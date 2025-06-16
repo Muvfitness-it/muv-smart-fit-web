@@ -52,7 +52,7 @@ const Servizi = () => {
 
     setIsGenerating(true);
     
-    // Simulate AI generation with mock data
+    // Simulate AI generation with mock data including video demonstrations
     setTimeout(() => {
       const mockWorkout = {
         title: `Allenamento ${obiettivo} - ${tempo} minuti`,
@@ -61,17 +61,20 @@ const Servizi = () => {
           {
             name: "Squat",
             details: "3 serie da 12 ripetizioni",
-            video: "https://example.com/squat-video.mp4"
+            description: "Posiziona i piedi alla larghezza delle spalle e scendi come se ti stessi sedendo su una sedia.",
+            videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4"
           },
           {
             name: "Push-up",
             details: "3 serie da 10 ripetizioni",
-            video: "https://example.com/pushup-video.mp4"
+            description: "Mantieni il corpo dritto, scendi fino a toccare il pavimento con il petto.",
+            videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4"
           },
           {
             name: "Plank",
             details: "3 serie da 30 secondi",
-            video: "https://example.com/plank-video.mp4"
+            description: "Mantieni il corpo dritto come una tavola, contraendo addominali e glutei.",
+            videoUrl: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_5mb.mp4"
           }
         ]
       };
@@ -175,12 +178,39 @@ const Servizi = () => {
                   <h3 className="text-2xl font-bold text-pink-600 mb-4">{generatedWorkout.title}</h3>
                   <p className="text-gray-300 mb-6">{generatedWorkout.description}</p>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <h4 className="text-xl font-semibold text-white">Esercizi:</h4>
                     {generatedWorkout.exercises.map((exercise, index) => (
-                      <div key={index} className="bg-gray-700 p-4 rounded-lg">
-                        <h5 className="text-lg font-bold text-white">{exercise.name}</h5>
-                        <p className="text-gray-300">{exercise.details}</p>
+                      <div key={index} className="bg-gray-700 p-6 rounded-lg">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          {/* Exercise Details */}
+                          <div>
+                            <h5 className="text-lg font-bold text-white mb-2">{exercise.name}</h5>
+                            <p className="text-pink-400 font-semibold mb-3">{exercise.details}</p>
+                            <p className="text-gray-300 text-sm leading-relaxed">{exercise.description}</p>
+                          </div>
+                          
+                          {/* Video Demonstration */}
+                          <div className="flex justify-center">
+                            <div className="w-full max-w-sm">
+                              <video
+                                className="w-full h-48 object-cover rounded-lg border-2 border-pink-600"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                              >
+                                <source src={exercise.videoUrl} type="video/mp4" />
+                                <div className="flex items-center justify-center h-48 bg-gray-800 rounded-lg">
+                                  <p className="text-gray-400">Video non disponibile</p>
+                                </div>
+                              </video>
+                              <p className="text-xs text-gray-400 mt-2 text-center">
+                                Video dimostrativo dell'esecuzione corretta
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
