@@ -52,31 +52,117 @@ const Servizi = () => {
 
     setIsGenerating(true);
     
-    // Simulate AI generation with mock data including video demonstrations
+    // Expanded exercise database with images
+    const allExercises = [
+      {
+        name: "Squat",
+        details: "3 serie da 12 ripetizioni",
+        description: "Posiziona i piedi alla larghezza delle spalle e scendi come se ti stessi sedendo su una sedia.",
+        imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Push-up",
+        details: "3 serie da 10 ripetizioni",
+        description: "Mantieni il corpo dritto, scendi fino a toccare il pavimento con il petto.",
+        imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Plank",
+        details: "3 serie da 30 secondi",
+        description: "Mantieni il corpo dritto come una tavola, contraendo addominali e glutei.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Burpees",
+        details: "3 serie da 8 ripetizioni",
+        description: "Movimento completo: squat, plank, push-up, salto. Esercizio total body ad alta intensità.",
+        imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Mountain Climbers",
+        details: "3 serie da 20 ripetizioni",
+        description: "In posizione plank, porta alternativamente le ginocchia al petto rapidamente.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Jumping Jacks",
+        details: "3 serie da 30 secondi",
+        description: "Saltelli aprendo e chiudendo gambe e braccia simultaneamente.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Lunges",
+        details: "3 serie da 10 per gamba",
+        description: "Affondo alternato in avanti, mantenendo il busto eretto e scendendo con il ginocchio.",
+        imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Crunch",
+        details: "3 serie da 15 ripetizioni",
+        description: "Sdraiato supino, solleva le spalle contraendo gli addominali.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Russian Twists",
+        details: "3 serie da 20 ripetizioni",
+        description: "Seduto con gambe sollevate, ruota il busto a destra e sinistra.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "High Knees",
+        details: "3 serie da 30 secondi",
+        description: "Corsa sul posto portando le ginocchia verso l'alto il più possibile.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Wall Sit",
+        details: "3 serie da 45 secondi",
+        description: "Schiena contro il muro, scivola fino a formare un angolo di 90° con le gambe.",
+        imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
+      },
+      {
+        name: "Dead Bug",
+        details: "3 serie da 8 per lato",
+        description: "Sdraiato supino, estendi alternativamente braccio e gamba opposti.",
+        imageUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop"
+      }
+    ];
+
+    // Select exercises based on objective and time
+    let selectedExercises = [];
+    const exerciseCount = tempo === "20" ? 4 : tempo === "40" ? 6 : 8;
+    
+    if (obiettivo === "Dimagrimento") {
+      const cardioExercises = allExercises.filter(ex => 
+        ["Burpees", "Mountain Climbers", "Jumping Jacks", "High Knees"].includes(ex.name)
+      );
+      const strengthExercises = allExercises.filter(ex => 
+        ["Squat", "Push-up", "Lunges"].includes(ex.name)
+      );
+      selectedExercises = [...cardioExercises.slice(0, Math.ceil(exerciseCount/2)), ...strengthExercises.slice(0, Math.floor(exerciseCount/2))];
+    } else if (obiettivo === "Tonificazione") {
+      const toneExercises = allExercises.filter(ex => 
+        ["Squat", "Push-up", "Lunges", "Plank", "Crunch", "Russian Twists", "Wall Sit"].includes(ex.name)
+      );
+      selectedExercises = toneExercises.slice(0, exerciseCount);
+    } else if (obiettivo === "Benessere") {
+      const wellnessExercises = allExercises.filter(ex => 
+        ["Plank", "Wall Sit", "Dead Bug", "Lunges", "Crunch"].includes(ex.name)
+      );
+      selectedExercises = wellnessExercises.slice(0, exerciseCount);
+    }
+
+    // Fallback to random selection if not enough exercises
+    if (selectedExercises.length < exerciseCount) {
+      const remaining = allExercises.filter(ex => !selectedExercises.includes(ex));
+      selectedExercises = [...selectedExercises, ...remaining.slice(0, exerciseCount - selectedExercises.length)];
+    }
+
     setTimeout(() => {
       const mockWorkout = {
         title: `Allenamento ${obiettivo} - ${tempo} minuti`,
         description: `Un programma intensivo di ${tempo} minuti specificamente progettato per il ${obiettivo.toLowerCase()}.`,
-        exercises: [
-          {
-            name: "Squat",
-            details: "3 serie da 12 ripetizioni",
-            description: "Posiziona i piedi alla larghezza delle spalle e scendi come se ti stessi sedendo su una sedia.",
-            videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-          },
-          {
-            name: "Push-up",
-            details: "3 serie da 10 ripetizioni",
-            description: "Mantieni il corpo dritto, scendi fino a toccare il pavimento con il petto.",
-            videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-          },
-          {
-            name: "Plank",
-            details: "3 serie da 30 secondi",
-            description: "Mantieni il corpo dritto come una tavola, contraendo addominali e glutei.",
-            videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-          }
-        ]
+        exercises: selectedExercises.slice(0, exerciseCount)
       };
       
       setGeneratedWorkout(mockWorkout);
@@ -190,24 +276,19 @@ const Servizi = () => {
                             <p className="text-gray-300 text-sm leading-relaxed">{exercise.description}</p>
                           </div>
                           
-                          {/* Video Demonstration */}
+                          {/* Exercise Image */}
                           <div className="flex justify-center">
                             <div className="w-full max-w-sm">
-                              <video
+                              <img
+                                src={exercise.imageUrl}
+                                alt={`Dimostrazione esercizio ${exercise.name}`}
                                 className="w-full h-48 object-cover rounded-lg border-2 border-pink-600"
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                controls
-                              >
-                                <source src={exercise.videoUrl} type="video/mp4" />
-                                <div className="flex items-center justify-center h-48 bg-gray-800 rounded-lg">
-                                  <p className="text-gray-400">Video non disponibile</p>
-                                </div>
-                              </video>
+                                onError={(e) => {
+                                  e.target.src = "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop";
+                                }}
+                              />
                               <p className="text-xs text-gray-400 mt-2 text-center">
-                                Video dimostrativo dell'esecuzione corretta
+                                Immagine dimostrativa dell'esercizio
                               </p>
                             </div>
                           </div>
