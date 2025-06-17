@@ -284,7 +284,9 @@ const Servizi = () => {
                                 alt={`Dimostrazione esercizio ${exercise.name}`}
                                 className="w-full h-48 object-cover rounded-lg border-2 border-pink-600"
                                 onError={(e) => {
-                                  e.target.src = "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop";
+                                  // Fix: Cast e.currentTarget as HTMLImageElement to access src property
+                                  const imgElement = e.currentTarget as HTMLImageElement;
+                                  imgElement.src = "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop";
                                 }}
                               />
                               <p className="text-xs text-gray-400 mt-2 text-center">
