@@ -196,24 +196,32 @@ const MuvPlanner = () => {
     setIsShoppingLoading(true);
     
     try {
-      // Mock shopping list data
+      // Enhanced mock shopping list with proportional costs
       const mockShoppingList: ShoppingListData = {
         lista_spesa: [
-          { categoria: "Proteine", nome: "Uova (confezione 12)", quantita: "1 conf", costo_calcolato_eur: 3.50 },
-          { categoria: "Proteine", nome: "Petto di pollo", quantita: "300g", costo_calcolato_eur: 8.00 },
-          { categoria: "Proteine", nome: "Salmone fresco", quantita: "250g", costo_calcolato_eur: 12.00 },
-          { categoria: "Carboidrati", nome: "Pane integrale", quantita: "1 pagnotta", costo_calcolato_eur: 2.50 },
-          { categoria: "Carboidrati", nome: "Riso integrale", quantita: "500g", costo_calcolato_eur: 2.00 },
-          { categoria: "Frutta e Verdura", nome: "Avocado", quantita: "2 pz", costo_calcolato_eur: 4.00 },
-          { categoria: "Frutta e Verdura", nome: "Banane", quantita: "1 kg", costo_calcolato_eur: 2.50 },
-          { categoria: "Latticini", nome: "Yogurt greco", quantita: "500g", costo_calcolato_eur: 4.50 }
+          { categoria: "Proteine", nome: "Uova", quantita: "2 pz", costo_calcolato_eur: 0.58 },
+          { categoria: "Proteine", nome: "Petto di pollo", quantita: "150g", costo_calcolato_eur: 4.00 },
+          { categoria: "Proteine", nome: "Salmone fresco", quantita: "120g", costo_calcolato_eur: 5.76 },
+          { categoria: "Proteine", nome: "Yogurt greco", quantita: "1 vasetto (170g)", costo_calcolato_eur: 1.35 },
+          { categoria: "Carboidrati", nome: "Pane integrale", quantita: "2 fette (60g)", costo_calcolato_eur: 0.30 },
+          { categoria: "Carboidrati", nome: "Riso integrale", quantita: "80g secco", costo_calcolato_eur: 0.32 },
+          { categoria: "Carboidrati", nome: "Quinoa", quantita: "50g secco", costo_calcolato_eur: 0.75 },
+          { categoria: "Frutta e Verdura", nome: "Avocado", quantita: "1 medio", costo_calcolato_eur: 2.00 },
+          { categoria: "Frutta e Verdura", nome: "Banana", quantita: "1 pz", costo_calcolato_eur: 0.25 },
+          { categoria: "Frutta e Verdura", nome: "Mela", quantita: "1 pz", costo_calcolato_eur: 0.30 },
+          { categoria: "Frutta e Verdura", nome: "Verdure miste", quantita: "200g", costo_calcolato_eur: 1.20 },
+          { categoria: "Frutta e Verdura", nome: "Verdure al vapore", quantita: "150g", costo_calcolato_eur: 0.90 },
+          { categoria: "Latticini", nome: "Latte", quantita: "250ml", costo_calcolato_eur: 0.35 },
+          { categoria: "Grassi e Condimenti", nome: "Olio EVO", quantita: "1 cucchiaio (10ml)", costo_calcolato_eur: 0.15 },
+          { categoria: "Frutta Secca", nome: "Mandorle", quantita: "30g", costo_calcolato_eur: 1.20 },
+          { categoria: "Frutta Secca", nome: "Burro di arachidi", quantita: "20g", costo_calcolato_eur: 0.40 }
         ],
-        totale_calcolato_eur: 39.00
+        totale_calcolato_eur: 19.81
       };
 
       setShoppingListData(mockShoppingList);
       setCurrentView('shoppingList');
-      toast({ title: "Lista spesa creata!", description: "La tua lista della spesa è pronta." });
+      toast({ title: "Lista spesa creata!", description: "Costi calcolati in quota parte per le quantità effettive." });
     } catch (err: any) {
       toast({ title: "Errore", description: "Errore nella creazione della lista spesa", variant: "destructive" });
     } finally {
@@ -585,7 +593,7 @@ const MuvPlanner = () => {
                     <ShoppingCart className="w-10 h-10" />
                     <span>Lista della Spesa</span>
                   </h2>
-                  <p className="text-gray-400 mt-1">Stima dei costi per il piano alimentare giornaliero.</p>
+                  <p className="text-gray-400 mt-1">Costi calcolati in quota parte per le quantità effettive del piano giornaliero.</p>
                 </div>
                 <div className="space-y-6">
                   {Object.entries(
@@ -619,11 +627,11 @@ const MuvPlanner = () => {
                 </div>
                 <div className="mt-8 pt-4 border-t-2 border-green-500/50">
                   <div className="flex justify-between items-center text-xl font-bold">
-                    <span className="text-green-300">Totale Stimato:</span>
+                    <span className="text-green-300">Totale Giornaliero:</span>
                     <span className="text-green-300">€ {shoppingListData.totale_calcolato_eur.toFixed(2)}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-2 text-right">
-                    I prezzi sono stime basate sulla media di mercato e quantità.
+                    Costi calcolati in quota parte per le quantità effettive necessarie.
                   </p>
                 </div>
               </div>
