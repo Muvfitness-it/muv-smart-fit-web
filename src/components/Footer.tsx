@@ -9,16 +9,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="flex items-center">
-                <span className="text-3xl font-bold text-pink-600">M</span>
-                <span className="text-3xl font-bold text-purple-500">U</span>
-                <span className="text-3xl font-bold text-blue-500">V</span>
-                <div className="ml-2">
-                  <span className="text-white font-semibold text-lg">FITNESS</span>
-                  <p className="text-gray-400 text-xs">fitness intelligente</p>
-                </div>
-              </div>
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png" 
+                alt="MUV Fitness Logo" 
+                className="h-16 w-auto"
+              />
             </Link>
             
             <div className="space-y-2">
