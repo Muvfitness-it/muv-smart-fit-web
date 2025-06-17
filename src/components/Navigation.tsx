@@ -14,10 +14,11 @@ const Navigation = () => {
     { name: "Team", path: "/team" },
     { name: "Servizi", path: "/servizi" },
     { name: "Risultati", path: "/risultati" },
+    { name: "MUV Planner", path: "/muv-planner" },
     { name: "Contatti", path: "/contatti" }
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="bg-gray-900 border-b border-gray-700 sticky top-0 z-50">
@@ -26,7 +27,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png" 
+              src="/lovable-uploads/85877de9-cbe5-44c5-a43e-6aeb6a1e8e5f.png" 
               alt="MUV Fitness Logo" 
               className="h-12 w-auto"
             />

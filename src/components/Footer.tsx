@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png" 
+                src="/lovable-uploads/85877de9-cbe5-44c5-a43e-6aeb6a1e8e5f.png" 
                 alt="MUV Fitness Logo" 
                 className="h-16 w-auto"
               />
@@ -48,6 +48,9 @@ const Footer = () => {
               </Link>
               <Link to="/risultati" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Risultati
+              </Link>
+              <Link to="/muv-planner" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                MUV Planner
               </Link>
               <Link to="/contatti" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Contatti

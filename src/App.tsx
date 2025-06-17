@@ -12,6 +12,7 @@ import Team from "./pages/Team";
 import Servizi from "./pages/Servizi";
 import Risultati from "./pages/Risultati";
 import Contatti from "./pages/Contatti";
+import MuvPlanner from "./pages/MuvPlanner";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/servizi" element={<Servizi />} />
               <Route path="/risultati" element={<Risultati />} />
               <Route path="/contatti" element={<Contatti />} />
+              <Route path="/muv-planner" element={<MuvPlanner />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
