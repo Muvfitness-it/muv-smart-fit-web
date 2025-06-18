@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -119,67 +118,12 @@ const MuvPlanner = () => {
     setIsLoading(true);
     setError('');
 
-    const prompt = `Agisci come un massimo esperto in nutrizione sportiva e crea un piano alimentare giornaliero di ${targetCalories} kcal per una persona con obiettivo ${formData.goal}. Il piano deve includere 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena. Ogni pasto deve avere una descrizione, lista di alimenti specifici con quantità, e calorie approssimative.`;
-
-    const mealObjectSchema = {
-      type: "OBJECT",
-      properties: {
-        descrizione: { type: "STRING" },
-        alimenti: { type: "ARRAY", items: { type: "STRING" } },
-        kcal: { type: "NUMBER" }
-      },
-      required: ["descrizione", "alimenti", "kcal"]
-    };
-
-    const payload = {
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: "OBJECT",
-          properties: {
-            colazione: mealObjectSchema,
-            spuntino_mattutino: mealObjectSchema,
-            pranzo: mealObjectSchema,
-            spuntino_pomeridiano: mealObjectSchema,
-            cena: mealObjectSchema
-          },
-          required: ["colazione", "spuntino_mattutino", "pranzo", "spuntino_pomeridiano", "cena"]
-        }
-      }
-    };
-
     try {
-      // For demo purposes, using mock data
-      const mockMealPlan: MealPlan = {
-        colazione: {
-          descrizione: "Colazione equilibrata ricca di proteine e carboidrati",
-          alimenti: ["2 uova strapazzate", "2 fette di pane integrale", "1 avocado medio", "1 tazza di latte"],
-          kcal: 450
-        },
-        spuntino_mattutino: {
-          descrizione: "Spuntino proteico e energetico",
-          alimenti: ["1 yogurt greco", "30g di mandorle", "1 banana"],
-          kcal: 250
-        },
-        pranzo: {
-          descrizione: "Pranzo completo con proteine magre e verdure",
-          alimenti: ["150g petto di pollo", "80g riso integrale", "Verdure miste", "1 cucchiaio olio EVO"],
-          kcal: 500
-        },
-        spuntino_pomeridiano: {
-          descrizione: "Spuntino leggero pre-workout",
-          alimenti: ["1 mela", "20g burro di arachidi"],
-          kcal: 200
-        },
-        cena: {
-          descrizione: "Cena leggera ma nutriente",
-          alimenti: ["120g salmone", "Verdure al vapore", "50g quinoa"],
-          kcal: 400
-        }
-      };
-
-      setMealPlanData({ calories: targetCalories, plan: mockMealPlan });
+      // Create varied meal plans based on user profile
+      const mealVariations = generateMealVariations(targetCalories, formData);
+      const randomPlan = selectRandomMealPlan(mealVariations);
+      
+      setMealPlanData({ calories: targetCalories, plan: randomPlan });
       setCurrentView('mealPlan');
       toast({ title: "Piano alimentare generato!", description: "Il tuo piano personalizzato è pronto." });
     } catch (err: any) {
@@ -188,6 +132,128 @@ const MuvPlanner = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const generateMealVariations = (calories: number, userData: FormData) => {
+    const { activityLevel, goal } = userData;
+    
+    // Base meal templates by activity level
+    const lowActivityMeals = {
+      colazione: [
+        { descrizione: "Colazione leggera e bilanciata", alimenti: ["1 yogurt greco", "30g cereali integrali", "1 cucchiaino miele", "150ml latte"], kcal: 320 },
+        { descrizione: "Colazione proteica semplice", alimenti: ["2 uova strapazzate", "1 fetta pane integrale", "1 arancia"], kcal: 350 },
+        { descrizione: "Colazione vegetale", alimenti: ["1 smoothie verde", "30g avena", "1 banana", "200ml latte vegetale"], kcal: 340 }
+      ],
+      spuntino_mattutino: [
+        { descrizione: "Spuntino energetico", alimenti: ["1 mela", "15g mandorle"], kcal: 150 },
+        { descrizione: "Break proteico", alimenti: ["1 yogurt magro", "1 cucchiaino semi di chia"], kcal: 120 },
+        { descrizione: "Snack bilanciato", alimenti: ["2 crackers integrali", "20g ricotta"], kcal: 140 }
+      ],
+      pranzo: [
+        { descrizione: "Pranzo equilibrato", alimenti: ["100g petto di pollo", "60g riso integrale", "Verdure miste", "1 cucchiaio olio EVO"], kcal: 420 },
+        { descrizione: "Pranzo mediterraneo", alimenti: ["120g pesce bianco", "50g quinoa", "Insalata mista", "1 cucchiaio olio EVO"], kcal: 400 },
+        { descrizione: "Pranzo vegetariano", alimenti: ["80g legumi", "60g pasta integrale", "Verdure saltate", "1 cucchiaio olio EVO"], kcal: 450 }
+      ],
+      spuntino_pomeridiano: [
+        { descrizione: "Merenda nutriente", alimenti: ["1 frutto di stagione", "10g noci"], kcal: 130 },
+        { descrizione: "Snack proteico", alimenti: ["1 bicchiere latte", "5g cioccolato fondente"], kcal: 160 },
+        { descrizione: "Break energetico", alimenti: ["1 fetta biscottata integrale", "1 cucchiaino marmellata"], kcal: 100 }
+      ],
+      cena: [
+        { descrizione: "Cena leggera", alimenti: ["100g ricotta", "Verdure al vapore", "30g pane integrale"], kcal: 280 },
+        { descrizione: "Cena proteica", alimenti: ["120g pesce", "Insalata verde", "1 cucchiaio olio EVO"], kcal: 300 },
+        { descrizione: "Cena bilanciata", alimenti: ["2 uova", "Verdure grigliate", "20g parmigiano"], kcal: 320 }
+      ]
+    };
+
+    const moderateActivityMeals = {
+      colazione: [
+        { descrizione: "Colazione energetica per l'allenamento", alimenti: ["2 uova strapazzate", "2 fette pane integrale", "1 avocado medio", "200ml latte"], kcal: 520 },
+        { descrizione: "Power breakfast", alimenti: ["50g avena", "1 banana", "30g proteine in polvere", "250ml latte"], kcal: 480 },
+        { descrizione: "Colazione del runner", alimenti: ["3 pancakes integrali", "2 cucchiai sciroppo acero", "150g frutti di bosco"], kcal: 450 }
+      ],
+      spuntino_mattutino: [
+        { descrizione: "Pre-workout snack", alimenti: ["1 banana", "20g burro di arachidi"], kcal: 200 },
+        { descrizione: "Energy boost", alimenti: ["1 barretta energetica", "10g mandorle"], kcal: 180 },
+        { descrizione: "Shake proteico", alimenti: ["250ml latte", "20g proteine whey"], kcal: 220 }
+      ],
+      pranzo: [
+        { descrizione: "Pranzo completo post-workout", alimenti: ["150g petto di pollo", "80g riso integrale", "Verdure miste", "1 cucchiaio olio EVO"], kcal: 500 },
+        { descrizione: "Power lunch", alimenti: ["150g salmone", "70g quinoa", "Avocado", "Verdure fresche"], kcal: 520 },
+        { descrizione: "Pranzo atleta", alimenti: ["120g manzo magro", "100g patate dolci", "Broccoli", "1 cucchiaio olio EVO"], kcal: 480 }
+      ],
+      spuntino_pomeridiano: [
+        { descrizione: "Recovery snack", alimenti: ["1 yogurt greco", "30g granola", "Frutti di bosco"], kcal: 250 },
+        { descrizione: "Post-workout", alimenti: ["1 shake proteico", "1 banana"], kcal: 280 },
+        { descrizione: "Energia sostenuta", alimenti: ["2 fette biscottate", "30g hummus", "Verdure crude"], kcal: 200 }
+      ],
+      cena: [
+        { descrizione: "Cena riparativa", alimenti: ["120g salmone", "Verdure al vapore", "50g quinoa"], kcal: 400 },
+        { descrizione: "Dinner time", alimenti: ["150g tacchino", "Insalata mista", "40g pane integrale"], kcal: 380 },
+        { descrizione: "Cena proteica", alimenti: ["100g tofu", "Verdure saltate", "60g riso basmati"], kcal: 420 }
+      ]
+    };
+
+    const highActivityMeals = {
+      colazione: [
+        { descrizione: "Colazione da atleta", alimenti: ["3 uova strapazzate", "2 fette pane integrale", "1 avocado", "250ml latte", "1 banana"], kcal: 650 },
+        { descrizione: "High energy breakfast", alimenti: ["80g avena", "2 banane", "40g proteine in polvere", "300ml latte", "30g noci"], kcal: 720 },
+        { descrizione: "Champion breakfast", alimenti: ["4 pancakes proteici", "3 cucchiai sciroppo", "200g frutti di bosco", "200ml latte"], kcal: 680 }
+      ],
+      spuntino_mattutino: [
+        { descrizione: "Power snack", alimenti: ["2 banane", "30g burro di arachidi", "250ml latte"], kcal: 350 },
+        { descrizione: "Energy bomb", alimenti: ["2 barrette energetiche", "20g mandorle"], kcal: 320 },
+        { descrizione: "Pre-training fuel", alimenti: ["300ml shake proteico", "1 mela", "15g miele"], kcal: 380 }
+      ],
+      pranzo: [
+        { descrizione: "Pranzo da campione", alimenti: ["200g petto di pollo", "100g riso integrale", "Verdure miste", "2 cucchiai olio EVO"], kcal: 650 },
+        { descrizione: "Athlete lunch", alimenti: ["180g salmone", "80g pasta integrale", "Avocado", "Verdure fresche", "Noci"], kcal: 700 },
+        { descrizione: "High performance meal", alimenti: ["150g manzo magro", "120g patate dolci", "Verdure", "1 cucchiaio olio EVO"], kcal: 600 }
+      ],
+      spuntino_pomeridiano: [
+        { descrizione: "Recovery power", alimenti: ["2 yogurt greci", "50g granola", "Frutti di bosco", "Miele"], kcal: 400 },
+        { descrizione: "Post-workout max", alimenti: ["400ml shake proteico", "2 banane", "Avena"], kcal: 450 },
+        { descrizione: "Sustained energy", alimenti: ["4 fette biscottate", "50g hummus", "Verdure", "20g noci"], kcal: 380 }
+      ],
+      cena: [
+        { descrizione: "Cena ricostruttiva", alimenti: ["150g salmone", "Verdure al vapore", "80g quinoa", "Avocado"], kcal: 500 },
+        { descrizione: "High protein dinner", alimenti: ["200g tacchino", "Insalata mista", "60g pane integrale", "Olive"], kcal: 480 },
+        { descrizione: "Recovery dinner", alimenti: ["120g tofu", "Verdure saltate", "80g riso basmati", "Semi"], kcal: 520 }
+      ]
+    };
+
+    // Select meal set based on activity level
+    let baseMeals;
+    if (activityLevel <= 1.375) baseMeals = lowActivityMeals;
+    else if (activityLevel <= 1.55) baseMeals = moderateActivityMeals;
+    else baseMeals = highActivityMeals;
+
+    // Adjust calories based on goal
+    const adjustMealsForGoal = (meals: any, goal: string) => {
+      const adjustment = goal === 'lose' ? 0.9 : goal === 'gain' ? 1.1 : 1;
+      
+      return Object.keys(meals).reduce((acc, mealType) => {
+        acc[mealType] = meals[mealType].map((meal: any) => ({
+          ...meal,
+          kcal: Math.round(meal.kcal * adjustment)
+        }));
+        return acc;
+      }, {} as any);
+    };
+
+    return adjustMealsForGoal(baseMeals, goal);
+  };
+
+  const selectRandomMealPlan = (mealVariations: any): MealPlan => {
+    const plan: any = {};
+    
+    Object.keys(mealVariations).forEach(mealType => {
+      const options = mealVariations[mealType];
+      const randomIndex = Math.floor(Math.random() * options.length);
+      plan[mealType] = options[randomIndex];
+    });
+    
+    return plan;
   };
 
   const generateShoppingList = async () => {
