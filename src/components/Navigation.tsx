@@ -30,7 +30,14 @@ const Navigation = () => {
               src="/lovable-uploads/85877de9-cbe5-44c5-a43e-6aeb6a1e8e5f.png" 
               alt="MUV Fitness Logo" 
               className="h-12 w-auto"
+              onError={(e) => {
+                console.log("Logo failed to load:", e);
+                e.currentTarget.style.display = 'none';
+              }}
+              onLoad={() => console.log("Logo loaded successfully")}
             />
+            {/* Fallback text logo if image fails */}
+            <span className="text-white text-xl font-bold ml-2">MUV FITNESS</span>
           </Link>
 
           {/* Desktop Navigation */}
