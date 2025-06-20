@@ -4,29 +4,35 @@ import { Card, CardContent } from "@/components/ui/card";
 const Team = () => {
   const teamMembers = [
     {
-      name: "Marco Verdi",
+      name: "Bocchino Vincenzo",
       role: "Titolare",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/Vincenzo-1.png",
       description: "Fondatore di MUV Fitness, esperto in metodologie di allenamento innovative e gestione del centro fitness."
     },
     {
-      name: "Laura Rossi",
+      name: "Christian Gioso",
       role: "Personal Trainer - Tecnico in Pancafit",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b2e0dca6?w=300&h=300&fit=crop&crop=face",
-      description: "Specializzata in correzione posturale e trattamento del mal di schiena attraverso la metodologia Pancafit."
+      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/PT_1.png",
+      description: "Laureato in Scienze delle Attività Motorie e Sportive. Tecnico del riequilibrio posturale in Pancafit.."
     },
     {
-      name: "Andrea Bianchi",
+      name: "Serena Portici",
       role: "Personal Trainer EMS",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
-      description: "Esperto in elettrostimolazione muscolare e programmi di allenamento ad alta intensità."
+      image: "https://www.muvfitness.it/wp-content/uploads/2024/07/sticker.webp",
+      description: "Laureata in scienze motorie e specializzata nei massaggi sportivi e linfodrenanti."
     },
     {
-      name: "Giulia Neri",
-      role: "Nutrizionista",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face",
-      description: "Specialista in nutrizione sportiva e piani alimentari personalizzati per il raggiungimento degli obiettivi."
+      name: "Susanna Isante",
+      role: "Consulente",
+      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/PT_2.png",
+      description: "Diplomata in estetica e benessere della persona, con esperienza pluriennale in centri benessere e dimagrimento.."
     }
+     {
+      name: "Mauro Petterle",
+      role: "Oersonal Trainer",
+      image: "https://www.muvfitness.it/wp-content/uploads/2024/03/mauro-petterle-5.png",
+      description: "Da quasi venti anni opero in questo settore e nell’altro degli anni mi sono specializzato in allenamenti per il potenziamento muscolare e dimagrimento."
+    },
   ];
 
   return (
