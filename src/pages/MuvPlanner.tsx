@@ -62,10 +62,11 @@ const MuvPlanner = () => {
   const [isShoppingListLoading, setIsShoppingListLoading] = useState(false);
   const [error, setError] = useState('');
   const [mealPlanError, setMealPlanError] = useState('');
+  const [apiKey, setApiKey] = useState('');
 
   const { callGeminiAPI } = useGeminiAPI();
 
-  const generateMealPlan = async (targetCalories: number) => {
+  const generateMealPlan = async (targetCalories: number, userApiKey: string) => {
     setIsLoading(true);
     setError('');
     
@@ -100,10 +101,11 @@ const MuvPlanner = () => {
     };
     
     try {
-      const result = await callGeminiAPI(payload);
+      const result = await callGeminiAPI(payload, userApiKey);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         const plan = JSON.parse(result.candidates[0].content.parts[0].text);
         setMealPlanData({ calories: targetCalories, plan });
+        setApiKey(userApiKey); // Store the API key for future use
         setCurrentView('mealPlan');
       } else {
         throw new Error("Risposta IA non valida.");
@@ -151,7 +153,7 @@ const MuvPlanner = () => {
     };
     
     try {
-      const result = await callGeminiAPI(payload);
+      const result = await callGeminiAPI(payload, apiKey);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         const shoppingData = JSON.parse(result.candidates[0].content.parts[0].text);
         setShoppingListData(shoppingData);
@@ -179,8 +181,8 @@ const MuvPlanner = () => {
     setMealPlanError('');
   };
 
-  const handleFormSubmit = (targetCalories: number) => {
-    generateMealPlan(targetCalories);
+  const handleFormSubmit = (targetCalories: number, userApiKey: string) => {
+    generateMealPlan(targetCalories, userApiKey);
   };
 
   const renderCurrentView = () => {

@@ -31,9 +31,11 @@ interface MealPlanProps {
   formData: FormData;
   isShoppingListLoading: boolean;
   mealPlanError: string;
+  apiKey: string;
   onGenerateShoppingList: () => void;
   onExportPDF: (elementId: string, fileName: string) => void;
   onRecalculate: () => void;
+  onAskCoach: (question: string, apiKey: string) => Promise<string>;
 }
 
 const MealPlan: React.FC<MealPlanProps> = ({
@@ -41,9 +43,11 @@ const MealPlan: React.FC<MealPlanProps> = ({
   formData,
   isShoppingListLoading,
   mealPlanError,
+  apiKey,
   onGenerateShoppingList,
   onExportPDF,
-  onRecalculate
+  onRecalculate,
+  onAskCoach
 }) => {
   const { calories, plan } = mealPlanData;
   const mealOrder: (keyof MealPlan)[] = ['colazione', 'spuntino_mattutino', 'pranzo', 'spuntino_pomeridiano', 'cena'];
@@ -125,7 +129,11 @@ const MealPlan: React.FC<MealPlanProps> = ({
             </button>
           </div>
           
-          <CoachChat mealPlanCalories={calories} />
+          <CoachChat 
+            mealPlanCalories={calories} 
+            apiKey={apiKey}
+            onAskCoach={onAskCoach}
+          />
           
           {mealPlanError && (
             <div className="mt-4 bg-red-500/20 border border-red-500 text-red-300 px-4 py-3 rounded-lg flex items-start">

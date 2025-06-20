@@ -1,7 +1,10 @@
 
 export const useGeminiAPI = () => {
-  const callGeminiAPI = async (payload: any) => {
-    const apiKey = ""; // Provided by environment
+  const callGeminiAPI = async (payload: any, apiKey?: string) => {
+    if (!apiKey) {
+      throw new Error("Chiave API Gemini richiesta. Inseriscila nel campo sopra.");
+    }
+    
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
     const response = await fetch(apiUrl, {
       method: 'POST',
