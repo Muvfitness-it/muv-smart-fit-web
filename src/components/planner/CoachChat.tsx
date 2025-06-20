@@ -29,6 +29,20 @@ const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, onAskCoach }) =
     }
   };
 
+  // Safe function to render text with preserved formatting
+  const renderSafeResponse = (text: string) => {
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line.startsWith('*') ? (
+          <span className="block">• {line.substring(1).trim()}</span>
+        ) : (
+          line
+        )}
+        {index < text.split('\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <div className="bg-gray-800/60 p-5 rounded-xl border border-gray-700">
       <h4 className="text-lg font-bold mb-3 flex items-center gap-2 text-green-300">
@@ -45,6 +59,7 @@ const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, onAskCoach }) =
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Es: Come posso strutturare la mia settimana di allenamento?"
           className="w-full bg-gray-900/70 border border-gray-600 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-green-400 transition"
+          maxLength={500}
         />
         <button
           type="submit"
@@ -66,11 +81,7 @@ const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, onAskCoach }) =
       </form>
       {response && (
         <div className="mt-4 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-200 text-sm leading-relaxed">
-          <div dangerouslySetInnerHTML={{ 
-            __html: response
-              .replace(/\n\*/g, '<br>•')
-              .replace(/\n/g, '<br>')
-          }} />
+          {renderSafeResponse(response)}
         </div>
       )}
     </div>
