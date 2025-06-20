@@ -34,12 +34,27 @@ const Contatti = () => {
       return;
     }
 
-    // Simulate form submission
+    // Crea il link mailto con i dati del form
+    const subject = encodeURIComponent(`Richiesta Check-up Gratuito - ${formData.nome}`);
+    const body = encodeURIComponent(
+      `Nome: ${formData.nome}\n` +
+      `Email: ${formData.email}\n\n` +
+      `Messaggio:\n${formData.messaggio}\n\n` +
+      `---\n` +
+      `Messaggio inviato dal sito web MUV Fitness`
+    );
+    
+    const mailtoLink = `mailto:vincenzob2011@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Apre il client email
+    window.location.href = mailtoLink;
+    
     toast({
-      title: "Messaggio inviato!",
-      description: "Ti contatteremo presto per il tuo check-up gratuito.",
+      title: "Client email aperto!",
+      description: "Si sta aprendo il tuo client email con il messaggio precompilato.",
     });
 
+    // Reset del form
     setFormData({ nome: "", email: "", messaggio: "" });
   };
 
@@ -142,7 +157,7 @@ const Contatti = () => {
                       <Mail className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
                       <div>
                         <h3 className="font-semibold text-white mb-1">Email</h3>
-                        <p className="text-gray-300">info@muvfitness.it</p>
+                        <p className="text-gray-300">vincenzob2011@gmail.com</p>
                       </div>
                     </div>
                   </div>
