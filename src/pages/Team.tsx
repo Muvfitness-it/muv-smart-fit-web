@@ -57,7 +57,7 @@ const Team = () => {
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-48 h-48 mx-auto object-cover border-0 border-gradient-to-r from-pink-600 via-purple-500 to-blue-500"
+                      className="w-48 h-55 mx-auto object-cover border-0 border-gradient-to-r from-pink-600 via-purple-500 to-blue-500"
                     />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
