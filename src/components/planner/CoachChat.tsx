@@ -4,11 +4,10 @@ import { Bot, Sparkles, Loader2 } from 'lucide-react';
 
 interface CoachChatProps {
   mealPlanCalories: number;
-  apiKey: string;
-  onAskCoach: (question: string, apiKey: string) => Promise<string>;
+  onAskCoach: (question: string) => Promise<string>;
 }
 
-const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, apiKey, onAskCoach }) => {
+const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, onAskCoach }) => {
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +20,7 @@ const CoachChat: React.FC<CoachChatProps> = ({ mealPlanCalories, apiKey, onAskCo
     setResponse('');
 
     try {
-      const answer = await onAskCoach(question, apiKey);
+      const answer = await onAskCoach(question);
       setResponse(answer);
     } catch (error: any) {
       setResponse(error.message || "Errore nella comunicazione con il coach.");

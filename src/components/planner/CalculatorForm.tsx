@@ -16,7 +16,7 @@ interface CalculatorFormProps {
   isLoading: boolean;
   error: string;
   onFormDataChange: (data: FormData) => void;
-  onSubmit: (targetCalories: number, apiKey: string) => void;
+  onSubmit: (targetCalories: number) => void;
 }
 
 const CalculatorForm: React.FC<CalculatorFormProps> = ({
@@ -26,8 +26,6 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
   onFormDataChange,
   onSubmit
 }) => {
-  const [apiKey, setApiKey] = React.useState('');
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     
@@ -50,7 +48,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
         break;
     }
     
-    onSubmit(Math.round(finalCalories), apiKey);
+    onSubmit(Math.round(finalCalories));
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -62,23 +60,11 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
 
   return (
     <div className="bg-white/10 backdrop-blur-lg p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20">
-      <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
-        <h3 className="text-sm font-medium text-blue-300 mb-2">Chiave API Gemini richiesta</h3>
-        <p className="text-xs text-blue-200 mb-3">
-          Inserisci la tua chiave API di Google Gemini per utilizzare il servizio AI.
-        </p>
-        <input
-          type="password"
-          placeholder="Inserisci la tua chiave API Gemini..."
-          value={apiKey}
-          onChange={(e) => setApiKey(e.target.value)}
-          className="w-full bg-gray-900/50 border border-gray-600 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-blue-400 transition text-sm"
-        />
-        <p className="text-xs text-blue-200 mt-2">
-          Ottieni la tua chiave API gratuita su{' '}
-          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-            Google AI Studio
-          </a>
+      <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+        <h3 className="text-sm font-medium text-green-300 mb-2">Servizio AI Integrato</h3>
+        <p className="text-xs text-green-200">
+          L'intelligenza artificiale è ora integrata in modo sicuro tramite Supabase. 
+          Non è più necessario inserire chiavi API.
         </p>
       </div>
 
@@ -158,7 +144,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
         <div>
           <button 
             type="submit" 
-            disabled={isLoading || !apiKey.trim()}
+            disabled={isLoading}
             className="w-full mt-4 bg-green-500 hover:bg-green-600 text-gray-900 font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed"
           >
             {isLoading ? (

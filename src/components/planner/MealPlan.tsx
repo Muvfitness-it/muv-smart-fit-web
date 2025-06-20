@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Target, ShoppingCart, FileDown } from 'lucide-react';
 import CoachChat from './CoachChat';
@@ -31,11 +30,10 @@ interface MealPlanProps {
   formData: FormData;
   isShoppingListLoading: boolean;
   mealPlanError: string;
-  apiKey: string;
   onGenerateShoppingList: () => void;
   onExportPDF: (elementId: string, fileName: string) => void;
   onRecalculate: () => void;
-  onAskCoach: (question: string, apiKey: string) => Promise<string>;
+  onAskCoach: (question: string) => Promise<string>;
 }
 
 const MealPlan: React.FC<MealPlanProps> = ({
@@ -43,7 +41,6 @@ const MealPlan: React.FC<MealPlanProps> = ({
   formData,
   isShoppingListLoading,
   mealPlanError,
-  apiKey,
   onGenerateShoppingList,
   onExportPDF,
   onRecalculate,
@@ -130,8 +127,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
           </div>
           
           <CoachChat 
-            mealPlanCalories={calories} 
-            apiKey={apiKey}
+            mealPlanCalories={mealPlanData.calories} 
             onAskCoach={onAskCoach}
           />
           

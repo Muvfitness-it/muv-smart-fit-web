@@ -1,23 +1,26 @@
 
+import { supabase } from '../integrations/supabase/client';
+
 export const useGeminiAPI = () => {
-  const callGeminiAPI = async (payload: any, apiKey?: string) => {
-    if (!apiKey) {
-      throw new Error("Chiave API Gemini richiesta. Inseriscila nel campo sopra.");
+  const callGeminiAPI = async (payload: any) => {
+    try {
+      console.log('Calling Supabase Edge Function with payload:', payload);
+      
+      const { data, error } = await supabase.functions.invoke('gemini-api', {
+        body: { payload }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(`Errore chiamata API: ${error.message}`);
+      }
+
+      console.log('Edge function response:', data);
+      return data;
+    } catch (error: any) {
+      console.error('Error calling Gemini API through Supabase:', error);
+      throw new Error(error.message || 'Errore nella comunicazione con il servizio AI');
     }
-    
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    
-    if (!response.ok) {
-      const errorBody = await response.text();
-      console.error("API Error Response:", errorBody);
-      throw new Error(`Errore API: ${response.statusText}`);
-    }
-    return response.json();
   };
 
   return { callGeminiAPI };

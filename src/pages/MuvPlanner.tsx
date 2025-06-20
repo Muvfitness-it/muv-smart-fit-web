@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
@@ -63,11 +62,10 @@ const MuvPlanner = () => {
   const [isShoppingListLoading, setIsShoppingListLoading] = useState(false);
   const [error, setError] = useState('');
   const [mealPlanError, setMealPlanError] = useState('');
-  const [apiKey, setApiKey] = useState('');
 
   const { callGeminiAPI } = useGeminiAPI();
 
-  const generateMealPlan = async (targetCalories: number, userApiKey: string) => {
+  const generateMealPlan = async (targetCalories: number) => {
     setIsLoading(true);
     setError('');
     
@@ -102,11 +100,10 @@ const MuvPlanner = () => {
     };
     
     try {
-      const result = await callGeminiAPI(payload, userApiKey);
+      const result = await callGeminiAPI(payload);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         const plan = JSON.parse(result.candidates[0].content.parts[0].text);
         setMealPlanData({ calories: targetCalories, plan });
-        setApiKey(userApiKey); // Store the API key for future use
         setCurrentView('mealPlan');
       } else {
         throw new Error("Risposta IA non valida.");
@@ -154,7 +151,7 @@ const MuvPlanner = () => {
     };
     
     try {
-      const result = await callGeminiAPI(payload, apiKey);
+      const result = await callGeminiAPI(payload);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         const shoppingData = JSON.parse(result.candidates[0].content.parts[0].text);
         setShoppingListData(shoppingData);
@@ -182,15 +179,11 @@ const MuvPlanner = () => {
     setMealPlanError('');
   };
 
-  const handleFormSubmit = (targetCalories: number, userApiKey: string) => {
-    generateMealPlan(targetCalories, userApiKey);
+  const handleFormSubmit = (targetCalories: number) => {
+    generateMealPlan(targetCalories);
   };
 
-  const handleAskCoach = async (question: string, userApiKey: string): Promise<string> => {
-    if (!userApiKey) {
-      throw new Error("Chiave API Gemini richiesta per utilizzare il coach.");
-    }
-
+  const handleAskCoach = async (question: string): Promise<string> => {
     const prompt = `Agisci come un coach esperto in nutrizione, allenamento e wellness. Rispondi alla seguente domanda in modo professionale e dettagliato: ${question}`;
     
     const payload = {
@@ -198,7 +191,7 @@ const MuvPlanner = () => {
     };
     
     try {
-      const result = await callGeminiAPI(payload, userApiKey);
+      const result = await callGeminiAPI(payload);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         return result.candidates[0].content.parts[0].text;
       } else {
@@ -228,7 +221,6 @@ const MuvPlanner = () => {
             formData={formData}
             isShoppingListLoading={isShoppingListLoading}
             mealPlanError={mealPlanError}
-            apiKey={apiKey}
             onGenerateShoppingList={generateShoppingList}
             onExportPDF={exportToPDF}
             onRecalculate={handleRecalculate}
