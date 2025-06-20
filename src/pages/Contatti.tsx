@@ -13,6 +13,7 @@ const Contatti = () => {
     email: "",
     messaggio: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +23,7 @@ const Contatti = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.nome || !formData.email || !formData.messaggio) {
@@ -34,28 +35,43 @@ const Contatti = () => {
       return;
     }
 
-    // Crea il link mailto con i dati del form
-    const subject = encodeURIComponent(`Richiesta Check-up Gratuito - ${formData.nome}`);
-    const body = encodeURIComponent(
-      `Nome: ${formData.nome}\n` +
-      `Email: ${formData.email}\n\n` +
-      `Messaggio:\n${formData.messaggio}\n\n` +
-      `---\n` +
-      `Messaggio inviato dal sito web MUV Fitness`
-    );
-    
-    const mailtoLink = `mailto:vincenzob2011@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Apre il client email
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Client email aperto!",
-      description: "Si sta aprendo il tuo client email con il messaggio precompilato.",
-    });
+    setIsSubmitting(true);
 
-    // Reset del form
-    setFormData({ nome: "", email: "", messaggio: "" });
+    try {
+      // Sostituisci 'YOUR_FORM_ID' con il tuo Form ID di Formspree
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.nome,
+          email: formData.email,
+          message: formData.messaggio,
+          subject: `Richiesta Check-up Gratuito - ${formData.nome}`,
+          _replyto: formData.email,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Messaggio inviato!",
+          description: "Ti contatteremo presto per il tuo check-up gratuito.",
+        });
+        setFormData({ nome: "", email: "", messaggio: "" });
+      } else {
+        throw new Error('Errore nell\'invio del messaggio');
+      }
+    } catch (error) {
+      console.error('Errore:', error);
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore nell'invio del messaggio. Riprova più tardi.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -88,6 +104,7 @@ const Contatti = () => {
                       onChange={handleInputChange}
                       className="bg-gray-700 border-gray-600 text-white"
                       placeholder="Il tuo nome"
+                      disabled={isSubmitting}
                     />
                   </div>
                   
@@ -101,6 +118,7 @@ const Contatti = () => {
                       onChange={handleInputChange}
                       className="bg-gray-700 border-gray-600 text-white"
                       placeholder="La tua email"
+                      disabled={isSubmitting}
                     />
                   </div>
                   
@@ -113,14 +131,16 @@ const Contatti = () => {
                       onChange={handleInputChange}
                       className="bg-gray-700 border-gray-600 text-white min-h-32"
                       placeholder="Raccontaci i tuoi obiettivi e come possiamo aiutarti..."
+                      disabled={isSubmitting}
                     />
                   </div>
                   
                   <Button 
                     type="submit"
-                    className="w-full bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    Invia Richiesta
+                    {isSubmitting ? "Invio in corso..." : "Invia Richiesta"}
                   </Button>
                 </form>
               </CardContent>
