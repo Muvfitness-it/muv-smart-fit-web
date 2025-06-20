@@ -36,8 +36,6 @@ const Navigation = () => {
               }}
               onLoad={() => console.log("Logo loaded successfully")}
             />
-            {/* Fallback text logo if image fails */}
-            <span className="text-white text-xl font-bold ml-2">MUV FITNESS</span>
           </Link>
 
           {/* Desktop Navigation */}
