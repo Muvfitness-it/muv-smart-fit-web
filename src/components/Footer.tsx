@@ -20,11 +20,11 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-pink-600" />
-                <span className="text-gray-300 text-sm">Via del Fitness, 123 - 20100 Milano, MI</span>
+                <span className="text-gray-300 text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-pink-600" />
-                <span className="text-gray-300 text-sm">+39 02 1234 5678</span>
+                <span className="text-gray-300 text-sm">+39 3459188197</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-pink-600" />
@@ -63,7 +63,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Seguici</h3>
             <div className="flex space-x-4">
               <a
-                href="https://facebook.com/muvfitness"
+                href="https://www.facebook.com/MuvLegnago/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 transition-colors duration-300"
@@ -71,7 +71,7 @@ const Footer = () => {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://instagram.com/muvfitness"
+                href="https://www.facebook.com/MuvLegnago/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 transition-colors duration-300"
@@ -88,7 +88,7 @@ const Footer = () => {
               © 2024 MUV Fitness. Tutti i diritti riservati.
             </p>
             <p className="text-gray-400 text-sm">
-              P.IVA: 12345678901
+              P.IVA: 05281920289
             </p>
           </div>
         </div>
