@@ -158,8 +158,8 @@ const Contatti = () => {
                       <div>
                         <h3 className="font-semibold text-white mb-1">Indirizzo</h3>
                         <p className="text-gray-300">
-                          Via del Fitness, 123<br />
-                          20100 Milano, MI<br />
+                          Via Venti Settembre, 5/7<br />
+                          Legnago, (VR)<br />
                           Italia
                         </p>
                       </div>
@@ -169,7 +169,7 @@ const Contatti = () => {
                       <Phone className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
                       <div>
                         <h3 className="font-semibold text-white mb-1">Telefono</h3>
-                        <p className="text-gray-300">+39 02 1234 5678</p>
+                        <p className="text-gray-300">+39 3459188197</p>
                       </div>
                     </div>
                     
@@ -177,7 +177,7 @@ const Contatti = () => {
                       <Mail className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
                       <div>
                         <h3 className="font-semibold text-white mb-1">Email</h3>
-                        <p className="text-gray-300">vincenzob2011@gmail.com</p>
+                        <p className="text-gray-300">info@muvfitness.it</p>
                       </div>
                     </div>
                   </div>
@@ -190,15 +190,15 @@ const Contatti = () => {
                   <div className="space-y-2 text-gray-300">
                     <div className="flex justify-between">
                       <span>Lunedì - Venerdì</span>
-                      <span>6:00 - 22:00</span>
+                      <span>08:00 - 21:00</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Sabato</span>
-                      <span>8:00 - 20:00</span>
+                      <span>8:00 - 12:00</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Domenica</span>
-                      <span>9:00 - 18:00</span>
+                      <span>Chiusi</span>
                     </div>
                   </div>
                 </CardContent>
