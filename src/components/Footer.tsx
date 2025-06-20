@@ -71,7 +71,7 @@ const Footer = () => {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://www.facebook.com/MuvLegnago/"
+                href="https://www.instagram.com/MuvLegnago/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 transition-colors duration-300"
