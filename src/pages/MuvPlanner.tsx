@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
@@ -20,7 +19,7 @@ interface MealData {
   kcal: number;
 }
 
-interface MealPlan {
+interface MealPlanType {
   colazione: MealData;
   spuntino_mattutino: MealData;
   pranzo: MealData;
@@ -30,7 +29,7 @@ interface MealPlan {
 
 interface MealPlanData {
   calories: number;
-  plan: MealPlan;
+  plan: MealPlanType;
 }
 
 interface ShoppingItem {
@@ -180,6 +179,10 @@ const MuvPlanner = () => {
     setMealPlanError('');
   };
 
+  const handleFormSubmit = (targetCalories: number) => {
+    generateMealPlan(targetCalories);
+  };
+
   const renderCurrentView = () => {
     switch (currentView) {
       case 'calculator':
@@ -189,7 +192,7 @@ const MuvPlanner = () => {
             isLoading={isLoading}
             error={error}
             onFormDataChange={setFormData}
-            onSubmit={generateMealPlan}
+            onSubmit={handleFormSubmit}
           />
         );
       case 'mealPlan':
