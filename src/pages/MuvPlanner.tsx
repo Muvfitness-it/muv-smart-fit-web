@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
@@ -185,6 +186,29 @@ const MuvPlanner = () => {
     generateMealPlan(targetCalories, userApiKey);
   };
 
+  const handleAskCoach = async (question: string, userApiKey: string): Promise<string> => {
+    if (!userApiKey) {
+      throw new Error("Chiave API Gemini richiesta per utilizzare il coach.");
+    }
+
+    const prompt = `Agisci come un coach esperto in nutrizione, allenamento e wellness. Rispondi alla seguente domanda in modo professionale e dettagliato: ${question}`;
+    
+    const payload = {
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
+    };
+    
+    try {
+      const result = await callGeminiAPI(payload, userApiKey);
+      if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+        return result.candidates[0].content.parts[0].text;
+      } else {
+        throw new Error("Risposta del coach non valida.");
+      }
+    } catch (error: any) {
+      throw new Error(error.message || "Errore nella comunicazione con il coach.");
+    }
+  };
+
   const renderCurrentView = () => {
     switch (currentView) {
       case 'calculator':
@@ -204,9 +228,11 @@ const MuvPlanner = () => {
             formData={formData}
             isShoppingListLoading={isShoppingListLoading}
             mealPlanError={mealPlanError}
+            apiKey={apiKey}
             onGenerateShoppingList={generateShoppingList}
             onExportPDF={exportToPDF}
             onRecalculate={handleRecalculate}
+            onAskCoach={handleAskCoach}
           />
         ) : null;
       case 'shoppingList':
