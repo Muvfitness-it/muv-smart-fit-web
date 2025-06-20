@@ -26,13 +26,13 @@ const Team = () => {
       role: "Consulente",
       image: "https://www.muvfitness.it/wp-content/uploads/2022/10/PT_2.png",
       description: "Diplomata in estetica e benessere della persona, con esperienza pluriennale in centri benessere e dimagrimento.."
-    }
-     {
-      name: "Mauro Petterle",
-      role: "Oersonal Trainer",
-      image: "https://www.muvfitness.it/wp-content/uploads/2024/03/mauro-petterle-5.png",
-      description: "Da quasi venti anni opero in questo settore e nell’altro degli anni mi sono specializzato in allenamenti per il potenziamento muscolare e dimagrimento."
     },
+    {
+      name: "Mauro Petterle",
+      role: "Personal Trainer",
+      image: "https://www.muvfitness.it/wp-content/uploads/2024/03/mauro-petterle-5.png",
+      description: "Da quasi venti anni opero in questo settore e nell'altro degli anni mi sono specializzato in allenamenti per il potenziamento muscolare e dimagrimento."
+    }
   ];
 
   return (
