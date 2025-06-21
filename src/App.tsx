@@ -13,6 +13,8 @@ import Servizi from "./pages/Servizi";
 import Risultati from "./pages/Risultati";
 import Contatti from "./pages/Contatti";
 import MuvPlanner from "./pages/MuvPlanner";
+import Privacy from "./pages/Privacy";
+import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,8 @@ const App = () => (
               <Route path="/risultati" element={<Risultati />} />
               <Route path="/contatti" element={<Contatti />} />
               <Route path="/muv-planner" element={<MuvPlanner />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

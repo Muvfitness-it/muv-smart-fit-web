@@ -82,14 +82,25 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © 2024 MUV Fitness. Tutti i diritti riservati.
-            </p>
-            <p className="text-gray-400 text-sm">
-              P.IVA: 05281920289
-            </p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+              <p className="text-gray-400 text-sm">
+                © 2024 MUV Fitness. Tutti i diritti riservati.
+              </p>
+              <p className="text-gray-400 text-sm">
+                P.IVA: 05281920289
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
+              <Link to="/privacy" className="text-gray-400 hover:text-pink-600 transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <Link to="/cookie-policy" className="text-gray-400 hover:text-pink-600 transition-colors duration-300">
+                Cookie Policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>

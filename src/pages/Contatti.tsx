@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const Contatti = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +16,23 @@ const Contatti = () => {
     messaggio: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consents, setConsents] = useState({
+    privacy: false,
+    marketing: false
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleConsentChange = (type: 'privacy' | 'marketing', checked: boolean) => {
+    setConsents(prev => ({
+      ...prev,
+      [type]: checked
     }));
   };
 
@@ -30,6 +43,15 @@ const Contatti = () => {
       toast({
         title: "Attenzione",
         description: "Tutti i campi sono obbligatori.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!consents.privacy) {
+      toast({
+        title: "Consenso Privacy Richiesto",
+        description: "È necessario accettare l'informativa sulla privacy per procedere.",
         variant: "destructive"
       });
       return;
@@ -49,6 +71,8 @@ const Contatti = () => {
           email: formData.email,
           message: formData.messaggio,
           subject: `Richiesta Check-up Gratuito - ${formData.nome}`,
+          privacy_consent: consents.privacy,
+          marketing_consent: consents.marketing,
           _replyto: formData.email,
         }),
       });
@@ -59,6 +83,7 @@ const Contatti = () => {
           description: "Ti contatteremo presto per il tuo check-up gratuito.",
         });
         setFormData({ nome: "", email: "", messaggio: "" });
+        setConsents({ privacy: false, marketing: false });
       } else {
         throw new Error('Errore nell\'invio del messaggio');
       }
@@ -134,10 +159,52 @@ const Contatti = () => {
                       disabled={isSubmitting}
                     />
                   </div>
+
+                  {/* GDPR Consent Checkboxes */}
+                  <div className="space-y-4 border-t border-gray-600 pt-6">
+                    <h3 className="text-lg font-semibold text-white mb-4">Consenso al Trattamento dei Dati</h3>
+                    
+                    <div className="flex items-start space-x-3">
+                      <Checkbox 
+                        id="privacy-consent"
+                        checked={consents.privacy}
+                        onCheckedChange={(checked) => handleConsentChange('privacy', checked as boolean)}
+                        className="mt-1"
+                        disabled={isSubmitting}
+                      />
+                      <label htmlFor="privacy-consent" className="text-sm text-gray-300 leading-relaxed">
+                        <span className="text-red-400">*</span> Ho letto e accetto l'{" "}
+                        <Link to="/privacy" className="text-pink-600 hover:text-pink-500 underline">
+                          informativa sulla privacy
+                        </Link>{" "}
+                        e autorizzo il trattamento dei miei dati personali per rispondere alla mia richiesta di contatto.
+                      </label>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <Checkbox 
+                        id="marketing-consent"
+                        checked={consents.marketing}
+                        onCheckedChange={(checked) => handleConsentChange('marketing', checked as boolean)}
+                        className="mt-1"
+                        disabled={isSubmitting}
+                      />
+                      <label htmlFor="marketing-consent" className="text-sm text-gray-300 leading-relaxed">
+                        Acconsento al trattamento dei miei dati personali per l'invio di comunicazioni commerciali, 
+                        newsletter e promozioni relative ai servizi di MUV Fitness. Questo consenso è facoltativo 
+                        e può essere revocato in qualsiasi momento.
+                      </label>
+                    </div>
+
+                    <p className="text-xs text-gray-400 leading-relaxed">
+                      I tuoi dati saranno trattati in conformità al Regolamento UE 2016/679 (GDPR). 
+                      Puoi esercitare i tuoi diritti contattandoci all'indirizzo info@muvfitness.it.
+                    </p>
+                  </div>
                   
                   <Button 
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !consents.privacy}
                     className="w-full bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {isSubmitting ? "Invio in corso..." : "Invia Richiesta"}
