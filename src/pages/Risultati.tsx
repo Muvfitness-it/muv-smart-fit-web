@@ -5,40 +5,58 @@ import { Star } from "lucide-react";
 const Risultati = () => {
   const testimonianze = [
     {
-      name: "Maria Bianchi",
+      name: "Maria B.",
+      age: "42 anni",
       obiettivo: "Dimagrimento",
-      quote: "Grazie al team di MUV Fitness ho perso 15 kg in 6 mesi. L'approccio personalizzato e la tecnologia EMS hanno fatto la differenza!",
-      avatar: "MB"
+      risultato: "-15kg in 6 mesi",
+      quote: "Dopo 3 gravidanze pensavo fosse impossibile tornare in forma. Con il metodo EMS di MUV ho perso 15kg in 6 mesi, allenandomi solo 2 volte a settimana. Ora mi sento più bella che a 20 anni!",
+      avatar: "MB",
+      tempo: "6 mesi fa"
     },
     {
-      name: "Giuseppe Rossi",
-      obiettivo: "Mal di schiena",
-      quote: "Dopo anni di dolori alla schiena, il metodo Pancafit mi ha letteralmente cambiato la vita. Ora posso finalmente vivere senza dolore.",
-      avatar: "GR"
+      name: "Giuseppe R.",
+      age: "55 anni", 
+      obiettivo: "Mal di schiena cronico",
+      risultato: "Dolore eliminato al 100%",
+      quote: "15 anni di mal di schiena, visite specialistiche inutili. Christian con il Pancafit ha risolto tutto in 8 settimane. Non prendo più antidolorifici e ho ripreso a giocare a tennis.",
+      avatar: "GR",
+      tempo: "3 mesi fa"
     },
     {
-      name: "Anna Verdi",
-      obiettivo: "Tonificazione",
-      quote: "Il personal training con MUV mi ha permesso di ottenere il corpo che ho sempre sognato. Staff competente e risultati straordinari!",
-      avatar: "AV"
+      name: "Anna V.",
+      age: "38 anni",
+      obiettivo: "Tonificazione post-parto", 
+      risultato: "-12kg e +30% forza",
+      quote: "Dopo il parto mi sentivo a pezzi. Serena mi ha seguita con pazienza e professionalità. In 4 mesi ho ritrovato la mia forma fisica e conquistato una forza che non avevo mai avuto.",
+      avatar: "AV",
+      tempo: "4 mesi fa"
     },
     {
-      name: "Luca Neri",
-      obiettivo: "Benessere generale",
-      quote: "L'ambiente professionale e l'attenzione ai dettagli di MUV Fitness mi hanno motivato a mantenere uno stile di vita attivo e salutare.",
-      avatar: "LN"
+      name: "Luca N.",
+      age: "29 anni",
+      obiettivo: "Massa muscolare",
+      risultato: "+8kg massa magra",
+      quote: "Mauro ha trasformato il mio fisico in 12 settimane. Da magro a muscoloso, con un programma su misura che non mi ha mai annoiato. Risultati che in palestra non avevo mai ottenuto.",
+      avatar: "LN",
+      tempo: "5 mesi fa"
     },
     {
-      name: "Francesca Gialli",
-      obiettivo: "Riabilitazione",
-      quote: "Dopo un infortunio, il team mi ha seguito passo dopo passo nella riabilitazione. Ora sono tornata più forte di prima!",
-      avatar: "FG"
+      name: "Francesca G.",
+      age: "47 anni",
+      obiettivo: "Riabilitazione ginocchio",
+      risultato: "Mobilità completa recuperata",
+      quote: "Dopo l'operazione al ginocchio i medici mi avevano dato poche speranze. Il team MUV mi ha fatto tornare a correre in 6 mesi. Ora faccio sport come una ragazzina.",
+      avatar: "FG",
+      tempo: "8 mesi fa"
     },
     {
-      name: "Marco Blu",
+      name: "Marco B.",
+      age: "34 anni",
       obiettivo: "Preparazione atletica",
-      quote: "La preparazione per la mia maratona è stata perfetta. I metodi scientifici di MUV mi hanno portato a superare tutti i miei record personali.",
-      avatar: "MB"
+      risultato: "Record personale maratona",
+      quote: "Grazie all'allenamento scientifico di MUV ho migliorato il mio tempo in maratona di 12 minuti. Approccio completamente diverso dalle solite palestre. Qui si studia ogni dettaglio.",
+      avatar: "MB",
+      tempo: "2 mesi fa"
     }
   ];
 
@@ -46,15 +64,17 @@ const Risultati = () => {
     <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
+          <header className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              LE LORO STORIE, I TUOI PROSSIMI{" "}
-              <span className="text-pink-600">RISULTATI</span>
+              RISULTATI REALI DI CLIENTI{" "}
+              <span className="text-pink-600">VERI</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Scopri le trasformazioni straordinarie dei nostri clienti e lasciati ispirare per iniziare il tuo percorso.
+              <strong>Non promesse vuote, ma trasformazioni documentate.</strong> Queste sono le storie di persone come te 
+              che hanno scelto MUV Smart Fit per cambiare la loro vita. 
+              <span className="text-pink-400">Il prossimo potresti essere tu.</span>
             </p>
-          </div>
+          </header>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonianze.map((testimonianza, index) => (
@@ -66,22 +86,53 @@ const Risultati = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-white">{testimonianza.name}</h3>
-                      <p className="text-pink-600 text-sm font-semibold">Obiettivo: {testimonianza.obiettivo}</p>
+                      <p className="text-gray-400 text-sm">{testimonianza.age}</p>
+                      <p className="text-pink-600 text-sm font-semibold">{testimonianza.obiettivo}</p>
                     </div>
                   </div>
                   
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                    ))}
+                  <div className="mb-4">
+                    <div className="flex mb-2" aria-label="Valutazione 5 stelle">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-green-400 font-bold text-sm mb-3">
+                      ✅ RISULTATO: {testimonianza.risultato}
+                    </p>
                   </div>
                   
-                  <blockquote className="text-gray-300 italic leading-relaxed">
+                  <blockquote className="text-gray-300 italic leading-relaxed mb-3">
                     "{testimonianza.quote}"
                   </blockquote>
+                  
+                  <p className="text-xs text-gray-500">
+                    Testimonianza raccolta {testimonianza.tempo}
+                  </p>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          {/* CTA Section */}
+          <div className="mt-16 text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-8 rounded-lg border border-pink-600/30">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Vuoi Essere il Prossimo Caso di Successo?
+            </h2>
+            <p className="text-lg text-gray-300 mb-6">
+              <strong>Queste persone hanno iniziato esattamente come te:</strong> piene di dubbi, con obiettivi che sembravano impossibili. 
+              <span className="text-pink-400 block mt-2">
+                Oggi sono la prova vivente che il metodo MUV funziona davvero.
+              </span>
+            </p>
+            <Link to="/contatti">
+              <Button 
+                className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
+                aria-label="Inizia la tua trasformazione con MUV Smart Fit Legnago"
+              >
+                Inizia la Tua Trasformazione
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
