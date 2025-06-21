@@ -20,7 +20,8 @@ const Servizi = () => {
       icon: <Zap className="w-12 h-12 text-purple-500 mb-4" />,
       title: "Tecnologia EMS Avanzata",
       subtitle: "20 minuti = 3 ore di palestra tradizionale",
-      description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale.",
+      description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all’allenamento tradizionale. <br />
+L’allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi..",
       benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida"
     },
     {
@@ -69,7 +70,10 @@ const Servizi = () => {
               <span className="text-pink-400">Scegli quello che fa per te.</span>
             </p>
           </header>
-          
+          <h2 className="text-3xl font-semibold text-white mt-12 mb-4">
+  Allenamenti personalizzati per dimagrimento, postura e benessere a Legnago
+</h2>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {servizi.map((servizio, index) => (
               <Card key={index} className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105">
@@ -146,7 +150,7 @@ const Servizi = () => {
                 className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
                 aria-label="Prenota consulenza gratuita servizi fitness Legnago"
               >
-                Prenota Consulenza Gratuita
+                Prenota la tua consulenza gratuita nel centro MUV a Legnago
               </Button>
             </Link>
           </div>
