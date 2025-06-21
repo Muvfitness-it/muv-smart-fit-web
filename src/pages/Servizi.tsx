@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,14 +7,74 @@ import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
 const Servizi = () => {
-  // Aggiorniamo i meta tag SEO specifici per la pagina servizi
+  // Meta tag SEO ottimizzati per la pagina servizi
   useEffect(() => {
-    document.title = "Servizi Fitness a Legnago | Personal Trainer, Pilates e EMS - MUV Smart Fit";
+    // Title
+    document.title = "Servizi Fitness a Legnago | Personal Trainer, Pilates, EMS – MUV Smart Fit";
     
+    // Meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Scopri tutti i servizi fitness di MUV a Legnago: personal training, Pilates Reformer, allenamento EMS, Pancafit e consulenza nutrizionale. Prova gratuita disponibile.');
+      metaDescription.setAttribute('content', 'Scopri i servizi fitness di MUV Smart Fit a Legnago: personal training, EMS, Pilates Reformer, Pancafit e consulenza nutrizionale. Prova gratuita disponibile.');
     }
+
+    // Meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', 'servizi fitness legnago, personal trainer legnago, allenamento EMS, pilates Legnago, pancafit mal di schiena, consulenza nutrizionale Legnago');
+
+    // Canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', 'https://muvsmartfit.it/servizi');
+
+    // Open Graph tags
+    const ogTags = [
+      { property: 'og:title', content: 'Servizi Fitness a Legnago | MUV Smart Fit' },
+      { property: 'og:description', content: 'Personal trainer, EMS, Pilates Reformer, Pancafit e consulenza nutrizionale a Legnago. Prenota una prova gratuita!' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://muvsmartfit.it/servizi' },
+      { property: 'og:image', content: 'https://muvsmartfit.it/og-image-servizi.jpg' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:locale', content: 'it_IT' }
+    ];
+
+    ogTags.forEach(tag => {
+      let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+      if (!metaTag) {
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('property', tag.property);
+        document.head.appendChild(metaTag);
+      }
+      metaTag.setAttribute('content', tag.content);
+    });
+
+    // Twitter Card tags
+    const twitterTags = [
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Servizi Fitness a Legnago | MUV Smart Fit' },
+      { name: 'twitter:description', content: 'Scopri tutti i servizi fitness di MUV Smart Fit a Legnago e prenota la tua prova gratuita!' },
+      { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-servizi.jpg' }
+    ];
+
+    twitterTags.forEach(tag => {
+      let metaTag = document.querySelector(`meta[name="${tag.name}"]`);
+      if (!metaTag) {
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('name', tag.name);
+        document.head.appendChild(metaTag);
+      }
+      metaTag.setAttribute('content', tag.content);
+    });
   }, []);
 
   const servizi = [

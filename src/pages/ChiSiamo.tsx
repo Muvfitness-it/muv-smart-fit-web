@@ -1,9 +1,89 @@
-
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const ChiSiamo = () => {
+  // Meta tag SEO ottimizzati per la pagina chi siamo
+  useEffect(() => {
+    // Title
+    document.title = "Chi Siamo – MUV Smart Fit | Centro Fitness Legnago";
+    
+    // Meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Scopri il team di MUV Smart Fit a Legnago: personal trainer certificati, esperienza, passione e metodo scientifico. Vieni a conoscerci!');
+    }
+
+    // Meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', 'chi siamo MUV Smart Fit, team personal trainer Legnago, centro fitness Legnago, metodo scientifico, allenamento personalizzato, personal trainer Verona');
+
+    // Meta author
+    let metaAuthor = document.querySelector('meta[name="author"]');
+    if (!metaAuthor) {
+      metaAuthor = document.createElement('meta');
+      metaAuthor.setAttribute('name', 'author');
+      document.head.appendChild(metaAuthor);
+    }
+    metaAuthor.setAttribute('content', 'MUV Smart Fit');
+
+    // Canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', 'https://muvsmartfit.it/chi-siamo');
+
+    // Open Graph tags
+    const ogTags = [
+      { property: 'og:title', content: 'Chi Siamo – MUV Smart Fit Legnago' },
+      { property: 'og:description', content: 'Conosci il nostro team di personal trainer certificati e la nostra filosofia. Metodo scientifico, passione e professionalità al centro MUV Smart Fit.' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://muvsmartfit.it/chi-siamo' },
+      { property: 'og:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:locale', content: 'it_IT' },
+      { property: 'og:site_name', content: 'MUV Smart Fit' }
+    ];
+
+    ogTags.forEach(tag => {
+      let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
+      if (!metaTag) {
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('property', tag.property);
+        document.head.appendChild(metaTag);
+      }
+      metaTag.setAttribute('content', tag.content);
+    });
+
+    // Twitter Card tags
+    const twitterTags = [
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Chi Siamo – MUV Smart Fit Legnago' },
+      { name: 'twitter:description', content: 'Scopri i professionisti di MUV Smart Fit: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
+      { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' }
+    ];
+
+    twitterTags.forEach(tag => {
+      let metaTag = document.querySelector(`meta[name="${tag.name}"]`);
+      if (!metaTag) {
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('name', tag.name);
+        document.head.appendChild(metaTag);
+      }
+      metaTag.setAttribute('content', tag.content);
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
