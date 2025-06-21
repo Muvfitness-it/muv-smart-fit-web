@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Dumbbell, Heart, Zap, Users, Target } from "lucide-react";
+import { Sparkles, Dumbbell, Heart, Zap, Users, Target, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -29,6 +29,13 @@ const Servizi = () => {
       subtitle: "95% di successo nel eliminare i dolori",
       description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
       benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo"
+    },
+    {
+      icon: <Star className="w-12 h-12 text-purple-500 mb-4" />,
+      title: "Pilates con Reformer",
+      subtitle: "Metodo originale Pilates su macchinari professionali",
+      description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale. Ideale per donne che vogliono un corpo snello e tonico.",
+      benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta"
     },
     {
       icon: <Users className="w-12 h-12 text-pink-600 mb-4" />,
@@ -58,7 +65,7 @@ const Servizi = () => {
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               <strong>Ogni servizio è progettato per un obiettivo specifico:</strong> dimagrimento rapido, 
-              eliminazione del mal di schiena, tonificazione muscolare. 
+              eliminazione del mal di schiena, tonificazione muscolare con Pilates reformer. 
               <span className="text-pink-400">Scegli quello che fa per te.</span>
             </p>
           </header>
@@ -78,6 +85,52 @@ const Servizi = () => {
               </Card>
             ))}
           </div>
+
+          {/* Pilates Section */}
+          <section className="mb-20 bg-gradient-to-r from-purple-600/10 via-pink-500/10 to-blue-500/10 p-8 rounded-lg border border-purple-600/20">
+            <h2 className="text-4xl font-bold text-center text-white mb-8">
+              Pilates con Reformer a <span className="text-purple-400">Legnago</span>
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-purple-400 mb-4">Il Metodo Pilates Originale su Macchinari Professionali</h3>
+                <p className="text-gray-300 leading-relaxed mb-6">
+                  <strong>Scopri il vero Pilates</strong> con lezioni individuali e small group su Reformer professionale. 
+                  Il nostro studio è l'unico a Legnago con macchinari certificati per un allenamento sicuro ed efficace.
+                </p>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center text-green-400">
+                    <span className="mr-2">✓</span>
+                    <span><strong>Tonificazione profonda:</strong> Addominali, glutei e braccia scolpiti</span>
+                  </div>
+                  <div className="flex items-center text-green-400">
+                    <span className="mr-2">✓</span>
+                    <span><strong>Flessibilità aumentata:</strong> Muscoli più lunghi e snelli</span>
+                  </div>
+                  <div className="flex items-center text-green-400">
+                    <span className="mr-2">✓</span>
+                    <span><strong>Postura perfetta:</strong> Addio a mal di schiena e tensioni</span>
+                  </div>
+                  <div className="flex items-center text-green-400">
+                    <span className="mr-2">✓</span>
+                    <span><strong>Core stability:</strong> Addome forte e stabile</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="bg-gray-800 p-6 rounded-lg border border-purple-500/30">
+                  <h4 className="text-xl font-bold text-white mb-4">Perfetto per:</h4>
+                  <ul className="text-gray-300 space-y-2 text-left">
+                    <li>• Donne che vogliono tonificare senza "ingrossare"</li>
+                    <li>• Chi soffre di mal di schiena cronico</li>
+                    <li>• Atleti che vogliono migliorare performance</li>
+                    <li>• Over 50 che cercano un movimento sicuro</li>
+                    <li>• Riabilitazione post-infortunio</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* CTA Section */}
           <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-8 rounded-lg border border-pink-600/30">
