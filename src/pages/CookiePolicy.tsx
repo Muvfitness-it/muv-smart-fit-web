@@ -56,10 +56,10 @@ const CookiePolicy = () => {
                   È possibile gestire o disabilitare i cookie attraverso le impostazioni del proprio browser:
                 </p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
-                  <li><strong>Chrome:</strong> Impostazioni {'>'}  Privacy e sicurezza {'>'}  Cookie e altri dati dei siti</li>
-                  <li><strong>Firefox:</strong> Opzioni {'>'}  Privacy e sicurezza {'>'}  Cookie e dati dei siti web</li>
-                  <li><strong>Safari:</strong> Preferenze {'>'}  Privacy {'>'}  Cookie e dati dei siti web</li>
-                  <li><strong>Edge:</strong> Impostazioni {'>'}  Cookie e autorizzazioni sito</li>
+                  <li><strong>Chrome:</strong> Impostazioni &gt; Privacy e sicurezza &gt; Cookie e altri dati dei siti</li>
+                  <li><strong>Firefox:</strong> Opzioni &gt; Privacy e sicurezza &gt; Cookie e dati dei siti web</li>
+                  <li><strong>Safari:</strong> Preferenze &gt; Privacy &gt; Cookie e dati dei siti web</li>
+                  <li><strong>Edge:</strong> Impostazioni &gt; Cookie e autorizzazioni sito</li>
                 </ul>
                 <p className="text-gray-300 leading-relaxed mt-4">
                   La disabilitazione dei cookie tecnici può compromettere il corretto funzionamento del sito.
