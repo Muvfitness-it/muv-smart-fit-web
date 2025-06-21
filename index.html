@@ -121,6 +121,37 @@
       }
     }
     </script>
+
+    <!-- Schema Markup per Servizi Fitness (solo per pagina servizi) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Servizi fitness a Legnago",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "MUV Smart Fit",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Legnago",
+          "addressRegion": "Veneto",
+          "postalCode": "37045",
+          "addressCountry": "IT"
+        }
+      },
+      "areaServed": "Legnago, Verona",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servizi offerti",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personal Training" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Allenamento EMS" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pilates Reformer" }},
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pancafit" }}
+        ]
+      }
+    }
+    </script>
   </head>
 
   <body>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,44 +8,54 @@ import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
 const Servizi = () => {
+  // Aggiorniamo i meta tag SEO specifici per la pagina servizi
+  useEffect(() => {
+    document.title = "Servizi Fitness a Legnago | Personal Trainer, Pilates e EMS - MUV Smart Fit";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Scopri tutti i servizi fitness di MUV a Legnago: personal training, Pilates Reformer, allenamento EMS, Pancafit e consulenza nutrizionale. Prova gratuita disponibile.');
+    }
+  }, []);
+
   const servizi = [
     {
-      icon: <Dumbbell className="w-12 h-12 text-pink-600 mb-4" />,
+      icon: <Dumbbell className="w-12 h-12 text-pink-600 mb-4" aria-label="Icona allenamento personal trainer Legnago" />,
       title: "Personal Training Esclusivo",
       subtitle: "Risultati garantiti in 30 giorni",
       description: "Allenamenti 1-to-1 completamente personalizzati. Ambiente riservato, zero code, massima attenzione. I nostri clienti perdono mediamente 3-5kg al mese.",
       benefits: "✓ Programma su misura ✓ Ambiente esclusivo ✓ Risultati misurabili"
     },
     {
-      icon: <Zap className="w-12 h-12 text-purple-500 mb-4" />,
+      icon: <Zap className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona tecnologia EMS Legnago" />,
       title: "Tecnologia EMS Avanzata",
       subtitle: "20 minuti = 3 ore di palestra tradizionale",
       description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale. L'allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi.",
       benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida"
     },
     {
-      icon: <Heart className="w-12 h-12 text-blue-500 mb-4" />,
+      icon: <Heart className="w-12 h-12 text-blue-500 mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
       title: "Pancafit per Mal di Schiena",
       subtitle: "95% di successo nel eliminare i dolori",
       description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
       benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo"
     },
     {
-      icon: <Star className="w-12 h-12 text-purple-500 mb-4" />,
+      icon: <Star className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona Pilates Reformer Legnago" />,
       title: "Pilates con Reformer",
       subtitle: "Metodo originale Pilates su macchinari professionali",
       description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale. Ideale per donne che vogliono un corpo snello e tonico.",
       benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta"
     },
     {
-      icon: <Users className="w-12 h-12 text-pink-600 mb-4" />,
+      icon: <Users className="w-12 h-12 text-pink-600 mb-4" aria-label="Icona small group training Legnago" />,
       title: "Small Group Training",
       subtitle: "Massimo 3 persone per sessione",
       description: "L'energia del gruppo con l'attenzione del personal trainer. Perfetto per chi vuole socializzare mantenendo la qualità dell'allenamento.",
       benefits: "✓ Motivazione di gruppo ✓ Costi ridotti ✓ Attenzione personalizzata"
     },
     {
-      icon: <Target className="w-12 h-12 text-purple-500 mb-4" />,
+      icon: <Target className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
       title: "Consulenza Nutrizionale",
       subtitle: "Piani alimentari che funzionano davvero",
       description: "Strategie nutrizionali semplici e sostenibili. Non diete estreme, ma abitudini che mantieni per sempre. Focus su risultati a lungo termine.",
@@ -69,6 +79,7 @@ const Servizi = () => {
               <span className="text-pink-400">Scegli quello che fa per te.</span>
             </p>
           </header>
+          
           <h2 className="text-3xl font-semibold text-white mt-12 mb-4">
             Allenamenti personalizzati per dimagrimento, postura e benessere a Legnago
           </h2>
@@ -77,7 +88,7 @@ const Servizi = () => {
             {servizi.map((servizio, index) => (
               <Card key={index} className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105">
                 <CardContent className="p-6 text-center">
-                  <div className="flex justify-center" aria-hidden="true">{servizio.icon}</div>
+                  <div className="flex justify-center">{servizio.icon}</div>
                   <h3 className="text-2xl font-bold text-white mb-2">{servizio.title}</h3>
                   <p className="text-pink-400 font-semibold mb-4 text-sm">{servizio.subtitle}</p>
                   <p className="text-gray-300 leading-relaxed mb-4">{servizio.description}</p>
