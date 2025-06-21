@@ -20,8 +20,7 @@ const Servizi = () => {
       icon: <Zap className="w-12 h-12 text-purple-500 mb-4" />,
       title: "Tecnologia EMS Avanzata",
       subtitle: "20 minuti = 3 ore di palestra tradizionale",
-      description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all’allenamento tradizionale. <br />
-L’allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi..",
+      description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale. L'allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi.",
       benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida"
     },
     {
@@ -71,8 +70,8 @@ L’allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rap
             </p>
           </header>
           <h2 className="text-3xl font-semibold text-white mt-12 mb-4">
-  Allenamenti personalizzati per dimagrimento, postura e benessere a Legnago
-</h2>
+            Allenamenti personalizzati per dimagrimento, postura e benessere a Legnago
+          </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {servizi.map((servizio, index) => (
