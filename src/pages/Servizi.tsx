@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sparkles, Dumbbell, Heart, Zap, Users, Target } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
 const Servizi = () => {
