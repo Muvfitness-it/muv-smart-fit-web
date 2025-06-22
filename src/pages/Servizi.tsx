@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,6 +27,15 @@ const Servizi = () => {
       document.head.appendChild(metaKeywords);
     }
     metaKeywords.setAttribute('content', 'servizi fitness legnago, personal trainer legnago, allenamento EMS, pilates Legnago, pancafit mal di schiena, consulenza nutrizionale Legnago');
+
+    // Meta robots
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.setAttribute('name', 'robots');
+      document.head.appendChild(metaRobots);
+    }
+    metaRobots.setAttribute('content', 'index, follow');
 
     // Canonical URL
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -79,42 +89,42 @@ const Servizi = () => {
 
   const servizi = [
     {
-      icon: <Dumbbell className="w-12 h-12 text-pink-600 mb-4" aria-label="Icona allenamento personal trainer Legnago" />,
+      icon: <Dumbbell className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" aria-label="Icona allenamento personal trainer Legnago" />,
       title: "Personal Training Esclusivo",
       subtitle: "Risultati garantiti in 30 giorni",
       description: "Allenamenti 1-to-1 completamente personalizzati. Ambiente riservato, zero code, massima attenzione. I nostri clienti perdono mediamente 3-5kg al mese.",
       benefits: "✓ Programma su misura ✓ Ambiente esclusivo ✓ Risultati misurabili"
     },
     {
-      icon: <Zap className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona tecnologia EMS Legnago" />,
+      icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona tecnologia EMS Legnago" />,
       title: "Tecnologia EMS Avanzata",
       subtitle: "20 minuti = 3 ore di palestra tradizionale",
       description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale. L'allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi.",
       benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida"
     },
     {
-      icon: <Heart className="w-12 h-12 text-blue-500 mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
+      icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
       title: "Pancafit per Mal di Schiena",
       subtitle: "95% di successo nel eliminare i dolori",
       description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
       benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo"
     },
     {
-      icon: <Star className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona Pilates Reformer Legnago" />,
+      icon: <Star className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona Pilates Reformer Legnago" />,
       title: "Pilates con Reformer",
       subtitle: "Metodo originale Pilates su macchinari professionali",
       description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale. Ideale per donne che vogliono un corpo snello e tonico.",
       benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta"
     },
     {
-      icon: <Users className="w-12 h-12 text-pink-600 mb-4" aria-label="Icona small group training Legnago" />,
+      icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" aria-label="Icona small group training Legnago" />,
       title: "Small Group Training",
       subtitle: "Massimo 3 persone per sessione",
       description: "L'energia del gruppo con l'attenzione del personal trainer. Perfetto per chi vuole socializzare mantenendo la qualità dell'allenamento.",
       benefits: "✓ Motivazione di gruppo ✓ Costi ridotti ✓ Attenzione personalizzata"
     },
     {
-      icon: <Target className="w-12 h-12 text-purple-500 mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
+      icon: <Target className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
       title: "Consulenza Nutrizionale",
       subtitle: "Piani alimentari che funzionano davvero",
       description: "Strategie nutrizionali semplici e sostenibili. Non diete estreme, ma abitudini che mantieni per sempre. Focus su risultati a lungo termine.",
@@ -125,33 +135,33 @@ const Servizi = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Services Section */}
-      <section className="py-20 px-4">
+      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
-          <header className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          <header className="text-center mb-12 sm:mb-16">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2">
               SERVIZI FITNESS INNOVATIVI A{" "}
-              <span className="text-pink-600">LEGNAGO</span>
+              <span className="text-pink-600 block sm:inline">LEGNAGO</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               <strong>Ogni servizio è progettato per un obiettivo specifico:</strong> dimagrimento rapido, 
               eliminazione del mal di schiena, tonificazione muscolare con Pilates reformer. 
               <span className="text-pink-400">Scegli quello che fa per te.</span>
             </p>
           </header>
           
-          <h2 className="text-3xl font-semibold text-white mt-12 mb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 sm:mt-12 mb-3 sm:mb-4 px-2">
             Allenamenti personalizzati per dimagrimento, postura e benessere a Legnago
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
             {servizi.map((servizio, index) => (
               <Card key={index} className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105">
-                <CardContent className="p-6 text-center">
+                <CardContent className="p-4 sm:p-6 text-center">
                   <div className="flex justify-center">{servizio.icon}</div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{servizio.title}</h3>
-                  <p className="text-pink-400 font-semibold mb-4 text-sm">{servizio.subtitle}</p>
-                  <p className="text-gray-300 leading-relaxed mb-4">{servizio.description}</p>
-                  <div className="text-sm text-green-400 font-medium">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">{servizio.title}</h3>
+                  <p className="text-pink-400 font-semibold mb-3 sm:mb-4 text-xs sm:text-sm">{servizio.subtitle}</p>
+                  <p className="text-gray-300 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{servizio.description}</p>
+                  <div className="text-xs sm:text-sm text-green-400 font-medium">
                     {servizio.benefits}
                   </div>
                 </CardContent>
@@ -160,40 +170,40 @@ const Servizi = () => {
           </div>
 
           {/* Pilates Section */}
-          <section className="mb-20 bg-gradient-to-r from-purple-600/10 via-pink-500/10 to-blue-500/10 p-8 rounded-lg border border-purple-600/20">
-            <h2 className="text-4xl font-bold text-center text-white mb-8">
-              Pilates con Reformer a <span className="text-purple-400">Legnago</span>
+          <section className="mb-16 sm:mb-20 bg-gradient-to-r from-purple-600/10 via-pink-500/10 to-blue-500/10 p-6 sm:p-8 rounded-lg border border-purple-600/20">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-6 sm:mb-8 px-2">
+              Pilates con Reformer a <span className="text-purple-400 block sm:inline">Legnago</span>
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
               <div>
-                <h3 className="text-2xl font-bold text-purple-400 mb-4">Il Metodo Pilates Originale su Macchinari Professionali</h3>
-                <p className="text-gray-300 leading-relaxed mb-6">
+                <h3 className="text-xl sm:text-2xl font-bold text-purple-400 mb-3 sm:mb-4 px-2">Il Metodo Pilates Originale su Macchinari Professionali</h3>
+                <p className="text-gray-300 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base px-2">
                   <strong>Scopri il vero Pilates</strong> con lezioni individuali e small group su Reformer professionale. 
                   Il nostro studio è l'unico a Legnago con macchinari certificati per un allenamento sicuro ed efficace.
                 </p>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center text-green-400">
-                    <span className="mr-2">✓</span>
+                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm px-2">
+                  <div className="flex items-start text-green-400">
+                    <span className="mr-2 mt-0.5">✓</span>
                     <span><strong>Tonificazione profonda:</strong> Addominali, glutei e braccia scolpiti</span>
                   </div>
-                  <div className="flex items-center text-green-400">
-                    <span className="mr-2">✓</span>
+                  <div className="flex items-start text-green-400">
+                    <span className="mr-2 mt-0.5">✓</span>
                     <span><strong>Flessibilità aumentata:</strong> Muscoli più lunghi e snelli</span>
                   </div>
-                  <div className="flex items-center text-green-400">
-                    <span className="mr-2">✓</span>
+                  <div className="flex items-start text-green-400">
+                    <span className="mr-2 mt-0.5">✓</span>
                     <span><strong>Postura perfetta:</strong> Addio a mal di schiena e tensioni</span>
                   </div>
-                  <div className="flex items-center text-green-400">
-                    <span className="mr-2">✓</span>
+                  <div className="flex items-start text-green-400">
+                    <span className="mr-2 mt-0.5">✓</span>
                     <span><strong>Core stability:</strong> Addome forte e stabile</span>
                   </div>
                 </div>
               </div>
               <div className="text-center">
-                <div className="bg-gray-800 p-6 rounded-lg border border-purple-500/30">
-                  <h4 className="text-xl font-bold text-white mb-4">Perfetto per:</h4>
-                  <ul className="text-gray-300 space-y-2 text-left">
+                <div className="bg-gray-800 p-4 sm:p-6 rounded-lg border border-purple-500/30">
+                  <h4 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Perfetto per:</h4>
+                  <ul className="text-gray-300 space-y-1 sm:space-y-2 text-left text-sm sm:text-base">
                     <li>• Donne che vogliono tonificare senza "ingrossare"</li>
                     <li>• Chi soffre di mal di schiena cronico</li>
                     <li>• Atleti che vogliono migliorare performance</li>
@@ -206,17 +216,17 @@ const Servizi = () => {
           </section>
 
           {/* CTA Section */}
-          <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-8 rounded-lg border border-pink-600/30">
-            <h2 className="text-3xl font-bold text-white mb-4">
+          <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-6 sm:p-8 rounded-lg border border-pink-600/30">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 px-2">
               Non Sai Quale Servizio Scegliere?
             </h2>
-            <p className="text-lg text-gray-300 mb-6">
+            <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 px-2 leading-relaxed">
               <strong>Prenota una consulenza gratuita</strong> e scopriremo insieme il percorso perfetto per i tuoi obiettivi. 
               Zero impegno, massima chiarezza.
             </p>
             <Link to="/contatti">
               <Button 
-                className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
+                className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
                 aria-label="Prenota consulenza gratuita servizi fitness Legnago"
               >
                 Prenota la tua consulenza gratuita nel centro MUV a Legnago
