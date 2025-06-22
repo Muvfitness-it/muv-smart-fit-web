@@ -28,10 +28,12 @@ const Index = () => {
           
           <Link to="/contatti">
             <Button 
-              className="bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 text-sm sm:text-base lg:text-lg xl:text-xl rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl w-full sm:w-auto font-bold"
+              className="bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-3 sm:py-4 lg:py-5 xl:py-6 text-xs sm:text-sm lg:text-base xl:text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl w-full sm:w-auto font-bold leading-tight"
               aria-label="Prenota check-up gratuito al centro fitness MUV Smart Fit"
             >
-              PRENOTA LA TUA PROVA GRATUITA OGGI
+              <span className="block sm:hidden">PRENOTA PROVA GRATUITA</span>
+              <span className="hidden sm:block lg:hidden">PRENOTA LA TUA PROVA GRATUITA</span>
+              <span className="hidden lg:block">PRENOTA LA TUA PROVA GRATUITA OGGI</span>
             </Button>
           </Link>
         </div>
@@ -108,10 +110,11 @@ const Index = () => {
           </p>
           <Link to="/contatti">
             <Button 
-              className="bg-white text-gray-900 hover:bg-gray-100 px-6 sm:px-8 lg:px-12 xl:px-16 py-4 sm:py-5 lg:py-6 text-sm sm:text-base lg:text-lg xl:text-xl rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl font-bold w-full sm:w-auto"
+              className="bg-white text-gray-900 hover:bg-gray-100 px-4 sm:px-6 lg:px-8 xl:px-12 py-3 sm:py-4 lg:py-5 xl:py-6 text-xs sm:text-sm lg:text-base xl:text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl font-bold w-full sm:w-auto leading-tight"
               aria-label="Prenota check-up gratuito centro fitness Legnago"
             >
-              PRENOTA CHECK-UP GRATUITO (VALORE €80)
+              <span className="block sm:hidden">PRENOTA CHECK-UP GRATUITO</span>
+              <span className="hidden sm:block">PRENOTA CHECK-UP GRATUITO (VALORE €80)</span>
             </Button>
           </Link>
         </div>

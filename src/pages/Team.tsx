@@ -60,22 +60,22 @@ const Team = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
             {teamMembers.map((member, index) => (
               <Card key={index} className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105">
-                <CardContent className="p-6 sm:p-8 text-center">
-                  <div className="mb-6 sm:mb-8 flex justify-center">
-                    <div className="w-40 h-48 sm:w-48 sm:h-56 md:w-56 md:h-64 lg:w-48 lg:h-56 xl:w-56 xl:h-64 overflow-hidden rounded-lg shadow-lg">
+                <CardContent className="p-4 sm:p-6 lg:p-8 text-center">
+                  <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
+                    <div className="w-32 h-40 sm:w-40 sm:h-48 md:w-44 md:h-52 lg:w-40 lg:h-48 xl:w-44 xl:h-52 overflow-hidden rounded-lg shadow-lg">
                       <img
                         src={member.image}
                         alt={`${member.name} - ${member.role} presso MUV Smart Fit Legnago`}
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover object-top"
                         loading="lazy"
                       />
                     </div>
                   </div>
-                  <div className="space-y-3 sm:space-y-4">
-                    <h3 className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-white">{member.name}</h3>
+                  <div className="space-y-2 sm:space-y-3 lg:space-y-4">
+                    <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white">{member.name}</h3>
                     <p className="text-pink-600 font-semibold text-sm sm:text-base lg:text-sm xl:text-base">{member.role}</p>
                     <p className="text-purple-400 font-medium text-xs sm:text-sm lg:text-xs xl:text-sm">{member.specialization}</p>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base lg:text-sm xl:text-base px-2">{member.description}</p>
+                    <p className="text-gray-300 leading-relaxed text-xs sm:text-sm lg:text-sm xl:text-base px-1 sm:px-2">{member.description}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -93,10 +93,11 @@ const Team = () => {
             </p>
             <Link to="/contatti">
               <Button 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-6 sm:px-8 lg:px-10 py-4 sm:py-5 text-sm sm:text-base lg:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto font-semibold"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 text-xs sm:text-sm lg:text-base rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto font-semibold leading-tight"
                 aria-label="Prenota consulenza con personal trainer Legnago"
               >
-                Prenota Consulenza con il Team
+                <span className="block sm:hidden">Prenota Consulenza</span>
+                <span className="hidden sm:block">Prenota Consulenza con il Team</span>
               </Button>
             </Link>
           </div>
