@@ -23,13 +23,13 @@ const Navigation = () => {
   return (
     <nav className="bg-gray-900 border-b border-gray-700 sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" 
               alt="MUV Fitness Logo" 
-              className="h-12 w-auto"
+              className="h-8 sm:h-10 lg:h-12 w-auto"
               onError={(e) => {
                 console.log("Logo failed to load:", e);
                 e.currentTarget.style.display = 'none';
@@ -39,12 +39,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-white hover:text-pink-600 transition-colors duration-300 ${
+                className={`text-white hover:text-pink-600 transition-colors duration-300 text-sm xl:text-base ${
                   isActive(item.path) ? "text-pink-600 font-semibold" : ""
                 }`}
               >
@@ -55,35 +55,35 @@ const Navigation = () => {
               href="https://www.muvfitness.it/blog"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-pink-600 transition-colors duration-300"
+              className="text-white hover:text-pink-600 transition-colors duration-300 text-sm xl:text-base"
             >
               Blog
             </a>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
               className="text-white hover:text-pink-600"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden pb-4">
+          <div className="lg:hidden pb-4">
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`text-white hover:text-pink-600 transition-colors duration-300 py-2 ${
+                  className={`text-white hover:text-pink-600 transition-colors duration-300 py-2 px-2 text-sm ${
                     isActive(item.path) ? "text-pink-600 font-semibold" : ""
                   }`}
                 >
@@ -94,7 +94,7 @@ const Navigation = () => {
                 href="https://www.muvfitness.it/blog"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-pink-600 transition-colors duration-300 py-2"
+                className="text-white hover:text-pink-600 transition-colors duration-300 py-2 px-2 text-sm"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
