@@ -17,13 +17,12 @@ const Index = () => {
             CENTRO FITNESS MUV
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-300">
-            <strong>Stanco di palestre affollate e risultati che non arrivano mai?</strong> A Legnago, 
-            trasformiamo il tuo corpo in soli 30 giorni con il metodo scientifico che ha già cambiato 
-            la vita di <span className="text-green-400 font-bold">oltre 500 persone</span>.
+            <strong><span className="text-green-400 font-bold">Oltre 500 persone</span> a Legnago hanno già perso fino a 5 kg in 30 giorni 
+             .
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/servizi" className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
-              Scopri Come Perdere 5kg in 30 Giorni IN MODO SOSTENIBILE
+              Prenota la Tua Prova Gratuita e Inizia a Cambiare Subito
             </Link>
           </div>
         </div>
