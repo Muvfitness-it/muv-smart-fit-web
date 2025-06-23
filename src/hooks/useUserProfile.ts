@@ -52,15 +52,7 @@ export const useUserProfile = () => {
         throw error;
       }
       
-      // Type cast the data to ensure compatibility with our interface
-      const profileData: UserProfile = {
-        ...data,
-        gender: data.gender as 'male' | 'female' | 'other',
-        activity_level: data.activity_level as '1.2' | '1.375' | '1.55' | '1.725' | '1.9',
-        fitness_goal: data.fitness_goal as 'lose' | 'maintain' | 'gain'
-      };
-      
-      setProfile(profileData);
+      setProfile(data);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -82,16 +74,7 @@ export const useUserProfile = () => {
         .single();
 
       if (error) throw error;
-      
-      // Type cast the data to ensure compatibility with our interface
-      const profileData: UserProfile = {
-        ...data,
-        gender: data.gender as 'male' | 'female' | 'other',
-        activity_level: data.activity_level as '1.2' | '1.375' | '1.55' | '1.725' | '1.9',
-        fitness_goal: data.fitness_goal as 'lose' | 'maintain' | 'gain'
-      };
-      
-      setProfile(profileData);
+      setProfile(data);
     } catch (err: any) {
       setError(err.message);
     }
@@ -120,16 +103,8 @@ export const useUserProfile = () => {
 
       if (error) throw error;
       
-      // Type cast the data to ensure compatibility with our interface
-      const profileData: UserProfile = {
-        ...data,
-        gender: data.gender as 'male' | 'female' | 'other',
-        activity_level: data.activity_level as '1.2' | '1.375' | '1.55' | '1.725' | '1.9',
-        fitness_goal: data.fitness_goal as 'lose' | 'maintain' | 'gain'
-      };
-      
-      setProfile(profileData);
-      return profileData;
+      setProfile(data);
+      return data;
     } catch (err: any) {
       setError(err.message);
       return null;
