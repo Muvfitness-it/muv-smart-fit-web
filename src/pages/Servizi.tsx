@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -226,10 +225,10 @@ const Servizi = () => {
             </p>
             <Link to="/contatti">
               <Button 
-                className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+                className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center whitespace-nowrap"
                 aria-label="Prenota consulenza gratuita servizi fitness Legnago"
               >
-                Prenota Consulenza Gratuita
+                Prenota una Consulenza Gratuita
               </Button>
             </Link>
           </div>

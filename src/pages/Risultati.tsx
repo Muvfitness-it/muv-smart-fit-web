@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -127,14 +126,16 @@ const Risultati = () => {
                 Oggi sono la prova vivente che il metodo MUV funziona davvero.
               </span>
             </p>
-            <Link to="/contatti">
-              <Button 
-                className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
-                aria-label="Inizia la tua trasformazione con MUV Smart Fit Legnago"
-              >
-                Inizia la Tua Trasformazione
-              </Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link to="/contatti">
+                <Button 
+                  className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
+                  aria-label="Inizia la tua trasformazione con MUV Smart Fit Legnago"
+                >
+                  Inizia la Tua Trasformazione
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
