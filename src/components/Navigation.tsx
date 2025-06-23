@@ -1,13 +1,11 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogIn } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { user } = useAuth();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -15,7 +13,6 @@ const Navigation = () => {
     { name: 'Team', path: '/team' },
     { name: 'Servizi', path: '/servizi' },
     { name: 'Risultati', path: '/risultati' },
-    { name: 'MUV Planner', path: '/muv-planner' },
     { name: 'Contatti', path: '/contatti' },
   ];
 
@@ -52,33 +49,6 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            
-            {/* Auth/Profile Links */}
-            {user ? (
-              <Link
-                to="/profile"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                  isActive('/profile')
-                    ? 'bg-green-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                <User className="w-4 h-4 mr-1" />
-                Profilo
-              </Link>
-            ) : (
-              <Link
-                to="/auth"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                  isActive('/auth')
-                    ? 'bg-green-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                <LogIn className="w-4 h-4 mr-1" />
-                Accedi
-              </Link>
-            )}
           </div>
 
           {/* Mobile menu button */}
@@ -110,35 +80,6 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              
-              {/* Mobile Auth/Profile Links */}
-              {user ? (
-                <Link
-                  to="/profile"
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center ${
-                    isActive('/profile')
-                      ? 'bg-green-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  Profilo
-                </Link>
-              ) : (
-                <Link
-                  to="/auth"
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center ${
-                    isActive('/auth')
-                      ? 'bg-green-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Accedi
-                </Link>
-              )}
             </div>
           </div>
         )}
