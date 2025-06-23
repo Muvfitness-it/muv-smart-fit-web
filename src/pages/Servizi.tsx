@@ -229,7 +229,7 @@ const Servizi = () => {
                 className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
                 aria-label="Prenota consulenza gratuita servizi fitness Legnago"
               >
-                Prenota la tua consulenza gratuita nel centro MUV a Legnago
+                Prenota Consulenza Gratuita
               </Button>
             </Link>
           </div>
