@@ -76,7 +76,11 @@ const MuvPlanner = () => {
         return mealPlanData ? (
           <MealPlan
             mealPlanData={mealPlanData}
-            formData={formData}
+            formData={{
+              goal: formData.goal,
+              allergies: formData.allergies,
+              intolerances: formData.intolerances
+            }}
             isShoppingListLoading={isShoppingListLoading}
             mealPlanError={shoppingListError}
             onGenerateShoppingList={handleGenerateShoppingList}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Target, ShoppingCart, FileDown, AlertTriangle, Save, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,7 +24,7 @@ interface MealPlanData {
   plan: MealPlan;
 }
 
-interface FormData {
+interface PlannerFormData {
   goal: string;
   allergies: string[];
   intolerances: string[];
@@ -33,7 +32,7 @@ interface FormData {
 
 interface MealPlanProps {
   mealPlanData: MealPlanData;
-  formData: FormData;
+  formData: PlannerFormData;
   isShoppingListLoading: boolean;
   mealPlanError: string;
   onGenerateShoppingList: () => void;

@@ -1,7 +1,13 @@
 
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { MealPlanData, SavedMealPlan, FormData } from '@/types/planner';
+import { MealPlanData, SavedMealPlan, MealPlanType } from '@/types/planner';
+
+interface FormDataForSaving {
+  goal: string;
+  allergies: string[];
+  intolerances: string[];
+}
 
 export const useMealPlanStorage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +15,7 @@ export const useMealPlanStorage = () => {
 
   const saveMealPlan = async (
     mealPlanData: MealPlanData,
-    formData: FormData
+    formData: FormDataForSaving
   ): Promise<SavedMealPlan | null> => {
     setIsLoading(true);
     setError('');
@@ -27,16 +33,21 @@ export const useMealPlanStorage = () => {
           user_id: user.id,
           calories: mealPlanData.calories,
           goal: formData.goal,
-          allergies: formData.allergies,
-          intolerances: formData.intolerances,
-          plan_data: mealPlanData.plan
+          allergies: formData.allergies as any,
+          intolerances: formData.intolerances as any,
+          plan_data: mealPlanData.plan as any
         })
         .select()
         .single();
 
       if (error) throw error;
       
-      return data as SavedMealPlan;
+      return {
+        ...data,
+        plan_data: data.plan_data as MealPlanType,
+        allergies: data.allergies as string[],
+        intolerances: data.intolerances as string[]
+      } as SavedMealPlan;
     } catch (err: any) {
       setError(err.message);
       return null;
@@ -64,7 +75,12 @@ export const useMealPlanStorage = () => {
 
       if (error) throw error;
       
-      return data as SavedMealPlan[];
+      return data.map(item => ({
+        ...item,
+        plan_data: item.plan_data as MealPlanType,
+        allergies: item.allergies as string[],
+        intolerances: item.intolerances as string[]
+      })) as SavedMealPlan[];
     } catch (err: any) {
       setError(err.message);
       return [];
