@@ -44,7 +44,7 @@ export const useMealPlanStorage = () => {
       
       return {
         ...data,
-        plan_data: data.plan_data as MealPlanType,
+        plan_data: data.plan_data as unknown as MealPlanType,
         allergies: data.allergies as string[],
         intolerances: data.intolerances as string[]
       } as SavedMealPlan;
@@ -77,7 +77,7 @@ export const useMealPlanStorage = () => {
       
       return data.map(item => ({
         ...item,
-        plan_data: item.plan_data as MealPlanType,
+        plan_data: item.plan_data as unknown as MealPlanType,
         allergies: item.allergies as string[],
         intolerances: item.intolerances as string[]
       })) as SavedMealPlan[];
