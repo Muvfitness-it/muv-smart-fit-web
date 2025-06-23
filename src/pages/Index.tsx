@@ -2,21 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Dumbbell, Users, Target, Star } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-
 const Index = () => {
-  const { user } = useAuth();
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  const {
+    user
+  } = useAuth();
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-green-900">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{
-            backgroundImage: "url('/images/fitness-professional-bg.jpg')"
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/70 to-green-900/80"></div>
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" style={{
+        backgroundImage: "url('/images/fitness-professional-bg.jpg')"
+      }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/70 to-green-900/80 px-0 my-[6px]"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
             MUV FITNESS CENTER
@@ -124,8 +120,6 @@ const Index = () => {
             </Link>}
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
