@@ -17,11 +17,13 @@ const Index = () => {
             MUV FITNESS CENTER
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-300">
-            Trasforma il tuo corpo, cambia la tua vita. Il tuo viaggio verso il benessere inizia qui.
+            <strong>Stanco di palestre affollate e risultati che non arrivano mai?</strong> A Legnago, 
+            trasformiamo il tuo corpo in soli 30 giorni con il metodo scientifico che ha già cambiato 
+            la vita di <span className="text-green-400 font-bold">oltre 500 persone</span>.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/servizi" className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
-              Scopri i Servizi
+              Scopri Come Perdere 5kg in 30 Giorni
             </Link>
           </div>
         </div>
@@ -32,36 +34,49 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-green-400">
-              Perché Scegliere MUV?
+              Perché il 95% dei Nostri Clienti Raggiunge l'Obiettivo?
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Offriamo un approccio completo al fitness con tecnologie innovative e un team di professionisti qualificati.
+              <strong>Non siamo una palestra qualsiasi.</strong> Siamo l'unico centro a Legnago che garantisce risultati 
+              misurabili grazie a tecnologie esclusive e un metodo collaudato su centinaia di trasformazioni.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-700 p-8 rounded-2xl text-center hover:bg-gray-600 transition-colors">
               <Dumbbell className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Attrezzature All'avanguardia</h3>
-              <p className="text-gray-300">
-                Macchinari di ultima generazione per allenamenti efficaci e sicuri in ogni disciplina.
+              <h3 className="text-2xl font-bold mb-4">Tecnologia EMS Esclusiva</h3>
+              <p className="text-gray-300 mb-4">
+                <strong>20 minuti = 3 ore di palestra tradizionale.</strong> La tecnologia EMS attiva oltre 300 muscoli 
+                contemporaneamente, bruciando il 30% di calorie in più.
               </p>
+              <div className="text-green-400 font-semibold text-sm">
+                ✓ Risultati 3x più veloci ✓ Solo 2 sedute a settimana ✓ Zero spreco di tempo
+              </div>
             </div>
             
             <div className="bg-gray-700 p-8 rounded-2xl text-center hover:bg-gray-600 transition-colors">
               <Users className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Personal Trainer Certificati</h3>
-              <p className="text-gray-300">
-                Il nostro team di esperti ti guiderà verso il raggiungimento dei tuoi obiettivi personali.
+              <h3 className="text-2xl font-bold mb-4">Personal Trainer d'Élite</h3>
+              <p className="text-gray-300 mb-4">
+                <strong>I migliori specialisti di Legnago.</strong> Christian ha risolto il mal di schiena al 95% dei suoi clienti. 
+                Serena ha fatto perdere oltre 200kg in un anno alle sue clienti.
               </p>
+              <div className="text-green-400 font-semibold text-sm">
+                ✓ Laureati in Scienze Motorie ✓ Specialisti certificati ✓ Track record comprovato
+              </div>
             </div>
             
             <div className="bg-gray-700 p-8 rounded-2xl text-center hover:bg-gray-600 transition-colors">
               <Target className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Programmi Personalizzati</h3>
-              <p className="text-gray-300">
-                Piani di allenamento e nutrizione su misura per le tue esigenze specifiche.
+              <h3 className="text-2xl font-bold mb-4">Metodo Scientifico Personalizzato</h3>
+              <p className="text-gray-300 mb-4">
+                <strong>Zero improvvisazione. Solo scienza.</strong> Analisi corporea avanzata, programmi su misura 
+                e monitoraggio costante per garantire che raggiungi l'obiettivo nei tempi previsti.
               </p>
+              <div className="text-green-400 font-semibold text-sm">
+                ✓ Piano su misura ✓ Risultati misurabili ✓ Garanzia di successo
+              </div>
             </div>
           </div>
         </div>
@@ -70,22 +85,31 @@ const Index = () => {
       {/* Stats Section */}
       <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600">
         <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              I Numeri Che Dimostrano la Nostra Eccellenza
+            </h2>
+            <p className="text-lg opacity-90 max-w-2xl mx-auto">
+              <strong>Non promettiamo miracoli.</strong> Ti mostriamo risultati concreti, 
+              ottenuti da persone vere che hanno scelto di cambiare la loro vita con noi.
+            </p>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
-              <div className="text-lg opacity-90">Membri Attivi</div>
+              <div className="text-lg opacity-90">Trasformazioni Completate</div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">10+</div>
-              <div className="text-lg opacity-90">Anni di Esperienza</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">95%</div>
+              <div className="text-lg opacity-90">Tasso di Successo</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">-5kg</div>
+              <div className="text-lg opacity-90">Media Perdita Peso (30gg)</div>
             </div>
             <div>
               <div className="text-4xl md:text-5xl font-bold mb-2">15</div>
-              <div className="text-lg opacity-90">Trainer Professionali</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">24/7</div>
-              <div className="text-lg opacity-90">Accessibilità</div>
+              <div className="text-lg opacity-90">Specialisti Certificati</div>
             </div>
           </div>
         </div>
@@ -96,14 +120,25 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center px-4">
           <Star className="w-16 h-16 text-green-400 mx-auto mb-6" />
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Pronto a Trasformare la Tua Vita?
+            Sei Pronto a Vedere il Cambiamento che Hai Sempre Sognato?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Unisciti alla famiglia MUV e inizia il tuo percorso verso una versione migliore di te stesso.
+            <strong>Basta scuse, basta rimandare.</strong> Oggi puoi iniziare il percorso che in 30 giorni 
+            ti farà guardare allo specchio con orgoglio. <span className="text-green-400">La prima consulenza è completamente gratuita.</span>
           </p>
+          <div className="bg-gray-800 p-6 rounded-lg border border-green-500/30 mb-8">
+            <h3 className="text-lg font-bold text-white mb-3">🎁 OFFERTA ESCLUSIVA PER I PRIMI 10</h3>
+            <p className="text-gray-300 mb-4">
+              <strong>Check-up completo GRATUITO</strong> (valore €80) + Prima seduta di prova 
+              + Piano personalizzato. <span className="text-green-400 font-semibold">Zero impegno, risultati garantiti.</span>
+            </p>
+          </div>
           <Link to="/contatti" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-colors inline-flex items-center">
-            Contattaci Ora
+            Prenota Ora la Tua Trasformazione Gratuita
           </Link>
+          <p className="text-sm text-gray-400 mt-4">
+            ⏰ Posti limitati - Solo 10 consulenze gratuite questo mese
+          </p>
         </div>
       </section>
     </div>
