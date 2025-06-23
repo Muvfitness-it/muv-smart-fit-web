@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, Wheat, Milk, Fish, Egg, TreePine, Shell, Peanut } from 'lucide-react';
+import { AlertTriangle, Wheat, Milk, Fish, Egg, TreePine, Shell, Nut } from 'lucide-react';
 
 interface AllergySelectorProps {
   allergies: string[];
@@ -23,7 +22,7 @@ const AllergySelector: React.FC<AllergySelectorProps> = ({
     { id: 'uova', label: 'Uova', icon: Egg },
     { id: 'frutta_secca', label: 'Frutta secca', icon: TreePine },
     { id: 'crostacei', label: 'Crostacei', icon: Shell },
-    { id: 'arachidi', label: 'Arachidi', icon: Peanut },
+    { id: 'arachidi', label: 'Arachidi', icon: Nut },
     { id: 'soia', label: 'Soia', icon: AlertTriangle },
   ];
 
@@ -35,21 +34,21 @@ const AllergySelector: React.FC<AllergySelectorProps> = ({
     { id: 'fruttosio', label: 'Fruttosio', icon: AlertTriangle },
   ];
 
-  const handleAllergyChange = (allergyId: string, checked: boolean) => {
+  function handleAllergyChange(allergyId: string, checked: boolean) {
     if (checked) {
       onAllergiesChange([...allergies, allergyId]);
     } else {
       onAllergiesChange(allergies.filter(a => a !== allergyId));
     }
-  };
+  }
 
-  const handleIntoleranceChange = (intoleranceId: string, checked: boolean) => {
+  function handleIntoleranceChange(intoleranceId: string, checked: boolean) {
     if (checked) {
       onIntolerancesChange([...intolerances, intoleranceId]);
     } else {
       onIntolerancesChange(intolerances.filter(i => i !== intoleranceId));
     }
-  };
+  }
 
   return (
     <div className="space-y-6">
