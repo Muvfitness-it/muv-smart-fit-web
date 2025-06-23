@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-green-900" style={{ height: 'calc(100vh - 44px)' }}>
+      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-green-900" style={{ height: 'calc(100vh - 4px)' }}>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" style={{
           backgroundImage: "url('/images/fitness-professional-bg.jpg')"
         }}></div>
