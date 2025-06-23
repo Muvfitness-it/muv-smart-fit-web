@@ -14,7 +14,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-blue-900/70 to-green-900/80"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
-            MUV FITNESS CENTER
+            CENTRO FITNESS MUV
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-300">
             <strong>Stanco di palestre affollate e risultati che non arrivano mai?</strong> A Legnago, 
@@ -23,7 +23,7 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/servizi" className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
-              Scopri Come Perdere 5kg in 30 Giorni
+              Scopri Come Perdere 5kg in 30 Giorni IN MODO SOSTENIBILE
             </Link>
           </div>
         </div>
@@ -108,7 +108,7 @@ const Index = () => {
               <div className="text-lg opacity-90">Media Perdita Peso (30gg)</div>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">15</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">5</div>
               <div className="text-lg opacity-90">Specialisti Certificati</div>
             </div>
           </div>
