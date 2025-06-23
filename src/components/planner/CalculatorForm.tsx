@@ -54,8 +54,8 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
           <Calculator className="w-10 h-10" />
           <span>Calcolatore Nutrizionale</span>
         </h2>
-        <p className="text-gray-400 mt-2">Crea il tuo piano alimentare personalizzato
-si specifica che è solo un servizio di idee alimentari e che non sostituisce i professionisti della nutrizione.</p>
+        <p className="text-gray-400 mt-2">Crea il tuo piano alimentare personalizzato 
+*Si specifica che è solo un servizio di idee alimentari e che non sostituisce i professionisti della nutrizione.</p>
       </div>
 
       <form onSubmit={calculateCalories} className="space-y-6">
