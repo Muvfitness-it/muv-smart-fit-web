@@ -56,9 +56,15 @@ export const useMealPlanStorage = () => {
           throw new Error(errors[0].error?.message || 'Errore nel salvare il piano settimanale');
         }
 
+        // Controlla che il primo risultato e i suoi dati esistano
+        const firstResult = results[0];
+        if (!firstResult.data || firstResult.data.length === 0) {
+          throw new Error('Errore nel recuperare i dati del piano salvato');
+        }
+
         // Ritorna il primo record come rappresentante del piano settimanale
         return {
-          id: results[0].data![0].id,
+          id: firstResult.data[0].id,
           user_id: user.id,
           calories: mealPlanData.calories,
           goal: formData.goal,
@@ -66,7 +72,7 @@ export const useMealPlanStorage = () => {
           intolerances: formData.intolerances,
           plan_data: mealPlanData.plan,
           plan_type: 'weekly',
-          created_at: results[0].data![0].created_at
+          created_at: firstResult.data[0].created_at
         } as SavedMealPlan;
       } else {
         // Piano giornaliero
