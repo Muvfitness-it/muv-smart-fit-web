@@ -8,6 +8,7 @@ export interface FormData {
   goal: string;
   allergies: string[];
   intolerances: string[];
+  planType: 'daily' | 'weekly'; // Nuovo campo per il tipo di piano
 }
 
 export interface MealData {
@@ -24,9 +25,21 @@ export interface MealPlanType {
   cena: MealData;
 }
 
+// Nuovo tipo per i piani settimanali
+export interface WeeklyMealPlan {
+  lunedi: MealPlanType;
+  martedi: MealPlanType;
+  mercoledi: MealPlanType;
+  giovedi: MealPlanType;
+  venerdi: MealPlanType;
+  sabato: MealPlanType;
+  domenica: MealPlanType;
+}
+
 export interface MealPlanData {
   calories: number;
-  plan: MealPlanType;
+  plan: MealPlanType | WeeklyMealPlan;
+  planType: 'daily' | 'weekly';
 }
 
 export interface ShoppingItem {
@@ -41,7 +54,7 @@ export interface ShoppingListData {
   totale_calcolato_eur: number;
 }
 
-// Nuovi tipi per il tracking
+// Tipi aggiornati per il tracking
 export interface SavedMealPlan {
   id: string;
   user_id: string;
@@ -49,7 +62,9 @@ export interface SavedMealPlan {
   goal: string;
   allergies: string[];
   intolerances: string[];
-  plan_data: MealPlanType;
+  plan_data: MealPlanType | WeeklyMealPlan;
+  plan_type: 'daily' | 'weekly';
+  week_day?: number;
   created_at: string;
 }
 
@@ -61,6 +76,7 @@ export interface FoodDiaryEntry {
   meal_type: keyof MealPlanType;
   consumed: boolean;
   notes?: string;
+  week_day?: number;
   created_at: string;
   updated_at: string;
 }

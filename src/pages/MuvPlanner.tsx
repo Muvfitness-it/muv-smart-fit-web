@@ -19,7 +19,8 @@ const MuvPlanner = () => {
     activityLevel: '1.375',
     goal: 'maintain',
     allergies: [],
-    intolerances: []
+    intolerances: [],
+    planType: 'daily'
   });
   const [mealPlanData, setMealPlanData] = useState<MealPlanData | null>(null);
   const [shoppingListData, setShoppingListData] = useState<ShoppingListData | null>(null);
@@ -29,7 +30,12 @@ const MuvPlanner = () => {
   const { askCoach } = useCoachChat();
 
   const handleFormSubmit = async (targetCalories: number) => {
-    const result = await generateMealPlan(targetCalories, formData.allergies, formData.intolerances);
+    const result = await generateMealPlan(
+      targetCalories, 
+      formData.allergies, 
+      formData.intolerances,
+      formData.planType
+    );
     if (result) {
       setMealPlanData(result);
       setCurrentView('mealPlan');
@@ -79,7 +85,8 @@ const MuvPlanner = () => {
             formData={{
               goal: formData.goal,
               allergies: formData.allergies,
-              intolerances: formData.intolerances
+              intolerances: formData.intolerances,
+              planType: formData.planType
             }}
             isShoppingListLoading={isShoppingListLoading}
             mealPlanError={shoppingListError}

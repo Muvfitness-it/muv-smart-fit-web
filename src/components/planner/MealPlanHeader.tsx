@@ -1,11 +1,12 @@
 
 import React from 'react';
-import { Target, AlertTriangle } from 'lucide-react';
+import { Target, AlertTriangle, Calendar, CalendarDays } from 'lucide-react';
 
 interface PlannerFormData {
   goal: string;
   allergies: string[];
   intolerances: string[];
+  planType: 'daily' | 'weekly';
 }
 
 interface MealPlanHeaderProps {
@@ -31,13 +32,23 @@ const MealPlanHeader: React.FC<MealPlanHeaderProps> = ({ calories, formData }) =
     return labels[allergy] || allergy;
   };
 
+  const planTypeIcon = formData.planType === 'weekly' ? CalendarDays : Calendar;
+  const PlanIcon = planTypeIcon;
+
   return (
     <div className="text-center mb-8">
-      <p className="text-gray-300">Piano nutrizionale personalizzato</p>
+      <div className="flex items-center justify-center space-x-2 mb-2">
+        <PlanIcon className="w-6 h-6 text-green-400" />
+        <p className="text-gray-300">
+          Piano nutrizionale {formData.planType === 'weekly' ? 'settimanale' : 'giornaliero'} personalizzato
+        </p>
+      </div>
+      
       <h2 className="text-4xl md:text-5xl font-bold text-green-400 flex items-center justify-center space-x-3">
         <Target className="w-10 h-10" />
-        <span>{calories} kcal</span>
+        <span>{calories} kcal{formData.planType === 'weekly' ? '/giorno' : ''}</span>
       </h2>
+      
       <p className="text-gray-400 mt-1">
         Obiettivo: {formData.goal === 'lose' ? 'Definizione' : formData.goal === 'gain' ? 'Aumento massa' : 'Mantenimento'}
       </p>

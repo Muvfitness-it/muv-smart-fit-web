@@ -56,6 +56,7 @@ export type Database = {
           notes: string | null
           updated_at: string
           user_id: string
+          week_day: number | null
         }
         Insert: {
           consumed?: boolean
@@ -67,6 +68,7 @@ export type Database = {
           notes?: string | null
           updated_at?: string
           user_id: string
+          week_day?: number | null
         }
         Update: {
           consumed?: boolean
@@ -78,6 +80,7 @@ export type Database = {
           notes?: string | null
           updated_at?: string
           user_id?: string
+          week_day?: number | null
         }
         Relationships: [
           {
@@ -98,7 +101,9 @@ export type Database = {
           id: string
           intolerances: Json | null
           plan_data: Json
+          plan_type: string
           user_id: string
+          week_day: number | null
         }
         Insert: {
           allergies?: Json | null
@@ -108,7 +113,9 @@ export type Database = {
           id?: string
           intolerances?: Json | null
           plan_data: Json
+          plan_type?: string
           user_id: string
+          week_day?: number | null
         }
         Update: {
           allergies?: Json | null
@@ -118,7 +125,9 @@ export type Database = {
           id?: string
           intolerances?: Json | null
           plan_data?: Json
+          plan_type?: string
           user_id?: string
+          week_day?: number | null
         }
         Relationships: []
       }

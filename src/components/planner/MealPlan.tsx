@@ -5,32 +5,16 @@ import { useMealPlanStorage } from '@/hooks/useMealPlanStorage';
 import { useToast } from '@/hooks/use-toast';
 import MealPlanHeader from './MealPlanHeader';
 import MealItem from './MealItem';
+import WeeklyMealPlanComponent from './WeeklyMealPlan';
 import MealPlanActions from './MealPlanActions';
 import CoachChat from './CoachChat';
-
-interface MealData {
-  descrizione: string;
-  alimenti: string[];
-  kcal: number;
-}
-
-interface MealPlan {
-  colazione: MealData;
-  spuntino_mattutino: MealData;
-  pranzo: MealData;
-  spuntino_pomeridiano: MealData;
-  cena: MealData;
-}
-
-interface MealPlanData {
-  calories: number;
-  plan: MealPlan;
-}
+import { MealPlanData, MealPlanType, WeeklyMealPlan } from '@/types/planner';
 
 interface PlannerFormData {
   goal: string;
   allergies: string[];
   intolerances: string[];
+  planType: 'daily' | 'weekly';
 }
 
 interface MealPlanProps {
@@ -56,17 +40,18 @@ const MealPlan: React.FC<MealPlanProps> = ({
   onAskCoach,
   onViewTracking
 }) => {
-  const { calories, plan } = mealPlanData;
+  const { calories, plan, planType } = mealPlanData;
   const { saveMealPlan, isLoading: isSaving } = useMealPlanStorage();
   const { toast } = useToast();
-  const mealOrder: (keyof MealPlan)[] = ['colazione', 'spuntino_mattutino', 'pranzo', 'spuntino_pomeridiano', 'cena'];
+  
+  const mealOrder: (keyof MealPlanType)[] = ['colazione', 'spuntino_mattutino', 'pranzo', 'spuntino_pomeridiano', 'cena'];
 
   const handleSavePlan = async () => {
     const result = await saveMealPlan(mealPlanData, formData);
     if (result) {
       toast({
         title: "Piano salvato!",
-        description: "Il piano alimentare è stato salvato nel tuo profilo.",
+        description: `Il piano alimentare ${planType === 'weekly' ? 'settimanale' : 'giornaliero'} è stato salvato nel tuo profilo.`,
       });
     } else {
       toast({
@@ -77,25 +62,36 @@ const MealPlan: React.FC<MealPlanProps> = ({
     }
   };
 
+  const renderMealPlan = () => {
+    if (planType === 'weekly') {
+      return <WeeklyMealPlanComponent weeklyPlan={plan as WeeklyMealPlan} />;
+    }
+
+    // Piano giornaliero
+    const dailyPlan = plan as MealPlanType;
+    return (
+      <div className="space-y-6">
+        {mealOrder.map(mealName => {
+          const mealData = dailyPlan[mealName];
+          if (!mealData) return null;
+          
+          return (
+            <MealItem
+              key={mealName}
+              mealName={mealName}
+              mealData={mealData}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className="bg-gray-900/50 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 text-white">
       <div id="meal-plan-export" className="p-6 md:p-8 bg-gray-900/0 rounded-t-2xl">
         <MealPlanHeader calories={calories} formData={formData} />
-        
-        <div className="space-y-6">
-          {mealOrder.map(mealName => {
-            const mealData = plan[mealName];
-            if (!mealData) return null;
-            
-            return (
-              <MealItem
-                key={mealName}
-                mealName={mealName}
-                mealData={mealData}
-              />
-            );
-          })}
-        </div>
+        {renderMealPlan()}
       </div>
       
       <div className="p-6 md:p-8 pt-0">
@@ -103,7 +99,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
           <MealPlanActions
             onSavePlan={handleSavePlan}
             onGenerateShoppingList={onGenerateShoppingList}
-            onExportPDF={() => onExportPDF('meal-plan-export', 'piano_alimentare_muv.pdf')}
+            onExportPDF={() => onExportPDF('meal-plan-export', `piano_alimentare_${planType}_muv.pdf`)}
             onViewTracking={onViewTracking}
             isSaving={isSaving}
             isShoppingListLoading={isShoppingListLoading}
