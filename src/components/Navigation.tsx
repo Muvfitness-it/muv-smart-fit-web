@@ -12,6 +12,7 @@ const Navigation = () => {
     { name: 'Chi Siamo', path: '/chi-siamo' },
     { name: 'Team', path: '/team' },
     { name: 'Servizi', path: '/servizi' },
+    { name: 'MUV Planner', path: '/muv-planner' },
     { name: 'Risultati', path: '/risultati' },
     { name: 'Contatti', path: '/contatti' },
   ];

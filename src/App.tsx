@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import ChiSiamo from "./pages/ChiSiamo";
 import Team from "./pages/Team";
 import Servizi from "./pages/Servizi";
+import MuvPlanner from "./pages/MuvPlanner";
 import Risultati from "./pages/Risultati";
 import Contatti from "./pages/Contatti";
 import Privacy from "./pages/Privacy";
@@ -28,6 +29,7 @@ const AppContent = () => {
           <Route path="/chi-siamo" element={<ChiSiamo />} />
           <Route path="/team" element={<Team />} />
           <Route path="/servizi" element={<Servizi />} />
+          <Route path="/muv-planner" element={<MuvPlanner />} />
           <Route path="/risultati" element={<Risultati />} />
           <Route path="/contatti" element={<Contatti />} />
           <Route path="/privacy" element={<Privacy />} />
