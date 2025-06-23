@@ -13,7 +13,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: "url('/images/professional-bg.jpg')"
+            backgroundImage: "url('/images/fitness-professional-bg.jpg')"
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/70 to-green-900/80"></div>
