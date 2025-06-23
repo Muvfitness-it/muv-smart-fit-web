@@ -8,11 +8,27 @@ export const useMealPlanGeneration = () => {
   const [error, setError] = useState('');
   const { callGeminiAPI } = useGeminiAPI();
 
-  const generateMealPlan = async (targetCalories: number): Promise<MealPlanData | null> => {
+  const generateMealPlan = async (
+    targetCalories: number, 
+    allergies: string[] = [], 
+    intolerances: string[] = []
+  ): Promise<MealPlanData | null> => {
     setIsLoading(true);
     setError('');
     
-    const prompt = `Agisci come un massimo esperto in nutrizione sportiva e clinica. Crea un piano alimentare giornaliero per ${targetCalories} kcal. Include 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena. Per ogni pasto fornisci: descrizione breve, lista alimenti con quantità, kcal approssimative.`;
+    let allergyRestrictions = '';
+    if (allergies.length > 0 || intolerances.length > 0) {
+      const restrictions = [];
+      if (allergies.length > 0) {
+        restrictions.push(`ALLERGIE DA EVITARE ASSOLUTAMENTE: ${allergies.join(', ')}`);
+      }
+      if (intolerances.length > 0) {
+        restrictions.push(`INTOLLERANZE DA CONSIDERARE: ${intolerances.join(', ')}`);
+      }
+      allergyRestrictions = ` IMPORTANTE: ${restrictions.join(' | ')}. Assicurati che NESSUN alimento nel piano contenga questi ingredienti o loro derivati.`;
+    }
+    
+    const prompt = `Agisci come un massimo esperto in nutrizione sportiva e clinica. Crea un piano alimentare giornaliero per ${targetCalories} kcal.${allergyRestrictions} Include 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena. Per ogni pasto fornisci: descrizione breve, lista alimenti con quantità, kcal approssimative.`;
     
     const mealObjectSchema = {
       type: "OBJECT",

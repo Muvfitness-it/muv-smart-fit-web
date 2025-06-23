@@ -6,6 +6,8 @@ export interface FormData {
   height: string;
   activityLevel: string;
   goal: string;
+  allergies: string[];
+  intolerances: string[];
 }
 
 export interface MealData {

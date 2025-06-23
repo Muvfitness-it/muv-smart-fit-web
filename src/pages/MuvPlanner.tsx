@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
@@ -16,7 +15,9 @@ const MuvPlanner = () => {
     weight: '70',
     height: '175',
     activityLevel: '1.375',
-    goal: 'maintain'
+    goal: 'maintain',
+    allergies: [],
+    intolerances: []
   });
   const [mealPlanData, setMealPlanData] = useState<MealPlanData | null>(null);
   const [shoppingListData, setShoppingListData] = useState<ShoppingListData | null>(null);
@@ -26,7 +27,7 @@ const MuvPlanner = () => {
   const { askCoach } = useCoachChat();
 
   const handleFormSubmit = async (targetCalories: number) => {
-    const result = await generateMealPlan(targetCalories);
+    const result = await generateMealPlan(targetCalories, formData.allergies, formData.intolerances);
     if (result) {
       setMealPlanData(result);
       setCurrentView('mealPlan');

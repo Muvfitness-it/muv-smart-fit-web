@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Target, ShoppingCart, FileDown } from 'lucide-react';
+import { Target, ShoppingCart, FileDown, AlertTriangle } from 'lucide-react';
 import CoachChat from './CoachChat';
 
 interface MealData {
@@ -23,6 +24,8 @@ interface MealPlanData {
 
 interface FormData {
   goal: string;
+  allergies: string[];
+  intolerances: string[];
 }
 
 interface MealPlanProps {
@@ -61,11 +64,28 @@ const MealPlan: React.FC<MealPlanProps> = ({
     cena: '🍽️'
   };
 
+  const formatAllergyLabel = (allergy: string) => {
+    const labels: Record<string, string> = {
+      glutine: 'Glutine',
+      lattosio: 'Lattosio',
+      pesce: 'Pesce',
+      uova: 'Uova',
+      frutta_secca: 'Frutta secca',
+      crostacei: 'Crostacei',
+      arachidi: 'Arachidi',
+      soia: 'Soia',
+      nichel: 'Nichel',
+      istamina: 'Istamina',
+      fruttosio: 'Fruttosio'
+    };
+    return labels[allergy] || allergy;
+  };
+
   return (
     <div className="bg-gray-900/50 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 text-white">
       <div id="meal-plan-export" className="p-6 md:p-8 bg-gray-900/0 rounded-t-2xl">
         <div className="text-center mb-8">
-          <p className="text-gray-300">Piano nutrizionale di esempio</p>
+          <p className="text-gray-300">Piano nutrizionale personalizzato</p>
           <h2 className="text-4xl md:text-5xl font-bold text-green-400 flex items-center justify-center space-x-3">
             <Target className="w-10 h-10" />
             <span>{calories} kcal</span>
@@ -73,7 +93,31 @@ const MealPlan: React.FC<MealPlanProps> = ({
           <p className="text-gray-400 mt-1">
             Obiettivo: {formData.goal === 'lose' ? 'Definizione' : formData.goal === 'gain' ? 'Aumento massa' : 'Mantenimento'}
           </p>
+          
+          {(formData.allergies.length > 0 || formData.intolerances.length > 0) && (
+            <div className="mt-4 bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+              <div className="flex items-center justify-center mb-2">
+                <AlertTriangle className="w-4 h-4 text-red-400 mr-2" />
+                <span className="text-sm font-medium text-red-300">Restrizioni Alimentari</span>
+              </div>
+              <div className="space-y-1 text-xs">
+                {formData.allergies.length > 0 && (
+                  <div>
+                    <span className="text-red-300 font-medium">Allergie: </span>
+                    <span className="text-red-200">{formData.allergies.map(formatAllergyLabel).join(', ')}</span>
+                  </div>
+                )}
+                {formData.intolerances.length > 0 && (
+                  <div>
+                    <span className="text-orange-300 font-medium">Intolleranze: </span>
+                    <span className="text-orange-200">{formData.intolerances.map(formatAllergyLabel).join(', ')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
+        
         <div className="space-y-6">
           {mealOrder.map(mealName => {
             const mealData = plan[mealName];
@@ -106,6 +150,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
           })}
         </div>
       </div>
+      
       <div className="p-6 md:p-8 pt-0">
         <div className="mt-8 pt-6 border-t border-white/10 space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -138,7 +183,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
           )}
         </div>
         <div className="mt-8 text-center text-xs text-gray-500">
-          <p>Questo piano alimentare è un esempio generato da un'IA e non sostituisce una consulenza medica personalizzata.</p>
+          <p>Questo piano alimentare è personalizzato in base alle tue restrizioni alimentari e non sostituisce una consulenza medica.</p>
         </div>
         <button
           onClick={onRecalculate}

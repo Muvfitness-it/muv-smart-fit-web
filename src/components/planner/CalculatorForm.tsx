@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { BrainCircuit, Loader2, AlertTriangle } from 'lucide-react';
+import AllergySelector from './AllergySelector';
+
 interface FormData {
   gender: string;
   age: string;
@@ -7,7 +10,10 @@ interface FormData {
   height: string;
   activityLevel: string;
   goal: string;
+  allergies: string[];
+  intolerances: string[];
 }
+
 interface CalculatorFormProps {
   formData: FormData;
   isLoading: boolean;
@@ -15,6 +21,7 @@ interface CalculatorFormProps {
   onFormDataChange: (data: FormData) => void;
   onSubmit: (targetCalories: number) => void;
 }
+
 const CalculatorForm: React.FC<CalculatorFormProps> = ({
   formData,
   isLoading,
@@ -40,15 +47,16 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
     }
     onSubmit(Math.round(finalCalories));
   };
-  const handleInputChange = (field: keyof FormData, value: string) => {
+
+  const handleInputChange = (field: keyof FormData, value: string | string[]) => {
     onFormDataChange({
       ...formData,
       [field]: value
     });
   };
-  return <div className="bg-white/10 backdrop-blur-lg p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20">
-      
 
+  return (
+    <div className="bg-white/10 backdrop-blur-lg p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -71,6 +79,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
             <input type="number" value={formData.height} onChange={e => handleInputChange('height', e.target.value)} className="w-full bg-gray-900/50 border border-gray-600 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-green-400 transition" min="100" max="250" />
           </div>
         </div>
+        
         <div>
           <label className="block text-sm font-medium text-gray-200 mb-2">Livello di attività fisica</label>
           <select value={formData.activityLevel} onChange={e => handleInputChange('activityLevel', e.target.value)} className="w-full bg-gray-900/50 border border-gray-600 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-green-400 transition">
@@ -81,6 +90,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
             <option value="1.9">Estremamente attivo</option>
           </select>
         </div>
+        
         <div>
           <label className="block text-sm font-medium text-gray-200 mb-2">Il tuo obiettivo</label>
           <select value={formData.goal} onChange={e => handleInputChange('goal', e.target.value)} className="w-full bg-gray-900/50 border border-gray-600 rounded-lg py-2 px-3 text-white focus:ring-2 focus:ring-green-400 transition">
@@ -89,6 +99,14 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
             <option value="gain">Aumento massa muscolare</option>
           </select>
         </div>
+
+        <AllergySelector
+          allergies={formData.allergies}
+          intolerances={formData.intolerances}
+          onAllergiesChange={(allergies) => handleInputChange('allergies', allergies)}
+          onIntolerancesChange={(intolerances) => handleInputChange('intolerances', intolerances)}
+        />
+
         <div>
           <button type="submit" disabled={isLoading} className="w-full mt-4 bg-green-500 hover:bg-green-600 text-gray-900 font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed">
             {isLoading ? <>
@@ -100,11 +118,14 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
               </>}
           </button>
         </div>
+        
         {error && <div className="bg-red-500/20 border border-red-500 text-red-300 px-4 py-3 rounded-lg flex items-start">
             <AlertTriangle className="inline-block mr-3 mt-1 h-5 w-5" />
             <span>{error}</span>
           </div>}
       </form>
-    </div>;
+    </div>
+  );
 };
+
 export default CalculatorForm;
