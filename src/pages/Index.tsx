@@ -2,28 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Dumbbell, Users, Target, Star } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-
 const Index = () => {
-  const { user } = useAuth();
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  const {
+    user
+  } = useAuth();
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-green-900" style={{ height: 'calc(100vh - 64px)' }}>
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-green-900">style={{ height: 'calc(100vh - 44px)' }}>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" style={{
-          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
-        }}></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/70 to-green-900/80"></div>
+        backgroundImage: "url('/images/fitness-professional-bg.jpg')"
+      }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br absolute via-blue-900/70 to-green-900/80 px-0 my-0 mx-0 py-0 rounded-none"></div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent my-0 mx-0">
             MUV FITNESS CENTER
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-300">
             Trasforma il tuo corpo, cambia la tua vita. Il tuo viaggio verso il benessere inizia qui.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {user ? (
-              <>
+            {user ? <>
                 <Link to="/muv-planner" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
                   Vai a MUV Planner
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -32,14 +30,12 @@ const Index = () => {
                   Il Mio Profilo
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
-              </>
-            ) : (
-              <>
+              </> : <>
+                
                 <Link to="/servizi" className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
                   Scopri i Servizi
                 </Link>
-              </>
-            )}
+              </>}
           </div>
         </div>
       </section>
@@ -124,8 +120,6 @@ const Index = () => {
             </Link>}
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
