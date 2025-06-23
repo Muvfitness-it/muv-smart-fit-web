@@ -37,7 +37,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img alt="MUV Fitness" className="h-10 w-auto object-none" src="https://www.muvfitness.it/wp-content/uploads/2022/10/muv_logo-1024x443.png" />
+              <img alt="MUV Fitness" src="https://www.muvfitness.it/wp-content/uploads/2022/10/muv_logo-1024x443.png" className="max-h-10 w-auto object-scale-down" />
             </Link>
           </div>
 
