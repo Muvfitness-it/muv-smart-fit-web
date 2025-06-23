@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -223,14 +224,16 @@ const Servizi = () => {
               <strong>Prenota una consulenza gratuita</strong> e scopriremo insieme il percorso perfetto per i tuoi obiettivi. 
               Zero impegno, massima chiarezza.
             </p>
-            <Link to="/contatti">
-              <Button 
-                className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center whitespace-nowrap"
-                aria-label="Prenota consulenza gratuita servizi fitness Legnago"
-              >
-                Prenota una Consulenza Gratuita
-              </Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link to="/contatti">
+                <Button 
+                  className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center whitespace-nowrap"
+                  aria-label="Prenota consulenza gratuita servizi fitness Legnago"
+                >
+                  Prenota una Consulenza Gratuita
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
