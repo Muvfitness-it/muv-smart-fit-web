@@ -46,6 +46,7 @@ export const useMealPlanStorage = () => {
               plan_type: 'weekly',
               week_day: index
             })
+            .select()
         );
 
         const results = await Promise.all(insertPromises);
@@ -58,13 +59,18 @@ export const useMealPlanStorage = () => {
 
         // Controlla che il primo risultato e i suoi dati esistano
         const firstResult = results[0];
-        if (!firstResult.data || firstResult.data.length === 0) {
+        if (!firstResult.data || !Array.isArray(firstResult.data) || firstResult.data.length === 0) {
+          throw new Error('Errore nel recuperare i dati del piano salvato');
+        }
+
+        const firstRecord = firstResult.data[0];
+        if (!firstRecord || !firstRecord.id) {
           throw new Error('Errore nel recuperare i dati del piano salvato');
         }
 
         // Ritorna il primo record come rappresentante del piano settimanale
         return {
-          id: firstResult.data[0].id,
+          id: firstRecord.id,
           user_id: user.id,
           calories: mealPlanData.calories,
           goal: formData.goal,
@@ -72,7 +78,7 @@ export const useMealPlanStorage = () => {
           intolerances: formData.intolerances,
           plan_data: mealPlanData.plan,
           plan_type: 'weekly',
-          created_at: firstResult.data[0].created_at
+          created_at: firstRecord.created_at
         } as SavedMealPlan;
       } else {
         // Piano giornaliero
