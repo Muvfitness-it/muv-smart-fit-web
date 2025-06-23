@@ -9,7 +9,7 @@ const Team = () => {
       name: "Bocchino Vincenzo",
       role: "Fondatore & CEO",
       image: "https://www.muvfitness.it/wp-content/uploads/2022/10/Vincenzo-1.png",
-      description: "Visionario del fitness innovativo, ha creato MUV Smart Fit per rivoluzionare l'approccio al benessere a Legnago. Esperto in gestione di centri fitness di eccellenza.",
+      description: "Visionario del fitness innovativo, ha creato Centro fitness MUV per rivoluzionare l'approccio al benessere a Legnago. Esperto in gestione di centri fitness di eccellenza.",
       specialization: "Strategia e Leadership"
     },
     {
@@ -65,7 +65,7 @@ const Team = () => {
                     <div className="w-32 h-40 sm:w-40 sm:h-48 md:w-44 md:h-52 lg:w-40 lg:h-48 xl:w-44 xl:h-52 overflow-hidden rounded-lg shadow-lg">
                       <img
                         src={member.image}
-                        alt={`${member.name} - ${member.role} presso MUV Smart Fit Legnago`}
+                        alt={`${member.name} - ${member.role} presso Centro fitness MUV Legnago`}
                         className="w-full h-full object-cover object-top"
                         loading="lazy"
                       />

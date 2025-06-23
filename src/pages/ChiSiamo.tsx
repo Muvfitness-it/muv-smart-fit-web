@@ -7,7 +7,7 @@ const ChiSiamo = () => {
   // Meta tag SEO ottimizzati per la pagina chi siamo
   useEffect(() => {
     // Title
-    document.title = "Chi Siamo – MUV | Centro Fitness Legnago";
+    document.title = "Chi Siamo – Centro fitness MUV | Centro Fitness Legnago";
     
     // Meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -31,7 +31,7 @@ const ChiSiamo = () => {
       metaAuthor.setAttribute('name', 'author');
       document.head.appendChild(metaAuthor);
     }
-    metaAuthor.setAttribute('content', 'MUV Smart Fit');
+    metaAuthor.setAttribute('content', 'Centro fitness MUV');
 
     // Canonical URL
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -44,15 +44,15 @@ const ChiSiamo = () => {
 
     // Open Graph tags
     const ogTags = [
-      { property: 'og:title', content: 'Chi Siamo – MUV Smart Fit Legnago' },
-      { property: 'og:description', content: 'Conosci il nostro team di personal trainer certificati e la nostra filosofia. Metodo scientifico, passione e professionalità al centro MUV Smart Fit.' },
+      { property: 'og:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
+      { property: 'og:description', content: 'Conosci il nostro team di personal trainer certificati e la nostra filosofia. Metodo scientifico, passione e professionalità al centro Centro fitness MUV.' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://muvsmartfit.it/chi-siamo' },
       { property: 'og:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       { property: 'og:locale', content: 'it_IT' },
-      { property: 'og:site_name', content: 'MUV Smart Fit' }
+      { property: 'og:site_name', content: 'Centro fitness MUV' }
     ];
 
     ogTags.forEach(tag => {
@@ -68,8 +68,8 @@ const ChiSiamo = () => {
     // Twitter Card tags
     const twitterTags = [
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Chi Siamo – MUV Legnago' },
-      { name: 'twitter:description', content: 'Scopri i professionisti di MUV: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
+      { name: 'twitter:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
+      { name: 'twitter:description', content: 'Scopri i professionisti di Centro fitness MUV: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
       { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' }
     ];
 
@@ -106,7 +106,7 @@ const ChiSiamo = () => {
             <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
               <img
                 src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center"
-                alt="Centro fitness MUV Smart Fit Legnago con tecnologie avanzate e ambiente esclusivo"
+                alt="Centro fitness Centro fitness MUV Legnago con tecnologie avanzate e ambiente esclusivo"
                 className="rounded-lg shadow-xl w-full h-64 sm:h-80 object-cover"
                 loading="lazy"
               />
@@ -114,7 +114,7 @@ const ChiSiamo = () => {
             
             <div className="order-1 lg:order-2 space-y-4 sm:space-y-6">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4">
-                Perché Abbiamo Creato MUV Smart Fit
+                Perché Abbiamo Creato Centro fitness MUV
               </h2>
               
               <p className="text-base sm:text-lg lg:text-xl leading-relaxed">
@@ -124,7 +124,7 @@ const ChiSiamo = () => {
               </p>
               
               <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-300">
-                <strong>MUV Smart Fit è il primo centro a Legnago</strong> che unisce tecnologie innovative 
+                <strong>Centro fitness MUV è il primo centro a Legnago</strong> che unisce tecnologie innovative 
                 (EMS, Pancafit, analisi corporea avanzata) con l'attenzione esclusiva del personal training 1-to-1. 
                 <span className="text-pink-400">Zero distrazioni, massimi risultati.</span>
               </p>
@@ -142,7 +142,7 @@ const ChiSiamo = () => {
               <Link to="/team">
                 <Button 
                   className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto font-semibold leading-tight"
-                  aria-label="Scopri il team di personal trainer specializzati MUV Smart Fit"
+                  aria-label="Scopri il team di personal trainer specializzati Centro fitness MUV"
                 >
                   <span className="block sm:hidden">Conosci gli Specialisti</span>
                   <span className="hidden sm:block">Conosci i Nostri Specialisti</span>

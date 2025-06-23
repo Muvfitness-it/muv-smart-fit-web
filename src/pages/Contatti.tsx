@@ -7,12 +7,12 @@ const Contatti = () => {
   // Meta tag SEO ottimizzati per la pagina contatti
   useEffect(() => {
     // Title
-    document.title = "Contatti MUV | Centro Fitness Legnago";
+    document.title = "Contatti Centro fitness MUV | Centro Fitness Legnago";
     
     // Meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Contatta MUV Smart Fit a Legnago: prenota la tua prova gratuita, scrivici o chiamaci. Siamo pronti ad aiutarti a raggiungere i tuoi obiettivi.');
+      metaDescription.setAttribute('content', 'Contatta Centro fitness MUV a Legnago: prenota la tua prova gratuita, scrivici o chiamaci. Siamo pronti ad aiutarti a raggiungere i tuoi obiettivi.');
     }
 
     // Meta keywords
@@ -22,7 +22,7 @@ const Contatti = () => {
       metaKeywords.setAttribute('name', 'keywords');
       document.head.appendChild(metaKeywords);
     }
-    metaKeywords.setAttribute('content', 'contatti MUV Smart Fit, contattaci fitness Legnago, prenota prova gratuita Legnago');
+    metaKeywords.setAttribute('content', 'contatti Centro fitness MUV, contattaci fitness Legnago, prenota prova gratuita Legnago');
 
     // Canonical URL
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -35,8 +35,8 @@ const Contatti = () => {
 
     // Open Graph tags
     const ogTags = [
-      { property: 'og:title', content: 'Contatti – MUV Smart Fit Legnago' },
-      { property: 'og:description', content: 'Hai domande? Prenota la tua prova gratuita o scrivici. Siamo a tua disposizione da MUV Smart Fit, Legnago.' },
+      { property: 'og:title', content: 'Contatti – Centro fitness MUV Legnago' },
+      { property: 'og:description', content: 'Hai domande? Prenota la tua prova gratuita o scrivici. Siamo a tua disposizione da Centro fitness MUV, Legnago.' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://muvsmartfit.it/contatti' },
       { property: 'og:image', content: 'https://muvsmartfit.it/og-image-contatti.jpg' },
@@ -58,8 +58,8 @@ const Contatti = () => {
     // Twitter Card tags
     const twitterTags = [
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Contatti – MUV Smart Fit Legnago' },
-      { name: 'twitter:description', content: 'Prenota la tua prova gratuita o scrivici subito a MUV Smart Fit Legnago. Siamo pronti ad aiutarti!' },
+      { name: 'twitter:title', content: 'Contatti – Centro fitness MUV Legnago' },
+      { name: 'twitter:description', content: 'Prenota la tua prova gratuita o scrivici subito a Centro fitness MUV Legnago. Siamo pronti ad aiutarti!' },
       { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-contatti.jpg' }
     ];
 

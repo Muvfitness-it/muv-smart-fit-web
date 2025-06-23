@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ const Risultati = () => {
       age: "42 anni",
       obiettivo: "Dimagrimento",
       risultato: "-15kg in 6 mesi",
-      quote: "Dopo 3 gravidanze pensavo fosse impossibile tornare in forma. Con il metodo EMS di MUV ho perso 15kg in 6 mesi, allenandomi solo 2 volte a settimana. Ora mi sento più bella che a 20 anni!",
+      quote: "Dopo 3 gravidanze pensavo fosse impossibile tornare in forma. Con il metodo EMS di Centro fitness MUV ho perso 15kg in 6 mesi, allenandomi solo 2 volte a settimana. Ora mi sento più bella che a 20 anni!",
       avatar: "MB",
       tempo: "6 mesi fa"
     },
@@ -46,7 +47,7 @@ const Risultati = () => {
       age: "47 anni",
       obiettivo: "Riabilitazione ginocchio",
       risultato: "Mobilità completa recuperata",
-      quote: "Dopo l'operazione al ginocchio i medici mi avevano dato poche speranze. Il team MUV mi ha fatto tornare a correre in 6 mesi. Ora faccio sport come una ragazzina.",
+      quote: "Dopo l'operazione al ginocchio i medici mi avevano dato poche speranze. Il team Centro fitness MUV mi ha fatto tornare a correre in 6 mesi. Ora faccio sport come una ragazzina.",
       avatar: "FG",
       tempo: "8 mesi fa"
     },
@@ -55,7 +56,7 @@ const Risultati = () => {
       age: "34 anni",
       obiettivo: "Preparazione atletica",
       risultato: "Record personale maratona",
-      quote: "Grazie all'allenamento scientifico di MUV ho migliorato il mio tempo in maratona di 12 minuti. Approccio completamente diverso dalle solite palestre. Qui si studia ogni dettaglio.",
+      quote: "Grazie all'allenamento scientifico di Centro fitness MUV ho migliorato il mio tempo in maratona di 12 minuti. Approccio completamente diverso dalle solite palestre. Qui si studia ogni dettaglio.",
       avatar: "MB",
       tempo: "2 mesi fa"
     }
@@ -72,7 +73,7 @@ const Risultati = () => {
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               <strong>Non promesse vuote, ma trasformazioni documentate.</strong> Queste sono le storie di persone come te 
-              che hanno scelto MUV Smart Fit per cambiare la loro vita. 
+              che hanno scelto Centro fitness MUV per cambiare la loro vita. 
               <span className="text-pink-400">Il prossimo potresti essere tu.</span>
             </p>
           </header>
@@ -123,14 +124,14 @@ const Risultati = () => {
             <p className="text-lg text-gray-300 mb-6">
               <strong>Queste persone hanno iniziato esattamente come te:</strong> piene di dubbi, con obiettivi che sembravano impossibili. 
               <span className="text-pink-400 block mt-2">
-                Oggi sono la prova vivente che il metodo MUV funziona davvero.
+                Oggi sono la prova vivente che il metodo Centro fitness MUV funziona davvero.
               </span>
             </p>
             <div className="flex justify-center">
               <Link to="/contatti">
                 <Button 
                   className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
-                  aria-label="Inizia la tua trasformazione con MUV Smart Fit Legnago"
+                  aria-label="Inizia la tua trasformazione con Centro fitness MUV Legnago"
                 >
                   Inizia la Tua Trasformazione
                 </Button>
