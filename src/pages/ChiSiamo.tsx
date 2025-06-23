@@ -7,12 +7,12 @@ const ChiSiamo = () => {
   // Meta tag SEO ottimizzati per la pagina chi siamo
   useEffect(() => {
     // Title
-    document.title = "Chi Siamo – MUV Smart Fit | Centro Fitness Legnago";
+    document.title = "Chi Siamo – MUV | Centro Fitness Legnago";
     
     // Meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Scopri il team di MUV Smart Fit a Legnago: personal trainer certificati, esperienza, passione e metodo scientifico. Vieni a conoscerci!');
+      metaDescription.setAttribute('content', 'Scopri il team del Centro Fitness MUV a Legnago: personal trainer certificati, esperienza, passione e metodo scientifico. Vieni a conoscerci!');
     }
 
     // Meta keywords
@@ -22,7 +22,7 @@ const ChiSiamo = () => {
       metaKeywords.setAttribute('name', 'keywords');
       document.head.appendChild(metaKeywords);
     }
-    metaKeywords.setAttribute('content', 'chi siamo MUV Smart Fit, team personal trainer Legnago, centro fitness Legnago, metodo scientifico, allenamento personalizzato, personal trainer Verona');
+    metaKeywords.setAttribute('content', 'chi siamo MUV, team personal trainer Legnago, centro fitness Legnago, metodo scientifico, allenamento personalizzato, personal trainer Verona');
 
     // Meta author
     let metaAuthor = document.querySelector('meta[name="author"]');
@@ -68,8 +68,8 @@ const ChiSiamo = () => {
     // Twitter Card tags
     const twitterTags = [
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Chi Siamo – MUV Smart Fit Legnago' },
-      { name: 'twitter:description', content: 'Scopri i professionisti di MUV Smart Fit: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
+      { name: 'twitter:title', content: 'Chi Siamo – MUV Legnago' },
+      { name: 'twitter:description', content: 'Scopri i professionisti di MUV: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
       { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' }
     ];
 
