@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Dumbbell, Users, Target, Star } from 'lucide-react';
@@ -17,8 +16,7 @@ const Index = () => {
             CENTRO FITNESS MUV
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-300">
-            <strong><span className="text-green-400 font-bold">Oltre 500 persone</span> a Legnago hanno già perso fino a 5 kg in 30 giorni 
-             .
+            <strong><span className="text-green-400 font-bold">Oltre 500 persone</span> a Legnago hanno già perso fino a 5 kg in 30 giorni.</strong>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/servizi" className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors flex items-center justify-center">
