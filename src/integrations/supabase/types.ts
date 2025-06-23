@@ -9,7 +9,119 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      body_measurements: {
+        Row: {
+          body_fat_percentage: number | null
+          created_at: string
+          height: number | null
+          id: string
+          measured_at: string
+          muscle_mass: number | null
+          notes: string | null
+          user_id: string
+          weight: number | null
+        }
+        Insert: {
+          body_fat_percentage?: number | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          measured_at?: string
+          muscle_mass?: number | null
+          notes?: string | null
+          user_id: string
+          weight?: number | null
+        }
+        Update: {
+          body_fat_percentage?: number | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          measured_at?: string
+          muscle_mass?: number | null
+          notes?: string | null
+          user_id?: string
+          weight?: number | null
+        }
+        Relationships: []
+      }
+      food_diary: {
+        Row: {
+          consumed: boolean
+          created_at: string
+          date: string
+          id: string
+          meal_plan_id: string | null
+          meal_type: string
+          notes: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          consumed?: boolean
+          created_at?: string
+          date?: string
+          id?: string
+          meal_plan_id?: string | null
+          meal_type: string
+          notes?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          consumed?: boolean
+          created_at?: string
+          date?: string
+          id?: string
+          meal_plan_id?: string | null
+          meal_type?: string
+          notes?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "food_diary_meal_plan_id_fkey"
+            columns: ["meal_plan_id"]
+            isOneToOne: false
+            referencedRelation: "meal_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meal_plans: {
+        Row: {
+          allergies: Json | null
+          calories: number
+          created_at: string
+          goal: string
+          id: string
+          intolerances: Json | null
+          plan_data: Json
+          user_id: string
+        }
+        Insert: {
+          allergies?: Json | null
+          calories: number
+          created_at?: string
+          goal: string
+          id?: string
+          intolerances?: Json | null
+          plan_data: Json
+          user_id: string
+        }
+        Update: {
+          allergies?: Json | null
+          calories?: number
+          created_at?: string
+          goal?: string
+          id?: string
+          intolerances?: Json | null
+          plan_data?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,7 +1,9 @@
+
 import React, { useState } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
 import ShoppingList from '../components/planner/ShoppingList';
+import TrackingDashboard from '../components/planner/TrackingDashboard';
 import { useMealPlanGeneration } from '../hooks/useMealPlanGeneration';
 import { useShoppingListGeneration } from '../hooks/useShoppingListGeneration';
 import { useCoachChat } from '../hooks/useCoachChat';
@@ -54,6 +56,10 @@ const MuvPlanner = () => {
     setShoppingListData(null);
   };
 
+  const handleViewTracking = () => {
+    setCurrentView('tracking');
+  };
+
   const renderCurrentView = () => {
     switch (currentView) {
       case 'calculator':
@@ -77,6 +83,7 @@ const MuvPlanner = () => {
             onExportPDF={exportToPDF}
             onRecalculate={handleRecalculate}
             onAskCoach={askCoach}
+            onViewTracking={handleViewTracking}
           />
         ) : null;
       case 'shoppingList':
@@ -88,6 +95,12 @@ const MuvPlanner = () => {
             onRecalculate={handleRecalculate}
           />
         ) : null;
+      case 'tracking':
+        return (
+          <TrackingDashboard
+            onBackToCalculator={handleRecalculate}
+          />
+        );
       default:
         return null;
     }

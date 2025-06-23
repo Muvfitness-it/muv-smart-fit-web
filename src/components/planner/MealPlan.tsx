@@ -1,6 +1,9 @@
 
 import React from 'react';
-import { Target, ShoppingCart, FileDown, AlertTriangle } from 'lucide-react';
+import { Target, ShoppingCart, FileDown, AlertTriangle, Save, BarChart3 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useMealPlanStorage } from '@/hooks/useMealPlanStorage';
+import { useToast } from '@/hooks/use-toast';
 import CoachChat from './CoachChat';
 
 interface MealData {
@@ -37,6 +40,7 @@ interface MealPlanProps {
   onExportPDF: (elementId: string, fileName: string) => void;
   onRecalculate: () => void;
   onAskCoach: (question: string) => Promise<string>;
+  onViewTracking: () => void;
 }
 
 const MealPlan: React.FC<MealPlanProps> = ({
@@ -47,9 +51,12 @@ const MealPlan: React.FC<MealPlanProps> = ({
   onGenerateShoppingList,
   onExportPDF,
   onRecalculate,
-  onAskCoach
+  onAskCoach,
+  onViewTracking
 }) => {
   const { calories, plan } = mealPlanData;
+  const { saveMealPlan, isLoading: isSaving } = useMealPlanStorage();
+  const { toast } = useToast();
   const mealOrder: (keyof MealPlan)[] = ['colazione', 'spuntino_mattutino', 'pranzo', 'spuntino_pomeridiano', 'cena'];
   
   const formatMealName = (name: string) => {
@@ -79,6 +86,22 @@ const MealPlan: React.FC<MealPlanProps> = ({
       fruttosio: 'Fruttosio'
     };
     return labels[allergy] || allergy;
+  };
+
+  const handleSavePlan = async () => {
+    const result = await saveMealPlan(mealPlanData, formData);
+    if (result) {
+      toast({
+        title: "Piano salvato!",
+        description: "Il piano alimentare è stato salvato nel tuo profilo.",
+      });
+    } else {
+      toast({
+        title: "Errore",
+        description: "Non è stato possibile salvare il piano. Riprova.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -153,22 +176,40 @@ const MealPlan: React.FC<MealPlanProps> = ({
       
       <div className="p-6 md:p-8 pt-0">
         <div className="mt-8 pt-6 border-t border-white/10 space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <button
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Button
+              onClick={handleSavePlan}
+              disabled={isSaving}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300"
+            >
+              <Save className="inline-block mr-2" />
+              {isSaving ? 'Salvando...' : 'Salva Piano'}
+            </Button>
+            
+            <Button
               onClick={onGenerateShoppingList}
               disabled={isShoppingListLoading}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300 disabled:bg-gray-500"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300"
             >
               <ShoppingCart className="inline-block mr-2" />
               {isShoppingListLoading ? 'Creando...' : 'Lista Spesa'}
-            </button>
-            <button
+            </Button>
+            
+            <Button
               onClick={() => onExportPDF('meal-plan-export', 'piano_alimentare_muv.pdf')}
               className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all"
             >
               <FileDown className="inline-block mr-2" />
               Esporta PDF
-            </button>
+            </Button>
+            
+            <Button
+              onClick={onViewTracking}
+              className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all"
+            >
+              <BarChart3 className="inline-block mr-2" />
+              Tracking
+            </Button>
           </div>
           
           <CoachChat 
@@ -185,12 +226,13 @@ const MealPlan: React.FC<MealPlanProps> = ({
         <div className="mt-8 text-center text-xs text-gray-500">
           <p>Questo piano alimentare è personalizzato in base alle tue restrizioni alimentari e non sostituisce una consulenza medica.</p>
         </div>
-        <button
+        <Button
           onClick={onRecalculate}
-          className="w-full mt-6 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-colors"
+          variant="outline"
+          className="w-full mt-6 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg border-gray-500"
         >
           Nuovo Calcolo
-        </button>
+        </Button>
       </div>
     </div>
   );
