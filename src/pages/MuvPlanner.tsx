@@ -118,7 +118,7 @@ const MuvPlanner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col items-center justify-center" 
+    <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col items-center justify-center pt-[var(--header-height)]" 
          style={{
            backgroundImage: 'radial-gradient(circle at top right, rgb(29, 78, 216, 0.15), transparent), radial-gradient(circle at bottom left, rgb(22, 163, 74, 0.15), transparent)'
          }}>
