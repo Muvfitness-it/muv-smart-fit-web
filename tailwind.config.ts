@@ -20,7 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
+				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+				heading: ['Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -66,17 +67,54 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// MUV Fitness Brand Colors
+				// MUV Brand Colors - Colori del logo ottimizzati
+				magenta: {
+					50: '#fdf2f8',
+					100: '#fce7f3',
+					200: '#fbcfe8',
+					300: '#f9a8d4',
+					400: '#f472b6',
+					500: '#ec4899',
+					600: '#C71585', // Primary Magenta del logo
+					700: '#A0136C',
+					800: '#831843',
+					900: '#6b1532'
+				},
+				viola: {
+					50: '#f3e8ff',
+					100: '#e9d5ff',
+					200: '#d6bcfa',
+					300: '#c084fc',
+					400: '#a855f7',
+					500: '#8A2BE2', // Secondary Viola del logo
+					600: '#7B27CC',
+					700: '#6d1fa7',
+					800: '#581c87',
+					900: '#4c1d95'
+				},
+				blu: {
+					50: '#eff6ff',
+					100: '#dbeafe',
+					200: '#bfdbfe',
+					300: '#93c5fd',
+					400: '#60a5fa',
+					500: '#1E90FF', // Tertiary Blu del logo
+					600: '#1A7FE6',
+					700: '#1d4ed8',
+					800: '#1e40af',
+					900: '#1e3a8a'
+				},
+				// Alias per retrocompatibilità
 				pink: {
-					600: '#C71585', // Primary Magenta
+					600: '#C71585',
 					700: '#A0136C'
 				},
 				purple: {
-					500: '#8A2BE2', // Secondary Viola
+					500: '#8A2BE2',
 					600: '#7B27CC'
 				},
 				blue: {
-					500: '#1E90FF', // Tertiary Blu
+					500: '#1E90FF',
 					600: '#1A7FE6'
 				}
 			},
@@ -111,13 +149,37 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(199, 21, 133, 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 40px rgba(199, 21, 133, 0.6)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
-				'bounce': 'bounce 2s infinite'
+				'bounce': 'bounce 2s infinite',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+			},
+			fontSize: {
+				'xs': ['0.75rem', { lineHeight: '1rem' }],
+				'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+				'base': ['1rem', { lineHeight: '1.5rem' }],
+				'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+				'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+				'2xl': ['1.5rem', { lineHeight: '2rem' }],
+				'3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+				'4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+				'5xl': ['3rem', { lineHeight: '1.1' }],
+				'6xl': ['3.75rem', { lineHeight: '1.1' }],
+				'7xl': ['4.5rem', { lineHeight: '1.1' }],
+				'8xl': ['6rem', { lineHeight: '1.1' }],
+				'9xl': ['8rem', { lineHeight: '1.1' }]
 			}
 		}
 	},
