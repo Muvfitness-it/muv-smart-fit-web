@@ -1,10 +1,9 @@
-
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
     <section 
-      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen" 
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen pt-[var(--header-height)]" 
     >
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" 
