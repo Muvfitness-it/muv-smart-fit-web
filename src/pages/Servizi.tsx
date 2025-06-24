@@ -50,7 +50,7 @@ const Servizi = () => {
       content: 'Servizi Fitness a Legnago | MUV Smart Fit'
     }, {
       property: 'og:description',
-      content: 'Personal trainer, EMS, Pilates Reformer, Pancafit e consulenza nutrizionale a Legnago. Prenota una prova gratuita!'
+      content: 'Personal trainer, EMS, Pilates Reformer, Pancafit e consulenza nutrizionale e Coaching psicologico a Legnago. Prenota una prova gratuita!'
     }, {
       property: 'og:type',
       content: 'website'
@@ -136,7 +136,7 @@ const Servizi = () => {
     benefits: "✓ Motivazione di gruppo ✓ Costi ridotti ✓ Attenzione personalizzata"
   }, {
     icon: <Target className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
-    title: "Consulenza Nutrizionale",
+    title: "Consulenza Nutrizionale e Coaching psicologico",
     subtitle: "Piani alimentari che funzionano davvero",
     description: "Strategie nutrizionali semplici e sostenibili. Non diete estreme, ma abitudini che mantieni per sempre. Focus su risultati a lungo termine.",
     benefits: "✓ Approccio sostenibile ✓ Educazione alimentare ✓ Supporto continuo"
