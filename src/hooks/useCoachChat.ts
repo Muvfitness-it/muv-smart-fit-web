@@ -1,18 +1,20 @@
 
 import { useGeminiAPI } from './useGeminiAPI';
-import { validateQuestion, sanitizeInput, sanitizeResponse } from '../utils/security';
 
 export const useCoachChat = () => {
   const { callGeminiAPI } = useGeminiAPI();
 
   const askCoach = async (question: string): Promise<string> => {
-    // Validate and sanitize input
-    const validation = validateQuestion(question);
-    if (!validation.isValid) {
-      throw new Error(validation.error);
+    // Basic validation
+    if (!question || question.trim().length === 0) {
+      throw new Error("La domanda non può essere vuota");
     }
     
-    const sanitizedQuestion = sanitizeInput(question, 500);
+    if (question.length > 500) {
+      throw new Error("La domanda è troppo lunga (massimo 500 caratteri)");
+    }
+    
+    const sanitizedQuestion = question.trim().substring(0, 500);
     const prompt = `Agisci come un coach esperto in nutrizione, allenamento e wellness. Rispondi alla seguente domanda in modo professionale e dettagliato: ${sanitizedQuestion}`;
     
     const payload = {
@@ -23,7 +25,7 @@ export const useCoachChat = () => {
       const result = await callGeminiAPI(payload);
       if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
         const response = result.candidates[0].content.parts[0].text;
-        return sanitizeResponse(response);
+        return response;
       } else {
         throw new Error("Risposta del coach non valida.");
       }
