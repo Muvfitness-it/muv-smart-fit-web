@@ -5,8 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { sanitizeInput, validateQuestion } from "@/utils/security";
-import GDPRConsent from "./GDPRConsent";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -15,75 +13,22 @@ const ContactForm = () => {
     messaggio: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [consents, setConsents] = useState({
-    privacy: false,
-    marketing: false
-  });
-  const [csrfToken, setCsrfToken] = useState(() => 
-    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-  );
-
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
-    // Sanitize input in real-time
-    const sanitizedValue = sanitizeInput(value, name === 'messaggio' ? 1000 : 255);
-    
     setFormData(prev => ({
       ...prev,
-      [name]: sanitizedValue
-    }));
-  };
-
-  const handleConsentChange = (type: 'privacy' | 'marketing', checked: boolean) => {
-    setConsents(prev => ({
-      ...prev,
-      [type]: checked
+      [name]: value
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Enhanced validation
-    if (!formData.nome.trim() || formData.nome.length < 2) {
+    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim()) {
       toast({
-        title: "Errore Validazione",
-        description: "Il nome deve essere di almeno 2 caratteri.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (!formData.email || !validateEmail(formData.email)) {
-      toast({
-        title: "Errore Validazione",
-        description: "Inserisci un indirizzo email valido.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Validate message using security utils
-    const messageValidation = validateQuestion(formData.messaggio);
-    if (!messageValidation.isValid) {
-      toast({
-        title: "Errore Validazione",
-        description: messageValidation.error,
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (!consents.privacy) {
-      toast({
-        title: "Consenso Privacy Richiesto",
-        description: "È necessario accettare l'informativa sulla privacy per procedere.",
+        title: "Errore",
+        description: "Tutti i campi sono obbligatori.",
         variant: "destructive"
       });
       return;
@@ -92,24 +37,17 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Use environment variable or default
-      const formspreeId = import.meta.env.VITE_FORMSPREE_ID || 'xdkowzpk';
-      
-      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      const response = await fetch('https://formspree.io/f/xdkowzpk', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: sanitizeInput(formData.nome, 100),
-          email: sanitizeInput(formData.email, 255),
-          message: sanitizeInput(formData.messaggio, 1000),
-          subject: `Richiesta Check-up Gratuito - ${sanitizeInput(formData.nome, 100)}`,
-          privacy_consent: consents.privacy,
-          marketing_consent: consents.marketing,
-          _replyto: sanitizeInput(formData.email, 255),
-          _csrf_token: csrfToken,
-          _timestamp: new Date().toISOString(),
+          name: formData.nome,
+          email: formData.email,
+          message: formData.messaggio,
+          subject: `Richiesta Check-up Gratuito - ${formData.nome}`,
+          _replyto: formData.email,
         }),
       });
 
@@ -119,11 +57,6 @@ const ContactForm = () => {
           description: "Ti contatteremo presto per il tuo check-up gratuito.",
         });
         setFormData({ nome: "", email: "", messaggio: "" });
-        setConsents({ privacy: false, marketing: false });
-        // Generate new CSRF token
-        setCsrfToken(
-          Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        );
       } else {
         throw new Error('Errore nell\'invio del messaggio');
       }
@@ -144,8 +77,6 @@ const ContactForm = () => {
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 text-white">Invia una Richiesta</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <input type="hidden" name="_csrf_token" value={csrfToken} />
-          
           <div>
             <label htmlFor="nome" className="block text-sm font-medium mb-2 text-gray-200">Nome *</label>
             <Input
@@ -157,7 +88,6 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="Il tuo nome"
               disabled={isSubmitting}
-              maxLength={100}
               required
             />
           </div>
@@ -173,7 +103,6 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="La tua email"
               disabled={isSubmitting}
-              maxLength={255}
               required
             />
           </div>
@@ -188,20 +117,13 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white min-h-32"
               placeholder="Raccontaci i tuoi obiettivi e come possiamo aiutarti..."
               disabled={isSubmitting}
-              maxLength={1000}
               required
             />
           </div>
-
-          <GDPRConsent 
-            consents={consents}
-            onConsentChange={handleConsentChange}
-            isSubmitting={isSubmitting}
-          />
           
           <Button 
             type="submit"
-            disabled={isSubmitting || !consents.privacy}
+            disabled={isSubmitting}
             className="w-full bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             {isSubmitting ? "Invio in corso..." : "Invia Richiesta"}
