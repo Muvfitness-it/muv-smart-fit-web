@@ -5,26 +5,26 @@
   text-align: left;
 }
 
-/* Ensure proper spacing for fixed navigation - increased values */
+/* Ensure proper spacing for fixed navigation - significantly increased values */
 main {
-  padding-top: 200px;
+  padding-top: 280px;
 }
 
 @media (min-width: 768px) {
   main {
-    padding-top: 220px;
+    padding-top: 300px;
   }
 }
 
 @media (min-width: 1024px) {
   main {
-    padding-top: 240px;
+    padding-top: 320px;
   }
 }
 
 @media (min-width: 1280px) {
   main {
-    padding-top: 260px;
+    padding-top: 340px;
   }
 }
 

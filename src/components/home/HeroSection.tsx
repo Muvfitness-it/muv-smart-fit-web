@@ -4,11 +4,7 @@ import { Link } from 'react-router-dom';
 const HeroSection = () => {
   return (
     <section 
-      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40" 
-      style={{
-        height: 'calc(100vh - 200px)',
-        marginTop: '200px'
-      }}
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen" 
     >
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" 
