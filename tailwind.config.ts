@@ -67,7 +67,11 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// MUV Brand Colors - Colori del logo ottimizzati
+				// MUV Brand Colors - Definizione pulita e consistente
+				'muv-magenta': '#C71585',
+				'muv-violet': '#8A2BE2', 
+				'muv-blue': '#1E90FF',
+				// Gradazioni per i colori MUV
 				magenta: {
 					50: '#fdf2f8',
 					100: '#fce7f3',
@@ -75,7 +79,7 @@ export default {
 					300: '#f9a8d4',
 					400: '#f472b6',
 					500: '#ec4899',
-					600: '#C71585', // Primary Magenta del logo
+					600: '#C71585',
 					700: '#A0136C',
 					800: '#831843',
 					900: '#6b1532'
@@ -86,7 +90,7 @@ export default {
 					200: '#d6bcfa',
 					300: '#c084fc',
 					400: '#a855f7',
-					500: '#8A2BE2', // Secondary Viola del logo
+					500: '#8A2BE2',
 					600: '#7B27CC',
 					700: '#6d1fa7',
 					800: '#581c87',
@@ -98,7 +102,7 @@ export default {
 					200: '#bfdbfe',
 					300: '#93c5fd',
 					400: '#60a5fa',
-					500: '#1E90FF', // Tertiary Blu del logo
+					500: '#1E90FF',
 					600: '#1A7FE6',
 					700: '#1d4ed8',
 					800: '#1e40af',
@@ -106,16 +110,40 @@ export default {
 				},
 				// Alias per retrocompatibilità
 				pink: {
+					50: '#fdf2f8',
+					100: '#fce7f3',
+					200: '#fbcfe8',
+					300: '#f9a8d4',
+					400: '#f472b6',
+					500: '#ec4899',
 					600: '#C71585',
-					700: '#A0136C'
+					700: '#A0136C',
+					800: '#831843',
+					900: '#6b1532'
 				},
 				purple: {
+					50: '#f3e8ff',
+					100: '#e9d5ff',
+					200: '#d6bcfa',
+					300: '#c084fc',
+					400: '#a855f7',
 					500: '#8A2BE2',
-					600: '#7B27CC'
+					600: '#7B27CC',
+					700: '#6d1fa7',
+					800: '#581c87',
+					900: '#4c1d95'
 				},
 				blue: {
+					50: '#eff6ff',
+					100: '#dbeafe',
+					200: '#bfdbfe',
+					300: '#93c5fd',
+					400: '#60a5fa',
 					500: '#1E90FF',
-					600: '#1A7FE6'
+					600: '#1A7FE6',
+					700: '#1d4ed8',
+					800: '#1e40af',
+					900: '#1e3a8a'
 				}
 			},
 			borderRadius: {
