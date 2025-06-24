@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { sanitizeInput, validateQuestion } from "@/utils/security";
 import GDPRConsent from "./GDPRConsent";
 
 const ContactForm = () => {
@@ -18,12 +19,24 @@ const ContactForm = () => {
     privacy: false,
     marketing: false
   });
+  const [csrfToken, setCsrfToken] = useState(() => 
+    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  );
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Sanitize input in real-time
+    const sanitizedValue = sanitizeInput(value, name === 'messaggio' ? 1000 : 255);
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
@@ -37,10 +50,31 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.nome || !formData.email || !formData.messaggio) {
+    // Enhanced validation
+    if (!formData.nome.trim() || formData.nome.length < 2) {
       toast({
-        title: "Attenzione",
-        description: "Tutti i campi sono obbligatori.",
+        title: "Errore Validazione",
+        description: "Il nome deve essere di almeno 2 caratteri.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.email || !validateEmail(formData.email)) {
+      toast({
+        title: "Errore Validazione",
+        description: "Inserisci un indirizzo email valido.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate message using security utils
+    const messageValidation = validateQuestion(formData.messaggio);
+    if (!messageValidation.isValid) {
+      toast({
+        title: "Errore Validazione",
+        description: messageValidation.error,
         variant: "destructive"
       });
       return;
@@ -58,20 +92,24 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Sostituisci 'YOUR_FORM_ID' con il tuo Form ID di Formspree
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      // Use environment variable or default
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID || 'xdkowzpk';
+      
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.nome,
-          email: formData.email,
-          message: formData.messaggio,
-          subject: `Richiesta Check-up Gratuito - ${formData.nome}`,
+          name: sanitizeInput(formData.nome, 100),
+          email: sanitizeInput(formData.email, 255),
+          message: sanitizeInput(formData.messaggio, 1000),
+          subject: `Richiesta Check-up Gratuito - ${sanitizeInput(formData.nome, 100)}`,
           privacy_consent: consents.privacy,
           marketing_consent: consents.marketing,
-          _replyto: formData.email,
+          _replyto: sanitizeInput(formData.email, 255),
+          _csrf_token: csrfToken,
+          _timestamp: new Date().toISOString(),
         }),
       });
 
@@ -82,11 +120,15 @@ const ContactForm = () => {
         });
         setFormData({ nome: "", email: "", messaggio: "" });
         setConsents({ privacy: false, marketing: false });
+        // Generate new CSRF token
+        setCsrfToken(
+          Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        );
       } else {
         throw new Error('Errore nell\'invio del messaggio');
       }
     } catch (error) {
-      console.error('Errore:', error);
+      console.error('Errore invio form:', error);
       toast({
         title: "Errore",
         description: "Si è verificato un errore nell'invio del messaggio. Riprova più tardi.",
@@ -102,6 +144,8 @@ const ContactForm = () => {
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 text-white">Invia una Richiesta</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
+          <input type="hidden" name="_csrf_token" value={csrfToken} />
+          
           <div>
             <label htmlFor="nome" className="block text-sm font-medium mb-2 text-gray-200">Nome *</label>
             <Input
@@ -113,6 +157,8 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="Il tuo nome"
               disabled={isSubmitting}
+              maxLength={100}
+              required
             />
           </div>
           
@@ -127,6 +173,8 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="La tua email"
               disabled={isSubmitting}
+              maxLength={255}
+              required
             />
           </div>
           
@@ -140,6 +188,8 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white min-h-32"
               placeholder="Raccontaci i tuoi obiettivi e come possiamo aiutarti..."
               disabled={isSubmitting}
+              maxLength={1000}
+              required
             />
           </div>
 
