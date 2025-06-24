@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const HeroSection = () => {
   return (
     <section 
-      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen -mt-[180px] sm:-mt-[200px] md:-mt-[220px] lg:-mt-[260px] xl:-mt-[280px] pt-[180px] sm:pt-[200px] md:pt-[220px] lg:pt-[260px] xl:pt-[280px]" 
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen" 
     >
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" 
