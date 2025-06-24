@@ -33,23 +33,18 @@ const Navigation = () => {
         : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 lg:py-6">
-          {/* Logo - Made significantly larger */}
-          <Link to="/" className="flex items-center space-x-3">
+        <div className="flex justify-between items-center py-3 lg:py-4">
+          {/* Logo only - centered and larger */}
+          <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" 
               alt="MUV logo" 
-              className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 xl:h-28 xl:w-28 object-contain"
+              className="h-12 w-12 sm:h-16 sm:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 object-contain"
             />
-            <span className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold">
-              <span className="bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                MUV
-              </span>
-            </span>
           </Link>
 
-          {/* Desktop Navigation - Better aligned */}
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          {/* Desktop Navigation - Better spacing and alignment */}
+          <div className="hidden lg:flex items-center justify-center flex-1 space-x-8 xl:space-x-10">
             {navItems.map((item) => (
               <Link
                 key={item.name}
