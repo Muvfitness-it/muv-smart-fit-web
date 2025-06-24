@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -51,6 +52,39 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Header height variables for responsive layout */
+    --header-height: 100px;
+  }
+
+  @media (max-width: 639px) {
+    :root {
+      --header-height: 88px;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    :root {
+      --header-height: 92px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+      --header-height: 96px;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    :root {
+      --header-height: 120px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    :root {
+      --header-height: 140px;
+    }
   }
 
   .dark {
