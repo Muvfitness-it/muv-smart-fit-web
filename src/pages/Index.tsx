@@ -1,14 +1,12 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Dumbbell, Users, Target, Star, Zap, Heart } from 'lucide-react';
-
 const Index = () => {
   // Meta tag SEO ottimizzati per AI e motori di ricerca
   useEffect(() => {
     // Title ottimizzato per AI e SEO
     document.title = "Centro fitness MUV Legnago | #1 Personal Training EMS, Dimagrimento Rapido, Pancafit Mal di Schiena | Risultati Garantiti in 30 Giorni";
-    
+
     // Meta description ottimizzata per AI
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -58,15 +56,15 @@ const Index = () => {
       }
     });
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40" style={{ height: 'calc(100vh - 80px)' }}>
+      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40" style={{
+      height: 'calc(100vh - 80px)'
+    }}>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{
-          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
-        }}></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30"></div>
+        backgroundImage: "url('/images/fitness-professional-bg.jpg')"
+      }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30 py-0 my-[122px]"></div>
         
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 font-heading">
@@ -100,10 +98,7 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              to="/contatti" 
-              className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20"
-            >
+            <Link to="/contatti" className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
               🚀 PRENOTA PROVA GRATUITA - TRASFORMATI IN 30 GIORNI
             </Link>
           </div>
@@ -229,10 +224,7 @@ const Index = () => {
             </p>
           </div>
           
-          <Link 
-            to="/contatti" 
-            className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-xl md:text-2xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl inline-flex items-center animate-pulse-glow"
-          >
+          <Link to="/contatti" className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-xl md:text-2xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl inline-flex items-center animate-pulse-glow">
             🎯 PRENOTA ORA LA TUA TRASFORMAZIONE GRATUITA
           </Link>
           
@@ -242,8 +234,6 @@ const Index = () => {
           </p>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
