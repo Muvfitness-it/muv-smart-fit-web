@@ -33,13 +33,13 @@ const Navigation = () => {
         : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-3 lg:py-4">
-          {/* Logo only - centered and larger */}
+        <div className="flex justify-between items-center py-4 lg:py-6">
+          {/* Logo - significantly larger */}
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" 
               alt="MUV logo" 
-              className="h-12 w-12 sm:h-16 sm:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 object-contain"
+              className="h-16 w-16 sm:h-20 sm:w-20 lg:h-28 lg:w-28 xl:h-32 xl:w-32 object-contain"
             />
           </Link>
 

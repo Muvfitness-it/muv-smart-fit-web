@@ -1,30 +1,37 @@
 
+
 #root {
   max-width: 100%;
   margin: 0 auto;
   text-align: left;
 }
 
-/* Ensure proper spacing for fixed navigation - significantly increased values */
+/* Ensure proper spacing for fixed navigation - adjusted for larger logo */
 main {
-  padding-top: 280px;
+  padding-top: 140px;
+}
+
+@media (min-width: 640px) {
+  main {
+    padding-top: 160px;
+  }
 }
 
 @media (min-width: 768px) {
   main {
-    padding-top: 300px;
+    padding-top: 180px;
   }
 }
 
 @media (min-width: 1024px) {
   main {
-    padding-top: 320px;
+    padding-top: 200px;
   }
 }
 
 @media (min-width: 1280px) {
   main {
-    padding-top: 340px;
+    padding-top: 220px;
   }
 }
 
@@ -63,3 +70,4 @@ main {
 .read-the-docs {
   color: #888;
 }
+
