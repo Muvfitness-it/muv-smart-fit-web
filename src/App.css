@@ -1,14 +1,8 @@
 
-
 #root {
   max-width: 100%;
   margin: 0 auto;
   text-align: left;
-}
-
-/* Ensure proper spacing for fixed navigation using CSS variables */
-main {
-  padding-top: var(--header-height);
 }
 
 .logo {
@@ -46,4 +40,3 @@ main {
 .read-the-docs {
   color: #888;
 }
-

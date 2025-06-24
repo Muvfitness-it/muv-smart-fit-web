@@ -27,7 +27,7 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-gray-900 text-white">
           <Navigation />
-          <main>
+          <main className="pt-[var(--header-height)]">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/chi-siamo" element={<ChiSiamo />} />
