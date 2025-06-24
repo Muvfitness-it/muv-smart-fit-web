@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Dumbbell, Users, Target, Star, Zap, Heart } from 'lucide-react';
+
 const Index = () => {
   // Meta tag SEO ottimizzati per AI e motori di ricerca
   useEffect(() => {
@@ -57,14 +58,15 @@ const Index = () => {
     });
   }, []);
   return <div className="min-h-screen bg-gray-900 text-white">
-      {/* Hero Section */}
+      {/* Hero Section - Fixed height calculation */}
       <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40" style={{
-      height: 'calc(100vh - 80px)'
+      height: 'calc(100vh - 200px)',
+      marginTop: '200px'
     }}>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{
         backgroundImage: "url('/images/fitness-professional-bg.jpg')"
       }}></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30 py-0 my-[122px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30"></div>
         
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 font-heading">
@@ -236,4 +238,5 @@ const Index = () => {
       </section>
     </div>;
 };
+
 export default Index;
