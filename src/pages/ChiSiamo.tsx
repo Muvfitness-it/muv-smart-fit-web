@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -40,15 +39,15 @@ const ChiSiamo = () => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', 'https://muvsmartfit.it/chi-siamo');
+    canonical.setAttribute('href', 'https://muvfitness.it/chi-siamo');
 
     // Open Graph tags
     const ogTags = [
       { property: 'og:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
       { property: 'og:description', content: 'Conosci il nostro team di personal trainer certificati e la nostra filosofia. Metodo scientifico, passione e professionalità al centro Centro fitness MUV.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://muvsmartfit.it/chi-siamo' },
-      { property: 'og:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' },
+      { property: 'og:url', content: 'https://muvfitness.it/chi-siamo' },
+      { property: 'og:image', content: 'https://muvfitness.it/og-image-chi-siamo.jpg' },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       { property: 'og:locale', content: 'it_IT' },
@@ -70,7 +69,7 @@ const ChiSiamo = () => {
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
       { name: 'twitter:description', content: 'Scopri i professionisti di Centro fitness MUV: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
-      { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-chi-siamo.jpg' }
+      { name: 'twitter:image', content: 'https://muvfitness.it/og-image-chi-siamo.jpg' }
     ];
 
     twitterTags.forEach(tag => {
@@ -85,6 +84,7 @@ const ChiSiamo = () => {
   }, []);
 
   return (
+    
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import ContactInfo from "../components/contact/ContactInfo";
@@ -31,15 +30,15 @@ const Contatti = () => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', 'https://muvsmartfit.it/contatti');
+    canonical.setAttribute('href', 'https://muvfitness.it/contatti');
 
     // Open Graph tags
     const ogTags = [
       { property: 'og:title', content: 'Contatti – Centro fitness MUV Legnago' },
       { property: 'og:description', content: 'Hai domande? Prenota la tua prova gratuita o scrivici. Siamo a tua disposizione da Centro fitness MUV, Legnago.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://muvsmartfit.it/contatti' },
-      { property: 'og:image', content: 'https://muvsmartfit.it/og-image-contatti.jpg' },
+      { property: 'og:url', content: 'https://muvfitness.it/contatti' },
+      { property: 'og:image', content: 'https://muvfitness.it/og-image-contatti.jpg' },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       { property: 'og:locale', content: 'it_IT' }
@@ -60,7 +59,7 @@ const Contatti = () => {
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Contatti – Centro fitness MUV Legnago' },
       { name: 'twitter:description', content: 'Prenota la tua prova gratuita o scrivici subito a Centro fitness MUV Legnago. Siamo pronti ad aiutarti!' },
-      { name: 'twitter:image', content: 'https://muvsmartfit.it/og-image-contatti.jpg' }
+      { name: 'twitter:image', content: 'https://muvfitness.it/og-image-contatti.jpg' }
     ];
 
     twitterTags.forEach(tag => {
