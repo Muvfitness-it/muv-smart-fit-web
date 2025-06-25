@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface AnalyticsData {
@@ -18,47 +18,66 @@ export const useAnalytics = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  const trackSiteVisit = async (pagePath: string) => {
+  const trackSiteVisit = useCallback(async (pagePath: string) => {
     try {
       const userAgent = navigator.userAgent;
       const referrer = document.referrer;
       
-      await supabase.from('site_visits').insert({
+      const { error } = await supabase.from('site_visits').insert({
         page_path: pagePath,
         user_agent: userAgent,
         referrer: referrer || null
       });
-      
-      // Update analytics summary
-      await supabase.rpc('update_analytics_summary');
-    } catch (error) {
-      console.error('Error tracking site visit:', error);
-    }
-  };
 
-  const trackPlannerUsage = async (actionType: string, calories?: number, planType?: string) => {
+      if (error) {
+        console.warn('Failed to track site visit:', error);
+        return;
+      }
+      
+      // Update analytics summary with better error handling
+      const { error: updateError } = await supabase.rpc('update_analytics_summary');
+      if (updateError) {
+        console.warn('Failed to update analytics summary:', updateError);
+      }
+    } catch (error) {
+      console.warn('Error tracking site visit:', error);
+    }
+  }, []);
+
+  const trackPlannerUsage = useCallback(async (actionType: string, calories?: number, planType?: string) => {
     try {
-      await supabase.from('planner_usage').insert({
+      const { error } = await supabase.from('planner_usage').insert({
         action_type: actionType,
         calories: calories || null,
         plan_type: planType || null
       });
-      
-      // Update analytics summary
-      await supabase.rpc('update_analytics_summary');
-    } catch (error) {
-      console.error('Error tracking planner usage:', error);
-    }
-  };
 
-  const fetchAnalytics = async () => {
+      if (error) {
+        console.warn('Failed to track planner usage:', error);
+        return;
+      }
+      
+      // Update analytics summary with better error handling
+      const { error: updateError } = await supabase.rpc('update_analytics_summary');
+      if (updateError) {
+        console.warn('Failed to update analytics summary:', updateError);
+      }
+    } catch (error) {
+      console.warn('Error tracking planner usage:', error);
+    }
+  }, []);
+
+  const fetchAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       const { data, error } = await supabase
         .from('analytics_summary')
         .select('metric_name, metric_value');
 
-      if (error) throw error;
+      if (error) {
+        console.warn('Error fetching analytics:', error);
+        return;
+      }
 
       const metrics = data?.reduce((acc, item) => {
         switch (item.metric_name) {
@@ -83,17 +102,19 @@ export const useAnalytics = () => {
         plannerUsageToday: 0
       });
 
-      setAnalyticsData(metrics);
+      if (metrics) {
+        setAnalyticsData(metrics);
+      }
     } catch (error) {
-      console.error('Error fetching analytics:', error);
+      console.warn('Error fetching analytics:', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAnalytics();
-  }, []);
+  }, [fetchAnalytics]);
 
   return {
     analyticsData,
