@@ -7,6 +7,7 @@ import TrackingDashboard from '../components/planner/TrackingDashboard';
 import { useMealPlanGeneration } from '../hooks/useMealPlanGeneration';
 import { useShoppingListGeneration } from '../hooks/useShoppingListGeneration';
 import { useCoachChat } from '../hooks/useCoachChat';
+import { useAnalytics } from '../hooks/useAnalytics';
 import { FormData, MealPlanData, ShoppingListData, ViewType } from '../types/planner';
 
 const MuvPlanner = () => {
@@ -28,6 +29,7 @@ const MuvPlanner = () => {
   const { generateMealPlan, isLoading: isMealPlanLoading, error: mealPlanError } = useMealPlanGeneration();
   const { generateShoppingList, isLoading: isShoppingListLoading, error: shoppingListError } = useShoppingListGeneration();
   const { askCoach } = useCoachChat();
+  const { trackPlannerUsage } = useAnalytics();
 
   const handleFormSubmit = async (targetCalories: number) => {
     const result = await generateMealPlan(
@@ -39,6 +41,9 @@ const MuvPlanner = () => {
     if (result) {
       setMealPlanData(result);
       setCurrentView('mealPlan');
+      
+      // Track planner usage
+      await trackPlannerUsage('meal_plan_generated', targetCalories, formData.planType);
     }
   };
 
@@ -49,7 +54,19 @@ const MuvPlanner = () => {
     if (result) {
       setShoppingListData(result);
       setCurrentView('shoppingList');
+      
+      // Track planner usage
+      await trackPlannerUsage('shopping_list_generated');
     }
+  };
+
+  const handleAskCoach = async (question: string) => {
+    const result = await askCoach(question);
+    
+    // Track planner usage
+    await trackPlannerUsage('coach_question_asked');
+    
+    return result;
   };
 
   const exportToPDF = (elementId: string, fileName: string) => {
@@ -93,7 +110,7 @@ const MuvPlanner = () => {
             onGenerateShoppingList={handleGenerateShoppingList}
             onExportPDF={exportToPDF}
             onRecalculate={handleRecalculate}
-            onAskCoach={askCoach}
+            onAskCoach={handleAskCoach}
             onViewTracking={handleViewTracking}
           />
         ) : null;

@@ -1,5 +1,10 @@
 
+import React from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
+
 const StatsSection = () => {
+  const { analyticsData } = useAnalytics();
+
   return (
     <section className="py-20 bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600">
       <div className="max-w-7xl mx-auto px-4">
@@ -22,12 +27,16 @@ const StatsSection = () => {
             <div className="text-lg md:text-xl font-bold">🎯 Tasso di Successo</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-yellow-300">-5kg</div>
-            <div className="text-lg md:text-xl font-bold">⚡ Media Perdita Peso (30gg)</div>
+            <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-yellow-300">
+              {analyticsData.totalSiteVisits > 0 ? `${Math.floor(analyticsData.totalSiteVisits / 100)}k+` : '1k+'}
+            </div>
+            <div className="text-lg md:text-xl font-bold">👥 Visite al Sito</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-yellow-300">5</div>
-            <div className="text-lg md:text-xl font-bold">👨‍⚕️ Specialisti Certificati</div>
+            <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-yellow-300">
+              {analyticsData.totalPlannerUsage > 0 ? `${analyticsData.totalPlannerUsage}+` : '100+'}
+            </div>
+            <div className="text-lg md:text-xl font-bold">🎯 Piani Generati</div>
           </div>
         </div>
       </div>

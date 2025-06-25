@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analytics_summary: {
+        Row: {
+          id: string
+          metric_name: string
+          metric_value: number
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          metric_name: string
+          metric_value?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          metric_name?: string
+          metric_value?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       body_measurements: {
         Row: {
           body_fat_percentage: number | null
@@ -131,6 +152,33 @@ export type Database = {
         }
         Relationships: []
       }
+      planner_usage: {
+        Row: {
+          action_type: string
+          calories: number | null
+          created_at: string
+          id: string
+          plan_type: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action_type: string
+          calories?: number | null
+          created_at?: string
+          id?: string
+          plan_type?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          calories?: number | null
+          created_at?: string
+          id?: string
+          plan_type?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           activity_level: string | null
@@ -185,12 +233,42 @@ export type Database = {
         }
         Relationships: []
       }
+      site_visits: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: string | null
+          page_path: string
+          referrer: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          page_path: string
+          referrer?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          page_path?: string
+          referrer?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_analytics_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
