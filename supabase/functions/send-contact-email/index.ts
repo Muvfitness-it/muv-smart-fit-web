@@ -63,9 +63,9 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Send email to business
+    // Send email to business - Updated to use verified domain
     const businessEmailResponse = await resend.emails.send({
-      from: "Centro MUV <onboarding@resend.dev>",
+      from: "Centro MUV <noreply@muvfitness.it>",
       to: ["info@muvfitness.it"],
       subject: `Nuova richiesta di contatto da ${name}`,
       html: `
@@ -81,9 +81,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Business email sent successfully:", businessEmailResponse);
 
-    // Send confirmation email to user
+    // Send confirmation email to user - Updated to use verified domain
     const userEmailResponse = await resend.emails.send({
-      from: "Centro MUV <onboarding@resend.dev>",
+      from: "Centro MUV <noreply@muvfitness.it>",
       to: [email],
       subject: "Conferma ricezione - Centro MUV",
       html: `
