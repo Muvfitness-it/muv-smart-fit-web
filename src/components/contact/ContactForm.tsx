@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -34,37 +35,53 @@ const ContactForm = () => {
       return;
     }
 
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Errore",
+        description: "Inserisci un indirizzo email valido.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xdkowzpk', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      console.log('Sending contact form data:', formData);
+
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
           name: formData.nome,
           email: formData.email,
           message: formData.messaggio,
-          subject: `Richiesta Check-up Gratuito - ${formData.nome}`,
-          _replyto: formData.email,
-        }),
+        }
       });
 
-      if (response.ok) {
-        toast({
-          title: "Messaggio inviato!",
-          description: "Ti contatteremo presto per il tuo check-up gratuito.",
-        });
-        setFormData({ nome: "", email: "", messaggio: "" });
-      } else {
-        throw new Error('Errore nell\'invio del messaggio');
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Errore nella comunicazione con il server');
       }
-    } catch (error) {
-      console.error('Errore invio form:', error);
+
+      if (data?.error) {
+        console.error('Edge function returned error:', data.error);
+        throw new Error(data.error);
+      }
+
+      console.log('Email sent successfully:', data);
+
+      toast({
+        title: "Messaggio inviato!",
+        description: "Ti contatteremo presto per il tuo check-up gratuito. Controlla anche la tua email per la conferma.",
+      });
+      
+      setFormData({ nome: "", email: "", messaggio: "" });
+    } catch (error: any) {
+      console.error('Error sending contact form:', error);
       toast({
         title: "Errore",
-        description: "Si è verificato un errore nell'invio del messaggio. Riprova più tardi.",
+        description: error.message || "Si è verificato un errore nell'invio del messaggio. Riprova più tardi.",
         variant: "destructive"
       });
     } finally {
