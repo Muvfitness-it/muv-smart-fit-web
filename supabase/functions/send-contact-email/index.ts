@@ -97,7 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
         <hr>
         <p style="font-size: 12px; color: #666;">
           Centro MUV - Legnago<br>
-          Tel: 045 7951 234<br>
+          Tel: 3513380770<br>
           Email: info@muvfitness.it
         </p>
       `,
