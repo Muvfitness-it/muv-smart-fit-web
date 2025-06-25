@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send email to business
     const businessEmailResponse = await resend.emails.send({
       from: "Centro MUV <onboarding@resend.dev>",
-      to: ["info@muvsmartfit.it"], // Replace with your actual business email
+      to: ["info@muvfitness.it"], // Updated email address
       subject: `Nuova richiesta di contatto da ${name}`,
       html: `
         <h2>Nuova richiesta di contatto</h2>
@@ -83,7 +83,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p style="font-size: 12px; color: #666;">
           Centro MUV - Legnago<br>
           Tel: 045 7951 234<br>
-          Email: info@muvsmartfit.it
+          Email: info@muvfitness.it
         </p>
       `,
     });
