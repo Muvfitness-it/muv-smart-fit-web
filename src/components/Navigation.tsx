@@ -23,6 +23,7 @@ const Navigation = () => {
     { name: "Team", path: "/team" },
     { name: "Risultati", path: "/risultati" },
     { name: "MUV Planner", path: "/muv-planner" },
+    { name: "Analytics", path: "/analytics" },
     { name: "Contatti", path: "/contatti" },
   ];
 

@@ -3,7 +3,6 @@ import React from 'react';
 import SEOHandler from '../components/home/SEOHandler';
 import HeroSection from '../components/home/HeroSection';
 import FeaturesSection from '../components/home/FeaturesSection';
-import StatsSection from '../components/home/StatsSection';
 import CTASection from '../components/home/CTASection';
 
 const Index = () => {
@@ -12,7 +11,6 @@ const Index = () => {
       <SEOHandler />
       <HeroSection />
       <FeaturesSection />
-      <StatsSection />
       <CTASection />
     </div>
   );
