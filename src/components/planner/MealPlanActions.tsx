@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { ShoppingCart, FileDown, Save, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 interface MealPlanActionsProps {
   onSavePlan: () => void;
   onGenerateShoppingList: () => void;
@@ -9,6 +11,7 @@ interface MealPlanActionsProps {
   isSaving: boolean;
   isShoppingListLoading: boolean;
 }
+
 const MealPlanActions: React.FC<MealPlanActionsProps> = ({
   onSavePlan,
   onGenerateShoppingList,
@@ -17,20 +20,28 @@ const MealPlanActions: React.FC<MealPlanActionsProps> = ({
   isSaving,
   isShoppingListLoading
 }) => {
-  return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-[25px]">
-      
-      
-      <Button onClick={onGenerateShoppingList} disabled={isShoppingListLoading} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-300">
-        <ShoppingCart className="inline-block mr-2" />
-        {isShoppingListLoading ? 'Creando...' : 'Lista Spesa'}
-      </Button>
-      
-      <Button onClick={onExportPDF} className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-all">
-        <FileDown className="inline-block mr-2" />
-        Esporta PDF
-      </Button>
-      
-      
-    </div>;
+  return (
+    <div className="flex justify-center items-center w-full px-6 py-4">
+      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-md">
+        <Button 
+          onClick={onGenerateShoppingList} 
+          disabled={isShoppingListLoading} 
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center transition-all duration-300 text-lg min-h-[60px] w-full"
+        >
+          <ShoppingCart className="mr-3 w-6 h-6" />
+          {isShoppingListLoading ? 'Creando...' : 'Lista Spesa'}
+        </Button>
+        
+        <Button 
+          onClick={onExportPDF} 
+          className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center transition-all text-lg min-h-[60px] w-full"
+        >
+          <FileDown className="mr-3 w-6 h-6" />
+          Esporta PDF
+        </Button>
+      </div>
+    </div>
+  );
 };
+
 export default MealPlanActions;

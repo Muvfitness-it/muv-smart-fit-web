@@ -55,56 +55,69 @@ export const useMealPlanGeneration = () => {
     let responseSchema: any;
 
     if (planType === 'weekly') {
-      prompt = `Agisci come un massimo esperto in nutrizione sportiva e clinica. Crea un piano alimentare SETTIMANALE completo per ${targetCalories} kcal al giorno.${allergyRestrictions} 
+      // Approccio semplificato per il piano settimanale - generiamo 7 piani giornalieri separati
+      const weekDays = ['lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica'];
+      const weeklyPlan: any = {};
+      
+      for (const day of weekDays) {
+        const dayPrompt = `Agisci come un massimo esperto in nutrizione sportiva e clinica. Crea un piano alimentare per ${day} con ${targetCalories} kcal totali.${allergyRestrictions} 
 
-Crea 7 giorni diversi (lunedi, martedi, mercoledi, giovedi, venerdi, sabato, domenica), ognuno con 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena. 
+Include 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena.
+Considera le preferenze italiane e la stagionalità.
+Per ogni pasto fornisci: descrizione breve, lista alimenti con quantità, kcal approssimative.
+IMPORTANTE: Rendi questo piano diverso e variegato rispetto ad altri giorni della settimana.`;
 
-IMPORTANTE: 
-- Ogni giorno deve essere DIVERSO dagli altri per varietà
-- Ogni giorno deve avere circa ${targetCalories} kcal totali
-- Considera le preferenze italiane e la stagionalità
-- Per ogni pasto fornisci: descrizione breve, lista alimenti con quantità, kcal approssimative`;
-
-      responseSchema = {
-        type: "OBJECT",
-        properties: {
-          lunedi: dayPlanSchema,
-          martedi: dayPlanSchema,
-          mercoledi: dayPlanSchema,
-          giovedi: dayPlanSchema,
-          venerdi: dayPlanSchema,
-          sabato: dayPlanSchema,
-          domenica: dayPlanSchema
-        },
-        required: ["lunedi", "martedi", "mercoledi", "giovedi", "venerdi", "sabato", "domenica"]
-      };
+        const dayPayload = {
+          contents: [{ role: "user", parts: [{ text: dayPrompt }] }],
+          generationConfig: {
+            responseMimeType: "application/json",
+            responseSchema: dayPlanSchema
+          }
+        };
+        
+        try {
+          const dayResult = await callGeminiAPI(dayPayload);
+          if (dayResult.candidates?.[0]?.content?.parts?.[0]?.text) {
+            weeklyPlan[day] = JSON.parse(dayResult.candidates[0].content.parts[0].text);
+          } else {
+            throw new Error(`Errore generazione piano per ${day}`);
+          }
+        } catch (err: any) {
+          setError(err.message || 'Errore generazione piano settimanale.');
+          setIsLoading(false);
+          return null;
+        }
+      }
+      
+      setIsLoading(false);
+      return { calories: targetCalories, plan: weeklyPlan, planType };
     } else {
       prompt = `Agisci come un massimo esperto in nutrizione sportiva e clinica. Crea un piano alimentare giornaliero per ${targetCalories} kcal.${allergyRestrictions} Include 5 pasti: colazione, spuntino_mattutino, pranzo, spuntino_pomeridiano, cena. Per ogni pasto fornisci: descrizione breve, lista alimenti con quantità, kcal approssimative.`;
       
       responseSchema = dayPlanSchema;
-    }
     
-    const payload = {
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema
+      const payload = {
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema
+        }
+      };
+      
+      try {
+        const result = await callGeminiAPI(payload);
+        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+          const plan = JSON.parse(result.candidates[0].content.parts[0].text);
+          return { calories: targetCalories, plan, planType };
+        } else {
+          throw new Error("Risposta IA non valida.");
+        }
+      } catch (err: any) {
+        setError(err.message || 'Errore generazione piano.');
+        return null;
+      } finally {
+        setIsLoading(false);
       }
-    };
-    
-    try {
-      const result = await callGeminiAPI(payload);
-      if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-        const plan = JSON.parse(result.candidates[0].content.parts[0].text);
-        return { calories: targetCalories, plan, planType };
-      } else {
-        throw new Error("Risposta IA non valida.");
-      }
-    } catch (err: any) {
-      setError(err.message || 'Errore generazione piano.');
-      return null;
-    } finally {
-      setIsLoading(false);
     }
   };
 
