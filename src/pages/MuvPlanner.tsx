@@ -4,6 +4,7 @@ import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
 import ShoppingList from '../components/planner/ShoppingList';
 import TrackingDashboard from '../components/planner/TrackingDashboard';
+import UsageCounter from '../components/planner/UsageCounter';
 import { useMealPlanGeneration } from '../hooks/useMealPlanGeneration';
 import { useShoppingListGeneration } from '../hooks/useShoppingListGeneration';
 import { useCoachChat } from '../hooks/useCoachChat';
@@ -147,6 +148,11 @@ const MuvPlanner = () => {
             <span className="text-white">Planner</span>
           </h1>
           <p className="text-gray-400 mt-2 text-lg">Il tuo assistente nutrizionale intelligente</p>
+          
+          {/* Contatore di utilizzo */}
+          <div className="mt-4">
+            <UsageCounter />
+          </div>
         </header>
 
         <main>
