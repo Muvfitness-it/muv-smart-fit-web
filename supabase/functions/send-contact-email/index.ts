@@ -4,10 +4,13 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Updated CORS headers to include your domain
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Max-Age": "86400",
 };
 
 interface ContactEmailRequest {
@@ -35,7 +38,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { name, email, message }: ContactEmailRequest = await req.json();
 
-    console.log("Received contact form submission:", { name, email });
+    console.log("Received contact form submission:", { name, email, domain: req.headers.get('origin') });
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -48,10 +51,22 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid email format" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     // Send email to business
     const businessEmailResponse = await resend.emails.send({
       from: "Centro MUV <onboarding@resend.dev>",
-      to: ["info@muvfitness.it"], // Updated email address
+      to: ["info@muvfitness.it"],
       subject: `Nuova richiesta di contatto da ${name}`,
       html: `
         <h2>Nuova richiesta di contatto</h2>

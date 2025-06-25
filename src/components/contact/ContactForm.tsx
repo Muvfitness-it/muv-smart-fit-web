@@ -50,6 +50,7 @@ const ContactForm = () => {
 
     try {
       console.log('Sending contact form data:', formData);
+      console.log('Current domain:', window.location.origin);
 
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
@@ -65,7 +66,7 @@ const ContactForm = () => {
       }
 
       if (data?.error) {
-        console.error('Edge function returned error:', data.error);
+        console.error('Edge function returned error:', data);
         throw new Error(data.error);
       }
 
@@ -79,9 +80,21 @@ const ContactForm = () => {
       setFormData({ nome: "", email: "", messaggio: "" });
     } catch (error: any) {
       console.error('Error sending contact form:', error);
+      
+      // Provide more specific error messages
+      let errorMessage = "Si è verificato un errore nell'invio del messaggio.";
+      
+      if (error.message?.includes('Failed to fetch')) {
+        errorMessage = "Problema di connessione. Verifica la tua connessione internet e riprova.";
+      } else if (error.message?.includes('CORS')) {
+        errorMessage = "Errore di configurazione del server. Contattaci direttamente.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Errore",
-        description: error.message || "Si è verificato un errore nell'invio del messaggio. Riprova più tardi.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
