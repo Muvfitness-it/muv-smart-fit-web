@@ -1,99 +1,103 @@
 
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Chi Siamo", path: "/chi-siamo" },
-    { name: "Servizi", path: "/servizi" },
-    { name: "Team", path: "/team" },
-    { name: "Risultati", path: "/risultati" },
-    { name: "MUV Planner", path: "/muv-planner" },
-    { name: "Contatti", path: "/contatti" },
+  const navigationItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Chi Siamo', href: '/chi-siamo' },
+    { name: 'Servizi', href: '/servizi' },
+    { name: 'Team', href: '/team' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Risultati', href: '/risultati' },
+    { name: 'Contatti', href: '/contatti' },
   ];
 
+  const isActive = (href: string) => {
+    if (href === '/' && location.pathname === '/') return true;
+    if (href !== '/' && location.pathname.startsWith(href)) return true;
+    return false;
+  };
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled || location.pathname !== '/' 
-        ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' 
-        : 'bg-transparent'
-    }`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 lg:py-6">
-          {/* Logo - made significantly larger */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" 
-              alt="MUV logo" 
-              className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain"
-            />
+    <nav className="bg-gray-900 text-white sticky top-0 z-50 border-b border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-10 h-10 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">M</span>
+            </div>
+            <span className="text-xl font-bold">MUV Fitness</span>
           </Link>
 
-          {/* Desktop Navigation - Better spacing and alignment */}
-          <div className="hidden lg:flex items-center justify-center flex-1 space-x-8 xl:space-x-10">
-            {navItems.map((item) => (
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navigationItems.map((item) => (
               <Link
                 key={item.name}
-                to={item.path}
-                className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-pink-600 ${
-                  location.pathname === item.path
-                    ? 'text-pink-600 border-b-2 border-pink-600 pb-1'
-                    : 'text-gray-200 hover:text-white'
+                to={item.href}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive(item.href)
+                    ? 'text-pink-400 bg-gray-800'
+                    : 'text-gray-300 hover:text-pink-400 hover:bg-gray-800'
                 }`}
               >
                 {item.name}
               </Link>
             ))}
+            <Link
+              to="/muv-planner"
+              className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              MUV Planner
+            </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-pink-600 transition-colors"
-              aria-label="Toggle menu"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="lg:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-700">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`block px-3 py-3 text-base font-medium transition-colors duration-300 ${
-                    location.pathname === item.path
-                      ? 'text-pink-600 bg-gray-800 rounded'
-                      : 'text-gray-200 hover:text-white hover:bg-gray-800 rounded'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800">
+            {navigationItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  isActive(item.href)
+                    ? 'text-pink-400 bg-gray-700'
+                    : 'text-gray-300 hover:text-pink-400 hover:bg-gray-700'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              to="/muv-planner"
+              className="block w-full text-center bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 mt-4"
+              onClick={() => setIsOpen(false)}
+            >
+              MUV Planner
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
