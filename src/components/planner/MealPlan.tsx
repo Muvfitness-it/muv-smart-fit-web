@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useMealPlanStorage } from '@/hooks/useMealPlanStorage';
@@ -22,6 +21,7 @@ interface MealPlanProps {
   formData: PlannerFormData;
   isShoppingListLoading: boolean;
   mealPlanError: string;
+  isExporting?: boolean;
   onGenerateShoppingList: () => void;
   onExportPDF: (elementId: string, fileName: string) => void;
   onRecalculate: () => void;
@@ -34,6 +34,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
   formData,
   isShoppingListLoading,
   mealPlanError,
+  isExporting = false,
   onGenerateShoppingList,
   onExportPDF,
   onRecalculate,
@@ -103,6 +104,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
             onViewTracking={onViewTracking}
             isSaving={isSaving}
             isShoppingListLoading={isShoppingListLoading}
+            isExporting={isExporting}
           />
           
           <CoachChat 

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import CalculatorForm from '../components/planner/CalculatorForm';
 import MealPlan from '../components/planner/MealPlan';
@@ -10,6 +9,8 @@ import { useMealPlanGeneration } from '../hooks/useMealPlanGeneration';
 import { useShoppingListGeneration } from '../hooks/useShoppingListGeneration';
 import { useCoachChat } from '../hooks/useCoachChat';
 import { useAnalytics } from '../hooks/useAnalytics';
+import { usePDFExport } from '../hooks/usePDFExport';
+import { useToast } from '../hooks/use-toast';
 import { FormData, MealPlanData, ShoppingListData, ViewType } from '../types/planner';
 
 const MuvPlanner = () => {
@@ -32,6 +33,8 @@ const MuvPlanner = () => {
   const { generateShoppingList, isLoading: isShoppingListLoading, error: shoppingListError } = useShoppingListGeneration();
   const { askCoach } = useCoachChat();
   const { trackPlannerUsage, trackSiteVisit } = useAnalytics();
+  const { exportToPDF, isExporting } = usePDFExport();
+  const { toast } = useToast();
 
   // Track page visit
   useEffect(() => {
@@ -89,10 +92,26 @@ const MuvPlanner = () => {
     return result;
   };
 
-  const exportToPDF = (elementId: string, fileName: string) => {
-    console.log(`Exporting ${elementId} as ${fileName}`);
-    // Track PDF export
-    trackPlannerUsage('pdf_exported');
+  const handleExportPDF = async (elementId: string, fileName: string) => {
+    try {
+      console.log(`Exporting ${elementId} as ${fileName}`);
+      await exportToPDF(elementId, fileName);
+      
+      // Track PDF export
+      await trackPlannerUsage('pdf_exported');
+      
+      toast({
+        title: "PDF Esportato!",
+        description: "Il file PDF è stato scaricato con successo.",
+      });
+    } catch (error) {
+      console.error('Errore export PDF:', error);
+      toast({
+        title: "Errore Export",
+        description: "Si è verificato un errore durante l'esportazione del PDF.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleRecalculate = () => {
@@ -130,7 +149,7 @@ const MuvPlanner = () => {
             isShoppingListLoading={isShoppingListLoading}
             mealPlanError={shoppingListError}
             onGenerateShoppingList={handleGenerateShoppingList}
-            onExportPDF={exportToPDF}
+            onExportPDF={handleExportPDF}
             onRecalculate={handleRecalculate}
             onAskCoach={handleAskCoach}
             onViewTracking={handleViewTracking}
@@ -141,7 +160,7 @@ const MuvPlanner = () => {
           <ShoppingList
             shoppingListData={shoppingListData}
             onBackToMealPlan={() => setCurrentView('mealPlan')}
-            onExportPDF={exportToPDF}
+            onExportPDF={handleExportPDF}
             onRecalculate={handleRecalculate}
           />
         ) : null;
