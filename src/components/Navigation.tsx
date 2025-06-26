@@ -36,7 +36,7 @@ const Navigation = () => {
   }];
   return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 lg:py-0">
+        <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
             <img src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" alt="MUV logo" className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain" />
