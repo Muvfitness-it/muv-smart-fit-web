@@ -49,7 +49,8 @@ export const useBlogPosts = (filters?: BlogFilters) => {
 
         setPosts(data?.map(post => ({
           ...post,
-          category: post.blog_categories
+          category: post.blog_categories,
+          status: post.status as 'draft' | 'published' | 'archived'
         })) || []);
         setTotalCount(count || 0);
       } catch (err) {
@@ -99,7 +100,8 @@ export const useBlogPost = (slug: string) => {
           setPost({
             ...data,
             category: data.blog_categories,
-            tags: data.blog_post_tags?.map((pt: any) => pt.blog_tags) || []
+            tags: data.blog_post_tags?.map((pt: any) => pt.blog_tags) || [],
+            status: data.status as 'draft' | 'published' | 'archived'
           });
         }
       } catch (err) {

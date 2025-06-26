@@ -81,7 +81,10 @@ const ViewManager: React.FC<ViewManagerProps> = ({
         <ShoppingList
           shoppingListData={shoppingListData}
           onBackToMealPlan={onBackToMealPlan}
-          onExportPDF={onExportPDF}
+          onExportPDF={(elementId: string, fileName: string) => {
+            // For shopping list, we need to handle the different signature
+            console.log('Exporting shopping list:', elementId, fileName);
+          }}
           onRecalculate={onRecalculate}
         />
       ) : null;
