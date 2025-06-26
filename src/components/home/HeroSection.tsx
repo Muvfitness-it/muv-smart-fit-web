@@ -1,84 +1,53 @@
-
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="flex flex-col items-center space-y-8">
-          {/* Logo and Brand */}
-          <div className="flex items-center space-x-4 mb-6">
-            <img 
-              src="/lovable-uploads/13084a47-9519-4cd3-9d9e-6c4e3f48e43a.png" 
-              alt="MUV Fitness Logo" 
-              className="h-16 w-auto"
-            />
-            <h1 className="text-4xl md:text-6xl font-extrabold">
-              <span className="text-white">MUV</span>
-              <span className="text-green-400"> Fitness</span>
-            </h1>
-          </div>
-
-          {/* Tagline */}
-          <p className="text-gray-300 text-lg md:text-xl max-w-3xl leading-relaxed">
-            Il tuo centro fitness all'avanguardia nel cuore di Brescia. 
-            Tecnologie innovative, professionalità e risultati garantiti.
+    <section 
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen" 
+    >
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" 
+        style={{
+          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
+        }}
+      ></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30"></div>
+      
+      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 font-heading">
+          <span className="bg-gradient-to-r from-magenta-400 via-viola-400 to-blu-400 bg-clip-text text-transparent drop-shadow-2xl">
+            CENTRO FITNESS MUV
+          </span>
+        </h1>
+        
+        <div className="mb-8 space-y-4">
+          <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
+            🏆 <span className="text-magenta-400 font-black">IL PRIMO</span> Centro Fitness 
+            <span className="text-viola-400 font-black"> SMART</span> di Legnago
           </p>
+          
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-200 font-semibold">
+            <strong className="text-magenta-400">✅ RISULTATI GARANTITI IN 30 GIORNI</strong> • 
+            <strong className="text-viola-400"> 500+ TRASFORMAZIONI DOCUMENTATE</strong> • 
+            <strong className="text-blu-400"> 95% TASSO DI SUCCESSO</strong>
+          </p>
+        </div>
 
-          {/* Main Heading */}
-          <h2 className="text-3xl md:text-5xl font-bold text-white max-w-4xl leading-tight">
-            Trasforma il tuo corpo con il 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400"> Personal Training</span> più efficace
+        <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border-2 border-magenta-600/50 mb-8 animate-pulse-glow">
+          <h2 className="text-2xl md:text-3xl font-bold text-magenta-400 mb-3">
+            🎯 METODOLOGIA SCIENTIFICA ESCLUSIVA
           </h2>
-
-          {/* Subheading */}
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl">
-            Raggiungi i tuoi obiettivi con allenamenti personalizzati, tecnologia EMS e Pancafit. 
-            <span className="text-green-400 font-semibold">Risultati visibili in sole 4 settimane.</span>
+          <p className="text-lg md:text-xl text-white font-semibold">
+            <span className="text-viola-400">💡 TECNOLOGIA EMS</span> + 
+            <span className="text-blu-400"> 🧬 PANCAFIT</span> + 
+            <span className="text-magenta-400"> 💪 PERSONAL TRAINING 1-to-1</span>
           </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-8">
-            <Link to="/contatti">
-              <Button size="lg" className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Prenota Consulenza Gratuita
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
-            >
-              <Play className="mr-2 h-5 w-5" />
-              Guarda i Risultati
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 pt-12 text-center">
-            <div>
-              <div className="text-3xl font-bold text-green-400">500+</div>
-              <div className="text-gray-400">Clienti Soddisfatti</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-pink-400">95%</div>
-              <div className="text-gray-400">Obiettivi Raggiunti</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-purple-400">4 Sett</div>
-              <div className="text-gray-400">Primi Risultati</div>
-            </div>
-          </div>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link to="/contatti" className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
+            🚀 PRENOTA PROVA GRATUITA - TRASFORMATI IN 30 GIORNI
+          </Link>
         </div>
       </div>
     </section>
