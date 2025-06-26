@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useMealPlanStorage } from '@/hooks/useMealPlanStorage';
@@ -23,7 +24,7 @@ interface MealPlanProps {
   mealPlanError: string;
   isExporting?: boolean;
   onGenerateShoppingList: () => void;
-  onExportPDF: (elementId: string, fileName: string) => void;
+  onExportPDF: (mealPlanData: MealPlanData, fileName: string) => Promise<void>;
   onRecalculate: () => void;
   onAskCoach: (question: string) => Promise<string>;
   onViewTracking: () => void;
@@ -64,7 +65,6 @@ const MealPlan: React.FC<MealPlanProps> = ({
   };
 
   const handleExportPDF = () => {
-    // Passa direttamente i dati del meal plan invece dell'elemento DOM
     onExportPDF(mealPlanData, `piano_alimentare_${planType}_muv.pdf`);
   };
 

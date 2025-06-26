@@ -17,7 +17,6 @@ export const usePDFExport = () => {
       // Colori
       const primaryColor = [34, 197, 94]; // green-500
       const textColor = [31, 41, 55]; // gray-800
-      const lightGray = [243, 244, 246]; // gray-100
       
       let yPosition = 20;
       
