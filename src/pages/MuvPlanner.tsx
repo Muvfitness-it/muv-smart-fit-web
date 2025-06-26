@@ -33,7 +33,7 @@ const MuvPlanner = () => {
   const { generateShoppingList, isLoading: isShoppingListLoading, error: shoppingListError } = useShoppingListGeneration();
   const { askCoach } = useCoachChat();
   const { trackPlannerUsage, trackSiteVisit } = useAnalytics();
-  const { exportToPDF, isExporting } = usePDFExport();
+  const { exportMealPlanToPDF, isExporting } = usePDFExport();
   const { toast } = useToast();
 
   // Track page visit
@@ -92,10 +92,10 @@ const MuvPlanner = () => {
     return result;
   };
 
-  const handleExportPDF = async (elementId: string, fileName: string) => {
+  const handleExportPDF = async (mealPlanData: MealPlanData, fileName: string) => {
     try {
-      console.log(`Exporting ${elementId} as ${fileName}`);
-      await exportToPDF(elementId, fileName);
+      console.log(`Exporting meal plan as ${fileName}`);
+      await exportMealPlanToPDF(mealPlanData, fileName);
       
       // Track PDF export
       await trackPlannerUsage('pdf_exported');

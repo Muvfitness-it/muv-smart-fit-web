@@ -63,6 +63,11 @@ const MealPlan: React.FC<MealPlanProps> = ({
     }
   };
 
+  const handleExportPDF = () => {
+    // Passa direttamente i dati del meal plan invece dell'elemento DOM
+    onExportPDF(mealPlanData, `piano_alimentare_${planType}_muv.pdf`);
+  };
+
   const renderMealPlan = () => {
     if (planType === 'weekly') {
       return <WeeklyMealPlanComponent weeklyPlan={plan as WeeklyMealPlan} />;
@@ -100,7 +105,7 @@ const MealPlan: React.FC<MealPlanProps> = ({
           <MealPlanActions
             onSavePlan={handleSavePlan}
             onGenerateShoppingList={onGenerateShoppingList}
-            onExportPDF={() => onExportPDF('meal-plan-export', `piano_alimentare_${planType}_muv.pdf`)}
+            onExportPDF={handleExportPDF}
             onViewTracking={onViewTracking}
             isSaving={isSaving}
             isShoppingListLoading={isShoppingListLoading}
