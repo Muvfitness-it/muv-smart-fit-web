@@ -1,22 +1,17 @@
-
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dumbbell, CheckCircle, Star, Users, Clock, Target } from "lucide-react";
-
 const PersonalTraining = () => {
   useEffect(() => {
     document.title = "Personal Training Legnago | Allenamento Personalizzato 1-to-1 – MUV Smart Fit";
-    
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Personal Training esclusivo a Legnago con risultati garantiti in 30 giorni. Allenamenti 1-to-1 personalizzati, ambiente riservato, zero code. Prenota la tua prova gratuita.');
     }
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-600/20 via-gray-900 to-purple-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -48,7 +43,7 @@ const PersonalTraining = () => {
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6 text-center">
                 <Target className="w-12 h-12 text-pink-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3">Programma Su Misura</h3>
+                <h3 className="text-xl font-bold mb-3 text-fuchsia-500">Programma Su Misura</h3>
                 <p className="text-gray-300">Ogni allenamento è progettato specificamente per i tuoi obiettivi, il tuo livello e le tue esigenze.</p>
               </CardContent>
             </Card>
@@ -56,7 +51,7 @@ const PersonalTraining = () => {
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6 text-center">
                 <Users className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3">Ambiente Esclusivo</h3>
+                <h3 className="text-xl font-bold mb-3 text-fuchsia-500">Ambiente Esclusivo</h3>
                 <p className="text-gray-300">Zero code, massima privacy. Ti alleni in un ambiente riservato con attenzione dedicata.</p>
               </CardContent>
             </Card>
@@ -64,7 +59,7 @@ const PersonalTraining = () => {
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6 text-center">
                 <Clock className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3">Risultati Rapidi</h3>
+                <h3 className="text-xl font-bold mb-3 text-fuchsia-500">Risultati Rapidi</h3>
                 <p className="text-gray-300">I nostri clienti perdono mediamente 3-5kg al mese e vedono risultati visibili in 2 settimane.</p>
               </CardContent>
             </Card>
@@ -124,8 +119,6 @@ const PersonalTraining = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default PersonalTraining;
