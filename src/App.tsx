@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +18,12 @@ import Contatti from "./pages/Contatti";
 import Privacy from "./pages/Privacy";
 import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
+import PersonalTraining from "./pages/servizi/PersonalTraining";
+import EMS from "./pages/servizi/EMS";
+import Pancafit from "./pages/servizi/Pancafit";
+import Pilates from "./pages/servizi/Pilates";
+import SmallGroup from "./pages/servizi/SmallGroup";
+import Nutrizione from "./pages/servizi/Nutrizione";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +39,12 @@ const AppContent = () => {
           <Route path="/" element={<Index />} />
           <Route path="/chi-siamo" element={<ChiSiamo />} />
           <Route path="/servizi" element={<Servizi />} />
+          <Route path="/servizi/personal-training" element={<PersonalTraining />} />
+          <Route path="/servizi/ems" element={<EMS />} />
+          <Route path="/servizi/pancafit" element={<Pancafit />} />
+          <Route path="/servizi/pilates" element={<Pilates />} />
+          <Route path="/servizi/small-group" element={<SmallGroup />} />
+          <Route path="/servizi/nutrizione" element={<Nutrizione />} />
           <Route path="/team" element={<Team />} />
           <Route path="/risultati" element={<Risultati />} />
           <Route path="/muv-planner" element={<MuvPlanner />} />

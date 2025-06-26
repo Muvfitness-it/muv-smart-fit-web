@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Dumbbell, Heart, Zap, Users, Target, Star } from "lucide-react";
+import { Sparkles, Dumbbell, Heart, Zap, Users, Target, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+
 const Servizi = () => {
   // Meta tag SEO ottimizzati per la pagina servizi
   useEffect(() => {
@@ -109,40 +108,46 @@ const Servizi = () => {
     title: "Personal Training Esclusivo",
     subtitle: "Risultati garantiti in 30 giorni",
     description: "Allenamenti 1-to-1 completamente personalizzati. Ambiente riservato, zero code, massima attenzione. I nostri clienti perdono mediamente 3-5kg al mese.",
-    benefits: "✓ Programma su misura ✓ Ambiente esclusivo ✓ Risultati misurabili"
+    benefits: "✓ Programma su misura ✓ Ambiente esclusivo ✓ Risultati misurabili",
+    link: "/servizi/personal-training"
   }, {
     icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona tecnologia EMS Legnago" />,
     title: "Tecnologia EMS Avanzata",
     subtitle: "20 minuti = 3 ore di palestra tradizionale",
-    description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale. L'allenamento EMS a Legnago ideale per chi ha poco tempo e vuole risultati rapidi.",
-    benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida"
+    description: "Elettrostimolazione muscolare che attiva oltre 300 muscoli contemporaneamente. Bruci il 30% di calorie in più rispetto all'allenamento tradizionale.",
+    benefits: "✓ Tempi ridotti ✓ Risultati amplificati ✓ Tonificazione rapida",
+    link: "/servizi/ems"
   }, {
     icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
     title: "Pancafit per Mal di Schiena",
     subtitle: "95% di successo nel eliminare i dolori",
     description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
-    benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo"
+    benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo",
+    link: "/servizi/pancafit"
   }, {
     icon: <Star className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona Pilates Reformer Legnago" />,
     title: "Pilates con Reformer",
     subtitle: "Metodo originale Pilates su macchinari professionali",
-    description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale. Ideale per donne che vogliono un corpo snello e tonico.",
-    benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta"
+    description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale.",
+    benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta",
+    link: "/servizi/pilates"
   }, {
     icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" aria-label="Icona small group training Legnago" />,
     title: "Small Group Training",
     subtitle: "Massimo 3 persone per sessione",
     description: "L'energia del gruppo con l'attenzione del personal trainer. Perfetto per chi vuole socializzare mantenendo la qualità dell'allenamento.",
-    benefits: "✓ Motivazione di gruppo ✓ Costi ridotti ✓ Attenzione personalizzata"
+    benefits: "✓ Motivazione di gruppo ✓ Costi ridotti ✓ Attenzione personalizzata",
+    link: "/servizi/small-group"
   }, {
     icon: <Target className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
     title: "Consulenza Nutrizionale e Coaching psicologico",
     subtitle: "Piani alimentari che funzionano davvero",
     description: "Strategie nutrizionali semplici e sostenibili. Non diete estreme, ma abitudini che mantieni per sempre. Focus su risultati a lungo termine.",
-    benefits: "✓ Approccio sostenibile ✓ Educazione alimentare ✓ Supporto continuo"
+    benefits: "✓ Approccio sostenibile ✓ Educazione alimentare ✓ Supporto continuo",
+    link: "/servizi/nutrizione"
   }];
-  return <div className="min-h-screen bg-gray-900 text-white">
-      {/* Services Section */}
+  return (
+    <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-12 sm:mb-16">
@@ -153,7 +158,7 @@ const Servizi = () => {
             <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
               <strong>Ogni servizio è progettato per un obiettivo specifico:</strong> dimagrimento rapido, 
               eliminazione del mal di schiena, tonificazione muscolare con Pilates reformer. 
-              <span className="text-pink-400"> Scegli quello che fa per te.</span>
+              <span className="text-pink-400"> Scegli quello che fa per te.</span>
             </p>
           </header>
           
@@ -162,17 +167,25 @@ const Servizi = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
-            {servizi.map((servizio, index) => <Card key={index} className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105">
-                <CardContent className="p-4 sm:p-6 text-center">
-                  <div className="flex justify-center">{servizio.icon}</div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">{servizio.title}</h3>
-                  <p className="text-pink-400 font-semibold mb-3 sm:mb-4 text-xs sm:text-sm">{servizio.subtitle}</p>
-                  <p className="text-gray-300 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">{servizio.description}</p>
-                  <div className="text-xs sm:text-sm text-green-400 font-medium">
-                    {servizio.benefits}
-                  </div>
-                </CardContent>
-              </Card>)}
+            {servizi.map((servizio, index) => (
+              <Link to={servizio.link} key={index} className="group">
+                <Card className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105 h-full">
+                  <CardContent className="p-4 sm:p-6 text-center h-full flex flex-col">
+                    <div className="flex justify-center">{servizio.icon}</div>
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">{servizio.title}</h3>
+                    <p className="text-pink-400 font-semibold mb-3 sm:mb-4 text-xs sm:text-sm">{servizio.subtitle}</p>
+                    <p className="text-gray-300 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base flex-grow">{servizio.description}</p>
+                    <div className="text-xs sm:text-sm text-green-400 font-medium mb-4">
+                      {servizio.benefits}
+                    </div>
+                    <div className="flex items-center justify-center text-pink-400 group-hover:text-white transition-colors">
+                      <span className="mr-2 font-semibold">Scopri di più</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
 
           {/* Pilates Section */}
@@ -240,6 +253,8 @@ const Servizi = () => {
           </div>
         </div>
       </section>
-    </div>;
+    </div>
+  );
 };
+
 export default Servizi;

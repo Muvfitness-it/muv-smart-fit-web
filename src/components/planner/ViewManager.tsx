@@ -45,6 +45,10 @@ const ViewManager: React.FC<ViewManagerProps> = ({
   onViewTracking,
   onBackToMealPlan
 }) => {
+  const handleExportPDF = (data: MealPlanData, fileName: string) => {
+    return onExportPDF(data, fileName);
+  };
+
   switch (currentView) {
     case 'calculator':
       return (
@@ -70,7 +74,7 @@ const ViewManager: React.FC<ViewManagerProps> = ({
           mealPlanError={shoppingListError}
           isExporting={isExporting}
           onGenerateShoppingList={onGenerateShoppingList}
-          onExportPDF={onExportPDF}
+          onExportPDF={handleExportPDF}
           onRecalculate={onRecalculate}
           onAskCoach={onAskCoach}
           onViewTracking={onViewTracking}
@@ -81,7 +85,7 @@ const ViewManager: React.FC<ViewManagerProps> = ({
         <ShoppingList
           shoppingListData={shoppingListData}
           onBackToMealPlan={onBackToMealPlan}
-          onExportPDF={onExportPDF}
+          onExportPDF={handleExportPDF}
           onRecalculate={onRecalculate}
         />
       ) : null;

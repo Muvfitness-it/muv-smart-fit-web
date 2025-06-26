@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
@@ -43,9 +43,6 @@ const Footer = () => {
               <Link to="/team" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Team
               </Link>
-              <Link to="/servizi" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
-                Servizi
-              </Link>
               <Link to="/risultati" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Risultati
               </Link>
@@ -54,6 +51,31 @@ const Footer = () => {
               </Link>
               <Link to="/contatti" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Contatti
+              </Link>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Servizi</h3>
+            <div className="space-y-2">
+              <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Personal Training
+              </Link>
+              <Link to="/servizi/ems" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Tecnologia EMS
+              </Link>
+              <Link to="/servizi/pancafit" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Pancafit
+              </Link>
+              <Link to="/servizi/pilates" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Pilates Reformer
+              </Link>
+              <Link to="/servizi/small-group" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Small Group
+              </Link>
+              <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                Consulenza Nutrizionale
               </Link>
             </div>
           </div>
