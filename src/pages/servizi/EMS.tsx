@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, CheckCircle, Clock, Muscle, TrendingUp } from "lucide-react";
+import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp } from "lucide-react";
 
 const EMS = () => {
   useEffect(() => {
@@ -73,7 +73,7 @@ const EMS = () => {
                   <p className="text-sm text-gray-300">Solo 20 minuti</p>
                 </div>
                 <div className="text-center">
-                  <Muscle className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                  <Dumbbell className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                   <p className="font-semibold">Più Muscoli</p>
                   <p className="text-sm text-gray-300">300+ attivati</p>
                 </div>
