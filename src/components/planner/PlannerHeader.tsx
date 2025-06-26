@@ -1,6 +1,5 @@
 
 import React from 'react';
-import UsageCounter from './UsageCounter';
 
 const PlannerHeader: React.FC = () => {
   return (
@@ -11,10 +10,6 @@ const PlannerHeader: React.FC = () => {
         <span className="text-white">Planner</span>
       </h1>
       <p className="text-gray-400 mt-2 text-lg">Il tuo assistente nutrizionale intelligente</p>
-      
-      <div className="mt-4">
-        <UsageCounter />
-      </div>
     </header>
   );
 };
