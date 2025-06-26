@@ -29,10 +29,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">M</span>
-            </div>
-            <span className="text-xl font-bold">MUV Fitness</span>
+            <img 
+              src="/lovable-uploads/13084a47-9519-4cd3-9d9e-6c4e3f48e43a.png" 
+              alt="MUV Fitness Logo" 
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
