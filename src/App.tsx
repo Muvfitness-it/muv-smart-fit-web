@@ -18,6 +18,7 @@ import BlogPost from "./pages/BlogPost";
 import Analytics from "./pages/Analytics";
 import Privacy from "./pages/Privacy";
 import CookiePolicy from "./pages/CookiePolicy";
+import CreateSamplePosts from "./pages/CreateSamplePosts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="/create-sample-posts" element={<CreateSamplePosts />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
