@@ -16,14 +16,22 @@ const BlogPost = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!slug) {
+      console.log('No slug provided');
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
 
     const fetchPost = async () => {
       try {
         setLoading(true);
+        console.log('Fetching post with slug:', slug);
         const fetchedPost = await getPostBySlug(slug);
+        console.log('Fetched post:', fetchedPost);
         
         if (!fetchedPost) {
+          console.log('Post not found');
           setNotFound(true);
           return;
         }
@@ -32,6 +40,7 @@ const BlogPost = () => {
         document.title = `${fetchedPost.title} - MUV Fitness Blog`;
         
         // Increment views
+        console.log('Incrementing views for post:', fetchedPost.id);
         await incrementViews(fetchedPost.id);
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -81,7 +90,22 @@ const BlogPost = () => {
   }
 
   if (notFound || !post) {
-    return <NotFound />;
+    return (
+      <div className="min-h-screen bg-gray-900 text-white pt-[var(--header-height)]">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Articolo non trovato</h1>
+            <p className="text-gray-400 mb-8">
+              L'articolo che stai cercando non esiste o non è stato ancora pubblicato.
+            </p>
+            <Link to="/blog" className="inline-flex items-center gap-2 text-pink-600 hover:text-pink-500">
+              <ArrowLeft className="h-4 w-4" />
+              Torna al Blog
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
