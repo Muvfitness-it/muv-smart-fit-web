@@ -85,10 +85,10 @@ const Servizi = () => {
       content: 'summary_large_image'
     }, {
       name: 'twitter:title',
-      content: 'Servizi Fitness a Legnago | MUV Smart Fit'
+      content: 'Servizi Fitness a Legnago | MUV Fitness'
     }, {
       name: 'twitter:description',
-      content: 'Scopri tutti i servizi fitness di MUV Smart Fit a Legnago e prenota la tua prova gratuita!'
+      content: 'Scopri tutti i servizi fitness di MUV a Legnago e prenota la tua prova gratuita!'
     }, {
       name: 'twitter:image',
       content: 'https://muvsmartfit.it/og-image-servizi.jpg'
@@ -119,7 +119,7 @@ const Servizi = () => {
     link: "/servizi/ems"
   }, {
     icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
-    title: "Pancafit per Mal di Schiena",
+    title: "Pancafit per il Mal di Schiena",
     subtitle: "95% di successo nel eliminare i dolori",
     description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
     benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo",
