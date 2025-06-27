@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -8,35 +7,35 @@ const Team = () => {
     {
       name: "Bocchino Vincenzo",
       role: "Fondatore & CEO",
-      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/Vincenzo-1.png",
+      image: "/lovable-uploads/470f5162-68c3-4cc1-8e0c-9402f101b13d.png",
       description: "Visionario del fitness innovativo, ha creato Centro fitness MUV per rivoluzionare l'approccio al benessere a Legnago. Esperto in gestione di centri fitness di eccellenza.",
       specialization: "Strategia e Leadership"
     },
     {
       name: "Christian Gioso",
       role: "Personal Trainer & Specialista Pancafit",
-      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/PT_1.png",
+      image: "/lovable-uploads/3a0cd379-08e3-4054-80ae-442258546626.png",
       description: "Laureato in Scienze Motorie, tecnico certificato Pancafit. Ha risolto problemi di mal di schiena a centinaia di clienti. Il 95% elimina il dolore entro 6 settimane.",
       specialization: "Postura e Riabilitazione"
     },
     {
       name: "Serena Portici",
       role: "Personal Trainer EMS & Wellness",
-      image: "https://www.muvfitness.it/wp-content/uploads/2024/07/sticker.webp",
+      image: "/lovable-uploads/db94c413-bfaa-4e3d-8dbd-08033a2a05f5.png",
       description: "Laureata in Scienze Motorie, specialista in tecnologia EMS e massaggi terapeutici. Esperta nel dimagrimento femminile e rimodellamento corporeo.",
       specialization: "Dimagrimento e Tonificazione"
     },
     {
       name: "Susanna Isante",
       role: "Consulente Benessere",
-      image: "https://www.muvfitness.it/wp-content/uploads/2022/10/PT_2.png",
+      image: "/lovable-uploads/15648e16-46c5-49f5-ac4b-1947ae3eed15.png",
       description: "Diplomata in estetica e benessere, con esperienza pluriennale in centri di dimagrimento. Specializzata nell'approccio olistico al benessere femminile.",
       specialization: "Benessere Olistico"
     },
     {
       name: "Mauro Petterle",
       role: "Personal Trainer Senior",
-      image: "https://www.muvfitness.it/wp-content/uploads/2024/03/mauro-petterle-5.png",
+      image: "/lovable-uploads/6a6b9274-a4a0-48ab-a512-74641f84240f.png",
       description: "20 anni di esperienza nel fitness. Specialista in allenamenti per potenziamento muscolare e dimagrimento. Ha trasformato il fisico di oltre 500 clienti.",
       specialization: "Forza e Massa Muscolare"
     }
