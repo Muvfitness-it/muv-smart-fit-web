@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Team = () => {
   const teamMembers = [
     {
-      name: "Bocchino Vincenzo",
+      name: "Vincenzo Bocchino",
       role: "Fondatore & CEO",
       image: "/lovable-uploads/470f5162-68c3-4cc1-8e0c-9402f101b13d.png",
       description: "Visionario del fitness innovativo, ha creato Centro fitness MUV per rivoluzionare l'approccio al benessere a Legnago. Esperto in gestione di centri fitness di eccellenza.",
