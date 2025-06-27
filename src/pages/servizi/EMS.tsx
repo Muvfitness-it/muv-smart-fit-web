@@ -1,22 +1,17 @@
-
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp } from "lucide-react";
-
 const EMS = () => {
   useEffect(() => {
     document.title = "Allenamento EMS Legnago | Elettrostimolazione Muscolare – MUV Smart Fit";
-    
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Allenamento EMS a Legnago: 20 minuti = 3 ore di palestra tradizionale. Elettrostimolazione muscolare avanzata per risultati rapidi. Prova gratuita disponibile.');
     }
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-600/20 via-gray-900 to-blue-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -128,7 +123,7 @@ const EMS = () => {
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold mb-3 text-yellow-400">Recupero Veloce</h3>
-                <p className="text-gray-300">Minor stress articolare e tempi di recupero ridotti tra le sessioni.</p>
+                <p className="text-gray-300">Minore stress articolare e tempi di recupero ridotti tra le sessioni.</p>
               </CardContent>
             </Card>
 
@@ -187,8 +182,6 @@ const EMS = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default EMS;
