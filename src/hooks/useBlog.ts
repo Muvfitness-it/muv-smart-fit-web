@@ -44,7 +44,6 @@ export const useBlog = () => {
   } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      console.log('Fetching published blog posts...');
       const { data, error } = await supabase
         .from('blog_posts')
         .select(`
@@ -64,7 +63,6 @@ export const useBlog = () => {
         throw error;
       }
 
-      console.log('Fetched posts:', data);
       return data as BlogPost[];
     }
   });
@@ -92,10 +90,7 @@ export const useBlog = () => {
 
   // Get single post by slug
   const getPostBySlug = async (slug: string) => {
-    console.log('Searching for post with slug:', slug);
-    
-    // First try to get published post
-    const { data: publishedPost, error: publishedError } = await supabase
+    const { data, error } = await supabase
       .from('blog_posts')
       .select(`
         *,
@@ -110,87 +105,40 @@ export const useBlog = () => {
       .eq('status', 'published')
       .maybeSingle();
 
-    if (publishedError) {
-      console.error('Error fetching published post:', publishedError);
+    if (error) {
+      console.error('Error fetching blog post:', error);
+      throw error;
     }
 
-    if (publishedPost) {
-      console.log('Found published post:', publishedPost);
-      return publishedPost as BlogPost;
-    }
-
-    // If no published post found, try to get any post (including drafts) for debugging
-    const { data: anyPost, error: anyError } = await supabase
-      .from('blog_posts')
-      .select(`
-        *,
-        blog_categories (
-          id,
-          name,
-          slug,
-          color
-        )
-      `)
-      .eq('slug', slug)
-      .maybeSingle();
-
-    if (anyError) {
-      console.error('Error fetching any post:', anyError);
-      throw anyError;
-    }
-
-    if (anyPost) {
-      console.log('Found post (but not published):', anyPost);
-      console.log('Post status:', anyPost.status);
-    } else {
-      console.log('No post found with slug:', slug);
-      
-      // Let's also check what posts exist in the database
-      const { data: allPosts, error: allPostsError } = await supabase
-        .from('blog_posts')
-        .select('slug, title, status')
-        .limit(10);
-      
-      if (!allPostsError) {
-        console.log('Available posts in database:', allPosts);
-      }
-    }
-
-    return null;
+    return data as BlogPost | null;
   };
 
   // Increment post views
   const incrementViews = async (postId: string) => {
-    try {
-      // First get the current views count
-      const { data: currentPost, error: fetchError } = await supabase
-        .from('blog_posts')
-        .select('views_count')
-        .eq('id', postId)
-        .single();
+    // First get the current views count
+    const { data: currentPost, error: fetchError } = await supabase
+      .from('blog_posts')
+      .select('views_count')
+      .eq('id', postId)
+      .single();
 
-      if (fetchError) {
-        console.error('Error fetching current views:', fetchError);
-        return;
-      }
+    if (fetchError) {
+      console.error('Error fetching current views:', fetchError);
+      return;
+    }
 
-      const currentViews = currentPost?.views_count || 0;
-      
-      // Update with incremented value
-      const { error } = await supabase
-        .from('blog_posts')
-        .update({ 
-          views_count: currentViews + 1
-        })
-        .eq('id', postId);
+    const currentViews = currentPost?.views_count || 0;
+    
+    // Update with incremented value
+    const { error } = await supabase
+      .from('blog_posts')
+      .update({ 
+        views_count: currentViews + 1
+      })
+      .eq('id', postId);
 
-      if (error) {
-        console.error('Error incrementing views:', error);
-      } else {
-        console.log('Views incremented successfully');
-      }
-    } catch (error) {
-      console.error('Unexpected error incrementing views:', error);
+    if (error) {
+      console.error('Error incrementing views:', error);
     }
   };
 
