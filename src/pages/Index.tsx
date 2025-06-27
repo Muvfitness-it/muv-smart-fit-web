@@ -4,6 +4,7 @@ import SEOHandler from '../components/home/SEOHandler';
 import HeroSection from '../components/home/HeroSection';
 import FeaturesSection from '../components/home/FeaturesSection';
 import StatsSection from '../components/home/StatsSection';
+import BlogSection from '../components/blog/BlogSection';
 import CTASection from '../components/home/CTASection';
 
 const Index = () => {
@@ -13,6 +14,7 @@ const Index = () => {
       <HeroSection />
       <FeaturesSection />
       <StatsSection />
+      <BlogSection />
       <CTASection />
     </div>
   );
