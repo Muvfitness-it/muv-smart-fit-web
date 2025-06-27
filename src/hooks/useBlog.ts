@@ -115,10 +115,25 @@ export const useBlog = () => {
 
   // Increment post views
   const incrementViews = async (postId: string) => {
+    // First get the current views count
+    const { data: currentPost, error: fetchError } = await supabase
+      .from('blog_posts')
+      .select('views_count')
+      .eq('id', postId)
+      .single();
+
+    if (fetchError) {
+      console.error('Error fetching current views:', fetchError);
+      return;
+    }
+
+    const currentViews = currentPost?.views_count || 0;
+    
+    // Update with incremented value
     const { error } = await supabase
       .from('blog_posts')
       .update({ 
-        views_count: supabase.raw('COALESCE(views_count, 0) + 1') 
+        views_count: currentViews + 1
       })
       .eq('id', postId);
 
