@@ -1,8 +1,10 @@
+
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, CheckCircle, User, Shield, Target } from "lucide-react";
+
 const Pancafit = () => {
   useEffect(() => {
     document.title = "Pancafit Legnago | Mal di Schiena, Postura, Riallineamento – MUV Smart Fit";
@@ -11,7 +13,9 @@ const Pancafit = () => {
       metaDescription.setAttribute('content', 'Pancafit a Legnago per eliminare il mal di schiena e migliorare la postura. 95% di successo nel risolvere dolori cronici. Prenota la tua sessione.');
     }
   }, []);
-  return <div className="min-h-screen bg-gray-900 text-white">
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600/20 via-gray-900 to-green-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -25,8 +29,9 @@ const Pancafit = () => {
             95% di successo nell'eliminare i dolori cronici e riallineare la postura
           </p>
           <Link to="/contatti">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-full">
-              Prenota Valutazione Posturale
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg rounded-full w-full sm:w-auto max-w-xs sm:max-w-none">
+              <span className="block sm:hidden">Prenota Valutazione</span>
+              <span className="hidden sm:block">Prenota Valutazione Posturale</span>
             </Button>
           </Link>
         </div>
@@ -156,13 +161,16 @@ const Pancafit = () => {
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Liberati dal Dolore</h3>
             <p className="text-lg text-gray-300 mb-6">Prenota una valutazione posturale gratuita e scopri come Pancafit può aiutarti</p>
             <Link to="/contatti">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-full">
-                Prenota Valutazione Gratuita
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg rounded-full w-full sm:w-auto max-w-xs sm:max-w-none">
+                <span className="block sm:hidden">Prenota Gratis</span>
+                <span className="hidden sm:block">Prenota Valutazione Gratuita</span>
               </Button>
             </Link>
           </div>
         </div>
       </section>
-    </div>;
+    </div>
+  );
 };
+
 export default Pancafit;
