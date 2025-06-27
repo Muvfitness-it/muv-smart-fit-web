@@ -1,22 +1,17 @@
-
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, CheckCircle, User, Shield, Target } from "lucide-react";
-
 const Pancafit = () => {
   useEffect(() => {
     document.title = "Pancafit Legnago | Mal di Schiena, Postura, Riallineamento – MUV Smart Fit";
-    
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 'Pancafit a Legnago per eliminare il mal di schiena e migliorare la postura. 95% di successo nel risolvere dolori cronici. Prenota la tua sessione.');
     }
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
+  return <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600/20 via-gray-900 to-green-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -45,10 +40,7 @@ const Pancafit = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Cos'è il <span className="text-blue-500">Metodo Pancafit</span>?
               </h2>
-              <p className="text-lg text-gray-300 mb-6">
-                Pancafit è un metodo di riequilibrio posturale che agisce sulle catene muscolari e fasciali 
-                per eliminare le tensioni e i compensi che causano dolore e limitazioni funzionali.
-              </p>
+              <p className="text-lg text-gray-300 mb-6">Pancafit è un metodo di riequilibrio posturale che agisce sulle catene muscolari e fasciali per eliminare le tensioni e gli scompensi che causano dolore e limitazioni funzionali.</p>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
@@ -171,8 +163,6 @@ const Pancafit = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Pancafit;
