@@ -38,8 +38,8 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white pt-[var(--header-height)]">
-      <div className="container mx-auto px-4 py-8">
-        <header className="mb-8 text-center">
+      <div className="container mx-auto px-4 py-12">
+        <header className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
             📝 Blog MUV Fitness
           </h1>
@@ -51,7 +51,10 @@ const Blog = () => {
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-2xl font-bold mb-4">Nessun articolo pubblicato</h2>
-            <p className="text-gray-400">Gli articoli del blog appariranno qui una volta pubblicati.</p>
+            <p className="text-gray-400 mb-4">Gli articoli del blog appariranno qui una volta pubblicati.</p>
+            <p className="text-sm text-gray-500">
+              Per pubblicare articoli, accedi al <Link to="/blog-admin" className="text-pink-600 hover:text-pink-500 underline">pannello di amministrazione</Link>.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
