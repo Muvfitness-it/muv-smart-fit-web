@@ -153,7 +153,7 @@ const Pancafit = () => {
 
           {/* CTA */}
           <div className="text-center bg-gradient-to-r from-blue-600/20 to-green-600/20 p-8 rounded-lg">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Libertati dal Dolore</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">Liberati dal Dolore</h3>
             <p className="text-lg text-gray-300 mb-6">Prenota una valutazione posturale gratuita e scopri come Pancafit può aiutarti</p>
             <Link to="/contatti">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-full">
