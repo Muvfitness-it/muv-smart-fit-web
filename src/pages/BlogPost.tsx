@@ -30,7 +30,7 @@ const BlogPost = () => {
     : `Leggi questo articolo sul blog di MUV Fitness per consigli su fitness, nutrizione e benessere.`;
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 pt-[var(--header-height)]">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />

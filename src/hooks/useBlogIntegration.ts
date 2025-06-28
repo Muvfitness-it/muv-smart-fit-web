@@ -32,58 +32,87 @@ export const useBlogIntegration = (currentSlug?: string) => {
 
     const { type, data } = event.data;
 
-    switch (type) {
-      case 'navigate':
-        console.log('useBlogIntegration: Navigate message received:', data);
-        if (data?.slug) {
-          navigate(`/blog/${data.slug}`);
-        } else {
-          navigate('/blog');
-        }
-        break;
-      
-      case 'loaded':
-        console.log('useBlogIntegration: Loaded message received:', data);
-        setIsLoading(false);
-        if (data?.title || data?.description) {
-          setArticleMeta({
-            title: data.title,
-            description: data.description
-          });
-        }
-        break;
-      
-      case 'error':
-        console.log('useBlogIntegration: Error message received:', data);
-        setIsLoading(false);
-        setError('Errore nel caricamento del blog');
-        break;
+    try {
+      switch (type) {
+        case 'navigate':
+          console.log('useBlogIntegration: Navigate message received:', data);
+          if (data?.slug) {
+            navigate(`/blog/${data.slug}`);
+          } else {
+            navigate('/blog');
+          }
+          setError(null); // Clear any previous errors
+          break;
+        
+        case 'loaded':
+          console.log('useBlogIntegration: Loaded message received:', data);
+          setIsLoading(false);
+          setError(null);
+          if (data?.title || data?.description) {
+            setArticleMeta({
+              title: data.title,
+              description: data.description
+            });
+          }
+          break;
+        
+        case 'error':
+          console.log('useBlogIntegration: Error message received:', data);
+          setIsLoading(false);
+          setError('Errore nel caricamento del blog');
+          break;
+
+        default:
+          console.log('useBlogIntegration: Unknown message type:', type);
+      }
+    } catch (err) {
+      console.error('useBlogIntegration: Error handling message:', err);
+      setError('Errore nella comunicazione con il blog');
+      setIsLoading(false);
     }
   }, [navigate]);
 
   useEffect(() => {
     console.log('useBlogIntegration: Setting up message listener for slug:', currentSlug);
+    
+    // Reset states when slug changes
+    setIsLoading(true);
+    setError(null);
+    
     window.addEventListener('message', handleMessage);
     
     // Timeout per gestire il caso in cui l'iframe non risponda
     const timeout = setTimeout(() => {
-      console.log('useBlogIntegration: Timeout reached, setting loading to false');
+      console.log('useBlogIntegration: Timeout reached, checking if still loading');
       setIsLoading(false);
-    }, 10000);
+      // Don't set error here, let the BlogFrame component handle timeout display
+    }, 12000);
+
+    // Test message sending capability
+    const testMessage = setTimeout(() => {
+      console.log('useBlogIntegration: Testing message sending capability');
+      sendMessageToIframe({ type: 'ping', timestamp: Date.now() });
+    }, 2000);
 
     return () => {
       window.removeEventListener('message', handleMessage);
       clearTimeout(timeout);
+      clearTimeout(testMessage);
     };
   }, [handleMessage, currentSlug]);
 
   const sendMessageToIframe = useCallback((message: any) => {
     console.log('useBlogIntegration: Sending message to iframe:', message);
-    const iframe = document.querySelector('#blog-iframe') as HTMLIFrameElement;
-    if (iframe?.contentWindow) {
-      iframe.contentWindow.postMessage(message, 'https://muvfit-blog-builder.lovable.app');
-    } else {
-      console.log('useBlogIntegration: Iframe not found or not ready');
+    try {
+      const iframe = document.querySelector('#blog-iframe') as HTMLIFrameElement;
+      if (iframe?.contentWindow) {
+        iframe.contentWindow.postMessage(message, 'https://muvfit-blog-builder.lovable.app');
+        console.log('useBlogIntegration: Message sent successfully');
+      } else {
+        console.log('useBlogIntegration: Iframe not found or not ready');
+      }
+    } catch (err) {
+      console.error('useBlogIntegration: Error sending message:', err);
     }
   }, []);
 

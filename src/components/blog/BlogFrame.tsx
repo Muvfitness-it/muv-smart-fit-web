@@ -1,6 +1,6 @@
 
-import React, { useEffect, useRef } from 'react';
-import { Loader2 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 interface BlogFrameProps {
   slug?: string;
@@ -16,38 +16,99 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
   onIframeLoad 
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
+    console.log('BlogFrame: Setting up iframe listeners');
+
     const handleLoad = () => {
-      console.log('BlogFrame: Iframe loaded');
-      // Invia il messaggio per navigare allo slug specifico se presente
+      console.log('BlogFrame: Iframe loaded successfully');
+      setIframeLoaded(true);
+      
+      // Test iframe accessibility
+      try {
+        console.log('BlogFrame: Testing iframe accessibility');
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+        if (iframeDoc) {
+          console.log('BlogFrame: Iframe is accessible, document loaded');
+        } else {
+          console.log('BlogFrame: Iframe document not accessible (likely CORS)');
+        }
+      } catch (e) {
+        console.log('BlogFrame: Cannot access iframe content due to CORS:', e);
+      }
+
+      // Send navigation message if slug is present
       if (slug) {
         console.log('BlogFrame: Sending navigate message for slug:', slug);
         setTimeout(() => {
-          iframe.contentWindow?.postMessage({
-            type: 'navigate_to_article',
-            slug: slug
-          }, 'https://muvfit-blog-builder.lovable.app');
+          try {
+            iframe.contentWindow?.postMessage({
+              type: 'navigate_to_article',
+              slug: slug
+            }, 'https://muvfit-blog-builder.lovable.app');
+            console.log('BlogFrame: Navigate message sent successfully');
+          } catch (e) {
+            console.error('BlogFrame: Error sending navigate message:', e);
+          }
         }, 1000);
       }
+      
       onIframeLoad?.();
     };
 
+    const handleError = () => {
+      console.error('BlogFrame: Iframe failed to load');
+      setIframeLoaded(false);
+    };
+
     iframe.addEventListener('load', handleLoad);
-    return () => iframe.removeEventListener('load', handleLoad);
-  }, [slug, onIframeLoad]);
+    iframe.addEventListener('error', handleError);
+
+    // Set a timeout to handle cases where iframe doesn't load
+    const timeout = setTimeout(() => {
+      if (!iframeLoaded) {
+        console.log('BlogFrame: Iframe loading timeout reached');
+        setLoadingTimeout(true);
+      }
+    }, 15000);
+
+    return () => {
+      iframe.removeEventListener('load', handleLoad);
+      iframe.removeEventListener('error', handleError);
+      clearTimeout(timeout);
+    };
+  }, [slug, onIframeLoad, iframeLoaded]);
+
+  const handleRetry = () => {
+    console.log('BlogFrame: Retrying iframe load');
+    setIframeLoaded(false);
+    setLoadingTimeout(false);
+    if (iframeRef.current) {
+      iframeRef.current.src = iframeRef.current.src;
+    }
+  };
 
   if (error) {
     return (
       <div className="flex items-center justify-center h-96 bg-gray-800 rounded-lg">
         <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
           <p className="text-red-400 mb-2">Errore nel caricamento del blog</p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm mb-4">
             Riprova più tardi o contattaci se il problema persiste
           </p>
+          <button
+            onClick={handleRetry}
+            className="flex items-center space-x-2 mx-auto px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-colors"
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span>Riprova</span>
+          </button>
         </div>
       </div>
     );
@@ -55,7 +116,7 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
 
   return (
     <div className="relative w-full bg-gray-800 rounded-lg overflow-hidden">
-      {isLoading && (
+      {(isLoading || !iframeLoaded) && !loadingTimeout && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
           <div className="flex items-center space-x-2">
             <Loader2 className="h-6 w-6 animate-spin text-pink-600" />
@@ -63,15 +124,41 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
           </div>
         </div>
       )}
+      
+      {loadingTimeout && !iframeLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
+          <div className="text-center">
+            <AlertCircle className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
+            <p className="text-yellow-400 mb-2">Il blog sta impiegando più tempo del solito</p>
+            <p className="text-gray-400 text-sm mb-4">
+              Controlla la tua connessione internet
+            </p>
+            <button
+              onClick={handleRetry}
+              className="flex items-center space-x-2 mx-auto px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-colors"
+            >
+              <RefreshCw className="h-4 w-4" />
+              <span>Riprova</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       <iframe
         ref={iframeRef}
         id="blog-iframe"
         src="https://muvfit-blog-builder.lovable.app/"
-        className="w-full h-screen border-0"
-        style={{ minHeight: '800px' }}
+        className="w-full border-0"
+        style={{ 
+          minHeight: '800px',
+          height: 'calc(100vh - 200px)',
+          opacity: iframeLoaded ? 1 : 0,
+          transition: 'opacity 0.3s ease-in-out'
+        }}
         title="MUV Fitness Blog"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation"
         loading="lazy"
+        allow="fullscreen"
       />
     </div>
   );
