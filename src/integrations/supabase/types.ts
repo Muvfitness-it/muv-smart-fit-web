@@ -464,6 +464,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      increment_article_views: {
+        Args: { article_id: string }
+        Returns: undefined
+      }
       update_analytics_summary: {
         Args: Record<PropertyKey, never>
         Returns: undefined

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,6 +23,8 @@ import Pancafit from "./pages/servizi/Pancafit";
 import Pilates from "./pages/servizi/Pilates";
 import SmallGroup from "./pages/servizi/SmallGroup";
 import Nutrizione from "./pages/servizi/Nutrizione";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,8 @@ const AppContent = () => {
           <Route path="/team" element={<Team />} />
           <Route path="/risultati" element={<Risultati />} />
           <Route path="/muv-planner" element={<MuvPlanner />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contatti" element={<Contatti />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
