@@ -22,8 +22,10 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
     if (!iframe) return;
 
     const handleLoad = () => {
+      console.log('BlogFrame: Iframe loaded');
       // Invia il messaggio per navigare allo slug specifico se presente
       if (slug) {
+        console.log('BlogFrame: Sending navigate message for slug:', slug);
         setTimeout(() => {
           iframe.contentWindow?.postMessage({
             type: 'navigate_to_article',
