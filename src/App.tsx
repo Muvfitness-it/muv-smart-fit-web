@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
+import { useEffect } from "react";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -31,6 +33,18 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
+  
+  // Preload blog domain for faster iframe loading
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'dns-prefetch';
+    link.href = 'https://muvfit-blog-builder.lovable.app';
+    document.head.appendChild(link);
+    
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
   
   return (
     <div className="min-h-screen bg-gray-900 text-white">

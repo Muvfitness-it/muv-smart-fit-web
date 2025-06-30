@@ -41,7 +41,7 @@ export const useBlogIntegration = (currentSlug?: string) => {
           } else {
             navigate('/blog');
           }
-          setError(null); // Clear any previous errors
+          setError(null);
           break;
         
         case 'loaded':
@@ -81,23 +81,15 @@ export const useBlogIntegration = (currentSlug?: string) => {
     
     window.addEventListener('message', handleMessage);
     
-    // Timeout per gestire il caso in cui l'iframe non risponda
+    // Timeout ridotto per feedback più veloce
     const timeout = setTimeout(() => {
       console.log('useBlogIntegration: Timeout reached, checking if still loading');
       setIsLoading(false);
-      // Don't set error here, let the BlogFrame component handle timeout display
-    }, 12000);
-
-    // Test message sending capability
-    const testMessage = setTimeout(() => {
-      console.log('useBlogIntegration: Testing message sending capability');
-      sendMessageToIframe({ type: 'ping', timestamp: Date.now() });
-    }, 2000);
+    }, 6000); // Ridotto da 12s a 6s
 
     return () => {
       window.removeEventListener('message', handleMessage);
       clearTimeout(timeout);
-      clearTimeout(testMessage);
     };
   }, [handleMessage, currentSlug]);
 

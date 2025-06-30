@@ -29,33 +29,18 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
       console.log('BlogFrame: Iframe loaded successfully');
       setIframeLoaded(true);
       
-      // Test iframe accessibility
-      try {
-        console.log('BlogFrame: Testing iframe accessibility');
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-        if (iframeDoc) {
-          console.log('BlogFrame: Iframe is accessible, document loaded');
-        } else {
-          console.log('BlogFrame: Iframe document not accessible (likely CORS)');
-        }
-      } catch (e) {
-        console.log('BlogFrame: Cannot access iframe content due to CORS:', e);
-      }
-
-      // Send navigation message if slug is present
+      // Send navigation message immediately when iframe loads
       if (slug) {
         console.log('BlogFrame: Sending navigate message for slug:', slug);
-        setTimeout(() => {
-          try {
-            iframe.contentWindow?.postMessage({
-              type: 'navigate_to_article',
-              slug: slug
-            }, 'https://muvfit-blog-builder.lovable.app');
-            console.log('BlogFrame: Navigate message sent successfully');
-          } catch (e) {
-            console.error('BlogFrame: Error sending navigate message:', e);
-          }
-        }, 1000);
+        try {
+          iframe.contentWindow?.postMessage({
+            type: 'navigate_to_article',
+            slug: slug
+          }, 'https://muvfit-blog-builder.lovable.app');
+          console.log('BlogFrame: Navigate message sent successfully');
+        } catch (e) {
+          console.error('BlogFrame: Error sending navigate message:', e);
+        }
       }
       
       onIframeLoad?.();
@@ -69,13 +54,13 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
     iframe.addEventListener('load', handleLoad);
     iframe.addEventListener('error', handleError);
 
-    // Set a timeout to handle cases where iframe doesn't load
+    // Reduced timeout for faster feedback
     const timeout = setTimeout(() => {
       if (!iframeLoaded) {
         console.log('BlogFrame: Iframe loading timeout reached');
         setLoadingTimeout(true);
       }
-    }, 15000);
+    }, 8000); // Ridotto da 15s a 8s
 
     return () => {
       iframe.removeEventListener('load', handleLoad);
@@ -89,7 +74,14 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
     setIframeLoaded(false);
     setLoadingTimeout(false);
     if (iframeRef.current) {
-      iframeRef.current.src = iframeRef.current.src;
+      // Force reload with cache busting
+      const currentSrc = iframeRef.current.src;
+      iframeRef.current.src = '';
+      setTimeout(() => {
+        if (iframeRef.current) {
+          iframeRef.current.src = currentSrc + '?t=' + Date.now();
+        }
+      }, 100);
     }
   };
 
@@ -153,11 +145,11 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
           minHeight: '800px',
           height: 'calc(100vh - 200px)',
           opacity: iframeLoaded ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out'
+          transition: 'opacity 0.2s ease-in-out' // Ridotta da 0.3s a 0.2s
         }}
         title="MUV Fitness Blog"
         sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation"
-        loading="lazy"
+        loading="eager" // Cambiato da lazy a eager per caricamento immediato
         allow="fullscreen"
       />
     </div>
