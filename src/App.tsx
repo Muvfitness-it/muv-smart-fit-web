@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,8 +22,11 @@ import PersonalTraining from "./pages/servizi/PersonalTraining";
 import EMS from "./pages/servizi/EMS";
 import Pancafit from "./pages/servizi/Pancafit";
 import Pilates from "./pages/servizi/Pilates";
+import HIIT from "./pages/servizi/HIIT";
 import SmallGroup from "./pages/servizi/SmallGroup";
 import Nutrizione from "./pages/servizi/Nutrizione";
+import Psicologo from "./pages/servizi/Psicologo";
+import Massoterapia from "./pages/servizi/Massoterapia";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 
@@ -58,8 +60,11 @@ const AppContent = () => {
           <Route path="/servizi/ems" element={<EMS />} />
           <Route path="/servizi/pancafit" element={<Pancafit />} />
           <Route path="/servizi/pilates" element={<Pilates />} />
+          <Route path="/servizi/hiit" element={<HIIT />} />
           <Route path="/servizi/small-group" element={<SmallGroup />} />
           <Route path="/servizi/nutrizione" element={<Nutrizione />} />
+          <Route path="/servizi/psicologo" element={<Psicologo />} />
+          <Route path="/servizi/massoterapia" element={<Massoterapia />} />
           <Route path="/team" element={<Team />} />
           <Route path="/risultati" element={<Risultati />} />
           <Route path="/muv-planner" element={<MuvPlanner />} />

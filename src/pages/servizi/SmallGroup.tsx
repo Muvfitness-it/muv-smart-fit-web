@@ -3,86 +3,86 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, CheckCircle, Heart, Zap, Target } from "lucide-react";
+import { Users, CheckCircle, Heart, Zap, Target, TrendingUp } from "lucide-react";
 
 const SmallGroup = () => {
   useEffect(() => {
-    document.title = "Small Group Training Legnago | Allenamento di Gruppo Esclusivo – MUV Smart Fit";
+    document.title = "HIIT Small Group Legnago | Allenamento di Gruppo ad Alta Intensità – MUV Smart Fit";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Small Group Training a Legnago: massimo 3 persone per sessione. L\'energia del gruppo con l\'attenzione del personal trainer. Prenota la tua sessione.');
+      metaDescription.setAttribute('content', 'HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l\'energia del gruppo. Cardio, forza e divertimento.');
     }
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-600/20 via-gray-900 to-orange-600/20">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600/20 via-gray-900 to-red-600/20">
         <div className="container mx-auto max-w-6xl text-center">
           <div className="flex justify-center mb-6">
-            <Users className="w-16 h-16 text-pink-600" />
+            <Users className="w-16 h-16 text-orange-600" />
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            Small Group <span className="text-pink-600">Training</span>
+            HIIT <span className="text-orange-600">Small Group</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            L'energia del gruppo con l'attenzione del personal trainer - Massimo 3 persone per sessione
+            Alta intensità in piccoli gruppi - Massimo 3 persone per l'energia perfetta
           </p>
           <Link to="/contatti">
-            <Button className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full">
-              Prenota Sessione di Prova
+            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 text-lg rounded-full">
+              Unisciti al Gruppo HIIT
             </Button>
           </Link>
         </div>
       </section>
 
-      {/* What is Small Group */}
+      {/* What is HIIT Small Group */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Il Meglio di <span className="text-pink-600">Due Mondi</span>
+                HIIT con l'<span className="text-orange-600">Energia del Gruppo</span>
               </h2>
               <p className="text-lg text-gray-300 mb-6">
-                Il Small Group Training combina l'energia motivante dell'allenamento di gruppo con l'attenzione 
-                personalizzata del personal training. Con massimo 3 persone per sessione, ogni partecipante 
-                riceve un programma adattato alle proprie esigenze.
+                Il HIIT Small Group combina l'intensità dell'allenamento ad alta intensità con la motivazione 
+                del gruppo. Con massimo 3 persone per sessione, ogni partecipante riceve attenzione personalizzata 
+                mentre si allena in un ambiente energico e stimolante.
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Motivazione e supporto del gruppo</span>
+                  <span>Allenamento HIIT personalizzato</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Attenzione personalizzata per ognuno</span>
+                  <span>Motivazione extra del gruppo</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Costi contenuti rispetto al personal training</span>
+                  <span>Risultati accelerati</span>
                 </li>
               </ul>
             </div>
-            <div className="bg-gradient-to-br from-pink-600/20 to-orange-600/20 p-8 rounded-lg">
+            <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 p-8 rounded-lg">
               <h3 className="text-2xl font-bold text-center mb-6">Vantaggi Esclusivi</h3>
               <div className="space-y-4">
                 <div className="flex items-center">
-                  <Heart className="w-6 h-6 text-pink-500 mr-3" />
-                  <span>Ambiente sociale e divertente</span>
+                  <Zap className="w-6 h-6 text-orange-500 mr-3" />
+                  <span>Intensità HIIT ottimale</span>
                 </div>
                 <div className="flex items-center">
-                  <Zap className="w-6 h-6 text-orange-500 mr-3" />
-                  <span>Maggiore intensità grazie al gruppo</span>
+                  <Heart className="w-6 h-6 text-red-500 mr-3" />
+                  <span>Cardio e forza combinati</span>
                 </div>
                 <div className="flex items-center">
                   <Target className="w-6 h-6 text-yellow-400 mr-3" />
-                  <span>Obiettivi personalizzati per tutti</span>
+                  <span>Obiettivi di gruppo</span>
                 </div>
                 <div className="flex items-center">
-                  <Users className="w-6 h-6 text-blue-500 mr-3" />
-                  <span>Supporto reciproco e amicizie</span>
+                  <TrendingUp className="w-6 h-6 text-green-500 mr-3" />
+                  <span>Performance migliorate</span>
                 </div>
               </div>
             </div>
@@ -90,77 +90,84 @@ const SmallGroup = () => {
 
           {/* Benefits */}
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Perché Scegliere il <span className="text-pink-600">Small Group Training</span>
+            Perché Scegliere <span className="text-orange-600">HIIT Small Group</span>
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-pink-400">Motivazione Extra</h3>
-                <p className="text-gray-300">L'energia del gruppo ti spinge oltre i tuoi limiti, rendendo l'allenamento più divertente ed efficace.</p>
+                <h3 className="text-xl font-bold mb-3 text-orange-400">Brucia Grassi Massimo</h3>
+                <p className="text-gray-300">Il HIIT in gruppo amplifica l'effetto brucia-grassi, continuando a bruciare calorie per ore dopo l'allenamento.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-orange-400">Attenzione Personalizzata</h3>
-                <p className="text-gray-300">Con massimo 3 persone, il trainer può dedicare attenzione a ogni partecipante e correggere la tecnica.</p>
+                <h3 className="text-xl font-bold mb-3 text-red-400">Motivazione Contagiosa</h3>
+                <p className="text-gray-300">L'energia del gruppo ti spinge oltre i tuoi limiti, rendendo ogni sessione una sfida divertente.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-purple-400">Rapporto Qualità-Prezzo</h3>
-                <p className="text-gray-300">Ottieni i benefici del personal training a un costo significativamente ridotto.</p>
+                <h3 className="text-xl font-bold mb-3 text-yellow-400">Varietà Continua</h3>
+                <p className="text-gray-300">Ogni sessione è diversa con esercizi sempre nuovi per non annoiarsi mai.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-blue-400">Varietà di Allenamenti</h3>
-                <p className="text-gray-300">Combinazioni di functional training, circuit training e allenamenti tematici sempre diversi.</p>
+                <h3 className="text-xl font-bold mb-3 text-green-400">Resistenza e Forza</h3>
+                <p className="text-gray-300">Migliora simultaneamente capacità cardiovascolare e forza muscolare.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-green-400">Supporto Sociale</h3>
-                <p className="text-gray-300">Crea legami con persone che condividono i tuoi obiettivi di benessere e forma fisica.</p>
+                <h3 className="text-xl font-bold mb-3 text-blue-400">Supporto Sociale</h3>
+                <p className="text-gray-300">Crea legami con persone che condividono la tua passione per le sfide.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-yellow-400">Flessibilità</h3>
-                <p className="text-gray-300">Programmi adattabili ai diversi livelli di fitness dei partecipanti.</p>
+                <h3 className="text-xl font-bold mb-3 text-purple-400">Tempo Efficiente</h3>
+                <p className="text-gray-300">Massimi risultati in 30-45 minuti di allenamento intenso.</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* How it Works */}
-          <div className="bg-gradient-to-r from-pink-600/10 to-orange-600/10 p-8 rounded-lg mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Come Funziona</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">1</span>
-                </div>
-                <h4 className="text-xl font-bold mb-2">Valutazione Iniziale</h4>
-                <p className="text-gray-300">Ogni partecipante viene valutato individualmente per creare un programma su misura.</p>
-              </div>
+          {/* Workout Structure */}
+          <div className="bg-gradient-to-r from-orange-600/10 to-red-600/10 p-8 rounded-lg mb-16">
+            <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Come Funziona una Sessione</h3>
+            <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">2</span>
+                  <span className="text-2xl font-bold">1</span>
                 </div>
-                <h4 className="text-xl font-bold mb-2">Formazione Gruppi</h4>
-                <p className="text-gray-300">Creiamo gruppi omogenei per livello e obiettivi, massimo 3 persone.</p>
+                <h4 className="text-lg font-bold mb-2">Warm-Up</h4>
+                <p className="text-gray-300 text-sm">Riscaldamento dinamico per preparare il corpo</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold">2</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">HIIT Cardio</h4>
+                <p className="text-gray-300 text-sm">Intervalli ad alta intensità per il sistema cardiovascolare</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold">3</span>
                 </div>
-                <h4 className="text-xl font-bold mb-2">Allenamenti Personalizzati</h4>
-                <p className="text-gray-300">Programmi diversificati che rispettano le esigenze di ogni partecipante.</p>
+                <h4 className="text-lg font-bold mb-2">Strength</h4>
+                <p className="text-gray-300 text-sm">Esercizi di forza funzionale</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold">4</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">Cool Down</h4>
+                <p className="text-gray-300 text-sm">Defaticamento e stretching</p>
               </div>
             </div>
           </div>
@@ -168,45 +175,46 @@ const SmallGroup = () => {
           {/* Perfect For */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className="bg-gray-800 p-6 rounded-lg">
-              <h3 className="text-2xl font-bold text-pink-400 mb-4">Perfetto Per Te Se...</h3>
+              <h3 className="text-2xl font-bold text-orange-400 mb-4">Perfetto Per Te Se...</h3>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-2 mt-0.5" />
-                  <span>Ami socializzare durante l'allenamento</span>
+                  <span>Ami le sfide e l'adrenalina</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-2 mt-0.5" />
-                  <span>Cerchi motivazione extra per allenarti</span>
+                  <span>Vuoi dimagrire velocemente</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-2 mt-0.5" />
-                  <span>Vuoi i benefici del personal training a costi ridotti</span>
+                  <span>Cerchi motivazione extra</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-2 mt-0.5" />
-                  <span>Ti piace la varietà negli allenamenti</span>
+                  <span>Hai poco tempo disponibile</span>
                 </li>
               </ul>
             </div>
             <div className="bg-gray-800 p-6 rounded-lg">
-              <h3 className="text-2xl font-bold text-orange-400 mb-4">Risultati Tipici</h3>
+              <h3 className="text-2xl font-bold text-red-400 mb-4">Risultati Tipici</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>• Maggiore consistenza negli allenamenti</li>
-                <li>• Miglioramenti più rapidi grazie alla motivazione</li>
-                <li>• Sviluppo di nuove amicizie e supporto sociale</li>
-                <li>• Aumento della fiducia in se stessi</li>
-                <li>• Divertimento durante l'esercizio fisico</li>
+                <li>• Dimagrimento accelerato (3-5kg/mese)</li>
+                <li>• Miglioramento resistenza cardiovascolare</li>
+                <li>• Aumento forza e potenza</li>
+                <li>• Maggiore fiducia in se stessi</li>
+                <li>• Divertimento e socializzazione</li>
+                <li>• Abitudini di allenamento solide</li>
               </ul>
             </div>
           </div>
 
           {/* CTA */}
-          <div className="text-center bg-gradient-to-r from-pink-600/20 to-orange-600/20 p-8 rounded-lg">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Unisciti al Gruppo!</h3>
-            <p className="text-lg text-gray-300 mb-6">Scopri l'energia del Small Group Training. Prenota una sessione di prova gratuita</p>
+          <div className="text-center bg-gradient-to-r from-orange-600/20 to-red-600/20 p-8 rounded-lg">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">Sfida Te Stesso in Gruppo!</h3>
+            <p className="text-lg text-gray-300 mb-6">Unisciti al nostro HIIT Small Group e scopri di cosa sei capace</p>
             <Link to="/contatti">
-              <Button className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 text-lg rounded-full">
-                Prenota Sessione di Prova
+              <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 text-lg rounded-full">
+                Prenota Sessione HIIT
               </Button>
             </Link>
           </div>
