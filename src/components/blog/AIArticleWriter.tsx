@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Loader2, Eye, Save, Send } from 'lucide-react';
+import { Sparkles, Loader2, Eye, Save, Send, FileUp } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -29,6 +28,7 @@ const AIArticleWriter: React.FC = () => {
   const [category, setCategory] = useState('');
   const [tone, setTone] = useState('professionale');
   const [length, setLength] = useState('medio');
+  const [featuredImage, setFeaturedImage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedArticle, setGeneratedArticle] = useState<ArticleData | null>(null);
   const [isPreview, setIsPreview] = useState(false);
@@ -175,6 +175,7 @@ const AIArticleWriter: React.FC = () => {
           meta_keywords: generatedArticle.keywords.join(', '),
           slug: generatedArticle.slug,
           reading_time: generatedArticle.readingTime,
+          featured_image: featuredImage || null,
           status: status,
           author_name: 'AI Assistant'
         });
@@ -190,6 +191,7 @@ const AIArticleWriter: React.FC = () => {
       setTopic('');
       setKeywords('');
       setCategory('');
+      setFeaturedImage('');
       setGeneratedArticle(null);
       
     } catch (error: any) {
@@ -260,6 +262,17 @@ const AIArticleWriter: React.FC = () => {
                   className="bg-gray-700 border-gray-600 text-white"
                 />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="featuredImage" className="text-white">Immagine di Copertina (URL)</Label>
+              <Input
+                id="featuredImage"
+                placeholder="https://esempio.com/immagine.jpg"
+                value={featuredImage}
+                onChange={(e) => setFeaturedImage(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white"
+              />
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -359,6 +372,15 @@ const AIArticleWriter: React.FC = () => {
                 <Input
                   value={generatedArticle.slug}
                   onChange={(e) => setGeneratedArticle({...generatedArticle, slug: e.target.value})}
+                  className="bg-gray-700 border-gray-600 text-white"
+                />
+              </div>
+
+              <div>
+                <Label className="text-white text-sm">Immagine di Copertina (URL)</Label>
+                <Input
+                  value={featuredImage}
+                  onChange={(e) => setFeaturedImage(e.target.value)}
                   className="bg-gray-700 border-gray-600 text-white"
                 />
               </div>

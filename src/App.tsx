@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useEffect } from "react";
+import { AuthProvider } from "./hooks/useAuth";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -32,6 +33,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
+import Auth from "./pages/Auth";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 
@@ -58,6 +60,9 @@ const AppContent = () => {
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
+        
+        {/* Auth Page - NO Navigation/Footer */}
+        <Route path="/auth" element={<Auth />} />
         
         {/* Regular Pages - WITH Navigation/Footer */}
         <Route path="/*" element={
@@ -101,11 +106,13 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
