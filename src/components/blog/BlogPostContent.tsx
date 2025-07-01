@@ -4,6 +4,7 @@ import { Calendar, Clock, Eye, Share2, ArrowLeft, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import ArticleContentParser from './ArticleContentParser';
 
 interface BlogPostContentProps {
@@ -24,6 +25,7 @@ interface BlogPostContentProps {
 
 const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Increment view count when post is loaded
   useEffect(() => {
@@ -41,19 +43,43 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   }, [post.id]);
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: post.title,
-          text: post.excerpt || '',
-          url: window.location.href,
+    const shareData = {
+      title: post.title,
+      text: post.excerpt || '',
+      url: window.location.href,
+    };
+
+    try {
+      // Prova prima con l'API nativa di condivisione
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+        toast({
+          title: "Condiviso!",
+          description: "Articolo condiviso con successo",
         });
-      } catch (error) {
-        console.log('Error sharing:', error);
+      } else {
+        // Fallback: copia il link negli appunti
+        await navigator.clipboard.writeText(window.location.href);
+        toast({
+          title: "Link copiato!",
+          description: "Il link dell'articolo è stato copiato negli appunti",
+        });
       }
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
+    } catch (error) {
+      // Se anche la clipboard fallisce, mostra il link
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        toast({
+          title: "Link copiato!",
+          description: "Il link dell'articolo è stato copiato negli appunti",
+        });
+      } catch (clipboardError) {
+        toast({
+          title: "Condivisione non disponibile",
+          description: "Copia manualmente questo link: " + window.location.href,
+          variant: "destructive"
+        });
+      }
     }
   };
 
