@@ -33,6 +33,7 @@ import BlogPost from "./pages/BlogPost";
 import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
+import BlogAdmin from "./pages/BlogAdmin";
 import Auth from "./pages/Auth";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
@@ -87,6 +88,7 @@ const AppContent = () => {
                 <Route path="/muv-planner" element={<MuvPlanner />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/scrivi" element={<BlogWriter />} />
+                <Route path="/blog/admin" element={<BlogAdmin />} />
                 <Route path="/blog/gestisci" element={<BlogManager />} />
                 <Route path="/blog/new" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />

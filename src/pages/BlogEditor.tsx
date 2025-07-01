@@ -2,7 +2,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-import ArticleEditor from '@/components/blog/ArticleEditor';
+import AdvancedArticleEditor from '@/components/blog/AdvancedArticleEditor';
 import ProtectedRoute from '@/components/blog/ProtectedRoute';
 
 const BlogEditor = () => {
@@ -19,7 +19,7 @@ const BlogEditor = () => {
         </Helmet>
 
         <div className="container mx-auto px-4">
-          <ArticleEditor articleId={id} />
+          <AdvancedArticleEditor articleId={id} />
         </div>
       </div>
     </ProtectedRoute>
