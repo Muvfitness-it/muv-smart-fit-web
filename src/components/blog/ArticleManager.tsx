@@ -355,14 +355,25 @@ const ArticleManager: React.FC = () => {
                         variant="ghost"
                         onClick={() => navigate(`/blog/${article.slug}`)}
                         className="text-gray-400 hover:text-white"
+                        title="Visualizza"
                       >
                         <Eye className="w-4 h-4" />
                       </Button>
                       <Button
                         size="sm"
                         variant="ghost"
+                        onClick={() => navigate(`/blog/edit/${article.id}`)}
+                        className="text-blue-400 hover:text-blue-300"
+                        title="Modifica"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
                         onClick={() => deleteArticle(article.id)}
                         className="text-red-400 hover:text-red-300"
+                        title="Elimina"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

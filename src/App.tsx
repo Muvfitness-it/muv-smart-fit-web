@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +32,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
+import BlogEditor from "./pages/BlogEditor";
 import Auth from "./pages/Auth";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
@@ -88,6 +88,8 @@ const AppContent = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/scrivi" element={<BlogWriter />} />
                 <Route path="/blog/gestisci" element={<BlogManager />} />
+                <Route path="/blog/new" element={<BlogEditor />} />
+                <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
