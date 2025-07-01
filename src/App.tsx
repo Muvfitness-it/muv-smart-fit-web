@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -29,6 +30,8 @@ import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+// Landing Pages
+import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 
 const queryClient = new QueryClient();
 
@@ -50,33 +53,43 @@ const AppContent = () => {
   
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navigation />
-      <main className="pt-[var(--header-height)]">
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chi-siamo" element={<ChiSiamo />} />
-          <Route path="/servizi" element={<Servizi />} />
-          <Route path="/servizi/personal-training" element={<PersonalTraining />} />
-          <Route path="/servizi/ems" element={<EMS />} />
-          <Route path="/servizi/pancafit" element={<Pancafit />} />
-          <Route path="/servizi/pilates" element={<Pilates />} />
-          <Route path="/servizi/hiit" element={<HIIT />} />
-          <Route path="/servizi/small-group" element={<SmallGroup />} />
-          <Route path="/servizi/nutrizione" element={<Nutrizione />} />
-          <Route path="/servizi/psicologo" element={<Psicologo />} />
-          <Route path="/servizi/massoterapia" element={<Massoterapia />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/risultati" element={<Risultati />} />
-          <Route path="/muv-planner" element={<MuvPlanner />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/contatti" element={<Contatti />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
+      <Routes>
+        {/* Landing Pages - NO Navigation/Footer */}
+        <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
+        
+        {/* Regular Pages - WITH Navigation/Footer */}
+        <Route path="/*" element={
+          <>
+            <Navigation />
+            <main className="pt-[var(--header-height)]">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/chi-siamo" element={<ChiSiamo />} />
+                <Route path="/servizi" element={<Servizi />} />
+                <Route path="/servizi/personal-training" element={<PersonalTraining />} />
+                <Route path="/servizi/ems" element={<EMS />} />
+                <Route path="/servizi/pancafit" element={<Pancafit />} />
+                <Route path="/servizi/pilates" element={<Pilates />} />
+                <Route path="/servizi/hiit" element={<HIIT />} />
+                <Route path="/servizi/small-group" element={<SmallGroup />} />
+                <Route path="/servizi/nutrizione" element={<Nutrizione />} />
+                <Route path="/servizi/psicologo" element={<Psicologo />} />
+                <Route path="/servizi/massoterapia" element={<Massoterapia />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/risultati" element={<Risultati />} />
+                <Route path="/muv-planner" element={<MuvPlanner />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/contatti" element={<Contatti />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+          </>
+        } />
+      </Routes>
     </div>
   );
 };
