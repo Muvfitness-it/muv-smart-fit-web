@@ -30,6 +30,8 @@ import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BlogWriter from "./pages/BlogWriter";
+import BlogManager from "./pages/BlogManager";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 
@@ -79,6 +81,8 @@ const AppContent = () => {
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />
                 <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/scrivi" element={<BlogWriter />} />
+                <Route path="/blog/gestisci" element={<BlogManager />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
