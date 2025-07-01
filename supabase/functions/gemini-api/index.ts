@@ -21,14 +21,25 @@ serve(async (req) => {
       throw new Error('API key di Gemini non configurata')
     }
 
-    console.log('Calling Gemini API with payload:', JSON.stringify(payload, null, 2))
+    console.log('Calling Gemini API with prompt:', payload)
+
+    // Formato corretto per l'API di Gemini
+    const requestBody = {
+      contents: [{
+        parts: [{
+          text: payload
+        }]
+      }]
+    }
+
+    console.log('Gemini API request body:', JSON.stringify(requestBody, null, 2))
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(requestBody)
     })
 
     if (!response.ok) {
@@ -40,7 +51,13 @@ serve(async (req) => {
     const data = await response.json()
     console.log('Gemini API response:', JSON.stringify(data, null, 2))
 
-    return new Response(JSON.stringify(data), {
+    // Estrai il testo dalla risposta di Gemini
+    const generatedText = data?.candidates?.[0]?.content?.parts?.[0]?.text
+    if (!generatedText) {
+      throw new Error('Nessun contenuto generato dall\'API di Gemini')
+    }
+
+    return new Response(JSON.stringify({ content: generatedText }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (error) {
