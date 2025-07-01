@@ -1,69 +1,38 @@
+
 import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Loader2, Eye, Save, Send, FileUp } from 'lucide-react';
+import { Loader2, Wand2, Save, Eye } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-interface ArticleData {
-  title: string;
-  content: string;
-  excerpt: string;
-  metaTitle: string;
-  metaDescription: string;
-  keywords: string[];
-  slug: string;
-  readingTime: number;
-}
-
-const AIArticleWriter: React.FC = () => {
+const AIArticleWriter = () => {
   const [topic, setTopic] = useState('');
   const [keywords, setKeywords] = useState('');
-  const [category, setCategory] = useState('');
+  const [articleLength, setArticleLength] = useState('medium');
   const [tone, setTone] = useState('professionale');
-  const [length, setLength] = useState('medio');
-  const [featuredImage, setFeaturedImage] = useState('');
+  const [generatedArticle, setGeneratedArticle] = useState('');
+  const [title, setTitle] = useState('');
+  const [excerpt, setExcerpt] = useState('');
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedArticle, setGeneratedArticle] = useState<ArticleData | null>(null);
-  const [isPreview, setIsPreview] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-
+  
   const { callGeminiAPI } = useGeminiAPI();
   const { toast } = useToast();
-
-  const generateSlug = (title: string): string => {
-    return title
-      .toLowerCase()
-      .replace(/[àáâäã]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôöõ]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ç]/g, 'c')
-      .replace(/[ñ]/g, 'n')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim('-');
-  };
-
-  const calculateReadingTime = (content: string): number => {
-    const wordsPerMinute = 200;
-    const wordCount = content.split(/\s+/).length;
-    return Math.ceil(wordCount / wordsPerMinute);
-  };
 
   const generateArticle = async () => {
     if (!topic.trim()) {
       toast({
         title: "Errore",
-        description: "Inserisci l'argomento dell'articolo",
+        description: "Inserisci un argomento per l'articolo",
         variant: "destructive"
       });
       return;
@@ -71,86 +40,82 @@ const AIArticleWriter: React.FC = () => {
 
     setIsGenerating(true);
     
+    const lengthMap = {
+      short: '800-1000 parole',
+      medium: '1200-1500 parole',
+      long: '2000-2500 parole'
+    };
+
+    const prompt = `Scrivi un articolo completo per un blog di fitness professionale sull'argomento: "${topic}".
+
+Specifiche:
+- Lunghezza: ${lengthMap[articleLength as keyof typeof lengthMap]}
+- Tono: ${tone}
+- Parole chiave da includere: ${keywords}
+- Target: appassionati di fitness, principianti e atleti
+- Settore: MUV Fitness
+
+Struttura richiesta:
+1. Titolo accattivante e SEO-friendly
+2. Introduzione coinvolgente (2-3 paragrafi)
+3. Corpo dell'articolo con sottotitoli H2 e H3
+4. Consigli pratici e actionable
+5. Conclusione con call-to-action
+6. Meta descrizione per SEO (150-160 caratteri)
+7. Titolo SEO ottimizzato (50-60 caratteri)
+
+Includi:
+- Informazioni scientificamente accurate
+- Esempi pratici e consigli applicabili
+- Linguaggio accessibile ma professionale
+- Riferimenti al mondo del fitness e benessere
+- Call-to-action verso MUV Fitness quando appropriato
+
+Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li).`;
+
     try {
-      const lengthMap = {
-        breve: '500-800 parole',
-        medio: '1000-1500 parole',
-        lungo: '2000-3000 parole'
-      };
-
-      const prompt = `
-      Scrivi un articolo completo e professionale per un blog di fitness su questo argomento: "${topic}"
-
-      Parametri:
-      - Lunghezza: ${lengthMap[length as keyof typeof lengthMap]}
-      - Tono: ${tone}
-      - Parole chiave da includere: ${keywords}
-      - Categoria: ${category}
-
-      Struttura l'articolo con:
-      1. Titolo accattivante e SEO-friendly
-      2. Introduzione coinvolgente (2-3 paragrafi)
-      3. Corpo dell'articolo ben strutturato con sottotitoli H2 e H3
-      4. Esempi pratici e consigli actionable
-      5. Conclusione con call-to-action
-
-      Inoltre fornisci:
-      - Excerpt (riassunto di 150-160 caratteri)
-      - Meta Title (50-60 caratteri)
-      - Meta Description (150-160 caratteri)
-      - 5-8 parole chiave pertinenti
-
-      Formatta la risposta come JSON con questa struttura:
-      {
-        "title": "Titolo dell'articolo",
-        "content": "Contenuto completo dell'articolo in formato HTML",
-        "excerpt": "Breve riassunto",
-        "metaTitle": "Meta title SEO",
-        "metaDescription": "Meta description SEO",
-        "keywords": ["keyword1", "keyword2", "keyword3"]
-      }
-      `;
-
-      const result = await callGeminiAPI({
-        contents: [{ role: "user", parts: [{ text: prompt }] }]
-      });
-
-      if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-        const responseText = result.candidates[0].content.parts[0].text;
-        
-        // Prova a estrarre il JSON dalla risposta
-        let jsonMatch = responseText.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) {
-          throw new Error("Formato risposta non valido");
+      const response = await callGeminiAPI(prompt);
+      
+      // Parsing della risposta per estrarre le diverse parti
+      const lines = response.split('\n');
+      let currentSection = '';
+      let content = '';
+      let extractedTitle = '';
+      let extractedExcerpt = '';
+      let extractedMetaTitle = '';
+      let extractedMetaDescription = '';
+      
+      for (const line of lines) {
+        if (line.includes('Titolo:') || line.includes('TITOLO:')) {
+          extractedTitle = line.replace(/.*?titolo:?\s*/i, '').trim();
+        } else if (line.includes('Meta descrizione:') || line.includes('META DESCRIZIONE:')) {
+          extractedMetaDescription = line.replace(/.*?meta descrizione:?\s*/i, '').trim();
+        } else if (line.includes('Titolo SEO:') || line.includes('TITOLO SEO:')) {
+          extractedMetaTitle = line.replace(/.*?titolo seo:?\s*/i, '').trim();
+        } else {
+          content += line + '\n';
         }
-
-        const articleData = JSON.parse(jsonMatch[0]);
-        
-        const article: ArticleData = {
-          title: articleData.title,
-          content: articleData.content,
-          excerpt: articleData.excerpt,
-          metaTitle: articleData.metaTitle,
-          metaDescription: articleData.metaDescription,
-          keywords: Array.isArray(articleData.keywords) ? articleData.keywords : [],
-          slug: generateSlug(articleData.title),
-          readingTime: calculateReadingTime(articleData.content)
-        };
-
-        setGeneratedArticle(article);
-        
-        toast({
-          title: "Articolo generato!",
-          description: "L'articolo è stato creato con successo dall'IA",
-        });
-      } else {
-        throw new Error("Nessun contenuto generato");
       }
-    } catch (error: any) {
+      
+      // Estrai excerpt dai primi 2-3 paragrafi
+      const paragraphs = content.split('\n').filter(p => p.trim() && !p.includes('<h') && !p.includes('Titolo') && !p.includes('Meta'));
+      extractedExcerpt = paragraphs.slice(0, 2).join(' ').substring(0, 200) + '...';
+      
+      setGeneratedArticle(content);
+      setTitle(extractedTitle || topic);
+      setExcerpt(extractedExcerpt);
+      setMetaTitle(extractedMetaTitle || extractedTitle || topic);
+      setMetaDescription(extractedMetaDescription || extractedExcerpt);
+      
+      toast({
+        title: "Successo",
+        description: "Articolo generato con successo!"
+      });
+    } catch (error) {
       console.error('Errore generazione articolo:', error);
       toast({
         title: "Errore",
-        description: error.message || "Errore nella generazione dell'articolo",
+        description: "Errore nella generazione dell'articolo",
         variant: "destructive"
       });
     } finally {
@@ -158,43 +123,55 @@ const AIArticleWriter: React.FC = () => {
     }
   };
 
-  const saveArticle = async (status: 'draft' | 'published' = 'draft') => {
-    if (!generatedArticle) return;
+  const saveArticle = async () => {
+    if (!title.trim() || !generatedArticle.trim()) {
+      toast({
+        title: "Errore",
+        description: "Titolo e contenuto sono obbligatori",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setIsSaving(true);
-    
+
     try {
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+
       const { error } = await supabase
         .from('blog_posts')
         .insert({
-          title: generatedArticle.title,
-          content: generatedArticle.content,
-          excerpt: generatedArticle.excerpt,
-          meta_title: generatedArticle.metaTitle,
-          meta_description: generatedArticle.metaDescription,
-          meta_keywords: generatedArticle.keywords.join(', '),
-          slug: generatedArticle.slug,
-          reading_time: generatedArticle.readingTime,
-          featured_image: featuredImage || null,
-          status: status,
-          author_name: 'AI Assistant'
+          title: title.trim(),
+          slug: slug,
+          content: generatedArticle.trim(),
+          excerpt: excerpt.trim(),
+          meta_title: metaTitle.trim(),
+          meta_description: metaDescription.trim(),
+          status: 'draft',
+          author_name: 'MUV Team'
         });
 
       if (error) throw error;
 
       toast({
-        title: status === 'published' ? "Articolo pubblicato!" : "Bozza salvata!",
-        description: `L'articolo è stato ${status === 'published' ? 'pubblicato' : 'salvato come bozza'} con successo`,
+        title: "Successo",
+        description: "Articolo salvato come bozza!"
       });
 
       // Reset form
       setTopic('');
       setKeywords('');
-      setCategory('');
-      setFeaturedImage('');
-      setGeneratedArticle(null);
-      
-    } catch (error: any) {
+      setGeneratedArticle('');
+      setTitle('');
+      setExcerpt('');
+      setMetaTitle('');
+      setMetaDescription('');
+    } catch (error) {
       console.error('Errore salvataggio:', error);
       toast({
         title: "Errore",
@@ -207,270 +184,184 @@ const AIArticleWriter: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">
-          Scrivi Articolo con IA
-        </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Descrivi l'argomento e lascia che l'intelligenza artificiale crei un articolo completo e ottimizzato SEO
-        </p>
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-bold text-white">Scrivi Articolo con IA</h1>
+        <p className="text-gray-400">Genera contenuti ottimizzati SEO per il blog MUV Fitness</p>
       </div>
 
-      {!generatedArticle ? (
-        <Card className="bg-gray-800 border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center">
-              <Sparkles className="w-6 h-6 mr-2 text-magenta-400" />
-              Configurazione Articolo
-            </CardTitle>
-            <CardDescription>
-              Fornisci le informazioni per generare il contenuto perfetto
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
+      <Card className="bg-gray-800 border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center space-x-2">
+            <Wand2 className="h-5 w-5 text-magenta-500" />
+            <span>Generatore IA</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="topic" className="text-white">Argomento *</Label>
-              <Textarea
+              <Input
                 id="topic"
-                placeholder="Descrivi l'argomento dell'articolo (es. 'Benefici dell'allenamento HIIT per la perdita di peso')"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white min-h-[100px]"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="keywords" className="text-white">Parole Chiave</Label>
-                <Input
-                  id="keywords"
-                  placeholder="HIIT, perdita peso, cardio"
-                  value={keywords}
-                  onChange={(e) => setKeywords(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="category" className="text-white">Categoria</Label>
-                <Input
-                  id="category"
-                  placeholder="Allenamento, Nutrizione, Benessere"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="featuredImage" className="text-white">Immagine di Copertina (URL)</Label>
-              <Input
-                id="featuredImage"
-                placeholder="https://esempio.com/immagine.jpg"
-                value={featuredImage}
-                onChange={(e) => setFeaturedImage(e.target.value)}
+                placeholder="es. Benefici dell'allenamento HIIT"
                 className="bg-gray-700 border-gray-600 text-white"
               />
             </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="keywords" className="text-white">Parole chiave</Label>
+              <Input
+                id="keywords"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                placeholder="fitness, allenamento, HIIT"
+                className="bg-gray-700 border-gray-600 text-white"
+              />
+            </div>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-white">Lunghezza articolo</Label>
+              <Select value={articleLength} onValueChange={setArticleLength}>
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="short">Breve (800-1000 parole)</SelectItem>
+                  <SelectItem value="medium">Medio (1200-1500 parole)</SelectItem>
+                  <SelectItem value="long">Lungo (2000-2500 parole)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-white">Tono</Label>
+              <Select value={tone} onValueChange={setTone}>
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="professionale">Professionale</SelectItem>
+                  <SelectItem value="informale">Informale</SelectItem>
+                  <SelectItem value="motivazionale">Motivazionale</SelectItem>
+                  <SelectItem value="scientifico">Scientifico</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <Button
+            onClick={generateArticle}
+            disabled={isGenerating}
+            className="w-full bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700"
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generazione in corso...
+              </>
+            ) : (
+              <>
+                <Wand2 className="mr-2 h-4 w-4" />
+                Genera Articolo
+              </>
+            )}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {generatedArticle && (
+        <Card className="bg-gray-800 border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center space-x-2">
+              <Eye className="h-5 w-5 text-green-500" />
+              <span>Anteprima e Modifica</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-white">Tono dell'articolo</Label>
-                <Select value={tone} onValueChange={setTone}>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="professionale">Professionale</SelectItem>
-                    <SelectItem value="amichevole">Amichevole</SelectItem>
-                    <SelectItem value="motivazionale">Motivazionale</SelectItem>
-                    <SelectItem value="scientifico">Scientifico</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="title" className="text-white">Titolo *</Label>
+                <Input
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="bg-gray-700 border-gray-600 text-white"
+                />
               </div>
-
+              
               <div className="space-y-2">
-                <Label className="text-white">Lunghezza</Label>
-                <Select value={length} onValueChange={setLength}>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="breve">Breve (500-800 parole)</SelectItem>
-                    <SelectItem value="medio">Medio (1000-1500 parole)</SelectItem>
-                    <SelectItem value="lungo">Lungo (2000-3000 parole)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="metaTitle" className="text-white">Titolo SEO</Label>
+                <Input
+                  id="metaTitle"
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                  className="bg-gray-700 border-gray-600 text-white"
+                  maxLength={60}
+                />
+                <span className="text-xs text-gray-400">{metaTitle.length}/60</span>
               </div>
             </div>
 
-            <Button
-              onClick={generateArticle}
-              disabled={isGenerating || !topic.trim()}
-              className="w-full bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white py-3 text-lg font-bold"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="w-6 h-6 mr-2 animate-spin" />
-                  Generazione in corso...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-6 h-6 mr-2" />
-                  Genera Articolo
-                </>
-              )}
-            </Button>
+            <div className="space-y-2">
+              <Label htmlFor="excerpt" className="text-white">Estratto</Label>
+              <Textarea
+                id="excerpt"
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white"
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="metaDescription" className="text-white">Meta Descrizione</Label>
+              <Textarea
+                id="metaDescription"
+                value={metaDescription}
+                onChange={(e) => setMetaDescription(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white"
+                rows={2}
+                maxLength={160}
+              />
+              <span className="text-xs text-gray-400">{metaDescription.length}/160</span>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="content" className="text-white">Contenuto</Label>
+              <Textarea
+                id="content"
+                value={generatedArticle}
+                onChange={(e) => setGeneratedArticle(e.target.value)}
+                className="bg-gray-700 border-gray-600 text-white"
+                rows={20}
+              />
+            </div>
+
+            <div className="flex space-x-2">
+              <Button
+                onClick={saveArticle}
+                disabled={isSaving}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Salvataggio...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Salva come Bozza
+                  </>
+                )}
+              </Button>
+            </div>
           </CardContent>
         </Card>
-      ) : (
-        <div className="space-y-6">
-          {/* Article Preview */}
-          <Card className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-white">Articolo Generato</CardTitle>
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsPreview(!isPreview)}
-                    className="border-gray-600 text-gray-300"
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    {isPreview ? 'Modifica' : 'Anteprima'}
-                  </Button>
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap gap-2 mt-4">
-                <Badge variant="secondary">
-                  {generatedArticle.readingTime} min lettura
-                </Badge>
-                {generatedArticle.keywords.map((keyword, index) => (
-                  <Badge key={index} variant="outline" className="border-magenta-500 text-magenta-400">
-                    {keyword}
-                  </Badge>
-                ))}
-              </div>
-            </CardHeader>
-            
-            <CardContent className="space-y-4">
-              <div>
-                <Label className="text-white text-sm">Titolo</Label>
-                <Input
-                  value={generatedArticle.title}
-                  onChange={(e) => setGeneratedArticle({...generatedArticle, title: e.target.value})}
-                  className="bg-gray-700 border-gray-600 text-white font-bold text-lg"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Slug URL</Label>
-                <Input
-                  value={generatedArticle.slug}
-                  onChange={(e) => setGeneratedArticle({...generatedArticle, slug: e.target.value})}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Immagine di Copertina (URL)</Label>
-                <Input
-                  value={featuredImage}
-                  onChange={(e) => setFeaturedImage(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Excerpt</Label>
-                <Textarea
-                  value={generatedArticle.excerpt}
-                  onChange={(e) => setGeneratedArticle({...generatedArticle, excerpt: e.target.value})}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm">Contenuto</Label>
-                {isPreview ? (
-                  <div 
-                    className="bg-gray-700 p-4 rounded border border-gray-600 text-white prose prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: generatedArticle.content }}
-                  />
-                ) : (
-                  <Textarea
-                    value={generatedArticle.content}
-                    onChange={(e) => setGeneratedArticle({...generatedArticle, content: e.target.value})}
-                    className="bg-gray-700 border-gray-600 text-white min-h-[400px] font-mono text-sm"
-                  />
-                )}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
-                  onClick={() => saveArticle('draft')}
-                  disabled={isSaving}
-                  variant="outline"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                >
-                  <Save className="w-4 h-4 mr-2" />
-                  Salva Bozza
-                </Button>
-                
-                <Button
-                  onClick={() => saveArticle('published')}
-                  disabled={isSaving}
-                  className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white"
-                >
-                  {isSaving ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4 mr-2" />
-                  )}
-                  Pubblica Articolo
-                </Button>
-                
-                <Button
-                  onClick={() => setGeneratedArticle(null)}
-                  variant="ghost"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Nuovo Articolo
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* SEO Info */}
-          <Card className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white text-lg">Informazioni SEO</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label className="text-white text-sm">Meta Title</Label>
-                <Input
-                  value={generatedArticle.metaTitle}
-                  onChange={(e) => setGeneratedArticle({...generatedArticle, metaTitle: e.target.value})}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-              
-              <div>
-                <Label className="text-white text-sm">Meta Description</Label>
-                <Textarea
-                  value={generatedArticle.metaDescription}
-                  onChange={(e) => setGeneratedArticle({...generatedArticle, metaDescription: e.target.value})}
-                  className="bg-gray-700 border-gray-600 text-white"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       )}
     </div>
   );

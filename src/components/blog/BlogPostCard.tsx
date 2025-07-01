@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Clock, Eye, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -16,18 +15,41 @@ interface BlogPostCardProps {
     published_at?: string;
     views_count?: number;
     reading_time?: number;
+    content?: string;
   };
 }
 
 const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
   const navigate = useNavigate();
 
-  const handleReadMore = () => {
-    navigate(`/blog/${post.slug}`);
+  // Genera automaticamente l'excerpt dal contenuto se non presente
+  const getExcerpt = () => {
+    if (post.excerpt) return post.excerpt;
+    if (post.content) {
+      // Rimuove tag HTML e limita a 150 caratteri
+      const plainText = post.content.replace(/<[^>]*>/g, '');
+      return plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText;
+    }
+    return 'Leggi questo interessante articolo sul nostro blog di fitness...';
+  };
+
+  const handleReadMore = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Navigazione diretta e veloce all'articolo
+    navigate(`/blog/${post.slug}`, { replace: false });
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Permette il click su tutta la card per aprire l'articolo
+    if ((e.target as HTMLElement).closest('button')) return; // Non interferire con il bottone
+    handleReadMore(e);
   };
 
   return (
-    <Card className="bg-gray-800 border-gray-700 hover:border-magenta-500 transition-all duration-300 transform hover:scale-105 cursor-pointer group">
+    <Card 
+      className="bg-gray-800 border-gray-700 hover:border-magenta-500 transition-all duration-300 transform hover:scale-105 cursor-pointer group"
+      onClick={handleCardClick}
+    >
       {post.featured_image && (
         <div className="aspect-video overflow-hidden rounded-t-lg">
           <img
@@ -38,6 +60,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
               const img = e.target as HTMLImageElement;
               img.style.display = 'none';
             }}
+            loading="lazy"
           />
         </div>
       )}
@@ -46,11 +69,9 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
         <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-magenta-400 transition-colors">
           {post.title}
         </h3>
-        {post.excerpt && (
-          <CardDescription className="text-gray-400 line-clamp-3 text-sm leading-relaxed">
-            {post.excerpt}
-          </CardDescription>
-        )}
+        <CardDescription className="text-gray-400 line-clamp-3 text-sm leading-relaxed">
+          {getExcerpt()}
+        </CardDescription>
       </CardHeader>
       
       <CardContent className="pt-0">

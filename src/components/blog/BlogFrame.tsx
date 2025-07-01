@@ -19,30 +19,25 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
 
+  // Costruisce l'URL diretto per l'articolo invece di caricare tutto il blog
+  const getIframeUrl = () => {
+    const baseUrl = 'https://muvfit-blog-builder.lovable.app';
+    if (slug) {
+      // Naviga direttamente all'articolo
+      return `${baseUrl}/article/${slug}`;
+    }
+    return baseUrl;
+  };
+
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    console.log('BlogFrame: Setting up iframe listeners');
+    console.log('BlogFrame: Setting up iframe for URL:', getIframeUrl());
 
     const handleLoad = () => {
       console.log('BlogFrame: Iframe loaded successfully');
       setIframeLoaded(true);
-      
-      // Send navigation message immediately when iframe loads
-      if (slug) {
-        console.log('BlogFrame: Sending navigate message for slug:', slug);
-        try {
-          iframe.contentWindow?.postMessage({
-            type: 'navigate_to_article',
-            slug: slug
-          }, 'https://muvfit-blog-builder.lovable.app');
-          console.log('BlogFrame: Navigate message sent successfully');
-        } catch (e) {
-          console.error('BlogFrame: Error sending navigate message:', e);
-        }
-      }
-      
       onIframeLoad?.();
     };
 
@@ -54,13 +49,13 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
     iframe.addEventListener('load', handleLoad);
     iframe.addEventListener('error', handleError);
 
-    // Reduced timeout for faster feedback
+    // Timeout ridotto per feedback più veloce
     const timeout = setTimeout(() => {
       if (!iframeLoaded) {
         console.log('BlogFrame: Iframe loading timeout reached');
         setLoadingTimeout(true);
       }
-    }, 8000); // Ridotto da 15s a 8s
+    }, 5000); // Ridotto da 8s a 5s per caricamento più rapido
 
     return () => {
       iframe.removeEventListener('load', handleLoad);
@@ -74,14 +69,9 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
     setIframeLoaded(false);
     setLoadingTimeout(false);
     if (iframeRef.current) {
-      // Force reload with cache busting
-      const currentSrc = iframeRef.current.src;
-      iframeRef.current.src = '';
-      setTimeout(() => {
-        if (iframeRef.current) {
-          iframeRef.current.src = currentSrc + '?t=' + Date.now();
-        }
-      }, 100);
+      // Force reload con cache busting
+      const newUrl = getIframeUrl() + '?t=' + Date.now();
+      iframeRef.current.src = newUrl;
     }
   };
 
@@ -90,7 +80,7 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
       <div className="flex items-center justify-center h-96 bg-gray-800 rounded-lg">
         <div className="text-center">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-          <p className="text-red-400 mb-2">Errore nel caricamento del blog</p>
+          <p className="text-red-400 mb-2">Errore nel caricamento dell'articolo</p>
           <p className="text-gray-400 text-sm mb-4">
             Riprova più tardi o contattaci se il problema persiste
           </p>
@@ -112,7 +102,9 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
         <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
           <div className="flex items-center space-x-2">
             <Loader2 className="h-6 w-6 animate-spin text-pink-600" />
-            <span className="text-gray-300">Caricamento blog...</span>
+            <span className="text-gray-300">
+              {slug ? 'Caricamento articolo...' : 'Caricamento blog...'}
+            </span>
           </div>
         </div>
       )}
@@ -121,7 +113,9 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
         <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
           <div className="text-center">
             <AlertCircle className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-            <p className="text-yellow-400 mb-2">Il blog sta impiegando più tempo del solito</p>
+            <p className="text-yellow-400 mb-2">
+              {slug ? 'L\'articolo sta impiegando più tempo del solito' : 'Il blog sta impiegando più tempo del solito'}
+            </p>
             <p className="text-gray-400 text-sm mb-4">
               Controlla la tua connessione internet
             </p>
@@ -139,17 +133,17 @@ const BlogFrame: React.FC<BlogFrameProps> = ({
       <iframe
         ref={iframeRef}
         id="blog-iframe"
-        src="https://muvfit-blog-builder.lovable.app/"
+        src={getIframeUrl()}
         className="w-full border-0"
         style={{ 
           minHeight: '800px',
           height: 'calc(100vh - 200px)',
           opacity: iframeLoaded ? 1 : 0,
-          transition: 'opacity 0.2s ease-in-out' // Ridotta da 0.3s a 0.2s
+          transition: 'opacity 0.15s ease-in-out' // Transizione più veloce
         }}
-        title="MUV Fitness Blog"
+        title={slug ? `Articolo: ${slug}` : "MUV Fitness Blog"}
         sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation"
-        loading="eager" // Cambiato da lazy a eager per caricamento immediato
+        loading="eager" // Caricamento immediato
         allow="fullscreen"
       />
     </div>
