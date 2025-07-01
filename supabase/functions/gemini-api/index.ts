@@ -21,15 +21,22 @@ serve(async (req) => {
       throw new Error('API key di Gemini non configurata')
     }
 
-    console.log('Calling Gemini API with prompt:', payload)
+    console.log('Calling Gemini API with payload:', payload)
 
-    // Formato corretto per l'API di Gemini
-    const requestBody = {
-      contents: [{
-        parts: [{
-          text: payload
+    let requestBody
+    
+    // Se il payload è una stringa, usa il formato semplice
+    if (typeof payload === 'string') {
+      requestBody = {
+        contents: [{
+          parts: [{
+            text: payload
+          }]
         }]
-      }]
+      }
+    } else {
+      // Se il payload è un oggetto, usalo direttamente
+      requestBody = payload
     }
 
     console.log('Gemini API request body:', JSON.stringify(requestBody, null, 2))

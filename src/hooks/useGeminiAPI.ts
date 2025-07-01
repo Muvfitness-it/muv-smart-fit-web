@@ -2,12 +2,12 @@
 import { supabase } from '../integrations/supabase/client';
 
 export const useGeminiAPI = () => {
-  const callGeminiAPI = async (prompt: string) => {
+  const callGeminiAPI = async (payload: string | any) => {
     try {
-      console.log('Calling Supabase Edge Function with prompt:', prompt);
+      console.log('Calling Supabase Edge Function with payload:', payload);
       
       const { data, error } = await supabase.functions.invoke('gemini-api', {
-        body: { payload: prompt }
+        body: { payload }
       });
 
       if (error) {
