@@ -35,14 +35,15 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
 
   const handleReadMore = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     // Navigazione diretta e veloce all'articolo
-    navigate(`/blog/${post.slug}`, { replace: false });
+    navigate(`/blog/${post.slug}`);
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Permette il click su tutta la card per aprire l'articolo
     if ((e.target as HTMLElement).closest('button')) return; // Non interferire con il bottone
-    handleReadMore(e);
+    navigate(`/blog/${post.slug}`);
   };
 
   return (
