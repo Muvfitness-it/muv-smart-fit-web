@@ -1,9 +1,10 @@
 
 import React, { useEffect } from 'react';
-import { Calendar, Clock, Eye, Share2, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, Eye, Share2, ArrowLeft, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import ArticleContentParser from './ArticleContentParser';
 
 interface BlogPostContentProps {
   post: {
@@ -66,108 +67,128 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   };
 
   return (
-    <article className="max-w-4xl mx-auto">
-      {/* Back button */}
-      <button
-        onClick={() => navigate('/blog')}
-        className="flex items-center space-x-2 text-pink-600 hover:text-pink-500 transition-colors mb-6"
-      >
-        <ArrowLeft className="h-5 w-5" />
-        <span>Torna al Blog</span>
-      </button>
-
-      {/* Featured Image */}
-      {post.featured_image && (
-        <div className="aspect-video overflow-hidden rounded-lg mb-8">
-          <img
-            src={post.featured_image}
-            alt={post.title}
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      {/* Content Container con sfondo più chiaro per la leggibilità */}
+      <div className="max-w-4xl mx-auto">
+        {/* Back button */}
+        <div className="pt-8 pb-4">
+          <button
+            onClick={() => navigate('/blog')}
+            className="flex items-center space-x-2 text-magenta-400 hover:text-magenta-300 transition-colors mb-6 group"
+          >
+            <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-medium">Torna al Blog</span>
+          </button>
         </div>
-      )}
 
-      {/* Article Header */}
-      <header className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-          {post.title}
-        </h1>
-        
-        {post.excerpt && (
-          <p className="text-xl text-gray-300 leading-relaxed mb-6">
-            {post.excerpt}
-          </p>
+        {/* Featured Image */}
+        {post.featured_image && (
+          <div className="aspect-video overflow-hidden rounded-2xl mb-8 shadow-2xl">
+            <img
+              src={post.featured_image}
+              alt={post.title}
+              className="w-full h-full object-cover"
+              loading="eager"
+            />
+          </div>
         )}
 
-        {/* Article Meta */}
-        <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-6">
-          {post.author_name && (
-            <span className="font-medium text-white">
-              di {post.author_name}
-            </span>
-          )}
+        {/* Article Header */}
+        <header className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+            {post.title}
+          </h1>
           
-          {post.published_at && (
-            <div className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4" />
-              <span>{formatDate(post.published_at)}</span>
+          {post.excerpt && (
+            <div className="bg-gradient-to-r from-magenta-500/10 to-viola-500/10 rounded-xl p-6 mb-8 border border-magenta-500/20">
+              <p className="text-xl text-gray-200 leading-relaxed font-medium">
+                {post.excerpt}
+              </p>
             </div>
           )}
-          
-          {post.reading_time && (
-            <div className="flex items-center space-x-2">
-              <Clock className="w-4 h-4" />
-              <span>{post.reading_time} min di lettura</span>
-            </div>
-          )}
-          
-          {post.views_count !== undefined && (
-            <div className="flex items-center space-x-2">
-              <Eye className="w-4 h-4" />
-              <span>{post.views_count} visualizzazioni</span>
-            </div>
-          )}
-        </div>
 
-        {/* Share Button */}
-        <Button
-          onClick={handleShare}
-          variant="outline"
-          className="border-pink-500 text-pink-400 hover:bg-pink-500 hover:text-white"
-        >
-          <Share2 className="w-4 h-4 mr-2" />
-          Condividi
-        </Button>
-      </header>
+          {/* Article Meta */}
+          <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-8 bg-gray-800/30 rounded-xl p-4">
+            {post.author_name && (
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-magenta-400 to-viola-400 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">
+                    {post.author_name.charAt(0)}
+                  </span>
+                </div>
+                <span className="font-medium text-white">
+                  {post.author_name}
+                </span>
+              </div>
+            )}
+            
+            {post.published_at && (
+              <div className="flex items-center space-x-2">
+                <Calendar className="w-4 h-4 text-magenta-400" />
+                <span>{formatDate(post.published_at)}</span>
+              </div>
+            )}
+            
+            {post.reading_time && (
+              <div className="flex items-center space-x-2">
+                <Clock className="w-4 h-4 text-viola-400" />
+                <span>{post.reading_time} min di lettura</span>
+              </div>
+            )}
+            
+            {post.views_count !== undefined && (
+              <div className="flex items-center space-x-2">
+                <Eye className="w-4 h-4 text-blu-400" />
+                <span>{post.views_count} visualizzazioni</span>
+              </div>
+            )}
+          </div>
 
-      {/* Article Content */}
-      <div 
-        className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-p:leading-relaxed prose-strong:text-white prose-a:text-pink-400 prose-a:no-underline hover:prose-a:underline prose-ul:text-gray-300 prose-ol:text-gray-300 prose-li:text-gray-300"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
-
-      {/* Article Footer */}
-      <footer className="mt-12 pt-8 border-t border-gray-700">
-        <div className="flex justify-between items-center">
+          {/* Share Button */}
           <Button
             onClick={handleShare}
-            className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white"
+            className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
             <Share2 className="w-4 h-4 mr-2" />
-            Condividi questo articolo
+            Condividi Articolo
           </Button>
+        </header>
+
+        {/* Article Content con sfondo più chiaro */}
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 md:p-12 shadow-2xl mb-8">
+          <div className="flex items-center mb-8 text-gray-700">
+            <BookOpen className="w-6 h-6 text-magenta-600 mr-3" />
+            <span className="font-semibold text-lg">Contenuto dell'articolo</span>
+            <div className="flex-1 h-px bg-gradient-to-r from-magenta-200 to-transparent ml-4"></div>
+          </div>
           
-          <Button
-            onClick={() => navigate('/blog')}
-            variant="outline"
-            className="border-gray-600 text-gray-400 hover:bg-gray-800"
-          >
-            Altri articoli
-          </Button>
+          <div className="prose-custom">
+            <ArticleContentParser content={post.content} />
+          </div>
         </div>
-      </footer>
-    </article>
+
+        {/* Article Footer */}
+        <footer className="pb-12 pt-8 border-t border-gray-700">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <Button
+              onClick={handleShare}
+              className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              Condividi questo articolo
+            </Button>
+            
+            <Button
+              onClick={() => navigate('/blog')}
+              variant="outline"
+              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white px-6 py-3 rounded-xl font-medium transition-all"
+            >
+              Altri articoli
+            </Button>
+          </div>
+        </footer>
+      </div>
+    </div>
   );
 };
 

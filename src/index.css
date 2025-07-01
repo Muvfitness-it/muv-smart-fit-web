@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -132,5 +133,57 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Stili personalizzati per gli articoli del blog */
+@layer components {
+  .prose-custom {
+    @apply text-gray-800;
+  }
+  
+  .prose-custom h2 {
+    @apply text-2xl md:text-3xl font-bold text-gray-900 mb-6 mt-8;
+  }
+  
+  .prose-custom h3 {
+    @apply text-xl font-semibold text-gray-800 mb-4 mt-6;
+  }
+  
+  .prose-custom p {
+    @apply text-gray-700 leading-relaxed mb-4 text-lg;
+    line-height: 1.8;
+  }
+  
+  .prose-custom ul {
+    @apply space-y-2 mb-6;
+  }
+  
+  .prose-custom li {
+    @apply text-gray-700 leading-relaxed;
+  }
+  
+  .prose-custom strong {
+    @apply font-semibold;
+  }
+  
+  .prose-custom em {
+    @apply italic text-gray-600;
+  }
+  
+  /* Migliora la leggibilità su mobile */
+  @media (max-width: 768px) {
+    .prose-custom {
+      @apply text-base;
+    }
+    
+    .prose-custom h2 {
+      @apply text-xl;
+    }
+    
+    .prose-custom p {
+      @apply text-base;
+      line-height: 1.7;
+    }
   }
 }
