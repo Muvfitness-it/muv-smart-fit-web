@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { Loader2, Wand2, Save, Eye } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const AIArticleWriter = () => {
@@ -27,6 +27,21 @@ const AIArticleWriter = () => {
   
   const { callGeminiAPI } = useGeminiAPI();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const generateSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .replace(/[àáâãäå]/g, 'a')
+      .replace(/[èéêë]/g, 'e')
+      .replace(/[ìíîï]/g, 'i')
+      .replace(/[òóôõö]/g, 'o')
+      .replace(/[ùúûü]/g, 'u')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
 
   const generateArticle = async () => {
     if (!topic.trim()) {
@@ -61,8 +76,6 @@ Struttura richiesta:
 3. Corpo dell'articolo con sottotitoli H2 e H3
 4. Consigli pratici e actionable
 5. Conclusione con call-to-action
-6. Meta descrizione per SEO (150-160 caratteri)
-7. Titolo SEO ottimizzato (50-60 caratteri)
 
 Includi:
 - Informazioni scientificamente accurate
@@ -71,41 +84,28 @@ Includi:
 - Riferimenti al mondo del fitness e benessere
 - Call-to-action verso MUV Fitness quando appropriato
 
-Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li).`;
+Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li).
+
+Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per il titolo.`;
 
     try {
       const response = await callGeminiAPI(prompt);
       
-      // Parsing della risposta per estrarre le diverse parti
-      const lines = response.split('\n');
-      let currentSection = '';
-      let content = '';
-      let extractedTitle = '';
-      let extractedExcerpt = '';
-      let extractedMetaTitle = '';
-      let extractedMetaDescription = '';
+      // Estrai il titolo dal contenuto HTML
+      const titleMatch = response.match(/<h1[^>]*>(.*?)<\/h1>/i);
+      const extractedTitle = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '') : topic;
       
-      for (const line of lines) {
-        if (line.includes('Titolo:') || line.includes('TITOLO:')) {
-          extractedTitle = line.replace(/.*?titolo:?\s*/i, '').trim();
-        } else if (line.includes('Meta descrizione:') || line.includes('META DESCRIZIONE:')) {
-          extractedMetaDescription = line.replace(/.*?meta descrizione:?\s*/i, '').trim();
-        } else if (line.includes('Titolo SEO:') || line.includes('TITOLO SEO:')) {
-          extractedMetaTitle = line.replace(/.*?titolo seo:?\s*/i, '').trim();
-        } else {
-          content += line + '\n';
-        }
-      }
+      // Genera excerpt dai primi paragrafi
+      const paragraphMatches = response.match(/<p[^>]*>(.*?)<\/p>/gi);
+      const extractedExcerpt = paragraphMatches 
+        ? paragraphMatches.slice(0, 2).join(' ').replace(/<[^>]*>/g, '').substring(0, 200) + '...'
+        : '';
       
-      // Estrai excerpt dai primi 2-3 paragrafi
-      const paragraphs = content.split('\n').filter(p => p.trim() && !p.includes('<h') && !p.includes('Titolo') && !p.includes('Meta'));
-      extractedExcerpt = paragraphs.slice(0, 2).join(' ').substring(0, 200) + '...';
-      
-      setGeneratedArticle(content);
-      setTitle(extractedTitle || topic);
+      setGeneratedArticle(response);
+      setTitle(extractedTitle);
       setExcerpt(extractedExcerpt);
-      setMetaTitle(extractedMetaTitle || extractedTitle || topic);
-      setMetaDescription(extractedMetaDescription || extractedExcerpt);
+      setMetaTitle(extractedTitle.substring(0, 60));
+      setMetaDescription(extractedExcerpt.substring(0, 160));
       
       toast({
         title: "Successo",
@@ -115,7 +115,7 @@ Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li
       console.error('Errore generazione articolo:', error);
       toast({
         title: "Errore",
-        description: "Errore nella generazione dell'articolo",
+        description: "Errore nella generazione dell'articolo: " + (error instanceof Error ? error.message : 'Errore sconosciuto'),
         variant: "destructive"
       });
     } finally {
@@ -136,46 +136,47 @@ Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li
     setIsSaving(true);
 
     try {
-      const slug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim();
+      const slug = generateSlug(title);
+      const readingTime = Math.ceil((generatedArticle.match(/\S+/g) || []).length / 200);
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('blog_posts')
         .insert({
           title: title.trim(),
           slug: slug,
           content: generatedArticle.trim(),
-          excerpt: excerpt.trim(),
-          meta_title: metaTitle.trim(),
-          meta_description: metaDescription.trim(),
+          excerpt: excerpt.trim() || generatedArticle.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
+          meta_title: metaTitle.trim() || title.substring(0, 60),
+          meta_description: metaDescription.trim() || excerpt.substring(0, 160),
           status: 'draft',
-          author_name: 'MUV Team'
-        });
+          author_name: 'MUV Team',
+          reading_time: readingTime
+        })
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
 
       toast({
         title: "Successo",
         description: "Articolo salvato come bozza!"
       });
 
-      // Reset form
-      setTopic('');
-      setKeywords('');
-      setGeneratedArticle('');
-      setTitle('');
-      setExcerpt('');
-      setMetaTitle('');
-      setMetaDescription('');
-    } catch (error) {
+      // Naviga alla pagina di modifica
+      if (data) {
+        navigate(`/blog/edit/${data.id}`);
+      } else {
+        navigate('/blog/admin');
+      }
+
+    } catch (error: any) {
       console.error('Errore salvataggio:', error);
       toast({
         title: "Errore",
-        description: "Errore nel salvataggio dell'articolo",
+        description: "Errore nel salvataggio: " + (error.message || 'Errore sconosciuto'),
         variant: "destructive"
       });
     } finally {
@@ -331,35 +332,29 @@ Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content" className="text-white">Contenuto</Label>
-              <Textarea
-                id="content"
-                value={generatedArticle}
-                onChange={(e) => setGeneratedArticle(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white"
-                rows={20}
-              />
+              <Label className="text-white">Anteprima Contenuto</Label>
+              <div className="bg-white p-4 rounded-lg max-h-64 overflow-y-auto">
+                <div dangerouslySetInnerHTML={{ __html: generatedArticle }} />
+              </div>
             </div>
 
-            <div className="flex space-x-2">
-              <Button
-                onClick={saveArticle}
-                disabled={isSaving}
-                className="bg-green-600 hover:bg-green-700"
-              >
-                {isSaving ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Salvataggio...
-                  </>
-                ) : (
-                  <>
-                    <Save className="mr-2 h-4 w-4" />
-                    Salva come Bozza
-                  </>
-                )}
-              </Button>
-            </div>
+            <Button
+              onClick={saveArticle}
+              disabled={isSaving}
+              className="w-full bg-green-600 hover:bg-green-700"
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Salvataggio...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Salva come Bozza
+                </>
+              )}
+            </Button>
           </CardContent>
         </Card>
       )}

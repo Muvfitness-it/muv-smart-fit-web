@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import ArticleContentParser from './ArticleContentParser';
 import ImageUploader from './ImageUploader';
+import RichTextEditor from './RichTextEditor';
 
 interface AdvancedArticleEditorProps {
   articleId?: string;
@@ -255,15 +255,15 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     try {
       setSaving(true);
       
-      const readingTime = Math.ceil((article.content.match(/\S+/g) || []).length / 200);
+      const readingTime = Math.ceil((article.content.replace(/<[^>]*>/g, '').match(/\S+/g) || []).length / 200);
       
       const articleData = {
         title: article.title.trim(),
         slug: article.slug.trim() || generateSlug(article.title),
         content: article.content.trim(),
-        excerpt: article.excerpt.trim() || article.content.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
+        excerpt: article.excerpt.trim() || article.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
         meta_title: article.meta_title.trim() || article.title.substring(0, 60),
-        meta_description: article.meta_description.trim() || (article.excerpt || article.content.substring(0, 160).replace(/<[^>]*>/g, '')),
+        meta_description: article.meta_description.trim() || (article.excerpt || article.content.replace(/<[^>]*>/g, '').substring(0, 160)),
         status: 'draft',
         author_name: article.author_name || 'MUV Team',
         featured_image: article.featured_image || null,
@@ -340,15 +340,15 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     try {
       setPublishing(true);
       
-      const readingTime = Math.ceil((article.content.match(/\S+/g) || []).length / 200);
+      const readingTime = Math.ceil((article.content.replace(/<[^>]*>/g, '').match(/\S+/g) || []).length / 200);
       
       const articleData = {
         title: article.title.trim(),
         slug: article.slug.trim() || generateSlug(article.title),
         content: article.content.trim(),
-        excerpt: article.excerpt.trim() || article.content.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
+        excerpt: article.excerpt.trim() || article.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
         meta_title: article.meta_title.trim() || article.title.substring(0, 60),
-        meta_description: article.meta_description.trim() || (article.excerpt || article.content.substring(0, 160).replace(/<[^>]*>/g, '')),
+        meta_description: article.meta_description.trim() || (article.excerpt || article.content.replace(/<[^>]*>/g, '').substring(0, 160)),
         status: 'published',
         author_name: article.author_name || 'MUV Team',
         featured_image: article.featured_image || null,
@@ -537,22 +537,20 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="content" className="text-white">Contenuto HTML *</Label>
-                    <Textarea
-                      id="content"
+                    <Label className="text-white">Contenuto *</Label>
+                    <RichTextEditor
                       value={article.content}
-                      onChange={(e) => updateField('content', e.target.value)}
-                      placeholder="Scrivi il contenuto del tuo articolo usando HTML..."
-                      className={`bg-gray-700 border-gray-600 text-white font-mono text-sm ${validationErrors.content ? 'border-red-500' : ''}`}
-                      rows={25}
+                      onChange={(value) => updateField('content', value)}
+                      placeholder="Scrivi il contenuto del tuo articolo..."
+                      className={validationErrors.content ? 'border-red-500' : ''}
                     />
                     <div className="flex justify-between items-center">
                       {validationErrors.content && (
                         <p className="text-red-400 text-sm">{validationErrors.content}</p>
                       )}
                       <div className="flex items-center space-x-4 ml-auto text-sm text-gray-400">
-                        <span>{article.content.length} caratteri</span>
-                        <span>~{Math.ceil((article.content.match(/\S+/g) || []).length / 200)} min lettura</span>
+                        <span>{article.content.replace(/<[^>]*>/g, '').length} caratteri</span>
+                        <span>~{Math.ceil((article.content.replace(/<[^>]*>/g, '').match(/\S+/g) || []).length / 200)} min lettura</span>
                       </div>
                     </div>
                   </div>
@@ -599,7 +597,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
                 </CardContent>
               </Card>
 
-              {/* Upload Immagini */}
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
@@ -615,7 +612,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
                 </CardContent>
               </Card>
 
-              {/* Validation Status */}
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
                   <CardTitle className="text-white">Controllo Qualità</CardTitle>
@@ -683,12 +679,12 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
                     <div className="flex items-center space-x-4 text-sm text-gray-500 border-b pb-4">
                       <span>Di {article.author_name}</span>
                       <span>•</span>
-                      <span>~{Math.ceil((article.content.match(/\S+/g) || []).length / 200)} min di lettura</span>
+                      <span>~{Math.ceil((article.content.replace(/<[^>]*>/g, '').match(/\S+/g) || []).length / 200)} min di lettura</span>
                     </div>
                   </header>
                   
                   <div className="prose prose-lg max-w-none">
-                    <ArticleContentParser content={article.content || 'Il contenuto del tuo articolo apparirà qui...'} />
+                    <div dangerouslySetInnerHTML={{ __html: article.content || 'Il contenuto del tuo articolo apparirà qui...' }} />
                   </div>
                 </article>
               </div>

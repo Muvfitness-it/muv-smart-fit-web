@@ -43,21 +43,33 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, currentI
       setUploading(true);
       
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
       const filePath = `blog-images/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      console.log('Uploading file:', filePath);
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('immagini')
-        .upload(filePath, file);
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
 
-      const { data } = supabase.storage
+      console.log('Upload successful:', uploadData);
+
+      const { data: urlData } = supabase.storage
         .from('immagini')
         .getPublicUrl(filePath);
 
-      onImageUploaded(data.publicUrl);
-      setUrlInput(data.publicUrl);
+      console.log('Public URL:', urlData.publicUrl);
+
+      onImageUploaded(urlData.publicUrl);
+      setUrlInput(urlData.publicUrl);
       
       toast({
         title: "Successo",
@@ -68,7 +80,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, currentI
       console.error('Error uploading image:', error);
       toast({
         title: "Errore",
-        description: "Errore nel caricamento dell'immagine",
+        description: `Errore nel caricamento: ${error.message || 'Errore sconosciuto'}`,
         variant: "destructive"
       });
     } finally {
@@ -208,7 +220,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, currentI
                     alt="Preview"
                     className="max-w-full h-auto max-h-48 rounded-lg border border-gray-600"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
+                      console.error('Image load error:', urlInput);
                       toast({
                         title: "Errore",
                         description: "Impossibile caricare l'immagine dall'URL",
