@@ -139,7 +139,7 @@ const BlogAdminStats: React.FC = () => {
         <Card className="bg-gray-800 border-gray-700">
           <CardContent className="p-6">
             <div className="flex items-center space-x-2">
-              <div className="p-2 bg-viola-600 rounded">
+              <div className="p-2 bg-purple-600 rounded">
                 <Clock className="w-4 h-4 text-white" />
               </div>
               <div>
@@ -240,7 +240,7 @@ const BlogAdminStats: React.FC = () => {
               </div>
             </div>
           </CardContent>
-        </div>
+        </Card>
       </div>
     </div>
   );
