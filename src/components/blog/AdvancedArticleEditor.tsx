@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,6 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
-import ArticleContentParser from './ArticleContentParser';
 import ImageUploader from './ImageUploader';
 import RichTextEditor from './RichTextEditor';
 
@@ -229,6 +229,39 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     setValidationErrors(errors);
   };
 
+  const checkUserPermissions = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    console.log('Current user:', user);
+    
+    if (!user) {
+      toast({
+        title: "Errore",
+        description: "Devi essere autenticato per salvare articoli",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    // Verifica i ruoli dell'utente
+    const { data: userRoles, error: rolesError } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id);
+
+    console.log('User roles:', userRoles, 'Error:', rolesError);
+
+    if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin')) {
+      toast({
+        title: "Errore",
+        description: "Non hai i permessi per creare/modificare articoli. Contatta l'amministratore.",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const saveAsDraft = async (silent: boolean = false) => {
     const hasErrors = Object.keys(validationErrors).length > 0;
     if (hasErrors && !silent) {
@@ -252,6 +285,10 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
+    // Verifica permessi
+    const hasPermissions = await checkUserPermissions();
+    if (!hasPermissions) return;
+
     try {
       setSaving(true);
       
@@ -270,6 +307,8 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
         reading_time: readingTime
       };
 
+      console.log('Saving article data:', articleData);
+
       let result;
       if (isEdit && article.id) {
         result = await supabase
@@ -286,7 +325,24 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
           .single();
       }
 
-      if (result.error) throw result.error;
+      if (result.error) {
+        console.error('Supabase error:', result.error);
+        
+        if (result.error.message.includes('row-level security')) {
+          toast({
+            title: "Errore di Permessi",
+            description: "Non hai i permessi per salvare articoli. Assicurati di essere autenticato come admin.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Errore",
+            description: `Errore nel salvataggio: ${result.error.message}`,
+            variant: "destructive"
+          });
+        }
+        return;
+      }
 
       if (!silent) {
         toast({
@@ -337,6 +393,10 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
+    // Verifica permessi
+    const hasPermissions = await checkUserPermissions();
+    if (!hasPermissions) return;
+
     try {
       setPublishing(true);
       
@@ -368,7 +428,24 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
           .insert(articleData);
       }
 
-      if (result.error) throw result.error;
+      if (result.error) {
+        console.error('Publish error:', result.error);
+        
+        if (result.error.message.includes('row-level security')) {
+          toast({
+            title: "Errore di Permessi",
+            description: "Non hai i permessi per pubblicare articoli. Assicurati di essere autenticato come admin.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Errore",
+            description: `Errore nella pubblicazione: ${result.error.message}`,
+            variant: "destructive"
+          });
+        }
+        return;
+      }
 
       toast({
         title: "Pubblicato!",

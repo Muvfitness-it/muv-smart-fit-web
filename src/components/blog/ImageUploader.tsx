@@ -48,6 +48,23 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, currentI
 
       console.log('Uploading file:', filePath);
 
+      // Prova prima a creare il bucket se non esiste
+      const { data: buckets } = await supabase.storage.listBuckets();
+      const bucketExists = buckets?.some(bucket => bucket.name === 'immagini');
+      
+      if (!bucketExists) {
+        console.log('Creating bucket...');
+        const { error: bucketError } = await supabase.storage.createBucket('immagini', {
+          public: true,
+          allowedMimeTypes: ['image/*'],
+          fileSizeLimit: 5242880 // 5MB
+        });
+        
+        if (bucketError) {
+          console.error('Bucket creation error:', bucketError);
+        }
+      }
+
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('immagini')
         .upload(filePath, file, {
@@ -57,7 +74,21 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, currentI
 
       if (uploadError) {
         console.error('Upload error:', uploadError);
-        throw uploadError;
+        // Se l'errore è di RLS, proviamo con upsert true
+        if (uploadError.message.includes('row-level security')) {
+          const { data: retryData, error: retryError } = await supabase.storage
+            .from('immagini')
+            .upload(filePath, file, {
+              cacheControl: '3600',
+              upsert: true
+            });
+          
+          if (retryError) {
+            throw retryError;
+          }
+        } else {
+          throw uploadError;
+        }
       }
 
       console.log('Upload successful:', uploadData);

@@ -136,28 +136,78 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
     setIsSaving(true);
 
     try {
+      // Verifica se l'utente è autenticato e ha i ruoli admin
+      const { data: { user } } = await supabase.auth.getUser();
+      console.log('Current user:', user);
+      
+      if (!user) {
+        toast({
+          title: "Errore",
+          description: "Devi essere autenticato per salvare articoli",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Verifica i ruoli dell'utente
+      const { data: userRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id);
+
+      console.log('User roles:', userRoles, 'Error:', rolesError);
+
+      if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin')) {
+        toast({
+          title: "Errore",
+          description: "Non hai i permessi per creare articoli. Contatta l'amministratore.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const slug = generateSlug(title);
       const readingTime = Math.ceil((generatedArticle.match(/\S+/g) || []).length / 200);
 
+      const articleData = {
+        title: title.trim(),
+        slug: slug,
+        content: generatedArticle.trim(),
+        excerpt: excerpt.trim() || generatedArticle.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
+        meta_title: metaTitle.trim() || title.substring(0, 60),
+        meta_description: metaDescription.trim() || excerpt.substring(0, 160),
+        status: 'draft',
+        author_name: 'MUV Team',
+        reading_time: readingTime
+      };
+
+      console.log('Saving article data:', articleData);
+
+      // Prova a inserire l'articolo
       const { data, error } = await supabase
         .from('blog_posts')
-        .insert({
-          title: title.trim(),
-          slug: slug,
-          content: generatedArticle.trim(),
-          excerpt: excerpt.trim() || generatedArticle.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
-          meta_title: metaTitle.trim() || title.substring(0, 60),
-          meta_description: metaDescription.trim() || excerpt.substring(0, 160),
-          status: 'draft',
-          author_name: 'MUV Team',
-          reading_time: readingTime
-        })
+        .insert(articleData)
         .select()
         .single();
 
       if (error) {
         console.error('Supabase error:', error);
-        throw error;
+        
+        // Se l'errore è di RLS, fornisci un messaggio più chiaro
+        if (error.message.includes('row-level security')) {
+          toast({
+            title: "Errore di Permessi",
+            description: "Non hai i permessi per creare articoli. Assicurati di essere autenticato come admin.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Errore",
+            description: `Errore nel salvataggio: ${error.message}`,
+            variant: "destructive"
+          });
+        }
+        return;
       }
 
       toast({
