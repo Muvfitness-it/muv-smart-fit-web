@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -87,10 +88,10 @@ const AppContent = () => {
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />
                 <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/scrivi" element={<BlogWriter />} />
+                <Route path="/blog/scrivi-con-ia" element={<BlogWriter />} />
                 <Route path="/blog/admin" element={<BlogAdmin />} />
                 <Route path="/blog/gestisci" element={<BlogManager />} />
-                <Route path="/blog/new" element={<BlogEditor />} />
+                <Route path="/blog/nuovo" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contatti" element={<Contatti />} />

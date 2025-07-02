@@ -16,6 +16,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import ArticleContentParser from './ArticleContentParser';
+import ImageUploader from './ImageUploader';
 
 interface AdvancedArticleEditorProps {
   articleId?: string;
@@ -79,6 +80,15 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       };
     }
   }, [hasUnsavedChanges, article.title]);
+
+  // Cleanup auto-save interval
+  useEffect(() => {
+    return () => {
+      if (autoSaveInterval) {
+        clearInterval(autoSaveInterval);
+      }
+    };
+  }, [autoSaveInterval]);
 
   // Carica articolo esistente
   useEffect(() => {
@@ -230,6 +240,18 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
+    // Verifica campi obbligatori
+    if (!article.title.trim()) {
+      if (!silent) {
+        toast({
+          title: "Errore",
+          description: "Il titolo è obbligatorio",
+          variant: "destructive"
+        });
+      }
+      return;
+    }
+
     try {
       setSaving(true);
       
@@ -237,7 +259,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       
       const articleData = {
         title: article.title.trim(),
-        slug: article.slug.trim(),
+        slug: article.slug.trim() || generateSlug(article.title),
         content: article.content.trim(),
         excerpt: article.excerpt.trim() || article.content.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
         meta_title: article.meta_title.trim() || article.title.substring(0, 60),
@@ -286,7 +308,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       if (!silent) {
         toast({
           title: "Errore",
-          description: "Errore nel salvataggio",
+          description: "Errore nel salvataggio: " + (error.message || 'Errore sconosciuto'),
           variant: "destructive"
         });
       }
@@ -306,6 +328,15 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
+    if (!article.title.trim() || !article.content.trim()) {
+      toast({
+        title: "Errore",
+        description: "Titolo e contenuto sono obbligatori per la pubblicazione",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       setPublishing(true);
       
@@ -313,7 +344,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       
       const articleData = {
         title: article.title.trim(),
-        slug: article.slug.trim(),
+        slug: article.slug.trim() || generateSlug(article.title),
         content: article.content.trim(),
         excerpt: article.excerpt.trim() || article.content.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
         meta_title: article.meta_title.trim() || article.title.substring(0, 60),
@@ -351,12 +382,16 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       console.error('Error publishing article:', error);
       toast({
         title: "Errore",
-        description: "Errore nella pubblicazione",
+        description: "Errore nella pubblicazione: " + (error.message || 'Errore sconosciuto'),
         variant: "destructive"
       });
     } finally {
       setPublishing(false);
     }
+  };
+
+  const handleImageUpload = (url: string) => {
+    updateField('featured_image', url);
   };
 
   if (loading) {
@@ -561,20 +596,22 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
                       className="bg-gray-700 border-gray-600 text-white"
                     />
                   </div>
+                </CardContent>
+              </Card>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="featured_image" className="text-white">
-                      <ImageIcon className="inline h-4 w-4 mr-1" />
-                      Immagine in evidenza
-                    </Label>
-                    <Input
-                      id="featured_image"
-                      value={article.featured_image || ''}
-                      onChange={(e) => updateField('featured_image', e.target.value)}
-                      placeholder="URL dell'immagine"
-                      className="bg-gray-700 border-gray-600 text-white"
-                    />
-                  </div>
+              {/* Upload Immagini */}
+              <Card className="bg-gray-800 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <ImageIcon className="mr-2 h-4 w-4" />
+                    Immagine in Evidenza
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ImageUploader
+                    onImageUploaded={handleImageUpload}
+                    currentImage={article.featured_image}
+                  />
                 </CardContent>
               </Card>
 
@@ -628,6 +665,13 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
               <div className="bg-white rounded-lg p-8 max-h-[80vh] overflow-y-auto">
                 <article className="prose prose-lg max-w-none">
                   <header className="mb-8">
+                    {article.featured_image && (
+                      <img
+                        src={article.featured_image}
+                        alt={article.title}
+                        className="w-full h-64 object-cover rounded-lg mb-6"
+                      />
+                    )}
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">
                       {article.title || 'Titolo del tuo articolo'}
                     </h1>

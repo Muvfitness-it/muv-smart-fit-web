@@ -1,59 +1,56 @@
 
 import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Eye, Edit, Trash2, Search, Plus, Calendar, Clock, TrendingUp } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  Plus, Search, Edit, Trash2, Eye, Calendar, 
+  FileText, Loader2, AlertCircle, CheckCircle,
+  Sparkles, PenTool
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 
-interface Article {
+interface BlogPost {
   id: string;
   title: string;
   slug: string;
   status: string;
-  created_at: string;
-  published_at?: string;
-  views_count?: number;
-  reading_time?: number;
   author_name: string;
-  excerpt?: string;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+  views_count: number | null;
+  reading_time: number | null;
 }
 
-const ArticleManager: React.FC = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+const ArticleManager = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('created_at');
-  
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchArticles();
+    loadPosts();
   }, []);
 
-  useEffect(() => {
-    filterAndSortArticles();
-  }, [articles, searchTerm, statusFilter, sortBy]);
-
-  const fetchArticles = async () => {
+  const loadPosts = async () => {
     try {
+      setLoading(true);
       const { data, error } = await supabase
         .from('blog_posts')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setArticles(data || []);
+      setPosts(data || []);
     } catch (error: any) {
-      console.error('Errore caricamento articoli:', error);
+      console.error('Error loading posts:', error);
       toast({
         title: "Errore",
         description: "Errore nel caricamento degli articoli",
@@ -64,41 +61,10 @@ const ArticleManager: React.FC = () => {
     }
   };
 
-  const filterAndSortArticles = () => {
-    let filtered = articles;
-
-    // Filtro per testo
-    if (searchTerm) {
-      filtered = filtered.filter(article =>
-        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        article.slug.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const deletePost = async (id: string, title: string) => {
+    if (!confirm(`Sei sicuro di voler eliminare l'articolo "${title}"?`)) {
+      return;
     }
-
-    // Filtro per status
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(article => article.status === statusFilter);
-    }
-
-    // Ordinamento
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'title':
-          return a.title.localeCompare(b.title);
-        case 'views':
-          return (b.views_count || 0) - (a.views_count || 0);
-        case 'published_at':
-          return new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime();
-        default:
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      }
-    });
-
-    setFilteredArticles(filtered);
-  };
-
-  const deleteArticle = async (id: string) => {
-    if (!confirm('Sei sicuro di voler eliminare questo articolo?')) return;
 
     try {
       const { error } = await supabase
@@ -109,13 +75,13 @@ const ArticleManager: React.FC = () => {
       if (error) throw error;
 
       toast({
-        title: "Articolo eliminato",
-        description: "L'articolo è stato eliminato con successo",
+        title: "Successo",
+        description: "Articolo eliminato con successo"
       });
 
-      fetchArticles();
+      loadPosts();
     } catch (error: any) {
-      console.error('Errore eliminazione:', error);
+      console.error('Error deleting post:', error);
       toast({
         title: "Errore",
         description: "Errore nell'eliminazione dell'articolo",
@@ -130,270 +96,249 @@ const ArticleManager: React.FC = () => {
     try {
       const { error } = await supabase
         .from('blog_posts')
-        .update({ status: newStatus })
+        .update({ 
+          status: newStatus,
+          published_at: newStatus === 'published' ? new Date().toISOString() : null
+        })
         .eq('id', id);
 
       if (error) throw error;
 
       toast({
-        title: "Status aggiornato",
-        description: `Articolo ${newStatus === 'published' ? 'pubblicato' : 'salvato come bozza'}`,
+        title: "Successo",
+        description: `Articolo ${newStatus === 'published' ? 'pubblicato' : 'salvato come bozza'}`
       });
 
-      fetchArticles();
+      loadPosts();
     } catch (error: any) {
-      console.error('Errore aggiornamento status:', error);
+      console.error('Error updating post status:', error);
       toast({
         title: "Errore",
-        description: "Errore nell'aggiornamento dello status",
+        description: "Errore nell'aggiornamento dello stato",
         variant: "destructive"
       });
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'published':
-        return <Badge className="bg-green-600">Pubblicato</Badge>;
-      case 'draft':
-        return <Badge variant="secondary">Bozza</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+  const filteredPosts = posts.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.author_name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || post.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('it-IT', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-white">Caricamento articoli...</div>
+        <Loader2 className="h-8 w-8 animate-spin text-white" />
+        <span className="ml-2 text-white">Caricamento articoli...</span>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* Header con azioni principali */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Gestione Articoli</h1>
-          <p className="text-gray-400">Gestisci e organizza tutti i tuoi contenuti</p>
+          <h2 className="text-2xl font-bold text-white">Gestione Articoli</h2>
+          <p className="text-gray-400">Crea, modifica e gestisci i tuoi articoli del blog</p>
         </div>
-        <Button
-          onClick={() => navigate('/blog/scrivi')}
-          className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Nuovo Articolo
-        </Button>
+        
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            onClick={() => navigate('/blog/scrivi-con-ia')}
+            className="bg-purple-600 hover:bg-purple-700 flex items-center"
+          >
+            <Sparkles className="mr-2 h-4 w-4" />
+            Scrivi con IA
+          </Button>
+          
+          <Button
+            onClick={() => navigate('/blog/nuovo')}
+            className="bg-blue-600 hover:bg-blue-700 flex items-center"
+          >
+            <PenTool className="mr-2 h-4 w-4" />
+            Editor Manuale
+          </Button>
+        </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid md:grid-cols-4 gap-4">
-        <Card className="bg-gray-800 border-gray-700">
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-magenta-600 rounded">
-                <Eye className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Totale Articoli</p>
-                <p className="text-xl font-bold text-white">{articles.length}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gray-800 border-gray-700">
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-green-600 rounded">
-                <TrendingUp className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Pubblicati</p>
-                <p className="text-xl font-bold text-white">
-                  {articles.filter(a => a.status === 'published').length}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gray-800 border-gray-700">
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-yellow-600 rounded">
-                <Edit className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Bozze</p>
-                <p className="text-xl font-bold text-white">
-                  {articles.filter(a => a.status === 'draft').length}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gray-800 border-gray-700">
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-blu-600 rounded">
-                <Eye className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400">Visualizzazioni</p>
-                <p className="text-xl font-bold text-white">
-                  {articles.reduce((sum, a) => sum + (a.views_count || 0), 0)}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filters */}
+      {/* Filtri e ricerca */}
       <Card className="bg-gray-800 border-gray-700">
-        <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row gap-4">
+        <CardContent className="p-6">
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Cerca articoli..."
+                  placeholder="Cerca articoli per titolo o autore..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white pl-10"
+                  className="pl-10 bg-gray-700 border-gray-600 text-white"
                 />
               </div>
             </div>
             
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-48 bg-gray-700 border-gray-600 text-white">
-                <SelectValue placeholder="Filtra per status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tutti</SelectItem>
-                <SelectItem value="published">Pubblicati</SelectItem>
-                <SelectItem value="draft">Bozze</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full md:w-48 bg-gray-700 border-gray-600 text-white">
-                <SelectValue placeholder="Ordina per" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="created_at">Data creazione</SelectItem>
-                <SelectItem value="published_at">Data pubblicazione</SelectItem>
-                <SelectItem value="title">Titolo</SelectItem>
-                <SelectItem value="views">Visualizzazioni</SelectItem>
-              </SelectContent>
-            </Select>
+            <Tabs value={statusFilter} onValueChange={setStatusFilter} className="w-full lg:w-auto">
+              <TabsList className="bg-gray-700">
+                <TabsTrigger value="all">Tutti ({posts.length})</TabsTrigger>
+                <TabsTrigger value="published">
+                  Pubblicati ({posts.filter(p => p.status === 'published').length})
+                </TabsTrigger>
+                <TabsTrigger value="draft">
+                  Bozze ({posts.filter(p => p.status === 'draft').length})
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
         </CardContent>
       </Card>
 
-      {/* Articles Table */}
-      <Card className="bg-gray-800 border-gray-700">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-gray-700">
-                <TableHead className="text-gray-300">Titolo</TableHead>
-                <TableHead className="text-gray-300">Status</TableHead>
-                <TableHead className="text-gray-300">Data</TableHead>
-                <TableHead className="text-gray-300">Views</TableHead>
-                <TableHead className="text-gray-300">Azioni</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredArticles.map((article) => (
-                <TableRow key={article.id} className="border-gray-700 hover:bg-gray-750">
-                  <TableCell className="text-white">
-                    <div>
-                      <div className="font-medium">{article.title}</div>
-                      <div className="text-sm text-gray-400">/{article.slug}</div>
-                      {article.excerpt && (
-                        <div className="text-sm text-gray-500 mt-1 line-clamp-2">
-                          {article.excerpt}
-                        </div>
+      {/* Lista articoli */}
+      <div className="space-y-4">
+        {filteredPosts.length === 0 ? (
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-8 text-center">
+              <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium text-white mb-2">
+                {searchTerm || statusFilter !== 'all' ? 'Nessun articolo trovato' : 'Nessun articolo presente'}
+              </h3>
+              <p className="text-gray-400 mb-6">
+                {searchTerm || statusFilter !== 'all' 
+                  ? 'Prova a modificare i filtri di ricerca'
+                  : 'Inizia creando il tuo primo articolo'
+                }
+              </p>
+              {!searchTerm && statusFilter === 'all' && (
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button
+                    onClick={() => navigate('/blog/scrivi-con-ia')}
+                    className="bg-purple-600 hover:bg-purple-700"
+                  >
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Scrivi con IA
+                  </Button>
+                  <Button
+                    onClick={() => navigate('/blog/nuovo')}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    <PenTool className="mr-2 h-4 w-4" />
+                    Editor Manuale
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ) : (
+          filteredPosts.map((post) => (
+            <Card key={post.id} className="bg-gray-800 border-gray-700">
+              <CardContent className="p-6">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-white">
+                        {post.title}
+                      </h3>
+                      <Badge 
+                        variant={post.status === 'published' ? 'default' : 'secondary'}
+                        className={post.status === 'published' ? 'bg-green-600' : 'bg-yellow-600'}
+                      >
+                        {post.status === 'published' ? (
+                          <>
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            Pubblicato
+                          </>
+                        ) : (
+                          <>
+                            <AlertCircle className="w-3 h-3 mr-1" />
+                            Bozza
+                          </>
+                        )}
+                      </Badge>
+                    </div>
+                    
+                    <div className="text-sm text-gray-400 space-y-1">
+                      <p>Autore: {post.author_name}</p>
+                      <p>Creato: {formatDate(post.created_at)}</p>
+                      {post.published_at && (
+                        <p>Pubblicato: {formatDate(post.published_at)}</p>
                       )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <button
-                      onClick={() => toggleStatus(article.id, article.status)}
-                      className="cursor-pointer"
-                    >
-                      {getStatusBadge(article.status)}
-                    </button>
-                  </TableCell>
-                  <TableCell className="text-gray-300">
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>
-                        {new Date(article.status === 'published' && article.published_at 
-                          ? article.published_at 
-                          : article.created_at
-                        ).toLocaleDateString('it-IT')}
-                      </span>
-                    </div>
-                    {article.reading_time && (
-                      <div className="flex items-center space-x-1 text-sm text-gray-500">
-                        <Clock className="w-3 h-3" />
-                        <span>{article.reading_time} min</span>
+                      <div className="flex items-center gap-4">
+                        {post.views_count !== null && (
+                          <span className="flex items-center">
+                            <Eye className="w-4 h-4 mr-1" />
+                            {post.views_count} visualizzazioni
+                          </span>
+                        )}
+                        {post.reading_time && (
+                          <span className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {post.reading_time} min lettura
+                          </span>
+                        )}
                       </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-gray-300">
-                    {article.views_count || 0}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => navigate(`/blog/${article.slug}`)}
-                        className="text-gray-400 hover:text-white"
-                        title="Visualizza"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => navigate(`/blog/edit/${article.id}`)}
-                        className="text-blue-400 hover:text-blue-300"
-                        title="Modifica"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => deleteArticle(article.id)}
-                        className="text-red-400 hover:text-red-300"
-                        title="Elimina"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
                     </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          
-          {filteredArticles.length === 0 && (
-            <div className="text-center py-8 text-gray-400">
-              {searchTerm || statusFilter !== 'all' 
-                ? 'Nessun articolo trovato con i filtri selezionati'
-                : 'Nessun articolo trovato. Inizia creando il tuo primo articolo!'
-              }
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate(`/blog/edit/${post.id}`)}
+                      className="border-gray-600 text-white hover:bg-gray-700"
+                    >
+                      <Edit className="w-4 h-4 mr-1" />
+                      Modifica
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate(`/blog/${post.slug}`)}
+                      className="border-gray-600 text-white hover:bg-gray-700"
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      Visualizza
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => toggleStatus(post.id, post.status)}
+                      className={`border-gray-600 text-white hover:bg-gray-700 ${
+                        post.status === 'published' ? 'text-yellow-400' : 'text-green-400'
+                      }`}
+                    >
+                      {post.status === 'published' ? 'Rendi Bozza' : 'Pubblica'}
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => deletePost(post.id, post.title)}
+                      className="border-red-600 text-red-400 hover:bg-red-700"
+                    >
+                      <Trash2 className="w-4 h-4 mr-1" />
+                      Elimina
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 };
