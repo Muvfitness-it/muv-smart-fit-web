@@ -36,43 +36,43 @@ const Index = () => {
               <span className="text-muted-foreground">Non autenticato</span>
             )}
           </div>
-          <div className="flex items-center space-x-3">
-            {!user ? (
-              <Link to="/auth">
-                <Button 
-                  variant="default" 
-                  size="sm" 
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Accedi
-                </Button>
-              </Link>
-            ) : (
-              <div className="flex items-center space-x-3">
-                {isAdmin && (
-                  <Link to="/blog/admin">
-                    <Button 
-                      variant="secondary" 
-                      size="sm" 
-                      className="bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                    >
-                      <Settings className="w-4 h-4 mr-2" />
-                      Admin Blog
-                    </Button>
-                  </Link>
-                )}
-                <Button 
-                  variant="destructive" 
-                  size="sm" 
-                  onClick={signOut}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
-                  Logout
-                </Button>
-              </div>
-            )}
-          </div>
+            <div className="flex items-center space-x-3">
+              {!user ? (
+                <Link to="/auth">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-white/20 text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Accedi
+                  </Button>
+                </Link>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  {isAdmin && (
+                    <Link to="/blog/admin">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-blue-400/30 text-blue-400 hover:bg-blue-400/10 hover:text-blue-300 hover:border-blue-300/40"
+                      >
+                        <Settings className="w-4 h-4 mr-2" />
+                        Admin Blog
+                      </Button>
+                    </Link>
+                  )}
+                  <Button 
+                    variant="destructive" 
+                    size="sm" 
+                    onClick={signOut}
+                    className="bg-red-600 text-white hover:bg-red-700 border-red-600 hover:border-red-700"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              )}
+            </div>
         </div>
       </div>
 
