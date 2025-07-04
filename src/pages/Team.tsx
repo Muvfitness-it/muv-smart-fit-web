@@ -38,12 +38,12 @@ const Team = () => {
       image: "/lovable-uploads/3a0cd379-08e3-4054-80ae-442258546626.png",
       description: "20 anni di esperienza nel fitness. Specialista in allenamenti per potenziamento muscolare e dimagrimento. Ha trasformato il fisico di oltre 500 clienti.",
       specialization: "Forza e Massa Muscolare"
-    }
-     {
+    },
+    {
       name: "Thomas Gabrieli",
       role: "Personal Trainer Senior",
-      image: "/lovable.dev/be7aade1-6d83-438b-844d-68be8594c861",
-      description: "Mi chiamo Thomas, sono Chinesiologo (Laurea Scienze Motorie) e Massoterapista (MCB/ausiliario sanitario). Il mio percorso di studi mi ha portato a sviluppare un approccio basato sull' "embodied cognition".",
+      image: "/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png",
+      description: "Mi chiamo Thomas, sono Chinesiologo (Laurea Scienze Motorie) e Massoterapista (MCB/ausiliario sanitario). Il mio percorso di studi mi ha portato a sviluppare un approccio basato sull'embodied cognition.",
       specialization: "Massoterapista e Chinesiologo"
     }
   ];
