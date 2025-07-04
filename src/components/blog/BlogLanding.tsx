@@ -39,7 +39,7 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
         
         {/* Admin Controls */}
         {user && isAdmin && <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={() => navigate('/blog/scrivi')} className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105">
+            <Button onClick={() => navigate('/blog/scrivi-con-ia')} className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105">
               <Sparkles className="w-6 h-6 mr-2" />
               Scrivi Articolo con IA
             </Button>

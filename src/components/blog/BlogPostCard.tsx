@@ -48,7 +48,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
 
   return (
     <Card 
-      className="bg-gray-800 border-gray-700 hover:border-magenta-500 transition-all duration-300 transform hover:scale-105 cursor-pointer group"
+      className="bg-card border-border hover:border-primary transition-all duration-300 transform hover:scale-105 cursor-pointer group"
       onClick={handleCardClick}
     >
       {post.featured_image && (
@@ -67,16 +67,16 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
       )}
       
       <CardHeader className="pb-3">
-        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-magenta-400 transition-colors">
+        <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
           {post.title}
         </h3>
-        <CardDescription className="text-gray-400 line-clamp-3 text-sm leading-relaxed">
+        <CardDescription className="text-muted-foreground line-clamp-3 text-sm leading-relaxed">
           {getExcerpt()}
         </CardDescription>
       </CardHeader>
       
       <CardContent className="pt-0">
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
           <div className="flex items-center space-x-4">
             {post.reading_time && (
               <div className="flex items-center space-x-1">
@@ -107,7 +107,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
         
         <Button
           onClick={handleReadMore}
-          className="w-full bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white"
+          className="w-full bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 text-primary-foreground"
         >
           Leggi Articolo
         </Button>

@@ -1,11 +1,13 @@
 
 import React, { useEffect } from 'react';
-import { Calendar, Clock, Eye, Share2, ArrowLeft, BookOpen } from 'lucide-react';
+import { Calendar, Clock, Eye, Share2, BookOpen, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import ArticleContentParser from './ArticleContentParser';
+import BlogHeader from './BlogHeader';
 
 interface BlogPostContentProps {
   post: {
@@ -26,6 +28,7 @@ interface BlogPostContentProps {
 const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isAdmin } = useAuth();
 
   // Increment view count when post is loaded
   useEffect(() => {
@@ -94,18 +97,15 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <BlogHeader
+        title={post.title}
+        canEdit={isAdmin}
+        editUrl={`/blog/edit/${post.id}`}
+        onShare={handleShare}
+      />
+      
       {/* Content Container con sfondo più chiaro per la leggibilità */}
-      <div className="max-w-4xl mx-auto">
-        {/* Back button */}
-        <div className="pt-8 pb-4">
-          <button
-            onClick={() => navigate('/blog')}
-            className="flex items-center space-x-2 text-magenta-400 hover:text-magenta-300 transition-colors mb-6 group"
-          >
-            <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium">Torna al Blog</span>
-          </button>
-        </div>
+      <div className="max-w-4xl mx-auto pt-8">
 
         {/* Featured Image */}
         {post.featured_image && (
@@ -134,15 +134,15 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
           )}
 
           {/* Article Meta */}
-          <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-8 bg-gray-800/30 rounded-xl p-4">
+          <div className="flex flex-wrap items-center gap-6 text-muted-foreground mb-8 bg-card/30 rounded-xl p-4">
             {post.author_name && (
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-magenta-400 to-viola-400 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">
+                <div className="w-8 h-8 bg-gradient-to-r from-primary via-primary to-secondary rounded-full flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-sm">
                     {post.author_name.charAt(0)}
                   </span>
                 </div>
-                <span className="font-medium text-white">
+                <span className="font-medium text-foreground">
                   {post.author_name}
                 </span>
               </div>
@@ -150,21 +150,21 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
             
             {post.published_at && (
               <div className="flex items-center space-x-2">
-                <Calendar className="w-4 h-4 text-magenta-400" />
+                <Calendar className="w-4 h-4 text-primary" />
                 <span>{formatDate(post.published_at)}</span>
               </div>
             )}
             
             {post.reading_time && (
               <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4 text-viola-400" />
+                <Clock className="w-4 h-4 text-secondary" />
                 <span>{post.reading_time} min di lettura</span>
               </div>
             )}
             
             {post.views_count !== undefined && (
               <div className="flex items-center space-x-2">
-                <Eye className="w-4 h-4 text-blu-400" />
+                <Eye className="w-4 h-4 text-accent" />
                 <span>{post.views_count} visualizzazioni</span>
               </div>
             )}
@@ -181,11 +181,11 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
         </header>
 
         {/* Article Content con sfondo più chiaro */}
-        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 md:p-12 shadow-2xl mb-8">
-          <div className="flex items-center mb-8 text-gray-700">
-            <BookOpen className="w-6 h-6 text-magenta-600 mr-3" />
+        <div className="bg-gradient-to-br from-background to-muted rounded-2xl p-8 md:p-12 shadow-2xl mb-8 border border-border">
+          <div className="flex items-center mb-8 text-foreground">
+            <BookOpen className="w-6 h-6 text-primary mr-3" />
             <span className="font-semibold text-lg">Contenuto dell'articolo</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-magenta-200 to-transparent ml-4"></div>
+            <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent ml-4"></div>
           </div>
           
           <div className="prose-custom">
@@ -194,11 +194,11 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
         </div>
 
         {/* Article Footer */}
-        <footer className="pb-12 pt-8 border-t border-gray-700">
+        <footer className="pb-12 pt-8 border-t border-border">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <Button
               onClick={handleShare}
-              className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 text-primary-foreground font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
             >
               <Share2 className="w-4 h-4 mr-2" />
               Condividi questo articolo
@@ -207,7 +207,7 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
             <Button
               onClick={() => navigate('/blog')}
               variant="outline"
-              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white px-6 py-3 rounded-xl font-medium transition-all"
+              className="px-6 py-3 rounded-xl font-medium transition-all"
             >
               Altri articoli
             </Button>

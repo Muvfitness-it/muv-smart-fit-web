@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { Loader2, AlertCircle } from 'lucide-react';
 import BlogPostContent from '../components/blog/BlogPostContent';
+import BlogSEO from '../components/blog/BlogSEO';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BlogPost {
@@ -91,10 +91,12 @@ const BlogPost = () => {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-gray-900 pt-[var(--header-height)]">
-        <Helmet>
-          <title>Articolo non trovato - MUV Fitness Blog</title>
-          <meta name="robots" content="noindex, nofollow" />
-        </Helmet>
+        <BlogSEO
+          title="Articolo non trovato - MUV Fitness Blog"
+          description="L'articolo richiesto non è stato trovato"
+          slug="not-found"
+          type="website"
+        />
         
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
@@ -125,37 +127,15 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 pt-[var(--header-height)]">
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="keywords" content={pageKeywords} />
-        <link rel="canonical" href={`https://www.muvfitness.it/blog/${slug}`} />
-        
-        {/* Open Graph meta tags */}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content={`https://www.muvfitness.it/blog/${slug}`} />
-        <meta property="og:type" content="article" />
-        {post.featured_image && (
-          <meta property="og:image" content={post.featured_image} />
-        )}
-        
-        {/* Twitter Card meta tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        {post.featured_image && (
-          <meta name="twitter:image" content={post.featured_image} />
-        )}
-        
-        {/* Article specific meta tags */}
-        {post.published_at && (
-          <meta property="article:published_time" content={post.published_at} />
-        )}
-        {post.author_name && (
-          <meta property="article:author" content={post.author_name} />
-        )}
-      </Helmet>
+      <BlogSEO
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+        slug={slug!}
+        image={post.featured_image}
+        publishedAt={post.published_at}
+        author={post.author_name}
+      />
 
       <div className="container mx-auto px-4 py-8">
         <BlogPostContent post={post} />
