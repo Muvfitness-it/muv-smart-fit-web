@@ -14,7 +14,7 @@ const Team = () => {
     {
       name: "Christian Gioso",
       role: "Personal Trainer & Specialista Pancafit",
-      image: "/lovable-uploads/3a0cd379-08e3-4054-80ae-442258546626.png",
+      image: "/lovable-uploads/6a6b9274-a4a0-48ab-a512-74641f84240f.png",
       description: "Laureato in Scienze Motorie, tecnico certificato Pancafit. Ha risolto problemi di mal di schiena a centinaia di clienti. Il 95% elimina il dolore entro 6 settimane.",
       specialization: "Postura e Riabilitazione"
     },
@@ -35,7 +35,7 @@ const Team = () => {
     {
       name: "Mauro Petterle",
       role: "Personal Trainer Senior",
-      image: "/lovable-uploads/6a6b9274-a4a0-48ab-a512-74641f84240f.png",
+      image: "/lovable-uploads/3a0cd379-08e3-4054-80ae-442258546626.png",
       description: "20 anni di esperienza nel fitness. Specialista in allenamenti per potenziamento muscolare e dimagrimento. Ha trasformato il fisico di oltre 500 clienti.",
       specialization: "Forza e Massa Muscolare"
     }
