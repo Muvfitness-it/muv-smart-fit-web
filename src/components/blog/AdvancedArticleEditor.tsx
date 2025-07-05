@@ -1,22 +1,19 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Separator } from '@/components/ui/separator';
-import { 
-  Loader2, Save, Eye, Globe, ArrowLeft, AlertCircle, 
-  CheckCircle, Clock, Target, Zap, Image as ImageIcon 
-} from 'lucide-react';
+import { Loader2, Target } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
-import ImageUploader from './ImageUploader';
 import RichTextEditor from './RichTextEditor';
+import EditorHeader from './EditorHeader';
+import EditorSidebar from './EditorSidebar';
+import SEOTab from './SEOTab';
+import PreviewTab from './PreviewTab';
+import { validateField, generateSlug } from './EditorValidation';
 
 interface AdvancedArticleEditorProps {
   articleId?: string;
@@ -67,7 +64,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
   const navigate = useNavigate();
   const isEdit = Boolean(articleId);
 
-  // Auto-save ogni 30 secondi
+  // Auto-save every 30 seconds
   useEffect(() => {
     if (hasUnsavedChanges && article.title.trim()) {
       const interval = setInterval(() => {
@@ -90,14 +87,14 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     };
   }, [autoSaveInterval]);
 
-  // Carica articolo esistente
+  // Load existing article
   useEffect(() => {
     if (isEdit && articleId) {
       loadArticle(articleId);
     }
   }, [articleId, isEdit]);
 
-  // Genera slug automaticamente
+  // Generate slug automatically
   useEffect(() => {
     if (article.title && !isEdit) {
       const slug = generateSlug(article.title);
@@ -105,7 +102,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     }
   }, [article.title, isEdit]);
 
-  // Genera meta_title automaticamente
+  // Generate meta_title automatically
   useEffect(() => {
     if (article.title && !article.meta_title) {
       setArticle(prev => ({ 
@@ -114,20 +111,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       }));
     }
   }, [article.title]);
-
-  const generateSlug = (title: string): string => {
-    return title
-      .toLowerCase()
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
-  };
 
   const loadArticle = async (id: string) => {
     try {
@@ -172,62 +155,9 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
     setHasUnsavedChanges(true);
     
     // Real-time validation
-    validateField(field, value);
-  }, []);
-
-  const validateField = (field: keyof Article, value: string) => {
-    const errors = { ...validationErrors };
-    
-    switch (field) {
-      case 'title':
-        if (!value.trim()) {
-          errors.title = 'Il titolo è obbligatorio';
-        } else if (value.length > 100) {
-          errors.title = 'Il titolo deve essere massimo 100 caratteri';
-        } else {
-          delete errors.title;
-        }
-        break;
-      
-      case 'slug':
-        if (!value.trim()) {
-          errors.slug = 'Lo slug è obbligatorio';
-        } else if (!/^[a-z0-9-]+$/.test(value)) {
-          errors.slug = 'Lo slug può contenere solo lettere minuscole, numeri e trattini';
-        } else {
-          delete errors.slug;
-        }
-        break;
-      
-      case 'content':
-        if (!value.trim()) {
-          errors.content = 'Il contenuto è obbligatorio';
-        } else if (value.length < 100) {
-          errors.content = 'Il contenuto deve essere almeno 100 caratteri';
-        } else {
-          delete errors.content;
-        }
-        break;
-      
-      case 'meta_title':
-        if (value.length > 60) {
-          errors.meta_title = 'Il titolo SEO deve essere massimo 60 caratteri';
-        } else {
-          delete errors.meta_title;
-        }
-        break;
-      
-      case 'meta_description':
-        if (value.length > 160) {
-          errors.meta_description = 'La descrizione SEO deve essere massimo 160 caratteri';
-        } else {
-          delete errors.meta_description;
-        }
-        break;
-    }
-    
-    setValidationErrors(errors);
-  };
+    const newErrors = validateField(field, value, validationErrors);
+    setValidationErrors(newErrors);
+  }, [validationErrors]);
 
   const checkUserPermissions = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -242,7 +172,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return false;
     }
 
-    // Verifica i ruoli dell'utente
     const { data: userRoles, error: rolesError } = await supabase
       .from('user_roles')
       .select('role')
@@ -273,7 +202,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
-    // Verifica campi obbligatori
     if (!article.title.trim()) {
       if (!silent) {
         toast({
@@ -285,7 +213,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
-    // Verifica permessi
     const hasPermissions = await checkUserPermissions();
     if (!hasPermissions) return;
 
@@ -393,7 +320,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return;
     }
 
-    // Verifica permessi
     const hasPermissions = await checkUserPermissions();
     if (!hasPermissions) return;
 
@@ -482,66 +408,16 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/blog/admin')}
-            className="text-gray-400 hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Torna all'Admin
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold text-white">
-              {isEdit ? 'Modifica Articolo' : 'Nuovo Articolo'}  
-            </h1>
-            <div className="flex items-center space-x-4 mt-1">
-              {lastSaved && (
-                <p className="text-sm text-gray-400 flex items-center">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Salvato: {lastSaved.toLocaleTimeString()}
-                </p>
-              )}
-              {hasUnsavedChanges && (
-                <Badge variant="outline" className="text-yellow-400 border-yellow-400">
-                  <AlertCircle className="h-3 w-3 mr-1" />
-                  Modifiche non salvate
-                </Badge>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-3">
-          <Button
-            onClick={() => saveAsDraft()}
-            disabled={saving}
-            className="bg-gray-600 hover:bg-gray-700"
-          >
-            {saving ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Save className="mr-2 h-4 w-4" />
-            )}
-            Salva Bozza
-          </Button>
-          
-          <Button
-            onClick={publishArticle}
-            disabled={publishing || Object.keys(validationErrors).length > 0}
-            className="bg-green-600 hover:bg-green-700"
-          >
-            {publishing ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Globe className="mr-2 h-4 w-4" />
-            )}
-            Pubblica
-          </Button>
-        </div>
-      </div>
+      <EditorHeader
+        isEdit={isEdit}
+        lastSaved={lastSaved}
+        hasUnsavedChanges={hasUnsavedChanges}
+        saving={saving}
+        publishing={publishing}
+        validationErrors={validationErrors}
+        onSaveAsDraft={() => saveAsDraft()}
+        onPublish={publishArticle}
+      />
 
       <Tabs defaultValue="editor" className="space-y-4">
         <TabsList className="bg-gray-800">
@@ -552,7 +428,6 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
 
         <TabsContent value="editor" className="space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Editor principale */}
             <div className="lg:col-span-3 space-y-4">
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
@@ -635,233 +510,25 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
               </Card>
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-4">
-              <Card className="bg-gray-800 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <Zap className="mr-2 h-4 w-4" />
-                    Stato
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Status:</span>
-                    <Badge variant={article.status === 'published' ? 'default' : 'secondary'}>
-                      {article.status === 'published' ? 'Pubblicato' : 'Bozza'}
-                    </Badge>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-300">Auto-save:</span>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 text-green-400 mr-1" />
-                      <span className="text-green-400 text-sm">30s</span>
-                    </div>
-                  </div>
-
-                  <Separator className="bg-gray-600" />
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="author" className="text-white">Autore</Label>
-                    <Input
-                      id="author"
-                      value={article.author_name}
-                      onChange={(e) => updateField('author_name', e.target.value)}
-                      className="bg-gray-700 border-gray-600 text-white"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-800 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center">
-                    <ImageIcon className="mr-2 h-4 w-4" />
-                    Immagine in Evidenza
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ImageUploader
-                    onImageUploaded={handleImageUpload}
-                    currentImage={article.featured_image}
-                  />
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-800 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-white">Controllo Qualità</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300">Titolo</span>
-                      {validationErrors.title ? (
-                        <AlertCircle className="h-4 w-4 text-red-400" />
-                      ) : (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300">Contenuto</span>
-                      {validationErrors.content ? (
-                        <AlertCircle className="h-4 w-4 text-red-400" />
-                      ) : (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300">SEO</span>
-                      {validationErrors.meta_title || validationErrors.meta_description ? (
-                        <AlertCircle className="h-4 w-4 text-yellow-400" />
-                      ) : (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            <EditorSidebar
+              article={article}
+              validationErrors={validationErrors}
+              onUpdateField={updateField}
+              onImageUpload={handleImageUpload}
+            />
           </div>
         </TabsContent>
 
         <TabsContent value="preview">
-          <Card className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center">
-                <Eye className="mr-2 h-5 w-5" />
-                Anteprima Live
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-white rounded-lg p-8 max-h-[80vh] overflow-y-auto">
-                <article className="prose prose-lg max-w-none">
-                  <header className="mb-8">
-                    {article.featured_image && (
-                      <img
-                        src={article.featured_image}
-                        alt={article.title}
-                        className="w-full h-64 object-cover rounded-lg mb-6"
-                      />
-                    )}
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                      {article.title || 'Titolo del tuo articolo'}
-                    </h1>
-                    {article.excerpt && (
-                      <p className="text-xl text-gray-600 mb-6 font-medium">
-                        {article.excerpt}
-                      </p>
-                    )}
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 border-b pb-4">
-                      <span>Di {article.author_name}</span>
-                      <span>•</span>
-                      <span>~{Math.ceil((article.content.replace(/<[^>]*>/g, '').match(/\S+/g) || []).length / 200)} min di lettura</span>
-                    </div>
-                  </header>
-                  
-                  <div className="prose prose-lg max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: article.content || 'Il contenuto del tuo articolo apparirà qui...' }} />
-                  </div>
-                </article>
-              </div>
-            </CardContent>
-          </Card>
+          <PreviewTab article={article} />
         </TabsContent>
 
         <TabsContent value="seo">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white">Ottimizzazione SEO</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="meta_title" className="text-white">Titolo SEO</Label>
-                  <Input
-                    id="meta_title"
-                    value={article.meta_title}
-                    onChange={(e) => updateField('meta_title', e.target.value)}
-                    placeholder="Titolo ottimizzato per i motori di ricerca"
-                    className={`bg-gray-700 border-gray-600 text-white ${validationErrors.meta_title ? 'border-red-500' : ''}`}
-                    maxLength={60}
-                  />
-                  <div className="flex justify-between items-center">
-                    {validationErrors.meta_title && (
-                      <p className="text-red-400 text-sm">{validationErrors.meta_title}</p>
-                    )}
-                    <p className={`text-sm ml-auto ${article.meta_title.length > 60 ? 'text-red-400' : article.meta_title.length > 50 ? 'text-yellow-400' : 'text-gray-400'}`}>
-                      {article.meta_title.length}/60 caratteri
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="meta_description" className="text-white">Meta Descrizione</Label>
-                  <Textarea
-                    id="meta_description"
-                    value={article.meta_description}
-                    onChange={(e) => updateField('meta_description', e.target.value)}
-                    placeholder="Descrizione che apparirà nei risultati di ricerca"
-                    className={`bg-gray-700 border-gray-600 text-white ${validationErrors.meta_description ? 'border-red-500' : ''}`}
-                    rows={3}
-                    maxLength={160}
-                  />
-                  <div className="flex justify-between items-center">
-                    {validationErrors.meta_description && (
-                      <p className="text-red-400 text-sm">{validationErrors.meta_description}</p>
-                    )}
-                    <p className={`text-sm ml-auto ${article.meta_description.length > 160 ? 'text-red-400' : article.meta_description.length > 140 ? 'text-yellow-400' : 'text-gray-400'}`}>
-                      {article.meta_description.length}/160 caratteri
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white">Anteprima Google</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-white p-4 rounded-lg">
-                  <div className="space-y-1">
-                    <div className="text-blue-600 text-lg font-medium hover:underline cursor-pointer">
-                      {article.meta_title || article.title || 'Titolo articolo'}
-                    </div>
-                    <div className="text-green-700 text-sm">
-                      https://www.muvfitness.it/blog/{article.slug || 'slug-articolo'}
-                    </div>
-                    <div className="text-gray-600 text-sm leading-relaxed">
-                      {article.meta_description || article.excerpt || 'Descrizione che apparirà nei risultati di ricerca. Assicurati che sia convincente e includa le parole chiave principali.'}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-6 space-y-3">
-                  <h4 className="text-white font-semibold">Suggerimenti SEO:</h4>
-                  <ul className="space-y-2 text-sm text-gray-300">
-                    <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
-                      Usa il titolo principale (H1) una sola volta
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
-                      Includi parole chiave nel titolo e sottotitoli
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
-                      Mantieni la meta descrizione sotto i 160 caratteri
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
-                      Usa immagini con attributi alt descrittivi
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <SEOTab
+            article={article}
+            validationErrors={validationErrors}
+            onUpdateField={updateField}
+          />
         </TabsContent>
       </Tabs>
     </div>
