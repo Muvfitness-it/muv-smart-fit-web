@@ -17,10 +17,17 @@ const EditorContent: React.FC<EditorContentProps> = ({
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (editorRef.current && value !== editorRef.current.innerHTML) {
+    if (editorRef.current && value !== editorRef.current.innerHTML && document.activeElement !== editorRef.current) {
       editorRef.current.innerHTML = value;
     }
   }, [value]);
+
+  // Initialize content on mount
+  useEffect(() => {
+    if (editorRef.current && value && editorRef.current.innerHTML === '') {
+      editorRef.current.innerHTML = value;
+    }
+  }, []);
 
   const updateContent = () => {
     if (editorRef.current) {
@@ -40,7 +47,7 @@ const EditorContent: React.FC<EditorContentProps> = ({
           // Consenti paste ma pulisci la formattazione eccessiva
           setTimeout(updateContent, 10);
         }}
-        dangerouslySetInnerHTML={{ __html: value }}
+        suppressContentEditableWarning={true}
         data-placeholder={placeholder}
       />
       
