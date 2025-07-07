@@ -58,6 +58,7 @@ const ContactForm = () => {
         body: {
           name: formData.nome,
           email: formData.email,
+          telefono: formData.telefono,
           message: formData.messaggio,
           city: formData.citta,
           goal: formData.obiettivo,
