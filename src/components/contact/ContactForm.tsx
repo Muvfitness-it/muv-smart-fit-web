@@ -11,7 +11,9 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
-    messaggio: ""
+    messaggio: "",
+    citta: "",
+    obiettivo: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -26,7 +28,7 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim()) {
+    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
       toast({
         title: "Errore",
         description: "Tutti i campi sono obbligatori.",
@@ -57,6 +59,8 @@ const ContactForm = () => {
           name: formData.nome,
           email: formData.email,
           message: formData.messaggio,
+          city: formData.citta,
+          goal: formData.obiettivo,
         }
       });
 
@@ -77,7 +81,7 @@ const ContactForm = () => {
         description: "Ti contatteremo presto per il tuo check-up gratuito. Controlla anche la tua email per la conferma.",
       });
       
-      setFormData({ nome: "", email: "", messaggio: "" });
+      setFormData({ nome: "", email: "", messaggio: "", citta: "", obiettivo: "" });
     } catch (error: any) {
       console.error('Error sending contact form:', error);
       
@@ -135,6 +139,42 @@ const ContactForm = () => {
               disabled={isSubmitting}
               required
             />
+          </div>
+          
+          <div>
+            <label htmlFor="citta" className="block text-sm font-medium mb-2 text-gray-200">Di dove sei *</label>
+            <Input
+              id="citta"
+              name="citta"
+              type="text"
+              value={formData.citta}
+              onChange={handleInputChange}
+              className="bg-gray-700 border-gray-600 text-white"
+              placeholder="La tua città"
+              disabled={isSubmitting}
+              required
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="obiettivo" className="block text-sm font-medium mb-2 text-gray-200">Qual è il tuo obiettivo *</label>
+            <select
+              id="obiettivo"
+              name="obiettivo"
+              value={formData.obiettivo}
+              onChange={handleInputChange}
+              className="w-full bg-gray-700 border border-gray-600 text-white rounded-md px-3 py-2"
+              disabled={isSubmitting}
+              required
+            >
+              <option value="">Seleziona il tuo obiettivo</option>
+              <option value="dimagrimento">Dimagrimento</option>
+              <option value="tonificazione">Tonificazione</option>
+              <option value="pilates">Pilates</option>
+              <option value="mal-di-schiena">Mal di schiena</option>
+              <option value="aumento-massa-muscolare">Aumento massa muscolare</option>
+              <option value="benessere-generale">Benessere generale</option>
+            </select>
           </div>
           
           <div>

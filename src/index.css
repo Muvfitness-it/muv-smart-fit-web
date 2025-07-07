@@ -38,21 +38,29 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
 
+    /* MUV Brand Colors - Semantic tokens */
+    --brand-primary: 325 100% 55%;     /* Magenta */
+    --brand-secondary: 274 100% 45%;   /* Viola */
+    --brand-accent: 211 100% 56%;      /* Blu */
+    
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-primary) / 0.9), hsl(var(--brand-secondary) / 0.8));
+    --gradient-card: linear-gradient(135deg, hsl(var(--brand-primary) / 0.1), hsl(var(--brand-secondary) / 0.05));
+    
+    /* Shadows */
+    --shadow-brand: 0 10px 30px -5px hsl(var(--brand-primary) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--brand-primary) / 0.4);
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.1);
+    
     /* Header height variables for responsive layout */
     --header-height: 90px;
   }
@@ -125,6 +133,21 @@
     --sidebar-border: 216 34% 17%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     
+    /* MUV Brand Colors - Dark theme */
+    --brand-primary: 325 100% 65%;     /* Magenta più chiaro */
+    --brand-secondary: 274 100% 65%;   /* Viola più chiaro */
+    --brand-accent: 211 100% 70%;      /* Blu più chiaro */
+    
+    /* Gradients per dark theme */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-primary) / 0.8), hsl(var(--brand-secondary) / 0.7));
+    --gradient-card: linear-gradient(135deg, hsl(var(--brand-primary) / 0.15), hsl(var(--brand-secondary) / 0.1));
+    
+    /* Shadows per dark theme */
+    --shadow-brand: 0 10px 30px -5px hsl(var(--brand-primary) / 0.4);
+    --shadow-glow: 0 0 40px hsl(var(--brand-primary) / 0.6);
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
+    
     /* Auth button variants for dark theme */
     --auth-primary: 220 91% 56%;
     --auth-primary-foreground: 213 31% 91%;
@@ -148,51 +171,131 @@
 /* Stili personalizzati per gli articoli del blog */
 @layer components {
   .prose-custom {
-    @apply text-gray-800;
+    @apply text-foreground;
+  }
+  
+  .prose-custom h1 {
+    @apply text-3xl md:text-4xl font-bold mb-8 mt-4;
+    background: var(--gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .prose-custom h2 {
-    @apply text-2xl md:text-3xl font-bold text-gray-900 mb-6 mt-8;
+    @apply text-2xl md:text-3xl font-bold mb-6 mt-8;
+    color: hsl(var(--brand-primary));
   }
   
   .prose-custom h3 {
-    @apply text-xl font-semibold text-gray-800 mb-4 mt-6;
+    @apply text-xl font-semibold mb-4 mt-6;
+    color: hsl(var(--brand-secondary));
   }
   
   .prose-custom p {
-    @apply text-gray-700 leading-relaxed mb-4 text-lg;
+    @apply leading-relaxed mb-4 text-lg;
     line-height: 1.8;
+    color: hsl(var(--foreground) / 0.9);
   }
   
   .prose-custom ul {
-    @apply space-y-2 mb-6;
+    @apply space-y-3 mb-6 pl-6;
   }
   
   .prose-custom li {
-    @apply text-gray-700 leading-relaxed;
+    @apply leading-relaxed;
+    color: hsl(var(--foreground) / 0.9);
   }
   
   .prose-custom strong {
     @apply font-semibold;
+    color: hsl(var(--brand-primary));
   }
   
   .prose-custom em {
-    @apply italic text-gray-600;
+    @apply italic;
+    color: hsl(var(--brand-secondary));
   }
   
-  /* Migliora la leggibilità su mobile */
+  .prose-custom a {
+    @apply underline hover:no-underline transition-colors;
+    color: hsl(var(--brand-accent));
+  }
+  
+  .prose-custom blockquote {
+    @apply border-l-4 pl-6 italic my-6;
+    border-color: hsl(var(--brand-primary));
+    color: hsl(var(--foreground) / 0.8);
+  }
+  
+  .prose-custom code {
+    @apply px-2 py-1 rounded text-sm;
+    background: hsl(var(--muted));
+    color: hsl(var(--brand-primary));
+  }
+  
+  .prose-custom pre {
+    @apply p-4 rounded-lg overflow-x-auto my-6;
+    background: hsl(var(--muted));
+  }
+  
+  .prose-custom img {
+    @apply rounded-lg shadow-lg my-6 mx-auto;
+    box-shadow: var(--shadow-card);
+  }
+  
+  /* Miglioramenti responsive */
   @media (max-width: 768px) {
     .prose-custom {
       @apply text-base;
+    }
+    
+    .prose-custom h1 {
+      @apply text-2xl;
     }
     
     .prose-custom h2 {
       @apply text-xl;
     }
     
+    .prose-custom h3 {
+      @apply text-lg;
+    }
+    
     .prose-custom p {
       @apply text-base;
       line-height: 1.7;
     }
+  }
+  
+  /* Stili per i pulsanti brand */
+  .btn-brand {
+    background: var(--gradient-brand);
+    @apply text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105;
+    box-shadow: var(--shadow-brand);
+  }
+  
+  .btn-brand:hover {
+    @apply shadow-lg;
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .btn-brand-outline {
+    @apply border-2 font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105;
+    border-color: hsl(var(--brand-primary));
+    color: hsl(var(--brand-primary));
+  }
+  
+  .btn-brand-outline:hover {
+    background: hsl(var(--brand-primary));
+    @apply text-white;
+  }
+  
+  /* Card con stile brand */
+  .card-brand {
+    background: var(--gradient-card);
+    @apply border backdrop-blur-sm;
+    border-color: hsl(var(--brand-primary) / 0.2);
+    box-shadow: var(--shadow-card);
   }
 }

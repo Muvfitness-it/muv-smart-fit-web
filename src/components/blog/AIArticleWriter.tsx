@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2, Wand2, Save, Eye } from 'lucide-react';
+import { Loader2, Wand2, Save, Eye, Image as ImageIcon, Sparkles } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -17,12 +17,16 @@ const AIArticleWriter = () => {
   const [keywords, setKeywords] = useState('');
   const [articleLength, setArticleLength] = useState('medium');
   const [tone, setTone] = useState('professionale');
+  const [targetAudience, setTargetAudience] = useState('generale');
+  const [includeImage, setIncludeImage] = useState(false);
   const [generatedArticle, setGeneratedArticle] = useState('');
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
+  const [featuredImage, setFeaturedImage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
   const { callGeminiAPI } = useGeminiAPI();
@@ -43,6 +47,56 @@ const AIArticleWriter = () => {
       .trim();
   };
 
+  const generateImage = async () => {
+    if (!topic.trim()) {
+      toast({
+        title: "Errore",
+        description: "Inserisci un argomento per generare l'immagine",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsGeneratingImage(true);
+    
+    try {
+      const imagePrompt = `Fitness blog image for article about: ${topic}. Professional, modern, clean design suitable for MUV Fitness brand.`;
+      
+      const { data, error } = await supabase.functions.invoke('generate-image', {
+        body: { 
+          prompt: imagePrompt,
+          style: 'natural',
+          size: '1792x1024',
+          quality: 'hd'
+        }
+      });
+
+      if (error) {
+        console.error('Image generation error:', error);
+        throw new Error(error.message);
+      }
+
+      if (data?.image_url) {
+        setFeaturedImage(data.image_url);
+        toast({
+          title: "Successo",
+          description: "Immagine generata con successo!"
+        });
+      } else {
+        throw new Error('Nessuna immagine ricevuta');
+      }
+    } catch (error) {
+      console.error('Error generating image:', error);
+      toast({
+        title: "Errore",
+        description: "Errore nella generazione dell'immagine: " + (error instanceof Error ? error.message : 'Errore sconosciuto'),
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
+
   const generateArticle = async () => {
     if (!topic.trim()) {
       toast({
@@ -61,32 +115,48 @@ const AIArticleWriter = () => {
       long: '2000-2500 parole'
     };
 
-    const prompt = `Scrivi un articolo completo per un blog di fitness professionale sull'argomento: "${topic}".
+    const prompt = `Scrivi un articolo completo e professionale per un blog di fitness sull'argomento: "${topic}".
 
-Specifiche:
+SPECIFICHE TECNICHE:
 - Lunghezza: ${lengthMap[articleLength as keyof typeof lengthMap]}
 - Tono: ${tone}
-- Parole chiave da includere: ${keywords}
-- Target: appassionati di fitness, principianti e atleti
-- Settore: MUV Fitness
+- Target audience: ${targetAudience}
+- Parole chiave SEO da includere naturalmente: ${keywords}
+- Settore: MUV Fitness (centro fitness innovativo a Legnago)
 
-Struttura richiesta:
-1. Titolo accattivante e SEO-friendly
-2. Introduzione coinvolgente (2-3 paragrafi)
-3. Corpo dell'articolo con sottotitoli H2 e H3
-4. Consigli pratici e actionable
-5. Conclusione con call-to-action
+STRUTTURA ARTICOLO:
+1. Titolo SEO-friendly e accattivante (max 60 caratteri)
+2. Introduzione coinvolgente (2-3 paragrafi che catturano l'attenzione)
+3. Corpo dell'articolo con:
+   - Sottotitoli H2 e H3 ben strutturati
+   - Paragrafi di 3-4 frasi ciascuno
+   - Liste puntate quando appropriato
+   - Esempi pratici e actionable tips
+4. Sezione "Conclusioni" con call-to-action verso MUV Fitness
+5. FAQ (3-5 domande frequenti) se appropriato
 
-Includi:
-- Informazioni scientificamente accurate
-- Esempi pratici e consigli applicabili
-- Linguaggio accessibile ma professionale
-- Riferimenti al mondo del fitness e benessere
-- Call-to-action verso MUV Fitness quando appropriato
+LINEE GUIDA CONTENUTO:
+- Informazioni scientificamente accurate e aggiornate
+- Linguaggio professionale ma accessibile
+- Esempi concreti e situazioni reali
+- Consigli pratici e immediatamente applicabili
+- Citazioni di studi scientifici quando rilevante
+- Integrazione naturale delle parole chiave
+- Call-to-action che indirizzano verso i servizi MUV Fitness
 
-Formatta il testo in HTML con tag appropriati (h1, h2, h3, p, strong, em, ul, li).
+OTTIMIZZAZIONE SEO:
+- Densità keyword naturale (1-2%)
+- Sinonimi e variazioni delle parole chiave
+- Struttura gerarchica con H1, H2, H3
+- Meta description accattivante inclusa
 
-Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per il titolo.`;
+FORMATTAZIONE:
+- Utilizza HTML semantico (h1, h2, h3, p, strong, em, ul, li)
+- Grassetto per concetti chiave
+- Corsivo per enfasi
+- Liste puntate per consigli/benefici
+
+Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il titolo principale.`;
 
     try {
       const response = await callGeminiAPI(prompt);
@@ -106,6 +176,11 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
       setExcerpt(extractedExcerpt);
       setMetaTitle(extractedTitle.substring(0, 60));
       setMetaDescription(extractedExcerpt.substring(0, 160));
+      
+      // Auto-genera immagine se richiesta
+      if (includeImage && !featuredImage) {
+        generateImage();
+      }
       
       toast({
         title: "Successo",
@@ -178,7 +253,8 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
         meta_description: metaDescription.trim() || excerpt.substring(0, 160),
         status: 'draft',
         author_name: 'MUV Team',
-        reading_time: readingTime
+        reading_time: readingTime,
+        featured_image: featuredImage || null
       };
 
       console.log('Saving article data:', articleData);
@@ -235,49 +311,53 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-white">Scrivi Articolo con IA</h1>
-        <p className="text-gray-400">Genera contenuti ottimizzati SEO per il blog MUV Fitness</p>
+      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">
+          Scrivi Articolo con IA
+        </h1>
+        <p className="text-muted-foreground text-lg">
+          Genera contenuti ottimizzati SEO per il blog MUV Fitness con intelligenza artificiale avanzata
+        </p>
       </div>
 
-      <Card className="bg-gray-800 border-gray-700">
+      <Card className="card-brand">
         <CardHeader>
-          <CardTitle className="text-white flex items-center space-x-2">
-            <Wand2 className="h-5 w-5 text-magenta-500" />
-            <span>Generatore IA</span>
+          <CardTitle className="text-foreground flex items-center space-x-2">
+            <Wand2 className="h-6 w-6 text-brand-primary" />
+            <span>Generatore IA Avanzato</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="topic" className="text-white">Argomento *</Label>
+              <Label htmlFor="topic" className="text-foreground font-medium">Argomento *</Label>
               <Input
                 id="topic"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="es. Benefici dell'allenamento HIIT"
-                className="bg-gray-700 border-gray-600 text-white"
+                placeholder="es. Benefici dell'allenamento HIIT per la salute cardiovascolare"
+                className="bg-muted border-border text-foreground"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="keywords" className="text-white">Parole chiave</Label>
+              <Label htmlFor="keywords" className="text-foreground font-medium">Parole chiave SEO</Label>
               <Input
                 id="keywords"
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
-                placeholder="fitness, allenamento, HIIT"
-                className="bg-gray-700 border-gray-600 text-white"
+                placeholder="HIIT, cardio, fitness, allenamento"
+                className="bg-muted border-border text-foreground"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label className="text-white">Lunghezza articolo</Label>
+              <Label className="text-foreground font-medium">Lunghezza articolo</Label>
               <Select value={articleLength} onValueChange={setArticleLength}>
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                <SelectTrigger className="bg-muted border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -289,9 +369,9 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
             </div>
 
             <div className="space-y-2">
-              <Label className="text-white">Tono</Label>
+              <Label className="text-foreground font-medium">Tono di voce</Label>
               <Select value={tone} onValueChange={setTone}>
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                <SelectTrigger className="bg-muted border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -299,108 +379,184 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con il tag <h1> per
                   <SelectItem value="informale">Informale</SelectItem>
                   <SelectItem value="motivazionale">Motivazionale</SelectItem>
                   <SelectItem value="scientifico">Scientifico</SelectItem>
+                  <SelectItem value="educativo">Educativo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-foreground font-medium">Target audience</Label>
+              <Select value={targetAudience} onValueChange={setTargetAudience}>
+                <SelectTrigger className="bg-muted border-border text-foreground">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="generale">Generale</SelectItem>
+                  <SelectItem value="principianti">Principianti</SelectItem>
+                  <SelectItem value="intermedi">Livello intermedio</SelectItem>
+                  <SelectItem value="avanzati">Atleti avanzati</SelectItem>
+                  <SelectItem value="over50">Over 50</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          <Button
-            onClick={generateArticle}
-            disabled={isGenerating}
-            className="w-full bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generazione in corso...
-              </>
-            ) : (
-              <>
-                <Wand2 className="mr-2 h-4 w-4" />
-                Genera Articolo
-              </>
-            )}
-          </Button>
+          <div className="flex items-center space-x-3">
+            <input
+              type="checkbox"
+              id="includeImage"
+              checked={includeImage}
+              onChange={(e) => setIncludeImage(e.target.checked)}
+              className="w-4 h-4 text-brand-primary bg-muted border-border rounded focus:ring-brand-primary"
+            />
+            <Label htmlFor="includeImage" className="text-foreground">
+              Genera automaticamente immagine con IA
+            </Label>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              onClick={generateArticle}
+              disabled={isGenerating}
+              className="btn-brand flex-1"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Generazione in corso...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="mr-2 h-5 w-5" />
+                  Genera Articolo
+                </>
+              )}
+            </Button>
+
+            <Button
+              onClick={generateImage}
+              disabled={isGeneratingImage}
+              variant="outline"
+              className="btn-brand-outline"
+            >
+              {isGeneratingImage ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Generando...
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="mr-2 h-5 w-5" />
+                  Genera Solo Immagine
+                </>
+              )}
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
-      {generatedArticle && (
-        <Card className="bg-gray-800 border-gray-700">
+      {(generatedArticle || featuredImage) && (
+        <Card className="card-brand">
           <CardHeader>
-            <CardTitle className="text-white flex items-center space-x-2">
-              <Eye className="h-5 w-5 text-green-500" />
-              <span>Anteprima e Modifica</span>
+            <CardTitle className="text-foreground flex items-center space-x-2">
+              <Eye className="h-6 w-6 text-brand-secondary" />
+              <span>Anteprima e Personalizzazione</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
+            {featuredImage && (
+              <div className="space-y-3">
+                <Label className="text-foreground font-medium">Immagine in evidenza</Label>
+                <div className="relative">
+                  <img
+                    src={featuredImage}
+                    alt="Featured image"
+                    className="w-full h-48 object-cover rounded-lg border border-border"
+                  />
+                  <Button
+                    onClick={() => setFeaturedImage('')}
+                    variant="destructive"
+                    size="sm"
+                    className="absolute top-2 right-2"
+                  >
+                    Rimuovi
+                  </Button>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-white">Titolo *</Label>
+                <Label htmlFor="title" className="text-foreground font-medium">Titolo *</Label>
                 <Input
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-muted border-border text-foreground"
                 />
+                <span className="text-sm text-muted-foreground">{title.length}/100</span>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="metaTitle" className="text-white">Titolo SEO</Label>
+                <Label htmlFor="metaTitle" className="text-foreground font-medium">Titolo SEO</Label>
                 <Input
                   id="metaTitle"
                   value={metaTitle}
                   onChange={(e) => setMetaTitle(e.target.value)}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-muted border-border text-foreground"
                   maxLength={60}
                 />
-                <span className="text-xs text-gray-400">{metaTitle.length}/60</span>
+                <span className="text-sm text-muted-foreground">{metaTitle.length}/60</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="excerpt" className="text-white">Estratto</Label>
+              <Label htmlFor="excerpt" className="text-foreground font-medium">Estratto</Label>
               <Textarea
                 id="excerpt"
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-muted border-border text-foreground"
                 rows={3}
               />
+              <span className="text-sm text-muted-foreground">{excerpt.length}/300</span>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="metaDescription" className="text-white">Meta Descrizione</Label>
+              <Label htmlFor="metaDescription" className="text-foreground font-medium">Meta Descrizione SEO</Label>
               <Textarea
                 id="metaDescription"
                 value={metaDescription}
                 onChange={(e) => setMetaDescription(e.target.value)}
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-muted border-border text-foreground"
                 rows={2}
                 maxLength={160}
               />
-              <span className="text-xs text-gray-400">{metaDescription.length}/160</span>
+              <span className="text-sm text-muted-foreground">{metaDescription.length}/160</span>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-white">Anteprima Contenuto</Label>
-              <div className="bg-white p-4 rounded-lg max-h-64 overflow-y-auto">
-                <div dangerouslySetInnerHTML={{ __html: generatedArticle }} />
+            {generatedArticle && (
+              <div className="space-y-3">
+                <Label className="text-foreground font-medium">Anteprima Contenuto</Label>
+                <div className="bg-background border border-border rounded-lg p-6 max-h-96 overflow-y-auto prose-custom">
+                  <div dangerouslySetInnerHTML={{ __html: generatedArticle }} />
+                </div>
               </div>
-            </div>
+            )}
 
             <Button
               onClick={saveArticle}
               disabled={isSaving}
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
             >
               {isSaving ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvataggio...
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Salvataggio in corso...
                 </>
               ) : (
                 <>
-                  <Save className="mr-2 h-4 w-4" />
+                  <Save className="mr-2 h-5 w-5" />
                   Salva come Bozza
                 </>
               )}
