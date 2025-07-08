@@ -17,7 +17,7 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -58,7 +58,6 @@ const ContactForm = () => {
         body: {
           name: formData.nome,
           email: formData.email,
-          telefono: formData.telefono,
           message: formData.messaggio,
           city: formData.citta,
           goal: formData.obiettivo,
