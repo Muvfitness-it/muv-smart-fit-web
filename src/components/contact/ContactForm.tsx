@@ -29,7 +29,7 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
+    if (!formData.nome.trim() || !formData.email.trim() || !formData.telefono.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
       toast({
         title: "Errore",
         description: "Tutti i campi sono obbligatori.",
