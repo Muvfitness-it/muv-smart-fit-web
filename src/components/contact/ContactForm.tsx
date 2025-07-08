@@ -83,7 +83,7 @@ const ContactForm = () => {
         description: "Ti contatteremo presto per il tuo check-up gratuito. Controlla anche la tua email per la conferma.",
       });
       
-      setFormData({ nome: "", email: "", messaggio: "", citta: "", obiettivo: "" });
+      setFormData({ nome: "", email: "", telefono: "", messaggio: "", citta: "", obiettivo: "" });
     } catch (error: any) {
       console.error('Error sending contact form:', error);
       
@@ -157,18 +157,18 @@ const ContactForm = () => {
               required
             />
           </div>
-          div>
-            <label htmlFor="telefono" className="block text-sm font-medium mb-2 text-gray-200">telefono *</label>
+          
+          <div>
+            <label htmlFor="telefono" className="block text-sm font-medium mb-2 text-gray-200">Telefono</label>
             <Input
               id="telefono"
               name="telefono"
               type="text"
-              value={formData.telefono}
+              value={formData.telefono || ""}
               onChange={handleInputChange}
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="Il tuo numero di telefono"
               disabled={isSubmitting}
-              required
             />
           </div>
           
