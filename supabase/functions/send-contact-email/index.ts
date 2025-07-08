@@ -17,6 +17,9 @@ interface ContactEmailRequest {
   name: string;
   email: string;
   message: string;
+  telefono?: string;
+  city: string;
+  goal: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -36,12 +39,12 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, message }: ContactEmailRequest = await req.json();
+    const { name, email, message, telefono, city, goal }: ContactEmailRequest = await req.json();
 
-    console.log("Received contact form submission:", { name, email, domain: req.headers.get('origin') });
+    console.log("Received contact form submission:", { name, email, telefono, city, goal, domain: req.headers.get('origin') });
 
     // Validate required fields
-    if (!name || !email || !message) {
+    if (!name || !email || !message || !city || !goal) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         {
@@ -72,6 +75,9 @@ const handler = async (req: Request): Promise<Response> => {
         <h2>Nuova richiesta di contatto</h2>
         <p><strong>Nome:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Città:</strong> ${city}</p>
+        <p><strong>Obiettivo:</strong> ${goal}</p>
+        ${telefono ? `<p><strong>Telefono:</strong> ${telefono}</p>` : ''}
         <p><strong>Messaggio:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
         <hr>
