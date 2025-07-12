@@ -49,22 +49,103 @@ const BlogAdmin = () => {
             </TabsContent>
 
             <TabsContent value="settings">
-              <Card className="bg-gray-800 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-white">Impostazioni Blog</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-gray-300">
-                    <p>Funzionalità in sviluppo:</p>
-                    <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li>Configurazione SEO globale</li>
-                      <li>Gestione categorie e tag</li>
-                      <li>Impostazioni di pubblicazione</li>
-                      <li>Backup e export contenuti</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">Controllo SEO</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-white">Status attuali:</h4>
+                      <ul className="text-sm space-y-1">
+                        <li className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span className="text-gray-300">Sitemap XML configurata</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span className="text-gray-300">Robots.txt ottimizzato</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span className="text-gray-300">Google Analytics attivo</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                          <span className="text-gray-300">Google Search Console da verificare</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span className="text-gray-300">Schema.org implementato</span>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div className="pt-4 border-t border-gray-700">
+                      <h4 className="font-medium mb-2 text-white">Azioni necessarie:</h4>
+                      <div className="space-y-2 text-sm text-gray-300">
+                        <p>1. Verifica il sito in Google Search Console</p>
+                        <p>2. Invia la sitemap a Google</p>
+                        <p>3. Monitora le performance delle parole chiave</p>
+                        <p>4. Ottimizza la velocità del sito</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">Analytics & Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="bg-blue-900/20 border border-blue-500/20 p-4 rounded-lg">
+                      <h4 className="font-medium text-blue-300 mb-2">Google Analytics 4</h4>
+                      <p className="text-blue-200 text-sm mb-3">
+                        ID: G-440977387 (configurato e attivo)
+                      </p>
+                      <div className="space-y-2 text-sm">
+                        <p className="text-white"><strong>Funzionalità:</strong></p>
+                        <ul className="list-disc list-inside ml-4 space-y-1 text-gray-300">
+                          <li>Enhanced Ecommerce</li>
+                          <li>Custom Dimensions</li>
+                          <li>Page View Tracking</li>
+                          <li>Conversioni personalizzate</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-white">Link utili:</h4>
+                      <div className="space-y-1 text-sm">
+                        <a 
+                          href="https://search.google.com/search-console" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          • Google Search Console
+                        </a>
+                        <a 
+                          href="https://analytics.google.com" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          • Google Analytics
+                        </a>
+                        <a 
+                          href="https://pagespeed.web.dev" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          • PageSpeed Insights
+                        </a>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
         </div>

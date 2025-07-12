@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Loader2, AlertCircle } from 'lucide-react';
 import BlogPostContent from '../components/blog/BlogPostContent';
-import BlogSEO from '../components/blog/BlogSEO';
+import BlogPostSEO from '../components/SEO/BlogPostSEO';
+import SEOOptimizer from '../components/SEO/SEOOptimizer';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BlogPost {
@@ -91,11 +92,11 @@ const BlogPost = () => {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-gray-900 pt-[var(--header-height)]">
-        <BlogSEO
+        <SEOOptimizer
           title="Articolo non trovato - MUV Fitness Blog"
           description="L'articolo richiesto non è stato trovato"
-          slug="not-found"
-          type="website"
+          canonicalUrl="https://muvfitness.it/blog/not-found"
+          noIndex={true}
         />
         
         <div className="container mx-auto px-4 py-8">
@@ -127,15 +128,7 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 pt-[var(--header-height)]">
-      <BlogSEO
-        title={pageTitle}
-        description={pageDescription}
-        keywords={pageKeywords}
-        slug={slug!}
-        image={post.featured_image}
-        publishedAt={post.published_at}
-        author={post.author_name}
-      />
+      <BlogPostSEO post={post} />
 
       <div className="container mx-auto px-4 py-8">
         <BlogPostContent post={post} />

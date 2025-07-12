@@ -1,14 +1,36 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://muvfitness.it/sitemap.xml
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /analytics/
+
+# Allow all major search engines
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+User-agent: Yandexbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Social media crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1

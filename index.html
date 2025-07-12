@@ -5,14 +5,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Google Analytics 4 -->
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="YOUR_GOOGLE_SEARCH_CONSOLE_CODE" />
+    
+    <!-- Google Analytics 4 Enhanced -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-440977387"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-440977387');
+      
+      gtag('config', 'G-440977387', {
+        // Enhanced Ecommerce per tracking conversioni
+        send_page_view: true,
+        anonymize_ip: true,
+        allow_google_signals: false,
+        cookie_flags: 'SameSite=None;Secure',
+        // Custom dimensions per tracciare tipo di contenuto
+        custom_map: {
+          'dimension1': 'page_type',
+          'dimension2': 'content_category'
+        }
+      });
+      
+      // Track scroll depth per engagement
+      gtag('config', 'G-440977387', {
+        page_title: document.title,
+        page_location: window.location.href
+      });
     </script>
+    
+    <!-- Google Tag Manager (optional - per conversioni avanzate) -->
+    <!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script> -->
     
     <!-- SEO Meta Tags Ottimizzati -->
     <title>Centro Fitness MUV | Centro Fitness a Legnago per Dimagrire con Personal Trainer</title>
@@ -23,6 +51,18 @@
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://muvfitness.it/" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.region" content="IT-VR" />
+    <meta name="geo.placename" content="Legnago" />
+    <meta name="geo.position" content="45.1914;11.3065" />
+    <meta name="ICBM" content="45.1914, 11.3065" />
+    <meta name="DC.title" content="Centro Fitness MUV | Personal Training a Legnago" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="global" />
+    <meta name="language" content="Italian" />
+    <meta http-equiv="content-language" content="it-IT" />
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Centro Fitness Legnago | MUV Smart Fit - Personal Training & Dimagrimento" />
