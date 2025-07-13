@@ -4,6 +4,7 @@ import FeaturesSection from '@/components/home/FeaturesSection';
 import StatsSection from '@/components/home/StatsSection';
 import CTASection from '@/components/home/CTASection';
 import SEOHandler from '@/components/home/SEOHandler';
+import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import AdminRoleAssigner from '@/components/auth/AdminRoleAssigner';
 import { Button } from '@/components/ui/button';
 import { LogIn, Settings, User } from 'lucide-react';
@@ -16,6 +17,7 @@ const Index = () => {
   } = useAuth();
   return <div className="min-h-screen bg-gray-900">
       <SEOHandler />
+      <LocalBusinessSchema />
       <AdminRoleAssigner />
       
       {/* Auth Status Bar */}

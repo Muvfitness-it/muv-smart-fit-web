@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import BreadcrumbSchema from '@/components/SEO/BreadcrumbSchema';
 
 interface BlogSEOProps {
   title: string;
@@ -56,7 +57,9 @@ const BlogSEO: React.FC<BlogSEOProps> = ({
   };
 
   return (
-    <Helmet>
+    <>
+      <BreadcrumbSchema />
+      <Helmet>
       {/* Basic SEO */}
       <title>{title}</title>
       <meta name="description" content={description} />
@@ -94,6 +97,7 @@ const BlogSEO: React.FC<BlogSEOProps> = ({
       <link rel="preconnect" href="https://www.muvfitness.it" />
       <link rel="dns-prefetch" href="https://www.muvfitness.it" />
     </Helmet>
+    </>
   );
 };
 

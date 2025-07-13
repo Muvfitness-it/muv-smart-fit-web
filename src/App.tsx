@@ -36,8 +36,11 @@ import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
 import BlogAdmin from "./pages/BlogAdmin";
 import Auth from "./pages/Auth";
+import Analytics from "./pages/Analytics";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
+// SEO Components
+import DynamicSitemap from "./components/SEO/DynamicSitemap";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +100,8 @@ const AppContent = () => {
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/sitemap.xml" element={<DynamicSitemap />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

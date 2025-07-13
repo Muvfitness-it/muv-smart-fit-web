@@ -66,16 +66,64 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     "keywords": articleData.tags?.join(', ') || keywords
   } : null;
 
+  // Enhanced Google Analytics tracking
   useEffect(() => {
-    // Tracking per Google Analytics Enhanced Ecommerce
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('config', 'G-440977387', {
-        page_title: title,
+      // Send page view
+      (window as any).gtag('config', 'G-2HQXZ9YK4P', {
+        page_title: optimizedTitle,
         page_location: canonicalUrl,
-        custom_map: { dimension1: 'page_type', dimension2: 'content_category' }
+        custom_map: { 
+          custom_dimension_1: 'page_category',
+          custom_dimension_2: 'content_group'
+        }
       });
+
+      // Track page view event
+      (window as any).gtag('event', 'page_view', {
+        page_title: optimizedTitle,
+        page_location: canonicalUrl,
+        page_path: window.location.pathname,
+        content_group1: articleData ? 'Blog' : 'Static Page',
+        content_group2: articleData?.section || 'General'
+      });
+
+      // Track scroll depth
+      let maxScroll = 0;
+      const trackScroll = () => {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+          maxScroll = scrollPercent;
+          (window as any).gtag('event', 'scroll', {
+            event_category: 'engagement',
+            event_label: `${scrollPercent}%`,
+            value: scrollPercent
+          });
+        }
+      };
+
+      // Track time on page
+      const startTime = Date.now();
+      const trackTimeOnPage = () => {
+        const timeSpent = Math.round((Date.now() - startTime) / 1000);
+        if (timeSpent > 30) { // Track after 30 seconds
+          (window as any).gtag('event', 'timing_complete', {
+            name: 'time_on_page',
+            value: timeSpent,
+            event_category: 'engagement'
+          });
+        }
+      };
+
+      window.addEventListener('scroll', trackScroll, { passive: true });
+      window.addEventListener('beforeunload', trackTimeOnPage);
+      
+      return () => {
+        window.removeEventListener('scroll', trackScroll);
+        window.removeEventListener('beforeunload', trackTimeOnPage);
+      };
     }
-  }, [title, canonicalUrl]);
+  }, [optimizedTitle, canonicalUrl, articleData]);
 
   return (
     <Helmet>

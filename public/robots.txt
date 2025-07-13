@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://muvfitness.it/sitemap.xml
+Sitemap: https://www.muvfitness.it/sitemap.xml
 
 # Block admin areas
 Disallow: /admin/
