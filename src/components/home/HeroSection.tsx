@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
+import LazyImage from '@/components/ui/LazyImage';
 
 const HeroSection = () => {
   return (
     <section 
       className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-magenta-900/30 to-viola-900/40 min-h-screen" 
     >
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" 
-        style={{
-          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
-        }}
-      ></div>
+      <LazyImage 
+        src="/images/fitness-professional-bg.jpg"
+        alt="MUV Fitness Centro"
+        className="absolute inset-0 opacity-25"
+        priority={true}
+      />
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-magenta-900/20 to-viola-900/30"></div>
       
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">

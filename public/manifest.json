@@ -1,0 +1,28 @@
+{
+  "name": "MUV Fitness - Centro Fitness Smart di Legnago",
+  "short_name": "MUV Fitness",
+  "description": "Il primo centro fitness smart di Legnago con metodologia scientifica esclusiva. Risultati garantiti in 30 giorni.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#ec4899",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "fitness", "sports"],
+  "lang": "it",
+  "scope": "/",
+  "prefer_related_applications": false
+}

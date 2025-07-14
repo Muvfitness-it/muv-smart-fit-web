@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import LazyImage from "@/components/ui/LazyImage";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,7 +43,12 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
-            <img src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" alt="MUV logo" className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain" />
+            <LazyImage 
+              src="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" 
+              alt="MUV logo" 
+              className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain" 
+              priority={true}
+            />
           </Link>
 
           {/* Desktop Navigation - Better spacing and alignment */}
@@ -60,14 +66,26 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && <div className="lg:hidden bg-gray-900/95 backdrop-blur-sm border-t border-gray-700">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map(item => <Link key={item.name} to={item.path} className={`block px-3 py-3 text-base font-medium transition-colors duration-300 ${location.pathname === item.path ? 'text-pink-600 bg-gray-800 rounded' : 'text-gray-200 hover:text-white hover:bg-gray-800 rounded'}`} onClick={() => setIsOpen(false)}>
-                  {item.name}
-                </Link>)}
-            </div>
-          </div>}
+        {/* Mobile Navigation - Improved UX */}
+        <div className={`lg:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-gray-900/98 backdrop-blur-md border-t border-gray-700/50`}>
+          <div className="px-4 py-4 space-y-2">
+            {navItems.map((item, index) => (
+              <Link 
+                key={item.name} 
+                to={item.path} 
+                className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 transform ${
+                  location.pathname === item.path 
+                    ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-105' 
+                    : 'text-gray-200 hover:text-white hover:bg-gray-800/80 hover:scale-102'
+                }`}
+                style={{ animationDelay: `${index * 50}ms` }}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </nav>;
 };

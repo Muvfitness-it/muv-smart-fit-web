@@ -8,6 +8,7 @@ import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useEffect } from "react";
 import { AuthProvider } from "./hooks/useAuth";
+import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -47,7 +48,7 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
-  
+
   // Preload blog domain for faster iframe loading
   useEffect(() => {
     const link = document.createElement('link');
@@ -61,7 +62,9 @@ const AppContent = () => {
   }, []);
   
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <PerformanceOptimizer />
+      <div className="min-h-screen bg-gray-900 text-white">
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
@@ -108,8 +111,9 @@ const AppContent = () => {
             <Footer />
           </>
         } />
-      </Routes>
-    </div>
+        </Routes>
+      </div>
+    </>
   );
 };
 

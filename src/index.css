@@ -298,4 +298,80 @@
     border-color: hsl(var(--brand-primary) / 0.2);
     box-shadow: var(--shadow-card);
   }
+
+  /* Performance optimizations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .hover-scale-102:hover {
+    transform: scale(1.02);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Core Web Vitals optimizations */
+  img {
+    content-visibility: auto;
+  }
+
+  .contain-layout {
+    contain: layout;
+  }
+
+  .contain-paint {
+    contain: paint;
+  }
+
+  /* Reduce layout shift */
+  .aspect-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Touch optimization for mobile */
+  @media (max-width: 768px) {
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Improved tap targets */
+    button, a, .clickable {
+      @apply touch-target;
+    }
+
+    /* Better mobile scrolling */
+    .mobile-scroll {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+  }
 }
