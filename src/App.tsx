@@ -38,6 +38,7 @@ import BlogEditor from "./pages/BlogEditor";
 import BlogAdmin from "./pages/BlogAdmin";
 import Auth from "./pages/Auth";
 import Analytics from "./pages/Analytics";
+import BookingManagement from "./pages/BookingManagement";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 // SEO Components
@@ -104,6 +105,7 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
+                <Route path="/prenotazioni" element={<BookingManagement />} />
                 <Route path="/sitemap.xml" element={<DynamicSitemap />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

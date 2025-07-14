@@ -270,6 +270,63 @@ export type Database = {
         }
         Relationships: []
       }
+      bookings: {
+        Row: {
+          cancelled_at: string | null
+          client_email: string
+          client_name: string
+          client_phone: string | null
+          confirmed_at: string | null
+          created_at: string
+          duration_minutes: number | null
+          id: string
+          message: string | null
+          notes: string | null
+          preferred_date: string
+          preferred_time: string
+          service_type: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          cancelled_at?: string | null
+          client_email: string
+          client_name: string
+          client_phone?: string | null
+          confirmed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          preferred_date: string
+          preferred_time: string
+          service_type: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          cancelled_at?: string | null
+          client_email?: string
+          client_name?: string
+          client_phone?: string | null
+          confirmed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          preferred_date?: string
+          preferred_time?: string
+          service_type?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       food_diary: {
         Row: {
           consumed: boolean
@@ -316,6 +373,63 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      lead_tracking: {
+        Row: {
+          booking_completed: boolean | null
+          conversion_value: number | null
+          created_at: string
+          form_submissions: number | null
+          id: string
+          ip_address: string | null
+          landing_page: string | null
+          pages_visited: number | null
+          referrer: string | null
+          session_id: string | null
+          time_on_site: number | null
+          updated_at: string
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          booking_completed?: boolean | null
+          conversion_value?: number | null
+          created_at?: string
+          form_submissions?: number | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          pages_visited?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          time_on_site?: number | null
+          updated_at?: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          booking_completed?: boolean | null
+          conversion_value?: number | null
+          created_at?: string
+          form_submissions?: number | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          pages_visited?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          time_on_site?: number | null
+          updated_at?: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
       }
       meal_plans: {
         Row: {

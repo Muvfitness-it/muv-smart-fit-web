@@ -1,8 +1,12 @@
 
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import BookingForm from '@/components/booking/BookingForm';
 import { Star } from 'lucide-react';
 
 const CTASection = () => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
     <section className="py-20 bg-gray-900">
       <div className="max-w-5xl mx-auto text-center px-4">
@@ -32,9 +36,22 @@ const CTASection = () => {
           </p>
         </div>
         
-        <Link to="/contatti" className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-xl md:text-2xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl inline-flex items-center animate-pulse-glow">
-          🎯 PRENOTA ORA LA TUA TRASFORMAZIONE GRATUITA
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+            <DialogTrigger asChild>
+              <button className="bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
+                🚀 PRENOTA SUBITO LA TUA PROVA GRATUITA
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <BookingForm onClose={() => setIsBookingOpen(false)} />
+            </DialogContent>
+          </Dialog>
+          
+          <Link to="/contatti" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
+            📞 CONTATTACI
+          </Link>
+        </div>
         
         <p className="text-sm md:text-base text-gray-400 mt-6 font-semibold">
           ⏰ <span className="text-magenta-400 font-bold">POSTI LIMITATI</span> - 
