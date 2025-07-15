@@ -1,121 +1,185 @@
-import React, { useEffect } from 'react';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, Calendar, Clock, Eye, User, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import ArticleContentParser from './ArticleContentParser';
-import BlogPostHeader from './BlogPostHeader';
-import BlogPostFooter from './BlogPostFooter';
-interface BlogPostContentProps {
-  post: {
-    id: string;
-    title: string;
-    content: string;
-    excerpt?: string;
-    featured_image?: string;
-    published_at?: string;
-    views_count?: number;
-    reading_time?: number;
-    author_name?: string;
-    meta_title?: string;
-    meta_description?: string;
-  };
-}
-const BlogPostContent: React.FC<BlogPostContentProps> = ({
-  post
-}) => {
-  const navigate = useNavigate();
-  const {
-    toast
-  } = useToast();
 
-  // Increment view count when post is loaded
-  useEffect(() => {
-    const incrementViews = async () => {
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt?: string;
+  featured_image?: string;
+  published_at?: string;
+  author_name?: string;
+  views_count?: number;
+  reading_time?: number;
+}
+
+interface BlogPostContentProps {
+  post: BlogPost;
+}
+
+const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/blog/${post.slug}`;
+    
+    if (navigator.share) {
       try {
-        await supabase.rpc('increment_article_views', {
-          article_id: post.id
+        await navigator.share({
+          title: post.title,
+          text: post.excerpt || 'Leggi questo articolo interessante',
+          url: url
         });
       } catch (error) {
-        console.error('Error incrementing views:', error);
+        console.error('Error sharing:', error);
       }
-    };
-    incrementViews();
-  }, [post.id]);
-  const handleShare = async () => {
-    const shareData = {
-      title: post.title,
-      text: post.excerpt || '',
-      url: window.location.href
-    };
-    try {
-      // Prova prima con l'API nativa di condivisione
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData);
-        toast({
-          title: "Condiviso!",
-          description: "Articolo condiviso con successo"
-        });
-      } else {
-        // Fallback: copia il link negli appunti
-        await navigator.clipboard.writeText(window.location.href);
-        toast({
-          title: "Link copiato!",
-          description: "Il link dell'articolo è stato copiato negli appunti"
-        });
-      }
-    } catch (error) {
-      // Se anche la clipboard fallisce, mostra il link
+    } else {
+      // Fallback: copy to clipboard
       try {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(url);
         toast({
           title: "Link copiato!",
-          description: "Il link dell'articolo è stato copiato negli appunti"
+          description: "Il link dell'articolo è stato copiato negli appunti.",
         });
-      } catch (clipboardError) {
+      } catch (error) {
+        console.error('Error copying to clipboard:', error);
         toast({
-          title: "Condivisione non disponibile",
-          description: "Copia manualmente questo link: " + window.location.href,
+          title: "Errore",
+          description: "Impossibile copiare il link.",
           variant: "destructive"
         });
       }
     }
   };
-  return <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Content Container con sfondo più chiaro per la leggibilità */}
-      <div className="max-w-4xl mx-auto">
-        {/* Back button */}
-        <div className="pt-8 pb-4">
-          <button onClick={() => navigate('/blog')} className="flex items-center space-x-2 text-magenta-400 hover:text-magenta-300 transition-colors mb-6 group">
-            <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium">Torna al Blog</span>
-          </button>
-        </div>
 
-        {/* Featured Image */}
-        {post.featured_image && <div className="aspect-video overflow-hidden rounded-2xl mb-8 shadow-2xl">
-            <img src={post.featured_image} alt={post.title} className="w-full h-full object-cover" loading="eager" />
-          </div>}
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('it-IT', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-        {/* Article Header */}
-        <BlogPostHeader post={post} onShare={handleShare} />
-
-        {/* Article Content con sfondo più chiaro */}
-        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 md:p-12 shadow-2xl mb-8">
-          <div className="flex items-center mb-8 text-gray-700">
-            <BookOpen className="w-6 h-6 text-magenta-600 mr-3" />
-            <span className="font-semibold text-lg">Contenuto dell'articolo</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-magenta-200 to-transparent ml-4"></div>
-          </div>
-          
-          <div className="prose-custom">
-            <ArticleContentParser content={post.content} />
-          </div>
-        </div>
-
-        {/* Article Footer */}
-        <BlogPostFooter onShare={handleShare} />
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {/* Navigation */}
+      <div className="mb-8">
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/blog')}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Torna al Blog
+        </Button>
       </div>
-    </div>;
+
+      {/* Featured Image */}
+      {post.featured_image && (
+        <div className="mb-8 rounded-lg overflow-hidden">
+          <img
+            src={post.featured_image}
+            alt={post.title}
+            className="w-full h-64 md:h-96 object-cover"
+            loading="eager"
+          />
+        </div>
+      )}
+
+      {/* Article Header */}
+      <header className="mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
+          {post.title}
+        </h1>
+
+        {/* Article Meta */}
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
+          {post.author_name && (
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span>{post.author_name}</span>
+            </div>
+          )}
+          
+          {post.published_at && (
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>{formatDate(post.published_at)}</span>
+            </div>
+          )}
+          
+          {post.reading_time && (
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              <span>{post.reading_time} min di lettura</span>
+            </div>
+          )}
+          
+          {post.views_count !== undefined && (
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              <span>{post.views_count} visualizzazioni</span>
+            </div>
+          )}
+        </div>
+
+        {/* Share Button */}
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleShare}
+            className="flex items-center gap-2"
+          >
+            <Share2 className="w-4 h-4" />
+            Condividi
+          </Button>
+          
+          <Badge variant="secondary" className="bg-primary/10 text-primary">
+            Fitness & Benessere
+          </Badge>
+        </div>
+      </header>
+
+      {/* Article Content */}
+      <article className="prose prose-lg max-w-none blog-content">
+        <ArticleContentParser content={post.content} />
+      </article>
+
+      {/* Article Footer */}
+      <footer className="mt-12 pt-8 border-t border-border">
+        <div className="bg-card rounded-lg p-6">
+          <h3 className="text-xl font-bold text-foreground mb-4">
+            Ti è piaciuto questo articolo?
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            Scopri tutti i nostri servizi personalizzati per raggiungere i tuoi obiettivi di fitness e benessere.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              onClick={() => navigate('/contatti')}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Prenota Consulenza Gratuita
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate('/blog')}
+            >
+              Leggi Altri Articoli
+            </Button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
 };
+
 export default BlogPostContent;

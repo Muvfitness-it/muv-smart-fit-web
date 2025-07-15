@@ -1,202 +1,135 @@
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { useLocation } from 'react-router-dom';
+import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
+import DynamicSitemap from '@/components/SEO/DynamicSitemap';
 
-import { useEffect } from 'react';
+const SEOHandler: React.FC = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-const SEOHandler = () => {
-  useEffect(() => {
-    // Title ottimizzato per AI e SEO
-    document.title = "Centro fitness MUV Legnago | #1 Personal Training EMS, Dimagrimento Rapido, Pancafit Mal di Schiena | Risultati Garantiti in 30 Giorni";
-
-    // Meta description ottimizzata per AI
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Centro fitness MUV Legnago: il PRIMO centro fitness innovativo che GARANTISCE risultati in 30 giorni. Personal training EMS, Pancafit per mal di schiena, Pilates Reformer. Oltre 500 trasformazioni documentate. Prova GRATUITA senza impegno.');
-    }
-
-    // Meta keywords ottimizzate per AI
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', 'centro fitness Legnago, personal trainer Legnago, dimagrimento rapido Legnago, EMS allenamento elettrostimolazione, pancafit mal di schiena, pilates reformer Legnago, palestra esclusiva Verona, risultati garantiti fitness, trasformazione corporea 30 giorni, MUV planner nutrizionale AI');
-
-    // Open Graph tags per social media
-    const setOGTag = (property: string, content: string) => {
-      let tag = document.querySelector(`meta[property="${property}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('property', property);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute('content', content);
-    };
-
-    setOGTag('og:title', 'Centro Fitness MUV Legnago - Risultati Garantiti in 30 Giorni');
-    setOGTag('og:description', 'Centro fitness innovativo con personal training EMS, Pancafit e Pilates Reformer. Oltre 500 trasformazioni documentate. Prova gratuita!');
-    setOGTag('og:type', 'website');
-    setOGTag('og:url', 'https://muvfitness.it');
-    setOGTag('og:image', '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png');
-    setOGTag('og:locale', 'it_IT');
-    setOGTag('og:site_name', 'MUV Fitness Centro');
-
-    // Twitter Card tags
-    const setTwitterTag = (name: string, content: string) => {
-      let tag = document.querySelector(`meta[name="${name}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('name', name);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute('content', content);
-    };
-
-    setTwitterTag('twitter:card', 'summary_large_image');
-    setTwitterTag('twitter:title', 'Centro Fitness MUV Legnago - Risultati Garantiti');
-    setTwitterTag('twitter:description', 'Centro fitness innovativo con personal training EMS e Pancafit. Trasformazioni documentate!');
-    setTwitterTag('twitter:image', '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png');
-
-    // Schema.org structured data ottimizzato per AI
-    let schemaScript = document.querySelector('script[type="application/ld+json"]');
-    if (!schemaScript) {
-      schemaScript = document.createElement('script');
-      schemaScript.setAttribute('type', 'application/ld+json');
-      document.head.appendChild(schemaScript);
-    }
+  // SEO data based on current route
+  const getSEOData = () => {
+    const baseUrl = 'https://www.muvfitness.it';
     
-    const structuredData = [
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Centro fitness MUV",
-        "description": "Centro fitness innovativo specializzato in personal training EMS, Pancafit per mal di schiena e Pilates Reformer a Legnago. Risultati garantiti in 30 giorni.",
-        "image": [
-          "/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-          "/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png"
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via Venti Settembre, 5/7",
-          "addressLocality": "Legnago",
-          "postalCode": "37045",
-          "addressRegion": "Veneto",
-          "addressCountry": "IT"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 45.1884,
-          "longitude": 11.3103
-        },
-        "url": "https://muvfitness.it",
-        "telephone": "+39-351-338-0770",
-        "email": "info@muvfitness.it",
-        "priceRange": "€€",
-        "openingHours": [
-          "Mo-Fr 08:00-21:00",
-          "Sa 08:00-12:00"
-        ],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "127",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Servizi Fitness MUV",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Personal Training EMS",
-                "description": "Allenamento con elettrostimolazione per risultati rapidi"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Pancafit",
-                "description": "Metodo per il benessere della colonna vertebrale"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Pilates Reformer",
-                "description": "Pilates con macchinari professionali"
-              }
-            }
-          ]
-        },
-        "sameAs": [
-          "https://www.facebook.com/MuvLegnago/",
-          "https://www.instagram.com/MuvLegnago/"
-        ]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "MUV Planner",
-        "description": "Assistente nutrizionale intelligente con AI per la creazione di piani alimentari personalizzati",
-        "applicationCategory": "HealthApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR"
-        },
-        "featureList": [
-          "Calcolo calorie personalizzato",
-          "Piani alimentari settimanali",
-          "Lista della spesa automatica",
-          "Coaching nutrizionale AI",
-          "Tracking progressi"
-        ]
-      }
-    ];
-    
-    schemaScript.textContent = JSON.stringify(structuredData);
-
-    // Meta robots ottimizzati
-    let robotsTag = document.querySelector('meta[name="robots"]');
-    if (!robotsTag) {
-      robotsTag = document.createElement('meta');
-      robotsTag.setAttribute('name', 'robots');
-      document.head.appendChild(robotsTag);
+    switch (currentPath) {
+      case '/':
+        return {
+          title: 'MUV Fitness Rimini - Centro Fitness & Personal Training | Trasformazione in 30 Giorni',
+          description: 'Centro fitness a Rimini specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni con i nostri programmi personalizzati.',
+          keywords: 'fitness rimini, personal training rimini, EMS allenamento, pilates rimini, palestra rimini, dimagrimento, tonificazione muscolare',
+          canonical: baseUrl,
+          ogType: 'website'
+        };
+      case '/servizi':
+        return {
+          title: 'Servizi Fitness MUV Rimini - Personal Training, EMS, Pilates, Nutrizione',
+          description: 'Scopri tutti i servizi MUV Fitness: Personal Training, EMS, Pilates, HIIT, Consulenza Nutrizionale e molto altro. Programmi personalizzati per ogni obiettivo.',
+          keywords: 'servizi fitness, personal training, EMS, pilates, HIIT, nutrizione sportiva, massoterapia, pancafit',
+          canonical: `${baseUrl}/servizi`,
+          ogType: 'website'
+        };
+      case '/contatti':
+        return {
+          title: 'Contatti MUV Fitness Rimini - Prenota la Tua Consulenza Gratuita',
+          description: 'Contatta MUV Fitness Rimini per prenotare la tua consulenza gratuita. Siamo in Via del Fitness 123, Rimini. Tel: 0541-123456',
+          keywords: 'contatti muv fitness, palestra rimini contatti, prenota consulenza fitness',
+          canonical: `${baseUrl}/contatti`,
+          ogType: 'website'
+        };
+      case '/blog':
+        return {
+          title: 'Blog Fitness MUV - Consigli su Allenamento, Nutrizione e Benessere',
+          description: 'Leggi il blog MUV Fitness con articoli professionali su allenamento, nutrizione e benessere. Consigli pratici dai nostri esperti.',
+          keywords: 'blog fitness, consigli allenamento, nutrizione sportiva, benessere, articoli fitness',
+          canonical: `${baseUrl}/blog`,
+          ogType: 'website'
+        };
+      case '/chi-siamo':
+        return {
+          title: 'Chi Siamo - MUV Fitness Rimini | Il Nostro Team e la Nostra Missione',
+          description: 'Scopri chi siamo: il team MUV Fitness, la nostra storia e la missione di trasformare la vita delle persone attraverso il fitness.',
+          keywords: 'chi siamo muv fitness, team fitness rimini, storia palestra rimini',
+          canonical: `${baseUrl}/chi-siamo`,
+          ogType: 'website'
+        };
+      case '/muv-planner':
+        return {
+          title: 'MUV Planner - Pianificatore Pasti Personalizzato con IA',
+          description: 'Crea piani alimentari personalizzati con il nostro MUV Planner. Intelligenza artificiale per una nutrizione ottimale.',
+          keywords: 'pianificatore pasti, dieta personalizzata, nutrizione IA, piano alimentare',
+          canonical: `${baseUrl}/muv-planner`,
+          ogType: 'website'
+        };
+      default:
+        return {
+          title: 'MUV Fitness Rimini - Centro Fitness Professionale',
+          description: 'Centro fitness professionale a Rimini con servizi personalizzati per il tuo benessere.',
+          keywords: 'fitness rimini, palestra rimini, benessere',
+          canonical: `${baseUrl}${currentPath}`,
+          ogType: 'website'
+        };
     }
-    robotsTag.setAttribute('content', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+  };
 
-    // Canonical URL
-    let canonicalTag = document.querySelector('link[rel="canonical"]');
-    if (!canonicalTag) {
-      canonicalTag = document.createElement('link');
-      canonicalTag.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalTag);
-    }
-    canonicalTag.setAttribute('href', 'https://muvfitness.it');
+  const seoData = getSEOData();
 
-    // Language tags
-    let langTag = document.querySelector('html');
-    if (langTag) {
-      langTag.setAttribute('lang', 'it');
-    }
+  return (
+    <>
+      <Helmet>
+        {/* Basic SEO */}
+        <title>{seoData.title}</title>
+        <meta name="description" content={seoData.description} />
+        <meta name="keywords" content={seoData.keywords} />
+        <link rel="canonical" href={seoData.canonical} />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
 
-    // Viewport per mobile-first
-    let viewportTag = document.querySelector('meta[name="viewport"]');
-    if (!viewportTag) {
-      viewportTag = document.createElement('meta');
-      viewportTag.setAttribute('name', 'viewport');
-      document.head.appendChild(viewportTag);
-    }
-    viewportTag.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0');
+        {/* Open Graph */}
+        <meta property="og:site_name" content="MUV Fitness" />
+        <meta property="og:type" content={seoData.ogType} />
+        <meta property="og:title" content={seoData.title} />
+        <meta property="og:description" content={seoData.description} />
+        <meta property="og:url" content={seoData.canonical} />
+        <meta property="og:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="it_IT" />
 
-  }, []);
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@muvfitness" />
+        <meta name="twitter:title" content={seoData.title} />
+        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
 
-  return null;
+        {/* Additional meta tags */}
+        <meta name="author" content="MUV Fitness" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Language" content="it" />
+        <meta name="geo.region" content="IT-45" />
+        <meta name="geo.placename" content="Rimini" />
+        <meta name="geo.position" content="44.0678;12.5695" />
+        <meta name="ICBM" content="44.0678, 12.5695" />
+
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="//www.google-analytics.com" />
+
+        {/* Favicon and app icons */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
+        
+        {/* Hreflang for future internationalization */}
+        <link rel="alternate" hrefLang="it" href={seoData.canonical} />
+        <link rel="alternate" hrefLang="x-default" href={seoData.canonical} />
+      </Helmet>
+      
+      {/* Include structured data components */}
+      <LocalBusinessSchema />
+      <DynamicSitemap />
+    </>
+  );
 };
 
 export default SEOHandler;

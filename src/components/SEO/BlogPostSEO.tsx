@@ -8,14 +8,14 @@ interface BlogPost {
   content: string;
   excerpt?: string;
   featured_image?: string;
-  published_at?: string;
-  updated_at?: string;
-  views_count?: number;
-  reading_time?: number;
-  author_name?: string;
   meta_title?: string;
   meta_description?: string;
   meta_keywords?: string;
+  published_at?: string;
+  author_name?: string;
+  author_email?: string;
+  views_count?: number;
+  reading_time?: number;
 }
 
 interface BlogPostSEOProps {
@@ -23,105 +23,98 @@ interface BlogPostSEOProps {
 }
 
 const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
-  const canonicalUrl = `https://muvfitness.it/blog/${post.slug}`;
+  const baseUrl = 'https://www.muvfitness.it';
+  const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
   
-  // Ottimizza il title per la SERP
-  const seoTitle = post.meta_title || `${post.title} | Blog MUV Fitness Legnago`;
-  
-  // Ottimizza la description
+  // SEO optimized title and description
+  const seoTitle = post.meta_title || `${post.title} | MUV Fitness Blog`;
   const seoDescription = post.meta_description || 
     post.excerpt || 
-    `Scopri tutto su ${post.title.toLowerCase()} nel blog di MUV Fitness. Consigli professionali per fitness, alimentazione e benessere a Legnago.`;
+    post.content.replace(/<[^>]*>/g, '').substring(0, 160) + '...';
   
-  // Keywords ottimizzate
   const seoKeywords = post.meta_keywords || 
-    `${post.title.toLowerCase()}, fitness legnago, blog fitness, allenamento, nutrizione, MUV fitness, benessere, personal training legnago`;
-  
-  // Extract tags from content or use default
-  const contentWords = post.content
-    .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .toLowerCase()
-    .split(/\s+/)
-    .slice(0, 50)
-    .filter(word => word.length > 4)
-    .slice(0, 10);
-  
-  const tags = [
-    'fitness',
-    'allenamento',
-    'benessere',
-    'legnago',
-    'MUV fitness',
-    ...contentWords
-  ].slice(0, 8);
+    `fitness, allenamento, ${post.title.toLowerCase().split(' ').slice(0, 3).join(', ')}, MUV Fitness`;
 
-  // Structured data specifico per blog post
+  // Extract tags from content for better SEO
+  const extractTags = (content: string): string[] => {
+    const words = content.toLowerCase().match(/\b\w{4,}\b/g) || [];
+    const frequency: { [key: string]: number } = {};
+    words.forEach(word => {
+      frequency[word] = (frequency[word] || 0) + 1;
+    });
+    return Object.entries(frequency)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 10)
+      .map(([word]) => word);
+  };
+
+  const contentTags = extractTags(post.content);
+
+  // Structured data for better SEO
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
+    "@id": `${canonicalUrl}#article`,
     "headline": post.title,
     "description": seoDescription,
-    "image": {
-      "@type": "ImageObject",
-      "url": post.featured_image?.startsWith('http') 
-        ? post.featured_image 
-        : `https://muvfitness.it${post.featured_image || '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'}`,
-      "width": 1200,
-      "height": 630
-    },
-    "url": canonicalUrl,
-    "datePublished": post.published_at,
-    "dateModified": post.updated_at || post.published_at,
+    "image": [
+      post.featured_image || `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`
+    ],
+    "datePublished": post.published_at || new Date().toISOString(),
+    "dateModified": new Date().toISOString(),
     "author": {
       "@type": "Person",
-      "name": post.author_name || "MUV Fitness Team",
-      "url": "https://muvfitness.it/team"
+      "name": post.author_name || "MUV Team",
+      "email": post.author_email || "info@muvfitness.it"
     },
     "publisher": {
       "@type": "Organization",
       "name": "MUV Fitness",
+      "url": baseUrl,
       "logo": {
         "@type": "ImageObject",
-        "url": "https://muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+        "url": `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`,
         "width": 400,
         "height": 400
-      },
-      "url": "https://muvfitness.it",
-      "sameAs": [
-        "https://www.facebook.com/muvsmartfit",
-        "https://www.instagram.com/muvsmartfit"
-      ]
+      }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": canonicalUrl
     },
-    "articleSection": "Fitness e Benessere",
-    "keywords": tags.join(', '),
-    "wordCount": post.content.replace(/<[^>]*>/g, '').split(/\s+/).length,
+    "wordCount": post.content.split(/\s+/).length,
     "timeRequired": `PT${post.reading_time || 5}M`,
-    "interactionStatistic": {
-      "@type": "InteractionCounter",
-      "interactionType": "https://schema.org/ReadAction",
-      "userInteractionCount": post.views_count || 0
+    "articleSection": "Fitness & Wellness",
+    "keywords": [...contentTags, ...seoKeywords.split(', ')].join(', '),
+    "about": {
+      "@type": "Thing",
+      "name": "Fitness Training",
+      "description": "Professional fitness training and wellness guidance"
     },
-    "isPartOf": {
-      "@type": "Blog",
-      "name": "MUV Fitness Blog",
-      "url": "https://muvfitness.it/blog"
-    },
-    "about": [
+    "mentions": [
       {
-        "@type": "Thing",
-        "name": "Fitness",
-        "sameAs": "https://en.wikipedia.org/wiki/Physical_fitness"
-      },
+        "@type": "Organization",
+        "name": "MUV Fitness",
+        "url": baseUrl
+      }
+    ],
+    "isAccessibleForFree": true,
+    "hasPart": [
       {
-        "@type": "Thing",
-        "name": "Personal Training",
-        "sameAs": "https://en.wikipedia.org/wiki/Personal_trainer"
+        "@type": "WebPageElement",
+        "cssSelector": ".blog-content",
+        "description": "Main article content"
       }
     ]
+  };
+
+  const articleData = {
+    title: post.title,
+    author: post.author_name || "MUV Team",
+    publishedAt: post.published_at,
+    readingTime: post.reading_time,
+    viewsCount: post.views_count,
+    category: "Fitness & Wellness"
   };
 
   return (
@@ -132,13 +125,7 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
       canonicalUrl={canonicalUrl}
       ogImage={post.featured_image}
       structuredData={structuredData}
-      articleData={{
-        publishedTime: post.published_at,
-        modifiedTime: post.updated_at,
-        author: post.author_name,
-        section: "Fitness e Benessere",
-        tags: tags
-      }}
+      articleData={articleData}
     />
   );
 };

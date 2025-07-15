@@ -43,6 +43,7 @@ import BookingManagement from "./pages/BookingManagement";
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 // SEO Components
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
+import SEOHandler from "./components/home/SEOHandler";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const AppContent = () => {
   
   return (
     <>
+      <SEOHandler />
       <PerformanceOptimizer />
       <div className="min-h-screen bg-gray-900 text-white">
       <Routes>
