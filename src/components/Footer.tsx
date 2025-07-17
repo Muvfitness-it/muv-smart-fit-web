@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <img 
-                src="/src/assets/muv-logo-transparent.png" 
+                src="/src/assets/muv-logo-original-transparent.png" 
                 alt="MUV Fitness Logo" 
                 className="h-16 w-auto"
               />
