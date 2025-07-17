@@ -15,14 +15,14 @@ interface BookingFormProps {
 }
 
 const services = [
-  { value: 'personal-training', label: 'Personal Training', duration: 60, price: '€80' },
-  { value: 'ems', label: 'Allenamento EMS', duration: 45, price: '€60' },
-  { value: 'pancafit', label: 'Pancafit', duration: 60, price: '€50' },
-  { value: 'pilates', label: 'Pilates Reformer', duration: 55, price: '€45' },
-  { value: 'hiit', label: 'HIIT Training', duration: 45, price: '€40' },
-  { value: 'small-group', label: 'Small Group (max 4)', duration: 60, price: '€30' },
-  { value: 'consulenza', label: 'Consulenza Nutrizionale', duration: 90, price: '€70' },
-  { value: 'massoterapia', label: 'Massoterapia', duration: 60, price: '€65' }
+  { value: 'personal-training', label: 'Personal Training', duration: 60 },
+  { value: 'ems', label: 'Allenamento EMS', duration: 45 },
+  { value: 'pancafit', label: 'Pancafit', duration: 60 },
+  { value: 'pilates', label: 'Pilates Reformer', duration: 55 },
+  { value: 'hiit', label: 'HIIT Training', duration: 45 },
+  { value: 'small-group', label: 'Small Group (max 4)', duration: 60 },
+  { value: 'consulenza', label: 'Consulenza Nutrizionale', duration: 90 },
+  { value: 'massoterapia', label: 'Massoterapia', duration: 60 }
 ];
 
 const timeSlots = [
@@ -55,8 +55,7 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
       // Track conversion event
       if (typeof gtag !== 'undefined') {
         gtag('event', 'booking_started', {
-          service_type: formData.serviceType,
-          value: selectedService?.price?.replace('€', '') || 0
+          service_type: formData.serviceType
         });
       }
 
@@ -78,8 +77,7 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
       // Track successful booking
       if (typeof gtag !== 'undefined') {
         gtag('event', 'booking_completed', {
-          service_type: formData.serviceType,
-          value: selectedService?.price?.replace('€', '') || 0
+          service_type: formData.serviceType
         });
       }
 
@@ -161,19 +159,16 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
                     <SelectValue placeholder="Che servizio ti interessa?" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border shadow-lg z-50">
-                    {services.map((service) => (
-                      <SelectItem key={service.value} value={service.value}>
-                        <div className="flex justify-between items-center w-full">
-                          <span>{service.label}</span>
-                          <span className="text-brand-primary font-bold ml-4">{service.price}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                     {services.map((service) => (
+                       <SelectItem key={service.value} value={service.value}>
+                         <span>{service.label}</span>
+                       </SelectItem>
+                     ))}
                   </SelectContent>
                 </Select>
                 {selectedService && (
                   <p className="text-sm text-muted-foreground">
-                    ⏱️ Durata: {selectedService.duration} minuti | 💰 Prezzo: {selectedService.price}
+                    ⏱️ Durata: {selectedService.duration} minuti
                   </p>
                 )}
               </div>
@@ -240,7 +235,6 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
                 <p><strong>Servizio:</strong> {selectedService?.label}</p>
                 <p><strong>Data:</strong> {new Date(formData.preferredDate).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
                 <p><strong>Orario:</strong> {formData.preferredTime}</p>
-                <p><strong>Prezzo:</strong> {selectedService?.price}</p>
               </div>
 
               {/* Contact Details */}
