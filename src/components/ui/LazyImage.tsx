@@ -47,6 +47,32 @@ const LazyImage = ({
     setHasError(true);
     onError?.();
   };
-  return;
+  return (
+    <div ref={imgRef} className={cn("relative", className)}>
+      {isInView && !hasError ? (
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "transition-opacity duration-300",
+            isLoaded ? "opacity-100" : "opacity-0",
+            className
+          )}
+          onLoad={handleLoad}
+          onError={handleError}
+        />
+      ) : !hasError ? (
+        <img
+          src={placeholder}
+          alt={alt}
+          className={cn("opacity-50", className)}
+        />
+      ) : (
+        <div className={cn("bg-gray-200 flex items-center justify-center", className)}>
+          <span className="text-gray-500 text-sm">Error loading image</span>
+        </div>
+      )}
+    </div>
+  );
 };
 export default LazyImage;
