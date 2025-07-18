@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, User, Phone, Mail, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, User, Phone, Mail, CheckCircle, XCircle, AlertCircle, ExternalLink } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -97,6 +97,26 @@ const BookingManager = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const generateGoogleCalendarLink = (booking: Booking) => {
+    const serviceLabel = serviceLabels[booking.service_type as keyof typeof serviceLabels] || booking.service_type;
+    const startDate = new Date(`${booking.preferred_date}T${booking.preferred_time}`);
+    const endDate = new Date(startDate.getTime() + (booking.duration_minutes || 60) * 60000);
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: `${serviceLabel} - ${booking.client_name}`,
+      dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
+      details: `Cliente: ${booking.client_name}\nEmail: ${booking.client_email}\nTelefono: ${booking.client_phone || 'Non fornito'}\nNote: ${booking.message || 'Nessuna nota'}`,
+      location: 'MUV Wellness Studio'
+    });
+
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
   };
 
   if (loading) {
@@ -218,37 +238,59 @@ const BookingManager = () => {
                   )}
 
                   {/* Actions */}
-                  {booking.status === 'pending' && (
-                    <div className="flex gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {booking.status === 'pending' && (
+                      <>
+                        <Button
+                          onClick={() => updateBookingStatus(booking.id, 'confirmed')}
+                          className="bg-green-600 hover:bg-green-700"
+                          size="sm"
+                        >
+                          <CheckCircle size={16} className="mr-1" />
+                          Conferma
+                        </Button>
+                        <Button
+                          onClick={() => updateBookingStatus(booking.id, 'cancelled')}
+                          variant="destructive"
+                          size="sm"
+                        >
+                          <XCircle size={16} className="mr-1" />
+                          Annulla
+                        </Button>
+                      </>
+                    )}
+                    
+                    {booking.status === 'confirmed' && (
                       <Button
-                        onClick={() => updateBookingStatus(booking.id, 'confirmed')}
-                        className="bg-green-600 hover:bg-green-700"
+                        onClick={() => updateBookingStatus(booking.id, 'completed')}
+                        className="bg-blue-600 hover:bg-blue-700"
                         size="sm"
                       >
                         <CheckCircle size={16} className="mr-1" />
-                        Conferma
+                        Segna come Completata
                       </Button>
+                    )}
+
+                    {/* Google Calendar Link - per tutte le prenotazioni confermate */}
+                    {(booking.status === 'confirmed' || booking.status === 'completed') && (
                       <Button
-                        onClick={() => updateBookingStatus(booking.id, 'cancelled')}
-                        variant="destructive"
+                        asChild
+                        variant="outline"
                         size="sm"
+                        className="border-blue-500 text-blue-600 hover:bg-blue-50"
                       >
-                        <XCircle size={16} className="mr-1" />
-                        Annulla
+                        <a
+                          href={generateGoogleCalendarLink(booking)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Calendar size={16} className="mr-1" />
+                          <ExternalLink size={12} className="ml-1" />
+                          Aggiungi a Google Calendar
+                        </a>
                       </Button>
-                    </div>
-                  )}
-                  
-                  {booking.status === 'confirmed' && (
-                    <Button
-                      onClick={() => updateBookingStatus(booking.id, 'completed')}
-                      className="bg-blue-600 hover:bg-blue-700"
-                      size="sm"
-                    >
-                      <CheckCircle size={16} className="mr-1" />
-                      Segna come Completata
-                    </Button>
-                  )}
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             );
