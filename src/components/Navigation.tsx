@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import LazyImage from "@/components/ui/LazyImage";
+import muvLogo from "@/assets/muv-logo-original-transparent.png";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,7 +45,7 @@ const Navigation = () => {
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
             <LazyImage 
-              src="/src/assets/muv-logo-original-transparent.png" 
+              src={muvLogo} 
               alt="MUV logo" 
               className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain" 
               priority={true}
