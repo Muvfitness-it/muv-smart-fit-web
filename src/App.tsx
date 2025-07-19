@@ -39,6 +39,7 @@ import BlogAdmin from "./pages/BlogAdmin";
 import Auth from "./pages/Auth";
 import Analytics from "./pages/Analytics";
 import BookingManagement from "./pages/BookingManagement";
+import AdminRoleAssigner from "./components/auth/AdminRoleAssigner";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 // SEO Components
@@ -125,6 +126,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
+        <AdminRoleAssigner />
         <Toaster />
         <Sonner />
         <BrowserRouter>
