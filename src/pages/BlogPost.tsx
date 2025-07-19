@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Eye } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import BlogPostSEO from '@/components/SEO/BlogPostSEO';
+import EnhancedBlogSEO from '@/components/blog/EnhancedBlogSEO';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 
 interface BlogPost {
@@ -122,8 +122,8 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)]">
-      {/* SEO Component */}
-      <BlogPostSEO post={post} />
+      {/* SEO Component Enhanced */}
+      <EnhancedBlogSEO post={post} />
       
       {/* Blog Post Content */}
       <BlogPostContent post={post} />

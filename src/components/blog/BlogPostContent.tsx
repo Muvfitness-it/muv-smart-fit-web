@@ -5,6 +5,8 @@ import { ArrowLeft, Calendar, Clock, Eye, User, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import ArticleContentParser from './ArticleContentParser';
+import BlogAnalytics from './BlogAnalytics';
+import AIOptimizedContent from './AIOptimizedContent';
 
 interface BlogPost {
   id: string;
@@ -68,7 +70,12 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background">
+      {/* Analytics e AI optimization invisibili */}
+      <BlogAnalytics post={post} />
+      <AIOptimizedContent post={post} />
+      
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Navigation */}
       <div className="mb-8">
         <Button
@@ -149,7 +156,7 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
       </header>
 
       {/* Article Content */}
-      <article className="prose prose-lg max-w-none blog-content">
+      <article className="prose prose-lg max-w-none blog-content bg-card rounded-lg p-6 shadow-sm border border-border">
         <ArticleContentParser content={post.content} />
       </article>
 
@@ -178,6 +185,7 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
