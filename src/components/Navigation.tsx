@@ -38,6 +38,9 @@ const Navigation = () => {
   }, {
     name: "Contatti",
     path: "/contatti"
+  }, {
+    name: "Admin",
+    path: "/auth"
   }];
   return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

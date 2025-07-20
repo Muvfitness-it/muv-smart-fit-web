@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
 
   React.useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/prenotazioni');
     }
   }, [user, navigate]);
 
