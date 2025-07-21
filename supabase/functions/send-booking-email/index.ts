@@ -28,6 +28,24 @@ interface BookingEmailRequest {
   previous_status?: string;
 }
 
+const generateCancelToken = async (bookingId: string): Promise<string> => {
+  const token = crypto.randomUUID();
+  const tokenHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token));
+  const hashString = Array.from(new Uint8Array(tokenHash))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  return token;
+};
+
+const generateModifyToken = async (bookingId: string): Promise<string> => {
+  const token = crypto.randomUUID();
+  const tokenHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token));
+  const hashString = Array.from(new Uint8Array(tokenHash))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  return token;
+};
+
 const serviceLabels = {
   'personal-training': 'Personal Training',
   'ems': 'Allenamento EMS',
@@ -59,7 +77,7 @@ const generateGoogleCalendarLink = (booking: any) => {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 };
 
-const getConfirmationEmailTemplate = (booking: any) => {
+const getConfirmationEmailTemplate = async (booking: any) => {
   const serviceLabel = serviceLabels[booking.service_type as keyof typeof serviceLabels] || booking.service_type;
   const formattedDate = new Date(booking.preferred_date).toLocaleDateString('it-IT', {
     weekday: 'long',
@@ -67,6 +85,10 @@ const getConfirmationEmailTemplate = (booking: any) => {
     month: 'long',
     day: 'numeric'
   });
+  
+  const cancelToken = await generateCancelToken(booking.id);
+  const modifyToken = await generateModifyToken(booking.id);
+  const baseUrl = 'https://muvfitness.it';
   
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
@@ -102,6 +124,16 @@ const getConfirmationEmailTemplate = (booking: any) => {
           </ul>
         </div>
         
+        <div style="background: #fff7ed; border: 1px solid #fed7aa; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <h3 style="color: #c2410c; margin: 0 0 15px 0; font-size: 16px;">🔄 Hai bisogno di modificare l'appuntamento?</h3>
+          <p style="color: #c2410c; margin-bottom: 15px;">Quando riceverai la conferma, potrai modificare o annullare facilmente:</p>
+          <ul style="color: #c2410c; margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li>Riceverai i link diretti per modificare o annullare</li>
+            <li>Puoi sempre contattarci per qualsiasi cambiamento</li>
+            <li>Le modifiche sono sempre possibili fino a 24h prima</li>
+          </ul>
+        </div>
+        
         <div style="text-align: center; margin: 30px 0;">
           <p style="color: #666; margin-bottom: 15px;">Hai domande? Contattaci!</p>
           <div style="display: inline-block; text-align: left;">
@@ -124,7 +156,7 @@ const getConfirmationEmailTemplate = (booking: any) => {
   `;
 };
 
-const getStatusChangeEmailTemplate = (booking: any, previousStatus: string) => {
+const getStatusChangeEmailTemplate = async (booking: any, previousStatus: string) => {
   const serviceLabel = serviceLabels[booking.service_type as keyof typeof serviceLabels] || booking.service_type;
   const formattedDate = new Date(booking.preferred_date).toLocaleDateString('it-IT', {
     weekday: 'long',
@@ -132,6 +164,10 @@ const getStatusChangeEmailTemplate = (booking: any, previousStatus: string) => {
     month: 'long',
     day: 'numeric'
   });
+  
+  const cancelToken = await generateCancelToken(booking.id);
+  const modifyToken = await generateModifyToken(booking.id);
+  const baseUrl = 'https://muvfitness.it';
   
   const statusMessages = {
     confirmed: {
@@ -203,6 +239,21 @@ const getStatusChangeEmailTemplate = (booking: any, previousStatus: string) => {
               <li>Porta una bottiglia d'acqua</li>
               <li>Se hai problemi fisici, informaci prima della sessione</li>
             </ul>
+          </div>
+          
+          <div style="background: #fff7ed; border: 1px solid #fed7aa; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <h3 style="color: #c2410c; margin: 0 0 15px 0; font-size: 16px;">🔄 Hai bisogno di modificare l'appuntamento?</h3>
+            <p style="color: #c2410c; margin-bottom: 15px;">Clicca sui pulsanti qui sotto:</p>
+            <div style="text-align: center; gap: 10px;">
+              <a href="${baseUrl}/booking-modify?token=${modifyToken}" 
+                 style="display: inline-block; background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 5px; font-weight: 600;">
+                📝 Modifica Appuntamento
+              </a>
+              <a href="${baseUrl}/booking-cancel?token=${cancelToken}" 
+                 style="display: inline-block; background: #ef4444; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 5px; font-weight: 600;">
+                ❌ Annulla Appuntamento
+              </a>
+            </div>
           </div>
         ` : ''}
         
@@ -310,10 +361,10 @@ const handler = async (req: Request): Promise<Response> => {
     let customerSubject = '';
     
     if (type === 'confirmation') {
-      customerEmailHtml = getConfirmationEmailTemplate(booking);
+      customerEmailHtml = await getConfirmationEmailTemplate(booking);
       customerSubject = '✅ Prenotazione ricevuta - MUV Wellness';
     } else {
-      customerEmailHtml = getStatusChangeEmailTemplate(booking, previous_status || '');
+      customerEmailHtml = await getStatusChangeEmailTemplate(booking, previous_status || '');
       const statusLabels = {
         confirmed: 'confermata',
         cancelled: 'annullata',

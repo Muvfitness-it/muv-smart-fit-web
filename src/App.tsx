@@ -42,6 +42,8 @@ import BookingManagement from "./pages/BookingManagement";
 import AdminRoleAssigner from "./components/auth/AdminRoleAssigner";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
+import BookingCancel from "./pages/BookingCancel";
+import BookingModify from "./pages/BookingModify";
 // SEO Components
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
@@ -75,6 +77,10 @@ const AppContent = () => {
         
         {/* Auth Page - NO Navigation/Footer */}
         <Route path="/auth" element={<Auth />} />
+        
+        {/* Booking Management Pages - NO Navigation/Footer */}
+        <Route path="/booking-cancel" element={<BookingCancel />} />
+        <Route path="/booking-modify" element={<BookingModify />} />
         
         {/* Regular Pages - WITH Navigation/Footer */}
         <Route path="/*" element={
