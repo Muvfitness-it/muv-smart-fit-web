@@ -28,7 +28,33 @@ const Index = () => {
         <AdminRoleAssigner />
         
         {/* Auth Status Bar */}
-        
+        {user && (
+          <div className="fixed top-4 right-4 z-50 bg-background/80 backdrop-blur-sm border rounded-lg p-4 shadow-lg">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-primary" />
+                <span className="text-sm text-foreground">{user.email}</span>
+              </div>
+              {isAdmin && (
+                <Link to="/admin/utenti">
+                  <Button variant="outline" size="sm">
+                    <Settings className="h-4 w-4 mr-1" />
+                    Admin
+                  </Button>
+                </Link>
+              )}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={signOut}
+                className="text-destructive hover:text-destructive"
+              >
+                <LogIn className="h-4 w-4 mr-1 rotate-180" />
+                Logout
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Existing content */}
         <HeroSection />
