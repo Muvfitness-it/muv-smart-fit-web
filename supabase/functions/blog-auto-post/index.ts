@@ -35,31 +35,82 @@ serve(async (req) => {
   }
 
   try {
+    // DEBUG: Log all environment variables related to MANUS
+    console.log('=== DEBUG: Environment Variables ===');
+    const expectedApiKey = Deno.env.get('MANUS_API_KEY');
+    console.log('MANUS_API_KEY exists:', !!expectedApiKey);
+    console.log('MANUS_API_KEY length:', expectedApiKey?.length || 0);
+    console.log('MANUS_API_KEY first 10 chars:', expectedApiKey?.substring(0, 10) || 'undefined');
+    
+    // DEBUG: Log all headers
+    console.log('=== DEBUG: Request Headers ===');
+    const headers = Array.from(req.headers.entries());
+    headers.forEach(([key, value]) => {
+      if (key.toLowerCase().includes('manus') || key.toLowerCase().includes('api')) {
+        console.log(`${key}: ${value.substring(0, 10)}...`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    });
+    
     // Validate Manus API key
     const manusApiKey = req.headers.get('x-manus-api-key');
-    const expectedApiKey = Deno.env.get('MANUS_API_KEY');
+    console.log('=== DEBUG: API Key Validation ===');
+    console.log('Received API key exists:', !!manusApiKey);
+    console.log('Received API key length:', manusApiKey?.length || 0);
+    console.log('Received API key first 10 chars:', manusApiKey?.substring(0, 10) || 'undefined');
     
     if (!expectedApiKey) {
-      console.error('MANUS_API_KEY not configured');
+      console.error('MANUS_API_KEY not configured in environment');
       return new Response(JSON.stringify({
         success: false,
-        error: 'API key not configured on server'
+        error: 'API key not configured on server',
+        debug: 'MANUS_API_KEY environment variable not found'
       } as ApiResponse), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
-    if (!manusApiKey || manusApiKey !== expectedApiKey) {
-      console.error('Invalid or missing Manus API key');
+    if (!manusApiKey) {
+      console.error('No x-manus-api-key header provided');
       return new Response(JSON.stringify({
         success: false,
-        error: 'Unauthorized: Invalid API key'
+        error: 'Unauthorized: Missing API key',
+        debug: 'x-manus-api-key header not found'
       } as ApiResponse), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
+
+    // DEBUG: Compare keys character by character
+    console.log('=== DEBUG: Key Comparison ===');
+    console.log('Keys match:', manusApiKey === expectedApiKey);
+    console.log('Expected key type:', typeof expectedApiKey);
+    console.log('Received key type:', typeof manusApiKey);
+    console.log('Expected key trimmed:', expectedApiKey.trim());
+    console.log('Received key trimmed:', manusApiKey.trim());
+    console.log('Keys match after trim:', manusApiKey.trim() === expectedApiKey.trim());
+
+    if (manusApiKey.trim() !== expectedApiKey.trim()) {
+      console.error('Invalid Manus API key provided');
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Unauthorized: Invalid API key',
+        debug: {
+          receivedLength: manusApiKey.length,
+          expectedLength: expectedApiKey.length,
+          receivedFirst10: manusApiKey.substring(0, 10),
+          expectedFirst10: expectedApiKey.substring(0, 10)
+        }
+      } as ApiResponse), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    console.log('=== DEBUG: Authentication successful ===');
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -69,6 +120,8 @@ serve(async (req) => {
     const { method, url } = req;
     const urlObj = new URL(url);
     const endpoint = urlObj.pathname.split('/').pop();
+
+    console.log(`=== DEBUG: Processing ${method} request to ${endpoint} ===`);
 
     switch (method) {
       case 'POST':
@@ -101,7 +154,8 @@ serve(async (req) => {
     console.error('Error in blog-auto-post function:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: error.message,
+      debug: 'Unexpected error in main function'
     } as ApiResponse), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
