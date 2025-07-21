@@ -59,7 +59,8 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
         });
       }
 
-      const { error } = await supabase
+      // Inserisci la prenotazione nel database
+      const { data: bookingData, error } = await supabase
         .from('bookings')
         .insert({
           service_type: formData.serviceType,
@@ -70,9 +71,39 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
           client_phone: formData.clientPhone,
           message: formData.message,
           duration_minutes: selectedService?.duration || 60
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // Invia email di conferma
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-booking-email', {
+          body: {
+            type: 'confirmation',
+            booking: {
+              id: bookingData.id,
+              service_type: bookingData.service_type,
+              preferred_date: bookingData.preferred_date,
+              preferred_time: bookingData.preferred_time,
+              client_name: bookingData.client_name,
+              client_email: bookingData.client_email,
+              client_phone: bookingData.client_phone,
+              message: bookingData.message,
+              status: bookingData.status,
+              duration_minutes: bookingData.duration_minutes
+            }
+          }
+        });
+
+        if (emailError) {
+          console.error('Errore invio email:', emailError);
+          // Non blocchiamo il processo se l'email fallisce
+        }
+      } catch (emailError) {
+        console.error('Errore invio email di conferma:', emailError);
+      }
 
       // Track successful booking
       if (typeof gtag !== 'undefined') {
@@ -83,7 +114,8 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
 
       toast({
         title: "✅ Prenotazione Inviata!",
-        description: `Riceverai conferma entro 2 ore per ${selectedService?.label} del ${new Date(formData.preferredDate).toLocaleDateString('it-IT')} alle ${formData.preferredTime}`,
+        description: `Riceverai conferma entro 2 ore per ${selectedService?.label} del ${new Date(formData.preferredDate).toLocaleDateString('it-IT')} alle ${formData.preferredTime}. Controlla anche la tua email!`,
+        duration: 6000,
       });
 
       onClose?.();
@@ -112,14 +144,13 @@ const BookingForm = ({ onClose, preSelectedService }: BookingFormProps) => {
 
   const prevStep = () => setStep(step - 1);
 
-  // Get next 30 days excluding Sundays
   const getAvailableDates = () => {
     const dates = [];
     const today = new Date();
     for (let i = 1; i <= 30; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
-      if (date.getDay() !== 0) { // Exclude Sundays
+      if (date.getDay() !== 0) {
         dates.push(date.toISOString().split('T')[0]);
       }
     }

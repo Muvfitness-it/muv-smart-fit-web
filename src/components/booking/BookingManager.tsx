@@ -69,6 +69,12 @@ const BookingManager = () => {
 
   const updateBookingStatus = async (bookingId: string, newStatus: string) => {
     try {
+      // Trova la prenotazione corrente per avere lo status precedente
+      const currentBooking = bookings.find(b => b.id === bookingId);
+      if (!currentBooking) throw new Error('Prenotazione non trovata');
+
+      const previousStatus = currentBooking.status;
+      
       const updateData: any = { status: newStatus };
       
       if (newStatus === 'confirmed') {
@@ -84,11 +90,32 @@ const BookingManager = () => {
 
       if (error) throw error;
 
+      // Invia email di notifica del cambio stato
+      try {
+        const updatedBooking = { ...currentBooking, status: newStatus };
+        
+        const { error: emailError } = await supabase.functions.invoke('send-booking-email', {
+          body: {
+            type: 'status_change',
+            booking: updatedBooking,
+            previous_status: previousStatus
+          }
+        });
+
+        if (emailError) {
+          console.error('Errore invio email notifica:', emailError);
+          // Non blocchiamo il processo se l'email fallisce
+        }
+      } catch (emailError) {
+        console.error('Errore invio email di notifica:', emailError);
+      }
+
       await fetchBookings();
       
       toast({
         title: "Stato aggiornato",
-        description: `Prenotazione ${statusConfig[newStatus as keyof typeof statusConfig]?.label.toLowerCase()}`,
+        description: `Prenotazione ${statusConfig[newStatus as keyof typeof statusConfig]?.label.toLowerCase()}. Email di notifica inviata al cliente.`,
+        duration: 5000,
       });
     } catch (error: any) {
       toast({
