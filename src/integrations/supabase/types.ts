@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_tokens: {
+        Row: {
+          created_at: string
+          created_for: string
+          expires_at: string
+          id: string
+          token: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_for: string
+          expires_at: string
+          id?: string
+          token: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_for?: string
+          expires_at?: string
+          id?: string
+          token?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       analytics_summary: {
         Row: {
           id: string
