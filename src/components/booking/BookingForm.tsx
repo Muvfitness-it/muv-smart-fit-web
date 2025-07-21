@@ -18,10 +18,9 @@ const services = [
   { value: 'personal-training', label: 'Personal Training', duration: 60 },
   { value: 'ems', label: 'Allenamento EMS', duration: 45 },
   { value: 'pancafit', label: 'Pancafit', duration: 60 },
-  { value: 'pilates', label: 'Pilates Reformer', duration: 55 },
-  { value: 'hiit', label: 'HIIT Training', duration: 45 },
-  { value: 'small-group', label: 'Small Group (max 4)', duration: 60 },
-  { value: 'consulenza', label: 'Consulenza Nutrizionale', duration: 90 },
+  { value: 'pilates', label: 'Pilates Reformer', duration: 60 },
+  { value: 'Vacuum', label: 'Vacuum', duration: 30 },
+  { value: 'consulenza', label: 'Consulenza', duration: 60 },
   { value: 'massoterapia', label: 'Massoterapia', duration: 60 }
 ];
 
