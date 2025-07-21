@@ -2,7 +2,7 @@
 import React from 'react';
 import EditorToolbar from './EditorToolbar';
 import EditorContent from './EditorContent';
-import { execCommand, insertLink, insertImage, changeTextColor, formatBlock } from './EditorUtils';
+import { execCommand, insertLink, insertImage, insertVideo, changeTextColor, formatBlock } from './EditorUtils';
 
 interface RichTextEditorProps {
   value: string;
@@ -50,6 +50,17 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }, 10);
   };
 
+  const handleInsertVideo = () => {
+    insertVideo();
+    // Trigger onChange after video insertion
+    setTimeout(() => {
+      const editorElement = document.querySelector('[contenteditable]') as HTMLDivElement;
+      if (editorElement) {
+        onChange(editorElement.innerHTML);
+      }
+    }, 10);
+  };
+
   const handleChangeTextColor = () => {
     changeTextColor();
     // Trigger onChange after color change
@@ -78,6 +89,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         onCommand={handleCommand}
         onInsertLink={handleInsertLink}
         onInsertImage={handleInsertImage}
+        onInsertVideo={handleInsertVideo}
         onChangeTextColor={handleChangeTextColor}
         onFormatBlock={handleFormatBlock}
       />

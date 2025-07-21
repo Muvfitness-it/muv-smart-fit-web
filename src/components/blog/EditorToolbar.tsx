@@ -5,13 +5,14 @@ import { Separator } from '@/components/ui/separator';
 import { 
   Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight,
   List, ListOrdered, Link, Image, Quote, Code, Undo, Redo,
-  Palette, Strikethrough
+  Palette, Strikethrough, Video
 } from 'lucide-react';
 
 interface EditorToolbarProps {
   onCommand: (command: string, value?: string) => void;
   onInsertLink: () => void;
   onInsertImage: () => void;
+  onInsertVideo: () => void;
   onChangeTextColor: () => void;
   onFormatBlock: (tag: string) => void;
 }
@@ -20,6 +21,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onCommand,
   onInsertLink,
   onInsertImage,
+  onInsertVideo,
   onChangeTextColor,
   onFormatBlock
 }) => {
@@ -50,6 +52,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     'separator',
     { icon: Link, action: onInsertLink, title: 'Inserisci link' },
     { icon: Image, action: onInsertImage, title: 'Inserisci immagine' },
+    { icon: Video, action: onInsertVideo, title: 'Inserisci video' },
     'separator',
     { icon: Code, action: () => onFormatBlock('pre'), title: 'Codice' },
     { icon: Palette, action: onChangeTextColor, title: 'Colore testo' },
