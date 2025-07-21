@@ -16,8 +16,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-lg">Caricamento...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-foreground text-lg">Caricamento...</div>
       </div>
     );
   }
@@ -28,10 +28,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (requireAdmin && !isAdmin) {
     return (
-      <div className="min-h-screen bg-gray-900 pt-[var(--header-height)] flex items-center justify-center">
+      <div className="min-h-screen bg-background pt-[var(--header-height)] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold text-white">Accesso Negato</h1>
-          <p className="text-gray-400">
+          <h1 className="text-3xl font-bold text-foreground">Accesso Negato</h1>
+          <p className="text-muted-foreground">
             Non hai i permessi necessari per accedere a questa pagina.
           </p>
         </div>
