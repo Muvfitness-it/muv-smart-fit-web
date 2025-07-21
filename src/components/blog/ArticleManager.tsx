@@ -296,20 +296,20 @@ const ArticleManager = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => navigate(`/blog/edit/${post.id}`)}
-                      className="border-gray-600 text-white hover:bg-gray-700"
+                      className="border-magenta-500 text-magenta-600 hover:bg-magenta-50 hover:text-magenta-700"
                     >
                       <Edit className="w-4 h-4 mr-1" />
-                      Modifica
+                      MODIFICA
                     </Button>
                     
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => navigate(`/blog/${post.slug}`)}
-                      className="border-gray-600 text-white hover:bg-gray-700"
+                      className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
                     >
                       <Eye className="w-4 h-4 mr-1" />
-                      Visualizza
+                      VISUALIZZA
                     </Button>
                     
                     <Button
