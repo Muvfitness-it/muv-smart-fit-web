@@ -76,7 +76,7 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           </div>
 
           {recentArticles.length > 6 && <div className="text-center">
-              <Button variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
+              <Button onClick={() => navigate('/blog')} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
                 Vedi tutti gli articoli
               </Button>
             </div>}
