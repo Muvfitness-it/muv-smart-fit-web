@@ -16,9 +16,13 @@ interface BlogLandingProps {
     reading_time?: number;
     featured_image?: string;
   }>;
+  showAllArticles?: boolean;
+  onShowAllArticles?: () => void;
 }
 const BlogLanding: React.FC<BlogLandingProps> = ({
-  recentArticles = []
+  recentArticles = [],
+  showAllArticles = false,
+  onShowAllArticles
 }) => {
   const navigate = useNavigate();
   const {
@@ -72,11 +76,11 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentArticles.slice(0, 6).map(article => <BlogPostCard key={article.id} post={article} />)}
+            {(showAllArticles ? recentArticles : recentArticles.slice(0, 6)).map(article => <BlogPostCard key={article.id} post={article} />)}
           </div>
 
-          {recentArticles.length > 6 && <div className="text-center">
-              <Button onClick={() => navigate('/blog')} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
+          {recentArticles.length > 6 && !showAllArticles && <div className="text-center">
+              <Button onClick={onShowAllArticles} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
                 Vedi tutti gli articoli
               </Button>
             </div>}

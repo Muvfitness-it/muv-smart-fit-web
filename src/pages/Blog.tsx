@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import BlogLanding from '@/components/blog/BlogLanding';
 import BlogSitemap from '@/components/blog/BlogSitemap';
@@ -7,6 +7,7 @@ import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const Blog = () => {
   const { posts, loading } = useBlogPosts();
+  const [showAllArticles, setShowAllArticles] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
@@ -38,7 +39,11 @@ const Blog = () => {
             <div className="text-foreground text-lg">Caricamento articoli...</div>
           </div>
         ) : (
-          <BlogLanding recentArticles={posts} />
+          <BlogLanding 
+            recentArticles={posts} 
+            showAllArticles={showAllArticles}
+            onShowAllArticles={() => setShowAllArticles(true)}
+          />
         )}
       </div>
     </div>
