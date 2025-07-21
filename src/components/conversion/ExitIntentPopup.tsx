@@ -98,58 +98,39 @@ const ExitIntentPopup = ({ children }: ExitIntentPopupProps) => {
       {children}
       
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-lg border-2 border-brand-primary/30">
-          <div className="relative">
+        <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto bg-background/95 backdrop-blur-sm border border-border shadow-lg">
+          <div className="relative p-4">
             {/* Close button */}
             <Button
               variant="ghost"
               size="sm"
-              className="absolute -top-2 -right-2 z-10"
+              className="absolute -top-1 -right-1 h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
               onClick={handleClose}
             >
-              <X size={20} />
+              <X size={16} />
             </Button>
             
-            {/* Attention-grabbing header */}
-            <div className="text-center mb-6 p-6 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 rounded-lg border border-brand-primary/30">
-              <h2 className="text-3xl font-black text-brand-primary mb-2">
-                ⚡ ASPETTA! Non Perdere Questa Opportunità
+            {/* Compact header */}
+            <div className="text-center mb-4">
+              <h2 className="text-lg font-bold text-brand-primary mb-1">
+                🎯 Prova Gratuita + Consulenza
               </h2>
-              <p className="text-xl font-semibold text-foreground mb-3">
-                🎯 <span className="text-brand-secondary">PROVA GRATUITA</span> + 
-                <span className="text-brand-primary"> CONSULENZA PERSONALIZZATA</span>
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Calendar size={16} /> Prenota ora
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock size={16} /> Risposta in 2h
-                </span>
-                <span className="flex items-center gap-1">
-                  <User size={16} /> Personal trainer dedicato
-                </span>
-              </div>
-            </div>
-
-            {/* Social proof */}
-            <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 p-4 rounded-lg border border-green-500/20 mb-6">
-              <p className="text-center text-sm">
-                <strong className="text-green-400">✅ 487 persone</strong> hanno già prenotato questo mese • 
-                <strong className="text-blue-400"> 95% tasso di soddisfazione</strong>
+              <p className="text-sm text-muted-foreground">
+                Personal trainer dedicato • Risposta in 2h
               </p>
             </div>
 
-            {/* Booking form */}
+            {/* Social proof - compact */}
+            <div className="bg-muted/50 p-2 rounded-md mb-4 text-center">
+              <p className="text-xs text-muted-foreground">
+                <span className="text-emerald-600 font-medium">487 persone</span> hanno già prenotato • 
+                <span className="text-blue-600 font-medium">95% soddisfazione</span>
+              </p>
+            </div>
+
+            {/* Booking form - compact */}
             <div onClick={handleBookingStart}>
               <BookingForm onClose={() => setIsOpen(false)} />
-            </div>
-
-            {/* Bottom guarantee */}
-            <div className="text-center mt-6 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-              <p className="text-sm text-yellow-600 dark:text-yellow-400 font-semibold">
-                🛡️ GARANZIA 100%: Se non sei soddisfatto della prova, non paghi nulla!
-              </p>
             </div>
           </div>
         </DialogContent>
