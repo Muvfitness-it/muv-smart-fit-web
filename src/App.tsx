@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -48,6 +47,7 @@ import BookingModify from "./pages/BookingModify";
 // SEO Components
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
+import AIAuth from "./pages/AIAuth";
 
 const queryClient = new QueryClient();
 
@@ -76,8 +76,9 @@ const AppContent = () => {
         {/* Landing Pages - NO Navigation/Footer */}
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
         
-        {/* Auth Page - NO Navigation/Footer */}
+        {/* Auth Pages - NO Navigation/Footer */}
         <Route path="/auth" element={<Auth />} />
+        <Route path="/ai-auth" element={<AIAuth />} />
         
         {/* Booking Management Pages - NO Navigation/Footer */}
         <Route path="/booking-cancel" element={<BookingCancel />} />
