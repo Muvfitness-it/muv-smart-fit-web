@@ -36,6 +36,7 @@ import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
 import BlogAdmin from "./pages/BlogAdmin";
+import UserAdmin from "./pages/UserAdmin";
 import Auth from "./pages/Auth";
 import Analytics from "./pages/Analytics";
 import BookingManagement from "./pages/BookingManagement";
@@ -110,6 +111,7 @@ const AppContent = () => {
                 <Route path="/blog/nuovo" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/admin/utenti" element={<UserAdmin />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />

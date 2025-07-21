@@ -3,7 +3,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Settings, FileText, Plus, BarChart3 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Settings, FileText, Plus, BarChart3, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import ArticleManager from '@/components/blog/ArticleManager';
 import BlogAdminStats from '@/components/blog/BlogAdminStats';
 import ProtectedRoute from '@/components/blog/ProtectedRoute';
@@ -22,6 +24,57 @@ const BlogAdmin = () => {
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-foreground mb-2">Blog Admin Dashboard</h1>
             <p className="text-muted-foreground">Gestione completa del tuo blog fitness</p>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <Card className="card-brand">
+              <CardContent className="p-4">
+                <Link to="/blog/nuovo" className="flex items-center space-x-3 text-foreground hover:text-brand-accent transition-colors">
+                  <Plus className="w-8 h-8" />
+                  <div>
+                    <h3 className="font-semibold">Nuovo Articolo</h3>
+                    <p className="text-sm text-muted-foreground">Crea contenuto</p>
+                  </div>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="card-brand">
+              <CardContent className="p-4">
+                <Link to="/blog/gestisci" className="flex items-center space-x-3 text-foreground hover:text-brand-accent transition-colors">
+                  <FileText className="w-8 h-8" />
+                  <div>
+                    <h3 className="font-semibold">Gestisci Articoli</h3>
+                    <p className="text-sm text-muted-foreground">Modifica e pubblica</p>
+                  </div>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="card-brand">
+              <CardContent className="p-4">
+                <Link to="/blog/scrivi-con-ia" className="flex items-center space-x-3 text-foreground hover:text-brand-accent transition-colors">
+                  <BarChart3 className="w-8 h-8" />
+                  <div>
+                    <h3 className="font-semibold">Scrivi con IA</h3>
+                    <p className="text-sm text-muted-foreground">Contenuto assistito</p>
+                  </div>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="card-brand">
+              <CardContent className="p-4">
+                <Link to="/admin/utenti" className="flex items-center space-x-3 text-foreground hover:text-brand-accent transition-colors">
+                  <Users className="w-8 h-8" />
+                  <div>
+                    <h3 className="font-semibold">Gestisci Utenti</h3>
+                    <p className="text-sm text-muted-foreground">Ruoli e permessi</p>
+                  </div>
+                </Link>
+              </CardContent>
+            </Card>
           </div>
 
           <Tabs defaultValue="articles" className="space-y-6">
