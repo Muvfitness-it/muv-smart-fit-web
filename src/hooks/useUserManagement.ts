@@ -31,12 +31,11 @@ export const useUserManagement = () => {
     try {
       setLoading(true);
       
-      // Fetch all users from auth.users via a Supabase function or direct API call
-      // Since we can't directly access auth.users from the client, we'll need to use the admin API
-      const { data: { users: authUsers }, error: usersError } = await supabase.auth.admin.listUsers();
+      // Call the edge function to get users
+      const { data, error } = await supabase.functions.invoke('get-users');
       
-      if (usersError) {
-        console.error('Error fetching users:', usersError);
+      if (error) {
+        console.error('Error fetching users:', error);
         toast({
           title: "Errore",
           description: "Impossibile caricare gli utenti",
@@ -45,32 +44,7 @@ export const useUserManagement = () => {
         return;
       }
 
-      // Fetch all user roles
-      const { data: userRoles, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('*');
-
-      if (rolesError) {
-        console.error('Error fetching user roles:', rolesError);
-        toast({
-          title: "Errore", 
-          description: "Impossibile caricare i ruoli utente",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      // Combine users with their roles
-      const usersWithRoles: UserWithRoles[] = authUsers.map(user => ({
-        id: user.id,
-        email: user.email || '',
-        created_at: user.created_at,
-        email_confirmed_at: user.email_confirmed_at,
-        last_sign_in_at: user.last_sign_in_at,
-        roles: userRoles?.filter(role => role.user_id === user.id) || []
-      }));
-
-      setUsers(usersWithRoles);
+      setUsers(data.users);
     } catch (error) {
       console.error('Error in fetchUsers:', error);
       toast({
