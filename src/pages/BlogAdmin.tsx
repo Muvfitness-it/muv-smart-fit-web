@@ -4,13 +4,15 @@ import { Helmet } from 'react-helmet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Settings, FileText, Plus, BarChart3, Users } from 'lucide-react';
+import { Settings, FileText, Plus, BarChart3, Users, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ArticleManager from '@/components/blog/ArticleManager';
 import BlogAdminStats from '@/components/blog/BlogAdminStats';
 import ProtectedRoute from '@/components/blog/ProtectedRoute';
+import { useAuth } from '@/hooks/useAuth';
 
 const BlogAdmin = () => {
+  const { user, signOut } = useAuth();
   return (
     <ProtectedRoute requireBlogAccess={true}>
       <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
@@ -21,9 +23,23 @@ const BlogAdmin = () => {
         </Helmet>
 
         <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-foreground mb-2">Blog Admin Dashboard</h1>
-            <p className="text-muted-foreground">Gestione completa del tuo blog fitness</p>
+          <div className="mb-8 flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl font-bold text-foreground mb-2">Blog Admin Dashboard</h1>
+              <p className="text-muted-foreground">Gestione completa del tuo blog fitness</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">{user?.email}</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={signOut}
+                className="text-destructive hover:text-destructive"
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Logout
+              </Button>
+            </div>
           </div>
 
           {/* Quick Actions */}
