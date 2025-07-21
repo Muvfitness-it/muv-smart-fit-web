@@ -1,4 +1,166 @@
-# Manus Agent API Documentation
+# API Documentation per ChatGPT/AI Assistant
+
+## Autenticazione AI
+
+### POST /ai-auth
+Autentica ChatGPT e ottiene un token temporaneo valido 24h.
+
+**Request Body:**
+```json
+{
+  "email": "vincenzo9141@libero.it",
+  "password": "your_password",
+  "aiKey": "your_ai_access_key"
+}
+```
+
+**Response:**
+```json
+{
+  "user": {
+    "id": "user_id",
+    "email": "vincenzo9141@libero.it"
+  },
+  "aiToken": "ai_token_here",
+  "message": "AI authentication successful"
+}
+```
+
+**AI Access Key:** `AI_ACCESS_KEY` (definita nei secrets Supabase)
+
+---
+
+## Pubblicazione Blog
+
+### POST /ai-blog-publish
+Crea e pubblica un nuovo articolo sul blog.
+
+**Headers:**
+```
+Authorization: Bearer {ai_token}
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+  "title": "Titolo dell'Articolo",
+  "content": "Contenuto completo dell'articolo in markdown o HTML",
+  "excerpt": "Breve descrizione dell'articolo (opzionale)",
+  "meta_title": "Titolo SEO (opzionale)",
+  "meta_description": "Descrizione SEO (opzionale)", 
+  "meta_keywords": "parole,chiave,seo (opzionale)",
+  "featured_image": "URL immagine in evidenza (opzionale)",
+  "status": "published", // "published" o "draft"
+  "format": "markdown" // "markdown", "html", o "json"
+}
+```
+
+**Response Success:**
+```json
+{
+  "success": true,
+  "article": {
+    "id": "article_id",
+    "title": "Titolo dell'Articolo",
+    "slug": "titolo-dell-articolo",
+    "status": "published",
+    "published_at": "2025-07-21T16:45:00Z",
+    "url": "https://muvfitness.com/blog/titolo-dell-articolo"
+  }
+}
+```
+
+---
+
+### PUT/PATCH /ai-blog-update/{article_id}
+Aggiorna un articolo esistente.
+
+**Headers:**
+```
+Authorization: Bearer {ai_token}
+Content-Type: application/json
+```
+
+**Request Body:** (campi opzionali - aggiorna solo quelli forniti)
+```json
+{
+  "title": "Nuovo Titolo (opzionale)",
+  "content": "Nuovo contenuto (opzionale)",
+  "excerpt": "Nuova descrizione (opzionale)",
+  "meta_title": "Nuovo titolo SEO (opzionale)",
+  "meta_description": "Nuova descrizione SEO (opzionale)",
+  "meta_keywords": "nuove,parole,chiave (opzionale)",
+  "featured_image": "Nuovo URL immagine (opzionale)",
+  "status": "published" // "published" o "draft"
+}
+```
+
+**Response:** Stesso formato del create
+
+---
+
+## Formati Supportati
+
+### 1. Markdown (consigliato)
+```markdown
+# Titolo H1
+## Sottotitolo H2
+
+Paragrafo con **grassetto** e *corsivo*.
+
+- Lista puntata
+- Elemento 2
+
+[Link](https://example.com)
+
+![Immagine](url-immagine)
+```
+
+### 2. HTML
+```html
+<h1>Titolo H1</h1>
+<h2>Sottotitolo H2</h2>
+<p>Paragrafo con <strong>grassetto</strong> e <em>corsivo</em>.</p>
+<ul>
+  <li>Lista puntata</li>
+  <li>Elemento 2</li>
+</ul>
+```
+
+### 3. JSON Strutturato
+```json
+{
+  "type": "article",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 1,
+      "content": "Titolo H1"
+    },
+    {
+      "type": "paragraph", 
+      "content": "Contenuto del paragrafo"
+    }
+  ]
+}
+```
+
+---
+
+## Gestione Immagini
+
+Per ora le immagini devono essere:
+1. Già caricate su un servizio esterno (Unsplash, CDN, etc.)
+2. Fornite tramite URL pubblici nel campo `featured_image`
+3. Incluse nel contenuto tramite markdown/HTML con URL esterni
+
+**Formati immagine consigliati:** JPG, PNG, WebP
+**Dimensioni consigliate:** 1200x630px per immagini in evidenza
+
+---
+
+# Manus Agent API Documentation (Legacy)
 
 ## Base URL
 ```
