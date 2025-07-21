@@ -8,6 +8,8 @@ interface AuthContext {
   user: User | null;
   session: Session | null;
   isAdmin: boolean;
+  isEditor: boolean;
+  canManageBlog: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
@@ -20,27 +22,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+  const [canManageBlog, setCanManageBlog] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const checkAdminRole = async (userId: string) => {
+  const checkUserRoles = async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .single();
+        .eq('user_id', userId);
 
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error checking admin role:', error);
-        return false;
+      if (error) {
+        console.error('Error checking user roles:', error);
+        return { isAdmin: false, isEditor: false, canManageBlog: false };
       }
 
-      return !!data;
+      const roles = data?.map(r => r.role) || [];
+      const isAdmin = roles.includes('admin');
+      const isEditor = roles.includes('editor');
+      const canManageBlog = isAdmin || isEditor;
+
+      return { isAdmin, isEditor, canManageBlog };
     } catch (error) {
-      console.error('Error checking admin role:', error);
-      return false;
+      console.error('Error checking user roles:', error);
+      return { isAdmin: false, isEditor: false, canManageBlog: false };
     }
   };
 
@@ -52,13 +59,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check admin role when user is authenticated
+          // Check user roles when user is authenticated
           setTimeout(async () => {
-            const adminStatus = await checkAdminRole(session.user.id);
-            setIsAdmin(adminStatus);
+            const roles = await checkUserRoles(session.user.id);
+            setIsAdmin(roles.isAdmin);
+            setIsEditor(roles.isEditor);
+            setCanManageBlog(roles.canManageBlog);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsEditor(false);
+          setCanManageBlog(false);
         }
         
         setLoading(false);
@@ -72,8 +83,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (session?.user) {
         setTimeout(async () => {
-          const adminStatus = await checkAdminRole(session.user.id);
-          setIsAdmin(adminStatus);
+          const roles = await checkUserRoles(session.user.id);
+          setIsAdmin(roles.isAdmin);
+          setIsEditor(roles.isEditor);
+          setCanManageBlog(roles.canManageBlog);
           setLoading(false);
         }, 0);
       } else {
@@ -166,6 +179,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     user,
     session,
     isAdmin,
+    isEditor,
+    canManageBlog,
     loading,
     signIn,
     signUp,

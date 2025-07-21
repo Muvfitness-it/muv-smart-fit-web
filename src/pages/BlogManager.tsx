@@ -6,7 +6,7 @@ import ProtectedRoute from '@/components/blog/ProtectedRoute';
 
 const BlogManager = () => {
   return (
-    <ProtectedRoute requireAdmin={true}>
+    <ProtectedRoute requireBlogAccess={true}>
       <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
         <Helmet>
           <title>Gestione Articoli - MUV Fitness Blog</title>

@@ -6,7 +6,7 @@ import ProtectedRoute from '@/components/blog/ProtectedRoute';
 
 const BlogWriter = () => {
   return (
-    <ProtectedRoute requireAdmin={true}>
+    <ProtectedRoute requireBlogAccess={true}>
       <div className="min-h-screen bg-gray-900 pt-[var(--header-height)] py-8">
         <Helmet>
           <title>Scrivi Articolo con IA - MUV Fitness Blog</title>

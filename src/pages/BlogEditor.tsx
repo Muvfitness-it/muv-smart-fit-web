@@ -10,7 +10,7 @@ const BlogEditor = () => {
   const isEdit = Boolean(id);
 
   return (
-    <ProtectedRoute requireAdmin={true}>
+    <ProtectedRoute requireBlogAccess={true}>
       <div className="min-h-screen bg-gray-900 pt-[var(--header-height)] py-8">
         <Helmet>
           <title>{isEdit ? 'Modifica Articolo' : 'Nuovo Articolo'} - MUV Fitness Blog</title>
