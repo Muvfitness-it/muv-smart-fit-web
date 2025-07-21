@@ -107,7 +107,8 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
         
         <Button
           onClick={handleReadMore}
-          className="w-full bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 text-primary-foreground"
+          variant="magenta"
+          className="w-full"
         >
           Leggi Articolo
         </Button>
