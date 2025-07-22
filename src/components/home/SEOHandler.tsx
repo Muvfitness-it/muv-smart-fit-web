@@ -15,15 +15,15 @@ const SEOHandler: React.FC = () => {
     switch (currentPath) {
       case '/':
         return {
-          title: 'MUV Fitness Rimini - Centro Fitness & Personal Training | Trasformazione in 30 Giorni',
-          description: 'Centro fitness a Rimini specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni con i nostri programmi personalizzati.',
-          keywords: 'fitness rimini, personal training rimini, EMS allenamento, pilates rimini, palestra rimini, dimagrimento, tonificazione muscolare',
+          title: 'MUV Fitness Legnago - Centro Fitness & Personal Training | Trasformazione in 30 Giorni',
+          description: 'Centro fitness a Legnago specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni con i nostri programmi personalizzati.',
+          keywords: 'fitness legnago, personal training legnago, EMS allenamento, pilates legnago, palestra legnago, dimagrimento, tonificazione muscolare',
           canonical: baseUrl,
           ogType: 'website'
         };
       case '/servizi':
         return {
-          title: 'Servizi Fitness MUV Rimini - Personal Training, EMS, Pilates, Nutrizione',
+          title: 'Servizi Fitness MUV Legnago - Personal Training, EMS, Pilates, Nutrizione',
           description: 'Scopri tutti i servizi MUV Fitness: Personal Training, EMS, Pilates, HIIT, Consulenza Nutrizionale e molto altro. Programmi personalizzati per ogni obiettivo.',
           keywords: 'servizi fitness, personal training, EMS, pilates, HIIT, nutrizione sportiva, massoterapia, pancafit',
           canonical: `${baseUrl}/servizi`,
@@ -31,9 +31,9 @@ const SEOHandler: React.FC = () => {
         };
       case '/contatti':
         return {
-          title: 'Contatti MUV Fitness Rimini - Prenota la Tua Consulenza Gratuita',
-          description: 'Contatta MUV Fitness Rimini per prenotare la tua consulenza gratuita. Siamo in Via del Fitness 123, Rimini. Tel: 0541-123456',
-          keywords: 'contatti muv fitness, palestra rimini contatti, prenota consulenza fitness',
+          title: 'Contatti MUV Fitness Legnago - Prenota la Tua Consulenza Gratuita',
+          description: 'Contatta MUV Fitness Legnago per prenotare la tua consulenza gratuita. Siamo in Via Venti Settembre 5/7, Legnago. Tel: 3513380770',
+          keywords: 'contatti muv fitness, palestra legnago contatti, prenota consulenza fitness',
           canonical: `${baseUrl}/contatti`,
           ogType: 'website'
         };
@@ -47,9 +47,9 @@ const SEOHandler: React.FC = () => {
         };
       case '/chi-siamo':
         return {
-          title: 'Chi Siamo - MUV Fitness Rimini | Il Nostro Team e la Nostra Missione',
+          title: 'Chi Siamo - MUV Fitness Legnago | Il Nostro Team e la Nostra Missione',
           description: 'Scopri chi siamo: il team MUV Fitness, la nostra storia e la missione di trasformare la vita delle persone attraverso il fitness.',
-          keywords: 'chi siamo muv fitness, team fitness rimini, storia palestra rimini',
+          keywords: 'chi siamo muv fitness, team fitness legnago, storia palestra legnago',
           canonical: `${baseUrl}/chi-siamo`,
           ogType: 'website'
         };
@@ -63,9 +63,9 @@ const SEOHandler: React.FC = () => {
         };
       default:
         return {
-          title: 'MUV Fitness Rimini - Centro Fitness Professionale',
-          description: 'Centro fitness professionale a Rimini con servizi personalizzati per il tuo benessere.',
-          keywords: 'fitness rimini, palestra rimini, benessere',
+          title: 'MUV Fitness Legnago - Centro Fitness Professionale',
+          description: 'Centro fitness professionale a Legnago con servizi personalizzati per il tuo benessere.',
+          keywords: 'fitness legnago, palestra legnago, benessere',
           canonical: `${baseUrl}${currentPath}`,
           ogType: 'website'
         };
@@ -106,10 +106,10 @@ const SEOHandler: React.FC = () => {
         <meta name="author" content="MUV Fitness" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Language" content="it" />
-        <meta name="geo.region" content="IT-45" />
-        <meta name="geo.placename" content="Rimini" />
-        <meta name="geo.position" content="44.0678;12.5695" />
-        <meta name="ICBM" content="44.0678, 12.5695" />
+        <meta name="geo.region" content="IT-34" />
+        <meta name="geo.placename" content="Legnago" />
+        <meta name="geo.position" content="45.1906;11.2994" />
+        <meta name="ICBM" content="45.1906, 11.2994" />
 
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
