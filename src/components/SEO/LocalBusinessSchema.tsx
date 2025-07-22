@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -7,27 +8,26 @@ const LocalBusinessSchema: React.FC = () => {
     "@type": "LocalBusiness",
     "@id": "https://www.muvfitness.it/#localbusiness",
     "name": "MUV Fitness",
-    "description": "Centro fitness a Rimini specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni.",
+    "description": "Centro fitness a Legnago specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni.",
     "url": "https://www.muvfitness.it",
-    "telephone": "+39-0541-123456",
+    "telephone": "+39 3513380770",
     "email": "info@muvfitness.it",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Via del Fitness, 123",
-      "addressLocality": "Rimini",
-      "addressRegion": "Emilia-Romagna",
-      "postalCode": "47921",
+      "streetAddress": "Via Venti Settembre, 5/7",
+      "addressLocality": "Legnago",
+      "addressRegion": "Veneto",
+      "postalCode": "37045",
       "addressCountry": "IT"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 44.0678,
-      "longitude": 12.5695
+      "latitude": 45.1919,
+      "longitude": 11.3058
     },
     "openingHours": [
-      "Mo-Fr 06:00-22:00",
-      "Sa 08:00-20:00",
-      "Su 09:00-19:00"
+      "Mo-Fr 08:00-21:00",
+      "Sa 08:00-12:00"
     ],
     "priceRange": "€€",
     "image": [
@@ -40,16 +40,15 @@ const LocalBusinessSchema: React.FC = () => {
       "height": 400
     },
     "sameAs": [
-      "https://www.facebook.com/muvfitness",
-      "https://www.instagram.com/muvfitness",
-      "https://www.linkedin.com/company/muvfitness"
+      "https://www.facebook.com/MuvLegnago/",
+      "https://www.instagram.com/MuvLegnago/"
     ],
     "serviceArea": {
       "@type": "GeoCircle",
       "geoMidpoint": {
         "@type": "GeoCoordinates",
-        "latitude": 44.0678,
-        "longitude": 12.5695
+        "latitude": 45.1919,
+        "longitude": 11.3058
       },
       "geoRadius": "25000"
     },
@@ -126,7 +125,7 @@ const LocalBusinessSchema: React.FC = () => {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+39-0541-123456",
+        "telephone": "+39 3513380770",
         "contactType": "customer service",
         "email": "info@muvfitness.it",
         "areaServed": "IT",
@@ -135,16 +134,15 @@ const LocalBusinessSchema: React.FC = () => {
     ],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Via del Fitness, 123",
-      "addressLocality": "Rimini",
-      "addressRegion": "Emilia-Romagna",
-      "postalCode": "47921",
+      "streetAddress": "Via Venti Settembre, 5/7",
+      "addressLocality": "Legnago",
+      "addressRegion": "Veneto",
+      "postalCode": "37045",
       "addressCountry": "IT"
     },
     "sameAs": [
-      "https://www.facebook.com/muvfitness",
-      "https://www.instagram.com/muvfitness",
-      "https://www.linkedin.com/company/muvfitness"
+      "https://www.facebook.com/MuvLegnago/",
+      "https://www.instagram.com/MuvLegnago/"
     ]
   };
 
