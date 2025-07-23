@@ -41,7 +41,7 @@ const Servizi = () => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', 'https://muvsmartfit.it/servizi');
+    canonical.setAttribute('href', 'https://www.muvfitness.it/servizi');
 
     // Open Graph tags
     const ogTags = [{
@@ -55,10 +55,10 @@ const Servizi = () => {
       content: 'website'
     }, {
       property: 'og:url',
-      content: 'https://muvsmartfit.it/servizi'
+      content: 'https://www.muvfitness.it/servizi'
     }, {
       property: 'og:image',
-      content: 'https://muvsmartfit.it/og-image-servizi.jpg'
+      content: 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'
     }, {
       property: 'og:image:width',
       content: '1200'
@@ -91,7 +91,7 @@ const Servizi = () => {
       content: 'Scopri tutti i servizi fitness di MUV a Legnago e prenota la tua prova gratuita!'
     }, {
       name: 'twitter:image',
-      content: 'https://muvsmartfit.it/og-image-servizi.jpg'
+      content: 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'
     }];
     twitterTags.forEach(tag => {
       let metaTag = document.querySelector(`meta[name="${tag.name}"]`);

@@ -39,15 +39,15 @@ const ChiSiamo = () => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', 'https://muvfitness.it/chi-siamo');
+    canonical.setAttribute('href', 'https://www.muvfitness.it/chi-siamo');
 
     // Open Graph tags
     const ogTags = [
       { property: 'og:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
       { property: 'og:description', content: 'Conosci il nostro team di personal trainer certificati e la nostra filosofia. Metodo scientifico, passione e professionalità al centro Centro fitness MUV.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://muvfitness.it/chi-siamo' },
-      { property: 'og:image', content: 'https://muvfitness.it/og-image-chi-siamo.jpg' },
+      { property: 'og:url', content: 'https://www.muvfitness.it/chi-siamo' },
+      { property: 'og:image', content: 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png' },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       { property: 'og:locale', content: 'it_IT' },
@@ -69,7 +69,7 @@ const ChiSiamo = () => {
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Chi Siamo – Centro fitness MUV Legnago' },
       { name: 'twitter:description', content: 'Scopri i professionisti di Centro fitness MUV: metodo scientifico, personal training e passione a Legnago. Vieni a conoscerci!' },
-      { name: 'twitter:image', content: 'https://muvfitness.it/og-image-chi-siamo.jpg' }
+      { name: 'twitter:image', content: 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png' }
     ];
 
     twitterTags.forEach(tag => {

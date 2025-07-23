@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
+import UnifiedSEO from "@/components/SEO/UnifiedSEO";
 
 const Risultati = () => {
   const testimonianze = [
@@ -63,7 +64,13 @@ const Risultati = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <UnifiedSEO
+        title="Risultati Clienti MUV Fitness Legnago - Testimonianze e Trasformazioni Reali"
+        description="Scopri i risultati reali dei nostri clienti: dimagrimento, tonificazione, risoluzione mal di schiena. Testimonianze verificate e trasformazioni documentate."
+        keywords="risultati fitness legnago, testimonianze palestra, trasformazioni clienti muv, prima dopo fitness"
+      />
+      <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-16">
@@ -141,6 +148,7 @@ const Risultati = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

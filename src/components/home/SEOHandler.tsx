@@ -71,6 +71,28 @@ const SEOHandler: React.FC = () => {
           content: 'MUV Fitness è un centro fitness esclusivo a Legnago con un team di professionisti qualificati. La nostra missione è aiutare le persone a raggiungere i loro obiettivi di fitness attraverso un approccio personalizzato e olistico al benessere.',
           services: []
         };
+      case '/risultati':
+        return {
+          title: 'Risultati Clienti MUV Fitness Legnago - Testimonianze e Trasformazioni Reali',
+          description: 'Scopri i risultati reali dei nostri clienti: dimagrimento, tonificazione, risoluzione mal di schiena. Testimonianze verificate e trasformazioni documentate.',
+          keywords: 'risultati fitness legnago, testimonianze palestra, trasformazioni clienti muv, prima dopo fitness',
+          canonical: `${baseUrl}/risultati`,
+          ogType: 'website',
+          pageType: 'home' as const,
+          content: 'I nostri clienti hanno ottenuto risultati straordinari: dimagrimento, tonificazione, risoluzione di problemi posturali e mal di schiena. Testimonianze reali di trasformazioni documentate presso MUV Fitness Legnago.',
+          services: []
+        };
+      case '/team':
+        return {
+          title: 'Team MUV Fitness Legnago - Personal Trainer Certificati e Specialisti',
+          description: 'Conosci il nostro team di personal trainer certificati, specialisti in EMS, Pancafit, Pilates e nutrizione. I migliori professionisti di Legnago.',
+          keywords: 'personal trainer legnago, team muv fitness, trainer certificati, specialisti fitness legnago',
+          canonical: `${baseUrl}/team`,
+          ogType: 'website',
+          pageType: 'home' as const,
+          content: 'Il team MUV Fitness è composto da personal trainer certificati e specialisti in diverse discipline: Christian Gioso (Pancafit), Serena Portici (EMS), Mauro Petterle, Thomas Gabrieli (massoterapia) e Susanna Isante (benessere olistico).',
+          services: []
+        };
       case '/muv-planner':
         return {
           title: 'MUV Planner - Pianificatore Pasti Personalizzato con IA',
