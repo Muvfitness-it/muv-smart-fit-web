@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import UnifiedSEO from '@/components/SEO/UnifiedSEO';
+import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
+import StaticContentGenerator from '@/components/SEO/StaticContentGenerator';
 import BlogLanding from '@/components/blog/BlogLanding';
 import BlogSitemap from '@/components/blog/BlogSitemap';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
@@ -9,29 +11,41 @@ const Blog = () => {
   const { posts, loading } = useBlogPosts();
   const [showAllArticles, setShowAllArticles] = useState(false);
 
+  // Generate dynamic content for crawlers
+  const blogContent = `
+    Il blog di MUV Fitness offre articoli professionali su fitness, allenamento e nutrizione.
+    Articoli recenti: ${posts.slice(0, 5).map(post => post.title).join(', ')}.
+    Contenuti aggiornati regolarmente da esperti del settore fitness.
+    Tematiche trattate: allenamento personalizzato, nutrizione sportiva, benessere, salute, tecniche di allenamento avanzate.
+  `;
+
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
       <BlogSitemap />
-      <Helmet>
-        <title>Blog - MUV Fitness | Articoli su Fitness, Allenamento e Nutrizione</title>
-        <meta name="description" content="Scopri il blog di MUV Fitness con articoli professionali su allenamento, nutrizione e benessere. Contenuti ottimizzati per Google News e sistemi AI." />
-        <meta name="keywords" content="blog fitness, articoli allenamento, nutrizione sportiva, benessere, personal training, MUV Fitness, Google News" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <meta name="news_keywords" content="fitness, allenamento, nutrizione, benessere, salute" />
-        <link rel="canonical" href="https://www.muvfitness.it/blog" />
-        
-        {/* Open Graph per social sharing */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Blog MUV Fitness - Articoli su Fitness e Allenamento" />
-        <meta property="og:description" content="Articoli professionali su fitness, allenamento e nutrizione. Ottimizzati per Google News e AI." />
-        <meta property="og:url" content="https://www.muvfitness.it/blog" />
-        <meta property="og:site_name" content="MUV Fitness" />
-        
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog MUV Fitness - Articoli Professionali" />
-        <meta name="twitter:description" content="Scopri articoli su fitness, allenamento e nutrizione ottimizzati per AI e Google News" />
-      </Helmet>
+      
+      {/* Unified SEO */}
+      <UnifiedSEO
+        title="Blog - MUV Fitness | Articoli su Fitness, Allenamento e Nutrizione"
+        description="Scopri il blog di MUV Fitness con articoli professionali su allenamento, nutrizione e benessere. Contenuti ottimizzati per Google News e sistemi AI."
+        keywords="blog fitness, articoli allenamento, nutrizione sportiva, benessere, personal training, MUV Fitness, Google News"
+        canonical="https://www.muvfitness.it/blog"
+        ogImage="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
+      />
+      
+      {/* Crawler Optimizer for AI and NotebookLM */}
+      <CrawlerOptimizer
+        title="Blog MUV Fitness"
+        description="Hub di contenuti professionali su fitness, allenamento e nutrizione"
+        content={blogContent}
+        services={['Articoli fitness', 'Guide allenamento', 'Consigli nutrizione', 'Blog professionale']}
+        location="Blog MUV Fitness - Centro di informazione fitness"
+      />
+      
+      {/* Static Content Generator */}
+      <StaticContentGenerator 
+        pageType="blog" 
+        additionalContent={blogContent}
+      />
 
       <div className="container mx-auto px-4">
         {loading ? (

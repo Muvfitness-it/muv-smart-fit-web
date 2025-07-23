@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Eye } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import UnifiedSEO from '@/components/SEO/UnifiedSEO';
+import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import EnhancedBlogSEO from '@/components/blog/EnhancedBlogSEO';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 
@@ -120,9 +122,34 @@ const BlogPost = () => {
     );
   }
 
+  // Prepare SEO data
+  const seoTitle = post.meta_title || `${post.title} | MUV Fitness - Allenamento Professionale`;
+  const seoDescription = post.meta_description || 
+    post.excerpt || 
+    post.content.replace(/<[^>]*>/g, '').substring(0, 160) + '...';
+  const canonicalUrl = `https://www.muvfitness.it/blog/${post.slug}`;
+
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)]">
-      {/* SEO Component Enhanced */}
+      {/* Unified SEO */}
+      <UnifiedSEO
+        title={seoTitle}
+        description={seoDescription}
+        keywords={post.meta_keywords}
+        canonical={canonicalUrl}
+        ogImage={post.featured_image || 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'}
+      />
+      
+      {/* Crawler Optimizer for AI and NotebookLM */}
+      <CrawlerOptimizer
+        title={post.title}
+        description={seoDescription}
+        content={post.content.replace(/<[^>]*>/g, '').substring(0, 1000)}
+        services={['Articoli fitness', 'Guide allenamento', 'Consigli nutrizione']}
+        location="Blog MUV Fitness"
+      />
+      
+      {/* Enhanced SEO for advanced blog features */}
       <EnhancedBlogSEO post={post} />
       
       {/* Blog Post Content */}
