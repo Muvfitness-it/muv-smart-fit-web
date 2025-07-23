@@ -21,6 +21,11 @@
     <style>
       body { margin: 0; background-color: #1f2937; }
       .loading { display: flex; justify-content: center; align-items: center; height: 100vh; }
+      .static-content { display: none; }
+      .static-content h1, .static-content h2, .static-content h3 { margin: 1rem 0; }
+      .static-content p { margin: 0.5rem 0; line-height: 1.6; }
+      .static-content ul { margin: 0.5rem 0; padding-left: 2rem; }
+      .static-content li { margin: 0.25rem 0; }
     </style>
     
     <!-- Google Search Console Verification -->
@@ -34,31 +39,21 @@
       gtag('js', new Date());
       
       gtag('config', 'G-440977387', {
-        // Enhanced Ecommerce per tracking conversioni
         send_page_view: true,
         anonymize_ip: true,
         allow_google_signals: false,
         cookie_flags: 'SameSite=None;Secure',
-        // Custom dimensions per tracciare tipo di contenuto
         custom_map: {
           'dimension1': 'page_type',
           'dimension2': 'content_category'
         }
       });
       
-      // Track scroll depth per engagement
       gtag('config', 'G-440977387', {
         page_title: document.title,
         page_location: window.location.href
       });
     </script>
-    
-    <!-- Google Tag Manager (optional - per conversioni avanzate) -->
-    <!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WDM2872');</script> -->
     
     <!-- SEO Meta Tags Ottimizzati -->
     <title>Centro Fitness MUV | Centro Fitness a Legnago per Dimagrire con Personal Trainer</title>
@@ -68,7 +63,7 @@
     <meta name="robots" content="index, follow" />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://muvfitness.it/" />
+    <link rel="canonical" href="https://www.muvfitness.it/" />
     
     <!-- Additional SEO Meta Tags -->
     <meta name="geo.region" content="IT-VR" />
@@ -86,8 +81,8 @@
     <meta property="og:title" content="Centro Fitness Legnago | MUV Fitness - Personal Training & Dimagrimento" />
     <meta property="og:description" content="Centro fitness esclusivo a Legnago (VR). Personal training 1-to-1, pilates, tecnologia EMS e Pancafit. Dimagrisci velocemente in ambiente riservato." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://muvfitness.it/" />
-    <meta property="og:image" content="https://muvfitness.it/og-image.jpg" />
+    <meta property="og:url" content="https://www.muvfitness.it/" />
+    <meta property="og:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content="MUV Fitness" />
 
@@ -95,7 +90,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Centro Fitness Legnago | MUV Smart Fit - Personal Training" />
     <meta name="twitter:description" content="Centro fitness esclusivo a Legnago. Personal training 1-to-1 e tecnologie avanzate per dimagrimento rapido, pilates e posturale." />
-    <meta name="twitter:image" content="https://muvfitness.it/og-image.jpg" />
+    <meta name="twitter:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -112,11 +107,11 @@
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "@id": "https://muvfitness.it/#organization",
+      "@id": "https://www.muvfitness.it/#organization",
       "name": "MUV Fitness",
-      "alternateName": "MUV Fitness",
-      "description": "Centro fitness esclusivo specializzato in personal training, dimagrimento e tecnologie avanzate per il benessere fisico.",
-      "url": "https://muvfitness.it",
+      "alternateName": "MUV Fitness Legnago",
+      "description": "Centro fitness esclusivo a Legnago specializzato in personal training, dimagrimento e tecnologie avanzate per il benessere fisico. Offriamo servizi di EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti posturali.",
+      "url": "https://www.muvfitness.it",
       "telephone": "+393513380770",
       "email": "info@muvfitness.it",
       "address": {
@@ -133,39 +128,33 @@
         "longitude": "11.3065"
       },
       "areaServed": [
-        {
-          "@type": "City",
-          "name": "Legnago"
-        },
-        {
-          "@type": "City", 
-          "name": "Verona"
-        },
-        {
-          "@type": "Place",
-          "name": "Bassa Veronese"
-        }
+        { "@type": "City", "name": "Legnago" },
+        { "@type": "City", "name": "Verona" },
+        { "@type": "Place", "name": "Bassa Veronese" },
+        { "@type": "City", "name": "Cerea" },
+        { "@type": "City", "name": "Bovolone" },
+        { "@type": "City", "name": "Nogara" }
       ],
       "openingHours": [
         "Mo-Fr 08:00-21:00",
         "Sa 08:00-12:00"
       ],
       "priceRange": "€€",
-      "image": "https://muvfitness.it/logo.png",
+      "image": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
       "sameAs": [
-        "https://www.facebook.com/muvsmartfit",
-        "https://www.instagram.com/muvsmartfit"
+        "https://www.facebook.com/MuvLegnago/",
+        "https://www.instagram.com/MuvLegnago/"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Servizi Fitness",
+        "name": "Servizi Fitness MUV",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
               "name": "Personal Training",
-              "description": "Allenamenti personalizzati one-to-one"
+              "description": "Allenamenti personalizzati one-to-one con trainer certificati per raggiungere i tuoi obiettivi di fitness"
             }
           },
           {
@@ -173,55 +162,198 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Allenamento EMS",
-              "description": "Tecnologia di elettrostimolazione muscolare"
+              "description": "Tecnologia di elettrostimolazione muscolare per massimizzare i risultati in tempi ridotti"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service", 
+              "name": "Pilates",
+              "description": "Corsi di Pilates per migliorare postura, flessibilità e forza del core"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "HIIT",
+              "description": "Allenamento ad alta intensità per bruciare grassi e migliorare la resistenza"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Consulenza Nutrizionale",
+              "description": "Piani alimentari personalizzati per supportare i tuoi obiettivi di fitness"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
               "name": "Pancafit",
-              "description": "Trattamento specializzato per mal di schiena"
+              "description": "Trattamento specializzato per problemi posturali e mal di schiena"
             }
           }
         ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     }
     </script>
 
-    <!-- Schema Markup per Servizi Fitness (solo per pagina servizi) -->
+    <!-- FAQ Schema per NotebookLM -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "serviceType": "Servizi fitness a Legnago",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "MUV Fitness",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Legnago",
-          "addressRegion": "Veneto",
-          "postalCode": "37045",
-          "addressCountry": "IT"
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Che cos'è MUV Fitness?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MUV Fitness è un centro fitness esclusivo a Legnago specializzato in personal training, tecnologie avanzate come EMS, Pilates, HIIT e consulenza nutrizionale. Offriamo un approccio personalizzato per aiutarti a raggiungere i tuoi obiettivi di fitness e benessere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Dove si trova MUV Fitness?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MUV Fitness si trova a Legnago (VR) in Via Venti Settembre, 5/7. Serviamo clienti da tutta la Bassa Veronese, incluso Verona, Cerea, Bovolone e Nogara."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quali servizi offre MUV Fitness?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I nostri servizi includono: Personal Training one-to-one, Allenamento EMS, Pilates, HIIT, Small Group Training, Consulenza Nutrizionale, Pancafit per problemi posturali, Massoterapia e supporto psicologico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Come posso prenotare una consulenza gratuita?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Puoi contattarci al numero +39 3513380770 o via email a info@muvfitness.it per prenotare la tua consulenza gratuita e scoprire come possiamo aiutarti a raggiungere i tuoi obiettivi."
+          }
         }
-      },
-      "areaServed": "Legnago, Verona",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Servizi offerti",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personal Training" }},
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Allenamento EMS" }},
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pilates Reformer" }},
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pancafit" }}
-        ]
-      }
+      ]
     }
     </script>
   </head>
 
   <body>
+    <!-- Contenuto statico per crawler e NotebookLM -->
+    <div class="static-content">
+      <header>
+        <h1>MUV Fitness - Centro Fitness a Legnago</h1>
+        <p><strong>Indirizzo:</strong> Via Venti Settembre, 5/7 - 37045 Legnago (VR)</p>
+        <p><strong>Telefono:</strong> +39 3513380770</p>
+        <p><strong>Email:</strong> info@muvfitness.it</p>
+        <p><strong>Orari:</strong> Lunedì-Venerdì 08:00-21:00, Sabato 08:00-12:00</p>
+      </header>
+
+      <main>
+        <section>
+          <h2>Chi Siamo</h2>
+          <p>MUV Fitness è un centro fitness esclusivo a Legnago specializzato in personal training e tecnologie avanzate per il fitness. Il nostro approccio personalizzato ti aiuta a raggiungere i tuoi obiettivi di benessere e forma fisica in modo efficace e sicuro.</p>
+          <p>Serviamo clienti da tutta la Bassa Veronese, incluso Verona, Cerea, Bovolone, Nogara e zone limitrofe, offrendo un ambiente riservato e professionale per il tuo allenamento.</p>
+        </section>
+
+        <section>
+          <h2>I Nostri Servizi</h2>
+          
+          <h3>Personal Training</h3>
+          <p>Allenamenti personalizzati one-to-one con trainer certificati. Ogni programma è studiato specificamente per i tuoi obiettivi, che si tratti di dimagrimento, tonificazione, aumento della massa muscolare o miglioramento delle prestazioni sportive.</p>
+
+          <h3>Allenamento EMS</h3>
+          <p>Tecnologia di elettrostimolazione muscolare che permette di massimizzare i risultati in tempi ridotti. L'EMS attiva simultaneamente diversi gruppi muscolari, rendendo l'allenamento più efficace e permettendo di ottenere risultati visibili in tempi rapidi.</p>
+
+          <h3>Pilates</h3>
+          <p>Corsi di Pilates per migliorare postura, flessibilità e forza del core. Offriamo sia lezioni individuali che di gruppo, utilizzando attrezzi professionali per un allenamento completo e sicuro.</p>
+
+          <h3>HIIT (High Intensity Interval Training)</h3>
+          <p>Allenamento ad alta intensità per bruciare grassi e migliorare la resistenza cardiovascolare. Perfetto per chi ha poco tempo ma vuole risultati massimi.</p>
+
+          <h3>Small Group Training</h3>
+          <p>Allenamenti in piccoli gruppi (2-4 persone) per unire i benefici del personal training con la motivazione del gruppo. Ideale per chi cerca un'esperienza sociale mantenendo l'attenzione personalizzata.</p>
+
+          <h3>Consulenza Nutrizionale</h3>
+          <p>Piani alimentari personalizzati creati da nutrizionisti qualificati per supportare i tuoi obiettivi di fitness. Ogni piano è studiato in base alle tue esigenze, preferenze alimentari e stile di vita.</p>
+
+          <h3>Pancafit</h3>
+          <p>Trattamento specializzato per problemi posturali e mal di schiena. Utilizzando il metodo Pancafit, aiutiamo a riequilibrare la postura e alleviare tensioni muscolari.</p>
+
+          <h3>Massoterapia</h3>
+          <p>Trattamenti di massoterapia per il recupero muscolare, la riduzione dello stress e il miglioramento del benessere generale.</p>
+
+          <h3>Supporto Psicologico</h3>
+          <p>Consulenza psicologica specializzata per affrontare gli aspetti mentali del benessere e del raggiungimento degli obiettivi di fitness.</p>
+        </section>
+
+        <section>
+          <h2>Perché Scegliere MUV Fitness</h2>
+          <ul>
+            <li><strong>Ambiente Esclusivo:</strong> Centro fitness riservato con attenzione personalizzata</li>
+            <li><strong>Tecnologie Avanzate:</strong> Utilizziamo le più moderne tecnologie per il fitness</li>
+            <li><strong>Staff Qualificato:</strong> Trainer certificati e professionisti del benessere</li>
+            <li><strong>Approccio Olistico:</strong> Dalla nutrizione al supporto psicologico</li>
+            <li><strong>Risultati Garantiti:</strong> Programmi studiati per obiettivi specifici</li>
+            <li><strong>Flessibilità:</strong> Orari e programmi adattati alle tue esigenze</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Trasformazione in 30 Giorni</h2>
+          <p>Il nostro programma speciale di trasformazione ti permette di vedere risultati concreti in soli 30 giorni. Combinando personal training, tecnologia EMS, consulenza nutrizionale e supporto continuo, ti guidiamo verso il raggiungimento dei tuoi obiettivi in tempi record.</p>
+        </section>
+
+        <section>
+          <h2>Contatti e Prenotazioni</h2>
+          <p>Prenota la tua consulenza gratuita per scoprire come possiamo aiutarti a raggiungere i tuoi obiettivi di fitness e benessere.</p>
+          <p><strong>Telefono:</strong> +39 3513380770</p>
+          <p><strong>Email:</strong> info@muvfitness.it</p>
+          <p><strong>Indirizzo:</strong> Via Venti Settembre, 5/7 - 37045 Legnago (VR)</p>
+          <p><strong>Orari di apertura:</strong></p>
+          <ul>
+            <li>Lunedì - Venerdì: 08:00 - 21:00</li>
+            <li>Sabato: 08:00 - 12:00</li>
+            <li>Domenica: Chiuso</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Zone Servite</h2>
+          <p>MUV Fitness serve clienti da:</p>
+          <ul>
+            <li>Legnago</li>
+            <li>Verona</li>
+            <li>Cerea</li>
+            <li>Bovolone</li>
+            <li>Nogara</li>
+            <li>Bassa Veronese</li>
+            <li>Zone limitrofe</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; 2024 MUV Fitness - Centro Fitness a Legnago. Tutti i diritti riservati.</p>
+        <p>Privacy Policy | Cookie Policy</p>
+      </footer>
+    </div>
+
+    <!-- Contenuto dinamico React -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

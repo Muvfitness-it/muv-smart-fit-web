@@ -1,3 +1,4 @@
+
 import { useAuth } from '@/hooks/useAuth';
 import HeroSection from '@/components/home/HeroSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
@@ -11,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { LogIn, Settings, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useLeadTracking from '@/hooks/useLeadTracking';
+
 const Index = () => {
   const {
     user,
@@ -20,6 +22,7 @@ const Index = () => {
 
   // Initialize lead tracking
   useLeadTracking();
+
   return (
     <ExitIntentPopup>
       <div className="min-h-screen bg-gray-900">
@@ -39,4 +42,5 @@ const Index = () => {
     </ExitIntentPopup>
   );
 };
+
 export default Index;
