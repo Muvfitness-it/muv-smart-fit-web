@@ -83,14 +83,14 @@ serve(async (req) => {
     const aiToken = crypto.randomUUID()
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 ore
 
-    // Salva il token nella tabella ai_tokens
+    // Salva il token nella tabella ai_tokens con created_for: 'blog_management'
     const { error: tokenError } = await supabaseAdmin
       .from('ai_tokens')
       .insert({
         token: aiToken,
         user_id: authData.user.id,
         expires_at: expiresAt.toISOString(),
-        created_for: 'ChatGPT'
+        created_for: 'blog_management'
       })
 
     if (tokenError) {
