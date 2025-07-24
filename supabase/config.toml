@@ -20,5 +20,8 @@ enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false
 
+[functions.ai-auth]
+verify_jwt = false
+
 [functions.blog-auto-post]
 verify_jwt = false
