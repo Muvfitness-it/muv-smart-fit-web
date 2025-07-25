@@ -203,6 +203,7 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
   };
 
   const saveAsDraft = async (silent: boolean = false) => {
+    console.log('🚀 saveAsDraft called with silent:', silent);
     const hasErrors = Object.keys(validationErrors).length > 0;
     if (hasErrors && !silent) {
       toast({
