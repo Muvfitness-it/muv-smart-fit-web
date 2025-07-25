@@ -6,7 +6,6 @@ import StatsSection from '@/components/home/StatsSection';
 import CTASection from '@/components/home/CTASection';
 import SEOHandler from '@/components/home/SEOHandler';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
-import AdminRoleAssigner from '@/components/auth/AdminRoleAssigner';
 import ExitIntentPopup from '@/components/conversion/ExitIntentPopup';
 import { Button } from '@/components/ui/button';
 import { LogIn, Settings, User } from 'lucide-react';
@@ -28,7 +27,6 @@ const Index = () => {
       <div className="min-h-screen bg-gray-900">
         <SEOHandler />
         <LocalBusinessSchema />
-        <AdminRoleAssigner />
         
         {/* Auth Status Bar */}
         
