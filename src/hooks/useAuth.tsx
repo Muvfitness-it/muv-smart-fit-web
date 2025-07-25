@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [canManageBlog, setCanManageBlog] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { logLoginAttempt } = useSecurityAudit();
+  const { logLoginAttempt } = useSecurityAudit(user);
 
   const checkUserRoles = async (userId: string) => {
     try {

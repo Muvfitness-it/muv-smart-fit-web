@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
+import type { User } from '@supabase/supabase-js';
 
 interface SecurityEvent {
   event_type: string;
@@ -8,8 +8,7 @@ interface SecurityEvent {
   user_id?: string;
 }
 
-export const useSecurityAudit = () => {
-  const { user } = useAuth();
+export const useSecurityAudit = (user?: User | null) => {
 
   const logSecurityEvent = useCallback(async (event: SecurityEvent) => {
     try {
