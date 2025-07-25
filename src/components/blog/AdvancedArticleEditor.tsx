@@ -179,10 +179,10 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
 
     console.log('User roles:', userRoles, 'Error:', rolesError);
 
-    if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin')) {
+    if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin' || r.role === 'editor')) {
       toast({
-        title: "Errore",
-        description: "Non hai i permessi per creare/modificare articoli. Contatta l'amministratore.",
+        title: "Errore di Permessi",
+        description: "Non hai i permessi per salvare articoli. Assicurati di essere autenticato come admin.",
         variant: "destructive"
       });
       return false;
