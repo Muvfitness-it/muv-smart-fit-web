@@ -38,6 +38,7 @@ import BlogAdmin from "./pages/BlogAdmin";
 import UserAdmin from "./pages/UserAdmin";
 import Auth from "./pages/Auth";
 import Analytics from "./pages/Analytics";
+import Admin from "./pages/Admin";
 import BookingManagement from "./pages/BookingManagement";
 import AdminRoleAssigner from "./components/auth/AdminRoleAssigner";
 // Landing Pages
@@ -112,6 +113,7 @@ const AppContent = () => {
                 <Route path="/blog/nuovo" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/utenti" element={<UserAdmin />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
