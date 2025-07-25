@@ -177,14 +177,10 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       .select('role')
       .eq('user_id', user.id);
 
-    console.log('User roles:', userRoles, 'Error:', rolesError);
-    console.log('User roles check:', userRoles?.map(r => r.role));
-
     if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin' || r.role === 'editor')) {
-      console.log('Permission denied - user roles:', userRoles);
       toast({
         title: "Errore di Permessi",
-        description: `Non hai i permessi per salvare articoli. Ruoli attuali: ${userRoles?.map(r => r.role).join(', ') || 'nessuno'}`,
+        description: "Non hai i permessi per salvare articoli. Assicurati di essere autenticato come admin o editor.",
         variant: "destructive"
       });
       return false;
