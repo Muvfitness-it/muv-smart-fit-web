@@ -3,6 +3,7 @@ import { useState, useEffect, createContext, useContext, ReactNode } from 'react
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useSecurityAudit } from '@/hooks/useSecurityAudit';
 
 interface AuthContext {
   user: User | null;
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [canManageBlog, setCanManageBlog] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { logLoginAttempt } = useSecurityAudit();
 
   const checkUserRoles = async (userId: string) => {
     try {
@@ -103,6 +105,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email,
         password,
       });
+
+      // Log the login attempt
+      await logLoginAttempt(!error, email);
 
       if (error) {
         toast({

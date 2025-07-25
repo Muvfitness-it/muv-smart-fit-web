@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useInputValidation } from "@/hooks/useInputValidation";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -17,18 +18,34 @@ const ContactForm = () => {
     obiettivo: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { validators, sanitizeHtml } = useInputValidation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Apply length limits and basic sanitization
+    let sanitizedValue = value;
+    
+    if (name === 'nome' || name === 'citta') {
+      sanitizedValue = value.slice(0, 50); // Limit name and city length
+    } else if (name === 'email') {
+      sanitizedValue = value.slice(0, 254); // Standard email max length
+    } else if (name === 'telefono') {
+      sanitizedValue = value.slice(0, 20); // Phone number limit
+    } else if (name === 'messaggio') {
+      sanitizedValue = value.slice(0, 2000); // Message limit
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Comprehensive validation
     if (!formData.nome.trim() || !formData.email.trim() || !formData.telefono.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
       toast({
         title: "Errore",
@@ -38,9 +55,8 @@ const ContactForm = () => {
       return;
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    // Validate email
+    if (!validators.email(formData.email)) {
       toast({
         title: "Errore",
         description: "Inserisci un indirizzo email valido.",
@@ -48,6 +64,29 @@ const ContactForm = () => {
       });
       return;
     }
+
+    // Validate name
+    if (!validators.name(formData.nome)) {
+      toast({
+        title: "Errore",
+        description: "Il nome contiene caratteri non validi.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate phone if provided
+    if (formData.telefono && !validators.phone(formData.telefono)) {
+      toast({
+        title: "Errore",
+        description: "Inserisci un numero di telefono valido.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Sanitize message content
+    const sanitizedMessage = sanitizeHtml(formData.messaggio);
 
     setIsSubmitting(true);
 
@@ -57,11 +96,11 @@ const ContactForm = () => {
 
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
-          name: formData.nome,
-          email: formData.email,
-          message: formData.messaggio,
-          telefono: formData.telefono,
-          city: formData.citta,
+          name: formData.nome.trim(),
+          email: formData.email.toLowerCase().trim(),
+          message: sanitizedMessage,
+          telefono: formData.telefono.trim(),
+          city: formData.citta.trim(),
           goal: formData.obiettivo,
         }
       });

@@ -1,0 +1,102 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+interface SecurityAuditEvent {
+  event_type: string;
+  event_data?: Record<string, any>;
+  user_id?: string;
+  ip_address?: string;
+  user_agent?: string;
+}
+
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    if (!supabaseServiceKey) {
+      throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY');
+    }
+
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      supabaseServiceKey
+    );
+
+    const body: SecurityAuditEvent = await req.json();
+    
+    // Validate required fields
+    if (!body.event_type) {
+      return new Response(
+        JSON.stringify({ error: 'event_type is required' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    // Log the security event
+    const { error } = await supabase
+      .from('security_audit_log')
+      .insert({
+        user_id: body.user_id,
+        event_type: body.event_type,
+        event_data: body.event_data || {},
+        ip_address: body.ip_address,
+        user_agent: body.user_agent,
+      });
+
+    if (error) {
+      console.error('Error logging security event:', error);
+      return new Response(
+        JSON.stringify({ error: 'Failed to log security event' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    // Check for suspicious patterns and alert if needed
+    if (body.event_type === 'login_failed') {
+      // Check for multiple failed attempts from same IP
+      const { data: recentFailures } = await supabase
+        .from('security_audit_log')
+        .select('id')
+        .eq('event_type', 'login_failed')
+        .eq('ip_address', body.ip_address)
+        .gte('created_at', new Date(Date.now() - 15 * 60 * 1000).toISOString()); // Last 15 minutes
+
+      if (recentFailures && recentFailures.length >= 5) {
+        console.warn(`Multiple failed login attempts detected from IP: ${body.ip_address}`);
+        // Here you could implement additional security measures like temporary IP blocking
+      }
+    }
+
+    return new Response(
+      JSON.stringify({ success: true }),
+      { 
+        status: 200, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
+
+  } catch (error) {
+    console.error('Security audit error:', error);
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { 
+        status: 500, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
+  }
+});

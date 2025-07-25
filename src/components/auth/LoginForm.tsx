@@ -8,13 +8,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, LogIn, UserPlus } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useInputValidation } from '@/hooks/useInputValidation';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
+  const { validators } = useInputValidation();
 
   React.useEffect(() => {
     if (user) {
@@ -22,8 +25,44 @@ const LoginForm: React.FC = () => {
     }
   }, [user, navigate]);
 
+  const validateForm = () => {
+    const newErrors: { email?: string; password?: string } = {};
+    
+    if (!validators.email(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (email.length > 254) {
+      newErrors.email = 'Email address too long';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validatePasswordForSignUp = () => {
+    const passwordValidation = validators.password(password);
+    const newErrors: { email?: string; password?: string } = {};
+    
+    if (!validators.email(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!passwordValidation.isValid) {
+      newErrors.password = passwordValidation.message;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
@@ -35,6 +74,11 @@ const LoginForm: React.FC = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validatePasswordForSignUp()) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
@@ -70,9 +114,11 @@ const LoginForm: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="bg-gray-700 border-gray-600 text-white"
+                    maxLength={254}
+                    className={`bg-gray-700 border-gray-600 text-white ${errors.email ? 'border-red-500' : ''}`}
                     placeholder="nome@esempio.com"
                   />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signin-password" className="text-white">Password</Label>
@@ -115,9 +161,11 @@ const LoginForm: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="bg-gray-700 border-gray-600 text-white"
+                    maxLength={254}
+                    className={`bg-gray-700 border-gray-600 text-white ${errors.email ? 'border-red-500' : ''}`}
                     placeholder="nome@esempio.com"
                   />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="signup-password" className="text-white">Password</Label>
@@ -127,9 +175,11 @@ const LoginForm: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="bg-gray-700 border-gray-600 text-white"
-                    placeholder="Minimo 6 caratteri"
+                    maxLength={128}
+                    className={`bg-gray-700 border-gray-600 text-white ${errors.password ? 'border-red-500' : ''}`}
+                    placeholder="Minimo 8 caratteri con lettere, numeri e simboli"
                   />
+                  {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
                 </div>
                 <Button
                   type="submit"

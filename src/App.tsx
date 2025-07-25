@@ -48,6 +48,7 @@ import BookingModify from "./pages/BookingModify";
 // SEO Components
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
+import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import AIAuth from "./pages/AIAuth";
 
 const queryClient = new QueryClient();
@@ -70,6 +71,7 @@ const AppContent = () => {
   
   return (
     <>
+      <SecurityHeaders />
       <SEOHandler />
       <PerformanceOptimizer />
       <div className="min-h-screen bg-gray-900 text-white">
