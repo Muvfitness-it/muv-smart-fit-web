@@ -160,10 +160,14 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
   }, [validationErrors]);
 
   const checkUserPermissions = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    console.log('Current user:', user);
+    console.log('🔍 Checking user permissions...');
+    
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    console.log('👤 Current user:', user);
+    console.log('❌ User error:', userError);
     
     if (!user) {
+      console.log('❌ No user found');
       toast({
         title: "Errore",
         description: "Devi essere autenticato per salvare articoli",
@@ -172,20 +176,29 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return false;
     }
 
+    console.log('🔑 Fetching user roles for user ID:', user.id);
     const { data: userRoles, error: rolesError } = await supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', user.id);
 
-    if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin' || r.role === 'editor')) {
+    console.log('👥 User roles data:', userRoles);
+    console.log('❌ Roles error:', rolesError);
+    
+    const hasPermission = userRoles && userRoles.length > 0 && userRoles.some(r => r.role === 'admin' || r.role === 'editor');
+    console.log('✅ Has permission:', hasPermission);
+
+    if (!hasPermission) {
+      console.log('❌ Permission denied');
       toast({
         title: "Errore di Permessi",
-        description: "Non hai i permessi per salvare articoli. Assicurati di essere autenticato come admin o editor.",
+        description: `Non hai i permessi per salvare articoli. Ruoli: ${userRoles?.map(r => r.role).join(', ') || 'nessuno'}`,
         variant: "destructive"
       });
       return false;
     }
 
+    console.log('✅ Permission check passed');
     return true;
   };
 
