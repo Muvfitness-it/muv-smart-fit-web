@@ -37,6 +37,8 @@ import BlogEditor from "./pages/BlogEditor";
 import BlogAdmin from "./pages/BlogAdmin";
 import UserAdmin from "./pages/UserAdmin";
 import Auth from "./pages/Auth";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import Analytics from "./pages/Analytics";
 import Admin from "./pages/Admin";
 import BookingManagement from "./pages/BookingManagement";
@@ -80,6 +82,7 @@ const AppContent = () => {
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
         
         {/* Auth Pages - NO Navigation/Footer */}
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/ai-auth" element={<AIAuth />} />
         
@@ -116,6 +119,7 @@ const AppContent = () => {
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<UserAdmin />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
