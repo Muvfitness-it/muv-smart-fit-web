@@ -1,5 +1,5 @@
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import HeroSection from '@/components/home/HeroSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
 import StatsSection from '@/components/home/StatsSection';
@@ -17,7 +17,7 @@ const Index = () => {
     user,
     isAdmin,
     signOut
-  } = useAuth();
+  } = useAdminAuth();
 
   // Initialize lead tracking
   useLeadTracking();

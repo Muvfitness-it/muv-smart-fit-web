@@ -2,11 +2,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import AIArticleWriter from '@/components/blog/AIArticleWriter';
-import ProtectedRoute from '@/components/blog/ProtectedRoute';
+import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 
 const BlogWriter = () => {
   return (
-    <ProtectedRoute requireBlogAccess={true}>
+    <SimpleProtectedRoute>
       <div className="min-h-screen bg-gray-900 pt-[var(--header-height)] py-8">
         <Helmet>
           <title>Scrivi Articolo con IA - MUV Fitness Blog</title>
@@ -19,7 +19,7 @@ const BlogWriter = () => {
           <AIArticleWriter />
         </div>
       </div>
-    </ProtectedRoute>
+    </SimpleProtectedRoute>
   );
 };
 

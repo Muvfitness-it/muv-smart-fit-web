@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PenTool, Sparkles, TrendingUp, FileText, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import BlogPostCard from './BlogPostCard';
 interface BlogLandingProps {
   recentArticles?: Array<{
@@ -28,7 +28,7 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
   const {
     user,
     isAdmin
-  } = useAuth();
+  } = useAdminAuth();
   return <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center space-y-6">

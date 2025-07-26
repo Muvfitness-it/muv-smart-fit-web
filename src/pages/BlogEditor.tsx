@@ -1,11 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import ArticleManager from '@/components/blog/ArticleManager';
-import ProtectedRoute from '@/components/blog/ProtectedRoute';
+import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 
 const BlogEditor = () => {
   return (
-    <ProtectedRoute requireBlogAccess={true}>
+    <SimpleProtectedRoute>
       <div className="min-h-screen bg-background pt-[var(--header-height)]">
         <Helmet>
           <title>Editor Articoli - MUV Fitness Blog</title>
@@ -15,7 +15,7 @@ const BlogEditor = () => {
         
         <ArticleManager />
       </div>
-    </ProtectedRoute>
+    </SimpleProtectedRoute>
   );
 };
 

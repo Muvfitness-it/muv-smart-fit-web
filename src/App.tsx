@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useEffect } from "react";
-import { AuthProvider } from "./hooks/useAuth";
 import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -34,15 +33,8 @@ import BlogPost from "./pages/BlogPost";
 import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
-import BlogAdmin from "./pages/BlogAdmin";
-import UserAdmin from "./pages/UserAdmin";
-import Auth from "./pages/Auth";
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
+import AdminAuth from "./pages/AdminAuth";
 import Analytics from "./pages/Analytics";
-import Admin from "./pages/Admin";
-
-import AdminRoleAssigner from "./components/auth/AdminRoleAssigner";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 // SEO Components
@@ -80,9 +72,8 @@ const AppContent = () => {
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
         
         {/* Auth Pages - NO Navigation/Footer */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/ai-auth" element={<AIAuth />} />
+            <Route path="/admin/auth" element={<AdminAuth />} />
+            <Route path="/ai-auth" element={<AIAuth />} />
         
         
         {/* Regular Pages - WITH Navigation/Footer */}
@@ -108,14 +99,10 @@ const AppContent = () => {
                 <Route path="/muv-planner" element={<MuvPlanner />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/scrivi-con-ia" element={<BlogWriter />} />
-                <Route path="/blog/admin" element={<BlogAdmin />} />
                 <Route path="/blog/gestisci" element={<BlogManager />} />
                 <Route path="/blog/nuovo" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/utenti" element={<UserAdmin />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
@@ -137,14 +124,11 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <AuthProvider>
-        <AdminRoleAssigner />
+      <BrowserRouter>
+        <AppContent />
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </AuthProvider>
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Edit, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 interface BlogHeaderProps {
   showBackButton?: boolean;
@@ -22,7 +22,7 @@ const BlogHeader: React.FC<BlogHeaderProps> = ({
   onShare
 }) => {
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
+  const { isAdmin } = useAdminAuth();
 
   return (
     <header className="sticky top-[var(--header-height)] bg-gray-900/95 backdrop-blur-sm border-b border-border z-40">

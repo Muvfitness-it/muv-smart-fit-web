@@ -224,18 +224,17 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
         return;
       }
 
-      // Verifica i ruoli dell'utente
-      const { data: userRoles, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
+      // Verifica se l'utente è admin
+      const { data: adminUser, error: adminError } = await supabase
+        .from('admin_users')
+        .select('id')
+        .eq('user_id', user.id)
+        .single();
 
-      console.log('User roles:', userRoles, 'Error:', rolesError);
-
-      if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin')) {
+      if (adminError || !adminUser) {
         toast({
           title: "Errore",
-          description: "Non hai i permessi per creare articoli. Contatta l'amministratore.",
+          description: "Non hai i permessi per creare articoli. Solo gli amministratori possono pubblicare.",
           variant: "destructive"
         });
         return;

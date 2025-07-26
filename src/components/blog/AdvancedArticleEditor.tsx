@@ -171,15 +171,16 @@ const AdvancedArticleEditor: React.FC<AdvancedArticleEditorProps> = ({ articleId
       return false;
     }
 
-    const { data: userRoles, error: rolesError } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', user.id);
+    const { data: adminUser, error: adminError } = await supabase
+      .from('admin_users')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
 
-    if (!userRoles || userRoles.length === 0 || !userRoles.some(r => r.role === 'admin' || r.role === 'editor')) {
+    if (adminError || !adminUser) {
       toast({
         title: "Errore di Permessi",
-        description: "Non hai i permessi per salvare articoli. Assicurati di essere autenticato come admin o editor.",
+        description: "Non hai i permessi per salvare articoli. Solo gli amministratori possono pubblicare.",
         variant: "destructive"
       });
       return false;
