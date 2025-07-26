@@ -16,7 +16,6 @@ import {
 
 const adminItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
-  { title: "Gestione Prenotazioni", url: "/admin/dashboard?tab=bookings", icon: Calendar },
   { title: "Gestione Articoli", url: "/admin/dashboard?tab=articles", icon: FileText },
   { title: "Gestione Utenti", url: "/admin/utenti", icon: Users },
 ];

@@ -6,7 +6,7 @@ import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProtectedRoute from '@/components/blog/ProtectedRoute';
-import BookingManager from '@/components/booking/BookingManager';
+
 import ArticleManager from '@/components/blog/ArticleManager';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['overview', 'bookings', 'articles'].includes(tab)) {
+    if (tab && ['overview', 'articles'].includes(tab)) {
       setActiveTab(tab);
     }
   }, [searchParams]);
@@ -66,25 +66,13 @@ const AdminDashboard = () => {
             {/* Main Content */}
             <main className="flex-1 p-6">
               <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-                <TabsList className="grid grid-cols-3 w-full max-w-md">
+                <TabsList className="grid grid-cols-2 w-full max-w-md">
                   <TabsTrigger value="overview">Panoramica</TabsTrigger>
-                  <TabsTrigger value="bookings">Prenotazioni</TabsTrigger>
                   <TabsTrigger value="articles">Articoli</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview" className="space-y-6">
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    <Card>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Prenotazioni</CardTitle>
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">-</div>
-                        <p className="text-xs text-muted-foreground">Gestisci le prenotazioni dei clienti</p>
-                      </CardContent>
-                    </Card>
-
+                  <div className="grid gap-6 md:grid-cols-2">
                     <Card>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Articoli Blog</CardTitle>
@@ -117,14 +105,6 @@ const AdminDashboard = () => {
                       <CardContent className="space-y-3">
                         <Button 
                           variant="outline" 
-                          className="w-full justify-start" 
-                          onClick={() => handleTabChange('bookings')}
-                        >
-                          <Calendar className="mr-2 h-4 w-4" />
-                          Gestisci Prenotazioni
-                        </Button>
-                        <Button 
-                          variant="outline" 
                           className="w-full justify-start"
                           onClick={() => handleTabChange('articles')}
                         >
@@ -155,17 +135,6 @@ const AdminDashboard = () => {
                   </div>
                 </TabsContent>
 
-                <TabsContent value="bookings">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Gestione Prenotazioni</CardTitle>
-                      <CardDescription>Visualizza e gestisci tutte le prenotazioni dei clienti</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <BookingManager />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
 
                 <TabsContent value="articles">
                   <Card>

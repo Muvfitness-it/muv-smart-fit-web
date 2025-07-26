@@ -41,12 +41,10 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Analytics from "./pages/Analytics";
 import Admin from "./pages/Admin";
-import BookingManagement from "./pages/BookingManagement";
+
 import AdminRoleAssigner from "./components/auth/AdminRoleAssigner";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
-import BookingCancel from "./pages/BookingCancel";
-import BookingModify from "./pages/BookingModify";
 // SEO Components
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
@@ -86,9 +84,6 @@ const AppContent = () => {
         <Route path="/auth" element={<Auth />} />
         <Route path="/ai-auth" element={<AIAuth />} />
         
-        {/* Booking Management Pages - NO Navigation/Footer */}
-        <Route path="/booking-cancel" element={<BookingCancel />} />
-        <Route path="/booking-modify" element={<BookingModify />} />
         
         {/* Regular Pages - WITH Navigation/Footer */}
         <Route path="/*" element={
@@ -125,7 +120,7 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
-                <Route path="/prenotazioni" element={<BookingManagement />} />
+                
                 <Route path="/sitemap.xml" element={<DynamicSitemap />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

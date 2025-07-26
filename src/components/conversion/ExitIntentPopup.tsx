@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { X, Calendar, Clock, User } from 'lucide-react';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import BookingForm from '@/components/booking/BookingForm';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 interface ExitIntentPopupProps {
   children?: React.ReactNode;
@@ -128,9 +127,20 @@ const ExitIntentPopup = ({ children }: ExitIntentPopupProps) => {
               </p>
             </div>
 
-            {/* Booking form - compact */}
-            <div onClick={handleBookingStart}>
-              <BookingForm onClose={() => setIsOpen(false)} />
+            {/* Blog content */}
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground mb-4">
+                Scopri i nostri articoli di fitness e nutrizione
+              </p>
+              <Button 
+                className="w-full"
+                onClick={() => {
+                  window.location.href = '/blog';
+                  setIsOpen(false);
+                }}
+              >
+                Vai al Blog
+              </Button>
             </div>
           </div>
         </DialogContent>
