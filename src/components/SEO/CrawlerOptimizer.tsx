@@ -35,7 +35,7 @@ const CrawlerOptimizer: React.FC<CrawlerOptimizerProps> = ({
         </ul>
       ` : ''}
       <p>Località: ${location}</p>
-      <p>Contatti: +39 3513380770 - info@muvfitness.it</p>
+      <p>Contatti: +39 3291070374 - info@muvfitness.it</p>
     `;
     
     // Rimuovi contenuto precedente se esiste

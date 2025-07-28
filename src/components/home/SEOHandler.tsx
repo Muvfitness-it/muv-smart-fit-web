@@ -41,7 +41,7 @@ const SEOHandler: React.FC = () => {
       case '/contatti':
         return {
           title: 'Contatti MUV Fitness Legnago - Prenota la Tua Consulenza Gratuita',
-          description: 'Contatta MUV Fitness Legnago per prenotare la tua consulenza gratuita. Siamo in Via Venti Settembre 5/7, Legnago. Tel: 3513380770',
+          description: 'Contatta MUV Fitness Legnago per prenotare la tua consulenza gratuita. Siamo in Via Venti Settembre 5/7, Legnago. Tel: 3291070374',
           keywords: 'contatti muv fitness, palestra legnago contatti, prenota consulenza fitness',
           canonical: `${baseUrl}/contatti`,
           ogType: 'website',

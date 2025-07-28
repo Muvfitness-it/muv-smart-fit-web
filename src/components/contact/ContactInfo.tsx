@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail } from "lucide-react";
+
 const ContactInfo = () => {
-  return <div className="space-y-8">
+  return (
+    <div className="space-y-8">
       <Card className="bg-gray-800 border-gray-700">
         <CardContent className="p-8">
           <h2 className="text-2xl font-bold mb-6 text-white">Informazioni di Contatto</h2>
@@ -23,7 +25,7 @@ const ContactInfo = () => {
               <Phone className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-white mb-1">Telefono</h3>
-                <p className="text-gray-300">+39 3513380770</p>
+                <p className="text-gray-300">+39 3291070374</p>
               </div>
             </div>
             
@@ -57,6 +59,8 @@ const ContactInfo = () => {
           </div>
         </CardContent>
       </Card>
-    </div>;
+    </div>
+  );
 };
+
 export default ContactInfo;
