@@ -1,9 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import ArticleManager from '@/components/blog/ArticleManager';
+import BlogEditor from '@/components/blog/BlogEditor';
 import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 
-const BlogEditor = () => {
+const BlogEditorPage = () => {
   return (
     <SimpleProtectedRoute>
       <div className="min-h-screen bg-background pt-[var(--header-height)]">
@@ -13,10 +13,10 @@ const BlogEditor = () => {
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         
-        <ArticleManager />
+        <BlogEditor />
       </div>
     </SimpleProtectedRoute>
   );
 };
 
-export default BlogEditor;
+export default BlogEditorPage;
