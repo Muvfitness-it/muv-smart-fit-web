@@ -17,7 +17,7 @@ const AdminAuth = () => {
 
   useEffect(() => {
     if (user && isAdmin) {
-      navigate('/blog/manager');
+      navigate('/admin/dashboard');
     }
   }, [user, isAdmin, navigate]);
 

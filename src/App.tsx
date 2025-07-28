@@ -34,6 +34,7 @@ import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
 import AdminAuth from "./pages/AdminAuth";
+import AdminDashboard from "./pages/AdminDashboard";
 import Analytics from "./pages/Analytics";
 // Landing Pages
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
@@ -103,6 +104,7 @@ const AppContent = () => {
                 <Route path="/blog/nuovo" element={<BlogEditor />} />
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
