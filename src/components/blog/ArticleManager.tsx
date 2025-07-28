@@ -165,7 +165,10 @@ const ArticleManager = () => {
           </Button>
           
           <Button
-            onClick={() => navigate('/blog/nuovo')}
+            onClick={() => {
+              console.log('Navigating to /blog/nuovo');
+              navigate('/blog/nuovo');
+            }}
             className="bg-blue-600 hover:bg-blue-700 flex items-center"
           >
             <PenTool className="mr-2 h-4 w-4" />
@@ -230,7 +233,10 @@ const ArticleManager = () => {
                     Scrivi con IA
                   </Button>
                   <Button
-                    onClick={() => navigate('/blog/nuovo')}
+                    onClick={() => {
+                      console.log('Navigating to /blog/nuovo');
+                      navigate('/blog/nuovo');
+                    }}
                     className="bg-blue-600 hover:bg-blue-700"
                   >
                     <PenTool className="mr-2 h-4 w-4" />
