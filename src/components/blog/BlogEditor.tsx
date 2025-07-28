@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import RichTextEditor from './RichTextEditor';
+import ImageUploader from './ImageUploader';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Save, Eye, Globe } from 'lucide-react';
@@ -312,14 +313,23 @@ const BlogEditor = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="featured_image">Immagine in evidenza (URL)</Label>
-                  <Input
-                    id="featured_image"
-                    value={formData.featured_image}
-                    onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                    className="mt-1"
-                  />
+                  <Label>Immagine in evidenza</Label>
+                  <div className="mt-2 space-y-4">
+                    <ImageUploader 
+                      onImageUploaded={(url) => setFormData({ ...formData, featured_image: url })}
+                      currentImage={formData.featured_image}
+                    />
+                    <div>
+                      <Label htmlFor="featured_image_url" className="text-sm text-muted-foreground">Oppure inserisci URL manualmente</Label>
+                      <Input
+                        id="featured_image_url"
+                        value={formData.featured_image}
+                        onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
+                        placeholder="https://example.com/image.jpg"
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
