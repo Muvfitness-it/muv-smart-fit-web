@@ -39,6 +39,20 @@ const ArticleManager = () => {
     loadPosts();
   }, []);
 
+  // Ricarica i post quando la pagina diventa visibile
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        loadPosts();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
   const loadPosts = async () => {
     try {
       setLoading(true);

@@ -181,7 +181,10 @@ const BlogEditor = () => {
         description: `Articolo ${status === 'published' ? 'pubblicato' : 'salvato'} con successo`,
       });
 
-      navigate('/blog/gestisci');
+      // Aggiungi un piccolo delay per permettere al database di aggiornarsi
+      setTimeout(() => {
+        navigate('/blog/gestisci');
+      }, 500);
     } catch (error) {
       console.error('Error saving post:', error);
       toast({
