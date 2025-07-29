@@ -3,75 +3,7 @@ import ContactForm from "../components/contact/ContactForm";
 import ContactInfo from "../components/contact/ContactInfo";
 
 const Contatti = () => {
-  // Meta tag SEO ottimizzati per la pagina contatti
-  useEffect(() => {
-    // Title
-    document.title = "Contatti Centro fitness MUV | Centro Fitness Legnago";
-    
-    // Meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Contatta Centro fitness MUV a Legnago: prenota la tua prova gratuita, scrivici o chiamaci. Siamo pronti ad aiutarti a raggiungere i tuoi obiettivi.');
-    }
-
-    // Meta keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', 'contatti Centro fitness MUV, contattaci fitness Legnago, prenota prova gratuita Legnago');
-
-    // Canonical URL
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', 'https://muvfitness.it/contatti');
-
-    // Open Graph tags
-    const ogTags = [
-      { property: 'og:title', content: 'Contatti – Centro fitness MUV Legnago' },
-      { property: 'og:description', content: 'Hai domande? Prenota la tua prova gratuita o scrivici. Siamo a tua disposizione da Centro fitness MUV, Legnago.' },
-      { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://muvfitness.it/contatti' },
-      { property: 'og:image', content: 'https://muvfitness.it/og-image-contatti.jpg' },
-      { property: 'og:image:width', content: '1200' },
-      { property: 'og:image:height', content: '630' },
-      { property: 'og:locale', content: 'it_IT' }
-    ];
-
-    ogTags.forEach(tag => {
-      let metaTag = document.querySelector(`meta[property="${tag.property}"]`);
-      if (!metaTag) {
-        metaTag = document.createElement('meta');
-        metaTag.setAttribute('property', tag.property);
-        document.head.appendChild(metaTag);
-      }
-      metaTag.setAttribute('content', tag.content);
-    });
-
-    // Twitter Card tags
-    const twitterTags = [
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Contatti – Centro fitness MUV Legnago' },
-      { name: 'twitter:description', content: 'Prenota la tua prova gratuita o scrivici subito a Centro fitness MUV Legnago. Siamo pronti ad aiutarti!' },
-      { name: 'twitter:image', content: 'https://muvfitness.it/og-image-contatti.jpg' }
-    ];
-
-    twitterTags.forEach(tag => {
-      let metaTag = document.querySelector(`meta[name="${tag.name}"]`);
-      if (!metaTag) {
-        metaTag = document.createElement('meta');
-        metaTag.setAttribute('name', tag.name);
-        document.head.appendChild(metaTag);
-      }
-      metaTag.setAttribute('content', tag.content);
-    });
-  }, []);
+  // SEO is now handled by SEOHandler component globally
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
