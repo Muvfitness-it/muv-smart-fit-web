@@ -59,10 +59,15 @@ const AppContent = () => {
     const link = document.createElement('link');
     link.rel = 'dns-prefetch';
     link.href = 'https://muvfit-blog-builder.lovable.app';
+    link.setAttribute('data-app-prefetch', 'true');
     document.head.appendChild(link);
     
     return () => {
-      document.head.removeChild(link);
+      // Safe cleanup - check if element exists and has parent
+      const existingLink = document.querySelector('link[data-app-prefetch="true"]');
+      if (existingLink && existingLink.parentNode) {
+        existingLink.parentNode.removeChild(existingLink);
+      }
     };
   }, []);
   
