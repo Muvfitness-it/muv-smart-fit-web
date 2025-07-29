@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useSecurityAudit } from './useSecurityAudit';
 import type { User, Session } from '@supabase/supabase-js';
 
 interface AdminAuthState {
@@ -18,13 +19,15 @@ export const useAdminAuth = () => {
     loading: true
   });
   const { toast } = useToast();
+  const { logLoginAttempt, logRoleChange } = useSecurityAudit(state.user);
 
   const checkAdminStatus = async (userId: string) => {
     try {
       const { data, error } = await supabase
-        .from('admin_users')
-        .select('id')
+        .from('user_roles')
+        .select('role')
         .eq('user_id', userId)
+        .eq('role', 'admin')
         .single();
 
       return !error && data;
@@ -35,34 +38,59 @@ export const useAdminAuth = () => {
 
   const registerAsAdmin = async (userId: string, email: string) => {
     try {
-      // Controlla se è il primo admin
+      // Check if any admins exist first
       const { data: existingAdmins } = await supabase
-        .from('admin_users')
+        .from('user_roles')
         .select('id')
+        .eq('role', 'admin')
         .limit(1);
 
       const isFirstAdmin = !existingAdmins || existingAdmins.length === 0;
 
-      const { error } = await supabase
-        .from('admin_users')
-        .insert({
-          user_id: userId,
-          email: email,
-          is_first_admin: isFirstAdmin
-        });
+      // For first admin, allow direct role assignment
+      if (isFirstAdmin) {
+        const { error } = await supabase
+          .from('user_roles')
+          .insert({
+            user_id: userId,
+            role: 'admin'
+          });
 
-      if (!error) {
-        setState(prev => ({ ...prev, isAdmin: true }));
+        if (!error) {
+          // Also insert into admin_users for backward compatibility
+          await supabase
+            .from('admin_users')
+            .insert({
+              user_id: userId,
+              email: email,
+              is_first_admin: true
+            });
+
+          setState(prev => ({ ...prev, isAdmin: true }));
+          logRoleChange(userId, 'admin', 'user');
+          
+          toast({
+            title: "Primo Amministratore Registrato",
+            description: "Sei il primo amministratore del sistema!",
+          });
+          return true;
+        }
+      } else {
+        // Subsequent admin requests require approval
         toast({
-          title: "Amministratore registrato",
-          description: isFirstAdmin 
-            ? "Sei il primo amministratore del sistema!"
-            : "Richiesta di amministratore inviata",
+          title: "Richiesta Amministratore",
+          description: "Solo gli amministratori esistenti possono assegnare ruoli di amministratore",
+          variant: "destructive"
         });
-        return true;
+        return false;
       }
     } catch (error) {
       console.error('Error registering as admin:', error);
+      toast({
+        title: "Errore",
+        description: "Errore durante la registrazione amministratore",
+        variant: "destructive"
+      });
     }
     return false;
   };
@@ -75,6 +103,7 @@ export const useAdminAuth = () => {
       });
 
       if (error) {
+        logLoginAttempt(false, email);
         toast({
           title: "Errore di accesso",
           description: error.message,
@@ -83,8 +112,10 @@ export const useAdminAuth = () => {
         return { error };
       }
 
+      logLoginAttempt(true, email);
       return { data };
     } catch (error: any) {
+      logLoginAttempt(false, email);
       toast({
         title: "Errore",
         description: "Errore durante l'accesso",

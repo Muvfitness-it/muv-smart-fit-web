@@ -2,6 +2,31 @@ import { useMemo } from 'react';
 import DOMPurify from 'dompurify';
 
 export const useInputValidation = () => {
+  // Rate limiting state for validation attempts
+  const rateLimitMap = new Map<string, { count: number; lastAttempt: number }>();
+
+  const checkRateLimit = (identifier: string, maxAttempts = 10, windowMs = 60000) => {
+    const now = Date.now();
+    const record = rateLimitMap.get(identifier);
+    
+    if (!record) {
+      rateLimitMap.set(identifier, { count: 1, lastAttempt: now });
+      return true;
+    }
+    
+    if (now - record.lastAttempt > windowMs) {
+      rateLimitMap.set(identifier, { count: 1, lastAttempt: now });
+      return true;
+    }
+    
+    if (record.count >= maxAttempts) {
+      return false;
+    }
+    
+    record.count++;
+    record.lastAttempt = now;
+    return true;
+  };
   const validators = useMemo(() => ({
     // Email validation
     email: (email: string): boolean => {

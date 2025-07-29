@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,16 @@ const ContactForm = () => {
     obiettivo: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [csrfToken, setCsrfToken] = useState("");
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const [lastSubmission, setLastSubmission] = useState(0);
   const { validators, sanitizeHtml } = useInputValidation();
+
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    const token = crypto.randomUUID();
+    setCsrfToken(token);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -44,6 +53,24 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Rate limiting check (max 3 submissions per 10 minutes)
+    const now = Date.now();
+    const timeWindow = 10 * 60 * 1000; // 10 minutes in milliseconds
+    
+    if (lastSubmission && (now - lastSubmission < timeWindow) && submissionCount >= 3) {
+      toast({
+        title: "Troppi tentativi",
+        description: "Hai effettuato troppi invii. Riprova tra qualche minuto.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Reset submission count if outside time window
+    if (!lastSubmission || (now - lastSubmission >= timeWindow)) {
+      setSubmissionCount(0);
+    }
     
     // Comprehensive validation
     if (!formData.nome.trim() || !formData.email.trim() || !formData.telefono.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
@@ -102,6 +129,8 @@ const ContactForm = () => {
           telefono: formData.telefono.trim(),
           city: formData.citta.trim(),
           goal: formData.obiettivo,
+          csrfToken: csrfToken,
+          timestamp: now
         }
       });
 
@@ -116,6 +145,10 @@ const ContactForm = () => {
       }
 
       console.log('Email sent successfully:', data);
+
+      // Track successful submission
+      setSubmissionCount(prev => prev + 1);
+      setLastSubmission(now);
 
       toast({
         title: "Messaggio inviato!",
