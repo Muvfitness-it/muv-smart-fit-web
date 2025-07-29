@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+
 interface LazyImageProps {
   src: string;
   alt: string;
@@ -8,6 +9,10 @@ interface LazyImageProps {
   onLoad?: () => void;
   onError?: () => void;
   priority?: boolean;
+  sizes?: string;
+  srcSet?: string;
+  width?: number;
+  height?: number;
 }
 const LazyImage = ({
   src,
@@ -16,7 +21,11 @@ const LazyImage = ({
   placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PC9zdmc+",
   onLoad,
   onError,
-  priority = false
+  priority = false,
+  sizes,
+  srcSet,
+  width,
+  height
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -32,7 +41,8 @@ const LazyImage = ({
         }
       });
     }, {
-      rootMargin: '50px'
+      rootMargin: '100px',
+      threshold: 0.1
     });
     if (imgRef.current) {
       observer.observe(imgRef.current);
@@ -47,29 +57,52 @@ const LazyImage = ({
     setHasError(true);
     onError?.();
   };
+  // Generate WebP source if supported
+  const getWebPSrc = (originalSrc: string) => {
+    if (originalSrc.includes('.jpg') || originalSrc.includes('.png')) {
+      return originalSrc.replace(/\.(jpg|png)$/i, '.webp');
+    }
+    return originalSrc;
+  };
+
   return (
-    <div ref={imgRef} className={cn("relative", className)}>
+    <div 
+      ref={imgRef} 
+      className={cn("relative", className)}
+      style={width && height ? { aspectRatio: `${width}/${height}` } : undefined}
+    >
       {isInView && !hasError ? (
-        <img
-          src={src}
-          alt={alt}
-          className={cn(
-            "transition-opacity duration-300",
-            isLoaded ? "opacity-100" : "opacity-0",
-            className
-          )}
-          onLoad={handleLoad}
-          onError={handleError}
-        />
+        <picture>
+          <source srcSet={srcSet ? srcSet.replace(/\.(jpg|png)/gi, '.webp') : getWebPSrc(src)} type="image/webp" />
+          <img
+            src={src}
+            srcSet={srcSet}
+            sizes={sizes}
+            alt={alt}
+            width={width}
+            height={height}
+            className={cn(
+              "transition-opacity duration-500 ease-out",
+              isLoaded ? "opacity-100" : "opacity-0",
+              className
+            )}
+            onLoad={handleLoad}
+            onError={handleError}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+          />
+        </picture>
       ) : !hasError ? (
-        <img
-          src={placeholder}
-          alt={alt}
-          className={cn("opacity-50", className)}
-        />
+        <div 
+          className={cn("animate-pulse bg-muted", className)}
+          style={width && height ? { aspectRatio: `${width}/${height}` } : undefined}
+        >
+          {/* Blur placeholder with better UX */}
+          <div className="w-full h-full bg-gradient-to-r from-muted to-muted/50 rounded" />
+        </div>
       ) : (
-        <div className={cn("bg-gray-200 flex items-center justify-center", className)}>
-          <span className="text-gray-500 text-sm">Error loading image</span>
+        <div className={cn("bg-muted flex items-center justify-center text-muted-foreground", className)}>
+          <span className="text-sm">Error loading image</span>
         </div>
       )}
     </div>

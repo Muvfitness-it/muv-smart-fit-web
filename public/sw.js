@@ -1,4 +1,8 @@
-const CACHE_NAME = 'muv-fitness-v1';
+const CACHE_NAME = 'muv-fitness-v2';
+const STATIC_CACHE = 'muv-static-v2';
+const DYNAMIC_CACHE = 'muv-dynamic-v2';
+const IMAGE_CACHE = 'muv-images-v2';
+
 const urlsToCache = [
   '/',
   '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png',
@@ -6,38 +10,146 @@ const urlsToCache = [
   '/manifest.json'
 ];
 
+const STATIC_ASSETS = [
+  '/src/main.tsx',
+  '/src/App.tsx',
+  '/src/index.css'
+];
+
+const MAX_CACHE_SIZE = 50;
+const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+// Helper function to limit cache size
+const limitCacheSize = async (name, size) => {
+  const cache = await caches.open(name);
+  const keys = await cache.keys();
+  if (keys.length > size) {
+    await cache.delete(keys[0]);
+    await limitCacheSize(name, size);
+  }
+};
+
 // Install event - cache resources
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+    Promise.all([
+      caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)),
+      caches.open(STATIC_CACHE).then(cache => cache.addAll(STATIC_ASSETS))
+    ])
   );
   self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - intelligent caching strategy
 self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Skip non-GET requests and different origins
+  if (request.method !== 'GET' || url.origin !== location.origin) {
+    return;
+  }
+
+  // Images strategy - Cache with fallback
+  if (request.destination === 'image') {
+    event.respondWith(
+      caches.match(request).then(response => {
+        if (response) return response;
+        
+        return fetch(request).then(fetchResponse => {
+          if (!fetchResponse || fetchResponse.status !== 200) {
+            return fetchResponse;
+          }
+          
+          const responseClone = fetchResponse.clone();
+          caches.open(IMAGE_CACHE).then(cache => {
+            cache.put(request, responseClone);
+            limitCacheSize(IMAGE_CACHE, MAX_CACHE_SIZE);
+          });
+          
+          return fetchResponse;
+        });
+      })
+    );
+    return;
+  }
+
+  // Static assets strategy - Cache first
+  if (url.pathname.match(/\.(js|css|woff|woff2|ttf|svg)$/)) {
+    event.respondWith(
+      caches.match(request).then(response => {
+        return response || fetch(request).then(fetchResponse => {
+          if (fetchResponse.status === 200) {
+            const responseClone = fetchResponse.clone();
+            caches.open(STATIC_CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
+          return fetchResponse;
+        });
+      })
+    );
+    return;
+  }
+
+  // Pages strategy - Network first with cache fallback
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+    fetch(request)
+      .then(response => {
+        if (response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+            limitCacheSize(DYNAMIC_CACHE, 20);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        return caches.match(request).then(response => {
+          return response || caches.match('/');
+        });
       })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [CACHE_NAME, STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE];
+  
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (!cacheWhitelist.includes(cacheName)) {
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      self.clients.claim()
+    ])
   );
-  self.clients.claim();
 });
+
+// Background sync for performance analytics
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'performance-sync') {
+    event.waitUntil(syncPerformanceData());
+  }
+});
+
+const syncPerformanceData = async () => {
+  // Send cached performance data when online
+  try {
+    const cache = await caches.open('performance-data');
+    const requests = await cache.keys();
+    for (const request of requests) {
+      await fetch(request.url);
+      await cache.delete(request);
+    }
+  } catch (error) {
+    console.log('Sync failed:', error);
+  }
+};

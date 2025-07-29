@@ -374,4 +374,66 @@
       overscroll-behavior: contain;
     }
   }
+
+  /* Enhanced Performance Optimizations */
+  .optimized-container {
+    content-visibility: auto;
+    contain: layout style paint;
+    container-type: inline-size;
+  }
+
+  .optimized-image {
+    contain: layout style;
+    aspect-ratio: attr(width) / attr(height);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .scroll-optimized {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Critical rendering path optimizations */
+  .hero-section {
+    content-visibility: auto;
+    contain: layout style paint;
+  }
+
+  .above-fold {
+    contain: layout style;
+  }
+
+  .below-fold {
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
+  }
+
+  /* Reduce layout shifts */
+  .skeleton-loader {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted)/0.5) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Optimize paint operations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* Reduce repaints on scroll */
+  .fixed-elements {
+    position: fixed;
+    will-change: transform;
+    contain: layout style paint;
+  }
 }

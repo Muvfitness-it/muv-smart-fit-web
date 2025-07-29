@@ -4,13 +4,17 @@ import LazyImage from '@/components/ui/LazyImage';
 const HeroSection = () => {
   return (
     <section 
-      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen" 
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen above-fold hero-section" 
     >
       <LazyImage 
         src="/images/fitness-professional-bg.jpg"
-        alt="MUV Fitness Centro"
-        className="absolute inset-0 opacity-25"
+        alt="Centro Fitness MUV - Personal training esclusivo a Legnago"
+        className="absolute inset-0 opacity-25 hero-section"
         priority={true}
+        width={1920}
+        height={1080}
+        sizes="100vw"
+        srcSet="/images/fitness-professional-bg.jpg 1920w"
       />
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-brand-primary/10 to-brand-secondary/10"></div>
       

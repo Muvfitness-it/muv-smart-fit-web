@@ -5,8 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
+import { useResourceOptimization } from "./hooks/useResourceOptimization";
 import { useEffect } from "react";
 import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
+import CriticalCSS from "@/components/CriticalCSS";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -50,6 +52,7 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
+  useResourceOptimization();
 
   // Preload blog domain for faster iframe loading
   useEffect(() => {
@@ -68,6 +71,7 @@ const AppContent = () => {
       <SecurityHeaders />
       <SEOHandler />
       <PerformanceOptimizer />
+      <CriticalCSS />
       <div className="min-h-screen bg-gray-900 text-white">
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
