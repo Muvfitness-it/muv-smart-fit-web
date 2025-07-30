@@ -8,7 +8,7 @@ const HeroSection = () => {
     >
       <LazyImage 
         src="/images/fitness-professional-bg.jpg"
-        alt="Centro Fitness MUV - Personal training esclusivo a Legnago"
+        alt="Centro Fitness MUV Legnago - Personal training esclusivo con tecnologie avanzate EMS, Pilates e Pancafit per dimagrimento e benessere"
         className="absolute inset-0 opacity-25 hero-section"
         priority={true}
         width={1920}

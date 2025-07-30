@@ -6,6 +6,10 @@ import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import DynamicSitemap from '@/components/SEO/DynamicSitemap';
 import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import StaticContentGenerator from '@/components/SEO/StaticContentGenerator';
+import StructuredData from '@/components/SEO/StructuredData';
+import AccessibilityEnhancer from '@/components/SEO/AccessibilityEnhancer';
+import SEOAudit from '@/components/SEO/SEOAudit';
+import PerformanceOptimizer from '@/components/SEO/PerformanceOptimizer';
 
 const SEOHandler: React.FC = () => {
   const location = useLocation();
@@ -244,9 +248,18 @@ const SEOHandler: React.FC = () => {
         <meta name="description" content={seoData.description} />
         <meta name="keywords" content={seoData.keywords} />
         <link rel="canonical" href={seoData.canonical} />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-        {/* Open Graph */}
+        {/* Enhanced Meta Tags */}
+        <meta name="author" content="MUV Fitness" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Language" content="it" />
+        <meta name="format-detection" content="telephone=yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        {/* Open Graph Enhanced */}
         <meta property="og:site_name" content="MUV Fitness" />
         <meta property="og:type" content={seoData.ogType} />
         <meta property="og:title" content={seoData.title} />
@@ -255,23 +268,28 @@ const SEOHandler: React.FC = () => {
         <meta property="og:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={seoData.title} />
         <meta property="og:locale" content="it_IT" />
+        <meta property="og:locale:alternate" content="en_US" />
 
-        {/* Twitter Cards */}
+        {/* Twitter Cards Enhanced */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@muvfitness" />
+        <meta name="twitter:creator" content="@muvfitness" />
         <meta name="twitter:title" content={seoData.title} />
         <meta name="twitter:description" content={seoData.description} />
         <meta name="twitter:image" content="https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
+        <meta name="twitter:image:alt" content={seoData.title} />
 
-        {/* Additional meta tags */}
-        <meta name="author" content="MUV Fitness" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta httpEquiv="Content-Language" content="it" />
-        <meta name="geo.region" content="IT-34" />
+        {/* Additional Social Media Meta */}
+        <meta property="fb:app_id" content="MUVFitness" />
+        <meta name="pinterest-rich-pin" content="true" />
+
+        {/* Geo and Local SEO */}
+        <meta name="geo.region" content="IT-VR" />
         <meta name="geo.placename" content="Legnago" />
-        <meta name="geo.position" content="45.1906;11.2994" />
-        <meta name="ICBM" content="45.1906, 11.2994" />
+        <meta name="geo.position" content="45.1914;11.3065" />
+        <meta name="ICBM" content="45.1914, 11.3065" />
 
         {/* Enhanced meta tags for better crawling */}
         <meta name="coverage" content="Worldwide" />
@@ -282,36 +300,44 @@ const SEOHandler: React.FC = () => {
         <meta name="HandheldFriendly" content="True" />
         <meta name="MobileOptimized" content="320" />
 
-        {/* Preconnect for performance */}
+        {/* Performance optimizations */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
 
         {/* Favicon and app icons */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png" />
         
-        {/* Hreflang for future internationalization */}
+        {/* Hreflang for internationalization */}
         <link rel="alternate" hrefLang="it" href={seoData.canonical} />
         <link rel="alternate" hrefLang="x-default" href={seoData.canonical} />
-        
-        {/* Additional structured data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "MUV Fitness",
-            "url": "https://www.muvfitness.it",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://www.muvfitness.it/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          })}
-        </script>
       </Helmet>
       
-      {/* Include new SEO components */}
+      {/* Accessibility Enhancement */}
+      <AccessibilityEnhancer pageTitle={seoData.title} />
+      
+      {/* SEO Audit Component (only in development) */}
+      <SEOAudit />
+      
+      {/* Performance Optimization */}
+      <PerformanceOptimizer />
+      {/* Enhanced SEO Components */}
+      <StructuredData 
+        type="SportsActivityLocation"
+        data={{
+          name: "MUV Fitness",
+          address: {
+            streetAddress: "Via Venti Settembre, 5/7",
+            addressLocality: "Legnago", 
+            addressRegion: "Veneto",
+            postalCode: "37045",
+            addressCountry: "IT"
+          }
+        }}
+      />
+      
       <CrawlerOptimizer
         title={seoData.title}
         description={seoData.description}
