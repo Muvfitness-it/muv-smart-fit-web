@@ -50,16 +50,16 @@ const BlogPost = () => {
           .select('*')
           .eq('slug', slug)
           .eq('status', 'published')
-          .single();
+          .maybeSingle();
 
         if (fetchError) {
           console.error('Error fetching post:', fetchError);
-          setError('Post non trovato');
+          setError('Errore nel caricamento del post');
           return;
         }
 
         if (!data) {
-          setError('Post non trovato');
+          setError('Post non trovato o non pubblicato');
           return;
         }
 

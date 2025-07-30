@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -129,6 +128,39 @@ const ArticleManager = () => {
       toast({
         title: "Errore",
         description: "Errore nell'aggiornamento dello stato",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleEditClick = (post: BlogPost) => {
+    console.log('Editing post:', post.id, post.title);
+    try {
+      navigate(`/blog/edit/${post.id}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+      toast({
+        title: "Errore",
+        description: "Errore nella navigazione",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleViewClick = (post: BlogPost) => {
+    console.log('Viewing post:', post.slug, post.status);
+    if (post.status === 'published') {
+      try {
+        // Apri in una nuova scheda per evitare problemi di navigazione
+        window.open(`/blog/${post.slug}`, '_blank');
+      } catch (error) {
+        console.error('Navigation error:', error);
+        navigate(`/blog/${post.slug}`);
+      }
+    } else {
+      toast({
+        title: "Avviso",
+        description: "Non puoi visualizzare un articolo in bozza. Pubblicalo prima.",
         variant: "destructive"
       });
     }
@@ -315,7 +347,7 @@ const ArticleManager = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => navigate(`/blog/edit/${post.id}`)}
+                      onClick={() => handleEditClick(post)}
                       className="border-magenta-500 text-magenta-600 hover:bg-magenta-50 hover:text-magenta-700"
                     >
                       <Edit className="w-4 h-4 mr-1" />
@@ -325,8 +357,9 @@ const ArticleManager = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => navigate(`/blog/${post.slug}`)}
+                      onClick={() => handleViewClick(post)}
                       className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                      disabled={post.status !== 'published'}
                     >
                       <Eye className="w-4 h-4 mr-1" />
                       VISUALIZZA

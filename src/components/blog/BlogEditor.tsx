@@ -63,9 +63,19 @@ const BlogEditor = () => {
         .from('blog_posts')
         .select('*')
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
+      
+      if (!data) {
+        toast({
+          title: "Errore",
+          description: "Articolo non trovato",
+          variant: "destructive"
+        });
+        navigate('/blog/gestisci');
+        return;
+      }
 
       setFormData({
         title: data.title || '',
