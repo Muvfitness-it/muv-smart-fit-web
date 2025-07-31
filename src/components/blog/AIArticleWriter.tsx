@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import type { AIProvider } from '@/hooks/useGeminiAPI';
 
 const AIArticleWriter = () => {
   const [topic, setTopic] = useState('');
@@ -19,6 +20,7 @@ const AIArticleWriter = () => {
   const [tone, setTone] = useState('professionale');
   const [targetAudience, setTargetAudience] = useState('generale');
   const [includeImage, setIncludeImage] = useState(false);
+  const [aiProvider, setAiProvider] = useState<AIProvider>('gemini');
   const [generatedArticle, setGeneratedArticle] = useState('');
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
@@ -29,7 +31,7 @@ const AIArticleWriter = () => {
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
-  const { callGeminiAPI } = useGeminiAPI();
+  const { callAIAPI } = useGeminiAPI();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -159,7 +161,7 @@ FORMATTAZIONE:
 Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il titolo principale.`;
 
     try {
-      const response = await callGeminiAPI(prompt);
+      const response = await callAIAPI(prompt, aiProvider);
       
       // Estrai il titolo dal contenuto HTML
       const titleMatch = response.match(/<h1[^>]*>(.*?)<\/h1>/i);
@@ -191,15 +193,7 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
       
       let errorMessage = 'Errore sconosciuto';
       if (error instanceof Error) {
-        if (error.message.includes('quota') || error.message.includes('insufficient_quota')) {
-          errorMessage = 'Quota API di OpenAI esaurita. Verifica il tuo account OpenAI o riprova più tardi.';
-        } else if (error.message.includes('rate limit')) {
-          errorMessage = 'Troppe richieste all\'API. Riprova tra qualche minuto.';
-        } else if (error.message.includes('API key')) {
-          errorMessage = 'Chiave API di OpenAI non configurata correttamente. Contatta l\'amministratore.';
-        } else {
-          errorMessage = error.message;
-        }
+        errorMessage = error.message;
       }
       
       toast({
@@ -366,7 +360,25 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label className="text-foreground font-medium">Provider IA</Label>
+              <Select value={aiProvider} onValueChange={(value: AIProvider) => setAiProvider(value)}>
+                <SelectTrigger className="bg-muted border-border text-foreground">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gemini">
+                    <div className="flex items-center space-x-2">
+                      <Sparkles className="h-4 w-4 text-brand-primary" />
+                      <span>Google Gemini</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="openai">OpenAI GPT</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label className="text-foreground font-medium">Lunghezza articolo</Label>
               <Select value={articleLength} onValueChange={setArticleLength}>

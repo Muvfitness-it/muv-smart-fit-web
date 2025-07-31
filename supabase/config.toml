@@ -26,5 +26,8 @@ verify_jwt = false
 [functions.blog-auto-post]
 verify_jwt = false
 
+[functions.gemini-provider]
+verify_jwt = false
+
 [functions.security-audit]
 verify_jwt = false
