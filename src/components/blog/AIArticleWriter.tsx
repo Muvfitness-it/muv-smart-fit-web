@@ -188,9 +188,23 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
       });
     } catch (error) {
       console.error('Errore generazione articolo:', error);
+      
+      let errorMessage = 'Errore sconosciuto';
+      if (error instanceof Error) {
+        if (error.message.includes('quota') || error.message.includes('insufficient_quota')) {
+          errorMessage = 'Quota API di OpenAI esaurita. Verifica il tuo account OpenAI o riprova più tardi.';
+        } else if (error.message.includes('rate limit')) {
+          errorMessage = 'Troppe richieste all\'API. Riprova tra qualche minuto.';
+        } else if (error.message.includes('API key')) {
+          errorMessage = 'Chiave API di OpenAI non configurata correttamente. Contatta l\'amministratore.';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
         title: "Errore",
-        description: "Errore nella generazione dell'articolo: " + (error instanceof Error ? error.message : 'Errore sconosciuto'),
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
