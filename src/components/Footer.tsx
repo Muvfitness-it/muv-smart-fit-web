@@ -15,6 +15,8 @@ const Footer = () => {
                 src={muvLogo} 
                 alt="MUV Fitness Logo" 
                 className="h-16 w-auto object-contain"
+                onError={(e) => console.error('Footer logo error:', e)}
+                onLoad={() => console.log('Footer logo loaded')}
               />
             </Link>
             
