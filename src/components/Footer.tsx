@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
+import muvLogo from "@/assets/muv-logo-original-transparent.png";
 
 const Footer = () => {
   return (
@@ -10,9 +11,11 @@ const Footer = () => {
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
-              <div className="h-16 w-16 flex items-center justify-center bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg">
-                <span className="text-white font-bold text-2xl">MUV</span>
-              </div>
+              <img 
+                src={muvLogo} 
+                alt="MUV Fitness Logo" 
+                className="h-16 w-auto object-contain"
+              />
             </Link>
             
             <div className="space-y-2">
