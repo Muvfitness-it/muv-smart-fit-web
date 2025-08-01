@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import LazyImage from "@/components/ui/LazyImage";
-import muvLogo from "@/assets/muv-logo-original-transparent.png";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,12 +46,9 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
-            <LazyImage 
-              src={muvLogo} 
-              alt="MUV logo" 
-              className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain" 
-              priority={true}
-            />
+            <div className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 xl:h-40 xl:w-40 flex items-center justify-center bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg">
+              <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl">MUV</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation - Better spacing and alignment */}

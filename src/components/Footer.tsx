@@ -10,11 +10,9 @@ const Footer = () => {
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/src/assets/muv-logo-original-transparent.png" 
-                alt="MUV Fitness Logo" 
-                className="h-16 w-auto"
-              />
+              <div className="h-16 w-16 flex items-center justify-center bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg">
+                <span className="text-white font-bold text-2xl">MUV</span>
+              </div>
             </Link>
             
             <div className="space-y-2">
