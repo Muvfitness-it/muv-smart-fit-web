@@ -46,6 +46,8 @@ import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
 import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import AIAuth from "./pages/AIAuth";
+import Sitemap from "./pages/Sitemap";
+import BlogSitemapPage from "./pages/BlogSitemap";
 
 const queryClient = new QueryClient();
 
@@ -121,7 +123,8 @@ const AppContent = () => {
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
                 
-                <Route path="/sitemap.xml" element={<DynamicSitemap />} />
+                <Route path="/sitemap.xml" element={<Sitemap />} />
+                <Route path="/sitemap-blog.xml" element={<BlogSitemapPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

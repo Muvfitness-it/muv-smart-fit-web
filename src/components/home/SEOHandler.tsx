@@ -10,6 +10,7 @@ import StructuredData from '@/components/SEO/StructuredData';
 import AccessibilityEnhancer from '@/components/SEO/AccessibilityEnhancer';
 import SEOAudit from '@/components/SEO/SEOAudit';
 import PerformanceOptimizer from '@/components/SEO/PerformanceOptimizer';
+import IndexingBooster from '@/components/SEO/IndexingBooster';
 
 const SEOHandler: React.FC = () => {
   const location = useLocation();
@@ -354,6 +355,7 @@ const SEOHandler: React.FC = () => {
       {/* Include existing structured data components */}
       <LocalBusinessSchema />
       <DynamicSitemap />
+      <IndexingBooster />
     </>
   );
 };

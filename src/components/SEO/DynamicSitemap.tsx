@@ -52,13 +52,40 @@ export const generateSitemap = async (): Promise<string> => {
 
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${allPages.map(page => `  <url>
+${allPages.map(page => {
+  const isBlogPost = page.url.startsWith('/blog/') && page.url !== '/blog';
+  
+  let urlEntry = `  <url>
     <loc>${baseUrl}${page.url}</loc>
     <lastmod>${page.lastmod ? new Date(page.lastmod).toISOString().split('T')[0] : currentDate}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>`).join('\n')}
+    <priority>${page.priority}</priority>`;
+
+  // Add Google News tags for blog posts
+  if (isBlogPost && page.lastmod) {
+    const pubDate = new Date(page.lastmod);
+    const isRecent = (Date.now() - pubDate.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
+    
+    if (isRecent) {
+      urlEntry += `
+    <news:news>
+      <news:publication>
+        <news:name>MUV Fitness Blog</news:name>
+        <news:language>it</news:language>
+      </news:publication>
+      <news:publication_date>${pubDate.toISOString()}</news:publication_date>
+      <news:title>${page.url.split('/').pop()?.replace(/-/g, ' ')}</news:title>
+      <news:keywords>fitness, allenamento, benessere, salute</news:keywords>
+    </news:news>`;
+    }
+  }
+  
+  urlEntry += `
+  </url>`;
+  return urlEntry;
+}).join('\n')}
 </urlset>`;
 
   return sitemapXml;

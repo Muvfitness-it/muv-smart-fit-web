@@ -5,6 +5,7 @@ import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import StaticContentGenerator from '@/components/SEO/StaticContentGenerator';
 import BlogLanding from '@/components/blog/BlogLanding';
 import BlogSitemap from '@/components/blog/BlogSitemap';
+import SitemapSubmitter from '@/components/SEO/SitemapSubmitter';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const Blog = () => {
@@ -21,7 +22,8 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
-      <BlogSitemap />
+    <BlogSitemap />
+    <SitemapSubmitter />
       
       {/* Unified SEO */}
       <UnifiedSEO
