@@ -1,10 +1,13 @@
 User-agent: *
 Allow: /
 
-# Sitemap locations
+# Sitemap locations - served via Edge Functions
 Sitemap: https://www.muvfitness.it/sitemap.xml
 Sitemap: https://www.muvfitness.it/sitemap-main.xml
-Sitemap: https://www.muvfitness.it/sitemap-blog.xml
+# Dynamic blog sitemap via Edge Function
+Sitemap: https://muvfitness.supabase.co/functions/v1/blog-sitemap
+# Main sitemap via Edge Function  
+Sitemap: https://muvfitness.supabase.co/functions/v1/sitemap
 
 # Block admin areas
 Disallow: /admin/
