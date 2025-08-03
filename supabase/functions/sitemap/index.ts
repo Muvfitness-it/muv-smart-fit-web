@@ -23,7 +23,7 @@ serve(async (req) => {
       .from('blog_posts')
       .select('slug, published_at, updated_at, title')
       .eq('status', 'published')
-      .order('published_at', { ascending: false });
+      .order('updated_at', { ascending: false });
 
     if (error) {
       throw error;
@@ -61,7 +61,7 @@ serve(async (req) => {
         url: `/blog/${post.slug}`,
         priority: '0.7',
         changefreq: 'weekly',
-        lastmod: post.updated_at || post.published_at
+        lastmod: post.updated_at
       }));
     }
 
@@ -83,7 +83,7 @@ ${allPages.map(page => {
   // Add Google News tags for recent blog posts
   if (isBlogPost && page.lastmod) {
     const pubDate = new Date(page.lastmod);
-    const isRecent = (Date.now() - pubDate.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
+    const isRecent = (Date.now() - pubDate.getTime()) < (30 * 24 * 60 * 60 * 1000); // 30 days
     
     if (isRecent) {
       const title = page.url.split('/').pop()?.replace(/-/g, ' ') || 'MUV Fitness Article';

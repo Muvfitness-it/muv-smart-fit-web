@@ -23,7 +23,7 @@ serve(async (req) => {
       .from('blog_posts')
       .select('slug, published_at, updated_at, title')
       .eq('status', 'published')
-      .order('published_at', { ascending: false });
+      .order('updated_at', { ascending: false });
 
     if (error) {
       throw error;
@@ -44,8 +44,8 @@ serve(async (req) => {
 
     const baseUrl = 'https://www.muvfitness.it';
     const sitemapEntries = posts.map((post: any) => {
-      const lastmod = new Date(post.updated_at || post.published_at).toISOString().split('T')[0];
-      const pubDate = new Date(post.published_at);
+      const lastmod = new Date(post.updated_at).toISOString().split('T')[0];
+      const pubDate = post.published_at ? new Date(post.published_at) : new Date(post.updated_at);
       const isRecent = (Date.now() - pubDate.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
       
       let urlEntry = `  <url>
