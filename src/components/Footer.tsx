@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
-import muvLogo from "@/assets/muv-logo-original-transparent.png";
+import muvLogo from "@/assets/muv-logo-transparent.png";
 
 const Footer = () => {
   return (

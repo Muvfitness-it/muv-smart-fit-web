@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import LazyImage from "@/components/ui/LazyImage";
-import muvLogo from "@/assets/muv-logo-original-transparent.png";
+import muvLogo from "@/assets/muv-logo-transparent.png";
 
 console.log('MUV Logo path:', muvLogo);
 const Navigation = () => {
