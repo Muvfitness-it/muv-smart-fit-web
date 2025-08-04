@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
-import muvLogo from "@/assets/muv-logo-transparent.png";
+// Use the new logo from public folder
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <img 
-                src={muvLogo} 
+                src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
                 alt="MUV Fitness Logo" 
                 className="h-16 w-auto object-contain"
                 onError={(e) => console.error('Footer logo error:', e)}

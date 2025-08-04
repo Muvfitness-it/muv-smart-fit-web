@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import LazyImage from "@/components/ui/LazyImage";
-import muvLogo from "@/assets/muv-logo-transparent.png";
-
-console.log('MUV Logo path:', muvLogo);
+// Use the new logo from public folder
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,12 +48,11 @@ const Navigation = () => {
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
             <img 
-              src={muvLogo} 
+              src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
               alt="MUV Fitness Logo" 
               className="h-20 w-auto sm:h-24 sm:w-auto md:h-28 md:w-auto lg:h-36 lg:w-auto xl:h-40 xl:w-auto object-contain" 
               onError={(e) => {
                 console.error('Error loading logo:', e);
-                console.log('Logo src:', muvLogo);
               }}
               onLoad={() => console.log('Logo loaded successfully')}
             />
