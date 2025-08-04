@@ -65,7 +65,7 @@ serve(async (req) => {
           .replace(/'/g, '&#39;');
           
         urlEntry += `
-    <news:news xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    <news:news>
       <news:publication>
         <news:name>MUV Fitness Blog</news:name>
         <news:language>it</news:language>
