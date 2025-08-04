@@ -1,170 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.muvfitness.it/blog/dimagrire-legnago-2025-ems-hiit</loc>
     <lastmod>2025-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-08-02T07:59:52+00:00</news:publication_date>
-      <news:title>Dimagrire a Legnago nel 2025: EMS e HIIT per un Allenamento Efficace</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/fitness-infitness-intelligente-ems-vacuum-therapy-roll-shape-hiit-risultati-rapiditelligente-ems-vacuum-therapy-roll-shape-e-hiit-per-risultati-rapidi-prima-delle-vacanze</loc>
     <lastmod>2025-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-31T09:33:57+00:00</news:publication_date>
-      <news:title>Fitness intelligente: EMS, Vacuum Therapy, Roll Shape e HIIT per risultati rapidi prima delle vacanze</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/postura-perfetta-sotto-il-sole-pancafit-pilates-reformer</loc>
     <lastmod>2025-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-30T08:47:56+00:00</news:publication_date>
-      <news:title>Postura perfetta sotto il sole: Pancafit e Pilates Reformer per eliminare il mal di schiena</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/dimagrimento-estivo-come-perdere-peso-a-legnago-in-30-giorni-con-il-metodo-muv</loc>
     <lastmod>2025-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-29T09:57:32+00:00</news:publication_date>
-      <news:title>Dimagrimento estivo: come perdere peso a Legnago in 30 giorni con il Metodo MUV</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/vacuum-addominale-guida-completa-per-un-core-di-acciaio</loc>
     <lastmod>2025-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-28T12:47:33+00:00</news:publication_date>
-      <news:title>Vacuum Addominale: Guida Completa per un Core di Acciaio</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/tendenze-fitness-2025-dimagrire-legnago</loc>
     <lastmod>2025-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-28T10:13:17+00:00</news:publication_date>
-      <news:title>Tendenze Fitness 2025: Dimagrire e Stare Bene a Legnago con EMS, HIIT e Personal Training</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/tendenze-fitness-2025-la-guida-completa-per-dimagrire-e-stare-bene-a-legnago</loc>
     <lastmod>2025-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-25T13:28:19+00:00</news:publication_date>
-      <news:title>Tendenze Fitness 2025: La Guida Completa per Dimagrire e Stare Bene a Legnago</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/limpatto-della-tecnologia-indossabile-e-dellintelligenza-artificiale-nel-fitness-moderno</loc>
     <lastmod>2025-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-23T08:36:14+00:00</news:publication_date>
-      <news:title>L&apos;Impatto della Tecnologia Indossabile e dell&apos;Intelligenza Artificiale nel Fitness Moderno</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/idratazione-e-nutrizione-estiva-il-carburante-perfetto-per-i-tuoi-allenamenti-muv</loc>
     <lastmod>2025-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-21T13:23:33+00:00</news:publication_date>
-      <news:title>Idratazione e Nutrizione Estiva: Il Carburante Perfetto per i Tuoi Allenamenti MUV</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/muv-fitness-in-vacanza-mantieni-la-forma-con-intelligenza-anche-sotto-il-sole</loc>
     <lastmod>2025-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-21T13:04:13+00:00</news:publication_date>
-      <news:title>MUV Fitness in Vacanza: Mantieni la Forma con Intelligenza (anche sotto il sole!)</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/allenamento-estivo-intelligente-massimizza-i-tuoi-risultati-con-muv-fitness</loc>
     <lastmod>2025-08-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>MUV Fitness Blog</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-18T06:58:34+00:00</news:publication_date>
-      <news:title>Allenamento Estivo Intelligente: Massimizza i Tuoi Risultati con MUV Fitness</news:title>
-      <news:keywords>fitness, allenamento, benessere, salute, nutrizione</news:keywords>
-    </news:news>
   </url>
   <url>
     <loc>https://www.muvfitness.it/blog/pilates-migliora-postura-e-forza-con-muv-fitness</loc>
