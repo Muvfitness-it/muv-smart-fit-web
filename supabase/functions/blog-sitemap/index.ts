@@ -23,7 +23,8 @@ serve(async (req) => {
       .from('blog_posts')
       .select('slug, published_at, updated_at, title')
       .eq('status', 'published')
-      .order('updated_at', { ascending: false });
+      .not('published_at', 'is', null)
+      .order('published_at', { ascending: false });
 
     if (error) {
       throw error;
