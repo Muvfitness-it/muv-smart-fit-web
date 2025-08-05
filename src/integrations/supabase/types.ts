@@ -757,6 +757,10 @@ export type Database = {
         Args: { user_id?: string }
         Returns: boolean
       }
+      log_unauthorized_access_attempt: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       revoke_user_role: {
         Args: {
           _user_id: string
@@ -770,7 +774,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      app_role: "admin" | "moderator" | "user" | "editor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -898,7 +902,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user"],
+      app_role: ["admin", "moderator", "user", "editor"],
     },
   },
 } as const
