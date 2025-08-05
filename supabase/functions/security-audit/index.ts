@@ -42,6 +42,29 @@ Deno.serve(async (req) => {
         }
       );
     }
+    
+    // Sanitize event_type
+    const sanitizedEventType = body.event_type.replace(/[^a-zA-Z0-9_\-]/g, '');
+    if (sanitizedEventType !== body.event_type) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid event type format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+    
+    // Validate event_type length
+    if (body.event_type.length > 100) {
+      return new Response(
+        JSON.stringify({ error: 'Event type too long' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
 
     // Log the security event
     const { error } = await supabase

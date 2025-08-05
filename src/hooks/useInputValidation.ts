@@ -71,17 +71,42 @@ export const useInputValidation = () => {
 
     // General text input validation (prevent XSS)
     text: (text: string, maxLength: number = 1000): { isValid: boolean; sanitized: string } => {
-      if (text.length > maxLength) {
+      if (!text || typeof text !== 'string') {
         return { isValid: false, sanitized: '' };
       }
       
-      // Sanitize HTML content
+      if (text.length > maxLength) {
+        return { isValid: false, sanitized: text.substring(0, maxLength) };
+      }
+      
+      // Enhanced sanitization with DOMPurify
       const sanitized = DOMPurify.sanitize(text, { 
         ALLOWED_TAGS: [], 
-        ALLOWED_ATTR: [] 
+        ALLOWED_ATTR: [],
+        FORBID_TAGS: ['script', 'object', 'embed', 'iframe'],
+        FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover']
       });
       
       return { isValid: true, sanitized };
+    },
+    
+    // AI Key validation
+    aiKey: (key: string): { isValid: boolean; message: string } => {
+      if (!key || typeof key !== 'string') {
+        return { isValid: false, message: 'AI key is required' };
+      }
+      
+      // Check for minimum length and valid characters
+      if (key.length < 8) {
+        return { isValid: false, message: 'AI key must be at least 8 characters long' };
+      }
+      
+      // Check for valid characters (alphanumeric and common special chars)
+      if (!/^[a-zA-Z0-9_\-\.]+$/.test(key)) {
+        return { isValid: false, message: 'AI key contains invalid characters' };
+      }
+      
+      return { isValid: true, message: 'Valid AI key' };
     },
 
     // URL validation

@@ -60,6 +60,24 @@ export const useSecurityAudit = (user?: User | null) => {
       logSecurityEvent({
         event_type: 'data_access',
         event_data: { resource, action }
+      }),
+
+    logAdminAction: (action: string, details?: Record<string, any>) =>
+      logSecurityEvent({
+        event_type: 'admin_action',
+        event_data: { action, ...details }
+      }),
+
+    logFailedAuthorization: (resource: string, attemptedAction: string) =>
+      logSecurityEvent({
+        event_type: 'failed_authorization',
+        event_data: { resource, attempted_action: attemptedAction }
+      }),
+
+    logSystemEvent: (event: string, details?: Record<string, any>) =>
+      logSecurityEvent({
+        event_type: 'system_event',
+        event_data: { event, ...details }
       })
   };
 };

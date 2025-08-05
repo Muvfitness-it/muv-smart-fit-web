@@ -25,6 +25,40 @@ serve(async (req) => {
     )
 
     const { email, password, ai_key } = await req.json()
+    
+    // Validate required fields
+    if (!email || !password || !ai_key) {
+      return new Response(
+        JSON.stringify({ error: 'Email, password, and AI key are required' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+    
+    // Validate AI key format
+    if (ai_key.length < 8 || !/^[a-zA-Z0-9_\-\.]+$/.test(ai_key)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid AI key format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
 
     console.log('AI Auth attempt:', { email, ai_key: ai_key ? 'present' : 'missing' })
 

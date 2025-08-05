@@ -17,7 +17,7 @@ import { Shield, Users, UserPlus, Eye, AlertTriangle } from 'lucide-react';
 interface UserRole {
   id: string;
   user_id: string;
-  role: 'admin' | 'moderator' | 'user';
+  role: 'admin' | 'moderator' | 'user' | 'editor';
   created_at: string;
   created_by?: string;
   profiles?: {
@@ -43,7 +43,7 @@ const AdminUserManagement: React.FC = () => {
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [newUserEmail, setNewUserEmail] = useState('');
-  const [newUserRole, setNewUserRole] = useState<'admin' | 'moderator' | 'user'>('user');
+  const [newUserRole, setNewUserRole] = useState<'admin' | 'moderator' | 'user' | 'editor'>('user');
   const [showSecurityLog, setShowSecurityLog] = useState(false);
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const AdminUserManagement: React.FC = () => {
     }
   };
 
-  const assignRole = async (userId: string, role: 'admin' | 'moderator' | 'user') => {
+  const assignRole = async (userId: string, role: 'admin' | 'moderator' | 'user' | 'editor') => {
     try {
       const { error } = await supabase.rpc('assign_user_role', {
         _user_id: userId,
@@ -143,7 +143,7 @@ const AdminUserManagement: React.FC = () => {
     }
   };
 
-  const revokeRole = async (userId: string, role: 'admin' | 'moderator' | 'user') => {
+  const revokeRole = async (userId: string, role: 'admin' | 'moderator' | 'user' | 'editor') => {
     try {
       const { error } = await supabase.rpc('revoke_user_role', {
         _user_id: userId,
@@ -175,8 +175,10 @@ const AdminUserManagement: React.FC = () => {
     switch (role) {
       case 'admin':
         return 'destructive';
-      case 'moderator':
+      case 'editor':
         return 'default';
+      case 'moderator':
+        return 'outline';
       default:
         return 'secondary';
     }
@@ -250,6 +252,7 @@ const AdminUserManagement: React.FC = () => {
                   <SelectContent>
                     <SelectItem value="user">Utente</SelectItem>
                     <SelectItem value="moderator">Moderatore</SelectItem>
+                    <SelectItem value="editor">Editor</SelectItem>
                     <SelectItem value="admin">Amministratore</SelectItem>
                   </SelectContent>
                 </Select>

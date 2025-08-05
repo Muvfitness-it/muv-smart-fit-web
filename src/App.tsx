@@ -46,6 +46,7 @@ import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 import DynamicSitemap from "./components/SEO/DynamicSitemap";
 import SEOHandler from "./components/home/SEOHandler";
 import { SecurityHeaders } from "./components/security/SecurityHeaders";
+import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 
 const queryClient = new QueryClient();
@@ -73,7 +74,7 @@ const AppContent = () => {
   }, []);
   
   return (
-    <>
+    <SessionSecurity>
       <SecurityHeaders />
       <SEOHandler />
       <PerformanceOptimizer />
@@ -131,7 +132,7 @@ const AppContent = () => {
         } />
         </Routes>
       </div>
-    </>
+    </SessionSecurity>
   );
 };
 
