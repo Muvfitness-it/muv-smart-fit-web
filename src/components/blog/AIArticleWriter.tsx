@@ -64,12 +64,11 @@ const AIArticleWriter = () => {
     try {
       const imagePrompt = `Fitness blog image for article about: ${topic}. Professional, modern, clean design suitable for MUV Fitness brand.`;
       
-      const { data, error } = await supabase.functions.invoke('generate-image', {
+      const { data, error } = await supabase.functions.invoke('runware-image', {
         body: { 
           prompt: imagePrompt,
-          style: 'natural',
-          size: '1792x1024',
-          quality: 'hd'
+          width: 1792,
+          height: 1024
         }
       });
 
