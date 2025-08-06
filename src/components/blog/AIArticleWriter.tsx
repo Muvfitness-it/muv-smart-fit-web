@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2, Wand2, Save, Eye, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { Loader2, Wand2, Save, Eye } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -19,16 +19,13 @@ const AIArticleWriter = () => {
   const [articleLength, setArticleLength] = useState('medium');
   const [tone, setTone] = useState('professionale');
   const [targetAudience, setTargetAudience] = useState('generale');
-  const [includeImage, setIncludeImage] = useState(false);
   const [aiProvider, setAiProvider] = useState<AIProvider>('gemini');
   const [generatedArticle, setGeneratedArticle] = useState('');
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
-  const [featuredImage, setFeaturedImage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
   const { callAIAPI } = useGeminiAPI();
@@ -49,54 +46,6 @@ const AIArticleWriter = () => {
       .trim();
   };
 
-  const generateImage = async () => {
-    if (!topic.trim()) {
-      toast({
-        title: "Errore",
-        description: "Inserisci un argomento per generare l'immagine",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsGeneratingImage(true);
-    
-    try {
-      const imagePrompt = `Fitness blog image for article about: ${topic}. Professional, modern, clean design suitable for MUV Fitness brand.`;
-      
-      const { data, error } = await supabase.functions.invoke('gemini-image', {
-        body: { 
-          prompt: imagePrompt,
-          width: 1792,
-          height: 1024
-        }
-      });
-
-      if (error) {
-        console.error('Image generation error:', error);
-        throw new Error(error.message);
-      }
-
-      if (data?.image_url) {
-        setFeaturedImage(data.image_url);
-        toast({
-          title: "Successo",
-          description: "Immagine generata con successo!"
-        });
-      } else {
-        throw new Error('Nessuna immagine ricevuta');
-      }
-    } catch (error) {
-      console.error('Error generating image:', error);
-      toast({
-        title: "Errore",
-        description: "Errore nella generazione dell'immagine: " + (error instanceof Error ? error.message : 'Errore sconosciuto'),
-        variant: "destructive"
-      });
-    } finally {
-      setIsGeneratingImage(false);
-    }
-  };
 
   const generateArticle = async () => {
     if (!topic.trim()) {
@@ -178,11 +127,6 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
       setMetaTitle(extractedTitle.substring(0, 60));
       setMetaDescription(extractedExcerpt.substring(0, 160));
       
-      // Auto-genera immagine se richiesta
-      if (includeImage && !featuredImage) {
-        generateImage();
-      }
-      
       toast({
         title: "Successo",
         description: "Articolo generato con successo!"
@@ -260,7 +204,7 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
         status: 'draft',
         author_name: 'MUV Team',
         reading_time: readingTime,
-        featured_image: featuredImage || null
+        featured_image: null
       };
 
       console.log('Saving article data:', articleData);
@@ -366,15 +310,14 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
                 <SelectTrigger className="bg-muted border-border text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="gemini">
-                    <div className="flex items-center space-x-2">
-                      <Sparkles className="h-4 w-4 text-brand-primary" />
-                      <span>Google Gemini</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="openai">OpenAI GPT</SelectItem>
-                </SelectContent>
+                 <SelectContent>
+                   <SelectItem value="gemini">
+                     <div className="flex items-center space-x-2">
+                       <span>Google Gemini</span>
+                     </div>
+                   </SelectItem>
+                   <SelectItem value="openai">OpenAI GPT</SelectItem>
+                 </SelectContent>
               </Select>
             </div>
 
@@ -425,61 +368,28 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
-            <input
-              type="checkbox"
-              id="includeImage"
-              checked={includeImage}
-              onChange={(e) => setIncludeImage(e.target.checked)}
-              className="w-4 h-4 text-brand-primary bg-muted border-border rounded focus:ring-brand-primary"
-            />
-            <Label htmlFor="includeImage" className="text-foreground">
-              Genera automaticamente immagine con IA
-            </Label>
-          </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              onClick={generateArticle}
-              disabled={isGenerating}
-              className="btn-brand flex-1"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Generazione in corso...
-                </>
-              ) : (
-                <>
-                  <Wand2 className="mr-2 h-5 w-5" />
-                  Genera Articolo
-                </>
-              )}
-            </Button>
-
-            <Button
-              onClick={generateImage}
-              disabled={isGeneratingImage}
-              variant="outline"
-              className="btn-brand-outline"
-            >
-              {isGeneratingImage ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Generando...
-                </>
-              ) : (
-                <>
-                  <ImageIcon className="mr-2 h-5 w-5" />
-                  Genera Solo Immagine
-                </>
-              )}
-            </Button>
-          </div>
+          <Button
+            onClick={generateArticle}
+            disabled={isGenerating}
+            className="btn-brand w-full"
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Generazione in corso...
+              </>
+            ) : (
+              <>
+                <Wand2 className="mr-2 h-5 w-5" />
+                Genera Articolo
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
 
-      {(generatedArticle || featuredImage) && (
+      {generatedArticle && (
         <Card className="card-brand">
           <CardHeader>
             <CardTitle className="text-foreground flex items-center space-x-2">
@@ -488,26 +398,6 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            {featuredImage && (
-              <div className="space-y-3">
-                <Label className="text-foreground font-medium">Immagine in evidenza</Label>
-                <div className="relative">
-                  <img
-                    src={featuredImage}
-                    alt="Featured image"
-                    className="w-full h-48 object-cover rounded-lg border border-border"
-                  />
-                  <Button
-                    onClick={() => setFeaturedImage('')}
-                    variant="destructive"
-                    size="sm"
-                    className="absolute top-2 right-2"
-                  >
-                    Rimuovi
-                  </Button>
-                </div>
-              </div>
-            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
