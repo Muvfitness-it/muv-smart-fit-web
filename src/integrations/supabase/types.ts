@@ -206,6 +206,7 @@ export type Database = {
           meta_title: string | null
           published_at: string | null
           reading_time: number | null
+          scheduled_publish_at: string | null
           slug: string
           status: string
           title: string
@@ -227,6 +228,7 @@ export type Database = {
           meta_title?: string | null
           published_at?: string | null
           reading_time?: number | null
+          scheduled_publish_at?: string | null
           slug: string
           status?: string
           title: string
@@ -248,6 +250,7 @@ export type Database = {
           meta_title?: string | null
           published_at?: string | null
           reading_time?: number | null
+          scheduled_publish_at?: string | null
           slug?: string
           status?: string
           title?: string

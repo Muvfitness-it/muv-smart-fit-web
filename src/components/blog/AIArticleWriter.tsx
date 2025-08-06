@@ -25,6 +25,9 @@ const AIArticleWriter = () => {
   const [excerpt, setExcerpt] = useState('');
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
+  const [publishMode, setPublishMode] = useState<'draft' | 'immediate' | 'scheduled'>('draft');
+  const [scheduledDate, setScheduledDate] = useState('');
+  const [scheduledTime, setScheduledTime] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -194,6 +197,25 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
       const slug = generateSlug(title);
       const readingTime = Math.ceil((generatedArticle.match(/\S+/g) || []).length / 200);
 
+      let articleStatus = 'draft';
+      let scheduledPublishAt = null;
+      let publishedAt = null;
+
+      // Determina status e date in base alla modalità scelta
+      if (publishMode === 'immediate') {
+        articleStatus = 'published';
+        publishedAt = new Date().toISOString();
+      } else if (publishMode === 'scheduled' && scheduledDate && scheduledTime) {
+        const scheduledDateTime = new Date(`${scheduledDate}T${scheduledTime}`);
+        if (scheduledDateTime > new Date()) {
+          articleStatus = 'scheduled';
+          scheduledPublishAt = scheduledDateTime.toISOString();
+        } else {
+          articleStatus = 'published';
+          publishedAt = new Date().toISOString();
+        }
+      }
+
       const articleData = {
         title: title.trim(),
         slug: slug,
@@ -201,10 +223,12 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
         excerpt: excerpt.trim() || generatedArticle.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
         meta_title: metaTitle.trim() || title.substring(0, 60),
         meta_description: metaDescription.trim() || excerpt.substring(0, 160),
-        status: 'draft',
+        status: articleStatus,
         author_name: 'MUV Team',
         reading_time: readingTime,
-        featured_image: null
+        featured_image: null,
+        scheduled_publish_at: scheduledPublishAt,
+        published_at: publishedAt
       };
 
       console.log('Saving article data:', articleData);
@@ -238,7 +262,7 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
 
       toast({
         title: "Successo",
-        description: "Articolo salvato come bozza!"
+        description: `Articolo ${articleStatus === 'published' ? 'pubblicato' : articleStatus === 'scheduled' ? 'programmato per pubblicazione' : 'salvato come bozza'}!`
       });
 
       // Naviga alla pagina di modifica
@@ -450,17 +474,94 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
             </div>
 
             {generatedArticle && (
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <Label className="text-foreground font-medium">Modalità di Pubblicazione</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label className="flex items-center space-x-3 p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50">
+                      <input
+                        type="radio"
+                        name="publishMode"
+                        value="draft"
+                        checked={publishMode === 'draft'}
+                        onChange={(e) => setPublishMode(e.target.value as 'draft')}
+                        className="w-4 h-4 text-brand-primary"
+                      />
+                      <div>
+                        <div className="font-medium text-foreground">Salva come Bozza</div>
+                        <div className="text-sm text-muted-foreground">Salva senza pubblicare</div>
+                      </div>
+                    </label>
+                    
+                    <label className="flex items-center space-x-3 p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50">
+                      <input
+                        type="radio"
+                        name="publishMode"
+                        value="immediate"
+                        checked={publishMode === 'immediate'}
+                        onChange={(e) => setPublishMode(e.target.value as 'immediate')}
+                        className="w-4 h-4 text-brand-primary"
+                      />
+                      <div>
+                        <div className="font-medium text-foreground">Pubblica Subito</div>
+                        <div className="text-sm text-muted-foreground">Pubblica immediatamente</div>
+                      </div>
+                    </label>
+                    
+                    <label className="flex items-center space-x-3 p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50">
+                      <input
+                        type="radio"
+                        name="publishMode"
+                        value="scheduled"
+                        checked={publishMode === 'scheduled'}
+                        onChange={(e) => setPublishMode(e.target.value as 'scheduled')}
+                        className="w-4 h-4 text-brand-primary"
+                      />
+                      <div>
+                        <div className="font-medium text-foreground">Programma Pubblicazione</div>
+                        <div className="text-sm text-muted-foreground">Pubblica in una data specifica</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                {publishMode === 'scheduled' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="scheduledDate" className="text-foreground font-medium">Data di Pubblicazione</Label>
+                      <Input
+                        id="scheduledDate"
+                        type="date"
+                        value={scheduledDate}
+                        onChange={(e) => setScheduledDate(e.target.value)}
+                        min={new Date().toISOString().split('T')[0]}
+                        className="bg-muted border-border text-foreground"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="scheduledTime" className="text-foreground font-medium">Orario di Pubblicazione</Label>
+                      <Input
+                        id="scheduledTime"
+                        type="time"
+                        value={scheduledTime}
+                        onChange={(e) => setScheduledTime(e.target.value)}
+                        className="bg-muted border-border text-foreground"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
               <div className="space-y-3">
                 <Label className="text-foreground font-medium">Anteprima Contenuto</Label>
                 <div className="bg-background border border-border rounded-lg p-6 max-h-96 overflow-y-auto prose-custom">
                   <div dangerouslySetInnerHTML={{ __html: generatedArticle }} />
                 </div>
               </div>
-            )}
 
             <Button
               onClick={saveArticle}
-              disabled={isSaving}
+              disabled={isSaving || (publishMode === 'scheduled' && (!scheduledDate || !scheduledTime))}
               className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
             >
               {isSaving ? (
@@ -471,7 +572,9 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
               ) : (
                 <>
                   <Save className="mr-2 h-5 w-5" />
-                  Salva come Bozza
+                  {publishMode === 'draft' ? 'Salva come Bozza' : 
+                   publishMode === 'immediate' ? 'Pubblica Subito' : 
+                   'Programma Pubblicazione'}
                 </>
               )}
             </Button>
