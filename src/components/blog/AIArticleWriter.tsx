@@ -64,7 +64,7 @@ const AIArticleWriter = () => {
     try {
       const imagePrompt = `Fitness blog image for article about: ${topic}. Professional, modern, clean design suitable for MUV Fitness brand.`;
       
-      const { data, error } = await supabase.functions.invoke('runware-image', {
+      const { data, error } = await supabase.functions.invoke('gemini-image', {
         body: { 
           prompt: imagePrompt,
           width: 1792,
