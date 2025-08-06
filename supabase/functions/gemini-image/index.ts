@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,8 +15,8 @@ serve(async (req) => {
   }
 
   try {
-    if (!geminiApiKey) {
-      throw new Error('GEMINI_API_KEY non configurata');
+    if (!openAIApiKey) {
+      throw new Error('OPENAI_API_KEY non configurata');
     }
 
     const { prompt, width = 1024, height = 1024 } = await req.json();
@@ -28,40 +28,42 @@ serve(async (req) => {
       );
     }
 
-    console.log('Generating image with Gemini API, prompt:', prompt);
+    console.log('Generating image with OpenAI DALL-E, prompt:', prompt);
 
-    // Use Hugging Face's FLUX model via their API since Gemini doesn't have direct image generation
-    const response = await fetch('https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell', {
+    const response = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer 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`, // Public demo token
+        'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inputs: `Crea un'immagine professionale per un blog di fitness: ${prompt}. Lo stile deve essere moderno, pulito e professionale, adatto a un brand fitness di alta qualità.`,
-        parameters: {
-          width: width,
-          height: height
-        }
+        model: 'dall-e-3',
+        prompt: `Crea un'immagine professionale per un blog di fitness: ${prompt}. Lo stile deve essere moderno, pulito e professionale, adatto a un brand fitness di alta qualità.`,
+        n: 1,
+        size: width >= 1024 ? '1792x1024' : '1024x1024',
+        quality: 'hd',
+        style: 'natural'
       }),
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      console.error('Hugging Face API error:', error);
-      throw new Error('Errore nella generazione dell\'immagine: ' + error);
+      const error = await response.json();
+      console.error('OpenAI API error:', error);
+      throw new Error(error.error?.message || 'Errore nella generazione dell\'immagine');
     }
 
-    const arrayBuffer = await response.arrayBuffer();
-    const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-    const imageUrl = `data:image/png;base64,${base64}`;
+    const data = await response.json();
+    
+    if (!data.data || data.data.length === 0) {
+      throw new Error('Nessuna immagine generata');
+    }
 
-    console.log('Image generated successfully');
+    console.log('Image generated successfully with OpenAI DALL-E');
 
     return new Response(
       JSON.stringify({ 
-        image_url: imageUrl,
-        revised_prompt: prompt 
+        image_url: data.data[0].url,
+        revised_prompt: data.data[0].revised_prompt 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -77,4 +79,5 @@ serve(async (req) => {
       }
     );
   }
+});
 });
