@@ -121,11 +121,16 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
     <SEOOptimizer
       title={seoTitle}
       description={seoDescription}
-      keywords={seoKeywords}
       canonicalUrl={canonicalUrl}
       ogImage={post.featured_image}
       structuredData={structuredData}
-      articleData={articleData}
+      articleData={{
+        publishedTime: post.published_at,
+        modifiedTime: new Date().toISOString(),
+        author: post.author_name || "MUV Team",
+        section: "Fitness & Wellness",
+        tags: [...contentTags, ...seoKeywords.split(', ')]
+      }}
     />
   );
 };
