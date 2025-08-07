@@ -138,15 +138,11 @@ ${urls}
 }
 
 async function generateNewsSitemap(supabaseClient: any): Promise<string> {
-  // Get posts from last 7 days for Google News
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
+  // Get all published posts for News sitemap
   const { data: posts, error } = await supabaseClient
     .from('blog_posts')
     .select('slug, published_at, title')
     .eq('status', 'published')
-    .gte('published_at', sevenDaysAgo.toISOString())
     .order('published_at', { ascending: false });
 
   if (error || !posts || posts.length === 0) {
