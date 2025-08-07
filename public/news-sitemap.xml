@@ -3,14 +3,83 @@
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 
   <url>
+    <loc>https://www.muvfitness.it/blog/vacuum-addominale-guida-completa-per-un-core-di-acciaio</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-28</news:publication_date>
+      <news:title>Vacuum Addominale: Guida Completa per un Core di Acciaio</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/tendenze-fitness-2025-dimagrire-legnago</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-28</news:publication_date>
+      <news:title>Tendenze Fitness 2025: Dimagrire e Stare Bene a Legnago</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/tendenze-fitness-2025-la-guida-completa-per-dimagrire-e-stare-bene-a-legnago</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-25</news:publication_date>
+      <news:title>Tendenze Fitness 2025: Guida Completa per Dimagrire e Stare Bene</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/dimagrimento-estivo-come-perdere-peso-a-legnago-in-30-giorni-con-il-metodo-muv</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-29</news:publication_date>
+      <news:title>Dimagrimento Estivo: Perdere Peso a Legnago in 30 Giorni</news:title>
+    </news:news>
+  </url>
+
+  <url>
     <loc>https://www.muvfitness.it/blog/dimagrire-legnago-2025-ems-hiit</loc>
     <news:news>
-      <news:publication>
-        <news:name>MUV Fitness</news:name>
-        <news:language>it</news:language>
-      </news:publication>
-      <news:publication_date>2025-08-03</news:publication_date>
-      <news:title>Dimagrire a Legnago nel 2025 con EMS e HIIT</news:title>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-08-02</news:publication_date>
+      <news:title>Dimagrire a Legnago nel 2025: EMS e HIIT per un Allenamento</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/vuoi-un-corpo-tonico-e-una-schiena-senza-dolori-prova-il-pilates-con-reformer-anche-se-parti-da-zero</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-? (data da confermare)</news:publication_date>
+      <news:title>Corpo Tonico e Schiena Senza Dolori? Prova Pilates con Reformer</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/limpatto-della-tecnologia-indossabile-e-dellintelligenza-artificiale-nel-fitness-moderno</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-23</news:publication_date>
+      <news:title>L’Impatto della Tecnologia Indossabile e dell’Intelligenza Artificiale nel Fitness Moderno</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/muv-fitness-in-vacanza-mantieni-la-forma-con-intelligenza-anche-sotto-il-sole</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-21</news:publication_date>
+      <news:title>MUV Fitness in Vacanza: Mantieni la Forma con Intelligenza</news:title>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://www.muvfitness.it/blog/allenamento-estivo-intelligente-massimizza-i-tuoi-risultati-con-muv-fitness</loc>
+    <news:news>
+      <news:publication><news:name>MUV Fitness</news:name><news:language>it</news:language></news:publication>
+      <news:publication_date>2025-07-17</news:publication_date>
+      <news:title>Allenamento Estivo Intelligente: Massimizza i Tuoi Risultati</news:title>
     </news:news>
   </url>
 
