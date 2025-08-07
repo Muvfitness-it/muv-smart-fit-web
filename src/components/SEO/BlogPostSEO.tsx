@@ -50,22 +50,31 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
 
   const contentTags = extractTags(post.content);
 
-  // Structured data for better SEO
-  const structuredData = {
+  // Schema.org Article completo per rich result
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     "@id": `${canonicalUrl}#article`,
     "headline": post.title,
     "description": seoDescription,
-    "image": [
-      post.featured_image || `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`
-    ],
+    "image": {
+      "@type": "ImageObject", 
+      "url": post.featured_image || `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`,
+      "width": 1200,
+      "height": 630
+    },
     "datePublished": post.published_at || new Date().toISOString(),
     "dateModified": new Date().toISOString(),
     "author": {
       "@type": "Person",
       "name": post.author_name || "MUV Team",
-      "email": post.author_email || "info@muvfitness.it"
+      "email": post.author_email || "info@muvfitness.it",
+      "url": `${baseUrl}/team`,
+      "jobTitle": "Fitness Expert",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "MUV Fitness"
+      }
     },
     "publisher": {
       "@type": "Organization",
@@ -76,6 +85,20 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
         "url": `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`,
         "width": 400,
         "height": 400
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Esempio 123",
+        "addressLocality": "Legnago",
+        "addressRegion": "VR",
+        "postalCode": "37045",
+        "addressCountry": "IT"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+39-0000-000000",
+        "contactType": "Customer Service",
+        "email": "info@muvfitness.it"
       }
     },
     "mainEntityOfPage": {
@@ -85,12 +108,19 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
     "wordCount": post.content.split(/\s+/).length,
     "timeRequired": `PT${post.reading_time || 5}M`,
     "articleSection": "Fitness & Wellness",
-    "keywords": [...contentTags, ...seoKeywords.split(', ')].join(', '),
-    "about": {
-      "@type": "Thing",
-      "name": "Fitness Training",
-      "description": "Professional fitness training and wellness guidance"
-    },
+    "keywords": [...contentTags, ...seoKeywords.split(', ')].filter((keyword, index, self) => self.indexOf(keyword) === index).join(', '),
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "Fitness Training",
+        "description": "Professional fitness training and wellness guidance"
+      },
+      {
+        "@type": "Thing", 
+        "name": "Health and Wellness",
+        "description": "Complete health and wellness solutions"
+      }
+    ],
     "mentions": [
       {
         "@type": "Organization",
@@ -99,13 +129,17 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
       }
     ],
     "isAccessibleForFree": true,
-    "hasPart": [
-      {
-        "@type": "WebPageElement",
-        "cssSelector": ".blog-content",
-        "description": "Main article content"
-      }
-    ]
+    "inLanguage": "it-IT",
+    "articleBody": post.content.replace(/<[^>]*>/g, '').substring(0, 500) + "...",
+    "url": canonicalUrl,
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": [canonicalUrl]
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".blog-title", ".blog-excerpt"]
+    }
   };
 
   const articleData = {
@@ -123,7 +157,7 @@ const BlogPostSEO: React.FC<BlogPostSEOProps> = ({ post }) => {
       description={seoDescription}
       canonicalUrl={canonicalUrl}
       ogImage={post.featured_image}
-      structuredData={structuredData}
+      structuredData={articleSchema}
       articleData={{
         publishedTime: post.published_at,
         modifiedTime: new Date().toISOString(),
