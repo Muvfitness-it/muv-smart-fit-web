@@ -1,38 +1,3 @@
 User-agent: *
 Allow: /
-
-# Sitemap locations
 Sitemap: https://www.muvfitness.it/sitemap.xml
-Sitemap: https://www.muvfitness.it/sitemap-blog.xml
-Sitemap: https://www.muvfitness.it/news-sitemap.xml
-
-# Block admin areas
-Disallow: /admin/
-Disallow: /auth/
-Disallow: /analytics/
-
-# Allow all major search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Yandexbot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-# Social media crawlers
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-# Crawl delay to prevent server overload
-Crawl-delay: 1

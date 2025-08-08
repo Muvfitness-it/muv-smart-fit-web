@@ -52,6 +52,12 @@ import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 
+import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
+import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
+import PilatesLegnago from "./pages/PilatesLegnago";
+
+import LocalBusinessSchema from "./components/SEO/LocalBusinessSchema";
+
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -80,6 +86,7 @@ const AppContent = () => {
     <SessionSecurity>
       <SecurityHeaders />
       <SEOHandler />
+      <LocalBusinessSchema />
       <PerformanceOptimizer />
       <CriticalCSS />
       <div className="min-h-screen bg-gray-900 text-white">
@@ -90,9 +97,7 @@ const AppContent = () => {
         {/* Auth Pages - NO Navigation/Footer */}
             <Route path="/admin/auth" element={<AdminAuth />} />
             <Route path="/ai-auth" element={<AIAuth />} />
-import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
-import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
-import PilatesLegnago from "./pages/PilatesLegnago";
+
 
         {/* Regular Pages - WITH Navigation/Footer */}
         <Route path="/*" element={
