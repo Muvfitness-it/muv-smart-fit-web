@@ -36,6 +36,9 @@ import BlogWriter from "./pages/BlogWriter";
 import BlogManager from "./pages/BlogManager";
 import BlogEditor from "./pages/BlogEditor";
 import MuvBlogSitemap from "./pages/MuvBlogSitemap";
+import MainSitemap from "./components/SEO/MainSitemap";
+import BlogSitemap from "./components/SEO/BlogSitemap";
+import NewsSitemap from "./components/SEO/NewsSitemap";
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserManagement from "./pages/AdminUserManagement";
@@ -117,6 +120,9 @@ const AppContent = () => {
                 <Route path="/blog/edit/:id" element={<BlogEditor />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/muv-blog-sitemap.xml" element={<MuvBlogSitemap />} />
+                <Route path="/sitemap.xml" element={<MainSitemap />} />
+                <Route path="/sitemap-blog.xml" element={<BlogSitemap />} />
+                <Route path="/news-sitemap.xml" element={<NewsSitemap />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
                 <Route path="/contatti" element={<Contatti />} />
