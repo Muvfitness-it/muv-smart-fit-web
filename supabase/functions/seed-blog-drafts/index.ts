@@ -139,19 +139,79 @@ serve(async (req) => {
       // Helper: chiama funzione AI testo
       async function generateLongForm(title: string): Promise<string> {
         const prompt = `Scrivi un articolo di blog in italiano estremamente approfondito e professionale su: "${title}".\nRequisiti:\n- Minimo 2000 parole (preferibilmente 2200-2600).\n- Struttura con H2 e H3, elenchi puntati, esempi pratici e consigli attuabili.\n- Tono autorevole ma comprensibile, stile MUV Fitness.\n- SEO: includi parole chiave correlate in modo naturale.\n- Niente fluff, niente ripetizioni inutili.\n- Non inserire immagini, ma solo contenuto testuale ben formattato.`;
-        const { data, error } = await supabase.functions.invoke('gemini-api', { body: { payload: prompt } });
-        if (error) throw error;
-        return (data as any).content as string;
+        try {
+          const { data, error } = await supabase.functions.invoke('gemini-api', { body: { payload: prompt } });
+          if (error) throw error;
+          return (data as any).content as string;
+        } catch (err) {
+          // Fallback diretto su OpenAI per evitare blocchi dell'invocazione funzione
+          const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+          if (!OPENAI_API_KEY) throw err;
+          const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'gpt-4.1-2025-04-14',
+              messages: [
+                { role: 'system', content: 'Sei un esperto scrittore di contenuti per blog di fitness. Rispondi sempre in italiano con contenuti professionali e ottimizzati SEO.' },
+                { role: 'user', content: prompt }
+              ],
+              max_tokens: 4000,
+              temperature: 0.7
+            })
+          });
+          if (!resp.ok) {
+            const t = await resp.text();
+            throw new Error(`OpenAI fallback failed: ${resp.status} ${t}`);
+          }
+          const j = await resp.json();
+          const text = j?.choices?.[0]?.message?.content;
+          if (!text) throw new Error('OpenAI fallback returned empty content');
+          return text as string;
+        }
       }
 
-      // Helper: genera immagine realistica tramite funzione esistente
+      // Helper: genera immagine realistica tramite funzione esistente con fallback OpenAI diretto
       async function generateImage(prompt: string, width: number, height: number): Promise<Uint8Array> {
-        const { data, error } = await supabase.functions.invoke('gemini-image', { body: { prompt, width, height } });
-        if (error) throw error;
-        const url = (data as any).image_url as string;
-        const imgResp = await fetch(url);
-        const arrBuf = await imgResp.arrayBuffer();
-        return new Uint8Array(arrBuf);
+        try {
+          const { data, error } = await supabase.functions.invoke('gemini-image', { body: { prompt, width, height } });
+          if (error) throw error;
+          const url = (data as any).image_url as string;
+          const imgResp = await fetch(url);
+          const arrBuf = await imgResp.arrayBuffer();
+          return new Uint8Array(arrBuf);
+        } catch (err) {
+          const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+          if (!OPENAI_API_KEY) throw err;
+          const resp = await fetch('https://api.openai.com/v1/images/generations', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'dall-e-3',
+              prompt: `Crea una foto realistica, moderna e di qualità editoriale per: ${prompt}. Niente testo, luce naturale, composizione pulita, inquadratura orizzontale ${width}x${height}.`,
+              n: 1,
+              size: (width >= 1200 && height <= 800) ? '1792x1024' : '1024x1024',
+              quality: 'hd',
+              style: 'natural'
+            })
+          });
+          if (!resp.ok) {
+            const t = await resp.text();
+            throw new Error(`OpenAI image fallback failed: ${resp.status} ${t}`);
+          }
+          const j = await resp.json();
+          const url = j?.data?.[0]?.url as string;
+          if (!url) throw new Error('OpenAI image fallback returned empty url');
+          const imgResp = await fetch(url);
+          const arrBuf = await imgResp.arrayBuffer();
+          return new Uint8Array(arrBuf);
+        }
       }
 
       // Helper: upload su storage e restituisci URL pubblico
