@@ -142,14 +142,12 @@ const BlogManager = () => {
   const handleSeedDrafts = async () => {
     try {
       setSeeding(true);
-      const { data, error } = await supabase.functions.invoke('seed-blog-drafts', { body: {} });
+      const { data, error } = await supabase.functions.invoke('seed-blog-drafts', { body: { applyToExisting: true } });
       if (error) throw error;
       const created = data?.created || 0;
-      const slugs: string[] = data?.slugs || [];
-      toast({ title: 'Bozze create', description: `${created} bozze generate. Creo le immagini…` });
-
-      const success = await processPosts(slugs);
-      toast({ title: 'Immagini create', description: `${success} immagini generate e collegate` });
+      const upgraded = data?.upgraded || 0;
+      const imagesGenerated = data?.imagesGenerated || 0;
+      toast({ title: 'Bozze aggiornate', description: `${created} nuove bozze, ${upgraded} bozze estese, ${imagesGenerated} immagini generate` });
     } catch (e: any) {
       toast({ title: 'Errore', description: e.message || 'Impossibile completare l’operazione', variant: 'destructive' });
     } finally {
@@ -159,7 +157,7 @@ const BlogManager = () => {
   useEffect(() => {
     const key = 'muv_blog_seed_once';
     if (!localStorage.getItem(key)) {
-      // Avvio automatico: crea bozze e immagini
+      // Avvio automatico: crea/aggiorna bozze e immagini
       handleSeedDrafts();
       localStorage.setItem(key, '1');
     }
@@ -176,7 +174,7 @@ const BlogManager = () => {
         <div className="flex items-center justify-between mb-4">
           <h1 className="sr-only">Gestione Articoli</h1>
           <Button onClick={handleSeedDrafts} disabled={seeding} className="ml-auto">
-            {seeding ? 'Creo bozze e immagini…' : 'Crea 12 bozze + immagini automaticamente'}
+            {seeding ? 'Creo/aggiorno bozze e immagini…' : 'Crea/aggiorna bozze (2000+ parole) + 2 immagini'}
           </Button>
         </div>
 
