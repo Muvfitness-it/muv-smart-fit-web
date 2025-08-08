@@ -90,8 +90,10 @@ const AppContent = () => {
         {/* Auth Pages - NO Navigation/Footer */}
             <Route path="/admin/auth" element={<AdminAuth />} />
             <Route path="/ai-auth" element={<AIAuth />} />
-        
-        
+import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
+import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
+import PilatesLegnago from "./pages/PilatesLegnago";
+
         {/* Regular Pages - WITH Navigation/Footer */}
         <Route path="/*" element={
           <>
@@ -110,6 +112,15 @@ const AppContent = () => {
                 <Route path="/servizi/nutrizione" element={<Nutrizione />} />
                 <Route path="/servizi/psicologo" element={<Psicologo />} />
                 <Route path="/servizi/massoterapia" element={<Massoterapia />} />
+
+                {/* Nuove pagine servizio SEO-first */}
+                <Route path="/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
+                <Route path="/personal-trainer-legnago/" element={<PersonalTrainerLegnago />} />
+                <Route path="/allenamento-ems-legnago" element={<AllenamentoEMSLegnago />} />
+                <Route path="/allenamento-ems-legnago/" element={<AllenamentoEMSLegnago />} />
+                <Route path="/pilates-legnago" element={<PilatesLegnago />} />
+                <Route path="/pilates-legnago/" element={<PilatesLegnago />} />
+
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />

@@ -17,7 +17,10 @@ export const prerenderRoutes = [
   '/servizi/small-group',
   '/risultati',
   '/team',
-  '/trasformazione-30-giorni'
+  '/trasformazione-30-giorni',
+  '/personal-trainer-legnago',
+  '/allenamento-ems-legnago',
+  '/pilates-legnago'
 ];
 
 export const generateStaticSitemap = () => {

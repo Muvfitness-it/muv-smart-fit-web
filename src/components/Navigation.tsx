@@ -24,6 +24,15 @@ const Navigation = () => {
     name: "Servizi",
     path: "/servizi"
   }, {
+    name: "Personal Trainer",
+    path: "/personal-trainer-legnago"
+  }, {
+    name: "EMS",
+    path: "/allenamento-ems-legnago"
+  }, {
+    name: "Pilates",
+    path: "/pilates-legnago"
+  }, {
     name: "Team",
     path: "/team"
   }, {
