@@ -11,7 +11,9 @@ import RichTextEditor from './RichTextEditor';
 import ImageUploader from './ImageUploader';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Save, Eye, Globe } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ArrowLeft, Save, Eye, Globe, Calendar as CalendarIcon, Clock } from 'lucide-react';
 
 interface BlogPostData {
   title: string;
@@ -20,11 +22,12 @@ interface BlogPostData {
   content: string;
   featured_image: string;
   author_name: string;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'scheduled';
   meta_title: string;
   meta_description: string;
   meta_keywords: string;
   reading_time: number;
+  scheduled_publish_at?: string | null;
 }
 
 const BlogEditor = () => {
@@ -34,6 +37,7 @@ const BlogEditor = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'content' | 'seo'>('content');
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
   
   const [formData, setFormData] = useState<BlogPostData>({
     title: '',
@@ -46,7 +50,8 @@ const BlogEditor = () => {
     meta_title: '',
     meta_description: '',
     meta_keywords: '',
-    reading_time: 5
+    reading_time: 5,
+    scheduled_publish_at: null
   });
 
   useEffect(() => {
@@ -84,12 +89,14 @@ const BlogEditor = () => {
         content: data.content || '',
         featured_image: data.featured_image || '',
         author_name: data.author_name || 'MUV Team',
-        status: (data.status as 'draft' | 'published') || 'draft',
+        status: (data.status as 'draft' | 'published' | 'scheduled') || 'draft',
         meta_title: data.meta_title || '',
         meta_description: data.meta_description || '',
         meta_keywords: data.meta_keywords || '',
-        reading_time: data.reading_time || 5
+        reading_time: data.reading_time || 5,
+        scheduled_publish_at: data.scheduled_publish_at || null
       });
+      setScheduledDate(data.scheduled_publish_at ? new Date(data.scheduled_publish_at) : undefined);
     } catch (error) {
       console.error('Error loading post:', error);
       toast({
@@ -207,6 +214,70 @@ const BlogEditor = () => {
     }
   };
 
+  const schedulePost = async () => {
+    try {
+      if (!scheduledDate) {
+        toast({ title: 'Data mancante', description: 'Seleziona una data futura per programmare la pubblicazione', variant: 'destructive' });
+        return;
+      }
+      setSaving(true);
+      const dateAtNine = new Date(scheduledDate);
+      dateAtNine.setHours(9, 0, 0, 0);
+
+      const payload = {
+        ...formData,
+        slug: formData.slug || generateSlug(formData.title),
+        excerpt: formData.excerpt || formData.content.replace(/<[^>]+>/g, '').slice(0, 150) + '...',
+        meta_description: formData.meta_description || formData.excerpt.slice(0, 160),
+        reading_time: estimateReadingTime(formData.content),
+        scheduled_publish_at: dateAtNine.toISOString(),
+        status: 'scheduled' as const,
+      };
+
+      let result;
+      if (id) {
+        result = await supabase
+          .from('blog_posts')
+          .update(payload)
+          .eq('id', id);
+      } else {
+        result = await supabase
+          .from('blog_posts')
+          .insert([payload]);
+      }
+
+      if (result.error) throw result.error;
+
+      toast({ title: 'Programmato', description: 'Articolo programmato con successo' });
+      setTimeout(() => navigate('/blog/gestisci'), 500);
+    } catch (error) {
+      console.error('Error scheduling post:', error);
+      toast({ title: 'Errore', description: 'Impossibile programmare l\'articolo', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const cancelSchedule = async () => {
+    try {
+      if (!id) return;
+      setSaving(true);
+      const { error } = await supabase
+        .from('blog_posts')
+        .update({ scheduled_publish_at: null, status: 'draft' })
+        .eq('id', id);
+      if (error) throw error;
+      setScheduledDate(undefined);
+      setFormData({ ...formData, status: 'draft', scheduled_publish_at: null });
+      toast({ title: 'Programmazione annullata', description: 'L\'articolo è tornato in bozza' });
+    } catch (error) {
+      console.error('Error canceling schedule:', error);
+      toast({ title: 'Errore', description: 'Impossibile annullare la programmazione', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -238,8 +309,10 @@ const BlogEditor = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            <Badge variant={formData.status === 'published' ? 'default' : 'secondary'}>
-              {formData.status === 'published' ? 'Pubblicato' : 'Bozza'}
+            <Badge variant={
+              formData.status === 'published' ? 'default' : 'secondary'
+            }>
+              {formData.status === 'published' ? 'Pubblicato' : formData.status === 'scheduled' ? 'Programmato' : 'Bozza'}
             </Badge>
             <Button
               variant="outline"
@@ -369,6 +442,53 @@ const BlogEditor = () => {
                     </div>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Scheduling */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Programmazione Pubblicazione</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={`w-[260px] justify-start font-normal ${!scheduledDate ? 'text-muted-foreground' : ''}`}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {scheduledDate ? scheduledDate.toLocaleDateString('it-IT') : <span>Scegli una data</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={scheduledDate}
+                        onSelect={setScheduledDate}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                        disabled={(date) => date < new Date()}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <div className="flex gap-2">
+                    <Button onClick={schedulePost} disabled={saving || !scheduledDate} className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      Programma
+                    </Button>
+                    {formData.status === 'scheduled' && (
+                      <Button variant="outline" onClick={cancelSchedule} disabled={saving}>
+                        Annulla Programmazione
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                {formData.scheduled_publish_at && (
+                  <p className="text-sm text-muted-foreground">Attuale: {new Date(formData.scheduled_publish_at).toLocaleString('it-IT')}</p>
+                )}
               </CardContent>
             </Card>
 
