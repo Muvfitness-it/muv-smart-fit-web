@@ -120,6 +120,32 @@ const AllenamentoEMSLegnago: React.FC = () => {
           </div>
           <div className="text-center mt-8"><Link to="/contatti"><Button className="bg-purple-600 hover:bg-purple-700 rounded-full px-8 py-4 text-lg">Prenota prova EMS</Button></Link></div>
         </section>
+
+        {/* Approfondimenti EMS */}
+        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Protocolli, sicurezza e integrazione con la forza</h2>
+          <article className="prose prose-invert max-w-none space-y-4">
+            <p>
+              Un ciclo tipico prevede 8–12 sedute EMS con progressione dell’intensità e del controllo tecnico. Alterniamo spesso EMS e forza tradizionale: la prima accelera lo stimolo metabolico, la seconda consolida tecnica e carichi. Per chi ha molto poco tempo, 1 seduta EMS/sett. + 1 seduta forza 
+              può già produrre risultati misurabili su circonferenze, percezione di tonicità e postura.
+            </p>
+            <p>
+              Sicurezza: prima di iniziare, screening accurato e anamnesi. Evitiamo EMS in presenza di pacemaker, gravidanza o patologie non compatibili. Durante la seduta, monitoriamo sensazioni, respiro e qualità del gesto. L’obiettivo non è “sopportare la scarica”, ma usare lo stimolo in modo intelligente.
+            </p>
+            <p>
+              Cosa aspettarsi: maggiore consapevolezza muscolare, miglior controllo del core, incremento della spesa calorica a parità di tempo. L’EMS non è una scorciatoia magica, ma uno strumento efficace se guidato da un professionista e inserito in un percorso coerente.
+            </p>
+            <p>
+              Nutrizione e recupero: idratazione adeguata, apporto proteico sufficiente, sonno di qualità. Questi pilastri amplificano l’efficacia delle sedute e riducono la fatica percepita.
+            </p>
+          </article>
+        </section>
+
+        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Come iniziare e costi</h2>
+          <p className="mb-4">Proponiamo una prova guidata gratuita per valutare risposta e obiettivi. I pacchetti EMS sono flessibili e trasparenti; definiamo insieme frequenza e durata in base al risultato desiderato e al tempo disponibile.</p>
+          <p className="mb-4">Se vuoi un percorso completo, integra l’EMS con sedute di forza o Pilates in base alla priorità (dimagrimento, postura, performance). Prenota ora: in 2–3 settimane sentirai già la differenza.</p>
+        </section>
       </main>
 
       <div className="fixed bottom-4 inset-x-0 flex justify-center px-4 sm:hidden z-40">

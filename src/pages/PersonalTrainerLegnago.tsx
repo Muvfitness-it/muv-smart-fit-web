@@ -174,6 +174,35 @@ const PersonalTrainerLegnago: React.FC = () => {
             <p className="mb-3">Ogni mese, rivediamo insieme ciò che è cambiato e decidiamo come progredire: più carico, più controllo tecnico, o più lavoro metabolico a seconda dell’obiettivo e della risposta individuale. Il tutto in un ambiente curato, riservato e accogliente.</p>
           </div>
         </section>
+
+        {/* Approfondimenti dettagliati */}
+        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Cosa include un percorso con personal trainer MUV (e cosa evitiamo)</h2>
+          <article className="prose prose-invert max-w-none space-y-4">
+            <p>
+              Il nostro lavoro non è venderti allenamenti, ma risultati. Nel percorso sono inclusi: valutazione iniziale, pianificazione settimanale chiara, progressioni semplici, richiami di mobilità e core utili, monitoraggio di circonferenze e forza di base, confronto mensile per verificare ciò che funziona. Evitiamo protocolli confusi, schede infinite e cambi casuali di esercizi: la coerenza nel tempo batte la novità fine a sé stessa.
+            </p>
+            <p>
+              Alimentazione: nessuna dieta estrema. Ti forniamo linee guida pragmatiche (porzioni, frequenze, esempi di pasti) che si adattano a orari di lavoro, famiglia e socialità. Obiettivo: sostenibilità. Se necessario collaboriamo con professionisti della nutrizione per personalizzazioni più spinte.
+            </p>
+            <p>
+              Quanto costa? I pacchetti variano in base a frequenza e durata. Preferiamo costruire un preventivo dopo la consulenza, perché vogliamo offrirti il miglior equilibrio tra investimento e resa. In ogni caso, la trasparenza è totale: nessun vincolo nascosto, niente sorprese.
+            </p>
+            <p>
+              Errori comuni che eviterai: allenarti sempre “a sensazione”, inseguire solo il consumo calorico, cambiare programma troppo spesso, trascurare il recupero, ignorare la tecnica. Lavoreremo su priorità chiare: qualità del movimento, progressione dei carichi, gestione della fatica, routine brevi per la postura.
+            </p>
+            <p>
+              Tempi e risultati: in 8–12 settimane puoi aspettarti cambi apprezzabili in composizione corporea e nella percezione del corpo. Se parti da poco tempo e bassa motivazione, costruiremo prima l’abitudine: allenamenti brevi ma incisivi, in modo che diventi “normale” allenarti bene.
+            </p>
+          </article>
+        </section>
+
+        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">A chi è adatto e come iniziare</h2>
+          <p className="mb-4">Percorso adatto a principianti, ripartenze, chi ha poco tempo, chi vuole perdere peso senza compromessi sulla salute, chi desidera sentirsi più forte e stabile nella vita di tutti i giorni. Lavoriamo anche post-infortunio in team con figure sanitarie quando serve.</p>
+          <p className="mb-4">Per iniziare: prenota la consulenza gratuita. Definiremo obiettivi, disponibilità oraria e preferenze; quindi programmeremo le prime 4 settimane. Dopo un mese, rivedremo insieme i dati e decideremo come proseguire.</p>
+        </section>
+
       </main>
 
       {/* Sticky CTA on mobile */}

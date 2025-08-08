@@ -40,3 +40,6 @@ verify_jwt = false
 
 [functions.news-sitemap]
 verify_jwt = false
+
+[functions.seed-blog-drafts]
+verify_jwt = false

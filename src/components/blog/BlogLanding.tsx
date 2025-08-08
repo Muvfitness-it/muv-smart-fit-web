@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PenTool, Sparkles, TrendingUp, FileText, LogIn } from 'lucide-react';
@@ -25,10 +25,35 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
   onShowAllArticles
 }) => {
   const navigate = useNavigate();
-  const {
-    user,
-    isAdmin
-  } = useAdminAuth();
+  const { user, isAdmin } = useAdminAuth();
+
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'recenti' | 'popolari' | 'lettura'>('recenti');
+
+  const processedArticles = useMemo(() => {
+    let list = [...recentArticles];
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      list = list.filter(a => a.title.toLowerCase().includes(q) || (a.excerpt || '').toLowerCase().includes(q));
+    }
+    switch (sortBy) {
+      case 'popolari':
+        list.sort((a, b) => (b.views_count || 0) - (a.views_count || 0));
+        break;
+      case 'lettura':
+        list.sort((a, b) => (a.reading_time || 0) - (b.reading_time || 0));
+        break;
+      default:
+        list.sort((a, b) => {
+          const da = a.published_at ? new Date(a.published_at).getTime() : 0;
+          const db = b.published_at ? new Date(b.published_at).getTime() : 0;
+          return db - da;
+        });
+    }
+    return list;
+  }, [recentArticles, query, sortBy]);
+
+  const articlesToShow = showAllArticles ? processedArticles : processedArticles.slice(0, 6);
   return <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center space-y-6">
@@ -61,9 +86,29 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           </Button>}
       </section>
 
-      {/* Features Section */}
-      
-
+      {/* Controls */}
+      <section className="max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-3 gap-4">
+          <input
+            type="search"
+            placeholder="Cerca articoli..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="sm:col-span-2 w-full rounded-lg bg-gray-800 border border-border px-4 py-3 text-foreground placeholder:text-muted-foreground"
+            aria-label="Cerca articoli"
+          />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as any)}
+            className="w-full rounded-lg bg-gray-800 border border-border px-4 py-3 text-foreground"
+            aria-label="Ordina articoli"
+          >
+            <option value="recenti">Più recenti</option>
+            <option value="popolari">Più letti</option>
+            <option value="lettura">Lettura più breve</option>
+          </select>
+        </div>
+      </section>
       {/* Recent Articles */}
       {recentArticles.length > 0 && <section className="space-y-6">
           <div className="text-center">
@@ -76,10 +121,10 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(showAllArticles ? recentArticles : recentArticles.slice(0, 6)).map(article => <BlogPostCard key={article.id} post={article} />)}
+            {articlesToShow.map(article => <BlogPostCard key={article.id} post={article} />)}
           </div>
 
-          {recentArticles.length > 6 && !showAllArticles && <div className="text-center">
+          {processedArticles.length > 6 && !showAllArticles && <div className="text-center">
               <Button onClick={onShowAllArticles} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
                 Vedi tutti gli articoli
               </Button>

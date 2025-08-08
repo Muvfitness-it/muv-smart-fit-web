@@ -117,6 +117,30 @@ const PilatesLegnago: React.FC = () => {
         </section>
       </main>
 
+      {/* Approfondimenti Pilates */}
+      <section className="bg-gray-900 text-white">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Percorsi, target e come iniziare</h2>
+          <article className="prose prose-invert max-w-none space-y-4">
+            <p>
+              Proponiamo percorsi personalizzati per diverse esigenze: mal di schiena ricorrente, rigidità da lavoro sedentario, recupero post-infortunio (in collaborazione con professionisti sanitari), preparazione fisica per danza o sport. La struttura delle lezioni alterna esercizi di mobilità, stabilità e controllo del respiro.
+            </p>
+            <p>
+              Un ciclo iniziale tipico prevede 8–12 lezioni per apprendere i principi, migliorare consapevolezza e costruire basi solide. In seguito, si può proseguire con lezioni individuali o small group, integrando eventualmente lavoro di forza leggero per potenziare i benefici posturali.
+            </p>
+            <p>
+              Cosa aspettarti: miglior controllo del core, riduzione dei compensi, più flessibilità e una postura più stabile. La qualità del gesto è centrale: i miglioramenti nascono dalla ripetizione corretta, non dalla difficoltà fine a sé stessa.
+            </p>
+            <p>
+              Costi e organizzazione: pacchetti flessibili e trasparenti, senza vincoli nascosti. Valutiamo insieme tempi, frequenza e modalità (individuale o small group) durante la prima lezione di prova.
+            </p>
+          </article>
+          <div className="text-center mt-8">
+            <Link to="/contatti"><Button className="bg-purple-600 hover:bg-purple-700 rounded-full px-8 py-4 text-lg">Prenota la tua prova Pilates</Button></Link>
+          </div>
+        </div>
+      </section>
+
       <div className="fixed bottom-4 inset-x-0 flex justify-center px-4 sm:hidden z-40">
         <Link to="/contatti" className="w-full max-w-sm"><Button className="w-full bg-purple-600 hover:bg-purple-700 rounded-full py-4 text-base">Prenota lezione di prova</Button></Link>
       </div>
