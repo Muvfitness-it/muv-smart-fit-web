@@ -136,41 +136,18 @@ serve(async (req) => {
         .eq('status', 'draft');
       if (fetchErr) throw fetchErr;
 
-      // Helper: chiama funzione AI testo
+      // Helper: chiama funzione AI testo (usa Gemini per evitare limiti OpenAI)
       async function generateLongForm(title: string): Promise<string> {
-        const prompt = `Scrivi un articolo di blog in italiano estremamente approfondito e professionale su: "${title}".\nRequisiti:\n- Minimo 2000 parole (preferibilmente 2200-2600).\n- Struttura con H2 e H3, elenchi puntati, esempi pratici e consigli attuabili.\n- Tono autorevole ma comprensibile, stile MUV Fitness.\n- SEO: includi parole chiave correlate in modo naturale.\n- Niente fluff, niente ripetizioni inutili.\n- Non inserire immagini, ma solo contenuto testuale ben formattato.`;
+        const prompt = `Scrivi un articolo di blog in italiano estremamente approfondito e professionale su: "${title}".\nRequisiti:\n- Minimo 2000 parole (preferibilmente 2300-2600).\n- Struttura chiara con H2/H3, elenchi puntati, esempi pratici, checklist finali.\n- Tono autorevole ma comprensibile, stile MUV Fitness.\n- SEO: inserisci parole chiave correlate in modo naturale (no keyword stuffing).\n- Nessuna immagine o markup HTML complesso, solo testo con titoli e paragrafi.`;
         try {
-          const { data, error } = await supabase.functions.invoke('gemini-api', { body: { payload: prompt } });
+          const { data, error } = await supabase.functions.invoke('gemini-provider', { body: { payload: prompt } });
           if (error) throw error;
-          return (data as any).content as string;
+          const content = (data as any)?.content as string | undefined;
+          if (!content || content.trim().length < 1000) throw new Error('Contenuto Gemini insufficiente');
+          return content;
         } catch (err) {
-          // Fallback diretto su OpenAI per evitare blocchi dell'invocazione funzione
-          const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-          if (!OPENAI_API_KEY) throw err;
-          const resp = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'gpt-4.1-2025-04-14',
-              messages: [
-                { role: 'system', content: 'Sei un esperto scrittore di contenuti per blog di fitness. Rispondi sempre in italiano con contenuti professionali e ottimizzati SEO.' },
-                { role: 'user', content: prompt }
-              ],
-              max_tokens: 4000,
-              temperature: 0.7
-            })
-          });
-          if (!resp.ok) {
-            const t = await resp.text();
-            throw new Error(`OpenAI fallback failed: ${resp.status} ${t}`);
-          }
-          const j = await resp.json();
-          const text = j?.choices?.[0]?.message?.content;
-          if (!text) throw new Error('OpenAI fallback returned empty content');
-          return text as string;
+          // In caso di errore Gemini, non ricadiamo su OpenAI (quota esaurita): lasciamo fallire esplicitamente
+          throw err;
         }
       }
 
@@ -232,32 +209,46 @@ serve(async (req) => {
             upgraded++;
           }
 
-          // Genera immagine HERO realistica
-          const heroBytes = await generateImage(`Foto realistica orizzontale, moderna e professionale per un articolo di fitness: ${post.title}. Illuminazione naturale, composizione pulita, stile fotografico editoriale.`, 1200, 630);
-          const heroPath = `blog/featured/${post.slug}.jpg`;
-          const heroUrl = await uploadAndGetUrl(heroPath, heroBytes, 'image/jpeg');
+          // Prova a generare le immagini ma non bloccare l'aggiornamento del contenuto se falliscono
+          let heroUrl: string | null = null;
+          let midUrl: string | null = null;
+          try {
+            // Genera immagine HERO realistica
+            const heroBytes = await generateImage(`Foto realistica orizzontale, moderna e professionale per un articolo di fitness: ${post.title}. Illuminazione naturale, composizione pulita, stile fotografico editoriale.`, 1200, 630);
+            const heroPath = `blog/featured/${post.slug}.jpg`;
+            heroUrl = await uploadAndGetUrl(heroPath, heroBytes, 'image/jpeg');
 
-          // Genera immagine MID-ARTICLE realistica
-          const midBytes = await generateImage(`Foto realistica per illustrare il tema: ${post.title}. Inquadratura orizzontale, dettagli chiari, stile coerente con immagine di copertina.`, 1024, 768);
-          const midPath = `blog/inline/${post.slug}-mid.jpg`;
-          const midUrl = await uploadAndGetUrl(midPath, midBytes, 'image/jpeg');
-          imagesGenerated += 2;
+            // Genera immagine MID-ARTICLE realistica
+            const midBytes = await generateImage(`Foto realistica per illustrare il tema: ${post.title}. Inquadratura orizzontale, dettagli chiari, stile coerente con immagine di copertina.`, 1024, 768);
+            const midPath = `blog/inline/${post.slug}-mid.jpg`;
+            midUrl = await uploadAndGetUrl(midPath, midBytes, 'image/jpeg');
+            imagesGenerated += 2;
+          } catch (imgErr) {
+            console.error('Image generation failed for', post.slug, imgErr);
+            // fallback: usa immagine di default se non esiste già
+            heroUrl = post.featured_image || '/images/fitness-professional-bg.jpg';
+          }
 
-          // Inserisci l'immagine a metà articolo
+          // Inserisci l'immagine a metà articolo (solo se disponibile)
           const paragraphs = newContent.split(/\n\n+/);
           const midIndex = Math.max(3, Math.floor(paragraphs.length / 2));
-          const imgBlock = `\n\n<figure><img src="${midUrl}" alt="${post.title}" loading="lazy" decoding="async" /></figure>\n\n`;
-          paragraphs.splice(midIndex, 0, imgBlock);
+          if (midUrl) {
+            const imgBlock = `\n\n<figure><img src="${midUrl}" alt="${post.title}" loading="lazy" decoding="async" /></figure>\n\n`;
+            paragraphs.splice(midIndex, 0, imgBlock);
+          }
           const finalContent = paragraphs.join('\n\n');
 
           // Recalcola reading_time
           const wordCount = finalContent.split(/\s+/).filter(Boolean).length;
           const reading_time = Math.max(1, Math.ceil(wordCount / 200));
 
-          // Aggiorna post
+          // Aggiorna post (aggiorna featured_image solo se disponibile)
+          const updatePayload: Record<string, any> = { content: finalContent, reading_time };
+          if (heroUrl) updatePayload.featured_image = heroUrl;
+
           await supabase
             .from('blog_posts')
-            .update({ content: finalContent, featured_image: heroUrl, reading_time })
+            .update(updatePayload)
             .eq('id', post.id);
         } catch (e) {
           console.error('Upgrade draft failed for', post.slug, e);
