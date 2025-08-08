@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import LazyImage from "@/components/ui/LazyImage";
+import logo from "@/assets/muv-logo-original-transparent.png";
 // Use the new logo from public folder
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,13 +56,16 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
-              alt="MUV Fitness Logo" 
-              className="h-20 w-auto sm:h-24 sm:w-auto md:h-28 md:w-auto lg:h-36 lg:w-auto xl:h-40 xl:w-auto object-contain" 
-              onError={(e) => {
-                console.error('Error loading logo:', e);
-              }}
+            <img
+              src={logo}
+              alt="Logo MUV Fitness Legnago"
+              width={240}
+              height={72}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-auto object-contain"
+              onError={(e) => console.error('Error loading logo:', e)}
               onLoad={() => console.log('Logo loaded successfully')}
             />
           </Link>
