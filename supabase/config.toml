@@ -31,3 +31,9 @@ verify_jwt = false
 
 [functions.security-audit]
 verify_jwt = false
+
+[functions.update-sitemaps]
+verify_jwt = false
+
+[functions.news-sitemap]
+verify_jwt = false

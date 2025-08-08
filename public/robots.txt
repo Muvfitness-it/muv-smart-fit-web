@@ -4,7 +4,7 @@ Allow: /
 # Sitemap locations
 Sitemap: https://www.muvfitness.it/sitemap.xml
 Sitemap: https://www.muvfitness.it/sitemap-blog.xml
-Sitemap: https://www.muvfitness.it/news-sitemap.xml
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/news-sitemap
 
 # Block admin areas
 Disallow: /admin/
