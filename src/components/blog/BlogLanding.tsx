@@ -80,7 +80,7 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           </div>}
 
         {/* Login for non-admin users */}
-        {!user && <Button onClick={() => navigate('/auth')} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white px-8 py-4 rounded-full text-lg font-bold">
+        {!user && <Button onClick={() => navigate('/admin/auth')} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white px-8 py-4 rounded-full text-lg font-bold">
             <LogIn className="w-6 h-6 mr-2" />
             Accesso Amministratori
           </Button>}

@@ -96,6 +96,7 @@ const AppContent = () => {
         
         {/* Auth Pages - NO Navigation/Footer */}
             <Route path="/admin/auth" element={<AdminAuth />} />
+            <Route path="/auth" element={<AdminAuth />} />
             <Route path="/ai-auth" element={<AIAuth />} />
 
 
