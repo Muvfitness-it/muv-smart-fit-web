@@ -40,7 +40,7 @@ serve(async (req) => {
     }
 
     const requestBody = {
-      model: 'gpt-4.1-2025-04-14',
+      model: 'gpt-4o-mini',
       messages: messages,
       max_tokens: 4000,
       temperature: 0.7

@@ -7,6 +7,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const [logoSrc, setLogoSrc] = useState<string>(logo);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -57,7 +58,7 @@ const Navigation = () => {
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
             <img
-              src={logo}
+              src={logoSrc}
               alt="Logo MUV Fitness Legnago"
               width={240}
               height={72}
@@ -65,8 +66,7 @@ const Navigation = () => {
               decoding="async"
               fetchPriority="high"
               className="h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-auto object-contain"
-              onError={(e) => console.error('Error loading logo:', e)}
-              onLoad={() => console.log('Logo loaded successfully')}
+              onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
 
