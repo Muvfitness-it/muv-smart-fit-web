@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemap locations
-Sitemap: https://www.muvfitness.it/sitemap.xml
-Sitemap: https://www.muvfitness.it/sitemap-blog.xml
+# Sitemap locations  
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/blog-sitemap
 Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/news-sitemap
 
 # Block admin areas

@@ -32,7 +32,10 @@ verify_jwt = false
 [functions.security-audit]
 verify_jwt = false
 
-[functions.update-sitemaps]
+[functions.sitemap]
+verify_jwt = false
+
+[functions.blog-sitemap]
 verify_jwt = false
 
 [functions.news-sitemap]
