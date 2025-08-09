@@ -54,6 +54,8 @@ import PilatesLegnago from "./pages/PilatesLegnago";
 
 import LocalBusinessSchema from "./components/SEO/LocalBusinessSchema";
 import SitemapSubmitter from "./components/SEO/SitemapSubmitter";
+import AutoOptimizer from "./components/SEO/AutoOptimizer";
+import AutoSitemapUpdater from "./components/SEO/AutoSitemapUpdater";
 
 const queryClient = new QueryClient();
 
@@ -83,6 +85,8 @@ const AppContent = () => {
     <SessionSecurity>
       <SecurityHeaders />
       <SEOHandler />
+      <AutoOptimizer />
+      <AutoSitemapUpdater />
       <LocalBusinessSchema />
       <PerformanceOptimizer />
       <CriticalCSS />
@@ -101,7 +105,7 @@ const AppContent = () => {
         <Route path="/*" element={
           <>
             <Navigation />
-            <main className="pt-[var(--header-height)]">
+            <main id="main" className="pt-[var(--header-height)]">
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/chi-siamo" element={<ChiSiamo />} />
