@@ -749,6 +749,10 @@ export type Database = {
         Args: { _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
       }
+      fix_and_format_articles: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       format_article_content: {
         Args: { input_content: string }
         Returns: string
