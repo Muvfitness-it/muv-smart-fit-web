@@ -23,7 +23,7 @@ function countWords(text: string): number {
 function dedupeAnchors(html: string): string {
   if (!html) return html;
   let result = html;
-  const re = new RegExp('(<a[\\s\\S]*?>[\\s\\S]*?<\\/a>)(\\s*)\\1', 'gi');
+  const re = /(<a[\s\S]*?>[\s\S]*?<\/a>)(\s*)\1/gi;
   let prev: string;
   do {
     prev = result;
@@ -36,7 +36,7 @@ function dedupeCTA(html: string): string {
   if (!html) return html;
   let result = html;
   // Collapse duplicate CTA blocks with class cta-section
-  const reBlock = new RegExp('(<div[^>]*class=\"[^\"]*cta-section[^\"]*\"[\s\S]*?<\\/div>)(?:\s*\1)+', 'gi');
+  const reBlock = /(<div[^>]*class="[^"]*cta-section[^"]*"[\s\S]*?<\/div>)(?:\s*\1)+/gi;
   result = result.replace(reBlock, '$1');
   return result;
 }
