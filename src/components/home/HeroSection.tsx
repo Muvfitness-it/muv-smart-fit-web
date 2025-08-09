@@ -36,6 +36,11 @@ const HeroSection = () => {
             <strong className="text-brand-secondary"> 500+ TRASFORMAZIONI DOCUMENTATE</strong> • 
             <strong className="text-brand-accent"> 95% TASSO DI SUCCESSO</strong>
           </p>
+
+          <p className="text-base md:text-lg lg:text-xl text-gray-300">
+            Personal trainer a Legnago, Pilates Reformer, Allenamento EMS, Pancafit, HIIT, nutrizione e massoterapia:
+            dimagrimento, postura e benessere con protocolli professionali e personalizzati.
+          </p>
         </div>
 
         <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border-2 border-brand-primary/50 mb-8 animate-pulse-glow">

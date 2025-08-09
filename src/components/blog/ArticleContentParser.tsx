@@ -1,8 +1,33 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
+
 interface ArticleContentParserProps {
   content: string;
 }
+
+// Clean up common markdown-like artifacts (e.g., **bold**, # headings, stray asterisks)
+const cleanHTML = (html: string) => {
+  // Sanitize first for safety
+  let sanitized = DOMPurify.sanitize(html);
+
+  // Remove markdown heading/bullet markers that slipped into paragraphs
+  sanitized = sanitized.replace(/<p>\s*([#>*\-]{1,6})\s+/g, '<p>');
+
+  // Convert simple **bold** or __bold__ patterns inside paragraphs to <strong>
+  sanitized = sanitized.replace(/<p>\s*\*\*(.+?)\*\*\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
+  sanitized = sanitized.replace(/<p>\s*__(.+?)__\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
+
+  // Remove paragraphs that contain only marker characters
+  sanitized = sanitized.replace(/<p>\s*[#*\-]+\s*<\/p>/g, '');
+
+  // Collapse excessive empty paragraphs
+  sanitized = sanitized.replace(/(?:<p>\s*<\/p>\s*){2,}/g, '<p></p>');
+
+  return sanitized;
+};
+
 const ArticleContentParser: React.FC<ArticleContentParserProps> = ({ content }) => {
+  const cleaned = cleanHTML(content);
   return (
     <div 
       className="prose prose-lg dark:prose-invert max-w-none
@@ -26,7 +51,7 @@ const ArticleContentParser: React.FC<ArticleContentParserProps> = ({ content }) 
         prose-th:bg-muted prose-th:p-3 prose-th:text-left prose-th:font-semibold prose-th:text-foreground
         prose-td:p-3 prose-td:border-t prose-td:border-border prose-td:text-foreground
         selection:bg-primary/20"
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: cleaned }}
     />
   );
 };
