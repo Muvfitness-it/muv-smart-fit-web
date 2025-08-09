@@ -56,6 +56,8 @@ import LocalBusinessSchema from "./components/SEO/LocalBusinessSchema";
 import SitemapSubmitter from "./components/SEO/SitemapSubmitter";
 import AutoOptimizer from "./components/SEO/AutoOptimizer";
 import AutoSitemapUpdater from "./components/SEO/AutoSitemapUpdater";
+import RedirectResolver from "./components/SEO/RedirectResolver";
+import AutoOptimizerRunner from "./components/SEO/AutoOptimizerRunner";
 
 const queryClient = new QueryClient();
 
@@ -85,7 +87,9 @@ const AppContent = () => {
     <SessionSecurity>
       <SecurityHeaders />
       <SEOHandler />
+      <RedirectResolver />
       <AutoOptimizer />
+      <AutoOptimizerRunner />
       <AutoSitemapUpdater />
       <LocalBusinessSchema />
       <PerformanceOptimizer />

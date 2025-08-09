@@ -49,3 +49,6 @@ verify_jwt = false
 
 [functions.gemini-image]
 verify_jwt = false
+
+[functions.auto-optimizer]
+verify_jwt = false

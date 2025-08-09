@@ -86,6 +86,48 @@ export type Database = {
         }
         Relationships: []
       }
+      auto_optimizer_logs: {
+        Row: {
+          actions: string[] | null
+          after: Json | null
+          before: Json | null
+          content_id: string | null
+          content_type: string | null
+          created_at: string
+          errors: string[] | null
+          id: string
+          impact_score: number | null
+          path: string | null
+          run_id: string
+        }
+        Insert: {
+          actions?: string[] | null
+          after?: Json | null
+          before?: Json | null
+          content_id?: string | null
+          content_type?: string | null
+          created_at?: string
+          errors?: string[] | null
+          id?: string
+          impact_score?: number | null
+          path?: string | null
+          run_id?: string
+        }
+        Update: {
+          actions?: string[] | null
+          after?: Json | null
+          before?: Json | null
+          content_id?: string | null
+          content_type?: string | null
+          created_at?: string
+          errors?: string[] | null
+          id?: string
+          impact_score?: number | null
+          path?: string | null
+          run_id?: string
+        }
+        Relationships: []
+      }
       blog_categories: {
         Row: {
           color: string | null
@@ -715,6 +757,33 @@ export type Database = {
           page_path?: string
           referrer?: string | null
           user_agent?: string | null
+        }
+        Relationships: []
+      }
+      url_redirects: {
+        Row: {
+          created_at: string
+          from_path: string
+          id: string
+          source_type: string | null
+          status_code: number
+          to_path: string
+        }
+        Insert: {
+          created_at?: string
+          from_path: string
+          id?: string
+          source_type?: string | null
+          status_code?: number
+          to_path: string
+        }
+        Update: {
+          created_at?: string
+          from_path?: string
+          id?: string
+          source_type?: string | null
+          status_code?: number
+          to_path?: string
         }
         Relationships: []
       }
