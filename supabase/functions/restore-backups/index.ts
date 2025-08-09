@@ -80,12 +80,22 @@ serve(async (req) => {
     const excludeSlugs: string[] = body.excludeSlugs || ['privacy', 'cookie-policy', 'termini-condizioni'];
     const minWords: number = body.minWords || 2000;
 
-    // 1) Fetch posts to process
-    const { data: posts, error: postsError } = await supabase
+    const limit: number = Math.min(Math.max(Number(body.limit) || 20, 1), 50);
+
+    // 1) Fetch posts to process (batched to avoid timeouts)
+    let query = supabase
       .from('blog_posts')
       .select('id, slug, title, status, content')
-      .in('status', ['published', 'draft'])
-      .not('slug', 'in', `(${excludeSlugs.join(',')})`);
+      .in('status', ['published', 'draft']);
+
+    if (Array.isArray(excludeSlugs) && excludeSlugs.length > 0) {
+      const excluded = excludeSlugs.map((s: string) => `"${s}"`).join(',');
+      query = query.not('slug', 'in', `(${excluded})`);
+    }
+
+    const { data: posts, error: postsError } = await query
+      .order('updated_at', { ascending: false })
+      .limit(limit);
 
     if (postsError) throw postsError;
 
