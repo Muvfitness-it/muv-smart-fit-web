@@ -10,6 +10,7 @@ import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 import ArticleManager from '@/components/blog/ArticleManager';
 import BlogDashboardStats from '@/components/blog/BlogDashboardStats';
 import AutoOptimizerControl from '@/components/admin/AutoOptimizerControl';
+import SlugNormalizer from '@/components/admin/SlugNormalizer';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -140,6 +141,9 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
+                {/* Slug Normalizer */}
+                <SlugNormalizer />
+                
                 {/* Auto-Optimizer Control */}
                 <AutoOptimizerControl />
                 

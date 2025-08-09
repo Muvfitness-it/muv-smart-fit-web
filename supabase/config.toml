@@ -55,3 +55,6 @@ verify_jwt = false
 
 [functions.redirect-handler]
 verify_jwt = false
+
+[functions.slug-normalizer]
+verify_jwt = false
