@@ -2,11 +2,7 @@
 import React, { useState } from 'react';
 import UnifiedSEO from '@/components/SEO/UnifiedSEO';
 import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
-import StaticContentGenerator from '@/components/SEO/StaticContentGenerator';
 import BlogLanding from '@/components/blog/BlogLanding';
-import BlogSitemap from '@/components/blog/BlogSitemap';
-import SitemapSubmitter from '@/components/SEO/SitemapSubmitter';
-import AutoSitemapUpdater from '@/components/SEO/AutoSitemapUpdater';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const Blog = () => {
@@ -23,9 +19,6 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
-    <BlogSitemap />
-    <SitemapSubmitter />
-    <AutoSitemapUpdater />
       
       {/* Unified SEO */}
       <UnifiedSEO
@@ -45,11 +38,6 @@ const Blog = () => {
         location="Blog MUV Fitness - Centro di informazione fitness"
       />
       
-      {/* Static Content Generator */}
-      <StaticContentGenerator 
-        pageType="blog" 
-        additionalContent={blogContent}
-      />
 
       <div className="container mx-auto px-4">
         {loading ? (

@@ -2,15 +2,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
-import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
-import DynamicSitemap from '@/components/SEO/DynamicSitemap';
 import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
-import StaticContentGenerator from '@/components/SEO/StaticContentGenerator';
 import StructuredData from '@/components/SEO/StructuredData';
 import AccessibilityEnhancer from '@/components/SEO/AccessibilityEnhancer';
 // SEOAudit disabilitato in produzione
 import PerformanceOptimizer from '@/components/SEO/PerformanceOptimizer';
-import IndexingBooster from '@/components/SEO/IndexingBooster';
 
 const SEOHandler: React.FC = () => {
   const location = useLocation();
@@ -336,23 +332,17 @@ const SEOHandler: React.FC = () => {
         }}
       />
       
-      <CrawlerOptimizer
-        title={seoData.title}
-        description={seoData.description}
-        content={seoData.content}
-        services={seoData.services}
-        location="Legnago"
-      />
-      
-      <StaticContentGenerator
-        pageType={seoData.pageType}
-        additionalContent={seoData.content}
-      />
+      {!currentPath.startsWith('/blog') && (
+        <CrawlerOptimizer
+          title={seoData.title}
+          description={seoData.description}
+          content={seoData.content}
+          services={seoData.services}
+          location="Legnago"
+        />
+      )}
       
       {/* Include existing structured data components */}
-      <LocalBusinessSchema />
-      <DynamicSitemap />
-      <IndexingBooster />
     </>
   );
 };

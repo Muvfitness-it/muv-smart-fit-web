@@ -27,13 +27,10 @@ export const SitemapSubmitter = () => {
       }
     };
 
-    // Submit on component mount and then periodically
+    // Submit on component mount only
     submitSitemapToGoogle();
 
-    // Resubmit every 6 hours
-    const interval = setInterval(submitSitemapToGoogle, 6 * 60 * 60 * 1000);
-
-    return () => clearInterval(interval);
+    return () => {};
   }, []);
 
   return null;
