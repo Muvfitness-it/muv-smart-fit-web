@@ -153,11 +153,13 @@ const AdminDashboard = () => {
                   <Button 
                     onClick={async () => {
                       try {
-                        const { data, error } = await supabase.functions.invoke('content-fixer');
+                        const { data, error } = await supabase.functions.invoke('auto-optimizer', {
+                          body: { batchSize: 50, repairMode: true }
+                        });
                         if (error) throw error;
                         toast({
                           title: "✅ Riparazione completata",
-                          description: `${data.processed} contenuti riparati con successo`,
+                          description: `${data.processed || 0} contenuti riparati con successo`,
                         });
                       } catch (e) {
                         toast({
