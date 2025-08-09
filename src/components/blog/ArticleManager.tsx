@@ -12,7 +12,8 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
-
+import { useGeminiAPI } from '@/hooks/useGeminiAPI';
+import { Checkbox } from '@/components/ui/checkbox';
 interface BlogPost {
   id: string;
   title: string;
@@ -31,8 +32,10 @@ const ArticleManager = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { callAIAPI } = useGeminiAPI();
 
   useEffect(() => {
     loadPosts();
@@ -166,6 +169,84 @@ const ArticleManager = () => {
     }
   };
 
+  const batchRewriteSelected = async () => {
+    if (selectedIds.length === 0) return;
+    toast({ title: 'Avvio riscrittura', description: `${selectedIds.length} articoli`, });
+
+    const rules = `AGISCI COME: Editor Senior SEO/SEM/Copywriting per il blog del Centro Fitness MUV (Legnago, VR).
+OBIETTIVO: Riscrivere articoli a partire dal titolo fornito, in stile naturale e autorevole, HTML pulito e SEO ottimizzato.
+REGOLE:
+- 1 solo <h1> con keyword principale all’inizio
+- Intro 80–120 parole
+- Struttura con <h2> e <h3>
+- Paragrafi <= 4 righe, frasi <= 20 parole
+- Liste dove utile
+- Conclusione con CTA: “Vuoi risultati concreti e duraturi? Prenota oggi la tua prova gratuita al Centro Fitness MUV a Legnago.”
+- Slug breve (lo mantiene il sistema), Meta title ≤60, Meta desc ≤155
+- Keyword principale in H1, primo paragrafo, almeno un H2 e conclusione
+- 3–6 keyword correlate naturali
+- 2–4 link interni pertinenti con anchor descrittive
+- Immagini con alt descrittivo e loading="lazy"
+- HTML valido e leggibile`;
+
+    for (const id of selectedIds) {
+      try {
+        const { data: post, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('id', id)
+          .maybeSingle();
+        if (error || !post) continue;
+
+        const lengthPref = post.reading_time && post.reading_time > 10 ? 'long' : 'medium';
+        const lengthMap: Record<string, string> = {
+          short: '800-1000 parole',
+          medium: '1200-1500 parole',
+          long: '2000-2500 parole'
+        };
+
+        const taskLine = `RISCRITTURA: Riscrivi completamente l’articolo partendo dal titolo: "${post.title}". Mantieni info utili, aggiorna dati, migliora leggibilità e SEO.`;
+        const prompt = `${rules}\n\nCONTESTO:\n- Lunghezza: ${lengthMap[lengthPref]}\n- Tono: professionale\n- Target: generale\n- Parole chiave: ${post.meta_keywords || ''}\n\n${taskLine}\n\nFORMATTAZIONE:\n- Usa solo HTML semantico (h1, h2, h3, p, strong, em, ul, li, a)\n- Inserisci la CTA standard in chiusura\n\nOUTPUT:\nRispondi SOLO con l’HTML completo dell’articolo, iniziando con <h1>.`;
+
+        const response = await callAIAPI(prompt, 'gemini');
+        const titleMatch = response.match(/<h1[^>]*>(.*?)<\/h1>/i);
+        const extractedTitle = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '') : post.title;
+        const paragraphMatches = response.match(/<p[^>]*>(.*?)<\/p>/gi) || [];
+        const extractedExcerpt = paragraphMatches
+          ? paragraphMatches.slice(0, 2).join(' ').replace(/<[^>]*>/g, '').substring(0, 200) + '...'
+          : post.excerpt || '';
+        const readingTime = Math.max(1, Math.ceil((response.replace(/<[^>]*>/g, '').split(/\s+/).length) / 200));
+
+        // Backup
+        try {
+          await supabase.from('blog_posts_backup').insert({ id: post.id, content_backup: post.content || '' });
+        } catch (_) {}
+
+        // Update post (mantiene slug e published_at)
+        await supabase
+          .from('blog_posts')
+          .update({
+            title: extractedTitle.substring(0, 180),
+            content: response.trim(),
+            excerpt: extractedExcerpt,
+            meta_title: (extractedTitle || post.title).substring(0, 60),
+            meta_description: extractedExcerpt.substring(0, 155),
+            reading_time: readingTime,
+          })
+          .eq('id', post.id);
+
+        toast({ title: 'Riscritto', description: `Aggiornato: ${post.title}` });
+      } catch (e) {
+        console.error('Batch rewrite error:', e);
+        toast({ title: 'Errore riscrittura', description: 'Uno degli articoli non è stato aggiornato', variant: 'destructive' });
+      }
+    }
+
+    setSelectedIds([]);
+    await loadPosts();
+    toast({ title: 'Completato', description: 'Riscrittura batch completata' });
+  };
+
   const filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.author_name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -254,6 +335,19 @@ const ArticleManager = () => {
         </CardContent>
       </Card>
 
+      {/* Toolbar batch riscrittura */}
+      {selectedIds.length > 0 && (
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-sm text-gray-300">{selectedIds.length} articoli selezionati</p>
+          <div className="flex gap-2">
+            <Button onClick={batchRewriteSelected} className="bg-purple-600 hover:bg-purple-700" size="sm">
+              <Sparkles className="w-4 h-4 mr-1" /> Riscrivi con IA (Batch)
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => setSelectedIds([])}>Annulla selezione</Button>
+          </div>
+        </div>
+      )}
+
       {/* Lista articoli */}
       <div className="space-y-4">
         {filteredPosts.length === 0 ? (
@@ -299,6 +393,12 @@ const ArticleManager = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
+                      <Checkbox
+                        checked={selectedIds.includes(post.id)}
+                        onCheckedChange={(checked) => {
+                          setSelectedIds(prev => checked ? [...prev, post.id] : prev.filter(id => id !== post.id));
+                        }}
+                      />
                       <h3 className="text-lg font-semibold text-white">
                         {post.title}
                       </h3>
