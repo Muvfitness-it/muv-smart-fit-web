@@ -7,7 +7,6 @@ export const SitemapSubmitter = () => {
         'https://www.muvfitness.it/sitemap.xml',
         'https://www.muvfitness.it/sitemap-main.xml',
         'https://www.muvfitness.it/sitemap-blog.xml',
-        'https://www.muvfitness.it/news-sitemap.xml',
       ];
 
       try {
