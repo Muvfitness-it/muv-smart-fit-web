@@ -8,7 +8,11 @@ export const useSiteVisitTracker = () => {
   const { trackSiteVisit } = useAnalytics();
 
   useEffect(() => {
-    // Track the page visit
-    trackSiteVisit(location.pathname);
+    const consentRaw = typeof window !== 'undefined' ? localStorage.getItem('muv_cookie_consent') : null;
+    const consent = consentRaw ? JSON.parse(consentRaw) : null;
+
+    if (consent?.analytics) {
+      trackSiteVisit(location.pathname);
+    }
   }, [location.pathname, trackSiteVisit]);
 };

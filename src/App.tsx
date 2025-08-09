@@ -47,6 +47,7 @@ import SEOHandler from "./components/home/SEOHandler";
 import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
+import CookieConsent from "./components/security/CookieConsent";
 
 import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
@@ -156,6 +157,7 @@ const AppContent = () => {
         } />
         </Routes>
       </div>
+      <CookieConsent />
     </SessionSecurity>
   );
 };
