@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { AIProvider } from '@/hooks/useGeminiAPI';
+import ArticleContentParser from './ArticleContentParser';
 
 const AIArticleWriter = () => {
   const [topic, setTopic] = useState('');
@@ -555,7 +556,7 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
               <div className="space-y-3">
                 <Label className="text-foreground font-medium">Anteprima Contenuto</Label>
                 <div className="bg-background border border-border rounded-lg p-6 max-h-96 overflow-y-auto prose-custom">
-                  <div dangerouslySetInnerHTML={{ __html: generatedArticle }} />
+                  <ArticleContentParser content={generatedArticle} />
                 </div>
               </div>
 

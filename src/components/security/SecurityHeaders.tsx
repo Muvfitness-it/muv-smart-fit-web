@@ -11,6 +11,7 @@ export const SecurityHeaders = () => {
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https: blob:;
         connect-src 'self' https://baujoowgqeyraqnukkmw.supabase.co wss://baujoowgqeyraqnukkmw.supabase.co https://api.ipify.org;
+        frame-ancestors 'self';
         frame-src 'self';
         object-src 'none';
         base-uri 'self';
@@ -20,9 +21,6 @@ export const SecurityHeaders = () => {
       
       {/* Prevent MIME type sniffing */}
       <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-      
-      {/* XSS Protection */}
-      <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
       
       {/* Prevent clickjacking - allow same origin for iframes */}
       <meta httpEquiv="X-Frame-Options" content="SAMEORIGIN" />

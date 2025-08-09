@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, BookOpen } from 'lucide-react';
+import ArticleContentParser from './ArticleContentParser';
 
 interface Article {
   title: string;
@@ -55,7 +56,7 @@ const PreviewTab: React.FC<PreviewTabProps> = ({ article }) => {
             </header>
             
             <div className="prose prose-lg max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: article.content || 'Il contenuto del tuo articolo apparirà qui...' }} />
+              <ArticleContentParser content={article.content || 'Il contenuto del tuo articolo apparirà qui...'} />
             </div>
           </article>
         </div>
