@@ -259,16 +259,20 @@ serve(async (req) => {
       auth: { autoRefreshToken: false, persistSession: false }
     });
 
-    const { batchSize = 25 } = (await req.json().catch(() => ({}))) as { batchSize?: number };
+    const { batchSize = 25, offset = 0 } = (await req.json().catch(() => ({}))) as { batchSize?: number; offset?: number };
 
-    // Get posts to format (exclude privacy/legal pages)
+    // Get posts to format (exclude privacy/legal pages) with stable pagination
+    const end = Math.max(offset + batchSize - 1, offset);
     const { data: posts, error: fetchError } = await supabase
       .from('blog_posts')
       .select('*')
       .in('status', ['published', 'draft'])
       .not('slug', 'in', '(privacy,cookie-policy,termini-condizioni)')
       .not('content', 'is', null)
-      .limit(batchSize);
+      .order('published_at', { ascending: true })
+      .order('created_at', { ascending: true })
+      .order('id', { ascending: true })
+      .range(offset, end);
 
     if (fetchError) {
       throw new Error(`Fetch error: ${fetchError.message}`);
@@ -299,7 +303,8 @@ serve(async (req) => {
       .in('status', ['published', 'draft'])
       .not('slug', 'in', '(privacy,cookie-policy,termini-condizioni)');
 
-    const remaining = (count || 0) - processed;
+    const processed_total = offset + processed;
+    const remaining = Math.max(0, (count || 0) - processed_total);
 
     return new Response(JSON.stringify({
       success: true,
@@ -308,7 +313,9 @@ serve(async (req) => {
       remaining,
       results,
       errors,
-      next_batch_ready: remaining > 0,
+      next_batch_ready: processed_total < (count || 0),
+      offset,
+      processed_total,
       summary: {
         formatting_applied: [
           'Frasi ≤ 20 parole',

@@ -55,18 +55,19 @@ const BlogFormatter: React.FC = () => {
   const [errors, setErrors] = useState<any[]>([]);
   const [currentBatch, setCurrentBatch] = useState(1);
 
-  const runFormatting = async (isAutoContinue = false) => {
+  const runFormatting = async (isAutoContinue = false, offset = 0) => {
     if (!isAutoContinue) {
       setIsRunning(true);
       setResults([]);
       setErrors([]);
       setTotalProcessed(0);
       setCurrentBatch(1);
+      setProgress(0);
     }
 
     try {
       const { data, error } = await supabase.functions.invoke('blog-formatter', {
-        body: { batchSize: 25 }
+        body: { batchSize: 25, offset }
       });
 
       if (error) throw error;
@@ -74,20 +75,21 @@ const BlogFormatter: React.FC = () => {
       const response: FormatResponse = data;
       
       setResults(prev => [...prev, ...response.results]);
-      setErrors(prev => [...prev, ...response.errors]);
-      setTotalProcessed(prev => prev + response.processed_this_run);
+      setErrors(prev => [...prev, ...(response.errors || [])]);
+      const newTotal = offset + response.processed_this_run;
+      setTotalProcessed(newTotal);
       setTotalPosts(response.total_posts);
-      setProgress((totalProcessed + response.processed_this_run) / response.total_posts * 100);
+      setProgress(Math.min(100, (newTotal / response.total_posts) * 100));
 
       toast({
         title: `✅ Batch ${currentBatch} completato`,
-        description: `${response.processed_this_run} articoli formattati. ${response.remaining} rimanenti.`,
+        description: `${response.processed_this_run} articoli formattati. ${Math.max(0, response.total_posts - newTotal)} rimanenti.`,
       });
 
       // Auto-continue if there are remaining posts
-      if (response.next_batch_ready && response.remaining > 0) {
+      if (newTotal < response.total_posts && response.next_batch_ready) {
         setCurrentBatch(prev => prev + 1);
-        setTimeout(() => runFormatting(true), 2000); // Wait 2s between batches
+        setTimeout(() => runFormatting(true, newTotal), 1500); // Wait 1.5s between batches
       } else {
         setIsRunning(false);
         toast({
@@ -96,11 +98,11 @@ const BlogFormatter: React.FC = () => {
         });
       }
 
-    } catch (e) {
+    } catch (e: any) {
       setIsRunning(false);
       toast({
         title: "Errore nella formattazione",
-        description: e.message,
+        description: e?.message || String(e),
         variant: "destructive"
       });
     }
@@ -165,7 +167,7 @@ const BlogFormatter: React.FC = () => {
 
         <div className="flex gap-2">
           <Button 
-            onClick={() => runFormatting(false)} 
+            onClick={() => runFormatting(false, 0)} 
             disabled={isRunning}
             className="flex items-center gap-2 flex-1"
           >
