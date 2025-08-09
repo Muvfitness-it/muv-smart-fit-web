@@ -267,24 +267,6 @@ export type Database = {
           },
         ]
       }
-      blog_posts_backup: {
-        Row: {
-          backed_up_at: string | null
-          content_backup: string | null
-          id: string | null
-        }
-        Insert: {
-          backed_up_at?: string | null
-          content_backup?: string | null
-          id?: string | null
-        }
-        Update: {
-          backed_up_at?: string | null
-          content_backup?: string | null
-          id?: string | null
-        }
-        Relationships: []
-      }
       blog_tags: {
         Row: {
           created_at: string
@@ -755,10 +737,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      clean_blog_content: {
-        Args: { input_content: string }
-        Returns: string
-      }
       cleanup_expired_booking_tokens: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -766,14 +744,6 @@ export type Database = {
       current_user_has_role: {
         Args: { _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
-      }
-      fix_and_format_articles: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      format_article_content: {
-        Args: { input_content: string }
-        Returns: string
       }
       has_role: {
         Args: {
@@ -791,14 +761,6 @@ export type Database = {
         Returns: boolean
       }
       log_unauthorized_access_attempt: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      repair_html_content: {
-        Args: { input_content: string }
-        Returns: string
-      }
-      restore_and_fix_all_posts: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

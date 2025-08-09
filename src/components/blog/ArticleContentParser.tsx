@@ -5,34 +5,23 @@ interface ArticleContentParserProps {
   content: string;
 }
 
-// Pulizia minima e sicura solo dei simboli markdown chiaramente isolati
+// Clean up common markdown-like artifacts (e.g., **bold**, # headings, stray asterisks)
 const cleanHTML = (html: string) => {
   // Sanitize first for safety
   let sanitized = DOMPurify.sanitize(html);
 
-  // Non toccare il contenuto HTML già formattato
-  if (sanitized.includes('<p>') || sanitized.includes('<div>') || sanitized.includes('<strong>') || sanitized.includes('<h')) {
-    return sanitized;
-  }
+  // Remove markdown heading/bullet markers that slipped into paragraphs
+  sanitized = sanitized.replace(/<p>\s*([#>*\-]{1,6})\s+/g, '<p>');
 
-  // Solo per contenuto che sembra markdown puro (senza HTML)
-  // Converti **testo** in <strong>testo</strong> solo se isolato
-  sanitized = sanitized.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-  
-  // Converti __testo__ in <strong>testo</strong> solo se isolato
-  sanitized = sanitized.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
-  
-  // Rimuovi solo hashtag all'inizio di riga seguiti da spazio
-  sanitized = sanitized.replace(/^#{1,6}\s+/gm, '');
-  
-  // Rimuovi solo trattini isolati all'inizio di riga seguiti da spazio
-  sanitized = sanitized.replace(/^[\s]*[-*]\s+/gm, '');
-  
-  // Aggiungi struttura HTML se è testo puro
-  if (!sanitized.includes('<p>') && sanitized.trim()) {
-    const lines = sanitized.split('\n').filter(line => line.trim());
-    sanitized = lines.map(line => `<p>${line.trim()}</p>`).join('');
-  }
+  // Convert simple **bold** or __bold__ patterns inside paragraphs to <strong>
+  sanitized = sanitized.replace(/<p>\s*\*\*(.+?)\*\*\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
+  sanitized = sanitized.replace(/<p>\s*__(.+?)__\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
+
+  // Remove paragraphs that contain only marker characters
+  sanitized = sanitized.replace(/<p>\s*[#*\-]+\s*<\/p>/g, '');
+
+  // Collapse excessive empty paragraphs
+  sanitized = sanitized.replace(/(?:<p>\s*<\/p>\s*){2,}/g, '<p></p>');
 
   return sanitized;
 };
