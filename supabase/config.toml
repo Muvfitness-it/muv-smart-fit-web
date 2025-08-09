@@ -73,3 +73,6 @@ verify_jwt = false
 
 [functions.content-fixer]
 verify_jwt = false
+
+[functions.blog-formatter]
+verify_jwt = false

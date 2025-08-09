@@ -16,6 +16,7 @@ import SlugNormalizer from '@/components/admin/SlugNormalizer';
 import BatchOptimizer from '@/components/admin/BatchOptimizer';
 import OptimizationPipeline from '@/components/admin/OptimizationPipeline';
 import FinalAudit from '@/components/admin/FinalAudit';
+import BlogFormatter from '@/components/admin/BlogFormatter';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -146,36 +147,10 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
-                {/* CRITICAL REPAIR SECTION */}
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-red-800 mb-3">🚨 Riparazione Critica Necessaria</h3>
-                  <p className="text-red-700 mb-4">I contenuti necessitano di una riparazione strutturale completa prima di procedere con l'ottimizzazione.</p>
-                  <Button 
-                    onClick={async () => {
-                      try {
-                        const { data, error } = await supabase.functions.invoke('auto-optimizer', {
-                          body: { batchSize: 50, repairMode: true }
-                        });
-                        if (error) throw error;
-                        toast({
-                          title: "✅ Riparazione completata",
-                          description: `${data.processed || 0} contenuti riparati con successo`,
-                        });
-                      } catch (e) {
-                        toast({
-                          title: "Errore nella riparazione",
-                          description: e.message,
-                          variant: "destructive"
-                        });
-                      }
-                    }}
-                    className="bg-red-600 hover:bg-red-700 text-white"
-                  >
-                    🔧 RIPARA TUTTI I CONTENUTI ORA
-                  </Button>
-                </div>
+                {/* FORZA REFORMAT BLOG */}
+                <BlogFormatter />
 
-                {/* Optimization Pipeline - Unified Control */}
+                {/* Optimization Pipeline - After Formatting */}
                 <OptimizationPipeline />
                 
                 {/* Final Audit - GO/NO-GO */}
