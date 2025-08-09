@@ -11,6 +11,9 @@ import ArticleManager from '@/components/blog/ArticleManager';
 import BlogDashboardStats from '@/components/blog/BlogDashboardStats';
 import AutoOptimizerControl from '@/components/admin/AutoOptimizerControl';
 import SlugNormalizer from '@/components/admin/SlugNormalizer';
+import BatchOptimizer from '@/components/admin/BatchOptimizer';
+import OptimizationPipeline from '@/components/admin/OptimizationPipeline';
+import FinalAudit from '@/components/admin/FinalAudit';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -141,11 +144,21 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
-                {/* Slug Normalizer */}
-                <SlugNormalizer />
+                {/* Optimization Pipeline - Unified Control */}
+                <OptimizationPipeline />
                 
-                {/* Auto-Optimizer Control */}
-                <AutoOptimizerControl />
+                {/* Final Audit - GO/NO-GO */}
+                <FinalAudit />
+                
+                {/* Individual Controls */}
+                <details className="border rounded-lg">
+                  <summary className="p-4 cursor-pointer font-medium">Controlli Individuali</summary>
+                  <div className="p-4 space-y-6 border-t">
+                    <SlugNormalizer />
+                    <BatchOptimizer />
+                    <AutoOptimizerControl />
+                  </div>
+                </details>
                 
                 <Card>
                   <CardHeader>

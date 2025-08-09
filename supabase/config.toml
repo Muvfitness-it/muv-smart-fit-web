@@ -58,3 +58,15 @@ verify_jwt = false
 
 [functions.slug-normalizer]
 verify_jwt = false
+
+[functions.image-optimizer]
+verify_jwt = false
+
+[functions.jsonld-optimizer]
+verify_jwt = false
+
+[functions.internal-linker]
+verify_jwt = false
+
+[functions.final-audit]
+verify_jwt = false
