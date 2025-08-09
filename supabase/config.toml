@@ -52,3 +52,6 @@ verify_jwt = false
 
 [functions.auto-optimizer]
 verify_jwt = false
+
+[functions.redirect-handler]
+verify_jwt = false

@@ -96,6 +96,30 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(request)
       .then(response => {
+        // Handle 404s by checking for redirects
+        if (response.status === 404) {
+          return fetch(`https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/redirect-handler${url.pathname}`)
+            .then(redirectResponse => {
+              if (redirectResponse.status === 301 || redirectResponse.status === 302) {
+                const location = redirectResponse.headers.get('Location');
+                if (location) {
+                  return fetch(location).then(finalResponse => {
+                    if (finalResponse.status === 200) {
+                      const responseClone = finalResponse.clone();
+                      caches.open(DYNAMIC_CACHE).then(cache => {
+                        cache.put(request, responseClone);
+                        limitCacheSize(DYNAMIC_CACHE, 20);
+                      });
+                    }
+                    return finalResponse;
+                  });
+                }
+              }
+              return response; // Return original 404 if no redirect
+            })
+            .catch(() => response); // Fallback to original 404
+        }
+        
         if (response.status === 200) {
           const responseClone = response.clone();
           caches.open(DYNAMIC_CACHE).then(cache => {

@@ -9,6 +9,7 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 import ArticleManager from '@/components/blog/ArticleManager';
 import BlogDashboardStats from '@/components/blog/BlogDashboardStats';
+import AutoOptimizerControl from '@/components/admin/AutoOptimizerControl';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -139,6 +140,9 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
+                {/* Auto-Optimizer Control */}
+                <AutoOptimizerControl />
+                
                 <Card>
                   <CardHeader>
                     <CardTitle>Ottimizzazione SEO</CardTitle>
