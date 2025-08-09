@@ -5,23 +5,48 @@ interface ArticleContentParserProps {
   content: string;
 }
 
-// Clean up common markdown-like artifacts (e.g., **bold**, # headings, stray asterisks)
+// Pulizia aggressiva di tutti i simboli markdown e formattazione corretta
 const cleanHTML = (html: string) => {
   // Sanitize first for safety
   let sanitized = DOMPurify.sanitize(html);
 
-  // Remove markdown heading/bullet markers that slipped into paragraphs
-  sanitized = sanitized.replace(/<p>\s*([#>*\-]{1,6})\s+/g, '<p>');
-
-  // Convert simple **bold** or __bold__ patterns inside paragraphs to <strong>
-  sanitized = sanitized.replace(/<p>\s*\*\*(.+?)\*\*\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
-  sanitized = sanitized.replace(/<p>\s*__(.+?)__\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
-
-  // Remove paragraphs that contain only marker characters
-  sanitized = sanitized.replace(/<p>\s*[#*\-]+\s*<\/p>/g, '');
-
-  // Collapse excessive empty paragraphs
-  sanitized = sanitized.replace(/(?:<p>\s*<\/p>\s*){2,}/g, '<p></p>');
+  // Rimuovi tutti i simboli markdown comuni ovunque si trovino
+  // Rimuovi ## per titoli
+  sanitized = sanitized.replace(/#{1,6}\s*/g, '');
+  
+  // Converti **testo** in <strong>testo</strong>
+  sanitized = sanitized.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  
+  // Converti __testo__ in <strong>testo</strong>
+  sanitized = sanitized.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  
+  // Rimuovi singoli asterischi isolati
+  sanitized = sanitized.replace(/\*(?!\*)/g, '');
+  
+  // Rimuovi trattini isolati all'inizio delle righe (bullet points markdown)
+  sanitized = sanitized.replace(/^[\s]*[-*]\s*/gm, '');
+  
+  // Rimuovi simboli > per citazioni
+  sanitized = sanitized.replace(/>\s*/g, '');
+  
+  // Rimuovi parentesi quadre per link markdown [text](url)
+  sanitized = sanitized.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  
+  // Pulisci spazi multipli
+  sanitized = sanitized.replace(/\s+/g, ' ');
+  
+  // Rimuovi paragrafi vuoti o con solo spazi
+  sanitized = sanitized.replace(/<p>\s*<\/p>/g, '');
+  
+  // Assicurati che i paragrafi abbiano contenuto valido
+  sanitized = sanitized.replace(/<p>\s*([#*\->\s]*)\s*<\/p>/g, '');
+  
+  // Aggiungi struttura HTML se manca
+  if (!sanitized.includes('<p>') && sanitized.trim()) {
+    // Dividi per righe e crea paragrafi
+    const lines = sanitized.split('\n').filter(line => line.trim());
+    sanitized = lines.map(line => `<p>${line.trim()}</p>`).join('');
+  }
 
   return sanitized;
 };
