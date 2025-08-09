@@ -9,9 +9,10 @@ import { Loader2, Wand2, Save, Eye } from 'lucide-react';
 import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { AIProvider } from '@/hooks/useGeminiAPI';
+import { Checkbox } from '@/components/ui/checkbox';
 import ArticleContentParser from './ArticleContentParser';
 
 const AIArticleWriter = () => {
@@ -35,6 +36,11 @@ const AIArticleWriter = () => {
   const { callAIAPI } = useGeminiAPI();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const rewriteId = searchParams.get('rewrite');
+  const [rewriteMode, setRewriteMode] = useState(false);
+  const [replaceOriginal, setReplaceOriginal] = useState(true);
+  const [originalPost, setOriginalPost] = useState<any | null>(null);
 
   const generateSlug = (title: string): string => {
     return title
@@ -50,6 +56,28 @@ const AIArticleWriter = () => {
       .trim();
   };
 
+  // Carica articolo originale per RISCRITTURA
+  useEffect(() => {
+    const loadForRewrite = async () => {
+      if (!rewriteId) return;
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('id', rewriteId)
+        .maybeSingle();
+      if (data) {
+        setRewriteMode(true);
+        setOriginalPost(data);
+        setTopic(data.title || '');
+        setTitle(data.title || '');
+        setExcerpt(data.excerpt || '');
+        setMetaTitle((data.meta_title || data.title || '').substring(0, 60));
+        setMetaDescription((data.meta_description || data.excerpt || '').substring(0, 160));
+        setKeywords(data.meta_keywords || '');
+      }
+    };
+    loadForRewrite();
+  }, [rewriteId]);
 
   const generateArticle = async () => {
     if (!topic.trim()) {
@@ -69,48 +97,46 @@ const AIArticleWriter = () => {
       long: '2000-2500 parole'
     };
 
-    const prompt = `Scrivi un articolo completo e professionale per un blog di fitness sull'argomento: "${topic}".
+    const rules = `AGISCI COME: Editor Senior SEO/SEM/Copywriting per il blog del Centro Fitness MUV (Legnago, VR).
+OBIETTIVO: Creare o riscrivere articoli a partire dal titolo fornito, naturali, umani e coinvolgenti, perfettamente formattati in HTML e ottimizzati SEO.
 
-SPECIFICHE TECNICHE:
+REGOLE SCRITTURA:
+- 1 solo <h1> con keyword principale all’inizio
+- Introduzione 80–120 parole che incuriosisca e anticipi il contenuto
+- Struttura ordinata con <h2> e <h3>
+- Paragrafi max 4 righe, frasi max 20 parole
+- Liste puntate/numerate dove utile
+- Conclusione con sintesi + CTA standard: “Vuoi risultati concreti e duraturi? Prenota oggi la tua prova gratuita al Centro Fitness MUV a Legnago.”
+- Slug breve, minuscolo, con trattini, senza stop words
+- Meta title ≤ 60 caratteri con keyword principale
+- Meta description ≤ 155 caratteri, persuasiva e con keyword
+- Keyword principale: in H1, primo paragrafo, almeno un H2 e conclusione
+- 3–6 keyword correlate distribuite naturalmente
+- 2–4 link interni pertinenti con anchor descrittive
+- Immagini con attributo alt descrittivo e loading="lazy"
+- HTML valido, pulito e visivamente leggibile`;
+
+    const taskLine = rewriteMode
+      ? `RISCRITTURA: Riscrivi completamente l’articolo partendo dal titolo: "${title || topic}". Mantieni le info utili, aggiorna dati e migliora leggibilità e SEO.`
+      : `SCRITTURA: Crea un nuovo articolo sull’argomento: "${topic}".`;
+
+    const prompt = `${rules}
+
+CONTESTO:
 - Lunghezza: ${lengthMap[articleLength as keyof typeof lengthMap]}
 - Tono: ${tone}
-- Target audience: ${targetAudience}
-- Parole chiave SEO da includere naturalmente: ${keywords}
-- Settore: MUV Fitness (centro fitness innovativo a Legnago)
+- Target: ${targetAudience}
+- Parole chiave principali/correlate: ${keywords}
 
-STRUTTURA ARTICOLO:
-1. Titolo SEO-friendly e accattivante (max 60 caratteri)
-2. Introduzione coinvolgente (2-3 paragrafi che catturano l'attenzione)
-3. Corpo dell'articolo con:
-   - Sottotitoli H2 e H3 ben strutturati
-   - Paragrafi di 3-4 frasi ciascuno
-   - Liste puntate quando appropriato
-   - Esempi pratici e actionable tips
-4. Sezione "Conclusioni" con call-to-action verso MUV Fitness
-5. FAQ (3-5 domande frequenti) se appropriato
-
-LINEE GUIDA CONTENUTO:
-- Informazioni scientificamente accurate e aggiornate
-- Linguaggio professionale ma accessibile
-- Esempi concreti e situazioni reali
-- Consigli pratici e immediatamente applicabili
-- Citazioni di studi scientifici quando rilevante
-- Integrazione naturale delle parole chiave
-- Call-to-action che indirizzano verso i servizi MUV Fitness
-
-OTTIMIZZAZIONE SEO:
-- Densità keyword naturale (1-2%)
-- Sinonimi e variazioni delle parole chiave
-- Struttura gerarchica con H1, H2, H3
-- Meta description accattivante inclusa
+${taskLine}
 
 FORMATTAZIONE:
-- Utilizza HTML semantico (h1, h2, h3, p, strong, em, ul, li)
-- Grassetto per concetti chiave
-- Corsivo per enfasi
-- Liste puntate per consigli/benefici
+- Usa solo HTML semantico (h1, h2, h3, p, strong, em, ul, li, a)
+- Inserisci la CTA standard in chiusura
 
-Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il titolo principale.`;
+OUTPUT:
+Rispondi SOLO con l’HTML completo dell’articolo, iniziando con <h1>.
+Non includere testo fuori dall’HTML.`;
 
     try {
       const response = await callAIAPI(prompt, aiProvider);
@@ -234,43 +260,84 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
 
       console.log('Saving article data:', articleData);
 
-      // Prova a inserire l'articolo
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .insert(articleData)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Supabase error:', error);
-        
-        // Se l'errore è di RLS, fornisci un messaggio più chiaro
-        if (error.message.includes('row-level security')) {
-          toast({
-            title: "Errore di Permessi",
-            description: "Non hai i permessi per creare articoli. Assicurati di essere autenticato come admin.",
-            variant: "destructive"
+      // Inserimento o aggiornamento in base alla modalità
+      if (rewriteMode && replaceOriginal && originalPost) {
+        // Backup contenuto originale
+        try {
+          await supabase.from('blog_posts_backup').insert({
+            id: originalPost.id,
+            content_backup: originalPost.content || ''
           });
-        } else {
-          toast({
-            title: "Errore",
-            description: `Errore nel salvataggio: ${error.message}`,
-            variant: "destructive"
-          });
+        } catch (e) {
+          console.warn('Backup fallito (proseguo comunque):', e);
         }
-        return;
-      }
 
-      toast({
-        title: "Successo",
-        description: `Articolo ${articleStatus === 'published' ? 'pubblicato' : articleStatus === 'scheduled' ? 'programmato per pubblicazione' : 'salvato come bozza'}!`
-      });
+        const updateData = {
+          title: title.trim(),
+          slug: originalPost.slug, // mantieni lo slug
+          content: generatedArticle.trim(),
+          excerpt: excerpt.trim() || generatedArticle.substring(0, 200).replace(/<[^>]*>/g, '') + '...',
+          meta_title: metaTitle.trim() || title.substring(0, 60),
+          meta_description: metaDescription.trim() || excerpt.substring(0, 160),
+          status: articleStatus,
+          author_name: originalPost.author_name || 'MUV Team',
+          reading_time: readingTime,
+          featured_image: originalPost.featured_image || null,
+          scheduled_publish_at: scheduledPublishAt,
+          published_at: publishedAt
+        };
 
-      // Naviga alla pagina di modifica
-      if (data) {
-        navigate(`/blog/edit/${data.id}`);
+        const { data: upd, error: updError } = await supabase
+          .from('blog_posts')
+          .update(updateData)
+          .eq('id', originalPost.id)
+          .select()
+          .single();
+
+        if (updError) {
+          throw updError;
+        }
+
+        toast({
+          title: 'Successo',
+          description: `Articolo riscritto e ${articleStatus === 'published' ? 'pubblicato' : articleStatus === 'scheduled' ? 'programmato' : 'salvato'} con successo`
+        });
+        navigate(`/blog/edit/${originalPost.id}`);
       } else {
-        navigate('/blog/admin');
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .insert(articleData)
+          .select()
+          .single();
+
+        if (error) {
+          console.error('Supabase error:', error);
+          if (error.message.includes('row-level security')) {
+            toast({
+              title: 'Errore di Permessi',
+              description: 'Non hai i permessi per creare articoli. Assicurati di essere autenticato come admin.',
+              variant: 'destructive'
+            });
+          } else {
+            toast({
+              title: 'Errore',
+              description: `Errore nel salvataggio: ${error.message}`,
+              variant: 'destructive'
+            });
+          }
+          return;
+        }
+
+        toast({
+          title: 'Successo',
+          description: `Articolo ${articleStatus === 'published' ? 'pubblicato' : articleStatus === 'scheduled' ? 'programmato per pubblicazione' : 'salvato come bozza'}!`
+        });
+
+        if (data) {
+          navigate(`/blog/edit/${data.id}`);
+        } else {
+          navigate('/blog/admin');
+        }
       }
 
     } catch (error: any) {
@@ -295,6 +362,18 @@ Rispondi SOLO con il contenuto HTML dell'articolo, iniziando con <h1> per il tit
           Genera contenuti ottimizzati SEO per il blog MUV Fitness con intelligenza artificiale avanzata
         </p>
       </div>
+
+      {rewriteMode && (
+        <div className="p-4 border border-border rounded-lg bg-muted/30">
+          <p className="text-sm text-muted-foreground">
+            Modalità RISCRITTURA attiva per: <strong>{originalPost?.title}</strong>
+          </p>
+          <label className="mt-2 flex items-center gap-2">
+            <Checkbox checked={replaceOriginal} onCheckedChange={(v) => setReplaceOriginal(!!v)} />
+            <span className="text-sm">Sostituisci l'articolo originale (backup automatico)</span>
+          </label>
+        </div>
+      )}
 
       <Card className="card-brand">
         <CardHeader>
