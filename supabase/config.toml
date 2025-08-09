@@ -76,3 +76,6 @@ verify_jwt = false
 
 [functions.blog-formatter]
 verify_jwt = false
+
+[functions.restore-backups]
+verify_jwt = false

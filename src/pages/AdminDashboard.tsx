@@ -17,6 +17,7 @@ import BatchOptimizer from '@/components/admin/BatchOptimizer';
 import OptimizationPipeline from '@/components/admin/OptimizationPipeline';
 import FinalAudit from '@/components/admin/FinalAudit';
 import BlogFormatter from '@/components/admin/BlogFormatter';
+import ContentRestore from '@/components/admin/ContentRestore';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -147,6 +148,9 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
+                {/* RIPRISTINO CONTENUTI */}
+                <ContentRestore />
+
                 {/* FORZA REFORMAT BLOG */}
                 <BlogFormatter />
 
