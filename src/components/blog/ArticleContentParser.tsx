@@ -5,45 +5,34 @@ interface ArticleContentParserProps {
   content: string;
 }
 
-// Pulizia conservativa dei simboli markdown preservando tutto il contenuto HTML
+// Pulizia minima e sicura solo dei simboli markdown chiaramente isolati
 const cleanHTML = (html: string) => {
   // Sanitize first for safety
   let sanitized = DOMPurify.sanitize(html);
 
-  // Solo se il contenuto sembra essere markdown puro (non HTML strutturato)
-  if (!sanitized.includes('<p>') && !sanitized.includes('<div>') && !sanitized.includes('<h')) {
-    // Converti **testo** in <strong>testo</strong> solo se isolato
-    sanitized = sanitized.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-    
-    // Converti __testo__ in <strong>testo</strong> solo se isolato
-    sanitized = sanitized.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
-    
-    // Aggiungi struttura HTML se è testo puro
-    const lines = sanitized.split('\n').filter(line => line.trim());
-    sanitized = lines.map(line => `<p>${line.trim()}</p>`).join('');
-  } else {
-    // Per contenuto già HTML, rimuovi solo simboli markdown chiaramente isolati
-    
-    // Rimuovi solo asterischi isolati all'inizio o fine di paragrafo
-    sanitized = sanitized.replace(/<p>\s*\*+\s*/g, '<p>');
-    sanitized = sanitized.replace(/\s*\*+\s*<\/p>/g, '</p>');
-    
-    // Rimuovi solo hashtag isolati all'inizio di paragrafo
-    sanitized = sanitized.replace(/<p>\s*#{1,6}\s*/g, '<p>');
-    
-    // Rimuovi trattini isolati solo all'inizio di paragrafo
-    sanitized = sanitized.replace(/<p>\s*[-*]\s+/g, '<p>');
-    
-    // Converti pattern **testo** rimanenti in <strong> se chiaramente markdown
-    sanitized = sanitized.replace(/\*\*([^*<>]+)\*\*/g, '<strong>$1</strong>');
-    sanitized = sanitized.replace(/__([^_<>]+)__/g, '<strong>$1</strong>');
+  // Non toccare il contenuto HTML già formattato
+  if (sanitized.includes('<p>') || sanitized.includes('<div>') || sanitized.includes('<strong>') || sanitized.includes('<h')) {
+    return sanitized;
   }
 
-  // Rimuovi solo paragrafi completamente vuoti
-  sanitized = sanitized.replace(/<p>\s*<\/p>/g, '');
+  // Solo per contenuto che sembra markdown puro (senza HTML)
+  // Converti **testo** in <strong>testo</strong> solo se isolato
+  sanitized = sanitized.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
   
-  // Normalizza spazi eccessivi
-  sanitized = sanitized.replace(/\s{2,}/g, ' ');
+  // Converti __testo__ in <strong>testo</strong> solo se isolato
+  sanitized = sanitized.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
+  
+  // Rimuovi solo hashtag all'inizio di riga seguiti da spazio
+  sanitized = sanitized.replace(/^#{1,6}\s+/gm, '');
+  
+  // Rimuovi solo trattini isolati all'inizio di riga seguiti da spazio
+  sanitized = sanitized.replace(/^[\s]*[-*]\s+/gm, '');
+  
+  // Aggiungi struttura HTML se è testo puro
+  if (!sanitized.includes('<p>') && sanitized.trim()) {
+    const lines = sanitized.split('\n').filter(line => line.trim());
+    sanitized = lines.map(line => `<p>${line.trim()}</p>`).join('');
+  }
 
   return sanitized;
 };
