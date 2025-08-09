@@ -70,3 +70,6 @@ verify_jwt = false
 
 [functions.final-audit]
 verify_jwt = false
+
+[functions.content-fixer]
+verify_jwt = false

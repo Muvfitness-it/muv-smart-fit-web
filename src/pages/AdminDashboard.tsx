@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Plus, FileText, BarChart3, Search, Settings, Users, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
 import ArticleManager from '@/components/blog/ArticleManager';
 import BlogDashboardStats from '@/components/blog/BlogDashboardStats';
@@ -144,6 +146,33 @@ const AdminDashboard = () => {
             {/* SEO Tab */}
             <TabsContent value="seo" className="mt-6">
               <div className="space-y-6">
+                {/* CRITICAL REPAIR SECTION */}
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-red-800 mb-3">🚨 Riparazione Critica Necessaria</h3>
+                  <p className="text-red-700 mb-4">I contenuti necessitano di una riparazione strutturale completa prima di procedere con l'ottimizzazione.</p>
+                  <Button 
+                    onClick={async () => {
+                      try {
+                        const { data, error } = await supabase.functions.invoke('content-fixer');
+                        if (error) throw error;
+                        toast({
+                          title: "✅ Riparazione completata",
+                          description: `${data.processed} contenuti riparati con successo`,
+                        });
+                      } catch (e) {
+                        toast({
+                          title: "Errore nella riparazione",
+                          description: e.message,
+                          variant: "destructive"
+                        });
+                      }
+                    }}
+                    className="bg-red-600 hover:bg-red-700 text-white"
+                  >
+                    🔧 RIPARA TUTTI I CONTENUTI ORA
+                  </Button>
+                </div>
+
                 {/* Optimization Pipeline - Unified Control */}
                 <OptimizationPipeline />
                 
