@@ -57,6 +57,7 @@ import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
 import LocalBusinessSchema from "./components/SEO/LocalBusinessSchema";
+import SitemapSubmitter from "./components/SEO/SitemapSubmitter";
 
 const queryClient = new QueryClient();
 
@@ -164,6 +165,7 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <AppContent />
+        <SitemapSubmitter />
         <Toaster />
         <Sonner />
       </BrowserRouter>
