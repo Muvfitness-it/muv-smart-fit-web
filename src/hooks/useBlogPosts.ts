@@ -14,6 +14,7 @@ interface BlogPost {
   reading_time?: number;
   status: string;
   featured_image?: string;
+  category_id?: string | null;
 }
 
 export const useBlogPosts = () => {
@@ -27,7 +28,7 @@ export const useBlogPosts = () => {
       
       let query = supabase
         .from('blog_posts')
-        .select('id, title, slug, excerpt, content, published_at, views_count, reading_time, status, featured_image')
+        .select('id, title, slug, excerpt, content, published_at, views_count, reading_time, status, featured_image, category_id')
         .order('published_at', { ascending: false, nullsFirst: false });
 
       if (publishedOnly) {

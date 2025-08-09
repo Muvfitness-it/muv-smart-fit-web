@@ -23,6 +23,15 @@ const cleanHTML = (html: string) => {
   // Collapse excessive empty paragraphs
   sanitized = sanitized.replace(/(?:<p>\s*<\/p>\s*){2,}/g, '<p></p>');
 
+  // Ensure all images are lazy-loaded and have alt + decoding attributes
+  sanitized = sanitized.replace(/<img([^>]*)>/gi, (match, attrs) => {
+    let newAttrs = attrs || '';
+    if (!/\bloading\s*=/.test(newAttrs)) newAttrs += ' loading="lazy"';
+    if (!/\bdecoding\s*=/.test(newAttrs)) newAttrs += ' decoding="async"';
+    if (!/\balt\s*=/.test(newAttrs)) newAttrs += ' alt="Immagine articolo MUV Fitness"';
+    return `<img${newAttrs}>`;
+  });
+
   return sanitized;
 };
 

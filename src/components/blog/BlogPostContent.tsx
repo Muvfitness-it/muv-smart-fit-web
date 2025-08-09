@@ -164,17 +164,17 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
       <footer className="mt-12 pt-8 border-t border-border">
         <div className="bg-card rounded-lg p-6">
           <h3 className="text-xl font-bold text-foreground mb-4">
-            Ti è piaciuto questo articolo?
+            Vuoi risultati concreti e duraturi?
           </h3>
           <p className="text-muted-foreground mb-6">
-            Scopri tutti i nostri servizi personalizzati per raggiungere i tuoi obiettivi di fitness e benessere.
+            Prenota oggi la tua prova gratuita al Centro Fitness MUV a Legnago.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               onClick={() => navigate('/contatti')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
-              Prenota Consulenza Gratuita
+              Prenota la tua prova gratuita
             </Button>
             <Button
               variant="outline"

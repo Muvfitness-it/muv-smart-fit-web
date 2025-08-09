@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PenTool, Sparkles, TrendingUp, FileText, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import BlogPostCard from './BlogPostCard';
+import { supabase } from '@/integrations/supabase/client';
 interface BlogLandingProps {
   recentArticles?: Array<{
     id: string;
@@ -15,6 +16,7 @@ interface BlogLandingProps {
     views_count?: number;
     reading_time?: number;
     featured_image?: string;
+    category_id?: string | null;
   }>;
   showAllArticles?: boolean;
   onShowAllArticles?: () => void;
@@ -29,12 +31,30 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
 
   const [query, setQuery] = useState('');
   const [sortBy, setSortBy] = useState<'recenti' | 'popolari' | 'lettura'>('recenti');
+  const [categories, setCategories] = useState<Array<{ id: string; name: string; slug: string }>>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [page, setPage] = useState<number>(1);
+  const pageSize = 9;
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const { data } = await supabase
+        .from('blog_categories')
+        .select('id, name, slug')
+        .order('name');
+      setCategories(data || []);
+    };
+    loadCategories();
+  }, []);
 
   const processedArticles = useMemo(() => {
     let list = [...recentArticles];
     if (query.trim()) {
       const q = query.toLowerCase();
       list = list.filter(a => a.title.toLowerCase().includes(q) || (a.excerpt || '').toLowerCase().includes(q));
+    }
+    if (selectedCategory !== 'all') {
+      list = list.filter(a => (a as any).category_id === selectedCategory);
     }
     switch (sortBy) {
       case 'popolari':
@@ -51,9 +71,14 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
         });
     }
     return list;
-  }, [recentArticles, query, sortBy]);
+  }, [recentArticles, query, sortBy, selectedCategory]);
 
-  const articlesToShow = showAllArticles ? processedArticles : processedArticles.slice(0, 6);
+  const totalPages = Math.max(1, Math.ceil(processedArticles.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * pageSize;
+  const paginated = processedArticles.slice(start, start + pageSize);
+
+  const articlesToShow = showAllArticles ? paginated : processedArticles.slice(0, 6);
   return <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center space-y-6">
@@ -87,7 +112,7 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
       </section>
 
       {/* Controls */}
-      <section className="max-w-5xl mx-auto">
+      <section className="max-w-5xl mx-auto space-y-4">
         <div className="grid sm:grid-cols-3 gap-4">
           <input
             type="search"
@@ -108,6 +133,27 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
             <option value="lettura">Lettura più breve</option>
           </select>
         </div>
+
+        {/* Category Filters */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <Button
+            variant={selectedCategory === 'all' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => { setSelectedCategory('all'); setPage(1); }}
+          >
+            Tutte
+          </Button>
+          {categories.map(cat => (
+            <Button
+              key={cat.id}
+              variant={selectedCategory === cat.id ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => { setSelectedCategory(cat.id); setPage(1); }}
+            >
+              {cat.name}
+            </Button>
+          ))}
+        </div>
       </section>
       {/* Recent Articles */}
       {recentArticles.length > 0 && <section className="space-y-6">
@@ -123,6 +169,18 @@ const BlogLanding: React.FC<BlogLandingProps> = ({
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {articlesToShow.map(article => <BlogPostCard key={article.id} post={article} />)}
           </div>
+
+          {showAllArticles && totalPages > 1 && (
+            <div className="flex items-center justify-center gap-3">
+              <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => setPage(p => Math.max(1, p - 1))}>
+                « Precedente
+              </Button>
+              <span className="text-sm text-gray-400">Pagina {currentPage} di {totalPages}</span>
+              <Button variant="outline" size="sm" disabled={currentPage === totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>
+                Successiva »
+              </Button>
+            </div>
+          )}
 
           {processedArticles.length > 6 && !showAllArticles && <div className="text-center">
               <Button onClick={onShowAllArticles} variant="outline" className="border-magenta-500 text-magenta-400 hover:bg-magenta-500 hover:text-white">
