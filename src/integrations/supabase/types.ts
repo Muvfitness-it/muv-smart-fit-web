@@ -737,6 +737,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      clean_blog_content: {
+        Args: { input_content: string }
+        Returns: string
+      }
       cleanup_expired_booking_tokens: {
         Args: Record<PropertyKey, never>
         Returns: undefined
