@@ -267,6 +267,24 @@ export type Database = {
           },
         ]
       }
+      blog_posts_backup: {
+        Row: {
+          backed_up_at: string | null
+          content_backup: string | null
+          id: string | null
+        }
+        Insert: {
+          backed_up_at?: string | null
+          content_backup?: string | null
+          id?: string | null
+        }
+        Update: {
+          backed_up_at?: string | null
+          content_backup?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
       blog_tags: {
         Row: {
           created_at: string
@@ -773,6 +791,14 @@ export type Database = {
         Returns: boolean
       }
       log_unauthorized_access_attempt: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      repair_html_content: {
+        Args: { input_content: string }
+        Returns: string
+      }
+      restore_and_fix_all_posts: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
