@@ -10,89 +10,6 @@ const corsHeaders = {
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-// Extract FAQ data from content
-const extractFAQs = (content: string): any[] => {
-  const faqs = [];
-  const faqPatterns = [
-    /(?:^|\n)(?:#+\s*)?(.+\?)\s*\n+(.+?)(?=\n(?:#+|$))/gm,
-    /<h[2-6][^>]*>([^<]*\?[^<]*)<\/h[2-6]>\s*<p>([^<]+)<\/p>/gm
-  ];
-
-  for (const pattern of faqPatterns) {
-    let match;
-    while ((match = pattern.exec(content)) !== null) {
-      const question = match[1].trim().replace(/^#+\s*/, '');
-      const answer = match[2].trim().replace(/<[^>]*>/g, '');
-      
-      if (question.length > 10 && answer.length > 20) {
-        faqs.push({
-          "@type": "Question",
-          name: question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: answer
-          }
-        });
-      }
-    }
-  }
-
-  return faqs.slice(0, 10); // Max 10 FAQs
-};
-
-// Generate Article schema
-const generateArticleSchema = (post: any): any => {
-  const baseUrl = 'https://www.muvfitness.it';
-  const publishedDate = post.published_at || post.created_at;
-  const modifiedDate = post.updated_at || publishedDate;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.meta_description || post.excerpt || post.content.replace(/<[^>]*>/g, '').substring(0, 160),
-    image: post.featured_image || `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`,
-    author: {
-      "@type": "Person",
-      name: post.author_name || "MUV Fitness Team",
-      url: baseUrl
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "MUV Fitness",
-      logo: {
-        "@type": "ImageObject",
-        url: `${baseUrl}/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png`
-      }
-    },
-    datePublished: new Date(publishedDate).toISOString(),
-    dateModified: new Date(modifiedDate).toISOString(),
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${baseUrl}/blog/${post.slug}`
-    },
-    keywords: post.meta_keywords || "fitness, allenamento, benessere, salute, nutrizione, MUV Fitness, Legnago",
-    wordCount: post.content.replace(/<[^>]*>/g, '').split(/\s+/).length,
-    inLanguage: "it-IT",
-    about: [
-      { "@type": "Thing", name: "Fitness" },
-      { "@type": "Thing", name: "Benessere" },
-      { "@type": "Thing", name: "Allenamento" }
-    ]
-  };
-};
-
-// Generate FAQ schema
-const generateFAQSchema = (faqs: any[]): any => {
-  if (faqs.length === 0) return null;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs
-  };
-};
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -129,33 +46,41 @@ serve(async (req) => {
         // Remove existing JSON-LD scripts to avoid duplicates
         updatedContent = updatedContent.replace(/<script[^>]*type=["']application\/ld\+json["'][^>]*>.*?<\/script>/gis, '');
 
-        // Generate Article schema
-        const articleSchema = generateArticleSchema(post);
-        
-        // Extract and generate FAQ schema if content has Q&A
-        const faqs = extractFAQs(post.content);
-        const faqSchema = generateFAQSchema(faqs);
+        // Generate simple Article schema
+        const articleSchema = {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.meta_description || post.excerpt || post.content.replace(/<[^>]*>/g, '').substring(0, 160),
+          image: post.featured_image || "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+          author: {
+            "@type": "Person",
+            name: post.author_name || "MUV Fitness Team",
+            url: "https://www.muvfitness.it"
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "MUV Fitness",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
+            }
+          },
+          datePublished: new Date(post.published_at || post.created_at).toISOString(),
+          dateModified: new Date(post.updated_at || post.created_at).toISOString(),
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://www.muvfitness.it/blog/${post.slug}`
+          }
+        };
 
-        // Prepare JSON-LD scripts
-        const jsonldScripts = [];
-        
-        // Always add Article schema
-        jsonldScripts.push(`<script type="application/ld+json">
+        // Add JSON-LD script
+        const jsonldScript = `<script type="application/ld+json">
 ${JSON.stringify(articleSchema, null, 2)}
-</script>`);
+</script>`;
 
-        // Add FAQ schema if FAQs found
-        if (faqSchema) {
-          jsonldScripts.push(`<script type="application/ld+json">
-${JSON.stringify(faqSchema, null, 2)}
-</script>`);
-        }
-
-        // Insert JSON-LD at the end of content
-        if (jsonldScripts.length > 0) {
-          updatedContent += '\n\n<!-- SEO JSON-LD -->\n' + jsonldScripts.join('\n') + '\n<!-- /SEO JSON-LD -->';
-          hasChanges = true;
-        }
+        updatedContent += '\n\n<!-- SEO JSON-LD -->\n' + jsonldScript + '\n<!-- /SEO JSON-LD -->';
+        hasChanges = true;
 
         // Update post if changes were made
         if (hasChanges) {
@@ -173,8 +98,7 @@ ${JSON.stringify(faqSchema, null, 2)}
             id: post.id,
             title: post.title,
             status: 'jsonld_added',
-            schemas: ['Article', ...(faqSchema ? ['FAQ'] : [])],
-            faq_count: faqs.length
+            schemas: ['Article']
           });
           processed++;
         } else {
@@ -182,8 +106,7 @@ ${JSON.stringify(faqSchema, null, 2)}
             id: post.id,
             title: post.title,
             status: 'no_changes_needed',
-            schemas: [],
-            faq_count: 0
+            schemas: []
           });
         }
 
@@ -197,11 +120,7 @@ ${JSON.stringify(faqSchema, null, 2)}
       processed,
       total_checked: posts?.length || 0,
       results,
-      errors,
-      schemas_added: {
-        article: processed,
-        faq: results.filter(r => r.faq_count > 0).length
-      }
+      errors
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });

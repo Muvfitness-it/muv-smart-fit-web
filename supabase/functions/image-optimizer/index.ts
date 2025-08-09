@@ -10,38 +10,6 @@ const corsHeaders = {
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-// Generate responsive image markup
-const generateResponsiveImage = (src: string, alt: string): string => {
-  const baseName = src.split('/').pop()?.split('.')[0] || 'image';
-  const extension = src.split('.').pop() || 'jpg';
-  const baseUrl = src.replace(/\.[^.]+$/, '');
-  
-  // Generate WebP version URL (assuming WebP conversion is available)
-  const webpSrc = `${baseUrl}.webp`;
-  
-  // Generate srcset for different breakpoints
-  const srcset = [
-    `${baseUrl}-400w.${extension} 400w`,
-    `${baseUrl}-600w.${extension} 600w`, 
-    `${baseUrl}-800w.${extension} 800w`,
-    `${baseUrl}-1200w.${extension} 1200w`,
-    `${src} 1600w`
-  ].join(', ');
-
-  const webpSrcset = [
-    `${baseUrl}-400w.webp 400w`,
-    `${baseUrl}-600w.webp 600w`,
-    `${baseUrl}-800w.webp 800w`, 
-    `${baseUrl}-1200w.webp 1200w`,
-    `${webpSrc} 1600w`
-  ].join(', ');
-
-  return `<picture>
-  <source srcset="${webpSrcset}" type="image/webp" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px">
-  <img src="${src}" srcset="${srcset}" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px" alt="${alt}" loading="lazy" decoding="async" width="800" height="450" class="w-full h-auto object-cover rounded-lg">
-</picture>`;
-};
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -75,41 +43,26 @@ serve(async (req) => {
         let updatedContent = post.content;
         let hasChanges = false;
 
-        // Process images in content - replace simple img tags with responsive picture elements
-        const imgRegex = /<img\s+([^>]*?)src=["']([^"']*?)["']([^>]*?)>/g;
+        // Simple image optimization - add lazy loading and dimensions
+        const imgRegex = /<img\s+([^>]*?)>/g;
         
-        updatedContent = updatedContent.replace(imgRegex, (match, beforeSrc, src, afterSrc) => {
-          // Skip if already has srcset or is in a picture element
-          if (match.includes('srcset=') || match.includes('<picture>')) {
-            return match;
+        updatedContent = updatedContent.replace(imgRegex, (match) => {
+          let optimizedImg = match;
+          
+          // Add loading="lazy" if not present
+          if (!optimizedImg.includes('loading=')) {
+            optimizedImg = optimizedImg.replace('>', ' loading="lazy">');
+            hasChanges = true;
           }
-
-          // Extract alt text
-          const altMatch = match.match(/alt=["']([^"']*?)["']/);
-          const alt = altMatch?.[1] || 'Immagine articolo MUV Fitness';
-
-          // Skip very small images or icons
-          if (src.includes('icon') || src.includes('logo') || src.includes('avatar')) {
-            // Just ensure these have proper attributes
-            let optimizedImg = match;
-            if (!optimizedImg.includes('loading=')) {
-              optimizedImg = optimizedImg.replace('>', ' loading="lazy">');
-            }
-            if (!optimizedImg.includes('decoding=')) {
-              optimizedImg = optimizedImg.replace('>', ' decoding="async">');
-            }
-            return optimizedImg;
+          
+          // Add decoding="async" if not present
+          if (!optimizedImg.includes('decoding=')) {
+            optimizedImg = optimizedImg.replace('>', ' decoding="async">');
+            hasChanges = true;
           }
-
-          hasChanges = true;
-          return generateResponsiveImage(src, alt);
+          
+          return optimizedImg;
         });
-
-        // Process featured image if it exists and needs optimization
-        if (post.featured_image && !post.featured_image.includes('srcset')) {
-          // Featured images are usually heroes, so we'll note them for future processing
-          // For now, we'll leave them as-is but could enhance later
-        }
 
         // Update post if changes were made
         if (hasChanges) {
@@ -127,15 +80,15 @@ serve(async (req) => {
             id: post.id,
             title: post.title,
             status: 'images_optimized',
-            changes: 'Immagini convertite a responsive con srcset e WebP'
+            changes: 'Aggiunto lazy loading e attributi async'
           });
           processed++;
         } else {
           results.push({
             id: post.id,
             title: post.title,
-            status: 'no_images_to_optimize',
-            changes: 'Nessuna immagine da ottimizzare trovata'
+            status: 'no_changes_needed',
+            changes: 'Nessuna modifica necessaria'
           });
         }
 
@@ -149,14 +102,7 @@ serve(async (req) => {
       processed,
       total_checked: posts?.length || 0,
       results,
-      errors,
-      optimizations: [
-        'Immagini convertite in elemento <picture> con WebP',
-        'Aggiunto srcset responsivo (400w, 600w, 800w, 1200w, 1600w)',
-        'Aggiunto sizes attribute ottimizzato per breakpoint',
-        'Aggiunto loading="lazy" e decoding="async"',
-        'Dimensioni esplicite width/height per CLS'
-      ]
+      errors
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
