@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ArrowLeft, Save, Eye, Globe, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface BlogPostData {
   title: string;
@@ -28,6 +29,7 @@ interface BlogPostData {
   meta_keywords: string;
   reading_time: number;
   scheduled_publish_at?: string | null;
+  category_id?: string | null;
 }
 
 const BlogEditor = () => {
@@ -38,6 +40,9 @@ const BlogEditor = () => {
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'content' | 'seo'>('content');
   const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
+  const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([]);
+  const [tags, setTags] = useState<Array<{ id: string; name: string }>>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   
   const [formData, setFormData] = useState<BlogPostData>({
     title: '',
@@ -51,7 +56,8 @@ const BlogEditor = () => {
     meta_description: '',
     meta_keywords: '',
     reading_time: 5,
-    scheduled_publish_at: null
+    scheduled_publish_at: null,
+    category_id: null
   });
 
   useEffect(() => {
@@ -59,6 +65,23 @@ const BlogEditor = () => {
       loadPost();
     }
   }, [id]);
+
+  useEffect(() => {
+    const loadTaxonomies = async () => {
+      const { data: cats } = await supabase
+        .from('blog_categories')
+        .select('id, name')
+        .order('name');
+      setCategories(cats || []);
+
+      const { data: tagList } = await supabase
+        .from('blog_tags')
+        .select('id, name')
+        .order('name');
+      setTags(tagList || []);
+    };
+    loadTaxonomies();
+  }, []);
 
   const loadPost = async () => {
     if (!id) return;
@@ -94,9 +117,17 @@ const BlogEditor = () => {
         meta_description: data.meta_description || '',
         meta_keywords: data.meta_keywords || '',
         reading_time: data.reading_time || 5,
-        scheduled_publish_at: data.scheduled_publish_at || null
+        scheduled_publish_at: data.scheduled_publish_at || null,
+        category_id: data.category_id || null
       });
       setScheduledDate(data.scheduled_publish_at ? new Date(data.scheduled_publish_at) : undefined);
+
+      // Carica tag collegati
+      const { data: postTags } = await supabase
+        .from('blog_post_tags')
+        .select('tag_id')
+        .eq('post_id', id);
+      setSelectedTags((postTags || []).map((r: any) => r.tag_id).filter(Boolean));
     } catch (error) {
       console.error('Error loading post:', error);
       toast({
@@ -148,6 +179,18 @@ const BlogEditor = () => {
     });
   };
 
+  const saveTagRelations = async (postId: string) => {
+    try {
+      await supabase.from('blog_post_tags').delete().eq('post_id', postId);
+      if (selectedTags.length > 0) {
+        const rows = selectedTags.map((tagId) => ({ post_id: postId, tag_id: tagId }));
+        await supabase.from('blog_post_tags').insert(rows);
+      }
+    } catch (e) {
+      console.error('Errore salvataggio tag:', e);
+    }
+  };
+
   const savePost = async (status: 'draft' | 'published') => {
     try {
       setSaving(true);
@@ -179,26 +222,35 @@ const BlogEditor = () => {
         reading_time: estimateReadingTime(formData.content)
       };
 
-      let result;
+      let postId: string | undefined = id;
       if (id) {
-        result = await supabase
+        const { data, error } = await supabase
           .from('blog_posts')
           .update(postData)
-          .eq('id', id);
+          .eq('id', id)
+          .select('id')
+          .maybeSingle();
+        if (error) throw error;
+        postId = data?.id || id;
       } else {
-        result = await supabase
+        const { data, error } = await supabase
           .from('blog_posts')
-          .insert([postData]);
+          .insert([postData])
+          .select('id')
+          .maybeSingle();
+        if (error) throw error;
+        postId = data?.id;
       }
 
-      if (result.error) throw result.error;
+      if (postId) {
+        await saveTagRelations(postId);
+      }
 
       toast({
         title: "Successo",
         description: `Articolo ${status === 'published' ? 'pubblicato' : 'salvato'} con successo`,
       });
 
-      // Aggiungi un piccolo delay per permettere al database di aggiornarsi
       setTimeout(() => {
         navigate('/blog/gestisci');
       }, 500);
@@ -234,19 +286,29 @@ const BlogEditor = () => {
         status: 'scheduled' as const,
       };
 
-      let result;
+      let postId: string | undefined = id;
       if (id) {
-        result = await supabase
+        const { data, error } = await supabase
           .from('blog_posts')
           .update(payload)
-          .eq('id', id);
+          .eq('id', id)
+          .select('id')
+          .maybeSingle();
+        if (error) throw error;
+        postId = data?.id || id;
       } else {
-        result = await supabase
+        const { data, error } = await supabase
           .from('blog_posts')
-          .insert([payload]);
+          .insert([payload])
+          .select('id')
+          .maybeSingle();
+        if (error) throw error;
+        postId = data?.id;
       }
 
-      if (result.error) throw result.error;
+      if (postId) {
+        await saveTagRelations(postId);
+      }
 
       toast({ title: 'Programmato', description: 'Articolo programmato con successo' });
       setTimeout(() => navigate('/blog/gestisci'), 500);
@@ -442,6 +504,48 @@ const BlogEditor = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Categoria */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label>Categoria</Label>
+                    <div className="mt-1">
+                      <Select value={formData.category_id || ''} onValueChange={(val) => setFormData({ ...formData, category_id: val || null })}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Seleziona categoria" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">Nessuna</SelectItem>
+                          {categories.map((c) => (
+                            <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Tag */}
+                  <div>
+                    <Label>Tag</Label>
+                    <div className="mt-2 grid grid-cols-2 gap-2 max-h-40 overflow-auto border border-border rounded p-2">
+                      {tags.map(t => (
+                        <label key={t.id} className="flex items-center gap-2 text-sm cursor-pointer">
+                          <Checkbox
+                            checked={selectedTags.includes(t.id)}
+                            onCheckedChange={(checked) => {
+                              setSelectedTags(prev => checked ? [...prev, t.id] : prev.filter(id => id !== t.id));
+                            }}
+                          />
+                          <span>{t.name}</span>
+                        </label>
+                      ))}
+                      {tags.length === 0 && (
+                        <span className="text-muted-foreground text-sm">Nessun tag disponibile</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
               </CardContent>
             </Card>
 

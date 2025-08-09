@@ -364,6 +364,16 @@ const ArticleManager = () => {
                       <Eye className="w-4 h-4 mr-1" />
                       VISUALIZZA
                     </Button>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate(`/blog/scrivi-con-ia?rewrite=${post.id}`)}
+                      className="border-purple-500 text-purple-600 hover:bg-purple-50 hover:text-purple-700"
+                    >
+                      <Sparkles className="w-4 h-4 mr-1" />
+                      RISCRIVI IA
+                    </Button>
                     
                     <Button
                       variant="outline"
