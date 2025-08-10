@@ -30,11 +30,11 @@ import SmallGroup from "./pages/servizi/SmallGroup";
 import Nutrizione from "./pages/servizi/Nutrizione";
 import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
-import Blog from "./pages/Blog";
+import BlogArchive from "./pages/BlogArchive";
+import BlogCategory from "./pages/BlogCategory";
+import BlogTag from "./pages/BlogTag";
 import BlogPost from "./pages/BlogPost";
-import BlogWriter from "./pages/BlogWriter";
-import BlogManager from "./pages/BlogManager";
-import BlogEditor from "./pages/BlogEditor";
+import NewBlogAdmin from "./components/blog/NewBlogAdmin";
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserManagement from "./pages/AdminUserManagement";
@@ -136,11 +136,11 @@ const AppContent = () => {
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/scrivi-con-ia" element={<BlogWriter />} />
-                <Route path="/blog/gestisci" element={<BlogManager />} />
-                <Route path="/blog/nuovo" element={<BlogEditor />} />
-                <Route path="/blog/edit/:id" element={<BlogEditor />} />
+                <Route path="/blog" element={<BlogArchive />} />
+                <Route path="/blog/categoria/:slug" element={<BlogCategory />} />
+                <Route path="/blog/tag/:slug" element={<BlogTag />} />
+                <Route path="/blog/p/:page" element={<BlogArchive />} />
+                <Route path="/blog/admin" element={<NewBlogAdmin />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
