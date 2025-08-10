@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, ArrowLeft, Tag as TagIcon } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import LazyImage from '@/components/ui/LazyImage';
 
@@ -19,62 +19,36 @@ interface BlogPost {
   views_count?: number;
 }
 
-interface BlogTag {
-  id: string;
-  name: string;
-  slug: string;
-}
-
 const BlogTag = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [tag, setTag] = useState<BlogTag | null>(null);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 12;
 
   useEffect(() => {
-    const fetchTagAndPosts = async () => {
+    const fetchPostsByTag = async () => {
       if (!slug) return;
 
       try {
-        // Fetch tag
-        const { data: tagData, error: tagError } = await supabase
-          .from('blog_tags')
-          .select('*')
-          .eq('slug', slug)
-          .single();
+        const { data: postsData, error: postsError } = await supabase
+          .from('blog_posts')
+          .select('id, title, slug, excerpt, featured_image, published_at, reading_time, views_count')
+          .contains('tags', [slug])
+          .eq('status', 'published')
+          .order('published_at', { ascending: false });
 
-        if (tagError) throw tagError;
-        setTag(tagData);
-
-        // Fetch posts with this tag
-        const { data: postTagsData, error: postTagsError } = await supabase
-          .from('blog_post_tags')
-          .select(\`
-            blog_posts (
-              id, title, slug, excerpt, featured_image, published_at, reading_time, views_count
-            )
-          \`)
-          .eq('tag_id', tagData.id);
-
-        if (postTagsError) throw postTagsError;
-        
-        // Extract posts from the join result and filter published ones
-        const postsData = postTagsData
-          .map((item: any) => item.blog_posts)
-          .filter((post: any) => post !== null);
-        
+        if (postsError) throw postsError;
         setPosts(postsData || []);
       } catch (error) {
-        console.error('Error fetching tag data:', error);
+        console.error('Error fetching posts by tag:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTagAndPosts();
+    fetchPostsByTag();
   }, [slug]);
 
   const totalPages = Math.ceil(posts.length / postsPerPage);
@@ -121,52 +95,15 @@ const BlogTag = () => {
     );
   }
 
-  if (!tag) {
-    return (
-      <div className="min-h-screen bg-background pt-[var(--header-height)] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Tag non trovato</h1>
-          <Button onClick={() => navigate('/blog')}>
-            Torna al Blog
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  const canonicalUrl = `https://www.muvfitness.it/blog/tag/${tag.slug}`;
+  const canonicalUrl = `https://www.muvfitness.it/blog/tag/${slug}`;
 
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)]">
       <Helmet>
-        <title>{\`Tag: \${tag.name} - Blog MUV Fitness\`}</title>
-        <meta name="description" content={\`Articoli taggati con \${tag.name} nel blog di MUV Fitness. Consigli professionali per il tuo benessere a Legnago.\`} />
-        <link rel="canonical" href={canonicalUrl} />
+        <title>{`Tag: ${slug} - Blog MUV Fitness`}</title>
+        <meta name="description" content={`Articoli del blog MUV Fitness con tag ${slug}. Contenuti professionali su fitness e benessere.`} />
         <meta name="robots" content="noindex, follow" />
-        
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {\`{
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://www.muvfitness.it"
-            }, {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Blog",
-              "item": "https://www.muvfitness.it/blog"
-            }, {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "Tag: \${tag.name}",
-              "item": "\${canonicalUrl}"
-            }]
-          }\`}
-        </script>
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       {/* Header */}
@@ -178,7 +115,7 @@ const BlogTag = () => {
               <li>/</li>
               <li><button onClick={() => navigate('/blog')} className="hover:text-primary">Blog</button></li>
               <li>/</li>
-              <li className="text-foreground">Tag: {tag.name}</li>
+              <li className="text-foreground">Tag: {slug}</li>
             </ol>
           </nav>
           
@@ -186,18 +123,17 @@ const BlogTag = () => {
             <Button variant="ghost" onClick={() => navigate('/blog')} className="p-2">
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <Badge variant="outline" className="flex items-center gap-1">
-              <TagIcon className="h-3 w-3" />
-              {tag.name}
+            <Badge variant="secondary">
+              #{slug}
             </Badge>
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Tag: <span className="text-primary">{tag.name}</span>
+            Tag: {slug}
           </h1>
           
           <div className="mt-6 text-muted-foreground">
-            {posts.length} {posts.length === 1 ? 'articolo taggato' : 'articoli taggati'} con "{tag.name}"
+            {posts.length} {posts.length === 1 ? 'articolo' : 'articoli'} con questo tag
           </div>
         </div>
       </section>
@@ -208,7 +144,7 @@ const BlogTag = () => {
           {currentPosts.length === 0 ? (
             <div className="text-center py-12">
               <h2 className="text-2xl font-semibold mb-4">Nessun articolo con questo tag</h2>
-              <p className="text-muted-foreground mb-6">Esplora altri contenuti del nostro blog.</p>
+              <p className="text-muted-foreground mb-6">Torna presto per nuovi contenuti!</p>
               <Button onClick={() => navigate('/blog')}>
                 Esplora tutti gli articoli
               </Button>
@@ -216,14 +152,14 @@ const BlogTag = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post: BlogPost) => (
-                <Card key={post.id} className="group cursor-pointer hover:shadow-lg transition-all duration-300" onClick={() => navigate(\`/blog/\${post.slug}\`)}>
+                <Card key={post.id} className="group cursor-pointer hover:shadow-lg transition-all duration-300" onClick={() => navigate(`/blog/${post.slug}`)}>
                   {post.featured_image && (
                     <div className="aspect-video overflow-hidden rounded-t-lg">
                       <LazyImage
                         src={post.featured_image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
+                        
                       />
                     </div>
                   )}
@@ -306,10 +242,10 @@ const BlogTag = () => {
       <section className="py-16 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Trasforma la teoria in pratica
+            Pronto a mettere in pratica questi consigli?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Raggiungi i tuoi obiettivi con l'aiuto dei professionisti MUV Fitness a Legnago
+            Trasforma la teoria in risultati concreti con l'aiuto dei professionisti MUV Fitness
           </p>
           <Button 
             size="lg" 

@@ -92,7 +92,7 @@ const BlogArchive = () => {
         
         {/* Breadcrumb Schema */}
         <script type="application/ld+json">
-          {\`{
+          {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [{
@@ -106,7 +106,7 @@ const BlogArchive = () => {
               "name": "Blog",
               "item": "https://www.muvfitness.it/blog"
             }]
-          }\`}
+          })}
         </script>
       </Helmet>
 
@@ -169,7 +169,7 @@ const BlogArchive = () => {
                         src={post.featured_image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
+                        
                       />
                     </div>
                   )}

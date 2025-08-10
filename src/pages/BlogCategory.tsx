@@ -133,21 +133,21 @@ const BlogCategory = () => {
   return (
     <div className="min-h-screen bg-background pt-[var(--header-height)]">
       <Helmet>
-        <title>{\`\${category.name} - Blog MUV Fitness | Articoli su \${category.name}\`}</title>
-        <meta name="description" content={\`Scopri tutti gli articoli di MUV Fitness su \${category.name.toLowerCase()}. Consigli professionali e guide pratiche per il tuo benessere a Legnago.\`} />
-        <meta name="keywords" content={\`\${category.name.toLowerCase()}, blog fitness, MUV Fitness, Legnago, allenamento, benessere\`} />
+        <title>{`${category.name} - Blog MUV Fitness | Articoli su ${category.name}`}</title>
+        <meta name="description" content={`Scopri tutti gli articoli di MUV Fitness su ${category.name.toLowerCase()}. Consigli professionali e guide pratiche per il tuo benessere a Legnago.`} />
+        <meta name="keywords" content={`${category.name.toLowerCase()}, blog fitness, MUV Fitness, Legnago, allenamento, benessere`} />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
         
         {/* Open Graph */}
-        <meta property="og:title" content={\`\${category.name} - Blog MUV Fitness\`} />
-        <meta property="og:description" content={\`Articoli professionali su \${category.name.toLowerCase()} dal blog di MUV Fitness\`} />
+        <meta property="og:title" content={`${category.name} - Blog MUV Fitness`} />
+        <meta property="og:description" content={`Articoli professionali su ${category.name.toLowerCase()} dal blog di MUV Fitness`} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
         
         {/* Breadcrumb Schema */}
         <script type="application/ld+json">
-          {\`{
+          {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [{
@@ -163,10 +163,10 @@ const BlogCategory = () => {
             }, {
               "@type": "ListItem",
               "position": 3,
-              "name": "\${category.name}",
-              "item": "\${canonicalUrl}"
+              "name": category.name,
+              "item": canonicalUrl
             }]
-          }\`}
+          })}
         </script>
       </Helmet>
 
@@ -226,14 +226,14 @@ const BlogCategory = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post: BlogPost) => (
-                <Card key={post.id} className="group cursor-pointer hover:shadow-lg transition-all duration-300" onClick={() => navigate(\`/blog/\${post.slug}\`)}>
+                <Card key={post.id} className="group cursor-pointer hover:shadow-lg transition-all duration-300" onClick={() => navigate(`/blog/${post.slug}`)}>
                   {post.featured_image && (
                     <div className="aspect-video overflow-hidden rounded-t-lg">
                       <LazyImage
                         src={post.featured_image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
+                        
                       />
                     </div>
                   )}

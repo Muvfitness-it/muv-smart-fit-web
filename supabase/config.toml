@@ -82,3 +82,6 @@ verify_jwt = false
 
 [functions.export-blog-titles]
 verify_jwt = false
+
+[functions.ai-article-writer]
+verify_jwt = false

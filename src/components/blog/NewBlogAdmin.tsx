@@ -1,199 +1,157 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertCircle, Save, Globe, Eye, Bot, Link as LinkIcon, CheckCircle, Clock, X } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { AlertCircle, CheckCircle, Eye, Save, Send, Wand2, Link } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useGeminiAPI } from '@/hooks/useGeminiAPI';
 
-interface BlogPostData {
-  id?: string;
+interface FormData {
   title: string;
   slug: string;
   meta_title: string;
   meta_description: string;
-  category_id: string;
+  category: string;
   tags: string[];
   excerpt: string;
-  content: string;
-  featured_image: string;
-  featured_image_alt: string;
-  author_name: string;
-  status: 'draft' | 'review' | 'published';
-  canonical_url: string;
   reading_time: number;
+  featured_image: string;
+  alt_text: string;
+  content: string;
+  canonical_url: string;
+  status: 'draft' | 'review' | 'published';
 }
 
-interface ValidationErrors {
-  title?: string;
-  slug?: string;
-  content?: string;
-  meta_title?: string;
-  meta_description?: string;
-  category_id?: string;
-  excerpt?: string;
-  featured_image_alt?: string;
-}
-
-interface Category {
+interface QACheck {
   id: string;
-  name: string;
-  slug: string;
+  label: string;
+  passed: boolean;
+  required: boolean;
 }
 
-const NewBlogAdmin: React.FC = () => {
+const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .replace(/[àáâäã]/g, 'a')
+    .replace(/[èéêë]/g, 'e')
+    .replace(/[ìíîï]/g, 'i')
+    .replace(/[òóôöõ]/g, 'o')
+    .replace(/[ùúûü]/g, 'u')
+    .replace(/[ç]/g, 'c')
+    .replace(/[ñ]/g, 'n')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+};
+
+const NewBlogAdmin = () => {
   const { toast } = useToast();
-  const { callGeminiAPI } = useGeminiAPI();
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
-  
-  const [formData, setFormData] = useState<BlogPostData>({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     slug: '',
     meta_title: '',
     meta_description: '',
-    category_id: '',
+    category: '',
     tags: [],
     excerpt: '',
-    content: '',
+    reading_time: 5,
     featured_image: '',
-    featured_image_alt: '',
-    author_name: 'MUV Team',
-    status: 'draft',
+    alt_text: '',
+    content: '',
     canonical_url: '',
-    reading_time: 5
+    status: 'draft'
   });
 
-  useEffect(() => {
-    loadCategories();
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('editor');
+  const [qaChecks, setQaChecks] = useState<QACheck[]>([]);
+  const [tagInput, setTagInput] = useState('');
 
+  // Auto-generate slug from title
   useEffect(() => {
-    // Auto-generate slug from title
     if (formData.title && !formData.slug) {
       const slug = generateSlug(formData.title);
       setFormData(prev => ({
         ...prev,
         slug,
-        canonical_url: \`https://www.muvfitness.it/blog/\${slug}\`
+        canonical_url: `https://www.muvfitness.it/blog/${slug}`
       }));
     }
   }, [formData.title]);
 
+  // QA Checks
   useEffect(() => {
-    // Auto-calculate reading time from content
-    if (formData.content) {
-      const wordCount = formData.content.replace(/<[^>]*>/g, '').trim().split(/\\s+/).length;
-      const readingTime = Math.max(1, Math.round(wordCount / 200));
-      setFormData(prev => ({ ...prev, reading_time: readingTime }));
-    }
-  }, [formData.content]);
+    const checks: QACheck[] = [
+      {
+        id: 'h1',
+        label: 'H1 unico con keyword principale',
+        passed: /<h1[^>]*>.*?<\/h1>/i.test(formData.content) && (formData.content.match(/<h1[^>]*>/gi) || []).length === 1,
+        required: true
+      },
+      {
+        id: 'hierarchy',
+        label: 'Gerarchia heading valida (H2/H3)',
+        passed: /<h2[^>]*>.*?<\/h2>/i.test(formData.content),
+        required: true
+      },
+      {
+        id: 'meta_title',
+        label: 'Meta title ≤60 caratteri',
+        passed: formData.meta_title.length > 0 && formData.meta_title.length <= 60,
+        required: true
+      },
+      {
+        id: 'meta_description',
+        label: 'Meta description ≤155 caratteri',
+        passed: formData.meta_description.length > 0 && formData.meta_description.length <= 155,
+        required: true
+      },
+      {
+        id: 'slug',
+        label: 'Slug univoco e SEO-friendly',
+        passed: formData.slug.length > 0 && /^[a-z0-9-]+$/.test(formData.slug),
+        required: true
+      },
+      {
+        id: 'excerpt',
+        label: 'Estratto 160-220 caratteri',
+        passed: formData.excerpt.length >= 160 && formData.excerpt.length <= 220,
+        required: true
+      },
+      {
+        id: 'cta',
+        label: 'CTA finale presente',
+        passed: /prenota.*prova.*gratuita|prova.*gratuita.*prenota/i.test(formData.content),
+        required: true
+      },
+      {
+        id: 'images',
+        label: 'Immagini con alt text',
+        passed: !/<img[^>]*>/i.test(formData.content) || /<img[^>]*alt="[^"]+"/i.test(formData.content),
+        required: true
+      },
+      {
+        id: 'clean_html',
+        label: 'HTML pulito (no markdown)',
+        passed: !formData.content.includes('```') && !formData.content.includes('**') && !formData.content.includes('##'),
+        required: true
+      }
+    ];
 
-  const loadCategories = async () => {
-    const { data, error } = await supabase
-      .from('blog_categories')
-      .select('id, name, slug')
-      .order('name');
-    
-    if (error) {
-      console.error('Error loading categories:', error);
-      toast({
-        title: "Errore",
-        description: "Impossibile caricare le categorie",
-        variant: "destructive"
-      });
-    } else {
-      setCategories(data || []);
-    }
-  };
+    setQaChecks(checks);
+  }, [formData]);
 
-  const generateSlug = (title: string): string => {
-    return title
-      .toLowerCase()
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[^a-z0-9\\s-]/g, '')
-      .replace(/\\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
-  };
-
-  const validateField = (field: string, value: any): string | undefined => {
-    switch (field) {
-      case 'title':
-        if (!value?.trim()) return 'Il titolo è obbligatorio';
-        if (value.length > 65) return 'Il titolo deve essere massimo 65 caratteri';
-        break;
-      case 'slug':
-        if (!value?.trim()) return 'Lo slug è obbligatorio';
-        if (!/^[a-z0-9-]+$/.test(value)) return 'Lo slug può contenere solo lettere minuscole, numeri e trattini';
-        break;
-      case 'content':
-        if (!value?.trim()) return 'Il contenuto è obbligatorio';
-        if (value.length < 100) return 'Il contenuto deve essere almeno 100 caratteri';
-        break;
-      case 'meta_title':
-        if (value && value.length > 60) return 'Il meta title deve essere massimo 60 caratteri';
-        break;
-      case 'meta_description':
-        if (value && value.length > 155) return 'La meta description deve essere massimo 155 caratteri';
-        break;
-      case 'category_id':
-        if (!value) return 'La categoria è obbligatoria';
-        break;
-      case 'excerpt':
-        if (!value?.trim()) return 'L\\'estratto è obbligatorio';
-        if (value.length < 160 || value.length > 220) return 'L\\'estratto deve essere tra 160 e 220 caratteri';
-        break;
-      case 'featured_image_alt':
-        if (formData.featured_image && !value?.trim()) return 'L\\'alt text è obbligatorio quando c\\'è un\\'immagine';
-        break;
-    }
-    return undefined;
-  };
-
-  const handleFieldChange = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    setHasUnsavedChanges(true);
-    
-    // Real-time validation
-    const error = validateField(field, value);
-    setValidationErrors(prev => ({
-      ...prev,
-      [field]: error
-    }));
-  };
-
-  const validateForm = (): boolean => {
-    const errors: ValidationErrors = {};
-    
-    Object.keys(formData).forEach(field => {
-      const error = validateField(field, (formData as any)[field]);
-      if (error) errors[field as keyof ValidationErrors] = error;
-    });
-    
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const generateWithAI = async (type: 'write' | 'rewrite' | 'optimize') => {
-    if (!formData.title.trim()) {
+  const handleAIAction = async (type: 'write' | 'rewrite' | 'optimize' | 'links') => {
+    if (!formData.title) {
       toast({
         title: "Errore",
         description: "Inserisci un titolo prima di usare l'IA",
@@ -204,75 +162,47 @@ const NewBlogAdmin: React.FC = () => {
 
     setLoading(true);
     try {
-        const prompt = type === 'write' 
-        ? `SCRIVI un articolo completo per il blog MUV Fitness con titolo: "${formData.title}".
-           Segui le regole STICKY: HTML semantico, professionale-empatico, keyword "${formData.title}" in H1/intro/conclusione.
-           Includi 2-4 link interni, meta title/description, struttura H2/H3, CTA finale.
-           OBIETTIVO: articolo AUTOREVOLE, conversion-oriented per MUV Fitness Legnago.`
-        : type === 'rewrite'
-        ? `RISCRIVI completamente l'articolo con titolo: "${formData.title}".
-           Ignora il contenuto esistente, scrivi ex-novo seguendo le regole STICKY MUV Fitness.
-           HTML semantico, keyword principale, meta ottimizzati, link interni, CTA finale.`
-        : `OTTIMIZZA SEO l'articolo "${formData.title}" mantenendo il significato.
-           Migliora: keyword density, meta title/description, struttura heading, link interni.
-           NON alterare il significato principale, solo ottimizzazione tecnica.`;
+      const response = await fetch('https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/ai-article-writer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdWpvb3dncWV5cmFxbnVra213Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzcwNTYsImV4cCI6MjA2NTY1MzA1Nn0.pmeNPLBZVJjXwYGJP_T2vorYnw7LJ-DdE5RfD3VfIrw'
+        },
+        body: JSON.stringify({
+          title: formData.title,
+          action: type === 'write' ? 'write_from_title' : 'rewrite_from_title'
+        })
+      });
 
-      const response = await callGeminiAPI(prompt);
-      
-      if (response) {
-        // Parse AI response and update form fields
-        const lines = response.split('\\n');
-        let content = '';
-        let metaTitle = '';
-        let metaDescription = '';
-        let excerpt = '';
-        let suggestions: string[] = [];
-        
-        let currentSection = '';
-        for (const line of lines) {
-          if (line.includes('META TITLE:')) {
-            currentSection = 'meta_title';
-            metaTitle = line.replace('META TITLE:', '').trim();
-          } else if (line.includes('META DESCRIPTION:')) {
-            currentSection = 'meta_description';
-            metaDescription = line.replace('META DESCRIPTION:', '').trim();
-          } else if (line.includes('EXCERPT:')) {
-            currentSection = 'excerpt';
-            excerpt = line.replace('EXCERPT:', '').trim();
-          } else if (line.includes('LINK INTERNI:')) {
-            currentSection = 'links';
-          } else if (line.includes('CONTENT:') || line.includes('<h1>')) {
-            currentSection = 'content';
-            if (!line.includes('CONTENT:')) content += line + '\\n';
-          } else if (currentSection === 'content') {
-            content += line + '\\n';
-          } else if (currentSection === 'links') {
-            if (line.trim()) suggestions.push(line.trim());
-          }
-        }
-        
-        // Update form with AI-generated content
+      const result = await response.json();
+
+      if (result.success) {
         setFormData(prev => ({
           ...prev,
-          content: content.trim() || response,
-          meta_title: metaTitle || prev.meta_title,
-          meta_description: metaDescription || prev.meta_description,
-          excerpt: excerpt || prev.excerpt
+          content: result.post.content || prev.content,
+          meta_title: result.post.meta_title || prev.meta_title,
+          meta_description: result.post.meta_description || prev.meta_description,
+          excerpt: result.post.excerpt || prev.excerpt,
+          slug: result.post.slug || prev.slug,
+          canonical_url: `https://www.muvfitness.it/blog/${result.post.slug || prev.slug}`
         }));
-        
-        setAiSuggestions(suggestions);
-        setHasUnsavedChanges(true);
-        
+
         toast({
           title: "Successo",
-          description: \`Contenuto \${type === 'write' ? 'scritto' : type === 'rewrite' ? 'riscritto' : 'ottimizzato'} con IA\`,
+          description: result.message
         });
+
+        if (result.internal_links) {
+          console.log('Link interni suggeriti:', result.internal_links);
+        }
+      } else {
+        throw new Error(result.error || 'Errore nella generazione');
       }
     } catch (error) {
-      console.error('Error generating with AI:', error);
+      console.error('AI Error:', error);
       toast({
-        title: "Errore IA",
-        description: "Errore durante la generazione del contenuto",
+        title: "Errore",
+        description: "Errore nella generazione del contenuto",
         variant: "destructive"
       });
     } finally {
@@ -280,83 +210,58 @@ const NewBlogAdmin: React.FC = () => {
     }
   };
 
-  const suggestInternalLinks = async () => {
-    if (!formData.content.trim()) {
+  const handleSave = async (status: 'draft' | 'review' | 'published') => {
+    const allRequiredPassed = qaChecks.filter(check => check.required).every(check => check.passed);
+    
+    if (status === 'published' && !allRequiredPassed) {
       toast({
-        title: "Errore",
-        description: "Inserisci del contenuto prima di suggerire link",
+        title: "QA non superato",
+        description: "Correggi tutti i controlli obbligatori prima di pubblicare",
         variant: "destructive"
       });
       return;
     }
 
-    setLoading(true);
-    try {
-      const prompt = \`Analizza questo contenuto del blog MUV Fitness e suggerisci 3-5 link interni pertinenti:
-      
-      TITOLO: \${formData.title}
-      CONTENUTO: \${formData.content.substring(0, 1000)}...
-      
-      Suggerisci link verso pagine MUV come:
-      - /servizi/personal-training
-      - /servizi/ems  
-      - /servizi/pilates
-      - /servizi/hiit
-      - /servizi/nutrizione
-      - /contatti
-      
-      Formato: "anchor text descrittivo" -> URL\`;
-
-      const response = await callGeminiAPI(prompt);
-      if (response) {
-        const links = response.split('\\n').filter(line => line.includes('->')).slice(0, 5);
-        setAiSuggestions(links);
-        
-        toast({
-          title: "Link suggeriti",
-          description: \`\${links.length} link interni suggeriti\`,
-        });
-      }
-    } catch (error) {
-      console.error('Error suggesting links:', error);
-      toast({
-        title: "Errore",
-        description: "Errore durante il suggerimento dei link",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const saveAsDraft = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
         .from('blog_posts')
-        .insert([{
+        .insert({
           ...formData,
-          status: 'draft',
-          created_at: new Date().toISOString()
-        }])
-        .select()
-        .single();
+          status,
+          published_at: status === 'published' ? new Date().toISOString() : null
+        });
 
       if (error) throw error;
 
-      setLastSaved(new Date());
-      setHasUnsavedChanges(false);
-      setFormData(prev => ({ ...prev, id: data.id }));
-      
       toast({
-        title: "Salvato",
-        description: "Articolo salvato come bozza",
+        title: "Successo",
+        description: `Articolo salvato come ${status.toUpperCase()}`
       });
+
+      // Reset form after successful save
+      if (status === 'published') {
+        setFormData({
+          title: '',
+          slug: '',
+          meta_title: '',
+          meta_description: '',
+          category: '',
+          tags: [],
+          excerpt: '',
+          reading_time: 5,
+          featured_image: '',
+          alt_text: '',
+          content: '',
+          canonical_url: '',
+          status: 'draft'
+        });
+      }
     } catch (error) {
-      console.error('Error saving draft:', error);
+      console.error('Save error:', error);
       toast({
         title: "Errore",
-        description: "Errore durante il salvataggio",
+        description: "Errore nel salvataggio",
         variant: "destructive"
       });
     } finally {
@@ -364,519 +269,460 @@ const NewBlogAdmin: React.FC = () => {
     }
   };
 
-  const publish = async () => {
-    if (!validateForm()) {
-      toast({
-        title: "Errori di validazione",
-        description: "Correggi gli errori prima di pubblicare",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const publishData = {
-        ...formData,
-        status: 'published' as const,
-        published_at: new Date().toISOString()
-      };
-
-      const { error } = formData.id
-        ? await supabase.from('blog_posts').update(publishData).eq('id', formData.id)
-        : await supabase.from('blog_posts').insert([publishData]);
-
-      if (error) throw error;
-
-      setLastSaved(new Date());
-      setHasUnsavedChanges(false);
-      
-      toast({
-        title: "Pubblicato",
-        description: "Articolo pubblicato con successo",
-      });
-    } catch (error) {
-      console.error('Error publishing:', error);
-      toast({
-        title: "Errore",
-        description: "Errore durante la pubblicazione",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
+  const addTag = () => {
+    if (tagInput.trim() && !formData.tags.includes(tagInput.trim()) && formData.tags.length < 8) {
+      setFormData(prev => ({
+        ...prev,
+        tags: [...prev.tags, tagInput.trim()]
+      }));
+      setTagInput('');
     }
   };
 
-  const hasErrors = Object.keys(validationErrors).length > 0;
+  const removeTag = (tagToRemove: string) => {
+    setFormData(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
+  };
+
+  const allRequiredPassed = qaChecks.filter(check => check.required).every(check => check.passed);
+  const passedChecks = qaChecks.filter(check => check.passed).length;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Editor Blog MUV Fitness</h1>
-          <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
-            {lastSaved && (
-              <div className="flex items-center gap-1">
-                <CheckCircle className="h-3 w-3" />
-                Salvato: {lastSaved.toLocaleTimeString()}
-              </div>
-            )}
-            {hasUnsavedChanges && (
-              <Badge variant="outline" className="text-yellow-600 border-yellow-600">
-                <AlertCircle className="h-3 w-3 mr-1" />
-                Modifiche non salvate
-              </Badge>
-            )}
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            onClick={() => setShowPreview(!showPreview)}
-          >
-            <Eye className="h-4 w-4 mr-2" />
-            {showPreview ? 'Nascondi' : 'Anteprima'}
-          </Button>
-          <Button
-            onClick={saveAsDraft}
-            disabled={loading}
-            variant="secondary"
-          >
-            <Save className="h-4 w-4 mr-2" />
-            Salva Bozza
-          </Button>
-          <Button
-            onClick={publish}
-            disabled={loading || hasErrors}
-            className="bg-green-600 hover:bg-green-700"
-          >
-            <Globe className="h-4 w-4 mr-2" />
-            Pubblica
-          </Button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background pt-[var(--header-height)]">
+      <Helmet>
+        <title>Blog Admin - MUV Fitness | Editor con IA</title>
+        <meta name="description" content="Area amministrativa del blog MUV Fitness con editor avanzato e strumenti IA per la creazione di contenuti." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
 
-      {/* AI Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Bot className="h-5 w-5" />
-            Azioni IA
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3">
-            <Button
-              onClick={() => generateWithAI('write')}
-              disabled={loading || !formData.title.trim()}
-              variant="outline"
-            >
-              <Bot className="h-4 w-4 mr-2" />
-              Scrivi con IA (da titolo)
-            </Button>
-            <Button
-              onClick={() => generateWithAI('rewrite')}
-              disabled={loading || !formData.title.trim()}
-              variant="outline"
-            >
-              <Bot className="h-4 w-4 mr-2" />
-              Riscrivi con IA
-            </Button>
-            <Button
-              onClick={() => generateWithAI('optimize')}
-              disabled={loading || !formData.content.trim()}
-              variant="outline"
-            >
-              <Bot className="h-4 w-4 mr-2" />
-              Ottimizza SEO
-            </Button>
-            <Button
-              onClick={suggestInternalLinks}
-              disabled={loading || !formData.content.trim()}
-              variant="outline"
-            >
-              <LinkIcon className="h-4 w-4 mr-2" />
-              Suggerisci Link Interni
-            </Button>
-          </div>
-          
-          {aiSuggestions.length > 0 && (
-            <div className="mt-4 p-4 bg-muted rounded-lg">
-              <h4 className="font-medium mb-2">Suggerimenti IA:</h4>
-              <ul className="space-y-1 text-sm">
-                {aiSuggestions.map((suggestion, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <span className="text-muted-foreground">•</span>
-                    {suggestion}
-                  </li>
-                ))}
-              </ul>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold">Blog Admin</h1>
+              <p className="text-muted-foreground">Editor con IA - SEO-first</p>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <div className="flex items-center gap-2">
+              <Badge variant={allRequiredPassed ? "default" : "secondary"}>
+                QA: {passedChecks}/{qaChecks.length}
+              </Badge>
+              <Badge variant="outline">
+                {formData.status.toUpperCase()}
+              </Badge>
+            </div>
+          </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          <Tabs defaultValue="content" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="content">Contenuto</TabsTrigger>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="editor">Editor</TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
               <TabsTrigger value="preview">Anteprima</TabsTrigger>
+              <TabsTrigger value="qa">QA</TabsTrigger>
             </TabsList>
-            
-            <TabsContent value="content" className="space-y-4">
+
+            {/* Editor Tab */}
+            <TabsContent value="editor" className="space-y-6">
               <Card>
-                <CardContent className="p-6 space-y-4">
-                  {/* Title */}
-                  <div>
-                    <Label htmlFor="title">Titolo *</Label>
-                    <Input
-                      id="title"
-                      value={formData.title}
-                      onChange={(e) => handleFieldChange('title', e.target.value)}
-                      placeholder="Inserisci il titolo dell'articolo"
-                      className={validationErrors.title ? 'border-red-500' : ''}
-                    />
-                    <div className="flex items-center justify-between mt-1">
-                      {validationErrors.title && (
-                        <span className="text-sm text-red-500">{validationErrors.title}</span>
-                      )}
-                      <span className="text-sm text-muted-foreground ml-auto">
-                        {formData.title.length}/65
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Slug */}
-                  <div>
-                    <Label htmlFor="slug">Slug URL *</Label>
-                    <Input
-                      id="slug"
-                      value={formData.slug}
-                      onChange={(e) => handleFieldChange('slug', e.target.value)}
-                      placeholder="url-articolo"
-                      className={validationErrors.slug ? 'border-red-500' : ''}
-                    />
-                    {validationErrors.slug && (
-                      <span className="text-sm text-red-500">{validationErrors.slug}</span>
-                    )}
-                    <p className="text-xs text-muted-foreground mt-1">
-                      URL: https://www.muvfitness.it/blog/{formData.slug}
-                    </p>
-                  </div>
-
-                  {/* Content */}
-                  <div>
-                    <Label htmlFor="content">Contenuto HTML *</Label>
-                    <Textarea
-                      id="content"
-                      value={formData.content}
-                      onChange={(e) => handleFieldChange('content', e.target.value)}
-                      placeholder="Inserisci il contenuto dell'articolo in HTML semantico"
-                      className={validationErrors.content ? 'border-red-500' : ''}
-                      rows={15}
-                    />
-                    {validationErrors.content && (
-                      <span className="text-sm text-red-500">{validationErrors.content}</span>
-                    )}
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Caratteri: {formData.content.length} | Tempo di lettura: {formData.reading_time} min
-                    </p>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Wand2 className="h-5 w-5" />
+                    Azioni IA
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    <Button 
+                      onClick={() => handleAIAction('write')} 
+                      disabled={loading || !formData.title}
+                      variant="default"
+                    >
+                      SCRIVI CON IA
+                    </Button>
+                    <Button 
+                      onClick={() => handleAIAction('rewrite')} 
+                      disabled={loading || !formData.title}
+                      variant="outline"
+                    >
+                      RISCRIVI CON IA
+                    </Button>
+                    <Button 
+                      onClick={() => handleAIAction('optimize')} 
+                      disabled={loading || !formData.content}
+                      variant="outline"
+                    >
+                      OTTIMIZZA SEO
+                    </Button>
+                    <Button 
+                      onClick={() => handleAIAction('links')} 
+                      disabled={loading || !formData.content}
+                      variant="outline"
+                    >
+                      <Link className="h-4 w-4 mr-2" />
+                      SUGGERISCI LINK INTERNI
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-            
-            <TabsContent value="seo" className="space-y-4">
-              <Card>
-                <CardContent className="p-6 space-y-4">
-                  {/* Meta Title */}
-                  <div>
-                    <Label htmlFor="meta_title">Meta Title</Label>
-                    <Input
-                      id="meta_title"
-                      value={formData.meta_title}
-                      onChange={(e) => handleFieldChange('meta_title', e.target.value)}
-                      placeholder="Titolo SEO ottimizzato"
-                      className={validationErrors.meta_title ? 'border-red-500' : ''}
-                    />
-                    <div className="flex items-center justify-between mt-1">
-                      {validationErrors.meta_title && (
-                        <span className="text-sm text-red-500">{validationErrors.meta_title}</span>
-                      )}
-                      <span className="text-sm text-muted-foreground ml-auto">
-                        {formData.meta_title.length}/60
-                      </span>
-                    </div>
-                  </div>
 
-                  {/* Meta Description */}
-                  <div>
-                    <Label htmlFor="meta_description">Meta Description</Label>
-                    <Textarea
-                      id="meta_description"
-                      value={formData.meta_description}
-                      onChange={(e) => handleFieldChange('meta_description', e.target.value)}
-                      placeholder="Descrizione SEO ottimizzata"
-                      className={validationErrors.meta_description ? 'border-red-500' : ''}
-                      rows={3}
-                    />
-                    <div className="flex items-center justify-between mt-1">
-                      {validationErrors.meta_description && (
-                        <span className="text-sm text-red-500">{validationErrors.meta_description}</span>
-                      )}
-                      <span className="text-sm text-muted-foreground ml-auto">
-                        {formData.meta_description.length}/155
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Excerpt */}
-                  <div>
-                    <Label htmlFor="excerpt">Estratto *</Label>
-                    <Textarea
-                      id="excerpt"
-                      value={formData.excerpt}
-                      onChange={(e) => handleFieldChange('excerpt', e.target.value)}
-                      placeholder="Estratto per anteprima (160-220 caratteri)"
-                      className={validationErrors.excerpt ? 'border-red-500' : ''}
-                      rows={3}
-                    />
-                    <div className="flex items-center justify-between mt-1">
-                      {validationErrors.excerpt && (
-                        <span className="text-sm text-red-500">{validationErrors.excerpt}</span>
-                      )}
-                      <span className="text-sm text-muted-foreground ml-auto">
-                        {formData.excerpt.length}/220
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Canonical URL */}
-                  <div>
-                    <Label htmlFor="canonical_url">URL Canonical</Label>
-                    <Input
-                      id="canonical_url"
-                      value={formData.canonical_url}
-                      onChange={(e) => handleFieldChange('canonical_url', e.target.value)}
-                      placeholder="https://www.muvfitness.it/blog/..."
-                      disabled
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="preview">
-              <Card>
-                <CardContent className="p-6">
-                  {formData.content ? (
-                    <div className="prose max-w-none">
-                      <h1>{formData.title}</h1>
-                      <div className="text-sm text-muted-foreground mb-4">
-                        {formData.excerpt}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Contenuto Base</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <Label htmlFor="title">Titolo (H1) *</Label>
+                        <Input
+                          id="title"
+                          value={formData.title}
+                          onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                          placeholder="Es: Dimagrire con EMS a Legnago: guida completa"
+                          maxLength={65}
+                        />
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {formData.title.length}/65 caratteri
+                        </div>
                       </div>
-                      <div dangerouslySetInnerHTML={{ __html: formData.content }} />
+
+                      <div>
+                        <Label htmlFor="slug">Slug *</Label>
+                        <Input
+                          id="slug"
+                          value={formData.slug}
+                          onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                          placeholder="dimagrire-ems-legnago-guida"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="category">Categoria *</Label>
+                          <Select 
+                            value={formData.category} 
+                            onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleziona categoria" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="fitness">Fitness</SelectItem>
+                              <SelectItem value="nutrizione">Nutrizione</SelectItem>
+                              <SelectItem value="tecnologie">Tecnologie</SelectItem>
+                              <SelectItem value="benessere">Benessere</SelectItem>
+                              <SelectItem value="allenamento">Allenamento</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label htmlFor="reading_time">Tempo lettura (min)</Label>
+                          <Input
+                            id="reading_time"
+                            type="number"
+                            value={formData.reading_time}
+                            onChange={(e) => setFormData(prev => ({ ...prev, reading_time: parseInt(e.target.value) || 5 }))}
+                            min={1}
+                            max={30}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="tags">Tag (max 8)</Label>
+                        <div className="flex gap-2 mb-2">
+                          <Input
+                            value={tagInput}
+                            onChange={(e) => setTagInput(e.target.value)}
+                            placeholder="Aggiungi tag..."
+                            onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                          />
+                          <Button type="button" onClick={addTag} variant="outline">
+                            Aggiungi
+                          </Button>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {formData.tags.map((tag) => (
+                            <Badge key={tag} variant="secondary" className="cursor-pointer" onClick={() => removeTag(tag)}>
+                              {tag} ×
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Immagine di Copertina</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <Label htmlFor="featured_image">URL Immagine</Label>
+                        <Input
+                          id="featured_image"
+                          value={formData.featured_image}
+                          onChange={(e) => setFormData(prev => ({ ...prev, featured_image: e.target.value }))}
+                          placeholder="https://..."
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="alt_text">Alt Text *</Label>
+                        <Input
+                          id="alt_text"
+                          value={formData.alt_text}
+                          onChange={(e) => setFormData(prev => ({ ...prev, alt_text: e.target.value }))}
+                          placeholder="Descrizione dettagliata dell'immagine"
+                        />
+                      </div>
+
+                      {formData.featured_image && (
+                        <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                          <img 
+                            src={formData.featured_image} 
+                            alt={formData.alt_text} 
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Estratto</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <Textarea
+                        value={formData.excerpt}
+                        onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
+                        placeholder="Breve descrizione dell'articolo per l'archivio..."
+                        maxLength={220}
+                        rows={4}
+                      />
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {formData.excerpt.length}/220 caratteri (ideale: 160-220)
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Content Editor */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Contenuto HTML</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    value={formData.content}
+                    onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                    placeholder="Scrivi qui il contenuto in HTML semantico..."
+                    rows={20}
+                    className="font-mono text-sm"
+                  />
+                  <div className="text-xs text-muted-foreground mt-2">
+                    Usa HTML semantico: &lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* SEO Tab */}
+            <TabsContent value="seo" className="space-y-6">
+              <div className="grid lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Meta Tags</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label htmlFor="meta_title">Meta Title *</Label>
+                      <Input
+                        id="meta_title"
+                        value={formData.meta_title}
+                        onChange={(e) => setFormData(prev => ({ ...prev, meta_title: e.target.value }))}
+                        placeholder="Titolo per i motori di ricerca"
+                        maxLength={60}
+                      />
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {formData.meta_title.length}/60 caratteri
+                      </div>
                     </div>
-                  ) : (
-                    <p className="text-muted-foreground">Inserisci del contenuto per vedere l'anteprima</p>
+
+                    <div>
+                      <Label htmlFor="meta_description">Meta Description *</Label>
+                      <Textarea
+                        id="meta_description"
+                        value={formData.meta_description}
+                        onChange={(e) => setFormData(prev => ({ ...prev, meta_description: e.target.value }))}
+                        placeholder="Descrizione per i risultati di ricerca"
+                        maxLength={155}
+                        rows={3}
+                      />
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {formData.meta_description.length}/155 caratteri
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="canonical_url">URL Canonical</Label>
+                      <Input
+                        id="canonical_url"
+                        value={formData.canonical_url}
+                        onChange={(e) => setFormData(prev => ({ ...prev, canonical_url: e.target.value }))}
+                        placeholder="https://www.muvfitness.it/blog/slug"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Structured Data Preview</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <pre className="text-xs bg-muted p-4 rounded-lg overflow-auto max-h-96">
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": formData.title || "Titolo articolo",
+  "description": formData.meta_description || "Descrizione articolo",
+  "image": formData.featured_image || "https://www.muvfitness.it/images/default.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "MUV Fitness"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MUV Fitness",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.muvfitness.it/images/muv-logo.png"
+    }
+  },
+  "datePublished": new Date().toISOString(),
+  "dateModified": new Date().toISOString(),
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": formData.canonical_url || `https://www.muvfitness.it/blog/${formData.slug}`
+  },
+  "keywords": formData.tags.join(', ') || 'fitness, MUV',
+  "articleSection": formData.category || 'Fitness'
+}, null, 2)}
+                    </pre>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Preview Tab */}
+            <TabsContent value="preview" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5" />
+                    Anteprima Articolo
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-lg max-w-none">
+                    <div dangerouslySetInnerHTML={{ __html: formData.content || '<p>Nessun contenuto da mostrare</p>' }} />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* QA Tab */}
+            <TabsContent value="qa" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5" />
+                    Controlli Qualità (QA)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {qaChecks.map((check) => (
+                      <div key={check.id} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center gap-3">
+                          {check.passed ? (
+                            <CheckCircle className="h-5 w-5 text-green-500" />
+                          ) : (
+                            <AlertCircle className="h-5 w-5 text-red-500" />
+                          )}
+                          <span className={check.required ? 'font-medium' : ''}>
+                            {check.label}
+                            {check.required && <span className="text-red-500 ml-1">*</span>}
+                          </span>
+                        </div>
+                        <Badge variant={check.passed ? "default" : "destructive"}>
+                          {check.passed ? "PASS" : "FAIL"}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+
+                  {!allRequiredPassed && (
+                    <Alert className="mt-6">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>
+                        Alcuni controlli obbligatori non sono superati. 
+                        L'articolo non può essere pubblicato fino a quando tutti i controlli obbligatori (*) non sono verdi.
+                      </AlertDescription>
+                    </Alert>
                   )}
                 </CardContent>
               </Card>
             </TabsContent>
           </Tabs>
-        </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Status & Publication */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                Stato Articolo
-                <Badge variant={formData.status === 'published' ? 'default' : 'secondary'}>
-                  {formData.status === 'draft' && 'Bozza'}
-                  {formData.status === 'review' && 'In Revisione'}
-                  {formData.status === 'published' && 'Pubblicato'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="author_name">Autore</Label>
-                <Input
-                  id="author_name"
-                  value={formData.author_name}
-                  onChange={(e) => handleFieldChange('author_name', e.target.value)}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Category & Tags */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Categoria e Tag</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="category">Categoria *</Label>
-                <Select
-                  value={formData.category_id}
-                  onValueChange={(value) => handleFieldChange('category_id', value)}
-                >
-                  <SelectTrigger className={validationErrors.category_id ? 'border-red-500' : ''}>
-                    <SelectValue placeholder="Seleziona categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {validationErrors.category_id && (
-                  <span className="text-sm text-red-500">{validationErrors.category_id}</span>
-                )}
-              </div>
-
-              <div>
-                <Label>Tag (massimo 8)</Label>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {formData.tags.map((tag, index) => (
-                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
-                      {tag}
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="h-auto p-0 text-muted-foreground hover:text-foreground"
-                        onClick={() => {
-                          const newTags = formData.tags.filter((_, i) => i !== index);
-                          handleFieldChange('tags', newTags);
-                        }}
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
-                    </Badge>
-                  ))}
-                </div>
-                <Input
-                  placeholder="Aggiungi tag e premi Invio"
-                  className="mt-2"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      const input = e.currentTarget;
-                      const value = input.value.trim();
-                      if (value && formData.tags.length < 8 && !formData.tags.includes(value)) {
-                        handleFieldChange('tags', [...formData.tags, value]);
-                        input.value = '';
-                      }
-                    }
-                  }}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Featured Image */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Immagine di Copertina</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="featured_image">URL Immagine</Label>
-                <Input
-                  id="featured_image"
-                  value={formData.featured_image}
-                  onChange={(e) => handleFieldChange('featured_image', e.target.value)}
-                  placeholder="https://..."
-                />
-              </div>
-              <div>
-                <Label htmlFor="featured_image_alt">Alt Text *</Label>
-                <Input
-                  id="featured_image_alt"
-                  value={formData.featured_image_alt}
-                  onChange={(e) => handleFieldChange('featured_image_alt', e.target.value)}
-                  placeholder="Descrizione dell'immagine"
-                  className={validationErrors.featured_image_alt ? 'border-red-500' : ''}
-                />
-                {validationErrors.featured_image_alt && (
-                  <span className="text-sm text-red-500">{validationErrors.featured_image_alt}</span>
-                )}
-              </div>
-              {formData.featured_image && (
-                <div className="aspect-video bg-muted rounded-lg overflow-hidden">
-                  <img
-                    src={formData.featured_image}
-                    alt={formData.featured_image_alt}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Quality Control */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Controllo Qualità</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Titolo (≤65 caratteri)</span>
-                  {formData.title && formData.title.length <= 65 ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Contenuto (≥100 caratteri)</span>
-                  {formData.content && formData.content.length >= 100 ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Meta Description (≤155)</span>
-                  {formData.meta_description && formData.meta_description.length <= 155 ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Categoria selezionata</span>
-                  {formData.category_id ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Estratto (160-220 caratteri)</span>
-                  {formData.excerpt && formData.excerpt.length >= 160 && formData.excerpt.length <= 220 ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Action Buttons */}
+          <div className="flex items-center justify-between border-t pt-6">
+            <div className="text-sm text-muted-foreground">
+              Status: <Badge variant="outline">{formData.status.toUpperCase()}</Badge>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => handleSave('draft')}
+                disabled={loading}
+              >
+                <Save className="h-4 w-4 mr-2" />
+                Salva Draft
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                onClick={() => handleSave('review')}
+                disabled={loading}
+              >
+                Salva per Review
+              </Button>
+              
+              <Button 
+                onClick={() => handleSave('published')}
+                disabled={loading || !allRequiredPassed}
+                className="bg-primary hover:bg-primary/90"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Pubblica
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
