@@ -43,7 +43,11 @@ const ContentRestore: React.FC = () => {
         body: { minWords: 2000 }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Prova a mostrare l'errore restituito dalla funzione, se presente
+        const serverMsg = (data as any)?.error || (error as any)?.message || 'Errore sconosciuto';
+        throw new Error(serverMsg);
+      }
       const res = data as RestoreResponse;
       setReport(res);
       setProgress(100);

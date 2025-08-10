@@ -80,7 +80,7 @@ serve(async (req) => {
     const excludeSlugs: string[] = body.excludeSlugs || ['privacy', 'cookie-policy', 'termini-condizioni'];
     const minWords: number = body.minWords || 2000;
 
-    const limit: number = Math.min(Math.max(Number(body.limit) || 20, 1), 50);
+83:     const limit: number = Math.min(Math.max(Number(body.limit) || 10, 1), 50);
 
     // 1) Fetch posts to process (batched to avoid timeouts)
     let query = supabase
@@ -99,14 +99,18 @@ serve(async (req) => {
 
     if (postsError) throw postsError;
 
-    // 2) Snapshot current contents
-    const snapshotRows = (posts || [])
-      .filter((p) => p.content && p.content.length > 0)
-      .map((p) => ({ id: p.id, content_backup: p.content, backed_up_at: new Date().toISOString() }));
-
-    if (snapshotRows.length > 0) {
-      await supabase.from('blog_posts_backup').insert(snapshotRows, { returning: 'minimal' });
-    }
+102:     // 2) Snapshot current contents
+103:     const snapshotRows = (posts || [])
+104:       .filter((p) => p.content && p.content.length > 0)
+105:       .map((p) => ({ id: p.id, content_backup: p.content, backed_up_at: new Date().toISOString() }));
+106: 
+107:     if (snapshotRows.length > 0) {
+108:       const { error: backupErr } = await supabase.from('blog_posts_backup').insert(snapshotRows, { returning: 'minimal' });
+109:       if (backupErr) {
+110:         console.error('backup insert error:', backupErr);
+111:         // Continue even if backup insert fails; we still try to restore from existing backups
+112:       }
+113:     }
 
     const results: any[] = [];
     const underMin: any[] = [];
