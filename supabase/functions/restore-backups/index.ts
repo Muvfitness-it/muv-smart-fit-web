@@ -1,3 +1,4 @@
+
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.0';
@@ -79,8 +80,7 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const excludeSlugs: string[] = body.excludeSlugs || ['privacy', 'cookie-policy', 'termini-condizioni'];
     const minWords: number = body.minWords || 2000;
-
-83:     const limit: number = Math.min(Math.max(Number(body.limit) || 10, 1), 50);
+    const limit: number = Math.min(Math.max(Number(body.limit) || 10, 1), 50);
 
     // 1) Fetch posts to process (batched to avoid timeouts)
     let query = supabase
@@ -99,18 +99,18 @@ serve(async (req) => {
 
     if (postsError) throw postsError;
 
-102:     // 2) Snapshot current contents
-103:     const snapshotRows = (posts || [])
-104:       .filter((p) => p.content && p.content.length > 0)
-105:       .map((p) => ({ id: p.id, content_backup: p.content, backed_up_at: new Date().toISOString() }));
-106: 
-107:     if (snapshotRows.length > 0) {
-108:       const { error: backupErr } = await supabase.from('blog_posts_backup').insert(snapshotRows, { returning: 'minimal' });
-109:       if (backupErr) {
-110:         console.error('backup insert error:', backupErr);
-111:         // Continue even if backup insert fails; we still try to restore from existing backups
-112:       }
-113:     }
+    // 2) Snapshot current contents
+    const snapshotRows = (posts || [])
+      .filter((p) => p.content && p.content.length > 0)
+      .map((p) => ({ id: p.id, content_backup: p.content, backed_up_at: new Date().toISOString() }));
+
+    if (snapshotRows.length > 0) {
+      const { error: backupErr } = await supabase.from('blog_posts_backup').insert(snapshotRows, { returning: 'minimal' });
+      if (backupErr) {
+        console.error('backup insert error:', backupErr);
+        // Continue even if backup insert fails; we still try to restore from existing backups
+      }
+    }
 
     const results: any[] = [];
     const underMin: any[] = [];
