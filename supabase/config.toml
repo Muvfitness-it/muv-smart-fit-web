@@ -79,3 +79,6 @@ verify_jwt = false
 
 [functions.restore-backups]
 verify_jwt = false
+
+[functions.export-blog-titles]
+verify_jwt = false
