@@ -94,14 +94,32 @@ FORMATO RISPOSTA JSON:
 
     const aiData = await response.json();
     
-    if (!aiData.choices?.[0]?.message?.content) {
+    // Estrarre JSON in modo robusto dall'output del modello
+    const rawContent: string = aiData?.choices?.[0]?.message?.content ?? '';
+    if (!rawContent) {
       throw new Error('Invalid AI response');
     }
 
-    let articleData;
+    function extractJsonString(text: string): string | null {
+      // 1) Blocco ```json
+      const block = text.match(/```json\s*([\s\S]*?)```/i) || text.match(/```\s*([\s\S]*?)```/i);
+      if (block?.[1]) return block[1].trim();
+      // 2) Prima graffa aperta -> ultima chiusa
+      const start = text.indexOf('{');
+      const end = text.lastIndexOf('}');
+      if (start !== -1 && end !== -1 && end > start) {
+        return text.slice(start, end + 1).trim();
+      }
+      return null;
+    }
+
+    const jsonString = extractJsonString(rawContent);
+
+    let articleData: any;
     try {
-      articleData = JSON.parse(aiData.choices[0].message.content);
+      articleData = JSON.parse(jsonString ?? rawContent.trim());
     } catch (e) {
+      console.error('AI raw content (truncated):', rawContent.slice(0, 400));
       throw new Error('AI response is not valid JSON');
     }
 
@@ -161,8 +179,7 @@ FORMATO RISPOSTA JSON:
         qaChecks,
         message: 'L\'articolo non ha superato i controlli di qualità'
       }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 400
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
