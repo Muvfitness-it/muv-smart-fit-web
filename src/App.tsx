@@ -59,6 +59,7 @@ import AutoOptimizer from "./components/SEO/AutoOptimizer";
 import AutoSitemapUpdater from "./components/SEO/AutoSitemapUpdater";
 import RedirectResolver from "./components/SEO/RedirectResolver";
 import AutoOptimizerRunner from "./components/SEO/AutoOptimizerRunner";
+import OverrideStickyRunner from "./components/admin/OverrideStickyRunner";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const AppContent = () => {
       <AutoOptimizer />
       <AutoOptimizerRunner />
       <AutoSitemapUpdater />
+      <OverrideStickyRunner />
       <LocalBusinessSchema />
       <PerformanceOptimizer />
       <CriticalCSS />
