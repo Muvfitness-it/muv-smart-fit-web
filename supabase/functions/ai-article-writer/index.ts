@@ -136,13 +136,20 @@ FORMATO RISPOSTA JSON:
 
     // SELF-QA automatico
     const qaChecks = {
-      hasH1: /<h1[^>]*>.*?<\/h1>/i.test(articleData.content),
+      hasSingleH1: (articleData.content.match(/<h1[^>]*>.*?<\/h1>/gi) || []).length === 1,
       hasH2: /<h2[^>]*>.*?<\/h2>/i.test(articleData.content),
+      h3HierarchyValid: !/<h3[^>]*>/i.test(articleData.content) || /<h2[^>]*>/i.test(articleData.content),
       hasCTA: /prenota.*prova.*gratuita|prova.*gratuita.*prenota/i.test(articleData.content),
-      hasIntro: articleData.content.length > 200,
+      hasIntro: articleData.content.replace(/<[^>]*>/g, '').length > 200,
       validSlug: finalSlug.length > 0 && finalSlug.length < 100,
       validMetaTitle: articleData.meta_title && articleData.meta_title.length <= 60,
-      validMetaDescription: articleData.meta_description && articleData.meta_description.length <= 155
+      validMetaDescription: articleData.meta_description && articleData.meta_description.length <= 155,
+      hasInternalLinks: Array.isArray(articleData.internal_links) && articleData.internal_links.length >= 2 && articleData.internal_links.length <= 5,
+      imagesAltLazy: !/<img[^>]*>/i.test(articleData.content) || (/<img[^>]*alt="[^"]+"/i.test(articleData.content) && /<img[^>]*loading="lazy"[^>]*>/i.test(articleData.content)),
+      hasJsonLd: /<script[^>]+type="application\/ld\+json"[^>]*>/i.test(articleData.content),
+      keywordDistribution: Array.isArray(articleData.keywords) && articleData.keywords.length > 0
+        ? (new RegExp(articleData.keywords[0], 'i').test(articleData.title) && new RegExp(articleData.keywords[0], 'i').test(articleData.content))
+        : true
     };
 
     const allChecksPassed = Object.values(qaChecks).every(check => check);

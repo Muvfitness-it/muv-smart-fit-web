@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Eye } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import LazyImage from '@/components/ui/LazyImage';
+import { ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import UnifiedSEO from '@/components/SEO/UnifiedSEO';
 import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import EnhancedBlogSEO from '@/components/blog/EnhancedBlogSEO';
 import BlogPostContent from '@/components/blog/BlogPostContent';
-
+import { useAnalytics } from '@/hooks/useAnalytics';
 interface BlogPost {
   id: string;
   title: string;
@@ -24,15 +27,19 @@ interface BlogPost {
   views_count?: number;
   reading_time?: number;
   status: string;
+  category_id?: string;
 }
+
+type RelatedPost = Pick<BlogPost, 'id' | 'title' | 'slug' | 'excerpt' | 'featured_image' | 'published_at' | 'reading_time' | 'views_count'>;
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { trackSiteVisit } = useAnalytics();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [related, setRelated] = useState<BlogPost[]>([]);
   useEffect(() => {
     const fetchPost = async () => {
       if (!slug) {
@@ -86,6 +93,45 @@ const BlogPost = () => {
     fetchPost();
   }, [slug]);
 
+  // Fetch related posts (same category -> fallback latest)
+  useEffect(() => {
+    const fetchRelated = async () => {
+      if (!post) return;
+      try {
+        let query = supabase
+          .from('blog_posts')
+          .select('id, title, slug, excerpt, featured_image, published_at, reading_time, views_count')
+          .eq('status', 'published')
+          .neq('id', post.id)
+          .order('published_at', { ascending: false })
+          .limit(3);
+
+        if (post.category_id) {
+          query = query.eq('category_id', post.category_id);
+        }
+
+        const { data, error } = await query;
+        if (error) throw error;
+
+        if (!data || data.length < 3) {
+          const { data: fallback, error: fbError } = await supabase
+            .from('blog_posts')
+            .select('id, title, slug, excerpt, featured_image, published_at, reading_time, views_count')
+            .eq('status', 'published')
+            .neq('id', post.id)
+            .order('published_at', { ascending: false })
+            .limit(3);
+          if (fbError) throw fbError;
+          setRelated(fallback || []);
+        } else {
+          setRelated(data);
+        }
+      } catch (e) {
+        console.error('Error fetching related posts:', e);
+      }
+    };
+    fetchRelated();
+  }, [post]);
   if (loading) {
     return (
       <div className="min-h-screen bg-background pt-[var(--header-height)] py-8">
