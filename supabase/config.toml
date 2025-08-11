@@ -88,3 +88,6 @@ verify_jwt = false
 
 [functions.override-orchestrator]
 verify_jwt = false
+
+[functions.blog-batch-rewrite]
+verify_jwt = false
