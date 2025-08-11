@@ -13,6 +13,8 @@ import { AlertCircle, CheckCircle, Eye, Save, Send, Wand2, Link } from 'lucide-r
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import AITestRunner from '@/components/blog/AITestRunner';
+import BatchRewriterFromCSV from '@/components/blog/BatchRewriterFromCSV';
 
 interface FormData {
   title: string;
@@ -687,7 +689,12 @@ const NewBlogAdmin = () => {
                 </CardContent>
               </Card>
             </TabsContent>
-          </Tabs>
+           </Tabs>
+
+           <div className="grid lg:grid-cols-2 gap-6 mt-8">
+             <AITestRunner />
+             <BatchRewriterFromCSV />
+           </div>
 
           {/* Action Buttons */}
           <div className="flex items-center justify-between border-t pt-6">
