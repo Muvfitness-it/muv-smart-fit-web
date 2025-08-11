@@ -17,12 +17,9 @@ serve(async (req) => {
   }
 
   try {
-    const { title, action } = await req.json();
+    const { title, action, provider: reqProvider } = await req.json();
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
+    const provider = (reqProvider === 'gemini') ? 'gemini' : 'openai';
 
     // PROMPT INTERNO IA (STICKY PER SCRITTURA/RISCRITTURA)
     const systemPrompt = `AGISCI COME: Editor Senior SEO/SEM/Copy per MUV Fitness (Legnago, VR).
@@ -76,28 +73,55 @@ FORMATO RISPOSTA JSON:
       ? `Scrivi un articolo completo partendo dal titolo: "${title}". Segui tutte le regole SEO e di struttura.`
       : `Riscrivi completamente ex-novo un articolo sul tema: "${title}". Ignora qualsiasi contenuto esistente e crea tutto da zero.`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        temperature: 0.6,
-        max_tokens: 3500
-      }),
-    });
+    let rawContent = '';
 
-    const aiData = await response.json();
-    
-    // Estrarre JSON in modo robusto dall'output del modello
-    const rawContent: string = aiData?.choices?.[0]?.message?.content ?? '';
+    if (provider === 'openai') {
+      if (!openAIApiKey) {
+        throw new Error('OpenAI API key not configured');
+      }
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openAIApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          temperature: 0.6,
+          max_tokens: 3500
+        }),
+      });
+      const aiData = await response.json();
+      rawContent = aiData?.choices?.[0]?.message?.content ?? '';
+    } else {
+      const geminiKey = Deno.env.get('GEMINI_API_KEY');
+      if (!geminiKey) {
+        throw new Error('Gemini API key not configured');
+      }
+      const geminiPrompt = `${systemPrompt}\n\nISTRUZIONI:\n${userPrompt}\n\nRISPONDI SOLO CON JSON nel formato definito in 'FORMATO RISPOSTA JSON'.`;
+      const gRes = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=' + geminiKey, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            { role: 'user', parts: [{ text: geminiPrompt }] }
+          ],
+          generationConfig: {
+            temperature: 0.6,
+            maxOutputTokens: 3500,
+            responseMimeType: 'application/json'
+          }
+        })
+      });
+      const gData = await gRes.json();
+      rawContent = gData?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    }
+
     if (!rawContent) {
       throw new Error('Invalid AI response');
     }

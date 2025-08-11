@@ -85,7 +85,7 @@ serve(async (req) => {
     for (const t of tasks) {
       // 1) Generate draft via AI writer
       const aiRes = await supabase.functions.invoke<AIWriterResponse>('ai-article-writer', {
-        body: { title: t.title, action: t.action },
+        body: { title: t.title, action: t.action, provider: input?.provider || 'openai' },
       });
 
       if (aiRes.error) {
