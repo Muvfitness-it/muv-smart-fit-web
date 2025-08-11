@@ -10,6 +10,7 @@ import UnifiedSEO from '@/components/SEO/UnifiedSEO';
 import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import EnhancedBlogSEO from '@/components/blog/EnhancedBlogSEO';
 import BlogPostContent from '@/components/blog/BlogPostContent';
+import StickyCTA from '@/components/blog/StickyCTA';
 import { useAnalytics } from '@/hooks/useAnalytics';
 interface BlogPost {
   id: string;
@@ -39,7 +40,7 @@ const BlogPost = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [related, setRelated] = useState<BlogPost[]>([]);
+  const [related, setRelated] = useState<RelatedPost[]>([]);
   useEffect(() => {
     const fetchPost = async () => {
       if (!slug) {
@@ -200,6 +201,7 @@ const BlogPost = () => {
       
       {/* Blog Post Content */}
       <BlogPostContent post={post} />
+      <StickyCTA />
     </div>
   );
 };

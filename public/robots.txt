@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /blog/tag/
+Disallow: /search
 Sitemap: https://www.muvfitness.it/sitemap.xml
 Sitemap: https://www.muvfitness.it/sitemap-blog.xml
+Sitemap: https://www.muvfitness.it/news-sitemap.xml

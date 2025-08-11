@@ -8,7 +8,7 @@ import { Search, Calendar, Clock, Tag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import LazyImage from '@/components/ui/LazyImage';
-
+import StickyCTA from '@/components/blog/StickyCTA';
 interface BlogPost {
   id: string;
   title: string;
@@ -266,6 +266,7 @@ const BlogArchive = () => {
           </Button>
         </div>
       </section>
+      <StickyCTA />
     </div>
   );
 };
