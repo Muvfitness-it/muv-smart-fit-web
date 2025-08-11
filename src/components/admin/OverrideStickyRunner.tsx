@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 const STORAGE_KEY_OPENAI = 'override_sticky_done_v2_openai';
 const STORAGE_KEY_GEMINI = 'override_sticky_done_v1_gemini';
 const STORAGE_KEY_BATCH = 'batch_rewrite_done_v1';
