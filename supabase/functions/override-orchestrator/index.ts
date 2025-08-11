@@ -39,11 +39,46 @@ serve(async (req) => {
   const supabase = createClient(SUPABASE_URL, SERVICE_ROLE);
 
   try {
-    // Titles to process based on the override plan
-    const tasks: { title: string; action: 'write_from_title' | 'rewrite_from_title' }[] = [
-      { title: 'Dimagrire con Vacuum a Legnago: guida completa', action: 'write_from_title' },
-      { title: 'Postura perfetta sotto il sole: Pancafit e Pilates', action: 'rewrite_from_title' },
-    ];
+    // Costruisci i task da body/CSV o usa fallback
+    let input: any = {};
+    try { input = await req.json(); } catch (_) {}
+
+    async function titlesFromCsvUrl(url: string): Promise<string[]> {
+      try {
+        const res = await fetch(url);
+        const text = await res.text();
+        // Estrai prima colonna "title"
+        return text.split('\n').slice(1).map(l => l.split(',')[0].trim()).filter(Boolean);
+      } catch (_) { return []; }
+    }
+    function titlesFromCsvString(csv: string): string[] {
+      return csv.split('\n').slice(1).map(l => l.split(',')[0].trim()).filter(Boolean);
+    }
+
+    let titles: string[] = [];
+    if (Array.isArray(input.titles)) {
+      titles = input.titles.filter((t: any) => typeof t === 'string');
+    } else if (typeof input.csvString === 'string') {
+      titles = titlesFromCsvString(input.csvString);
+    } else if (typeof input.csvUrl === 'string') {
+      titles = await titlesFromCsvUrl(input.csvUrl);
+    }
+
+    if (titles.length === 0) {
+      titles = [
+        'Dimagrire con Vacuum a Legnago: guida completa',
+        'Postura perfetta sotto il sole: Pancafit e Pilates'
+      ];
+    }
+
+    const tasks: { title: string; action: 'write_from_title' | 'rewrite_from_title' }[] = titles
+      .slice(0, input.limit || 5)
+      .map((t: string, i: number) => ({
+        title: t,
+        action: (input?.action === 'rewrite_from_title' || (Array.isArray(input?.actions) && input.actions[i] === 'rewrite_from_title'))
+          ? 'rewrite_from_title'
+          : 'write_from_title'
+      }));
 
     const results: any[] = [];
 

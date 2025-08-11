@@ -40,6 +40,7 @@ STRUTTURA OBBLIGATORIA (HTML SOLO)
 - Conclusione con sintesi + CTA: "Vuoi risultati concreti e duraturi? Prenota oggi la tua prova gratuita al Centro Fitness MUV a Legnago."
 - 2–4 link interni pertinenti (anchor descrittive).
 - Immagini: <img loading="lazy" alt="descrizione naturale con keyword">
+- Inserisci in coda un <script type="application/ld+json"> con JSON-LD Article coerente con title, meta, slug (usa lo slug generato) e "author": "MUV Fitness".
 - NIENTE markdown, NIENTE stili inline superflui; HTML pulito.
 
 SEO OBBLIGATORIO
@@ -82,13 +83,14 @@ FORMATO RISPOSTA JSON:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
+        response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        temperature: 0.7,
-        max_tokens: 4000
+        temperature: 0.6,
+        max_tokens: 3500
       }),
     });
 
