@@ -31,12 +31,16 @@ serve(async (req) => {
     if (linkerRes.error) throw new Error(`internal-linker: ${linkerRes.error.message}`);
     if (jsonldRes.error) throw new Error(`jsonld-optimizer: ${jsonldRes.error.message}`);
 
-    // 3) Sitemaps (in parallelo)
-    const [smRes, newsSmRes] = await Promise.all([
+    // 3) Media optimization + Sitemaps (in parallelo)
+    const [imgOptRes, smRes, blogSmRes, newsSmRes] = await Promise.all([
+      supabase.functions.invoke("image-optimizer", { body: { mode: "webp+og", limit: 100 } }),
       supabase.functions.invoke("sitemap", { body: {} }),
+      supabase.functions.invoke("blog-sitemap", { body: {} }),
       supabase.functions.invoke("news-sitemap", { body: {} }),
     ]);
+    if (imgOptRes.error) throw new Error(`image-optimizer: ${imgOptRes.error.message}`);
     if (smRes.error) throw new Error(`sitemap: ${smRes.error.message}`);
+    if (blogSmRes.error) throw new Error(`blog-sitemap: ${blogSmRes.error.message}`);
     if (newsSmRes.error) throw new Error(`news-sitemap: ${newsSmRes.error.message}`);
 
     const report = {
@@ -44,7 +48,8 @@ serve(async (req) => {
       cleanup: cleanupData?.data || cleanupData || null,
       linker: linkerRes?.data || null,
       jsonld: jsonldRes?.data || null,
-      sitemaps: { sitemap: smRes?.data || null, news: newsSmRes?.data || null },
+      images: imgOptRes?.data || null,
+      sitemaps: { sitemap: smRes?.data || null, blog: blogSmRes?.data || null, news: newsSmRes?.data || null },
       timestamp: new Date().toISOString(),
     };
 

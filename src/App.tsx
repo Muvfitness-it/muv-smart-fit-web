@@ -60,7 +60,8 @@ import AutoSitemapUpdater from "./components/SEO/AutoSitemapUpdater";
 import RedirectResolver from "./components/SEO/RedirectResolver";
 import AutoOptimizerRunner from "./components/SEO/AutoOptimizerRunner";
 import OverrideStickyRunner from "./components/admin/OverrideStickyRunner";
-
+import SiteOptimizerWeeklyRunner from "./components/SEO/SiteOptimizerWeeklyRunner";
+import AdminSEOReport from "./pages/AdminSEOReport";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -92,6 +93,7 @@ const AppContent = () => {
       <RedirectResolver />
       <AutoOptimizer />
       <AutoOptimizerRunner />
+      <SiteOptimizerWeeklyRunner />
       <AutoSitemapUpdater />
       <OverrideStickyRunner />
       <LocalBusinessSchema />
@@ -146,6 +148,7 @@ const AppContent = () => {
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
+                <Route path="/admin/seo-report" element={<AdminSEOReport />} />
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
