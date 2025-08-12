@@ -20,16 +20,8 @@ enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false
 
+# Public endpoints (no JWT required)
 [functions.ai-auth]
-verify_jwt = false
-
-[functions.blog-auto-post]
-verify_jwt = false
-
-[functions.gemini-provider]
-verify_jwt = false
-
-[functions.security-audit]
 verify_jwt = false
 
 [functions.sitemap]
@@ -41,65 +33,25 @@ verify_jwt = false
 [functions.news-sitemap]
 verify_jwt = false
 
-[functions.seed-blog-drafts]
-verify_jwt = false
-
-[functions.gemini-api]
-verify_jwt = false
-
-[functions.gemini-image]
-verify_jwt = false
-
-[functions.auto-optimizer]
-verify_jwt = false
-
-[functions.redirect-handler]
-verify_jwt = false
-
-[functions.slug-normalizer]
-verify_jwt = false
-
-[functions.image-optimizer]
-verify_jwt = false
-
-[functions.jsonld-optimizer]
-verify_jwt = false
-
-[functions.internal-linker]
-verify_jwt = false
-
-[functions.final-audit]
-verify_jwt = false
-
-[functions.content-fixer]
-verify_jwt = false
-
-[functions.blog-formatter]
-verify_jwt = false
-
-[functions.restore-backups]
-verify_jwt = false
-
-[functions.export-blog-titles]
-verify_jwt = false
-
-[functions.ai-article-writer]
-verify_jwt = false
-
-[functions.override-orchestrator]
-verify_jwt = false
-
-[functions.blog-batch-rewrite]
-verify_jwt = false
-
-[functions.blog-cleanup]
-verify_jwt = false
-
-[functions.site-optimizer]
-verify_jwt = false
-
 [functions.blog-rss]
 verify_jwt = false
 
 [functions.update-sitemaps]
 verify_jwt = false
+
+[functions.redirect-handler]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.send-booking-email]
+verify_jwt = false
+
+[functions.verify-ai-token]
+verify_jwt = false
+
+[functions.security-audit]
+verify_jwt = false
+
+# All other functions require JWT by default (no override here)

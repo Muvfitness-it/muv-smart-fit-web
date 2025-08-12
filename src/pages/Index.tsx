@@ -27,8 +27,9 @@ const Index = () => {
   // Initialize lead tracking
   useLeadTracking();
 
-  // One-time automatic trigger to extend drafts and generate images
+  // One-time automatic trigger to extend drafts and generate images (admin only)
   useEffect(() => {
+    if (!isAdmin) return; // Only admins should trigger seed operations
     const key = 'muv_seed_now_v3';
     if (localStorage.getItem(key)) return;
     (async () => {
@@ -47,7 +48,7 @@ const Index = () => {
         localStorage.setItem(key, '1');
       }
     })();
-  }, []);
+  }, [isAdmin]);
 
   return (
     <div className="min-h-screen bg-gray-900">

@@ -12,19 +12,10 @@ export const useSecurityAudit = (user?: User | null) => {
 
   const logSecurityEvent = useCallback(async (event: SecurityEvent) => {
     try {
-      // Get client info
-      const userAgent = navigator.userAgent;
-      const ipAddress = await fetch('https://api.ipify.org?format=json')
-        .then(res => res.json())
-        .then(data => data.ip)
-        .catch(() => 'unknown');
-
       await supabase.functions.invoke('security-audit', {
         body: {
           ...event,
           user_id: event.user_id || user?.id,
-          ip_address: ipAddress,
-          user_agent: userAgent
         }
       });
     } catch (error) {

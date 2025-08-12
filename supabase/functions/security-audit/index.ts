@@ -66,15 +66,31 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Derive IP and User-Agent from request headers (ignore client-provided values)
+    const forwardedFor = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '';
+    const ip_address = forwardedFor.split(',')[0]?.trim() || undefined;
+    const user_agent = req.headers.get('user-agent') || undefined;
+
+    // Try to associate event to an authenticated user (if a Bearer token is present)
+    const authHeader = req.headers.get('authorization') || req.headers.get('Authorization') || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+    let user_id: string | undefined = undefined;
+    if (token) {
+      const { data: userResp } = await supabase.auth.getUser(token);
+      if (userResp?.user?.id) {
+        user_id = userResp.user.id;
+      }
+    }
+
     // Log the security event
     const { error } = await supabase
       .from('security_audit_log')
       .insert({
-        user_id: body.user_id,
+        user_id,
         event_type: body.event_type,
         event_data: body.event_data || {},
-        ip_address: body.ip_address,
-        user_agent: body.user_agent,
+        ip_address,
+        user_agent,
       });
 
     if (error) {
@@ -89,18 +105,18 @@ Deno.serve(async (req) => {
     }
 
     // Check for suspicious patterns and alert if needed
-    if (body.event_type === 'login_failed') {
+    if (body.event_type === 'login_failed' && ip_address) {
       // Check for multiple failed attempts from same IP
       const { data: recentFailures } = await supabase
         .from('security_audit_log')
         .select('id')
         .eq('event_type', 'login_failed')
-        .eq('ip_address', body.ip_address)
+        .eq('ip_address', ip_address)
         .gte('created_at', new Date(Date.now() - 15 * 60 * 1000).toISOString()); // Last 15 minutes
 
       if (recentFailures && recentFailures.length >= 5) {
-        console.warn(`Multiple failed login attempts detected from IP: ${body.ip_address}`);
-        // Here you could implement additional security measures like temporary IP blocking
+        console.warn(`Multiple failed login attempts detected from IP: ${ip_address}`);
+        // Optional: add throttling or notifications here
       }
     }
 
