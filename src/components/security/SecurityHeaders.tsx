@@ -11,6 +11,7 @@ export const SecurityHeaders = () => {
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https: blob:;
         connect-src 'self' https://baujoowgqeyraqnukkmw.supabase.co wss://baujoowgqeyraqnukkmw.supabase.co https://api.ipify.org;
+        worker-src 'self';
         frame-ancestors 'self';
         frame-src 'self';
         object-src 'none';
