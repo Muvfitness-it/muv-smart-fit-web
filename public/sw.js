@@ -1,7 +1,7 @@
-const CACHE_NAME = 'muv-fitness-v3';
-const STATIC_CACHE = 'muv-static-v3';
-const DYNAMIC_CACHE = 'muv-dynamic-v3';
-const IMAGE_CACHE = 'muv-images-v3';
+const CACHE_NAME = 'muv-fitness-v4';
+const STATIC_CACHE = 'muv-static-v4';
+const DYNAMIC_CACHE = 'muv-dynamic-v4';
+const IMAGE_CACHE = 'muv-images-v4';
 
 const urlsToCache = [
   '/',
