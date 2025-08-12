@@ -17,10 +17,10 @@ export const AutoSitemapUpdater = () => {
         
         // Alternatively, call the Edge Function to get fresh data
         try {
-          const response = await fetch('/api/sitemap-update', {
+          const response = await fetch('https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/update-sitemaps', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'update_blog_sitemap' })
+            body: JSON.stringify({ action: 'update_all_sitemaps' })
           });
           
           if (response.ok) {
