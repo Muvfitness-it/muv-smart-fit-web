@@ -54,6 +54,7 @@ import BlogCategory from "./pages/blog/BlogCategory";
 import BlogArticle from "./pages/blog/BlogArticle";
 import AdminBlogList from "./pages/admin/AdminBlogList";
 import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
+import AdminCategories from "./pages/admin/AdminCategories";
 const queryClient = new QueryClient();
 
 const AppContent = () => {

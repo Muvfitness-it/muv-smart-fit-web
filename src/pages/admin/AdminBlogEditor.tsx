@@ -41,6 +41,8 @@ const AdminBlogEditor = () => {
   const [saving, setSaving] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiTopic, setAiTopic] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
 
   useEffect(() => {
     const loadCats = async () => {
@@ -131,6 +133,34 @@ const AdminBlogEditor = () => {
     }
   };
 
+  const handleUpload = async () => {
+    if (!uploadFile) {
+      toast({ title: 'Seleziona un file', description: 'Scegli un\'immagine da caricare' });
+      return;
+    }
+    try {
+      setUploading(true);
+      const ext = uploadFile.name.split('.').pop() || 'jpg';
+      const safeName = uploadFile.name.replace(/[^a-zA-Z0-9.\-_/]/g, '-');
+      const path = `blog/${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from('immagini').upload(path, uploadFile, {
+        cacheControl: '3600',
+        contentType: uploadFile.type || 'image/*',
+        upsert: false,
+      });
+      if (upErr) throw upErr;
+      const { data } = supabase.storage.from('immagini').getPublicUrl(path);
+      if (data?.publicUrl) {
+        setFeatured(data.publicUrl);
+        toast({ title: 'Immagine caricata', description: 'URL inserito automaticamente' });
+      }
+    } catch (e: any) {
+      toast({ title: 'Errore upload', description: e.message || 'Caricamento non riuscito', variant: 'destructive' });
+    } finally {
+      setUploading(false);
+    }
+  };
+
   if (!isAdmin) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -193,8 +223,13 @@ const AdminBlogEditor = () => {
             </Select>
           </div>
           <div>
-            <Label htmlFor="featured">URL immagine di copertina</Label>
-            <Input id="featured" value={featured} onChange={e => setFeatured(e.target.value)} placeholder="https://..." />
+            <Label htmlFor="featured">Immagine di copertina</Label>
+            <Input id="featured" value={featured} onChange={e => setFeatured(e.target.value)} placeholder="https://..." className="mb-2" />
+            <div className="flex items-center gap-2">
+              <Input type="file" accept="image/*" onChange={e => setUploadFile(e.target.files?.[0] || null)} />
+              <Button onClick={handleUpload} disabled={uploading}>{uploading ? 'Caricamento...' : 'Carica'}</Button>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Carica su Storage e imposta automaticamente l'URL pubblico.</p>
           </div>
           <div>
             <Label>Stato</Label>
