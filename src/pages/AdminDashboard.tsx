@@ -3,18 +3,9 @@ import { Helmet } from 'react-helmet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, FileText, BarChart3, Search, Settings, Users, LogOut } from 'lucide-react';
+import { Plus, FileText, BarChart3, Settings, Users, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/hooks/use-toast';
-import AutoOptimizerControl from '@/components/admin/AutoOptimizerControl';
-import SlugNormalizer from '@/components/admin/SlugNormalizer';
-import BatchOptimizer from '@/components/admin/BatchOptimizer';
-import OptimizationPipeline from '@/components/admin/OptimizationPipeline';
-import FinalAudit from '@/components/admin/FinalAudit';
-import BlogFormatter from '@/components/admin/BlogFormatter';
-import ContentRestore from '@/components/admin/ContentRestore';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -60,7 +51,7 @@ const AdminDashboard = () => {
         {/* Main Content */}
         <div className="container mx-auto px-4 py-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-none lg:flex">
+            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-none lg:flex">
               <TabsTrigger value="articles" className="flex items-center space-x-2">
                 <FileText className="w-4 h-4" />
                 <span>Gestisci Articoli</span>
@@ -68,10 +59,6 @@ const AdminDashboard = () => {
               <TabsTrigger value="analytics" className="flex items-center space-x-2">
                 <BarChart3 className="w-4 h-4" />
                 <span>Statistiche</span>
-              </TabsTrigger>
-              <TabsTrigger value="seo" className="flex items-center space-x-2">
-                <Search className="w-4 h-4" />
-                <span>SEO</span>
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center space-x-2">
                 <Settings className="w-4 h-4" />
@@ -135,79 +122,6 @@ const AdminDashboard = () => {
               </div>
             </TabsContent>
 
-            {/* SEO Tab */}
-            <TabsContent value="seo" className="mt-6">
-              <div className="space-y-6">
-                {/* RIPRISTINO CONTENUTI */}
-                <ContentRestore />
-
-                {/* FORZA REFORMAT BLOG */}
-                <BlogFormatter />
-
-                {/* Optimization Pipeline - After Formatting */}
-                <OptimizationPipeline />
-                
-                {/* Final Audit - GO/NO-GO */}
-                <FinalAudit />
-                
-                {/* Individual Controls */}
-                <details className="border rounded-lg">
-                  <summary className="p-4 cursor-pointer font-medium">Controlli Individuali</summary>
-                  <div className="p-4 space-y-6 border-t">
-                    <SlugNormalizer />
-                    <BatchOptimizer />
-                    <AutoOptimizerControl />
-                  </div>
-                </details>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Ottimizzazione SEO</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-3">
-                        <h4 className="font-medium">Stato SEO Articoli</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm">Articoli ottimizzati</span>
-                            <span className="text-sm font-medium">--</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm">Meta description mancanti</span>
-                            <span className="text-sm font-medium">--</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm">Immagini senza alt text</span>
-                            <span className="text-sm font-medium">--</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <h4 className="font-medium">Performance Keywords</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm">Keywords monitorate</span>
-                            <span className="text-sm font-medium">--</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm">Posizione media</span>
-                            <span className="text-sm font-medium">--</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm">Click-through rate</span>
-                            <span className="text-sm font-medium">--%</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <Button className="w-full">
-                      Analizza SEO Completa
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
 
             {/* Settings Tab */}
             <TabsContent value="settings" className="mt-6">

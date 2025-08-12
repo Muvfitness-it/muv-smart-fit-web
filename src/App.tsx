@@ -48,7 +48,7 @@ import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
-import AdminSEOReport from "./pages/AdminSEOReport";
+
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
 import BlogArticle from "./pages/blog/BlogArticle";
@@ -117,7 +117,7 @@ const AppContent = () => {
                 <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
                 <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
-                <Route path="/admin/seo-report" element={<AdminSEOReport />} />
+                
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
