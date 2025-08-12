@@ -31,6 +31,7 @@ const BlogCategory = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [recommended, setRecommended] = useState<Post[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -55,6 +56,18 @@ const BlogCategory = () => {
 
         setPosts(firstPosts || []);
         setHasMore((count || 0) > PAGE_SIZE);
+
+        // Carica consigliati (stessa categoria, evitando duplicati)
+        const { data: rec } = await supabase
+          .from('blog_posts')
+          .select('id, title, slug, excerpt, featured_image, published_at')
+          .eq('status', 'published')
+          .eq('category_id', cat.id)
+          .order('published_at', { ascending: false })
+          .limit(6);
+        const existingIds = new Set((firstPosts || []).map(p => p.id));
+        const filtered = (rec || []).filter(p => !existingIds.has(p.id)).slice(0, 3) as Post[];
+        setRecommended(filtered);
       } else {
         setPosts([]);
         setHasMore(false);
@@ -168,6 +181,42 @@ const BlogCategory = () => {
                   {loadingMore ? "Caricamento..." : "Carica altri"}
                 </Button>
               </div>
+            )}
+
+            {recommended.length > 0 && (
+              <section className="mt-12">
+                <h2 className="text-2xl font-bold mb-6">Articoli consigliati{category ? ` in ${category.name}` : ''}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {recommended.map((post) => (
+                    <Card key={post.id} className="overflow-hidden">
+                      {post.featured_image && (
+                        <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
+                          <LazyImage
+                            src={post.featured_image}
+                            alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}
+                            className="w-full h-40 object-cover"
+                            width={800}
+                            height={450}
+                          />
+                        </Link>
+                      )}
+                      <CardHeader>
+                        <CardTitle className="text-lg">
+                          <Link to={`/blog/${post.slug}`} className="hover:underline">
+                            {post.title}
+                          </Link>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        {post.excerpt && <p className="text-muted-foreground line-clamp-2">{post.excerpt}</p>}
+                        <div className="mt-3">
+                          <Button asChild size="sm" variant="outline"><Link to={`/blog/${post.slug}`}>Leggi</Link></Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </section>
             )}
           </>
         )}

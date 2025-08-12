@@ -1,13 +1,29 @@
-
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 // Use the new logo from public folder
 
 const Footer = () => {
+  const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('title, slug, published_at')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(3);
+      setLatest((data || []).map(d => ({ title: d.title as string, slug: d.slug as string })));
+    };
+    load();
+  }, []);
+
   return (
     <footer className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
@@ -80,6 +96,22 @@ const Footer = () => {
               <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Consulenza Nutrizionale
               </Link>
+            </div>
+          </div>
+          {/* Ultimi Articoli */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Ultimi articoli</h3>
+            <div className="space-y-2">
+              {latest.map(p => (
+                <Link key={p.slug} to={`/blog/${p.slug}`} className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                  {p.title}
+                </Link>
+              ))}
+              <a
+                href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
+                className="block text-gray-400 hover:text-pink-600 text-sm"
+                aria-label="Feed RSS del Blog"
+              >RSS Feed</a>
             </div>
           </div>
 
