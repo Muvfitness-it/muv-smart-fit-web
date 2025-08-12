@@ -71,10 +71,31 @@ if (data?.ok) {
       }
     };
 
-    // Avvio test orchestrator (2 task) e batch rewrite completo
+    // Avvio test orchestrator (2 task), batch rewrite completo e ottimizzazione sito
     runProvider('openai', STORAGE_KEY_OPENAI);
     setTimeout(() => runProvider('gemini', STORAGE_KEY_GEMINI), 2500);
     setTimeout(() => runBatchRewrite(), 4000);
+
+    const runSiteOptimizer = async (attempt = 1) => {
+      try {
+        const { data, error } = await supabase.functions.invoke('site-optimizer', { body: {} });
+        if (error) {
+          console.error('site-optimizer error:', error);
+          if (attempt < 3) setTimeout(() => runSiteOptimizer(attempt + 1), 1500 * attempt);
+          return;
+        }
+        console.log('site-optimizer data:', data);
+        toast({
+          title: 'Ottimizzazione completata',
+          description: 'Pulizia contenuti, linking e sitemap aggiornate.',
+          duration: 6000,
+        });
+      } catch (e) {
+        console.error('site-optimizer exception:', e);
+        if (attempt < 3) setTimeout(() => runSiteOptimizer(attempt + 1), 1500 * attempt);
+      }
+    };
+    setTimeout(() => runSiteOptimizer(), 6500);
   }, []);
 
   return null;

@@ -91,3 +91,9 @@ verify_jwt = false
 
 [functions.blog-batch-rewrite]
 verify_jwt = false
+
+[functions.blog-cleanup]
+verify_jwt = false
+
+[functions.site-optimizer]
+verify_jwt = false
