@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,11 +7,15 @@ import LazyImage from '@/components/ui/LazyImage';
 import { ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import UnifiedSEO from '@/components/SEO/UnifiedSEO';
-import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
-import EnhancedBlogSEO from '@/components/blog/EnhancedBlogSEO';
+
+
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import StickyCTA from '@/components/blog/StickyCTA';
 import { useAnalytics } from '@/hooks/useAnalytics';
+
+// Lazy-loaded heavy, non-critical SEO modules
+const CrawlerOptimizer = lazy(() => import('@/components/SEO/CrawlerOptimizer'));
+const EnhancedBlogSEO = lazy(() => import('@/components/blog/EnhancedBlogSEO'));
 interface BlogPost {
   id: string;
   title: string;
@@ -41,6 +45,9 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [related, setRelated] = useState<RelatedPost[]>([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => { setIsClient(true); }, []);
   useEffect(() => {
     const fetchPost = async () => {
       if (!slug) {

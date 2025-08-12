@@ -95,7 +95,8 @@ const BlogPostContent: React.FC<BlogPostContentProps> = ({ post }) => {
             src={post.featured_image}
             alt={post.title}
             className="w-full h-64 md:h-96 object-cover"
-            loading="eager"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       )}
