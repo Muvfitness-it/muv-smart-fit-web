@@ -113,6 +113,7 @@ const AppContent = () => {
                 <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/blog" element={<AdminBlogList />} />
+                <Route path="/admin/blog/categorie" element={<AdminCategories />} />
                 <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
                 <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />

@@ -75,7 +75,10 @@ const AdminBlogList = () => {
 
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Articoli</h1>
-        <Button onClick={() => navigate("/admin/blog/new")}>Nuovo articolo</Button>
+        <div className="flex gap-2">
+          <Button onClick={() => navigate("/admin/blog/categorie")} variant="outline">Categorie</Button>
+          <Button onClick={() => navigate("/admin/blog/new")}>Nuovo articolo</Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-3 mb-6">
