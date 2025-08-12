@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { supabase } from "@/integrations/supabase/client";
 import LazyImage from "@/components/ui/LazyImage";
+import { Badge } from "@/components/ui/badge";
 
 interface Post {
   id: string;
@@ -16,19 +17,22 @@ interface Post {
   featured_image: string | null;
   published_at: string | null;
   author_name: string | null;
+  category_id: string | null;
 }
 
 const BlogArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const [category, setCategory] = useState<{ id: string; name: string; slug: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{ open: boolean; index: number }>({ open: false, index: 0 });
 
   useEffect(() => {
     const load = async () => {
       if (!slug) return;
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, content, excerpt, meta_title, meta_description, featured_image, published_at, author_name")
+        .select("id, title, slug, content, excerpt, meta_title, meta_description, featured_image, published_at, author_name, category_id")
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
@@ -45,6 +49,16 @@ const BlogArticle = () => {
       }
 
       setPost(data as Post);
+
+      // Carica categoria se presente
+      if ((data as any).category_id) {
+        const { data: cat } = await supabase
+          .from('blog_categories')
+          .select('id, name, slug')
+          .eq('id', (data as any).category_id)
+          .maybeSingle();
+        setCategory(cat || null);
+      }
 
       // Incrementa le visualizzazioni (best-effort)
       void (async () => { try { await supabase.rpc("increment_article_views", { article_id: slug }); } catch { /* no-op */ } })();
@@ -87,6 +101,21 @@ const BlogArticle = () => {
     return imgs;
   }, [post?.content, post?.featured_image]);
 
+  useEffect(() => {
+    if (!lightbox.open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox({ open: false, index: 0 });
+      if (e.key === 'ArrowRight' && galleryImages.length > 0) {
+        setLightbox(prev => ({ open: true, index: (prev.index + 1) % galleryImages.length }));
+      }
+      if (e.key === 'ArrowLeft' && galleryImages.length > 0) {
+        setLightbox(prev => ({ open: true, index: (prev.index - 1 + galleryImages.length) % galleryImages.length }));
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox.open, galleryImages.length]);
+
   if (notFound) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -114,6 +143,13 @@ const BlogArticle = () => {
             <header className="mb-8">
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{post.title}</h1>
               <p className="text-muted-foreground mt-2">{date}</p>
+              {category && (
+                <div className="mt-2">
+                  <Link to={`/blog/c/${category.slug}`}>
+                    <Badge variant="secondary">{category.name}</Badge>
+                  </Link>
+                </div>
+              )}
             </header>
 
             {post.featured_image && (
@@ -139,14 +175,22 @@ const BlogArticle = () => {
                 <h2 className="text-xl font-semibold mb-4">Galleria immagini</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {galleryImages.map((src, idx) => (
-                    <LazyImage
+                    <button
                       key={src}
-                      src={src}
-                      alt={`Galleria: ${post.title} - immagine ${idx + 1}`}
-                      className="w-full h-40 md:h-48 object-cover rounded-lg"
-                      width={800}
-                      height={600}
-                    />
+                      type="button"
+                      onClick={() => setLightbox({ open: true, index: idx })}
+                      className="group relative focus:outline-none"
+                      aria-label={`Apri immagine ${idx + 1} in galleria`}
+                    >
+                      <LazyImage
+                        src={src}
+                        alt={`Galleria: ${post.title} - immagine ${idx + 1}`}
+                        className="w-full h-40 md:h-48 object-cover rounded-lg"
+                        width={800}
+                        height={600}
+                      />
+                      <span className="absolute inset-0 rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition" aria-hidden="true" />
+                    </button>
                   ))}
                 </div>
               </section>
@@ -161,6 +205,38 @@ const BlogArticle = () => {
           </div>
         )}
       </article>
+      {lightbox.open && (
+        <div className="fixed inset-0 z-50 bg-black/80 p-4 flex items-center justify-center" onClick={() => setLightbox({ open: false, index: 0 })}>
+          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="absolute top-2 right-2 bg-white/10 hover:bg-white/20 text-white rounded px-3 py-1"
+              onClick={() => setLightbox({ open: false, index: 0 })}
+              aria-label="Chiudi galleria"
+            >
+              Chiudi
+            </button>
+            <img
+              src={galleryImages[lightbox.index]}
+              alt={`Galleria: ${post?.title} - immagine ${lightbox.index + 1}`}
+              className="w-full h-auto max-h-[80vh] object-contain rounded"
+            />
+            {galleryImages.length > 1 && (
+              <>
+                <button
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10"
+                  onClick={() => setLightbox(prev => ({ open: true, index: (prev.index - 1 + galleryImages.length) % galleryImages.length }))}
+                  aria-label="Immagine precedente"
+                >‹</button>
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10"
+                  onClick={() => setLightbox(prev => ({ open: true, index: (prev.index + 1) % galleryImages.length }))}
+                  aria-label="Immagine successiva"
+                >›</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
