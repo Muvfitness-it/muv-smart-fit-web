@@ -91,6 +91,16 @@ const ContentRestore: React.FC = () => {
             {isRunning ? 'Ripristino in corso…' : 'Avvia Ripristino' }
           </Button>
         </div>
+        <Progress value={progress} />
+
+        {report && (
+          <div className="space-y-3">
+            <div className="text-sm">
+              <div>Totale: {report.summary.total_posts}</div>
+              <div>Ripristinati: {report.summary.restored}</div>
+              <div>Senza backup: {report.summary.no_backup}</div>
+              <div>Sotto {report.summary.min_words} parole: {report.summary.under_min_count}</div>
+            </div>
 
             {report.under_min?.length > 0 && (
               <div>
