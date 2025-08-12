@@ -1,9 +1,6 @@
 import { lazy, Suspense } from 'react';
 
 // Lazy load heavy components
-export const LazyBlogManager = lazy(() => import('../pages/BlogManager'));
-export const LazyBlogEditor = lazy(() => import('../pages/BlogEditor'));
-export const LazyBlogWriter = lazy(() => import('../pages/BlogWriter'));
 export const LazyAdminDashboard = lazy(() => import('../pages/AdminDashboard'));
 export const LazyAnalytics = lazy(() => import('../pages/Analytics'));
 export const LazyMuvPlanner = lazy(() => import('../pages/MuvPlanner'));
@@ -47,13 +44,4 @@ export const preloadComponents = () => {
     ]);
   }
 
-  // Preload blog components if on blog routes
-  const isBlogRoute = window.location.pathname.includes('/blog');
-  if (isBlogRoute) {
-    Promise.all([
-      import('../pages/BlogManager'),
-      import('../pages/BlogEditor'),
-      import('../pages/BlogWriter')
-    ]);
-  }
 };

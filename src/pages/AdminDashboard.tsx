@@ -8,9 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
-import ArticleManager from '@/components/blog/ArticleManager';
-import BlogDashboardStats from '@/components/blog/BlogDashboardStats';
 import AutoOptimizerControl from '@/components/admin/AutoOptimizerControl';
 import SlugNormalizer from '@/components/admin/SlugNormalizer';
 import BatchOptimizer from '@/components/admin/BatchOptimizer';
@@ -30,7 +27,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <SimpleProtectedRoute>
+    <>
       <div className="min-h-screen bg-background">
         <Helmet>
           <title>Dashboard Amministratore - MUV Fitness</title>
@@ -47,13 +44,6 @@ const AdminDashboard = () => {
                 <p className="text-muted-foreground">Benvenuto {user?.email}</p>
               </div>
               <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  onClick={() => navigate('/blog')}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  Visualizza Blog
-                </Button>
                 <Button
                   variant="outline"
                   onClick={handleSignOut}
@@ -134,14 +124,14 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Articles List */}
-                <ArticleManager />
+                <div className="text-muted-foreground">Il blog è stato dismesso.</div>
               </div>
             </TabsContent>
 
             {/* Analytics Tab */}
             <TabsContent value="analytics" className="mt-6">
               <div className="space-y-6">
-                <BlogDashboardStats />
+                <div className="text-muted-foreground">Statistiche blog non disponibili.</div>
               </div>
             </TabsContent>
 
@@ -264,7 +254,7 @@ const AdminDashboard = () => {
           </Tabs>
         </div>
       </div>
-    </SimpleProtectedRoute>
+    </>
   );
 };
 

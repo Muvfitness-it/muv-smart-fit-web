@@ -11,7 +11,7 @@ import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useSecurityAudit } from '@/hooks/useSecurityAudit';
-import SimpleProtectedRoute from '@/components/blog/SimpleProtectedRoute';
+
 import { Shield, Users, UserPlus, Eye, AlertTriangle } from 'lucide-react';
 
 interface UserRole {
@@ -199,7 +199,7 @@ const AdminUserManagement: React.FC = () => {
   };
 
   return (
-    <SimpleProtectedRoute>
+    <>
       <Helmet>
         <title>Gestione Utenti - Admin Dashboard</title>
         <meta name="robots" content="noindex, nofollow" />
@@ -401,7 +401,7 @@ const AdminUserManagement: React.FC = () => {
           )}
         </div>
       </div>
-    </SimpleProtectedRoute>
+    </>
   );
 };
 
