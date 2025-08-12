@@ -49,6 +49,9 @@ import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
 import AdminSEOReport from "./pages/AdminSEOReport";
+import BlogIndex from "./pages/blog/BlogIndex";
+import BlogCategory from "./pages/blog/BlogCategory";
+import BlogArticle from "./pages/blog/BlogArticle";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -102,7 +105,9 @@ const AppContent = () => {
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />
-                <Route path="/blog/*" element={<Navigate to="/" replace />} />
+                <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/c/:slug" element={<BlogCategory />} />
+                <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
                 <Route path="/admin/seo-report" element={<AdminSEOReport />} />
