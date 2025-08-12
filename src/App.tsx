@@ -52,6 +52,8 @@ import AdminSEOReport from "./pages/AdminSEOReport";
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
 import BlogArticle from "./pages/blog/BlogArticle";
+import AdminBlogList from "./pages/admin/AdminBlogList";
+import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -109,6 +111,9 @@ const AppContent = () => {
                 <Route path="/blog/c/:slug" element={<BlogCategory />} />
                 <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/blog" element={<AdminBlogList />} />
+                <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
+                <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
                 <Route path="/admin/seo-report" element={<AdminSEOReport />} />
                 <Route path="/contatti" element={<Contatti />} />
