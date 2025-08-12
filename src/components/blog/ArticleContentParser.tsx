@@ -32,6 +32,28 @@ const cleanHTML = (html: string) => {
     return `<img${newAttrs}>`;
   });
 
+  // 1) Fix overuse of bold: unwrap <strong> that wraps an entire long paragraph
+  sanitized = sanitized.replace(/<p>\s*<strong>([\s\S]{60,}?)<\/strong>\s*<\/p>/gi, '<p>$1<\/p>');
+  sanitized = sanitized.replace(/<p>\s*<b>([\s\S]{60,}?)<\/b>\s*<\/p>/gi, '<p>$1<\/p>');
+  // Also limit very long <strong> spans (50+ chars)
+  sanitized = sanitized.replace(/<strong>([^<]{50,})<\/strong>/gi, '$1');
+
+  // 2) Deduplicate "Prossimi passi" sections: keep only the first
+  let count = 0;
+  sanitized = sanitized.replace(/<!--\s*auto-internal-links\s*-->[\s\S]*?<!--\s*\/auto-internal-links\s*-->/gi, (m) => {
+    count++;
+    return count === 1 ? m : '';
+  });
+  // Handle blocks without markers: <h2>Prossimi passi consigliati</h2> ... <ul>...</ul>
+  count = 0;
+  sanitized = sanitized.replace(/<h2[^>]*>\s*Prossimi\s+passi[^<]*<\/h2>[\s\S]*?<ul[\s\S]*?<\/ul>/gi, (m) => {
+    count++;
+    return count === 1 ? m : '';
+  });
+
+  // 3) Remove duplicated identical link lists at the very end
+  sanitized = sanitized.replace(/(\s*<ul[\s\S]*?<\/ul>)(\s*\1)+$/i, '$1');
+
   return sanitized;
 };
 

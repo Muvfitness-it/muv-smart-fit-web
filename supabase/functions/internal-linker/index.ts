@@ -40,18 +40,39 @@ serve(async (req) => {
 
     for (const post of posts || []) {
       try {
-        // Skip if already has auto-internal-links
-        if (post.content.includes('<!-- auto-internal-links -->')) {
-          results.push({
-            id: post.id,
-            title: post.title,
-            status: 'already_has_links',
-            linksAdded: []
+        const content: string = post.content || '';
+        const hasMarker = /<!--\s*auto-internal-links\s*-->/.test(content);
+        const hasHeading = /<h2[^>]*>\s*Prossimi\s+passi[^<]*<\/h2>/i.test(content);
+
+        const dedupe = (html: string) => {
+          let out = html;
+          let count = 0;
+          out = out.replace(/<!--\s*auto-internal-links\s*-->[\s\S]*?<!--\s*\/auto-internal-links\s*-->/gi, (m) => {
+            count++;
+            return count === 1 ? m : '';
           });
+          count = 0;
+          out = out.replace(/<h2[^>]*>\s*Prossimi\s+passi[^<]*<\/h2>[\s\S]*?<ul[\s\S]*?<\/ul>/gi, (m) => {
+            count++;
+            return count === 1 ? m : '';
+          });
+          return out;
+        };
+
+        if (hasMarker || hasHeading) {
+          const cleaned = dedupe(content);
+          if (cleaned !== content) {
+            const { error: updateError } = await supabase
+              .from('blog_posts')
+              .update({ content: cleaned, updated_at: new Date().toISOString() })
+              .eq('id', post.id);
+            if (updateError) throw updateError;
+          }
+          results.push({ id: post.id, title: post.title, status: 'already_has_links', linksAdded: [] });
           continue;
         }
 
-        let updatedContent = post.content;
+        let updatedContent = content;
         const linksAdded: string[] = [];
 
         // Add a simple related posts section at the end
@@ -69,6 +90,7 @@ serve(async (req) => {
 <!-- /auto-internal-links -->`;
 
         updatedContent += relatedSection;
+        updatedContent = dedupe(updatedContent);
         linksAdded.push('Sezione "Prossimi passi" aggiunta');
 
         // Update post
@@ -90,7 +112,7 @@ serve(async (req) => {
         });
         processed++;
 
-      } catch (e) {
+      } catch (e: any) {
         errors.push(`Error processing ${post.id}: ${e.message}`);
       }
     }
