@@ -194,17 +194,20 @@ const BlogPost = () => {
         ogImage={post.featured_image || 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'}
       />
       
-      {/* Crawler Optimizer for AI and NotebookLM */}
-      <CrawlerOptimizer
-        title={post.title}
-        description={seoDescription}
-        content={post.content.replace(/<[^>]*>/g, '').substring(0, 1000)}
-        services={['Articoli fitness', 'Guide allenamento', 'Consigli nutrizione']}
-        location="Blog MUV Fitness"
-      />
-      
-      {/* Enhanced SEO for advanced blog features */}
-      <EnhancedBlogSEO post={post} />
+      {/* Crawler Optimizer and Enhanced SEO - deferred on client for performance */}
+      {isClient && (
+        <Suspense fallback={null}>
+          <CrawlerOptimizer
+            title={post.title}
+            description={seoDescription}
+            content={post.content.replace(/<[^>]*>/g, '').substring(0, 1000)}
+            services={['Articoli fitness', 'Guide allenamento', 'Consigli nutrizione']}
+            location="Blog MUV Fitness"
+          />
+          {/* Enhanced SEO for advanced blog features */}
+          <EnhancedBlogSEO post={post} />
+        </Suspense>
+      )}
       
       {/* Blog Post Content */}
       <BlogPostContent post={post} />
