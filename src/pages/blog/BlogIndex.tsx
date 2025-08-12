@@ -6,6 +6,7 @@ import LazyImage from "@/components/ui/LazyImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Post {
   id: string;
@@ -32,6 +33,7 @@ const BlogIndex = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [selectedCatId, setSelectedCatId] = useState<string | null>(null);
 
   useEffect(() => {
     const loadInitial = async () => {
@@ -54,17 +56,40 @@ const BlogIndex = () => {
     loadInitial();
   }, []);
 
+  // Ricarica quando cambia il filtro categoria
+  useEffect(() => {
+    const reload = async () => {
+      setLoading(true);
+      setPage(0);
+      let query = supabase
+        .from("blog_posts")
+        .select("id, title, slug, excerpt, featured_image, published_at, category_id", { count: "exact" })
+        .eq("status", "published")
+        .order("published_at", { ascending: false })
+        .range(0, PAGE_SIZE - 1);
+      if (selectedCatId) query = query.eq("category_id", selectedCatId);
+      const { data, count } = await query;
+      setPosts(data || []);
+      setHasMore((count || 0) > PAGE_SIZE);
+      setLoading(false);
+    };
+    // esegui su ogni cambio filtro
+    reload();
+  }, [selectedCatId]);
+
   const loadMore = async () => {
     if (!hasMore || loadingMore) return;
     setLoadingMore(true);
     const from = (page + 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
-    const { data } = await supabase
+    let query = supabase
       .from("blog_posts")
       .select("id, title, slug, excerpt, featured_image, published_at, category_id")
       .eq("status", "published")
       .order("published_at", { ascending: false })
       .range(from, to);
+    if (selectedCatId) query = query.eq("category_id", selectedCatId);
+    const { data } = await query;
 
     const newPosts = data || [];
     setPosts(prev => [...prev, ...newPosts]);
@@ -104,14 +129,29 @@ const BlogIndex = () => {
       <main className="container mx-auto px-4 py-8">
         {/* Categories */}
         <section aria-label="Categorie" className="mb-8">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((c) => (
-              <Link key={c.id} to={`/blog/c/${c.slug}`}>
-                <Badge variant="secondary" className="hover:opacity-80 transition" aria-label={`Categoria ${c.name}`}>
-                  {c.name}
-                </Badge>
-              </Link>
-            ))}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex flex-wrap gap-2">
+              {categories.map((c) => (
+                <Link key={c.id} to={`/blog/c/${c.slug}`}>
+                  <Badge variant="secondary" className="hover:opacity-80 transition" aria-label={`Categoria ${c.name}`}>
+                    {c.name}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+            <div className="w-full md:w-64">
+              <Select value={selectedCatId || "all"} onValueChange={(v) => setSelectedCatId(v === "all" ? null : v)}>
+                <SelectTrigger aria-label="Filtra per categoria">
+                  <SelectValue placeholder="Filtra per categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tutte le categorie</SelectItem>
+                  {categories.map(c => (
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </section>
 

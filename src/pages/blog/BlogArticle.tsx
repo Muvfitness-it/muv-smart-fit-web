@@ -73,6 +73,20 @@ const BlogArticle = () => {
       }
     : undefined;
 
+  // Estrai immagini aggiuntive dal contenuto per la galleria
+  const galleryImages = useMemo(() => {
+    const imgs: string[] = [];
+    const html = post?.content || "";
+    const regex = /<img[^>]+src=["']([^"']+)["']/gi;
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+      const src = match[1];
+      if (src && !imgs.includes(src) && src !== post?.featured_image) imgs.push(src);
+      if (imgs.length >= 12) break;
+    }
+    return imgs;
+  }, [post?.content, post?.featured_image]);
+
   if (notFound) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -119,6 +133,24 @@ const BlogArticle = () => {
               // Sanitize HTML per sicurezza
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || "") }}
             />
+
+            {galleryImages.length > 0 && (
+              <section aria-label="Galleria immagini" className="mt-10">
+                <h2 className="text-xl font-semibold mb-4">Galleria immagini</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {galleryImages.map((src, idx) => (
+                    <LazyImage
+                      key={src}
+                      src={src}
+                      alt={`Galleria: ${post.title} - immagine ${idx + 1}`}
+                      className="w-full h-40 md:h-48 object-cover rounded-lg"
+                      width={800}
+                      height={600}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </>
         ) : (
           <div className="space-y-4">
