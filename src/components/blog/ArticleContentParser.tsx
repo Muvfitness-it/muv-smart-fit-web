@@ -7,52 +7,131 @@ interface ArticleContentParserProps {
 
 // Clean up common markdown-like artifacts (e.g., **bold**, # headings, stray asterisks)
 const cleanHTML = (html: string) => {
-  // Sanitize first for safety
+  // 0) Sanitize first for safety
   let sanitized = DOMPurify.sanitize(html);
 
-  // Remove markdown heading/bullet markers that slipped into paragraphs
+  // 1) Light markdown cleanup before DOM processing
   sanitized = sanitized.replace(/<p>\s*([#>*\-]{1,6})\s+/g, '<p>');
-
-  // Convert simple **bold** or __bold__ patterns inside paragraphs to <strong>
   sanitized = sanitized.replace(/<p>\s*\*\*(.+?)\*\*\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
   sanitized = sanitized.replace(/<p>\s*__(.+?)__\s*<\/p>/g, '<p><strong>$1<\/strong><\/p>');
-
-  // Remove paragraphs that contain only marker characters
   sanitized = sanitized.replace(/<p>\s*[#*\-]+\s*<\/p>/g, '');
-
-  // Collapse excessive empty paragraphs
   sanitized = sanitized.replace(/(?:<p>\s*<\/p>\s*){2,}/g, '<p></p>');
 
-  // Ensure all images are lazy-loaded and have alt + decoding attributes
-  sanitized = sanitized.replace(/<img([^>]*)>/gi, (match, attrs) => {
-    let newAttrs = attrs || '';
-    if (!/\bloading\s*=/.test(newAttrs)) newAttrs += ' loading="lazy"';
-    if (!/\bdecoding\s*=/.test(newAttrs)) newAttrs += ' decoding="async"';
-    if (!/\balt\s*=/.test(newAttrs)) newAttrs += ' alt="Immagine articolo MUV Fitness"';
-    return `<img${newAttrs}>`;
-  });
+  try {
+    // 2) Parse into a DOM for robust fixes
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(sanitized, 'text/html');
+    const body = doc.body;
 
-  // 1) Fix overuse of bold: unwrap <strong> that wraps an entire long paragraph
-  sanitized = sanitized.replace(/<p>\s*<strong>([\s\S]{60,}?)<\/strong>\s*<\/p>/gi, '<p>$1<\/p>');
-  sanitized = sanitized.replace(/<p>\s*<b>([\s\S]{60,}?)<\/b>\s*<\/p>/gi, '<p>$1<\/p>');
-  // Also limit very long <strong> spans (50+ chars)
-  sanitized = sanitized.replace(/<strong>([^<]{50,})<\/strong>/gi, '$1');
+    // Ensure all images are lazy and have decoding + alt
+    body.querySelectorAll('img').forEach((img) => {
+      if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+      if (!img.getAttribute('decoding')) img.setAttribute('decoding', 'async');
+      if (!img.getAttribute('alt')) img.setAttribute('alt', 'Immagine articolo MUV Fitness');
+      // Remove width/height that break layout if absurdly large strings
+      const w = Number(img.getAttribute('width') || 0);
+      const h = Number(img.getAttribute('height') || 0);
+      if (w > 4096 || h > 4096) {
+        img.removeAttribute('width');
+        img.removeAttribute('height');
+      }
+    });
 
-  // 2) Deduplicate "Prossimi passi" sections: keep only the first
-  let count = 0;
-  sanitized = sanitized.replace(/<!--\s*auto-internal-links\s*-->[\s\S]*?<!--\s*\/auto-internal-links\s*-->/gi, (m) => {
-    count++;
-    return count === 1 ? m : '';
-  });
-  // Handle blocks without markers: <h2>Prossimi passi consigliati</h2> ... <ul>...</ul>
-  count = 0;
-  sanitized = sanitized.replace(/<h2[^>]*>\s*Prossimi\s+passi[^<]*<\/h2>[\s\S]*?<ul[\s\S]*?<\/ul>/gi, (m) => {
-    count++;
-    return count === 1 ? m : '';
-  });
+    // Helper to unwrap a node (replace tag with its children)
+    const unwrap = (el: Element) => {
+      const parent = el.parentNode;
+      if (!parent) return;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+    };
 
-  // 3) Remove duplicated identical link lists at the very end
-  sanitized = sanitized.replace(/(\s*<ul[\s\S]*?<\/ul>)(\s*\1)+$/i, '$1');
+    // 3) Reduce excessive bold inside paragraphs and list items
+    body.querySelectorAll('p, li').forEach((el) => {
+      const textLen = (el.textContent || '').trim().length;
+      const strongs = Array.from(el.querySelectorAll('strong, b'));
+      if (strongs.length === 1) {
+        const s = strongs[0];
+        if ((s.textContent || '').trim() === (el.textContent || '').trim()) {
+          // Entire element was bold -> unwrap
+          unwrap(s);
+          return;
+        }
+      }
+      let strongTotal = 0;
+      strongs.forEach((s) => (strongTotal += (s.textContent || '').length));
+      strongs.forEach((s) => {
+        const len = (s.textContent || '').length;
+        // Unwrap very long bold spans or when bold dominates the element
+        if (len >= 50 || (textLen > 0 && len / textLen > 0.6) || strongTotal / Math.max(textLen, 1) > 0.7) {
+          unwrap(s);
+        }
+      });
+    });
+
+    // 4) Normalize and deduplicate "Prossimi passi" blocks
+    const isNextSteps = (txt: string) => /prossimi\s+passi/i.test(txt || '');
+    let nextStepsFound = 0;
+
+    // Convert <p><strong>Prossimi passi...</strong></p> into proper <h2>
+    body.querySelectorAll('p').forEach((p) => {
+      const onlyChild = p.childNodes.length === 1 ? (p.childNodes[0] as Element) : null;
+      if (onlyChild && (onlyChild.tagName === 'STRONG' || onlyChild.tagName === 'B')) {
+        const text = (onlyChild.textContent || '').trim();
+        if (isNextSteps(text)) {
+          const h2 = doc.createElement('h2');
+          h2.textContent = text;
+          p.parentElement?.insertBefore(h2, p);
+          p.remove();
+        }
+      }
+    });
+
+    // Deduplicate: keep first heading and remove subsequent heading + immediate list
+    Array.from(body.querySelectorAll('h1,h2,h3')).forEach((h) => {
+      const text = (h.textContent || '').trim();
+      if (isNextSteps(text)) {
+        nextStepsFound += 1;
+        if (nextStepsFound > 1) {
+          const toRemove: Element[] = [h];
+          const sib = h.nextElementSibling;
+          if (sib && (sib.tagName === 'UL' || sib.tagName === 'OL')) toRemove.push(sib);
+          toRemove.forEach((el) => el.remove());
+        }
+      }
+    });
+
+    // 5) Remove consecutive duplicated link lists anywhere
+    const lists = Array.from(body.querySelectorAll('ul,ol'));
+    for (let i = 1; i < lists.length; i++) {
+      const prev = lists[i - 1];
+      const curr = lists[i];
+      if (prev.outerHTML === curr.outerHTML) curr.remove();
+    }
+
+    sanitized = body.innerHTML;
+  } catch (e) {
+    // Fallbacks with regex if DOMParser fails
+    sanitized = sanitized.replace(/<img([^>]*)>/gi, (match, attrs) => {
+      let newAttrs = attrs || '';
+      if (!/\bloading\s*=/.test(newAttrs)) newAttrs += ' loading="lazy"';
+      if (!/\bdecoding\s*=/.test(newAttrs)) newAttrs += ' decoding="async"';
+      if (!/\balt\s*=/.test(newAttrs)) newAttrs += ' alt="Immagine articolo MUV Fitness"';
+      return `<img${newAttrs}>`;
+    });
+
+    // Unwrap very long bold paragraphs
+    sanitized = sanitized.replace(/<p>\s*<strong>([\s\S]{60,}?)<\/strong>\s*<\/p>/gi, '<p>$1<\/p>');
+    sanitized = sanitized.replace(/<p>\s*<b>([\s\S]{60,}?)<\/b>\s*<\/p>/gi, '<p>$1<\/p>');
+    sanitized = sanitized.replace(/<strong>([^<]{50,})<\/strong>/gi, '$1');
+
+    // Deduplicate simple next-steps blocks
+    let count = 0;
+    sanitized = sanitized.replace(/<h2[^>]*>\s*Prossimi\s+passi[^<]*<\/h2>[\s\S]*?<ul[\s\S]*?<\/ul>/gi, (m) => {
+      count++; return count === 1 ? m : ''; 
+    });
+
+    sanitized = sanitized.replace(/(\s*<ul[\s\S]*?<\/ul>)(\s*\1)+$/i, '$1');
+  }
 
   return sanitized;
 };

@@ -101,8 +101,8 @@ const LazyImage = ({
           <div className="w-full h-full bg-gradient-to-r from-muted to-muted/50 rounded" />
         </div>
       ) : (
-        <div className={cn("bg-muted flex items-center justify-center text-muted-foreground", className)}>
-          <span className="text-sm">Error loading image</span>
+        <div className={cn("bg-muted flex items-center justify-center", className)}>
+          <div className="w-full h-full bg-muted/60" aria-hidden="true" />
         </div>
       )}
     </div>
