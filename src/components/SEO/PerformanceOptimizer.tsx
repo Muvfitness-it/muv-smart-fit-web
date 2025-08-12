@@ -76,7 +76,7 @@ const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
 
     // Service Worker registration
     if (enableServiceWorker && 'serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('/sw.js?v=3')
         .then(registration => {
           console.log('SW registered: ', registration);
         })

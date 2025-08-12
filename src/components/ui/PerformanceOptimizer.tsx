@@ -93,7 +93,7 @@ const PerformanceOptimizer = () => {
   // Register service worker for caching
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-      navigator.serviceWorker.register('/sw.js').catch(console.error);
+      navigator.serviceWorker.register('/sw.js?v=3').catch(console.error);
     }
   }, []);
 
