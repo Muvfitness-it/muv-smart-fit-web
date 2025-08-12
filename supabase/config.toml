@@ -97,3 +97,6 @@ verify_jwt = false
 
 [functions.site-optimizer]
 verify_jwt = false
+
+[functions.blog-rss]
+verify_jwt = false

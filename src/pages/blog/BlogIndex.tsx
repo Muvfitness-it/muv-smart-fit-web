@@ -115,14 +115,24 @@ const BlogIndex = () => {
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href="https://www.muvfitness.it/blog" />
+        <link rel="alternate" type="application/rss+xml" title="MUV Fitness Blog RSS" href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss" />
       </Helmet>
 
       <header className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
         <div className="container mx-auto px-4 py-10">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Blog MUV Fitness</h1>
-          <p className="text-muted-foreground mt-2 max-w-2xl">
-            Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
-          </p>
+          <div className="flex items-start md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Blog MUV Fitness</h1>
+              <p className="text-muted-foreground mt-2 max-w-2xl">
+                Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+              </p>
+            </div>
+            <a
+              href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
+              className="text-sm text-muted-foreground hover:underline"
+              aria-label="Feed RSS del Blog MUV Fitness"
+            >RSS</a>
+          </div>
         </div>
       </header>
 

@@ -5,6 +5,8 @@ import DOMPurify from "dompurify";
 import { supabase } from "@/integrations/supabase/client";
 import LazyImage from "@/components/ui/LazyImage";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Post {
   id: string;
@@ -26,6 +28,7 @@ const BlogArticle = () => {
   const [notFound, setNotFound] = useState(false);
   const [category, setCategory] = useState<{ id: string; name: string; slug: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ open: boolean; index: number }>({ open: false, index: 0 });
+  const [related, setRelated] = useState<Array<{ id: string; title: string; slug: string; excerpt: string | null; featured_image: string | null; published_at: string | null }>>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -116,6 +119,23 @@ const BlogArticle = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [lightbox.open, galleryImages.length]);
 
+  useEffect(() => {
+    const loadRelated = async () => {
+      if (!post) return;
+      let query = supabase
+        .from('blog_posts')
+        .select('id, title, slug, excerpt, featured_image, published_at')
+        .eq('status', 'published')
+        .neq('id', post.id)
+        .order('published_at', { ascending: false })
+        .limit(3);
+      if (post.category_id) query = query.eq('category_id', post.category_id);
+      const { data } = await query;
+      setRelated(data || []);
+    };
+    loadRelated();
+  }, [post?.id, post?.category_id]);
+
   if (notFound) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -205,6 +225,39 @@ const BlogArticle = () => {
           </div>
         )}
       </article>
+      {related.length > 0 && (
+        <section className="container mx-auto px-4 py-10">
+          <h2 className="text-2xl font-bold mb-6">Articoli correlati</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {related.map((rp) => (
+              <Card key={rp.id} className="overflow-hidden">
+                {rp.featured_image && (
+                  <Link to={`/blog/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
+                    <LazyImage
+                      src={rp.featured_image}
+                      alt={`Copertina articolo correlato ${rp.title}`}
+                      className="w-full h-40 object-cover"
+                      width={800}
+                      height={450}
+                    />
+                  </Link>
+                )}
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    <Link to={`/blog/${rp.slug}`} className="hover:underline">{rp.title}</Link>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {rp.excerpt && <p className="text-muted-foreground line-clamp-2">{rp.excerpt}</p>}
+                  <div className="mt-3">
+                    <Button asChild size="sm" variant="outline"><Link to={`/blog/${rp.slug}`}>Leggi</Link></Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
       {lightbox.open && (
         <div className="fixed inset-0 z-50 bg-black/80 p-4 flex items-center justify-center" onClick={() => setLightbox({ open: false, index: 0 })}>
           <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
