@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -32,6 +33,7 @@ const ContentRestore: React.FC = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [report, setReport] = useState<RestoreResponse | null>(null);
+  const [batchSize, setBatchSize] = useState<number>(10);
 
   const runRestore = async () => {
     try {
@@ -40,7 +42,7 @@ const ContentRestore: React.FC = () => {
       setReport(null);
 
       const { data, error } = await supabase.functions.invoke('restore-backups', {
-        body: { minWords: 2000 }
+        body: { minWords: 2000, limit: batchSize }
       });
 
       if (error) {
@@ -72,21 +74,23 @@ const ContentRestore: React.FC = () => {
         <p className="text-sm text-muted-foreground">
           Esegue uno snapshot, ripristina ogni articolo dalla versione migliore salvata, ripara l'HTML e rimuove duplicazioni di link/CTA. Verifica il minimo di 2000 parole e produce un report.
         </p>
+        <div className="flex items-center gap-3">
+          <label className="text-sm">Batch (articoli per esecuzione)</label>
+          <Input
+            type="number"
+            min={1}
+            max={50}
+            value={batchSize}
+            onChange={(e) => setBatchSize(Number((e.target as HTMLInputElement).value) || 1)}
+            className="w-24"
+            aria-label="Limite articoli per ripristino"
+          />
+        </div>
         <div className="flex gap-2">
           <Button onClick={runRestore} disabled={isRunning} className="flex-1">
             {isRunning ? 'Ripristino in corso…' : 'Avvia Ripristino' }
           </Button>
         </div>
-        <Progress value={progress} />
-
-        {report && (
-          <div className="space-y-3">
-            <div className="text-sm">
-              <div>Totale: {report.summary.total_posts}</div>
-              <div>Ripristinati: {report.summary.restored}</div>
-              <div>Senza backup: {report.summary.no_backup}</div>
-              <div>Sotto {report.summary.min_words} parole: {report.summary.under_min_count}</div>
-            </div>
 
             {report.under_min?.length > 0 && (
               <div>
