@@ -1,12 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LazyImage from "@/components/ui/LazyImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 interface Post {
   id: string;
@@ -27,76 +34,54 @@ interface Category {
 const PAGE_SIZE = 9;
 
 const BlogIndex = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
   const [selectedCatId, setSelectedCatId] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(initialPage);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
+  // Load categories once
   useEffect(() => {
-    const loadInitial = async () => {
-      setLoading(true);
-      const [{ data: cats }, { data: firstPosts, count }] = await Promise.all([
-        supabase.from("blog_categories").select("id, name, slug").order("name"),
-        supabase
-          .from("blog_posts")
-          .select("id, title, slug, excerpt, featured_image, published_at, category_id", { count: "exact" })
-          .eq("status", "published")
-          .order("published_at", { ascending: false })
-          .range(0, PAGE_SIZE - 1),
-      ]);
-
+    const loadCats = async () => {
+      const { data: cats } = await supabase.from("blog_categories").select("id, name, slug").order("name");
       setCategories(cats || []);
-      setPosts(firstPosts || []);
-      setHasMore((count || 0) > PAGE_SIZE);
-      setLoading(false);
     };
-    loadInitial();
+    loadCats();
   }, []);
 
-  // Ricarica quando cambia il filtro categoria
+  // Load posts on page or filter change
   useEffect(() => {
-    const reload = async () => {
+    const loadPosts = async () => {
       setLoading(true);
-      setPage(0);
+      const from = (page - 1) * PAGE_SIZE;
+      const to = from + PAGE_SIZE - 1;
+
       let query = supabase
         .from("blog_posts")
         .select("id, title, slug, excerpt, featured_image, published_at, category_id", { count: "exact" })
         .eq("status", "published")
         .order("published_at", { ascending: false })
-        .range(0, PAGE_SIZE - 1);
+        .range(from, to);
+
       if (selectedCatId) query = query.eq("category_id", selectedCatId);
+
       const { data, count } = await query;
       setPosts(data || []);
-      setHasMore((count || 0) > PAGE_SIZE);
+      setTotalPages(Math.max(1, Math.ceil((count || 0) / PAGE_SIZE)));
       setLoading(false);
     };
-    // esegui su ogni cambio filtro
-    reload();
-  }, [selectedCatId]);
 
-  const loadMore = async () => {
-    if (!hasMore || loadingMore) return;
-    setLoadingMore(true);
-    const from = (page + 1) * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
-    let query = supabase
-      .from("blog_posts")
-      .select("id, title, slug, excerpt, featured_image, published_at, category_id")
-      .eq("status", "published")
-      .order("published_at", { ascending: false })
-      .range(from, to);
-    if (selectedCatId) query = query.eq("category_id", selectedCatId);
-    const { data } = await query;
+    // Update URL search params (SEO-friendly pagination)
+    const newParams = new URLSearchParams(searchParams);
+    if (page > 1) newParams.set("page", String(page)); else newParams.delete("page");
+    setSearchParams(newParams, { replace: true });
 
-    const newPosts = data || [];
-    setPosts(prev => [...prev, ...newPosts]);
-    setPage(prev => prev + 1);
-    if (newPosts.length < PAGE_SIZE) setHasMore(false);
-    setLoadingMore(false);
-  };
+    loadPosts();
+  }, [page, selectedCatId]);
 
   const pageTitle = "Blog MUV Fitness Legnago: articoli e guide";
   const pageDescription = "Scopri articoli, consigli e guide su allenamento, EMS, Pilates e benessere. Aggiornato dal team MUV Fitness.";
@@ -109,18 +94,56 @@ const BlogIndex = () => {
     [posts]
   );
 
+  const prevUrl = page > 1 ? (page === 2 ? "/blog" : `/blog?page=${page - 1}`) : undefined;
+  const nextUrl = page < totalPages ? `/blog?page=${page + 1}` : undefined;
+  const canonical = page > 1 ? `https://www.muvfitness.it/blog?page=${page}` : "https://www.muvfitness.it/blog";
+
+  const goToPage = (p: number) => setPage(Math.min(Math.max(p, 1), totalPages));
+  const pagesToShow = useMemo(() => {
+    const arr: number[] = [];
+    const start = Math.max(1, page - 2);
+    const end = Math.min(totalPages, start + 4);
+    for (let i = start; i <= end; i++) arr.push(i);
+    return arr;
+  }, [page, totalPages]);
+
   return (
     <>
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href="https://www.muvfitness.it/blog" />
+        <link rel="canonical" href={canonical} />
+        {prevUrl && <link rel="prev" href={`https://www.muvfitness.it${prevUrl}`} />}
+        {nextUrl && <link rel="next" href={`https://www.muvfitness.it${nextUrl}`} />}
         <link rel="alternate" type="application/rss+xml" title="MUV Fitness Blog RSS" href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.muvfitness.it/" },
+            { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.muvfitness.it/blog" },
+          ],
+        })}</script>
       </Helmet>
 
       <header className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-        <div className="container mx-auto px-4 py-10">
-          <div className="flex items-start md:items-center justify-between gap-4">
+        <div className="container mx-auto px-4 py-6">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/blog">Blog</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="mt-4 flex items-start md:items-center justify-between gap-4">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Blog MUV Fitness</h1>
               <p className="text-muted-foreground mt-2 max-w-2xl">
@@ -137,7 +160,7 @@ const BlogIndex = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {/* Categories */}
+        {/* Categories + Filter */}
         <section aria-label="Categorie" className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex flex-wrap gap-2">
@@ -150,7 +173,7 @@ const BlogIndex = () => {
               ))}
             </div>
             <div className="w-full md:w-64">
-              <Select value={selectedCatId || "all"} onValueChange={(v) => setSelectedCatId(v === "all" ? null : v)}>
+              <Select value={selectedCatId || "all"} onValueChange={(v) => { setSelectedCatId(v === "all" ? null : v); setPage(1); }}>
                 <SelectTrigger aria-label="Filtra per categoria">
                   <SelectValue placeholder="Filtra per categoria" />
                 </SelectTrigger>
@@ -211,12 +234,16 @@ const BlogIndex = () => {
                 ))}
               </div>
 
-              {hasMore && (
-                <div className="flex justify-center mt-8">
-                  <Button onClick={loadMore} disabled={loadingMore} variant="secondary">
-                    {loadingMore ? "Caricamento..." : "Carica altri"}
-                  </Button>
-                </div>
+              {totalPages > 1 && (
+                <nav className="flex items-center justify-center gap-2 mt-8" aria-label="Paginazione articoli">
+                  <Button variant="outline" size="sm" onClick={() => goToPage(page - 1)} disabled={page === 1}>Precedente</Button>
+                  {pagesToShow.map(n => (
+                    <Button key={n} size="sm" variant={n === page ? "default" : "outline"} onClick={() => goToPage(n)} aria-current={n === page ? "page" : undefined}>
+                      {n}
+                    </Button>
+                  ))}
+                  <Button variant="outline" size="sm" onClick={() => goToPage(page + 1)} disabled={page === totalPages}>Successiva</Button>
+                </nav>
               )}
             </>
           )}

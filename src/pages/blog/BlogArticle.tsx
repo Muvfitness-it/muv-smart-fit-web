@@ -7,6 +7,13 @@ import LazyImage from "@/components/ui/LazyImage";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 interface Post {
   id: string;
@@ -78,17 +85,36 @@ const BlogArticle = () => {
   const description = post?.meta_description || post?.excerpt || "Leggi l'articolo sul blog di MUV Fitness Legnago.";
   const canonical = slug ? `https://www.muvfitness.it/blog/${slug}` : undefined;
 
-  const articleJsonLd = post
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: post.title,
-        datePublished: post.published_at || undefined,
-        image: post.featured_image || undefined,
-        author: post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
-        mainEntityOfPage: canonical,
-      }
-    : undefined;
+  // JSON-LD Article + optional NewsArticle (ultime 48 ore)
+  const isRecent = post?.published_at ? (Date.now() - new Date(post.published_at).getTime()) < 1000 * 60 * 60 * 48 : false;
+  const articleJsonLd = post ? {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    datePublished: post.published_at || undefined,
+    image: post.featured_image || undefined,
+    author: post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    mainEntityOfPage: canonical,
+  } : undefined;
+  const newsJsonLd = post && isRecent ? {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: post.title,
+    datePublished: post.published_at || undefined,
+    image: post.featured_image || undefined,
+    author: post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    mainEntityOfPage: canonical,
+  } : undefined;
+  const breadcrumbJsonLd = post ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.muvfitness.it/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.muvfitness.it/blog" },
+      ...(category ? [{ "@type": "ListItem", position: 3, name: category.name, item: `https://www.muvfitness.it/blog/c/${category.slug}` }] : []),
+      { "@type": "ListItem", position: category ? 4 : 3, name: post.title, item: canonical },
+    ],
+  } : undefined;
 
   // Estrai immagini aggiuntive dal contenuto per la galleria
   const galleryImages = useMemo(() => {
@@ -152,15 +178,41 @@ const BlogArticle = () => {
         <title>{title}</title>
         <meta name="description" content={description} />
         {canonical && <link rel="canonical" href={canonical} />}
-        {articleJsonLd && (
-          <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
-        )}
+        {articleJsonLd && (<script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>)}
+        {newsJsonLd && (<script type="application/ld+json">{JSON.stringify(newsJsonLd)}</script>)}
+        {breadcrumbJsonLd && (<script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>)}
       </Helmet>
 
       <article className="container mx-auto px-4 py-10">
         {post ? (
           <>
-            <header className="mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/blog">Blog</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                {category && (
+                  <>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to={`/blog/c/${category.slug}`}>{category.name}</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </>
+                )}
+              </BreadcrumbList>
+            </Breadcrumb>
+
+            <header className="mb-8 mt-4">
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{post.title}</h1>
               <p className="text-muted-foreground mt-2">{date}</p>
               {category && (
@@ -215,6 +267,40 @@ const BlogArticle = () => {
                 </div>
               </section>
             )}
+
+            {related.length > 0 && (
+              <section className="mt-12">
+                <h2 className="text-2xl font-bold mb-6">Articoli correlati</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {related.map((rp) => (
+                    <Card key={rp.id} className="overflow-hidden">
+                      {rp.featured_image && (
+                        <Link to={`/blog/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
+                          <LazyImage
+                            src={rp.featured_image}
+                            alt={`Copertina articolo correlato ${rp.title}`}
+                            className="w-full h-40 object-cover"
+                            width={800}
+                            height={450}
+                          />
+                        </Link>
+                      )}
+                      <CardHeader>
+                        <CardTitle className="text-lg">
+                          <Link to={`/blog/${rp.slug}`} className="hover:underline">{rp.title}</Link>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        {rp.excerpt && <p className="text-muted-foreground line-clamp-2">{rp.excerpt}</p>}
+                        <div className="mt-3">
+                          <Button asChild size="sm" variant="outline"><Link to={`/blog/${rp.slug}`}>Leggi</Link></Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            )}
           </>
         ) : (
           <div className="space-y-4">
@@ -225,39 +311,7 @@ const BlogArticle = () => {
           </div>
         )}
       </article>
-      {related.length > 0 && (
-        <section className="container mx-auto px-4 py-10">
-          <h2 className="text-2xl font-bold mb-6">Articoli correlati</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {related.map((rp) => (
-              <Card key={rp.id} className="overflow-hidden">
-                {rp.featured_image && (
-                  <Link to={`/blog/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
-                    <LazyImage
-                      src={rp.featured_image}
-                      alt={`Copertina articolo correlato ${rp.title}`}
-                      className="w-full h-40 object-cover"
-                      width={800}
-                      height={450}
-                    />
-                  </Link>
-                )}
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    <Link to={`/blog/${rp.slug}`} className="hover:underline">{rp.title}</Link>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {rp.excerpt && <p className="text-muted-foreground line-clamp-2">{rp.excerpt}</p>}
-                  <div className="mt-3">
-                    <Button asChild size="sm" variant="outline"><Link to={`/blog/${rp.slug}`}>Leggi</Link></Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
+
       {lightbox.open && (
         <div className="fixed inset-0 z-50 bg-black/80 p-4 flex items-center justify-center" onClick={() => setLightbox({ open: false, index: 0 })}>
           <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
