@@ -10,7 +10,7 @@ export const generateSitemap = async (): Promise<string> => {
     { url: '/chi-siamo', priority: '0.8', changefreq: 'monthly' },
     { url: '/contatti', priority: '0.9', changefreq: 'monthly' },
     { url: '/blog', priority: '0.9', changefreq: 'daily' },
-    { url: '/muv-planner', priority: '0.8', changefreq: 'weekly' },
+    
     { url: '/servizi/personal-training', priority: '0.8', changefreq: 'monthly' },
     { url: '/servizi/ems', priority: '0.8', changefreq: 'monthly' },
     { url: '/servizi/pilates', priority: '0.8', changefreq: 'monthly' },

@@ -73,9 +73,6 @@ const BreadcrumbSchema: React.FC = () => {
         case 'contatti':
           name = 'Contatti';
           break;
-        case 'muv-planner':
-          name = 'MUV Planner';
-          break;
         case 'trasformazione-30-giorni':
           name = 'Trasformazione 30 Giorni';
           break;

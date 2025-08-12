@@ -18,7 +18,7 @@ const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
         '/contatti',
         '/servizi',
         '/chi-siamo',
-        '/muv-planner'
+        
       ];
 
       const prefetchPages = () => {

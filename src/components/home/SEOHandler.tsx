@@ -209,17 +209,6 @@ const SEOHandler: React.FC = () => {
           services: []
         };
 
-      case '/muv-planner':
-        return {
-          title: 'MUV Planner | Pianificatore Nutrizionale Gratuito - MUV Smart Fit',
-          description: 'MUV Planner: strumento gratuito per creare piani nutrizionali personalizzati. Calcola le tue esigenze e pianifica i tuoi pasti con MUV Smart Fit.',
-          keywords: 'pianificatore nutrizionale, dieta personalizzata, calcolo calorie, piano alimentare gratuito',
-          canonical: `${baseUrl}/muv-planner`,
-          ogType: 'website',
-          pageType: 'home' as const,
-          content: 'MUV Planner è il nostro strumento avanzato per la creazione di piani alimentari personalizzati. Utilizzando l\'intelligenza artificiale, creiamo piani nutrizionali ottimali per i tuoi obiettivi di fitness e benessere.',
-          services: []
-        };
       
       default:
         return {

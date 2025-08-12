@@ -39,7 +39,7 @@ const SitemapRoute: React.FC = () => {
           { loc: 'https://www.muvfitness.it/risultati', lastmod: '2024-01-15', changefreq: 'weekly', priority: 0.7 },
           { loc: 'https://www.muvfitness.it/blog', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.9 },
           { loc: 'https://www.muvfitness.it/contatti', lastmod: '2024-01-15', changefreq: 'monthly', priority: 0.7 },
-          { loc: 'https://www.muvfitness.it/muv-planner', lastmod: '2024-01-15', changefreq: 'weekly', priority: 0.8 },
+          
           { loc: 'https://www.muvfitness.it/trasformazione-30-giorni', lastmod: '2024-01-15', changefreq: 'weekly', priority: 0.9 }
         ];
 

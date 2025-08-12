@@ -5,7 +5,7 @@ export const prerenderRoutes = [
   '/contatti',
   '/chi-siamo',
   '/blog',
-  '/muv-planner',
+  
   '/servizi/personal-training',
   '/servizi/ems',
   '/servizi/pilates',

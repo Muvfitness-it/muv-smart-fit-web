@@ -55,9 +55,6 @@ const Navigation = () => {
     name: "Blog",
     path: "/blog"
   }, {
-    name: "MUV Planner",
-    path: "/muv-planner"
-  }, {
     name: "Contatti",
     path: "/contatti"
   }, {

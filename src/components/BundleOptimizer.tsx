@@ -3,7 +3,7 @@ import { lazy, Suspense } from 'react';
 // Lazy load heavy components
 export const LazyAdminDashboard = lazy(() => import('../pages/AdminDashboard'));
 export const LazyAnalytics = lazy(() => import('../pages/Analytics'));
-export const LazyMuvPlanner = lazy(() => import('../pages/MuvPlanner'));
+
 
 // Loading fallback component
 export const LoadingSkeleton = () => (

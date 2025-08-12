@@ -65,9 +65,6 @@ const Footer = () => {
               <Link to="/risultati" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Risultati
               </Link>
-              <Link to="/muv-planner" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
-                MUV Planner
-              </Link>
               <Link to="/contatti" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
                 Contatti
               </Link>

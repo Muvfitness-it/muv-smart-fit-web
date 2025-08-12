@@ -16,7 +16,7 @@ import ChiSiamo from "./pages/ChiSiamo";
 import Servizi from "./pages/Servizi";
 import Team from "./pages/Team";
 import Risultati from "./pages/Risultati";
-import MuvPlanner from "./pages/MuvPlanner";
+
 import Contatti from "./pages/Contatti";
 import Privacy from "./pages/Privacy";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -107,7 +107,7 @@ const AppContent = () => {
 
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
-                <Route path="/muv-planner" element={<MuvPlanner />} />
+                
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/c/:slug" element={<BlogCategory />} />
                 <Route path="/blog/:slug" element={<BlogArticle />} />
