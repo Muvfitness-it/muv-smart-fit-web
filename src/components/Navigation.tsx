@@ -15,6 +15,18 @@ const Navigation = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
   const navItems = [{
     name: "Home",
     path: "/"
@@ -85,24 +97,54 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Improved UX */}
-        <div className={`lg:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-gray-900/98 backdrop-blur-md border-t border-gray-700/50`}>
-          <div className="px-4 py-4 space-y-2">
-            {navItems.map((item, index) => (
-              <Link 
-                key={item.name} 
-                to={item.path} 
-                className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 transform ${
-                  location.pathname === item.path 
-                    ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-105' 
-                    : 'text-gray-200 hover:text-white hover:bg-gray-800/80 hover:scale-102'
-                }`}
-                style={{ animationDelay: `${index * 50}ms` }}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
+        {/* Mobile Navigation - Fullscreen overlay */}
+        <div
+          className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
+            isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu di navigazione"
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
+
+          {/* Panel */}
+          <div className="relative z-[61] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
+              <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
+                <img
+                  src={logoSrc}
+                  alt="Logo MUV Fitness Legnago"
+                  className="h-10 w-auto object-contain"
+                />
               </Link>
-            ))}
+              <button
+                aria-label="Chiudi menu"
+                onClick={() => setIsOpen(false)}
+                className="text-gray-200 hover:text-white"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+              {navItems.map((item, index) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 ${
+                    location.pathname === item.path
+                      ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
+                      : 'text-gray-200 hover:text-white hover:bg-gray-800/80'
+                  }`}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
