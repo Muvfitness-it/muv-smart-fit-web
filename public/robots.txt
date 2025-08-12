@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /blog
 Disallow: /blog/tag/
 Disallow: /search
 Sitemap: https://www.muvfitness.it/sitemap.xml

@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useResourceOptimization } from "./hooks/useResourceOptimization";
@@ -30,11 +30,6 @@ import SmallGroup from "./pages/servizi/SmallGroup";
 import Nutrizione from "./pages/servizi/Nutrizione";
 import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
-import BlogArchive from "./pages/BlogArchive";
-import BlogCategory from "./pages/BlogCategory";
-import BlogTag from "./pages/BlogTag";
-import BlogPost from "./pages/BlogPost";
-import NewBlogAdmin from "./components/blog/NewBlogAdmin";
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserManagement from "./pages/AdminUserManagement";
@@ -140,12 +135,7 @@ const AppContent = () => {
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
                 <Route path="/muv-planner" element={<MuvPlanner />} />
-                <Route path="/blog" element={<BlogArchive />} />
-                <Route path="/blog/categoria/:slug" element={<BlogCategory />} />
-                <Route path="/blog/tag/:slug" element={<BlogTag />} />
-                <Route path="/blog/p/:page" element={<BlogArchive />} />
-                <Route path="/blog/admin" element={<NewBlogAdmin />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/blog/*" element={<Navigate to="/" replace />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
                 <Route path="/admin/seo-report" element={<AdminSEOReport />} />
