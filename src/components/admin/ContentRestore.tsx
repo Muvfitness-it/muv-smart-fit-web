@@ -33,7 +33,7 @@ const ContentRestore: React.FC = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [report, setReport] = useState<RestoreResponse | null>(null);
-  const [batchSize, setBatchSize] = useState<number>(10);
+  const [batchSize, setBatchSize] = useState<number>(3);
 
   const runRestore = async () => {
     try {
@@ -42,7 +42,7 @@ const ContentRestore: React.FC = () => {
       setReport(null);
 
       const { data, error } = await supabase.functions.invoke('restore-backups', {
-        body: { minWords: 2000, limit: batchSize }
+        body: { minWords: 2000, limit: batchSize, backupLimit: 20 }
       });
 
       if (error) {

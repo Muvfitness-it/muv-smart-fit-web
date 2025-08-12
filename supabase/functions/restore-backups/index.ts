@@ -81,6 +81,7 @@ serve(async (req) => {
     const excludeSlugs: string[] = body.excludeSlugs || ['privacy', 'cookie-policy', 'termini-condizioni'];
     const minWords: number = body.minWords || 2000;
     const limit: number = Math.min(Math.max(Number(body.limit) || 10, 1), 50);
+    const backupLimit: number = Math.min(Math.max(Number(body.backupLimit) || 20, 1), 100);
 
     // 1) Fetch posts to process (batched to avoid timeouts)
     let query = supabase
@@ -99,18 +100,7 @@ serve(async (req) => {
 
     if (postsError) throw postsError;
 
-    // 2) Snapshot current contents
-    const snapshotRows = (posts || [])
-      .filter((p) => p.content && p.content.length > 0)
-      .map((p) => ({ id: p.id, content_backup: p.content, backed_up_at: new Date().toISOString() }));
-
-    if (snapshotRows.length > 0) {
-      const { error: backupErr } = await supabase.from('blog_posts_backup').insert(snapshotRows, { returning: 'minimal' });
-      if (backupErr) {
-        console.error('backup insert error:', backupErr);
-        // Continue even if backup insert fails; we still try to restore from existing backups
-      }
-    }
+    // 2) Snapshot current contents - moved per-post to reduce memory footprint
 
     const results: any[] = [];
     const underMin: any[] = [];
@@ -119,12 +109,21 @@ serve(async (req) => {
     // 3) Process each post
     for (const post of posts || []) {
       try {
-        // Fetch backups for this post
+        // Create snapshot just-in-time for this post to reduce memory usage
+        if (post.content && post.content.length > 0) {
+          const { error: backupErr } = await supabase
+            .from('blog_posts_backup')
+            .insert({ id: post.id, content_backup: post.content, backed_up_at: new Date().toISOString() }, { returning: 'minimal' });
+          if (backupErr) console.error('single backup insert error:', backupErr);
+        }
+
+        // Fetch a limited number of backups for this post (best-of among recent ones)
         const { data: backups, error: bErr } = await supabase
           .from('blog_posts_backup')
           .select('content_backup, backed_up_at')
           .eq('id', post.id)
-          .order('backed_up_at', { ascending: false });
+          .order('backed_up_at', { ascending: false })
+          .limit(backupLimit);
         if (bErr) throw bErr;
 
         const best = pickBestBackup(backups || []);
