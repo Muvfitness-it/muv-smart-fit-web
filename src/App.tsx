@@ -38,7 +38,7 @@ import Analytics from "./pages/Analytics";
 import Trasformazione30Giorni from "./pages/landing/Trasformazione30Giorni";
 // SEO Components
 
-import SEOHandler from "./components/home/SEOHandler";
+
 import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
@@ -48,14 +48,6 @@ import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
-import LocalBusinessSchema from "./components/SEO/LocalBusinessSchema";
-import SitemapSubmitter from "./components/SEO/SitemapSubmitter";
-import AutoOptimizer from "./components/SEO/AutoOptimizer";
-import AutoSitemapUpdater from "./components/SEO/AutoSitemapUpdater";
-import RedirectResolver from "./components/SEO/RedirectResolver";
-import AutoOptimizerRunner from "./components/SEO/AutoOptimizerRunner";
-import OverrideStickyRunner from "./components/admin/OverrideStickyRunner";
-import SiteOptimizerWeeklyRunner from "./components/SEO/SiteOptimizerWeeklyRunner";
 import AdminSEOReport from "./pages/AdminSEOReport";
 const queryClient = new QueryClient();
 
@@ -64,34 +56,9 @@ const AppContent = () => {
   useSiteVisitTracker();
   useResourceOptimization();
 
-  // Preload blog domain for faster iframe loading
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'dns-prefetch';
-    link.href = 'https://muvfit-blog-builder.lovable.app';
-    link.setAttribute('data-app-prefetch', 'true');
-    document.head.appendChild(link);
-    
-    return () => {
-      // Safe cleanup - check if element exists and has parent
-      const existingLink = document.querySelector('link[data-app-prefetch="true"]');
-      if (existingLink && existingLink.parentNode) {
-        existingLink.parentNode.removeChild(existingLink);
-      }
-    };
-  }, []);
-  
   return (
     <SessionSecurity>
       <SecurityHeaders />
-      <SEOHandler />
-      <RedirectResolver />
-      <AutoOptimizer />
-      <AutoOptimizerRunner />
-      <SiteOptimizerWeeklyRunner />
-      <AutoSitemapUpdater />
-      <OverrideStickyRunner />
-      <LocalBusinessSchema />
       <PerformanceOptimizer />
       <CriticalCSS />
       <div className="min-h-screen bg-gray-900 text-white">
@@ -162,7 +129,6 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <AppContent />
-        <SitemapSubmitter />
         <Toaster />
         <Sonner />
       </BrowserRouter>
