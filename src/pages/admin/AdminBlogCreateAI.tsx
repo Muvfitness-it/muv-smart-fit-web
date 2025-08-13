@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { useGeminiAPI } from "@/hooks/useGeminiAPI";
 import { supabase } from "@/integrations/supabase/client";
+import { SecureHTMLRenderer } from "@/components/security/SecureHTMLRenderer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { toast } from "@/hooks/use-toast";
-import DOMPurify from "dompurify";
+
 import { Loader2, Wand2, CheckCircle2, CalendarClock } from "lucide-react";
 
 // Simple slugify
@@ -59,7 +60,7 @@ const AdminBlogCreateAI: React.FC = () => {
     return base.length > 157 ? `${base.substring(0, 157)}…` : base;
   }, [excerpt, contentHTML]);
 
-  const sanitized = useMemo(() => ({ __html: DOMPurify.sanitize(contentHTML) }), [contentHTML]);
+  // Removed DOMPurify usage - using SecureHTMLRenderer instead
 
   const handleGenerate = async () => {
     if (!topic.trim()) {
@@ -257,7 +258,10 @@ const AdminBlogCreateAI: React.FC = () => {
             </CardHeader>
             <CardContent>
               {contentHTML ? (
-                <article className="prose prose-invert max-w-none" dangerouslySetInnerHTML={sanitized} />
+                <SecureHTMLRenderer
+                  html={contentHTML}
+                  className="prose prose-invert max-w-none"
+                />
               ) : (
                 <p className="text-muted-foreground">Genera l'articolo per vedere l'anteprima qui.</p>
               )}

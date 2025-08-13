@@ -99,7 +99,8 @@ const StaticContentGenerator: React.FC<StaticContentGeneratorProps> = ({
           break;
       }
       
-      staticSection.innerHTML = content + additionalContent;
+      // Safe DOM manipulation instead of innerHTML
+      staticSection.textContent = content + additionalContent;
       
       // Rimuovi contenuto precedente
       const existing = document.getElementById('static-fallback');

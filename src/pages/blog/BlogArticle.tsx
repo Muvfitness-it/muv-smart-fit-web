@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams, Link } from "react-router-dom";
-import DOMPurify from "dompurify";
+
 import { supabase } from "@/integrations/supabase/client";
+import { SecureHTMLRenderer } from "@/components/security/SecureHTMLRenderer";
 import LazyImage from "@/components/ui/LazyImage";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -236,10 +237,9 @@ const BlogArticle = () => {
               </div>
             )}
 
-            <section
+            <SecureHTMLRenderer
+              html={post.content || ""}
               className="prose prose-invert max-w-none prose-headings:scroll-mt-24"
-              // Sanitize HTML per sicurezza
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || "") }}
             />
 
             {galleryImages.length > 0 && (

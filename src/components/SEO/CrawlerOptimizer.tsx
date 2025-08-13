@@ -24,19 +24,41 @@ const CrawlerOptimizer: React.FC<CrawlerOptimizerProps> = ({
     crawlerContent.style.display = 'none';
     crawlerContent.setAttribute('aria-hidden', 'true');
     
-    crawlerContent.innerHTML = `
-      <h1>${title}</h1>
-      <p>${description}</p>
-      <div>${content}</div>
-      ${services.length > 0 ? `
-        <h2>Servizi Offerti</h2>
-        <ul>
-          ${services.map(service => `<li>${service}</li>`).join('')}
-        </ul>
-      ` : ''}
-      <p>Località: ${location}</p>
-      <p>Contatti: +39 3291070374 - info@muvfitness.it</p>
-    `;
+    // Safe DOM manipulation instead of innerHTML
+    const titleEl = document.createElement('h1');
+    titleEl.textContent = title;
+    crawlerContent.appendChild(titleEl);
+    
+    const descEl = document.createElement('p');
+    descEl.textContent = description;
+    crawlerContent.appendChild(descEl);
+    
+    const contentEl = document.createElement('div');
+    contentEl.textContent = content;
+    crawlerContent.appendChild(contentEl);
+    
+    if (services.length > 0) {
+      const servicesTitle = document.createElement('h2');
+      servicesTitle.textContent = 'Servizi Offerti';
+      crawlerContent.appendChild(servicesTitle);
+      
+      const servicesList = document.createElement('ul');
+      services.forEach(service => {
+        const serviceItem = document.createElement('li');
+        serviceItem.textContent = service;
+        servicesList.appendChild(serviceItem);
+      });
+      crawlerContent.appendChild(servicesList);
+    }
+    
+    // Add location and contact info
+    const locationEl = document.createElement('p');
+    locationEl.textContent = `Località: ${location}`;
+    crawlerContent.appendChild(locationEl);
+    
+    const contactEl = document.createElement('p');
+    contactEl.textContent = 'Contatti: +39 3291070374 - info@muvfitness.it';
+    crawlerContent.appendChild(contactEl);
     
     // Rimuovi contenuto precedente se esiste
     const existingContent = document.getElementById('crawler-content');
