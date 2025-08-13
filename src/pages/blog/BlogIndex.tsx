@@ -126,8 +126,12 @@ const BlogIndex = () => {
         })}</script>
       </Helmet>
 
-      <header className="relative border-b border-border bg-gradient-to-b from-background/95 to-background/60 supports-[backdrop-filter]:backdrop-blur">
-        <div className="container mx-auto px-4 py-10 md:py-14">
+      <header className="relative border-b border-border">
+        {/* Background image + overlay for readability */}
+        <div className="absolute inset-0 bg-[url('/images/fitness-professional-bg.jpg')] bg-cover bg-center opacity-20" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 to-background/90" aria-hidden="true" />
+
+        <div className="container relative mx-auto px-4 py-10 md:py-14 min-h-[240px] md:min-h-[320px] flex flex-col items-center justify-center text-center gap-4">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -143,19 +147,18 @@ const BlogIndex = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="mt-6 flex flex-col items-center text-center gap-3">
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">Blog MUV Fitness</h1>
-            <p>
-              <span className="inline-block rounded-md bg-muted/70 px-3 py-1 text-sm md:text-base text-foreground ring-1 ring-border shadow-sm">
-                Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
-              </span>
-            </p>
-            <a
-              href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
-              className="text-sm text-muted-foreground hover:underline"
-              aria-label="Feed RSS del Blog MUV Fitness"
-            >RSS</a>
-          </div>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">Blog MUV Fitness</h1>
+          <p>
+            <span className="inline-block rounded-md bg-muted/70 px-3 py-1 text-sm md:text-base text-foreground ring-1 ring-border shadow-sm">
+              Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+            </span>
+          </p>
+          <a
+            href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
+            className="text-sm text-muted-foreground hover:underline"
+            aria-label="Feed RSS del Blog MUV Fitness"
+          >RSS</a>
         </div>
       </header>
 
