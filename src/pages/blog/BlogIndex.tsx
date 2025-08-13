@@ -126,8 +126,8 @@ const BlogIndex = () => {
         })}</script>
       </Helmet>
 
-      <header className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-        <div className="container mx-auto px-4 py-6">
+      <header className="relative border-b border-border bg-gradient-to-b from-background/80 to-background/40 supports-[backdrop-filter]:backdrop-blur">
+        <div className="container mx-auto px-4 py-8">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -143,11 +143,13 @@ const BlogIndex = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="mt-4 flex items-start md:items-center justify-between gap-4">
+          <div className="mt-6 flex items-start md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Blog MUV Fitness</h1>
-              <p className="text-muted-foreground mt-2 max-w-2xl">
-                Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">Blog MUV Fitness</h1>
+              <p className="mt-3">
+                <span className="inline-block rounded-md bg-muted/60 px-3 py-1 text-sm md:text-base text-foreground">
+                  Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+                </span>
               </p>
             </div>
             <a
@@ -174,7 +176,7 @@ const BlogIndex = () => {
             </div>
             <div className="w-full md:w-64">
               <Select value={selectedCatId || "all"} onValueChange={(v) => { setSelectedCatId(v === "all" ? null : v); setPage(1); }}>
-                <SelectTrigger aria-label="Filtra per categoria">
+                <SelectTrigger aria-label="Filtra per categoria" className="h-10 bg-muted/60 text-foreground border-border focus:ring-2 focus:ring-primary/40 focus:border-primary/40">
                   <SelectValue placeholder="Filtra per categoria" />
                 </SelectTrigger>
                 <SelectContent>
