@@ -126,8 +126,8 @@ const BlogIndex = () => {
         })}</script>
       </Helmet>
 
-      <header className="relative border-b border-border bg-gradient-to-b from-background/80 to-background/40 supports-[backdrop-filter]:backdrop-blur">
-        <div className="container mx-auto px-4 py-8">
+      <header className="relative border-b border-border bg-gradient-to-b from-background/95 to-background/60 supports-[backdrop-filter]:backdrop-blur">
+        <div className="container mx-auto px-4 py-10 md:py-14">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -143,15 +143,13 @@ const BlogIndex = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="mt-6 flex items-start md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">Blog MUV Fitness</h1>
-              <p className="mt-3">
-                <span className="inline-block rounded-md bg-muted/60 px-3 py-1 text-sm md:text-base text-foreground">
-                  Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
-                </span>
-              </p>
-            </div>
+          <div className="mt-6 flex flex-col items-center text-center gap-3">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">Blog MUV Fitness</h1>
+            <p>
+              <span className="inline-block rounded-md bg-muted/70 px-3 py-1 text-sm md:text-base text-foreground ring-1 ring-border shadow-sm">
+                Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+              </span>
+            </p>
             <a
               href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
               className="text-sm text-muted-foreground hover:underline"
