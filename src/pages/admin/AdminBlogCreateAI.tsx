@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-import { useGeminiAPI } from "@/hooks/useGeminiAPI";
+import { useAdvancedArticleGenerator, ArticleResponse } from "@/hooks/useAdvancedArticleGenerator";
 import { supabase } from "@/integrations/supabase/client";
 import { SecureHTMLRenderer } from "@/components/security/SecureHTMLRenderer";
 import { Input } from "@/components/ui/input";
@@ -37,60 +37,65 @@ const wordOptions = [600, 1000, 1500, 2000];
 
 const AdminBlogCreateAI: React.FC = () => {
   const navigate = useNavigate();
-  const { callGeminiAPI } = useGeminiAPI();
+  const { generateArticle } = useAdvancedArticleGenerator();
 
   // Form state
   const [topic, setTopic] = useState("");
   const [words, setWords] = useState<number>(1000);
   const [tone, setTone] = useState<string>("professionale");
+  const [additionalContext, setAdditionalContext] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Generated preview
-  const [title, setTitle] = useState("");
-  const [contentHTML, setContentHTML] = useState("");
-  const [excerpt, setExcerpt] = useState("");
+  // Generated content
+  const [generatedArticle, setGeneratedArticle] = useState<ArticleResponse | null>(null);
 
   // Publish options
   const [publishMode, setPublishMode] = useState<"now" | "schedule" | "draft">("draft");
   const [scheduleDate, setScheduleDate] = useState<Date | undefined>(undefined);
 
-  const metaTitle = useMemo(() => (title?.length > 57 ? `${title.substring(0, 57)}…` : title), [title]);
-  const metaDescription = useMemo(() => {
-    const base = excerpt || (contentHTML ? contentHTML.replace(/<[^>]+>/g, " ").slice(0, 180) : "");
-    return base.length > 157 ? `${base.substring(0, 157)}…` : base;
-  }, [excerpt, contentHTML]);
+  // Computed values from generated article
+  const title = generatedArticle?.title || "";
+  const contentHTML = generatedArticle?.content || "";
+  const excerpt = generatedArticle?.excerpt || "";
+  const metaTitle = generatedArticle?.metaTitle || title;
+  const metaDescription = generatedArticle?.metaDescription || excerpt;
 
   // Removed DOMPurify usage - using SecureHTMLRenderer instead
 
   const handleGenerate = async () => {
     if (!topic.trim()) {
-      toast({ title: "Argomento mancante", description: "Inserisci un argomento prima di generare.", variant: "destructive" });
+      toast({ 
+        title: "Argomento mancante", 
+        description: "Inserisci un argomento prima di generare l'articolo.", 
+        variant: "destructive" 
+      });
       return;
     }
+
     try {
       setIsGenerating(true);
-      const prompt = `Scrivi un articolo in italiano, altamente umanizzato, naturale e coinvolgente, su: "${topic.trim()}". \n\nRequisiti: \n- Lunghezza: ~${words} parole. \n- Tono: ${tone}. \n- Ottimizzazione SEO completa (H2/H3, paragrafi brevi, bullet dove utili, call-to-action finale). \n- Evita toni robotici, usa esempi pratici e frasi variabili. \n- Non inserire affermazioni mediche senza disclaimer. \n- Includi: \n  1) Titolo H1 proposto, \n  2) Meta description (<=160 caratteri), \n  3) Estratto (2-3 frasi), \n  4) Contenuto HTML pulito (solo tag semantici: h2, h3, p, ul, li, strong, em, blockquote, a).`;
+      
+      const article = await generateArticle({
+        topic: topic.trim(),
+        wordCount: words,
+        tone,
+        additionalContext: additionalContext.trim() || undefined
+      });
 
-      const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-      const data = await callGeminiAPI(payload);
-      // Prova a estrarre testo
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.content || "";
-
-      // Strategy: try to split blocks by markers if present, fallback to heuristic
-      const tTitle = (/Titolo H1\s*:?\s*(.*)/i.exec(text)?.[1] || topic).trim();
-      const tMeta = (/Meta description\s*:?\s*([\s\S]*?)(\n|$)/i.exec(text)?.[1] || "").trim();
-      const tExcerpt = (/Estratto\s*:?\s*([\s\S]*?)(\n\n|$)/i.exec(text)?.[1] || "").trim();
-      // Heuristic to find HTML content
-      const htmlMatch = text.match(/<h2[\s\S]*$/i);
-      const tContent = htmlMatch ? htmlMatch[0] : `<p>${text.replace(/\n/g, "<br />")}</p>`;
-
-      setTitle(tTitle);
-      setExcerpt(tExcerpt || tMeta);
-      setContentHTML(tContent);
-
-      toast({ title: "Bozza generata", description: "Controlla titolo, estratto e contenuto." });
-    } catch (e: any) {
-      toast({ title: "Errore generazione", description: e.message || "Impossibile generare l'articolo.", variant: "destructive" });
+      setGeneratedArticle(article);
+      
+      toast({ 
+        title: "Articolo generato con successo!", 
+        description: "Controlla il contenuto e personalizzalo se necessario." 
+      });
+      
+    } catch (error: any) {
+      console.error('Generation error:', error);
+      toast({ 
+        title: "Errore nella generazione", 
+        description: error.message || "Impossibile generare l'articolo. Riprova.", 
+        variant: "destructive" 
+      });
     } finally {
       setIsGenerating(false);
     }
@@ -152,7 +157,13 @@ const AdminBlogCreateAI: React.FC = () => {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="topic">Argomento</Label>
-                <Input id="topic" placeholder="Es. Allenamento EMS per principianti" value={topic} onChange={(e) => setTopic(e.target.value)} />
+                <Input 
+                  id="topic" 
+                  placeholder="Es. Benefici dell'allenamento EMS per il recupero muscolare" 
+                  value={topic} 
+                  onChange={(e) => setTopic(e.target.value)} 
+                  className="text-foreground"
+                />
               </div>
 
               <div className="space-y-2">
@@ -183,9 +194,21 @@ const AdminBlogCreateAI: React.FC = () => {
                 </Select>
               </div>
 
-              <Button onClick={handleGenerate} disabled={isGenerating} className="w-full">
+              <div className="space-y-2">
+                <Label htmlFor="context">Contesto aggiuntivo (opzionale)</Label>
+                <Textarea 
+                  id="context"
+                  placeholder="Aggiungi dettagli specifici, target audience, obiettivi particolari..."
+                  value={additionalContext}
+                  onChange={(e) => setAdditionalContext(e.target.value)}
+                  rows={3}
+                  className="text-foreground"
+                />
+              </div>
+
+              <Button onClick={handleGenerate} disabled={isGenerating || !topic.trim()} className="w-full">
                 {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4 mr-2" />}
-                Genera bozza
+                {isGenerating ? "Generazione in corso..." : "Genera articolo"}
               </Button>
             </CardContent>
           </Card>
@@ -217,7 +240,7 @@ const AdminBlogCreateAI: React.FC = () => {
                 </div>
               )}
 
-              <Button className="w-full" onClick={() => handleSave(publishMode)} disabled={!contentHTML || !title}>
+              <Button className="w-full" onClick={() => handleSave(publishMode)} disabled={!generatedArticle}>
                 <CheckCircle2 className="w-4 h-4 mr-2" />
                 Salva
               </Button>
@@ -231,24 +254,55 @@ const AdminBlogCreateAI: React.FC = () => {
               <CardTitle>Anteprima e Meta</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Titolo</Label>
-                <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Titolo dell'articolo" />
-              </div>
-              <div className="space-y-2">
-                <Label>Estratto</Label>
-                <Textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} rows={3} placeholder="Breve riassunto (2-3 frasi)" />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Meta Title</Label>
-                  <Input value={metaTitle} readOnly />
+              {generatedArticle ? (
+                <>
+                  <div className="space-y-2">
+                    <Label>Titolo</Label>
+                    <Input 
+                      value={title} 
+                      onChange={(e) => setGeneratedArticle(prev => prev ? {...prev, title: e.target.value} : null)} 
+                      placeholder="Titolo dell'articolo" 
+                      className="text-foreground font-medium"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Estratto</Label>
+                    <Textarea 
+                      value={excerpt} 
+                      onChange={(e) => setGeneratedArticle(prev => prev ? {...prev, excerpt: e.target.value} : null)} 
+                      rows={3} 
+                      placeholder="Breve riassunto (2-3 frasi)" 
+                      className="text-foreground"
+                    />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Meta Title</Label>
+                      <Input value={metaTitle} readOnly className="bg-muted text-muted-foreground" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Meta Description</Label>
+                      <Input value={metaDescription} readOnly className="bg-muted text-muted-foreground" />
+                    </div>
+                  </div>
+                  {generatedArticle.keywords && generatedArticle.keywords.length > 0 && (
+                    <div className="space-y-2">
+                      <Label>Keywords SEO</Label>
+                      <div className="flex flex-wrap gap-2">
+                        {generatedArticle.keywords.map((keyword, index) => (
+                          <span key={index} className="bg-primary/10 text-primary px-2 py-1 rounded-md text-sm">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">Genera un articolo per vedere l'anteprima qui</p>
                 </div>
-                <div className="space-y-2">
-                  <Label>Meta Description</Label>
-                  <Input value={metaDescription} readOnly />
-                </div>
-              </div>
+              )}
             </CardContent>
           </Card>
 
@@ -258,12 +312,18 @@ const AdminBlogCreateAI: React.FC = () => {
             </CardHeader>
             <CardContent>
               {contentHTML ? (
-                <SecureHTMLRenderer
-                  html={contentHTML}
-                  className="prose prose-invert max-w-none"
-                />
+                <div className="border rounded-lg p-4 bg-card">
+                  <SecureHTMLRenderer
+                    html={contentHTML}
+                    className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground"
+                  />
+                </div>
               ) : (
-                <p className="text-muted-foreground">Genera l'articolo per vedere l'anteprima qui.</p>
+                <div className="text-center py-12 border-2 border-dashed border-muted rounded-lg">
+                  <Wand2 className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground text-lg">Genera l'articolo per vedere l'anteprima qui</p>
+                  <p className="text-muted-foreground/60 text-sm mt-2">Il contenuto apparirà qui una volta generato</p>
+                </div>
               )}
             </CardContent>
           </Card>
