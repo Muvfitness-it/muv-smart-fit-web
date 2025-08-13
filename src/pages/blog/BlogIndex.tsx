@@ -128,10 +128,10 @@ const BlogIndex = () => {
 
       <header className="relative border-b border-border">
         {/* Background image + overlay for readability */}
-        <div className="absolute inset-0 bg-[url('/images/fitness-professional-bg.jpg')] bg-cover bg-center opacity-20" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 to-background/90" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[url('/images/fitness-professional-bg.jpg')] bg-cover bg-center" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/70" aria-hidden="true" />
 
-        <div className="container relative mx-auto px-4 py-10 md:py-14 min-h-[240px] md:min-h-[320px] flex flex-col items-center justify-center text-center gap-4">
+        <div className="container relative mx-auto px-4 py-12 md:py-16 min-h-[280px] md:min-h-[360px] flex flex-col items-center justify-center text-center gap-6">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -148,15 +148,15 @@ const BlogIndex = () => {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">Blog MUV Fitness</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-white">Blog MUV Fitness</h1>
           <p>
-            <span className="inline-block rounded-md bg-muted/70 px-3 py-1 text-sm md:text-base text-foreground ring-1 ring-border shadow-sm">
+            <span className="inline-block rounded-md bg-black/50 backdrop-blur-sm px-3 py-1 text-sm md:text-base text-white ring-1 ring-white/20 shadow-sm">
               Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
             </span>
           </p>
           <a
             href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
-            className="text-sm text-muted-foreground hover:underline"
+            className="text-sm text-white/80 hover:text-white hover:underline transition-colors"
             aria-label="Feed RSS del Blog MUV Fitness"
           >RSS</a>
         </div>
