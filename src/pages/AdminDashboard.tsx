@@ -72,7 +72,7 @@ const AdminDashboard = () => {
                 {/* Quick Actions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Card className="hover:shadow-md transition-shadow cursor-pointer" 
-                        onClick={() => navigate('/admin/blog/new')}>
+                        onClick={() => navigate('/admin/blog/create/ai')}>
                     <CardContent className="p-6 text-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                         <Plus className="w-6 h-6 text-primary" />
@@ -85,7 +85,7 @@ const AdminDashboard = () => {
                   </Card>
 
                   <Card className="hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => navigate('/admin/blog/new')}>
+                        onClick={() => navigate('/admin/blog/create/manual')}>
                     <CardContent className="p-6 text-center">
                       <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                         <FileText className="w-6 h-6 text-secondary" />

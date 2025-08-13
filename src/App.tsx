@@ -116,7 +116,9 @@ const AppContent = () => {
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/blog" element={<AdminBlogList />} />
                 <Route path="/admin/blog/categorie" element={<AdminCategories />} />
-                <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
+                <Route path="/admin/blog/create/ai" element={<AdminBlogCreateAI />} />
+                <Route path="/admin/blog/create/manual" element={<AdminBlogCreateManual />} />
+                <Route path="/admin/blog/new" element={<Navigate to="/admin/blog/create/ai" replace />} />
                 <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
                 <Route path="/admin/utenti" element={<AdminUserManagement />} />
                 
