@@ -1,6 +1,5 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 export const usePlannerStats = () => {
   const [totalUsage, setTotalUsage] = useState<number>(0);
@@ -20,61 +19,25 @@ export const usePlannerStats = () => {
     }
 
     setIsLoading(true);
-    let attempts = 0;
     
-    const attemptFetch = async (): Promise<void> => {
-      try {
-        console.log('Fetching planner usage stats...');
-        
-        // Conta direttamente dalla tabella planner_usage
-        const { count, error: countError } = await supabase
-          .from('planner_usage')
-          .select('*', { count: 'exact', head: true });
-
-        if (countError) {
-          console.error('Error counting planner usage:', countError);
-          throw countError;
-        }
-
-        const newUsage = count || 0;
-        console.log('Planner usage count:', newUsage);
-        
-        setTotalUsage(newUsage);
-        setLastFetch(now);
-        
-        // Aggiorna la tabella analytics_summary in background
-        const { error: upsertError } = await supabase
-          .from('analytics_summary')
-          .upsert({
-            metric_name: 'total_planner_usage',
-            metric_value: newUsage,
-            updated_at: new Date().toISOString()
-          });
-
-        if (upsertError) {
-          console.warn('Failed to update analytics_summary:', upsertError);
-        }
-
-      } catch (error) {
-        console.error('Error fetching planner stats:', error);
-        attempts++;
-        
-        if (attempts < RETRY_ATTEMPTS) {
-          console.log(`Retrying fetch (attempt ${attempts + 1}/${RETRY_ATTEMPTS})...`);
-          setTimeout(attemptFetch, 1000 * attempts);
-        } else {
-          // Fallback: mostra un valore di default se tutto fallisce
-          if (totalUsage === 0) {
-            setTotalUsage(1250); // Valore di fallback
-            console.log('Using fallback value for planner usage');
-          }
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    await attemptFetch();
+    try {
+      // TODO: Implement database access when planner_usage table is created
+      // For now, use a mock value
+      console.log('Using mock planner usage stats...');
+      
+      const mockUsage = 1250 + Math.floor(Math.random() * 100); // Mock incrementing usage
+      setTotalUsage(mockUsage);
+      setLastFetch(now);
+      
+      console.log('Mock planner usage count:', mockUsage);
+      
+    } catch (error) {
+      console.error('Error in mock planner stats:', error);
+      // Fallback value
+      setTotalUsage(1250);
+    } finally {
+      setIsLoading(false);
+    }
   }, [lastFetch, totalUsage]);
 
   const refreshStats = useCallback(() => {

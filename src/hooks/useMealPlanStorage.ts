@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { MealPlanData, SavedMealPlan, MealPlanType, WeeklyMealPlan } from '@/types/planner';
 
 interface FormDataForSaving {
@@ -22,91 +22,30 @@ export const useMealPlanStorage = () => {
     setError('');
     
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      // TODO: Implement database storage when meal_plans table is created
+      // For now, use localStorage
+      const savedPlans = JSON.parse(localStorage.getItem('savedMealPlans') || '[]');
       
-      if (authError || !user) {
-        throw new Error('Devi essere autenticato per salvare un piano alimentare');
-      }
+      const newPlan: SavedMealPlan = {
+        id: Date.now().toString(),
+        user_id: 'local-user',
+        calories: mealPlanData.calories,
+        goal: formData.goal,
+        allergies: formData.allergies,
+        intolerances: formData.intolerances,
+        plan_data: mealPlanData.plan,
+        plan_type: formData.planType,
+        created_at: new Date().toISOString()
+      };
 
-      if (formData.planType === 'weekly') {
-        // Salva ogni giorno della settimana come record separato
-        const weeklyPlan = mealPlanData.plan as WeeklyMealPlan;
-        const days = ['lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica'] as const;
-        
-        const insertPromises = days.map((day, index) => 
-          supabase
-            .from('meal_plans')
-            .insert({
-              user_id: user.id,
-              calories: mealPlanData.calories,
-              goal: formData.goal,
-              allergies: formData.allergies as any,
-              intolerances: formData.intolerances as any,
-              plan_data: weeklyPlan[day] as any,
-              plan_type: 'weekly',
-              week_day: index
-            })
-            .select()
-        );
+      savedPlans.push(newPlan);
+      localStorage.setItem('savedMealPlans', JSON.stringify(savedPlans));
 
-        const results = await Promise.all(insertPromises);
-        
-        // Controlla se ci sono errori
-        const errors = results.filter(result => result.error);
-        if (errors.length > 0) {
-          throw new Error(errors[0].error?.message || 'Errore nel salvare il piano settimanale');
-        }
-
-        // Controlla che il primo risultato e i suoi dati esistano
-        const firstResult = results[0];
-        if (!firstResult.data || !Array.isArray(firstResult.data) || firstResult.data.length === 0) {
-          throw new Error('Errore nel recuperare i dati del piano salvato');
-        }
-
-        const firstRecord = firstResult.data[0];
-        if (!firstRecord || !firstRecord.id) {
-          throw new Error('Errore nel recuperare i dati del piano salvato');
-        }
-
-        // Ritorna il primo record come rappresentante del piano settimanale
-        return {
-          id: firstRecord.id,
-          user_id: user.id,
-          calories: mealPlanData.calories,
-          goal: formData.goal,
-          allergies: formData.allergies,
-          intolerances: formData.intolerances,
-          plan_data: mealPlanData.plan,
-          plan_type: 'weekly',
-          created_at: firstRecord.created_at
-        } as SavedMealPlan;
-      } else {
-        // Piano giornaliero
-        const { data, error } = await supabase
-          .from('meal_plans')
-          .insert({
-            user_id: user.id,
-            calories: mealPlanData.calories,
-            goal: formData.goal,
-            allergies: formData.allergies as any,
-            intolerances: formData.intolerances as any,
-            plan_data: mealPlanData.plan as any,
-            plan_type: 'daily'
-          })
-          .select()
-          .single();
-
-        if (error) throw error;
-        
-        return {
-          ...data,
-          plan_data: data.plan_data as unknown as MealPlanType,
-          allergies: data.allergies as string[],
-          intolerances: data.intolerances as string[]
-        } as SavedMealPlan;
-      }
+      toast.success('Piano alimentare salvato con successo!');
+      return newPlan;
     } catch (err: any) {
       setError(err.message);
+      toast.error('Errore nel salvataggio del piano alimentare');
       return null;
     } finally {
       setIsLoading(false);
@@ -118,66 +57,13 @@ export const useMealPlanStorage = () => {
     setError('');
     
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      // TODO: Implement database retrieval when meal_plans table is created
+      // For now, use localStorage
+      const savedPlans = JSON.parse(localStorage.getItem('savedMealPlans') || '[]');
       
-      if (authError || !user) {
-        throw new Error('Devi essere autenticato per visualizzare i piani alimentari');
-      }
-
-      const { data, error } = await supabase
-        .from('meal_plans')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      
-      // Raggruppa i piani settimanali
-      const groupedPlans: SavedMealPlan[] = [];
-      const weeklyPlansMap = new Map<string, any[]>();
-      
-      data.forEach(item => {
-        if (item.plan_type === 'weekly') {
-          const groupKey = `${item.calories}-${item.goal}-${item.created_at.split('T')[0]}`;
-          if (!weeklyPlansMap.has(groupKey)) {
-            weeklyPlansMap.set(groupKey, []);
-          }
-          weeklyPlansMap.get(groupKey)?.push(item);
-        } else {
-          groupedPlans.push({
-            ...item,
-            plan_data: item.plan_data as unknown as MealPlanType,
-            allergies: item.allergies as string[],
-            intolerances: item.intolerances as string[]
-          } as SavedMealPlan);
-        }
-      });
-      
-      // Processa i piani settimanali
-      weeklyPlansMap.forEach(weekDays => {
-        if (weekDays.length === 7) {
-          weekDays.sort((a, b) => (a.week_day || 0) - (b.week_day || 0));
-          
-          const weeklyPlan: WeeklyMealPlan = {
-            lunedi: weekDays[0].plan_data,
-            martedi: weekDays[1].plan_data,
-            mercoledi: weekDays[2].plan_data,
-            giovedi: weekDays[3].plan_data,
-            venerdi: weekDays[4].plan_data,
-            sabato: weekDays[5].plan_data,
-            domenica: weekDays[6].plan_data
-          };
-          
-          groupedPlans.push({
-            ...weekDays[0],
-            plan_data: weeklyPlan,
-            allergies: weekDays[0].allergies as string[],
-            intolerances: weekDays[0].intolerances as string[]
-          } as SavedMealPlan);
-        }
-      });
-      
-      return groupedPlans.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      return savedPlans.sort((a: SavedMealPlan, b: SavedMealPlan) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     } catch (err: any) {
       setError(err.message);
       return [];
