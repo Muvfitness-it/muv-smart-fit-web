@@ -117,13 +117,17 @@ export const ImageWithLogo: React.FC<ImageWithLogoProps> = ({
         canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', 0.9);
       });
 
-      const fileName = `article-image-${Date.now()}.jpg`;
+      // Generate organized file path and dynamic alt text
+      const timestamp = Date.now();
+      const fileName = `blog/article-image-${timestamp}.jpg`;
+      const altText = `Immagine professionale di fitness: ${prompt.slice(0, 100)}${prompt.length > 100 ? '...' : ''}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('immagini')
         .upload(fileName, blob, {
           contentType: 'image/jpeg',
-          cacheControl: '3600'
+          cacheControl: '3600',
+          upsert: false
         });
 
       if (uploadError) {
@@ -140,8 +144,11 @@ export const ImageWithLogo: React.FC<ImageWithLogoProps> = ({
 
       toast({
         title: "Immagine generata con successo!",
-        description: "L'immagine con il logo MUV è stata creata e caricata."
+        description: "L'immagine con il logo MUV è stata creata e caricata.",
+        duration: 3000
       });
+
+      console.log('Image generated successfully:', { fileName, publicUrl, altText });
 
     } catch (error: any) {
       console.error('Error generating image with logo:', error);
@@ -180,7 +187,7 @@ export const ImageWithLogo: React.FC<ImageWithLogoProps> = ({
         <div className="border rounded-lg p-4 bg-card">
           <img 
             src={generatedImageUrl} 
-            alt="Generated image with MUV logo" 
+            alt={`Immagine professionale di fitness: ${prompt.slice(0, 100)}${prompt.length > 100 ? '...' : ''}`}
             className="w-full h-auto rounded-lg"
           />
           <p className="text-sm text-muted-foreground mt-2">
