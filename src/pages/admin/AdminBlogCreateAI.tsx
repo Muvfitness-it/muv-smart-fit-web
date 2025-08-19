@@ -58,6 +58,7 @@ const AdminBlogCreateAI: React.FC = () => {
 
   // Generated content
   const [generatedArticle, setGeneratedArticle] = useState<ArticleResponse | null>(null);
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
 
   // Publish options
   const [publishMode, setPublishMode] = useState<"now" | "schedule" | "draft">("draft");
@@ -130,6 +131,7 @@ const AdminBlogCreateAI: React.FC = () => {
       excerpt: excerpt || null,
       meta_title: metaTitle || null,
       meta_description: metaDescription || null,
+      featured_image_url: generatedImageUrl || null,
       status: mode === "now" ? "published" : mode === "schedule" ? "scheduled" : "draft",
       published_at: mode === "now" ? new Date().toISOString() : null,
       scheduled_publish_at: mode === "schedule" && scheduleDate ? new Date(scheduleDate).toISOString() : null,
@@ -298,7 +300,7 @@ const AdminBlogCreateAI: React.FC = () => {
               <CardContent>
                 <ImageWithLogo 
                   prompt={generatedArticle.image_prompt}
-                  onImageGenerated={(url) => console.log('Image generated:', url)}
+                  onImageGenerated={setGeneratedImageUrl}
                 />
               </CardContent>
             </Card>
@@ -355,11 +357,31 @@ const AdminBlogCreateAI: React.FC = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Meta Title</Label>
-                      <Input value={metaTitle} readOnly className="bg-muted text-muted-foreground text-xs" />
+                      <div className="flex items-center gap-2">
+                        <Input value={metaTitle} readOnly className="bg-muted text-muted-foreground text-xs" />
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => navigator.clipboard.writeText(metaTitle)}
+                          className="shrink-0"
+                        >
+                          Copia
+                        </Button>
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <Label>Meta Description</Label>
-                      <Input value={metaDescription} readOnly className="bg-muted text-muted-foreground text-xs" />
+                      <div className="flex items-center gap-2">
+                        <Input value={metaDescription} readOnly className="bg-muted text-muted-foreground text-xs" />
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => navigator.clipboard.writeText(metaDescription)}
+                          className="shrink-0"
+                        >
+                          Copia
+                        </Button>
+                      </div>
                     </div>
                   </div>
                   {generatedArticle.keywords && generatedArticle.keywords.length > 0 && (
@@ -379,6 +401,9 @@ const AdminBlogCreateAI: React.FC = () => {
                       <Label>Struttura contenuto</Label>
                       <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-md text-sm">
                         <div className="font-semibold text-blue-700 dark:text-blue-300">H1: {generatedArticle.headings.h1}</div>
+                        <div className="text-muted-foreground text-xs mb-2">
+                          H2: {generatedArticle.headings.h2.length} sezioni • H3: {generatedArticle.headings.h3.length} sottosezioni
+                        </div>
                         {generatedArticle.headings.h2.map((h2, i) => (
                           <div key={i} className="ml-2 text-green-700 dark:text-green-300">H2: {h2}</div>
                         ))}

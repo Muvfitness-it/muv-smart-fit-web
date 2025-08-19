@@ -54,4 +54,10 @@ verify_jwt = false
 [functions.security-audit]
 verify_jwt = false
 
+[functions.advanced-article-generator]
+verify_jwt = false
+
+[functions.gemini-provider]
+verify_jwt = false
+
 # All other functions require JWT by default (no override here)
