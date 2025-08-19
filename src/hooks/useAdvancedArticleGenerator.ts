@@ -5,15 +5,28 @@ export interface ArticleRequest {
   wordCount: number;
   tone: string;
   additionalContext?: string;
+  qualityModel?: 'pro' | 'flash';
+  createImage?: boolean;
 }
 
 export interface ArticleResponse {
   title: string;
+  slug: string;
+  hook: string;
   content: string;
   excerpt: string;
   metaTitle: string;
   metaDescription: string;
   keywords: string[];
+  headings?: {
+    h1: string;
+    h2: string[];
+    h3: string[];
+  };
+  internal_links?: string[];
+  image_prompt?: string;
+  tone_used?: string;
+  word_count_target?: number;
 }
 
 export const useAdvancedArticleGenerator = () => {

@@ -15,14 +15,30 @@ serve(async (req) => {
   }
 
   try {
-    const { payload } = await req.json();
+    const { payload, model } = await req.json();
     console.log('Received payload type:', typeof payload);
+    console.log('Requested model:', model);
     
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     
     if (!geminiApiKey) {
       console.error('GEMINI_API_KEY not found');
       throw new Error('GEMINI_API_KEY non configurata');
+    }
+
+    // Determina il modello da usare con fallback intelligente
+    let selectedModel = model || 'gemini-2.5-pro';
+    
+    // Fallback hierarchy: 2.5-pro -> 2.0-pro -> 1.5-pro -> 1.5-flash
+    const modelFallbacks = [
+      'gemini-2.5-pro',
+      'gemini-2.0-pro', 
+      'gemini-1.5-pro',
+      'gemini-1.5-flash'
+    ];
+    
+    if (!modelFallbacks.includes(selectedModel)) {
+      selectedModel = 'gemini-2.5-pro';
     }
 
     let requestBody;
@@ -37,30 +53,64 @@ serve(async (req) => {
           }]
         }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.8,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 8192
         }
       };
     } else {
-      // Altrimenti è un payload strutturato (per meal planner, shopping list, etc.)
+      // Altrimenti è un payload strutturato (per meal planner, shopping list, articoli avanzati etc.)
       console.log('Structured payload for specific generation');
       requestBody = payload;
     }
 
-    console.log('Calling Gemini API...');
+    console.log(`Calling Gemini API with model: ${selectedModel}...`);
     
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
+    // Funzione helper per tentare la chiamata con un modello specifico
+    const tryGeminiCall = async (modelName: string) => {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+      return response;
+    };
+
+    let response;
+    let lastError;
+    
+    // Prova con il modello selezionato e i fallback se necessario
+    for (const modelToTry of modelFallbacks) {
+      if (modelToTry === selectedModel || (lastError && modelFallbacks.indexOf(modelToTry) > modelFallbacks.indexOf(selectedModel))) {
+        try {
+          console.log(`Trying model: ${modelToTry}`);
+          response = await tryGeminiCall(modelToTry);
+          
+          if (response.ok) {
+            console.log(`Success with model: ${modelToTry}`);
+            selectedModel = modelToTry; // Aggiorna il modello utilizzato con successo
+            break;
+          } else {
+            const errorText = await response.text();
+            console.warn(`Model ${modelToTry} failed:`, response.status, errorText);
+            lastError = new Error(`${modelToTry}: ${response.status} - ${errorText}`);
+          }
+        } catch (error) {
+          console.warn(`Model ${modelToTry} error:`, error);
+          lastError = error;
+        }
       }
-    );
+    }
+
+    if (!response || !response.ok) {
+      throw lastError || new Error('Tutti i modelli Gemini hanno fallito');
+    }
 
     if (!response.ok) {
       const errorText = await response.text();

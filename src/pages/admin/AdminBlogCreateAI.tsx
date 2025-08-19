@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAdvancedArticleGenerator, ArticleResponse } from "@/hooks/useAdvancedArticleGenerator";
 import { supabase } from "@/integrations/supabase/client";
 import { SecureHTMLRenderer } from "@/components/security/SecureHTMLRenderer";
+import { ImageWithLogo } from "@/components/ui/ImageWithLogo";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -31,9 +32,16 @@ const tones = [
   { value: "amichevole", label: "Amichevole" },
   { value: "motivazionale", label: "Motivazionale" },
   { value: "educativo", label: "Educativo" },
+  { value: "coinvolgente", label: "Coinvolgente" },
+  { value: "tecnico", label: "Tecnico" },
+  { value: "narrativo", label: "Narrativo" },
 ];
 
-const wordOptions = [600, 1000, 1500, 2000];
+const wordOptions = [1000, 2000, 3000];
+const qualityOptions = [
+  { value: "pro", label: "Gemini Pro (Qualità)" },
+  { value: "flash", label: "Gemini Flash (Veloce)" },
+];
 
 const AdminBlogCreateAI: React.FC = () => {
   const navigate = useNavigate();
@@ -41,9 +49,11 @@ const AdminBlogCreateAI: React.FC = () => {
 
   // Form state
   const [topic, setTopic] = useState("");
-  const [words, setWords] = useState<number>(1000);
-  const [tone, setTone] = useState<string>("professionale");
+  const [words, setWords] = useState<number>(2000);
+  const [tone, setTone] = useState<string>("coinvolgente");
   const [additionalContext, setAdditionalContext] = useState("");
+  const [qualityModel, setQualityModel] = useState<'pro' | 'flash'>('pro');
+  const [createImage, setCreateImage] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
   // Generated content
@@ -55,6 +65,8 @@ const AdminBlogCreateAI: React.FC = () => {
 
   // Computed values from generated article
   const title = generatedArticle?.title || "";
+  const slug = generatedArticle?.slug || "";
+  const hook = generatedArticle?.hook || "";
   const contentHTML = generatedArticle?.content || "";
   const excerpt = generatedArticle?.excerpt || "";
   const metaTitle = generatedArticle?.metaTitle || title;
@@ -79,7 +91,9 @@ const AdminBlogCreateAI: React.FC = () => {
         topic: topic.trim(),
         wordCount: words,
         tone,
-        additionalContext: additionalContext.trim() || undefined
+        additionalContext: additionalContext.trim() || undefined,
+        qualityModel,
+        createImage
       });
 
       setGeneratedArticle(article);
@@ -107,11 +121,11 @@ const AdminBlogCreateAI: React.FC = () => {
       return;
     }
 
-    const slug = slugify(title);
+    const finalSlug = slug || slugify(title);
 
     const payload: any = {
       title,
-      slug,
+      slug: finalSlug,
       content: contentHTML,
       excerpt: excerpt || null,
       meta_title: metaTitle || null,
@@ -195,6 +209,33 @@ const AdminBlogCreateAI: React.FC = () => {
               </div>
 
               <div className="space-y-2">
+                <Label>Modello IA</Label>
+                <Select value={qualityModel} onValueChange={(v: 'pro' | 'flash') => setQualityModel(v)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleziona modello" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {qualityOptions.map((q) => (
+                      <SelectItem key={q.value} value={q.value}>{q.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="createImage"
+                  checked={createImage}
+                  onChange={(e) => setCreateImage(e.target.checked)}
+                  className="rounded border border-border"
+                />
+                <Label htmlFor="createImage" className="text-sm font-medium">
+                  Crea immagine con logo MUV
+                </Label>
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="context">Contesto aggiuntivo (opzionale)</Label>
                 <Textarea 
                   id="context"
@@ -249,6 +290,20 @@ const AdminBlogCreateAI: React.FC = () => {
         </div>
 
         <div className="lg:col-span-2 space-y-4">
+          {createImage && generatedArticle?.image_prompt && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Immagine con Logo MUV</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ImageWithLogo 
+                  prompt={generatedArticle.image_prompt}
+                  onImageGenerated={(url) => console.log('Image generated:', url)}
+                />
+              </CardContent>
+            </Card>
+          )}
+          
           <Card>
             <CardHeader>
               <CardTitle>Anteprima e Meta</CardTitle>
@@ -265,6 +320,18 @@ const AdminBlogCreateAI: React.FC = () => {
                       className="text-foreground font-medium"
                     />
                   </div>
+                  {hook && (
+                    <div className="space-y-2">
+                      <Label>Hook di apertura</Label>
+                      <Textarea 
+                        value={hook} 
+                        onChange={(e) => setGeneratedArticle(prev => prev ? {...prev, hook: e.target.value} : null)} 
+                        rows={2} 
+                        placeholder="Frase di apertura coinvolgente" 
+                        className="text-foreground font-medium bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700"
+                      />
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <Label>Estratto</Label>
                     <Textarea 
@@ -277,12 +344,22 @@ const AdminBlogCreateAI: React.FC = () => {
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
+                      <Label>Slug URL</Label>
+                      <Input value={slug} readOnly className="bg-muted text-muted-foreground text-xs" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Parole generate</Label>
+                      <Input value={`${generatedArticle.word_count_target || words} parole target`} readOnly className="bg-muted text-muted-foreground text-xs" />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
                       <Label>Meta Title</Label>
-                      <Input value={metaTitle} readOnly className="bg-muted text-muted-foreground" />
+                      <Input value={metaTitle} readOnly className="bg-muted text-muted-foreground text-xs" />
                     </div>
                     <div className="space-y-2">
                       <Label>Meta Description</Label>
-                      <Input value={metaDescription} readOnly className="bg-muted text-muted-foreground" />
+                      <Input value={metaDescription} readOnly className="bg-muted text-muted-foreground text-xs" />
                     </div>
                   </div>
                   {generatedArticle.keywords && generatedArticle.keywords.length > 0 && (
@@ -290,9 +367,23 @@ const AdminBlogCreateAI: React.FC = () => {
                       <Label>Keywords SEO</Label>
                       <div className="flex flex-wrap gap-2">
                         {generatedArticle.keywords.map((keyword, index) => (
-                          <span key={index} className="bg-primary/10 text-primary px-2 py-1 rounded-md text-sm">
+                          <span key={index} className="bg-primary/10 text-primary px-2 py-1 rounded-md text-sm font-medium">
                             {keyword}
                           </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {generatedArticle.headings && (
+                    <div className="space-y-2">
+                      <Label>Struttura contenuto</Label>
+                      <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-md text-sm">
+                        <div className="font-semibold text-blue-700 dark:text-blue-300">H1: {generatedArticle.headings.h1}</div>
+                        {generatedArticle.headings.h2.map((h2, i) => (
+                          <div key={i} className="ml-2 text-green-700 dark:text-green-300">H2: {h2}</div>
+                        ))}
+                        {generatedArticle.headings.h3.map((h3, i) => (
+                          <div key={i} className="ml-4 text-orange-700 dark:text-orange-300">H3: {h3}</div>
                         ))}
                       </div>
                     </div>
@@ -312,10 +403,17 @@ const AdminBlogCreateAI: React.FC = () => {
             </CardHeader>
             <CardContent>
               {contentHTML ? (
-                <div className="border rounded-lg p-4 bg-card">
+                <div className="border rounded-lg p-6 bg-card">
+                  {hook && (
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+                      <p className="text-lg font-medium text-blue-900 dark:text-blue-100 italic">
+                        "{hook}"
+                      </p>
+                    </div>
+                  )}
                   <SecureHTMLRenderer
                     html={contentHTML}
-                    className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground"
+                    className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-em:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground prose-table:text-foreground prose-th:bg-slate-900 prose-th:text-white prose-td:border prose-td:border-slate-300"
                   />
                 </div>
               ) : (

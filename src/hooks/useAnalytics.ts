@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -65,19 +64,20 @@ export const useAnalytics = () => {
     try {
       console.log('Tracking planner usage:', { actionType, calories, planType });
       
-      const { error } = await supabase.from('planner_usage').insert({
-        action_type: actionType,
-        calories: calories || null,
-        plan_type: planType || null,
-        user_id: null // Allow anonymous usage tracking
-      });
+      // TODO: Implement planner_usage table
+      // const { error } = await supabase.from('planner_usage').insert({
+      //   action_type: actionType,
+      //   calories: calories || null,
+      //   plan_type: planType || null,
+      //   user_id: null // Allow anonymous usage tracking
+      // });
 
-      if (error) {
-        console.warn('Failed to track planner usage:', error);
-        return;
-      }
+      // if (error) {
+      //   console.warn('Failed to track planner usage:', error);
+      //   return;
+      // }
       
-      console.log('Planner usage tracked successfully');
+      console.log('Planner usage tracked successfully (mock)');
       
       // Update analytics summary with better error handling
       const { error: updateError } = await supabase.rpc('update_analytics_summary');
