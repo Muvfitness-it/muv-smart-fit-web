@@ -36,8 +36,8 @@ export const ImageWithLogo: React.FC<ImageWithLogoProps> = ({
       const { data: imageData, error: imageError } = await supabase.functions.invoke('generate-image', {
         body: { 
           prompt: `${prompt}, professional fitness center image, high quality, modern, clean lighting`,
-          width: 1024,
-          height: 768
+          size: '1024x1024',
+          quality: 'high'
         }
       });
 

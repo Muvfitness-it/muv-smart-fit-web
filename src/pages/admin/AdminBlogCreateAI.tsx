@@ -292,16 +292,21 @@ const AdminBlogCreateAI: React.FC = () => {
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          {createImage && generatedArticle?.image_prompt && (
+          {createImage && (
             <Card>
               <CardHeader>
                 <CardTitle>Immagine con Logo MUV</CardTitle>
               </CardHeader>
               <CardContent>
                 <ImageWithLogo 
-                  prompt={generatedArticle.image_prompt}
+                  prompt={generatedArticle?.image_prompt || ''}
                   onImageGenerated={setGeneratedImageUrl}
                 />
+                {!generatedArticle?.image_prompt && (
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Genera prima l'articolo per ottenere il prompt dell'immagine
+                  </p>
+                )}
               </CardContent>
             </Card>
           )}
@@ -403,6 +408,7 @@ const AdminBlogCreateAI: React.FC = () => {
                         <div className="font-semibold text-blue-700 dark:text-blue-300">H1: {generatedArticle.headings.h1}</div>
                         <div className="text-muted-foreground text-xs mb-2">
                           H2: {generatedArticle.headings.h2.length} sezioni • H3: {generatedArticle.headings.h3.length} sottosezioni
+                          {generatedArticle.provider_used && ` • Provider: ${generatedArticle.provider_used}`}
                         </div>
                         {generatedArticle.headings.h2.map((h2, i) => (
                           <div key={i} className="ml-2 text-green-700 dark:text-green-300">H2: {h2}</div>

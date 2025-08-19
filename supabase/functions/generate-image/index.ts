@@ -37,12 +37,12 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'dall-e-3',
+        model: 'gpt-image-1',
         prompt: `Crea un'immagine professionale per un blog di fitness: ${prompt}. Lo stile deve essere moderno, pulito e professionale, adatto a un brand fitness di alta qualità.`,
         n: 1,
         size: size,
         quality: quality,
-        style: style
+        output_format: 'png'
       }),
     });
 
@@ -62,7 +62,7 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ 
-        image_url: data.data[0].url,
+        image: `data:image/png;base64,${data.data[0].b64_json}`,
         revised_prompt: data.data[0].revised_prompt 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

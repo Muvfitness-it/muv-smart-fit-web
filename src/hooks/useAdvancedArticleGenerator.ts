@@ -27,6 +27,7 @@ export interface ArticleResponse {
   image_prompt?: string;
   tone_used?: string;
   word_count_target?: number;
+  provider_used?: string;
 }
 
 export const useAdvancedArticleGenerator = () => {
