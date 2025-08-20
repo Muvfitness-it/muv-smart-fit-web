@@ -618,6 +618,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      log_unauthorized_lead_access: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       repair_html_content: {
         Args: { input_content: string }
         Returns: string

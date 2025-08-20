@@ -6,6 +6,45 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Rate limiting and security
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // 10 requests per minute per IP
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now();
+  const clientData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
+  
+  if (now - clientData.lastReset > RATE_LIMIT_WINDOW) {
+    clientData.count = 0;
+    clientData.lastReset = now;
+  }
+  
+  clientData.count++;
+  rateLimitMap.set(ip, clientData);
+  
+  return clientData.count <= RATE_LIMIT_MAX_REQUESTS;
+};
+
+const validatePayload = (payload: any): string | null => {
+  if (typeof payload === 'string') {
+    if (payload.length > 50000) {
+      return 'Prompt troppo lungo (max 50000 caratteri)';
+    }
+    if (payload.trim().length === 0) {
+      return 'Prompt vuoto non consentito';
+    }
+  } else if (typeof payload === 'object') {
+    const payloadStr = JSON.stringify(payload);
+    if (payloadStr.length > 100000) {
+      return 'Payload troppo grande (max 100KB)';
+    }
+  } else {
+    return 'Formato payload non valido';
+  }
+  return null;
+};
+
 serve(async (req) => {
   console.log('Gemini Provider function called');
   
@@ -14,36 +53,74 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown';
+
   try {
+    // Rate limiting
+    if (!checkRateLimit(clientIP)) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: 'Troppe richieste. Riprova tra qualche minuto.' }),
+        { 
+          status: 429, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
     const { payload, model } = await req.json();
-    console.log('Received payload type:', typeof payload);
-    console.log('Requested model:', model);
+    
+    // Validate payload
+    const validationError = validatePayload(payload);
+    if (validationError) {
+      console.warn(`Payload validation failed: ${validationError}`, { ip: clientIP });
+      return new Response(
+        JSON.stringify({ error: validationError }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    console.log('Processing request:', { 
+      payloadType: typeof payload, 
+      model: model || 'default',
+      ip: clientIP,
+      timestamp: new Date().toISOString()
+    });
     
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     
     if (!geminiApiKey) {
       console.error('GEMINI_API_KEY not found');
-      throw new Error('GEMINI_API_KEY non configurata');
+      return new Response(
+        JSON.stringify({ error: 'Configurazione API non valida' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
     }
 
-    // Determina il modello da usare con fallback intelligente
+    // Model selection with security validation
     let selectedModel = model || 'gemini-2.5-pro';
     
-    // Fallback hierarchy: 2.5-pro -> 2.0-pro -> 1.5-pro -> 1.5-flash
-    const modelFallbacks = [
+    const allowedModels = [
       'gemini-2.5-pro',
       'gemini-2.0-pro', 
       'gemini-1.5-pro',
       'gemini-1.5-flash'
     ];
     
-    if (!modelFallbacks.includes(selectedModel)) {
+    if (!allowedModels.includes(selectedModel)) {
+      console.warn(`Invalid model requested: ${selectedModel}`, { ip: clientIP });
       selectedModel = 'gemini-2.5-pro';
     }
 
     let requestBody;
     
-    // Se il payload è una stringa, è un prompt semplice per il blog
+    // Process payload based on type
     if (typeof payload === 'string') {
       console.log('Simple prompt for blog article generation');
       requestBody = {
@@ -57,71 +134,129 @@ serve(async (req) => {
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 8192
-        }
+        },
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH", 
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          }
+        ]
       };
     } else {
-      // Altrimenti è un payload strutturato (per meal planner, shopping list, articoli avanzati etc.)
       console.log('Structured payload for specific generation');
       requestBody = payload;
+      
+      // Add safety settings to structured payloads too
+      if (!requestBody.safetySettings) {
+        requestBody.safetySettings = [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH", 
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          }
+        ];
+      }
     }
 
     console.log(`Calling Gemini API with model: ${selectedModel}...`);
     
-    // Funzione helper per tentare la chiamata con un modello specifico
-    const tryGeminiCall = async (modelName: string) => {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-      return response;
+    // Enhanced API call with timeout and retry logic
+    const callGeminiWithTimeout = async (modelName: string, timeoutMs: number = 30000) => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            signal: controller.signal
+          }
+        );
+        clearTimeout(timeoutId);
+        return response;
+      } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
     };
 
     let response;
     let lastError;
     
-    // Prova con il modello selezionato e i fallback se necessario
+    // Try with selected model and fallbacks
+    const modelFallbacks = allowedModels;
+    
     for (const modelToTry of modelFallbacks) {
       if (modelToTry === selectedModel || (lastError && modelFallbacks.indexOf(modelToTry) > modelFallbacks.indexOf(selectedModel))) {
         try {
           console.log(`Trying model: ${modelToTry}`);
-          response = await tryGeminiCall(modelToTry);
+          response = await callGeminiWithTimeout(modelToTry);
           
           if (response.ok) {
             console.log(`Success with model: ${modelToTry}`);
-            selectedModel = modelToTry; // Aggiorna il modello utilizzato con successo
+            selectedModel = modelToTry;
             break;
           } else {
             const errorText = await response.text();
-            console.warn(`Model ${modelToTry} failed:`, response.status, errorText);
-            lastError = new Error(`${modelToTry}: ${response.status} - ${errorText}`);
+            console.warn(`Model ${modelToTry} failed:`, response.status, errorText.substring(0, 200));
+            lastError = new Error(`${modelToTry}: ${response.status} - ${errorText.substring(0, 100)}`);
           }
         } catch (error) {
-          console.warn(`Model ${modelToTry} error:`, error);
+          console.warn(`Model ${modelToTry} error:`, error.message);
           lastError = error;
         }
       }
     }
 
     if (!response || !response.ok) {
-      throw lastError || new Error('Tutti i modelli Gemini hanno fallito');
-    }
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Gemini API error:', response.status, errorText);
-      throw new Error(`Errore API Gemini: ${response.status} - ${errorText}`);
+      console.error('All Gemini models failed:', lastError?.message);
+      throw lastError || new Error('Tutti i modelli Gemini non disponibili');
     }
 
     const data = await response.json();
-    console.log('Gemini API response received');
+    console.log('Gemini API response received successfully');
 
-    // Per prompt semplici (blog), restituisci direttamente il testo
+    // Check for safety blocks
+    if (data.candidates?.[0]?.finishReason === 'SAFETY') {
+      console.warn('Content blocked by safety filters', { ip: clientIP });
+      return new Response(
+        JSON.stringify({ error: 'Contenuto bloccato dai filtri di sicurezza' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    // For simple prompts (blog), return content directly
     if (typeof payload === 'string') {
       const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!content) {
@@ -132,21 +267,27 @@ serve(async (req) => {
       });
     }
 
-    // Per payload strutturati, restituisci la risposta completa
+    // For structured payloads, return full response
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in gemini-provider function:', error);
+    console.error('Error in gemini-provider function:', { 
+      error: error.message, 
+      ip: clientIP,
+      timestamp: new Date().toISOString()
+    });
     
     let errorMessage = 'Errore nella comunicazione con Gemini';
-    if (error.message?.includes('API key')) {
+    if (error.message?.includes('API key') || error.message?.includes('401')) {
       errorMessage = 'Chiave API di Gemini non configurata correttamente';
-    } else if (error.message?.includes('quota') || error.message?.includes('limit')) {
+    } else if (error.message?.includes('quota') || error.message?.includes('limit') || error.message?.includes('429')) {
       errorMessage = 'Quota API di Gemini esaurita o limite raggiunto';
-    } else if (error.message?.includes('blocked')) {
+    } else if (error.message?.includes('blocked') || error.message?.includes('SAFETY')) {
       errorMessage = 'Contenuto bloccato dai filtri di sicurezza di Gemini';
+    } else if (error.name === 'AbortError') {
+      errorMessage = 'Timeout nella richiesta a Gemini';
     }
     
     return new Response(JSON.stringify({ error: errorMessage }), {
