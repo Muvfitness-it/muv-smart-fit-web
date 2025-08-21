@@ -13,8 +13,8 @@ export const SecurityHeaders = () => {
       {/* Content Security Policy - Hardened with dynamic nonces */}
       <meta httpEquiv="Content-Security-Policy" content={`
         default-src 'self';
-        script-src 'self' 'nonce-${nonces.script}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net 'unsafe-inline';
-        style-src 'self' 'nonce-${nonces.style}' https://fonts.googleapis.com 'unsafe-inline';
+        script-src 'self' 'nonce-${nonces.script}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net;
+        style-src 'self' 'nonce-${nonces.style}' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com data:;
         img-src 'self' data: https: blob: https://baujoowgqeyraqnukkmw.supabase.co;
         connect-src 'self' https://baujoowgqeyraqnukkmw.supabase.co https://*.supabase.co wss://baujoowgqeyraqnukkmw.supabase.co wss://*.supabase.co https://api.ipify.org https://www.google-analytics.com;

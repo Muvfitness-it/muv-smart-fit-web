@@ -24,6 +24,12 @@ enable_confirmations = false
 [auth.security]
 captcha_enabled = true
 refresh_token_rotation_enabled = true
+password_min_length = 8
+password_require_uppercase = true
+password_require_lowercase = true
+password_require_numbers = true
+password_require_special = true
+max_password_length = 128
 
 # Public endpoints (no JWT required)
 [functions.ai-auth]
@@ -62,7 +68,7 @@ verify_jwt = false
 [functions.advanced-article-generator]
 verify_jwt = false
 
-[functions.gemini-provider]
+[functions.secure-contact]
 verify_jwt = false
 
 # All other functions require JWT by default (no override here)

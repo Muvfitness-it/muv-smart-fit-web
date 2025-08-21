@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -68,7 +69,44 @@ serve(async (req) => {
       );
     }
 
-    const { payload, model } = await req.json();
+    const { payload, model, ai_token } = await req.json();
+    
+    // AI TOKEN AUTHENTICATION - CRITICAL SECURITY
+    if (!ai_token) {
+      console.warn('Unauthorized access attempt - missing AI token', { ip: clientIP });
+      return new Response(
+        JSON.stringify({ error: 'Accesso non autorizzato - token AI richiesto' }),
+        { 
+          status: 401, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+    
+    // Verify AI token using database function
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+    
+    const { data: tokenValidation, error: tokenError } = await supabase
+      .rpc('verify_ai_token_access', { token_input: ai_token });
+    
+    if (tokenError || !tokenValidation?.[0]?.valid || !tokenValidation?.[0]?.can_use_ai) {
+      console.warn('Invalid AI token provided', { ip: clientIP, tokenError });
+      return new Response(
+        JSON.stringify({ error: 'Token AI non valido o scaduto' }),
+        { 
+          status: 401, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+    
+    console.log('AI token validated successfully', { 
+      userId: tokenValidation[0].user_id, 
+      isAdmin: tokenValidation[0].is_admin 
+    });
     
     // Validate payload
     const validationError = validatePayload(payload);

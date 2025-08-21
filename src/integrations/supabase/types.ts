@@ -351,6 +351,38 @@ export type Database = {
         }
         Relationships: []
       }
+      comment_submissions: {
+        Row: {
+          comment_id: string | null
+          id: string
+          ip_address: string
+          status: string | null
+          submitted_at: string | null
+        }
+        Insert: {
+          comment_id?: string | null
+          id?: string
+          ip_address: string
+          status?: string | null
+          submitted_at?: string | null
+        }
+        Update: {
+          comment_id?: string | null
+          id?: string
+          ip_address?: string
+          status?: string | null
+          submitted_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_submissions_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_tracking: {
         Row: {
           booking_completed: boolean | null
@@ -459,6 +491,33 @@ export type Database = {
           updated_at?: string
           user_id?: string
           weight?: number | null
+        }
+        Relationships: []
+      }
+      rate_limits: {
+        Row: {
+          created_at: string | null
+          id: string
+          identifier: string
+          requests_count: number | null
+          resource: string
+          window_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          identifier: string
+          requests_count?: number | null
+          resource: string
+          window_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          identifier?: string
+          requests_count?: number | null
+          resource?: string
+          window_start?: string | null
         }
         Relationships: []
       }
@@ -648,6 +707,24 @@ export type Database = {
       update_analytics_summary: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      validate_request_hmac: {
+        Args: {
+          expected_key_name?: string
+          payload_text: string
+          signature_header: string
+        }
+        Returns: boolean
+      }
+      verify_ai_token_access: {
+        Args: { token_input: string }
+        Returns: {
+          can_use_ai: boolean
+          is_admin: boolean
+          roles: string[]
+          user_id: string
+          valid: boolean
+        }[]
       }
     }
     Enums: {
