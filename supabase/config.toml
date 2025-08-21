@@ -20,6 +20,11 @@ enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false
 
+# Security configurations for auth
+[auth.security]
+captcha_enabled = true
+refresh_token_rotation_enabled = true
+
 # Public endpoints (no JWT required)
 [functions.ai-auth]
 verify_jwt = false

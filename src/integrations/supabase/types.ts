@@ -583,6 +583,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      audit_security_event: {
+        Args: {
+          event_data_param?: Json
+          event_type_param: string
+          user_id_param?: string
+        }
+        Returns: undefined
+      }
       clean_blog_content: {
         Args: { input_content: string }
         Returns: string
