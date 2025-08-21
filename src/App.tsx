@@ -21,6 +21,14 @@ import Contatti from "./pages/Contatti";
 import Privacy from "./pages/Privacy";
 import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
+// New SEO service pages
+import EMSLegnago from "./pages/servizi/EMSLegnago";
+import PancafitPosturaLegnago from "./pages/servizi/PancafitPosturaLegnago";
+import PilatesReformerLegnago from "./pages/servizi/PilatesReformerLegnago";
+import CelluliteVacuumLegnago from "./pages/servizi/CelluliteVacuumLegnago";
+import PersonalTrainerLegnago from "./pages/servizi/PersonalTrainerLegnago";
+
+// Legacy service pages
 import PersonalTraining from "./pages/servizi/PersonalTraining";
 import EMS from "./pages/servizi/EMS";
 import Pancafit from "./pages/servizi/Pancafit";
@@ -30,6 +38,10 @@ import SmallGroup from "./pages/servizi/SmallGroup";
 import Nutrizione from "./pages/servizi/Nutrizione";
 import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
+
+// New main pages
+import Prezzi from "./pages/Prezzi";
+import ComeArrivare from "./pages/ComeArrivare";
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUserManagement from "./pages/AdminUserManagement";
@@ -44,7 +56,6 @@ import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 import CookieConsent from "./components/security/CookieConsent";
 
-import PersonalTrainerLegnago from "./pages/PersonalTrainerLegnago";
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
@@ -89,6 +100,15 @@ const AppContent = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/chi-siamo" element={<ChiSiamo />} />
                 <Route path="/servizi" element={<Servizi />} />
+                
+                {/* New SEO-optimized service pages */}
+                <Route path="/servizi/ems-legnago" element={<EMSLegnago />} />
+                <Route path="/servizi/pancafit-postura-legnago" element={<PancafitPosturaLegnago />} />
+                <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerLegnago />} />
+                <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<CelluliteVacuumLegnago />} />
+                <Route path="/servizi/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
+                
+                {/* Legacy service pages for backward compatibility */}
                 <Route path="/servizi/personal-training" element={<PersonalTraining />} />
                 <Route path="/servizi/ems" element={<EMS />} />
                 <Route path="/servizi/pancafit" element={<Pancafit />} />
@@ -99,14 +119,13 @@ const AppContent = () => {
                 <Route path="/servizi/psicologo" element={<Psicologo />} />
                 <Route path="/servizi/massoterapia" element={<Massoterapia />} />
 
-                {/* Nuove pagine servizio SEO-first */}
+                {/* Legacy SEO pages - redirects */}
                 <Route path="/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
-                <Route path="/personal-trainer-legnago/" element={<PersonalTrainerLegnago />} />
                 <Route path="/allenamento-ems-legnago" element={<AllenamentoEMSLegnago />} />
-                <Route path="/allenamento-ems-legnago/" element={<AllenamentoEMSLegnago />} />
                 <Route path="/pilates-legnago" element={<PilatesLegnago />} />
-                <Route path="/pilates-legnago/" element={<PilatesLegnago />} />
 
+                <Route path="/prezzi" element={<Prezzi />} />
+                <Route path="/come-arrivare" element={<ComeArrivare />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
                 
