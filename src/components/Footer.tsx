@@ -68,6 +68,9 @@ const Footer = () => {
               <Link to="/contatti" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Contatti
               </Link>
+              <Link to="/recensioni" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Recensioni
+              </Link>
             </div>
           </div>
 

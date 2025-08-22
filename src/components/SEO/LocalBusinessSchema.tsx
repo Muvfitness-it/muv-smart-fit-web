@@ -7,7 +7,7 @@ const LocalBusinessSchema: React.FC = () => {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": "https://www.muvfitness.it/#localbusiness",
-    "name": "MUV Fitness",
+    "name": "MUV Fitness Legnago",
     "description": "Centro fitness a Legnago specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni.",
     "url": "https://www.muvfitness.it",
     "telephone": "+39 3291070374",
@@ -43,15 +43,12 @@ const LocalBusinessSchema: React.FC = () => {
       "https://www.facebook.com/MuvLegnago/",
       "https://www.instagram.com/MuvLegnago/"
     ],
-    "serviceArea": {
-      "@type": "GeoCircle",
-      "geoMidpoint": {
-        "@type": "GeoCoordinates",
-        "latitude": 45.1919,
-        "longitude": 11.3058
-      },
-      "geoRadius": "25000"
-    },
+    "areaServed": [
+      "Legnago",
+      "Bassa Veronese", 
+      "Verona",
+      "Veneto"
+    ],
     "makesOffer": [
       {
         "@type": "Offer",
@@ -86,35 +83,27 @@ const LocalBusinessSchema: React.FC = () => {
         }
       }
     ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "127",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
-        },
-        "author": {
-          "@type": "Person",
-          "name": "Marco R."
-        },
-        "reviewBody": "Ottimo centro fitness, staff qualificato e risultati garantiti. Consiglio vivamente!"
-      }
-    ]
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servizi MUV Fitness Legnago",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "Consulenza gratuita",
+            "description": "Valutazione posturale e corporea gratuita di 45 minuti"
+          }
+        }
+      ]
+    }
   };
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://www.muvfitness.it/#organization",
-    "name": "MUV Fitness",
+    "name": "MUV Fitness Legnago",
     "url": "https://www.muvfitness.it",
     "logo": {
       "@type": "ImageObject",

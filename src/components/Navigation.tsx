@@ -55,6 +55,9 @@ const Navigation = () => {
     name: "Blog",
     path: "/blog"
   }, {
+    name: "Recensioni",
+    path: "/recensioni"
+  }, {
     name: "Contatti",
     path: "/contatti"
   }, {

@@ -153,7 +153,10 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
-                <Route path="/qa-report" element={<QAReport />} />
+        <Route path="/qa-report" element={<QAReport />} />
+        <Route path="/recensioni" element={<Recensioni />} />
+        <Route path="/faq-gbp" element={<FaqGbp />} />
+        <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
                 
                 {/* Redirect /muv-planner to /contatti/ */}
                 <Route path="/muv-planner" element={<Navigate to="/contatti/" replace />} />
