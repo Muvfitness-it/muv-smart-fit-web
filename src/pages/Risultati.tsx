@@ -74,15 +74,15 @@ const Risultati = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              RISULTATI REALI DI CLIENTI{" "}
-              <span className="text-pink-600">VERI</span>
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              <strong>Non promesse vuote, ma trasformazioni documentate.</strong> Queste sono le storie di persone come te 
-              che hanno scelto Centro fitness MUV per cambiare la loro vita. 
-              <span className="text-pink-400">Il prossimo potresti essere tu.</span>
-            </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            Risultati reali di clienti{" "}
+            <span className="text-brand-primary">veri</span>
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <strong>Non promesse vuote, ma trasformazioni documentate.</strong> Queste sono le storie di persone come te 
+            che hanno scelto MUV Fitness per cambiare la loro vita. 
+            <span className="text-brand-primary">Il prossimo potresti essere tu.</span>
+          </p>
           </header>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -96,7 +96,7 @@ const Risultati = () => {
                     <div>
                       <h3 className="text-lg font-bold text-white">{testimonianza.name}</h3>
                       <p className="text-gray-400 text-sm">{testimonianza.age}</p>
-                      <p className="text-pink-600 text-sm font-semibold">{testimonianza.obiettivo}</p>
+                      <p className="text-brand-primary text-sm font-semibold">{testimonianza.obiettivo}</p>
                     </div>
                   </div>
                   
@@ -124,23 +124,23 @@ const Risultati = () => {
           </div>
           
           {/* CTA Section */}
-          <div className="mt-16 text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-8 rounded-lg border border-pink-600/30">
+          <div className="mt-16 text-center bg-gradient-to-r from-brand-primary/20 via-brand-accent/20 to-brand-info/20 p-8 rounded-lg border border-brand-primary/30">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Vuoi Essere il Prossimo Caso di Successo?
+              Vuoi essere il prossimo caso di successo?
             </h2>
             <p className="text-lg text-gray-300 mb-6">
               <strong>Queste persone hanno iniziato esattamente come te:</strong> piene di dubbi, con obiettivi che sembravano impossibili. 
-              <span className="text-pink-400 block mt-2">
-                Oggi sono la prova vivente che il metodo Centro fitness MUV funziona davvero.
+              <span className="text-brand-primary block mt-2">
+                Oggi sono la prova vivente che il metodo MUV Fitness funziona davvero.
               </span>
             </p>
             <div className="flex justify-center">
               <Link to="/contatti">
                 <Button 
-                  className="bg-pink-600 hover:bg-pink-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
-                  aria-label="Inizia la tua trasformazione con Centro fitness MUV Legnago"
+                  className="bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center min-h-[44px]"
+                  aria-label="Inizia la tua trasformazione con MUV Fitness Legnago"
                 >
-                  Inizia la Tua Trasformazione
+                  Inizia la tua trasformazione
                 </Button>
               </Link>
             </div>

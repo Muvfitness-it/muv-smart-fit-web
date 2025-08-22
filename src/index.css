@@ -7,34 +7,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
+    /* MUV Fitness Color Tokens - WCAG AA Compliant */
+    --muv-text: 0 0% 7%;               /* #111 - high contrast on white */
+    --muv-text-muted: 0 0% 29%;       /* #4A4A4A - readable gray */
+    --muv-on-dark: 0 0% 100%;         /* #FFF - text on dark/images */
+    --muv-primary: 334 89% 45%;       /* #E50064 - magenta brand */
+    --muv-accent: 260 100% 50%;       /* #7A00FF - violet accent */
+    --muv-info: 213 100% 50%;         /* #0077FF - blue info */
+    --muv-bg: 0 0% 100%;             /* #FFF - white background */
+    --muv-bg-dark: 225 17% 11%;      /* #14161C - dark background */
+    --muv-overlay: 0 0% 0% / 55%;    /* rgba(0,0,0,.55) - text overlay */
+    
+    /* Shadcn compatibility using MUV tokens */
+    --background: var(--muv-bg);
+    --foreground: var(--muv-text);
+    --card: var(--muv-bg);
+    --card-foreground: var(--muv-text);
+    --popover: var(--muv-bg);
+    --popover-foreground: var(--muv-text);
+    --primary: var(--muv-primary);
+    --primary-foreground: var(--muv-on-dark);
     --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
+    --secondary-foreground: var(--muv-text);
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+    --muted-foreground: var(--muv-text-muted);
+    --accent: var(--muv-accent);
+    --accent-foreground: var(--muv-on-dark);
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
+    --destructive-foreground: var(--muv-on-dark);
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --ring: var(--muv-primary);
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
@@ -47,20 +50,9 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* MUV Brand Colors - Semantic tokens */
-    --brand-primary: 325 100% 55%;     /* Magenta */
-    --brand-secondary: 274 100% 45%;   /* Viola */
-    --brand-accent: 211 100% 56%;      /* Blu */
-
-    /* MUV Accessibility Colors - WCAG 2.2 AA Compliant */
-    --muv-text: 0 0% 7%;               /* #111 - testo su chiaro */
-    --muv-text-muted: 0 0% 29%;        /* #4A4A4A - testo secondario */
-    --muv-on-dark: 0 0% 100%;          /* #FFFFFF - testo su scuro */
-    --muv-primary: 325 100% 45%;       /* Magenta con contrasto AA */
-    --muv-accent: 274 100% 35%;        /* Viola con contrasto AA */
-    --muv-info: 211 100% 45%;          /* Blu con contrasto AA */
-    --muv-bg: 0 0% 100%;              /* #FFFFFF - sfondo chiaro */
-    --muv-bg-dark: 225 39% 10%;       /* #14161C - sfondo scuro */
-    --muv-overlay: 0 0% 0% / 0.65;    /* Overlay per testo su immagini */
+    --brand-primary: var(--muv-primary);
+    --brand-secondary: var(--muv-accent);   
+    --brand-accent: var(--muv-info);      
 
     /* Typography */
     --font-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -110,33 +102,26 @@
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 213 31% 91%;
-
-    --primary: 213 31% 91%;
-    --primary-foreground: 224 71% 4%;
-
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 213 31% 91%;
-
-    --muted: 223 47% 11%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 216 34% 17%;
-    --accent-foreground: 213 31% 91%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 213 31% 91%;
-
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --ring: 216 34% 17%;
+    /* Dark mode using MUV tokens */
+    --background: var(--muv-bg-dark);
+    --foreground: var(--muv-on-dark);
+    --card: var(--muv-bg-dark);
+    --card-foreground: var(--muv-on-dark);
+    --popover: var(--muv-bg-dark);
+    --popover-foreground: var(--muv-on-dark);
+    --primary: var(--muv-primary);
+    --primary-foreground: var(--muv-on-dark);
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: var(--muv-on-dark);
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: var(--muv-accent);
+    --accent-foreground: var(--muv-on-dark);
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: var(--muv-on-dark);
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: var(--muv-primary);
     
     --sidebar-background: 224 71% 4%;
     --sidebar-foreground: 213 31% 91%;
@@ -151,17 +136,6 @@
     --brand-primary: 325 100% 65%;     /* Magenta più chiaro */
     --brand-secondary: 274 100% 65%;   /* Viola più chiaro */
     --brand-accent: 211 100% 70%;      /* Blu più chiaro */
-
-    /* MUV Accessibility Colors - Dark theme */
-    --muv-text: 0 0% 100%;             /* Testo su dark mode */
-    --muv-text-muted: 0 0% 70%;        /* Testo secondario dark */
-    --muv-on-dark: 0 0% 100%;          /* Bianco su scuro */
-    --muv-primary: 325 100% 65%;       /* Magenta accessibile dark */
-    --muv-accent: 274 100% 70%;        /* Viola accessibile dark */
-    --muv-info: 211 100% 70%;          /* Blu accessibile dark */
-    --muv-bg: 0 0% 100%;              /* Sfondo chiaro mantenuto */
-    --muv-bg-dark: 225 39% 8%;        /* Sfondo più scuro */
-    --muv-overlay: 0 0% 0% / 0.7;     /* Overlay più intenso per dark */
     
     /* Gradients per dark theme */
     --gradient-brand: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
@@ -191,6 +165,50 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+  }
+  
+  /* Focus visibility - WCAG AA compliant */
+  :focus-visible {
+    outline: 3px solid hsl(var(--muv-primary));
+    outline-offset: 2px;
+  }
+
+  /* Button focus styles */
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 3px solid hsl(var(--muv-primary));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Link accessibility */
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Text overlay for images - WCAG AA contrast */
+  .text-overlay {
+    background: var(--muv-overlay);
+    backdrop-filter: blur(1px);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Minimum tap target sizes - WCAG AA */
+  button, 
+  [role="button"], 
+  input[type="submit"], 
+  input[type="button"],
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 

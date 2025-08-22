@@ -60,13 +60,13 @@ const Team = () => {
       <section className="py-8 sm:py-12 lg:py-16 xl:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <header className="text-center mb-10 sm:mb-14 lg:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2">
-              I MIGLIORI PERSONAL TRAINER DI{" "}
-              <span className="text-purple-500 block sm:inline">LEGNAGO</span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 text-white">
+              I migliori Personal Trainer di{" "}
+              <span className="text-brand-primary block sm:inline">Legnago</span>
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white max-w-4xl mx-auto leading-relaxed px-4">
               <strong>Non troverai un team più qualificato e appassionato</strong> in tutta la provincia di Verona. 
-              Ogni specialista ha una missione: <span className="text-purple-400">trasformare il tuo corpo e la tua vita</span>.
+              Ogni specialista ha una missione: <span className="text-brand-primary">trasformare il tuo corpo e la tua vita</span>.
             </p>
           </header>
           
@@ -76,41 +76,43 @@ const Team = () => {
                 <CardContent className="p-4 sm:p-6 lg:p-8 text-center">
                   <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
                     <div className="w-32 h-40 sm:w-40 sm:h-48 md:w-44 md:h-52 lg:w-40 lg:h-48 xl:w-44 xl:h-52 overflow-hidden rounded-lg shadow-lg">
-                      <img
+                       <img
                         src={member.image}
-                        alt={`${member.name} - ${member.role} presso Centro fitness MUV Legnago`}
+                        alt={`${member.name} – ${member.role} presso MUV Fitness Legnago`}
                         className="w-full h-full object-cover object-top"
                         loading="lazy"
+                        width="200"
+                        height="250"
                       />
                     </div>
                   </div>
-                  <div className="space-y-2 sm:space-y-3 lg:space-y-4">
+                   <div className="space-y-2 sm:space-y-3 lg:space-y-4">
                     <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white">{member.name}</h3>
-                    <p className="text-pink-600 font-semibold text-sm sm:text-base lg:text-sm xl:text-base">{member.role}</p>
-                    <p className="text-purple-400 font-medium text-xs sm:text-sm lg:text-xs xl:text-sm">{member.specialization}</p>
+                    <p className="text-brand-primary font-semibold text-sm sm:text-base lg:text-sm xl:text-base">{member.role}</p>
+                    <p className="text-brand-accent font-medium text-xs sm:text-sm lg:text-xs xl:text-sm">{member.specialization}</p>
                     <p className="text-gray-300 leading-relaxed text-xs sm:text-sm lg:text-sm xl:text-base px-1 sm:px-2">{member.description}</p>
-                  </div>
+                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
           
           {/* CTA Section */}
-          <div className="mt-12 sm:mt-16 lg:mt-20 text-center bg-gradient-to-r from-purple-600/20 via-pink-500/20 to-blue-500/20 p-6 sm:p-8 lg:p-10 rounded-lg border border-purple-600/30">
+          <div className="mt-12 sm:mt-16 lg:mt-20 text-center bg-gradient-to-r from-brand-primary/20 via-brand-accent/20 to-brand-info/20 p-6 sm:p-8 lg:p-10 rounded-lg border border-brand-primary/30">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-bold text-white mb-4 sm:mb-6 px-2">
-              Scegli il Tuo Specialista
+              Scegli il tuo specialista
             </h2>
             <p className="text-sm sm:text-base lg:text-sm xl:text-base text-gray-300 mb-6 sm:mb-8 px-4 leading-relaxed max-w-3xl mx-auto">
               <strong>Ogni trainer ha competenze specifiche.</strong> Durante il check-up gratuito ti assegneremo 
-              lo specialista perfetto per i tuoi obiettivi. <span className="text-purple-400">Risultati garantiti</span>.
+              lo specialista perfetto per i tuoi obiettivi. <span className="text-brand-primary">Risultati garantiti</span>.
             </p>
             <Link to="/contatti">
               <Button 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 text-xs sm:text-sm lg:text-base rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto font-semibold leading-tight"
-                aria-label="Prenota consulenza con personal trainer Legnago"
+                className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 text-sm sm:text-base lg:text-lg rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto font-semibold leading-tight min-h-[44px]"
+                aria-label="Prenota consulenza gratuita con personal trainer MUV Fitness Legnago"
               >
-                <span className="block sm:hidden">Prenota Consulenza</span>
-                <span className="hidden sm:block">Prenota Consulenza con il Team</span>
+                <span className="block sm:hidden">Prenota consulenza</span>
+                <span className="hidden sm:block">Prenota consulenza con il team</span>
               </Button>
             </Link>
           </div>

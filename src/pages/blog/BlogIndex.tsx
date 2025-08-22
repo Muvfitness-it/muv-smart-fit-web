@@ -151,13 +151,13 @@ const BlogIndex = () => {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-white">Blog MUV Fitness</h1>
           <p>
             <span className="inline-block rounded-md bg-black/50 backdrop-blur-sm px-3 py-1 text-sm md:text-base text-white ring-1 ring-white/20 shadow-sm">
-              Articoli pratici e guide su Personal Training, EMS, Pilates e benessere, a cura del nostro team.
+              Articoli pratici e guide su personal training, EMS, Pilates e benessere, a cura del nostro team.
             </span>
           </p>
           <a
             href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
             className="text-sm text-white/80 hover:text-white hover:underline transition-colors"
-            aria-label="Feed RSS del Blog MUV Fitness"
+            aria-label="Feed RSS del blog MUV Fitness Legnago"
           >RSS</a>
         </div>
       </header>
