@@ -35,6 +35,9 @@ max_password_length = 128
 [functions.log-visit]
 verify_jwt = false
 
+[functions.blog-theme-normalizer]
+verify_jwt = true
+
 [functions.security-audit]
 verify_jwt = true
 

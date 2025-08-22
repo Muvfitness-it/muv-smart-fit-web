@@ -18,6 +18,21 @@
     --muv-bg-dark: 225 17% 11%;      /* #14161C - dark background */
     --muv-overlay: 0 0% 0% / 55%;    /* rgba(0,0,0,.55) - text overlay */
     
+    /* Blog Article Tokens - Accessibility Focused */
+    --text: #111111; 
+    --text-muted: #444; 
+    --bg: #FFFFFF; 
+    --surface: #FFFFFF; 
+    --border: #E6E8EB;
+    /* Brand accent HSL: 312=magenta, 265=viola, 215=blu, 205=blu tenue */
+    --accent-h: 312; 
+    --accent-s: 90%; 
+    --accent-l: 54%;
+    --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+    --accent-ink: #0A0A0A;
+    --tint-10: hsl(var(--accent-h) 85% 97%);
+    --tint-20: hsl(var(--accent-h) 85% 93%);
+    
     /* Shadcn compatibility using MUV tokens */
     --background: var(--muv-bg);
     --foreground: var(--muv-text);
@@ -228,32 +243,143 @@
 
 /* Stili personalizzati per gli articoli del blog */
 @layer components {
+  /* Base post styling - Accessibility focused */
+  .blog article, .post article, .single-post article {
+    background: #FFF;
+    color: var(--text);
+  }
+  
+  .blog article h1, .blog article h2, .blog article h3, 
+  .post article h1, .post article h2, .post article h3 {
+    color: #0A0A0A;
+  }
+  
+  .blog article a {
+    color: #0A58FF;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  
+  .blog article strong {
+    font-weight: 700;
+    color: #0A0A0A; /* enfasi: grassetto, non colore */
+  }
+  
+  .blog article img {
+    border-radius: .5rem;
+    background: #FFF;
+  }
+  
+  .blog article table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .blog article th, .blog article td {
+    border: 1px solid var(--border);
+    padding: .6rem;
+  }
+  
+  .blog article thead th {
+    background: var(--tint-10);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .blog article, .post article {
+      background: #FFFFFF;
+      color: #111;
+    }
+  }
+  
+  /* Blocchi guidati dall'accento */
+  .post-hero {
+    background: var(--tint-10);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+  
+  .post-hero-label {
+    display: inline-block;
+    padding: .35rem .6rem;
+    border-radius: .5rem;
+    background: var(--tint-20);
+    border: 1px solid var(--border);
+    color: var(--accent-ink);
+  }
+  
+  nav.toc {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 1rem;
+    background: #fff;
+  }
+  
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: var(--tint-10);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--tint-20);
+    padding: 1rem 1.25rem;
+    border-radius: .5rem;
+    margin: 1rem 0;
+  }
+  
+  .key {
+    display: block;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    background: var(--tint-10);
+    border-left: 4px solid var(--accent);
+    font-weight: 700;
+    margin: 1rem 0;
+  }
+  
+  /* CTA accessibili */
+  a.btn, button.btn {
+    min-height: 44px;
+  }
+  
+  /* Varianti "tipo contenuto" (opzionali se usate) */
+  .callout.tip {
+    --accent-h: 215; /* info/metodo=blu */
+  }
+  
+  .callout.note {
+    --accent-h: 265; /* postura=viola */
+  }
+  
+  .callout.warn {
+    --accent-h: 12; /* avvisi=arancio tenue */
+  }
+
   .prose-custom {
     @apply text-foreground;
   }
   
   .prose-custom h1 {
     @apply text-3xl md:text-4xl font-bold mb-8 mt-4;
-    background: var(--gradient-brand);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #0A0A0A;
   }
   
   .prose-custom h2 {
     @apply text-2xl md:text-3xl font-bold mb-6 mt-8;
-    color: hsl(var(--brand-primary));
+    color: #0A0A0A;
   }
   
   .prose-custom h3 {
     @apply text-xl font-semibold mb-4 mt-6;
-    color: hsl(var(--brand-secondary));
+    color: #0A0A0A;
   }
   
   .prose-custom p {
     @apply leading-relaxed mb-4 text-lg;
     line-height: 1.8;
-    color: hsl(var(--foreground) / 0.9);
+    color: var(--text);
   }
   
   .prose-custom ul {
@@ -262,34 +388,37 @@
   
   .prose-custom li {
     @apply leading-relaxed;
-    color: hsl(var(--foreground) / 0.9);
+    color: var(--text);
   }
   
   .prose-custom strong {
     @apply font-semibold;
-    color: hsl(var(--brand-primary));
+    color: #0A0A0A;
   }
   
   .prose-custom em {
     @apply italic;
-    color: hsl(var(--brand-secondary));
+    color: var(--text);
   }
   
   .prose-custom a {
     @apply underline hover:no-underline transition-colors;
-    color: hsl(var(--brand-accent));
+    color: #0A58FF;
+    text-underline-offset: 2px;
   }
   
   .prose-custom blockquote {
     @apply border-l-4 pl-6 italic my-6;
-    border-color: hsl(var(--brand-primary));
-    color: hsl(var(--foreground) / 0.8);
+    border-color: var(--accent);
+    background: var(--tint-10);
+    color: var(--text);
+    padding: 1rem 1.25rem;
   }
   
   .prose-custom code {
     @apply px-2 py-1 rounded text-sm;
     background: hsl(var(--muted));
-    color: hsl(var(--brand-primary));
+    color: var(--text);
   }
   
   .prose-custom pre {
@@ -300,6 +429,7 @@
   .prose-custom img {
     @apply rounded-lg shadow-lg my-6 mx-auto;
     box-shadow: var(--shadow-card);
+    background: #FFF;
   }
   
   /* Miglioramenti responsive */

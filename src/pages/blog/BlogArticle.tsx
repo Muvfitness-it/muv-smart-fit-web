@@ -16,6 +16,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
 
 interface Post {
   id: string;
@@ -29,6 +30,7 @@ interface Post {
   published_at: string | null;
   author_name: string | null;
   category_id: string | null;
+  reading_time?: number;
 }
 
 const BlogArticle = () => {
@@ -44,7 +46,7 @@ const BlogArticle = () => {
       if (!slug) return;
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, content, excerpt, meta_title, meta_description, featured_image, published_at, author_name, category_id")
+        .select("id, title, slug, content, excerpt, meta_title, meta_description, featured_image, published_at, author_name, category_id, reading_time")
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
@@ -60,7 +62,11 @@ const BlogArticle = () => {
         return;
       }
 
-      setPost(data as Post);
+      // Clean and process content for accessibility and theming
+      const cleanedContent = cleanBlogContent(data.content || '');
+      const processedContent = processContentBlocks(cleanedContent);
+      
+      setPost({ ...data, content: processedContent } as Post);
 
       // Carica categoria se presente
       if ((data as any).category_id) {
@@ -82,6 +88,11 @@ const BlogArticle = () => {
     () => (post?.published_at ? new Date(post.published_at).toLocaleDateString("it-IT") : ""),
     [post?.published_at]
   );
+
+  // Get dynamic accent hue based on slug
+  const accentHue = useMemo(() => {
+    return slug ? getPostAccentHue(slug) : 312;
+  }, [slug]);
 
   const title = post?.meta_title || (post ? `${post.title} - Blog MUV Fitness Legnago` : "Articolo - Blog");
   const description = post?.meta_description || post?.excerpt || "Leggi l'articolo sul blog di MUV Fitness Legnago.";
@@ -185,7 +196,10 @@ const BlogArticle = () => {
         {breadcrumbJsonLd && (<script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>)}
       </Helmet>
 
-      <article className="container mx-auto px-4 py-10">
+      <article 
+        className="container mx-auto px-4 py-10 blog" 
+        style={{ '--accent-h': accentHue } as React.CSSProperties}
+      >
         {post ? (
           <>
             <Breadcrumb>
@@ -214,11 +228,15 @@ const BlogArticle = () => {
               </BreadcrumbList>
             </Breadcrumb>
 
-            <header className="mb-8 mt-4">
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{post.title}</h1>
-              <p className="text-muted-foreground mt-2">{date}</p>
+            {/* Post Hero - Standard Format */}
+            <header className="post-hero mb-8 mt-4">
+              <span className="post-hero-label">Guida • Metodo MUV</span>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{post.title}</h1>
+              <p className="meta text-sm text-muted-foreground">
+                Team MUV • Aggiornato il {date} • Lettura {post.reading_time || 5} minuti
+              </p>
               {category && (
-                <div className="mt-2">
+                <div className="mt-3">
                   <Link to={`/blog/c/${category.slug}`}>
                     <Badge variant="secondary">{category.name}</Badge>
                   </Link>
@@ -238,10 +256,12 @@ const BlogArticle = () => {
               </div>
             )}
 
-            <SecureHTMLRenderer
-              html={post.content || ""}
-              className="prose prose-invert max-w-none prose-headings:scroll-mt-24"
-            />
+            <div className="prose-custom">
+              <SecureHTMLRenderer
+                html={post.content || ""}
+                className="max-w-none"
+              />
+            </div>
 
             {galleryImages.length > 0 && (
               <section aria-label="Galleria immagini" className="mt-10">
