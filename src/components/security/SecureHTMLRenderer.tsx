@@ -21,7 +21,7 @@ export const SecureHTMLRenderer = ({
   allowedAttributes = ['href', 'src', 'alt', 'title', 'class']
 }: SecureHTMLRendererProps) => {
   const sanitizedHTML = useMemo(() => {
-    return DOMPurify.sanitize(html, {
+    const cleanHTML = DOMPurify.sanitize(html, {
       ALLOWED_TAGS: allowedTags,
       ALLOWED_ATTR: allowedAttributes,
       FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input'],
@@ -31,6 +31,17 @@ export const SecureHTMLRenderer = ({
       RETURN_DOM: false,
       WHOLE_DOCUMENT: false
     });
+
+    // Post-process to ensure all external links have proper security attributes
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = cleanHTML;
+    
+    const links = tempDiv.querySelectorAll('a[target="_blank"]');
+    links.forEach(link => {
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+    
+    return tempDiv.innerHTML;
   }, [html, allowedTags, allowedAttributes]);
 
   return (

@@ -31,10 +31,23 @@ password_require_numbers = true
 password_require_special = true
 max_password_length = 128
 
-# Public endpoints (no JWT required)
-[functions.ai-auth]
+# Secure endpoints - require authentication or HMAC
+[functions.log-visit]
 verify_jwt = false
 
+[functions.security-audit]
+verify_jwt = true
+
+[functions.verify-ai-token]
+verify_jwt = true
+
+[functions.send-contact-email]
+verify_jwt = true
+
+[functions.secure-contact]
+verify_jwt = true
+
+# Public endpoints (no JWT required)  
 [functions.sitemap]
 verify_jwt = false
 
@@ -53,22 +66,10 @@ verify_jwt = false
 [functions.redirect-handler]
 verify_jwt = false
 
-[functions.send-contact-email]
-verify_jwt = false
-
 [functions.send-booking-email]
 verify_jwt = false
 
-[functions.verify-ai-token]
-verify_jwt = false
-
-[functions.security-audit]
-verify_jwt = false
-
 [functions.advanced-article-generator]
-verify_jwt = false
-
-[functions.secure-contact]
 verify_jwt = false
 
 # All other functions require JWT by default (no override here)

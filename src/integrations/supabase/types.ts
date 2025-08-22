@@ -440,6 +440,39 @@ export type Database = {
         }
         Relationships: []
       }
+      planner_usage: {
+        Row: {
+          action_type: string
+          calories: number | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          plan_type: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action_type: string
+          calories?: number | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          plan_type?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          calories?: number | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          plan_type?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           activity_level: string | null

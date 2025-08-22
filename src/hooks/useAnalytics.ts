@@ -17,29 +17,16 @@ export const useAnalytics = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  // Function to get user's IP address
-  const getUserIP = async (): Promise<string> => {
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      return data.ip || 'unknown';
-    } catch (error) {
-      console.warn('Failed to get user IP:', error);
-      return 'unknown';
-    }
-  };
+  // Remove IP collection function - handled securely on server side
 
   const trackSiteVisit = useCallback(async (pagePath: string) => {
     try {
-      const userAgent = navigator.userAgent;
-      const referrer = document.referrer;
-      const ipAddress = await getUserIP();
-      
-      const { error } = await supabase.from('site_visits').insert({
-        page_path: pagePath,
-        user_agent: userAgent,
-        ip_address: ipAddress,
-        referrer: referrer || null
+      // Use secure log-visit edge function instead of direct database access
+      const { error } = await supabase.functions.invoke('log-visit', {
+        body: { 
+          pagePath,
+          // Remove IP collection on client side for security
+        }
       });
 
       if (error) {
@@ -47,14 +34,8 @@ export const useAnalytics = () => {
         return;
       }
       
-      // Update analytics summary with better error handling
-      const { error: updateError } = await supabase.rpc('update_analytics_summary');
-      if (updateError) {
-        console.warn('Failed to update analytics summary:', updateError);
-      } else {
-        // Refresh analytics data after successful update
-        await fetchAnalytics();
-      }
+      // Refresh analytics data after successful logging
+      await fetchAnalytics();
     } catch (error) {
       console.warn('Error tracking site visit:', error);
     }
@@ -64,29 +45,25 @@ export const useAnalytics = () => {
     try {
       console.log('Tracking planner usage:', { actionType, calories, planType });
       
-      // TODO: Implement planner_usage table
-      // const { error } = await supabase.from('planner_usage').insert({
-      //   action_type: actionType,
-      //   calories: calories || null,
-      //   plan_type: planType || null,
-      //   user_id: null // Allow anonymous usage tracking
-      // });
+      // Use secure log-visit edge function for planner usage tracking
+      const { error } = await supabase.functions.invoke('log-visit', {
+        body: { 
+          pagePath: 'planner-usage',
+          actionType,
+          calories: calories || null,
+          planType: planType || null
+        }
+      });
 
-      // if (error) {
-      //   console.warn('Failed to track planner usage:', error);
-      //   return;
-      // }
-      
-      console.log('Planner usage tracked successfully (mock)');
-      
-      // Update analytics summary with better error handling
-      const { error: updateError } = await supabase.rpc('update_analytics_summary');
-      if (updateError) {
-        console.warn('Failed to update analytics summary:', updateError);
-      } else {
-        // Refresh analytics data after successful update
-        await fetchAnalytics();
+      if (error) {
+        console.warn('Failed to track planner usage:', error);
+        return;
       }
+      
+      console.log('Planner usage tracked successfully');
+      
+      // Refresh analytics data after successful logging
+      await fetchAnalytics();
     } catch (error) {
       console.warn('Error tracking planner usage:', error);
     }
