@@ -88,7 +88,7 @@ const processContentBlocks = (content: string): string => {
 
   // Identify and wrap key phrases
   processed = processed.replace(
-    /<p[^>]*>(.*?)(<strong>.*?</strong>.*?)(.*?)<\/p>/gi,
+    /<p[^>]*>(.*?)(<strong>.*?<\/strong>.*?)(.*?)<\/p>/gi,
     (match, before, strong, after) => {
       if (before.trim().length < 10 && after.trim().length < 10) {
         return `<p class="key">${before} ${strong} ${after}</p>`;
