@@ -81,14 +81,14 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-8 xl:space-x-10">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-pink-600 ${location.pathname === item.path ? 'text-pink-600 border-b-2 border-pink-600 pb-1' : 'text-gray-200 hover:text-white'}`}>
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-brand-primary ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
                 {item.name}
               </Link>)}
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-white hover:text-pink-600 transition-colors" aria-label="Toggle menu">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-white hover:text-brand-primary transition-colors min-h-[44px] min-w-[44px]" aria-label="Apri menu di navigazione">
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>

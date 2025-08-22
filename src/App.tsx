@@ -68,6 +68,7 @@ import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
+import QAReport from "./pages/qa-report";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
@@ -95,6 +96,13 @@ const AppContent = () => {
         <Route path="/*" element={
           <>
             <Navigation />
+            {/* Skip to content link for accessibility */}
+            <a 
+              href="#main" 
+              className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+            >
+              Salta al contenuto principale
+            </a>
             <main id="main" className="pt-[var(--header-height)]">
               <Routes>
                 <Route path="/" element={<Index />} />
@@ -145,6 +153,10 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
+                <Route path="/qa-report" element={<QAReport />} />
+                
+                {/* Redirect /muv-planner to /contatti/ */}
+                <Route path="/muv-planner" element={<Navigate to="/contatti/" replace />} />
                 
                 <Route path="*" element={<NotFound />} />
               </Routes>

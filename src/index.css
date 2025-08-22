@@ -210,6 +210,20 @@
     min-height: 44px;
     min-width: 44px;
   }
+  
+  /* Skip to content link */
+  .skip-link {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .skip-link:focus {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 9999;
+  }
 }
 
 /* Stili personalizzati per gli articoli del blog */

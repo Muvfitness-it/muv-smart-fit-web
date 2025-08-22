@@ -38,15 +38,15 @@ const Footer = () => {
             
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-pink-600" />
+                <MapPin className="w-4 h-4 text-brand-primary" />
                 <span className="text-gray-300 text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-pink-600" />
+                <Phone className="w-4 h-4 text-brand-primary" />
                 <span className="text-gray-300 text-sm">+39 3291070374</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-pink-600" />
+                <Mail className="w-4 h-4 text-brand-primary" />
                 <span className="text-gray-300 text-sm">info@muvfitness.it</span>
               </div>
             </div>
@@ -56,16 +56,16 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Link Rapidi</h3>
             <div className="space-y-2">
-              <Link to="/chi-siamo" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/chi-siamo" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Chi Siamo
               </Link>
-              <Link to="/team" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/team" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Team
               </Link>
-              <Link to="/risultati" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/risultati" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Risultati
               </Link>
-              <Link to="/contatti" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/contatti" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Contatti
               </Link>
             </div>
@@ -75,22 +75,22 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Servizi</h3>
             <div className="space-y-2">
-              <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Personal Training
               </Link>
-              <Link to="/servizi/ems" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/ems" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Tecnologia EMS
               </Link>
-              <Link to="/servizi/pancafit" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/pancafit" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Pancafit
               </Link>
-              <Link to="/servizi/pilates" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/pilates" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Pilates Reformer
               </Link>
-              <Link to="/servizi/small-group" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/small-group" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Small Group
               </Link>
-              <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Consulenza Nutrizionale
               </Link>
             </div>
@@ -100,14 +100,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Ultimi articoli</h3>
             <div className="space-y-2">
               {latest.map(p => (
-                <Link key={p.slug} to={`/blog/${p.slug}`} className="block text-gray-300 hover:text-pink-600 transition-colors duration-300">
+                <Link key={p.slug} to={`/blog/${p.slug}`} className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                   {p.title}
                 </Link>
               ))}
               <a
                 href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
-                className="block text-gray-400 hover:text-pink-600 text-sm"
-                aria-label="Feed RSS del Blog"
+                className="block text-gray-400 hover:text-brand-primary text-sm"
+                aria-label="Feed RSS del blog MUV Fitness Legnago"
               >RSS Feed</a>
             </div>
           </div>
@@ -120,7 +120,7 @@ const Footer = () => {
                 href="https://www.facebook.com/MuvLegnago/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 transition-colors duration-300"
+                className="bg-gray-800 p-3 rounded-full hover:bg-brand-primary transition-colors duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -128,7 +128,7 @@ const Footer = () => {
                 href="https://www.instagram.com/MuvLegnago/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 transition-colors duration-300"
+                className="bg-gray-800 p-3 rounded-full hover:bg-brand-primary transition-colors duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -148,10 +148,10 @@ const Footer = () => {
             </div>
             
             <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
-              <Link to="/privacy" className="text-gray-400 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/privacy" className="text-gray-400 hover:text-brand-primary transition-colors duration-300">
                 Privacy Policy
               </Link>
-              <Link to="/cookie-policy" className="text-gray-400 hover:text-pink-600 transition-colors duration-300">
+              <Link to="/cookie-policy" className="text-gray-400 hover:text-brand-primary transition-colors duration-300">
                 Cookie Policy
               </Link>
             </div>
