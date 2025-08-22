@@ -1,63 +1,81 @@
 
-import { Zap, Heart, Target } from 'lucide-react';
+import { Zap, Heart, Target, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FeaturesSection = () => {
   return (
+    <>
+    {/* Perché MUV funziona */}
     <section className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6 font-heading">
-            <span className="text-magenta-400">PERCHÉ</span> il <span className="text-viola-400">95%</span> dei Nostri Clienti 
-            <span className="text-blu-400 block md:inline"> RAGGIUNGE L'OBIETTIVO?</span>
+            Perché MUV funziona
           </h2>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto font-semibold leading-relaxed">
-            <strong className="text-magenta-400">🔬 SCIENZA + TECNOLOGIA + METODO COLLAUDATO</strong> = 
-            <span className="text-viola-400"> RISULTATI 3X PIÙ VELOCI</span> rispetto alle palestre tradizionali
-          </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl text-center hover:from-magenta-900/30 hover:to-viola-900/30 transition-all duration-300 transform hover:scale-105 border border-magenta-600/30">
-            <Zap className="w-16 h-16 text-magenta-400 mx-auto mb-4" />
-            <h3 className="text-2xl font-black mb-4 text-magenta-400">⚡ TECNOLOGIA EMS ESCLUSIVA</h3>
-            <p className="text-gray-200 mb-4 font-semibold">
-              <strong className="text-white">🎯 20 MINUTI = 3 ORE di palestra tradizionale.</strong> 
-              L'EMS attiva <span className="text-magenta-400 font-bold">300+ MUSCOLI</span> simultaneamente, 
-              bruciando il <span className="text-viola-400 font-bold">30% DI CALORIE IN PIÙ</span>.
-            </p>
-            <div className="text-magenta-400 font-bold text-sm">
-              ✅ Risultati 3X più veloci ✅ Solo 2 sedute/settimana ✅ Zero spreco di tempo
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center">
+            <Clock className="w-12 h-12 text-brand-primary mx-auto mb-4" />
+            <h3 className="text-lg font-bold mb-2 text-white">Sessioni su appuntamento, zero caos</h3>
           </div>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl text-center hover:from-viola-900/30 hover:to-blu-900/30 transition-all duration-300 transform hover:scale-105 border border-viola-600/30">
-            <Heart className="w-16 h-16 text-viola-400 mx-auto mb-4" />
-            <h3 className="text-2xl font-black mb-4 text-viola-400">🧬 PANCAFIT PER MAL DI SCHIENA</h3>
-            <p className="text-gray-200 mb-4 font-semibold">
-              <strong className="text-white">🎯 95% DI SUCCESSO</strong> nell'eliminare il mal di schiena cronico. 
-              <span className="text-viola-400 font-bold">METODO ESCLUSIVO</span> a Legnago per 
-              <span className="text-blu-400 font-bold"> RIALLINEAMENTO POSTURALE</span> definitivo.
-            </p>
-            <div className="text-viola-400 font-bold text-sm">
-              ✅ Addio al dolore cronico ✅ Postura corretta ✅ Benessere duraturo
-            </div>
+          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center">
+            <Target className="w-12 h-12 text-brand-primary mx-auto mb-4" />
+            <h3 className="text-lg font-bold mb-2 text-white">Metodo + tecnologie → risultati misurabili</h3>
           </div>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl text-center hover:from-blu-900/30 hover:to-magenta-900/30 transition-all duration-300 transform hover:scale-105 border border-blu-600/30">
-            <Target className="w-16 h-16 text-blu-400 mx-auto mb-4" />
-            <h3 className="text-2xl font-black mb-4 text-blu-400">🎯 PERSONAL TRAINING D'ÉLITE</h3>
-            <p className="text-gray-200 mb-4 font-semibold">
-              <strong className="text-white">🏆 I MIGLIORI SPECIALISTI</strong> di Legnago. 
-              Laureati in Scienze Motorie con <span className="text-blu-400 font-bold">TRACK RECORD COMPROVATO</span>: 
-              <span className="text-magenta-400 font-bold"> 500+ TRASFORMAZIONI</span> documentate.
-            </p>
-            <div className="text-blu-400 font-bold text-sm">
-              ✅ Specialisti certificati ✅ Metodo scientifico ✅ Risultati misurabili
-            </div>
+          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center">
+            <Heart className="w-12 h-12 text-brand-primary mx-auto mb-4" />
+            <h3 className="text-lg font-bold mb-2 text-white">Team laureato e specializzato in postura</h3>
+          </div>
+          
+          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center">
+            <Zap className="w-12 h-12 text-brand-primary mx-auto mb-4" />
+            <h3 className="text-lg font-bold mb-2 text-white">Programmi su misura per obiettivi reali</h3>
           </div>
         </div>
       </div>
     </section>
+
+    {/* Cosa risolviamo */}
+    <section className="py-20 bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-black mb-6 font-heading text-white">
+            Cosa risolviamo
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Link to="/servizi/ems-legnago" className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-300 transform hover:scale-105 border border-gray-600">
+            <h3 className="text-xl font-bold mb-4 text-brand-primary">Dimagrimento quando hai poco tempo (EMS 20')</h3>
+            <p className="text-gray-300">Risultati rapidi con elettrostimolazione guidata</p>
+          </Link>
+          
+          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl border border-gray-600">
+            <h3 className="text-xl font-bold mb-4 text-brand-primary">Mal di schiena e rigidità</h3>
+            <p className="text-gray-300 mb-4">Pancafit + Pilates Reformer per postura corretta</p>
+            <div className="flex gap-2">
+              <Link to="/servizi/pancafit-postura-legnago" className="text-sm text-brand-secondary hover:text-white">Pancafit</Link>
+              <span className="text-gray-500">•</span>
+              <Link to="/servizi/pilates-reformer-legnago" className="text-sm text-brand-secondary hover:text-white">Pilates Reformer</Link>
+            </div>
+          </div>
+          
+          <Link to="/servizi/cellulite-vacuum-pressoterapia-legnago" className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-300 transform hover:scale-105 border border-gray-600">
+            <h3 className="text-xl font-bold mb-4 text-brand-primary">Cellulite e ritenzione (Vacuum + Pressoterapia)</h3>
+            <p className="text-gray-300">Protocolli mirati per microcircolo e drenaggio</p>
+          </Link>
+          
+          <Link to="/servizi/personal-trainer-legnago" className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-300 transform hover:scale-105 border border-gray-600">
+            <h3 className="text-xl font-bold mb-4 text-brand-primary">Ricomposizione corporea (Personal training 1:1 / Small group)</h3>
+            <p className="text-gray-300">Coaching personalizzato per obiettivi specifici</p>
+          </Link>
+        </div>
+      </div>
+    </section>
+    </>
   );
 };
 

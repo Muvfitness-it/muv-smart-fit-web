@@ -8,7 +8,7 @@ const HeroSection = () => {
     >
       <LazyImage 
         src="/images/fitness-professional-bg.jpg"
-        alt="Centro Fitness MUV Legnago - Personal training esclusivo con tecnologie avanzate EMS, Pilates e Pancafit per dimagrimento e benessere"
+        alt="Personal Trainer Legnago - Centro Fitness MUV con EMS, Pancafit e Pilates Reformer"
         className="absolute inset-0 opacity-25 hero-section"
         priority={true}
         width={1920}
@@ -20,43 +20,30 @@ const HeroSection = () => {
       
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 font-heading">
-          <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent drop-shadow-2xl">
-            CENTRO FITNESS MUV
-          </span>
+          Il tuo Personal Trainer a Legnago, senza palestre affollate.
         </h1>
         
         <div className="mb-8 space-y-4">
           <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
-            🏆 <span className="text-brand-primary font-black">IL PRIMO</span> Centro Fitness 
-            <span className="text-brand-secondary font-black"> SMART</span> di Legnago
-          </p>
-          
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-200 font-semibold">
-            <strong className="text-brand-primary">✅ RISULTATI GARANTITI IN 30 GIORNI</strong> • 
-            <strong className="text-brand-secondary"> 500+ TRASFORMAZIONI DOCUMENTATE</strong> • 
-            <strong className="text-brand-accent"> 95% TASSO DI SUCCESSO</strong>
-          </p>
-
-          <p className="text-base md:text-lg lg:text-xl text-gray-300">
-            Personal trainer a Legnago, Pilates Reformer, Allenamento EMS, Pancafit, HIIT, nutrizione e massoterapia:
-            dimagrimento, postura e benessere con protocolli professionali e personalizzati.
-          </p>
-        </div>
-
-        <div className="bg-gray-900/80 backdrop-blur-sm p-6 rounded-2xl border-2 border-brand-primary/50 mb-8 animate-pulse-glow">
-          <h2 className="text-2xl md:text-3xl font-bold text-brand-primary mb-3">
-            🎯 METODOLOGIA SCIENTIFICA ESCLUSIVA
-          </h2>
-          <p className="text-lg md:text-xl text-white font-semibold">
-            <span className="text-brand-secondary">💡 TECNOLOGIA EMS</span> + 
-            <span className="text-brand-accent"> 🧬 PANCAFIT</span> + 
-            <span className="text-brand-primary"> 💪 PERSONAL TRAINING 1-to-1</span>
+            Risultati visibili in 30 giorni con <span className="text-brand-primary font-black">*Fitness Intelligente*</span>: 
+            EMS, Pancafit, Pilates Reformer, Vacuum e Pressoterapia.
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/contatti" className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:opacity-90 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20">
-            🚀 PRENOTA PROVA GRATUITA - TRASFORMATI IN 30 GIORNI
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <a 
+            href="https://wa.me/393291070374"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20"
+          >
+            Scrivici su WhatsApp
+          </a>
+          <Link 
+            to="/contatti" 
+            className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:opacity-90 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20"
+          >
+            Prenota Consulenza Gratuita (valore €80)
           </Link>
         </div>
       </div>

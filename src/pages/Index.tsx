@@ -1,28 +1,33 @@
 
 import HeroSection from '@/components/home/HeroSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
-import StatsSection from '@/components/home/StatsSection';
+import MethodSection from '@/components/home/MethodSection';
+import ProofSection from '@/components/home/ProofSection';
+import FAQSection from '@/components/home/FAQSection';
 import CTASection from '@/components/home/CTASection';
-import SEOHandler from '@/components/home/SEOHandler';
+import { Helmet } from 'react-helmet';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import useLeadTracking from '@/hooks/useLeadTracking';
 
 const Index = () => {
-
   // Initialize lead tracking
   useLeadTracking();
 
-
   return (
     <div className="min-h-screen bg-gray-900">
-      <SEOHandler />
+      <Helmet>
+        <title>MUV Fitness Legnago – Fitness Intelligente con Personal Trainer</title>
+        <meta name="description" content="EMS, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Percorsi su misura per dimagrimento, postura e cellulite. Prenota la consulenza gratuita." />
+        <meta name="keywords" content="personal trainer legnago, ems legnago, pancafit legnago, pilates reformer legnago, fitness intelligente" />
+        <link rel="canonical" href="https://www.muvfitness.it/" />
+      </Helmet>
       <LocalBusinessSchema />
       
-
-      {/* Existing content */}
       <HeroSection />
       <FeaturesSection />
-      <StatsSection />
+      <MethodSection />
+      <ProofSection />
+      <FAQSection />
       <CTASection />
     </div>
   );

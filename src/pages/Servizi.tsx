@@ -1,95 +1,75 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Dumbbell, Heart, Zap, Users, Target, Star, ArrowRight, Brain, HandHeart, TrendingUp } from "lucide-react";
+import { Zap, Activity, Heart, Users, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Servizi = () => {
-  // SEO is now handled by SEOHandler component globally
-  const servizi = [{
-    icon: <Dumbbell className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" aria-label="Icona personal trainer Legnago" />,
-    title: "Personal Training Esclusivo",
-    subtitle: "Servizio sempre disponibile - Risultati garantiti",
-    description: "Allenamenti 1-to-1 completamente personalizzati. Ambiente riservato, zero code, massima attenzione. I nostri clienti perdono mediamente 3-5kg al mese.",
-    benefits: "✓ Programma su misura ✓ Ambiente esclusivo ✓ Risultati misurabili",
-    link: "/servizi/personal-training"
-  }, {
-    icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona tecnologie EMS Legnago" />,
-    title: "EMS + Tecnologie Recupero",
-    subtitle: "EMS, Vacuum, Roll Shape, Pressoterapia",
-    description: "Elettrostimolazione che attiva oltre 300 muscoli + tecnologie avanzate per il recupero. Allenamento e recupero ottimale in un'unica soluzione.",
-    benefits: "✓ 20 min = 3h palestra ✓ Recupero accelerato ✓ Tecnologie innovative",
-    link: "/servizi/ems"
-  }, {
-    icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" aria-label="Icona Pancafit mal di schiena Legnago" />,
-    title: "Pancafit per il Mal di Schiena",
-    subtitle: "95% di successo nell'eliminare i dolori",
-    description: "Metodo specifico per riallineamento posturale e risoluzione definitiva del mal di schiena cronico. Tecnica esclusiva a Legnago.",
-    benefits: "✓ Addio al dolore ✓ Postura corretta ✓ Benessere duraturo",
-    link: "/servizi/pancafit"
-  }, {
-    icon: <Star className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona Pilates Reformer Legnago" />,
-    title: "Pilates con Reformer",
-    subtitle: "Metodo originale su macchinari professionali",
-    description: "Lezioni individuali e small group su Reformer professionale. Tonificazione profonda, flessibilità, core stability e riabilitazione posturale.",
-    benefits: "✓ Tonificazione profonda ✓ Flessibilità aumentata ✓ Postura perfetta",
-    link: "/servizi/pilates"
-  }, {
-    icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-500 mb-3 sm:mb-4" aria-label="Icona HIIT Legnago" />,
-    title: "Allenamento HIIT",
-    subtitle: "Cardio e performance ad alta intensità",
-    description: "Allenamento ad intervalli ad alta intensità per massimizzare il consumo calorico e migliorare le performance. Risultati rapidi e duraturi.",
-    benefits: "✓ Brucia grassi 24h ✓ Resistenza aumentata ✓ Performance atletiche",
-    link: "/servizi/hiit"
-  }, {
-    icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-3 sm:mb-4" aria-label="Icona HIIT small group Legnago" />,
-    title: "HIIT Small Group",
-    subtitle: "Alta intensità in piccoli gruppi - Max 3 persone",
-    description: "L'energia del HIIT con la motivazione del gruppo. Perfetto per chi ama le sfide e vuole divertirsi allenandosi con altri.",
-    benefits: "✓ Motivazione di gruppo ✓ HIIT personalizzato ✓ Divertimento garantito",
-    link: "/servizi/small-group"
-  }, {
-    icon: <Target className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" aria-label="Icona consulenza nutrizionale Legnago" />,
-    title: "Nutrizionista",
-    subtitle: "Piani alimentari che funzionano davvero",
-    description: "Strategie nutrizionali semplici e sostenibili. Non diete estreme, ma abitudini che mantieni per sempre. Focus su risultati a lungo termine.",
-    benefits: "✓ Approccio sostenibile ✓ Educazione alimentare ✓ Supporto continuo",
-    link: "/servizi/nutrizione"
-  }, {
-    icon: <Brain className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-600 mb-3 sm:mb-4" aria-label="Icona psicologo Legnago" />,
-    title: "Coaching Psicologico",
-    subtitle: "Supporto mentale per i tuoi obiettivi",
-    description: "Psicologo specializzato in sport e benessere. Supera blocchi mentali, costruisci abitudini durature e mantieni la motivazione alta.",
-    benefits: "✓ Superamento blocchi ✓ Motivazione costante ✓ Abitudini solide",
-    link: "/servizi/psicologo"
-  }, {
-    icon: <HandHeart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-500 mb-3 sm:mb-4" aria-label="Icona massoterapia Legnago" />,
-    title: "Massoterapia",
-    subtitle: "Recupero e benessere totale",
-    description: "Massaggi terapeutici, decontratturanti e rilassanti. Accelera il recupero, riduci le tensioni e regala benessere al tuo corpo.",
-    benefits: "✓ Recupero accelerato ✓ Riduzione tensioni ✓ Benessere completo",
-    link: "/servizi/massoterapia"
-  }];
+  const servizi = [
+    {
+      icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" />,
+      title: "EMS",
+      subtitle: "Dimagrire e tonificare in 20'",
+      description: "Elettrostimolazione guidata, 20' reali, ideale se hai poco tempo.",
+      benefits: "✓ Dimagrimento rapido ✓ Attivazione profonda ✓ Protezione articolare",
+      link: "/servizi/ems-legnago"
+    },
+    {
+      icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" />,
+      title: "Pancafit & Postura",
+      subtitle: "Stop al mal di schiena",
+      description: "Riorganizzazione posturale in decompensazione, respirazione mirata.",
+      benefits: "✓ Riduzione rigidità ✓ Allungamento globale ✓ Respiro migliore",
+      link: "/servizi/pancafit-postura-legnago"
+    },
+    {
+      icon: <Activity className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" />,
+      title: "Pilates Reformer",
+      subtitle: "Core, mobilità e postura",
+      description: "Controllo motorio e stabilità del core in sicurezza.",
+      benefits: "✓ Stabilità lombare ✓ Mobilità anche/colonna ✓ Forza controllata",
+      link: "/servizi/pilates-reformer-legnago"
+    },
+    {
+      icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-500 mb-3 sm:mb-4" />,
+      title: "Cellulite (Vacuum + Pressoterapia)",
+      subtitle: "Gambe leggere e drenaggio",
+      description: "Migliora microcircolo e drenaggio, riduci i cm dove serve.",
+      benefits: "✓ Drenaggio efficace ✓ Gambe leggere ✓ Pelle più uniforme",
+      link: "/servizi/cellulite-vacuum-pressoterapia-legnago"
+    },
+    {
+      icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-3 sm:mb-4" />,
+      title: "Personal Training 1:1 & Small Group",
+      subtitle: "Coaching su misura, senza caos",
+      description: "Un coach vero al tuo fianco; obiettivi chiari e progressioni misurabili.",
+      benefits: "✓ Tecnica corretta ✓ Motivazione costante ✓ Programmazione su misura",
+      link: "/servizi/personal-trainer-legnago"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Helmet>
+        <title>Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum</title>
+        <meta name="description" content="5 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training. Scegli il tuo percorso ideale." />
+        <link rel="canonical" href="https://www.muvfitness.it/servizi/" />
+      </Helmet>
+
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-12 sm:mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2">
-              CENTRO FITNESS COMPLETO A{" "}
-              <span className="text-pink-600 block sm:inline">LEGNAGO</span>
+              Servizi di Fitness Intelligente a{" "}
+              <span className="text-pink-600 block sm:inline">Legnago</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
-              <strong>9 servizi specializzati per ogni tuo obiettivo:</strong> dimagrimento, postura, performance, 
-              recupero e benessere totale. <span className="text-pink-400">Personal Training sempre disponibile</span> 
-              come servizio core del centro.
+              <strong>5 servizi specializzati</strong> per ogni obiettivo: dimagrimento rapido, postura corretta, 
+              cellulite, ricomposizione corporea. <span className="text-pink-400">Scegli il tuo percorso ideale</span>.
             </p>
           </header>
           
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 sm:mt-12 mb-3 sm:mb-4 px-2">
-            Tutti i servizi per trasformare il tuo corpo e la tua mente
-          </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
             {servizi.map((servizio, index) => (
               <Link to={servizio.link} key={index} className="group">
@@ -104,54 +84,12 @@ const Servizi = () => {
                     </div>
                     <div className="flex items-center justify-center text-pink-400 group-hover:text-white transition-colors">
                       <span className="mr-2 font-semibold">Scopri di più</span>
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
               </Link>
             ))}
           </div>
-
-          {/* Service Categories */}
-          <section className="mb-16 sm:mb-20">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-8 sm:mb-12 px-2">
-              Servizi Organizzati per <span className="text-purple-400">Categoria</span>
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              <div className="bg-gradient-to-br from-pink-600/20 to-purple-500/20 p-6 rounded-lg border border-pink-600/30">
-                <h3 className="text-xl font-bold text-pink-400 mb-4">Allenamento</h3>
-                <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• Personal Training</li>
-                  <li>• HIIT Individual</li>
-                  <li>• HIIT Small Group</li>
-                </ul>
-              </div>
-              <div className="bg-gradient-to-br from-purple-600/20 to-blue-500/20 p-6 rounded-lg border border-purple-600/30">
-                <h3 className="text-xl font-bold text-purple-400 mb-4">Tecnologie</h3>
-                <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• EMS</li>
-                  <li>• Vacuum Therapy</li>
-                  <li>• Roll Shape</li>
-                  <li>• Pressoterapia</li>
-                </ul>
-              </div>
-              <div className="bg-gradient-to-br from-blue-600/20 to-green-500/20 p-6 rounded-lg border border-blue-600/30">
-                <h3 className="text-xl font-bold text-blue-400 mb-4">Postura & Movimento</h3>
-                <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• Pancafit</li>
-                  <li>• Pilates Reformer</li>
-                </ul>
-              </div>
-              <div className="bg-gradient-to-br from-green-600/20 to-teal-500/20 p-6 rounded-lg border border-green-600/30">
-                <h3 className="text-xl font-bold text-green-400 mb-4">Benessere</h3>
-                <ul className="text-gray-300 space-y-2 text-sm">
-                  <li>• Nutrizionista</li>
-                  <li>• Coaching Psicologico</li>
-                  <li>• Massoterapia</li>
-                </ul>
-              </div>
-            </div>
-          </section>
 
           {/* CTA Section */}
           <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-6 sm:p-8 rounded-lg border border-pink-600/30">
@@ -160,12 +98,19 @@ const Servizi = () => {
             </h2>
             <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 px-2 leading-relaxed">
               <strong>Prenota una consulenza gratuita</strong> e scopriremo insieme il percorso perfetto per i tuoi obiettivi. 
-              Con 9 servizi specializzati, abbiamo la soluzione per ogni esigenza.
             </p>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-4">
+              <a 
+                href="https://wa.me/393291070374"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+              >
+                Scrivici su WhatsApp
+              </a>
               <Link to="/contatti">
-                <Button className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center whitespace-nowrap" aria-label="Prenota consulenza gratuita servizi fitness Legnago">
-                  Prenota una Consulenza Gratuita
+                <Button className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105">
+                  Prenota Consulenza Gratuita
                 </Button>
               </Link>
             </div>
