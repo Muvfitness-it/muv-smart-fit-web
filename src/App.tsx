@@ -69,6 +69,10 @@ import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
 import QAReport from "./pages/qa-report";
+import Recensioni from "./pages/Recensioni";
+import FaqGbp from "./pages/FaqGbp";
+import MediaKitProofPosts from "./pages/MediaKitProofPosts";
+
 const queryClient = new QueryClient();
 
 const AppContent = () => {

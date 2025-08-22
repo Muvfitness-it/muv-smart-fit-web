@@ -147,6 +147,24 @@ const Risultati = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews Link */}
+      <section className="py-16 bg-gray-800/50">
+        <div className="container mx-auto px-4 text-center">
+          <Card className="bg-gray-900/50 border-brand-primary/20 backdrop-blur-sm max-w-md mx-auto">
+            <CardContent className="p-8">
+              <h3 className="text-xl font-semibold text-white mb-4">Vuoi lasciare anche tu una recensione?</h3>
+              <p className="text-gray-300 mb-6">La tua esperienza può aiutare altre persone a scoprire MUV Fitness</p>
+              <Button 
+                asChild 
+                className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold min-h-[44px]"
+              >
+                <Link to="/recensioni">Come lasciare una recensione</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
     </div>
     </>
   );
