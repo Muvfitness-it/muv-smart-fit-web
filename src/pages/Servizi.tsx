@@ -73,9 +73,9 @@ const Servizi = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
             {servizi.map((servizio, index) => (
               <Link to={servizio.link} key={index} className="group">
-                <Card className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105 h-full">
+                <Card className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105 h-full min-h-[44px] focus-within:ring-4 focus-within:ring-pink-600/50">
                   <CardContent className="p-4 sm:p-6 text-center h-full flex flex-col">
-                    <div className="flex justify-center">{servizio.icon}</div>
+                    <div className="flex justify-center" aria-hidden="true">{servizio.icon}</div>
                     <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">{servizio.title}</h3>
                     <p className="text-pink-400 font-semibold mb-3 sm:mb-4 text-xs sm:text-sm">{servizio.subtitle}</p>
                     <p className="text-gray-300 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base flex-grow">{servizio.description}</p>
@@ -83,7 +83,7 @@ const Servizi = () => {
                       {servizio.benefits}
                     </div>
                     <div className="flex items-center justify-center text-pink-400 group-hover:text-white transition-colors">
-                      <span className="mr-2 font-semibold">Scopri di più</span>
+                      <span className="mr-2 font-semibold underline">Scopri di più</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -99,17 +99,18 @@ const Servizi = () => {
             <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 px-2 leading-relaxed">
               <strong>Prenota una consulenza gratuita</strong> e scopriremo insieme il percorso perfetto per i tuoi obiettivi. 
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-4 flex-wrap">
               <a 
                 href="https://wa.me/393291070374"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"
+                aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
               >
                 Scrivici su WhatsApp
               </a>
               <Link to="/contatti">
-                <Button className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105">
+                <Button className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-pink-600/50">
                   Prenota Consulenza Gratuita
                 </Button>
               </Link>

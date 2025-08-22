@@ -42,9 +42,9 @@ const ProofSection = () => {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl border border-gray-600">
               <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
+                <div className="flex text-yellow-400" aria-label="Valutazione 5 stelle">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
+                    <Star key={i} className="w-4 h-4 fill-current" aria-hidden="true" />
                   ))}
                 </div>
               </div>
@@ -56,7 +56,7 @@ const ProofSection = () => {
               
               <div className="mb-4">
                 <div className="flex items-center text-brand-primary font-bold mb-2">
-                  <TrendingDown className="w-4 h-4 mr-2" />
+                  <TrendingDown className="w-4 h-4 mr-2" aria-hidden="true" />
                   {testimonial.results}
                 </div>
               </div>
@@ -71,10 +71,11 @@ const ProofSection = () => {
         <div className="text-center">
           <Link 
             to="/risultati" 
-            className="inline-flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105"
+            className="inline-flex items-center bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50"
+            aria-label="Scopri tutte le trasformazioni dei nostri clienti"
           >
             Vedi tutte le trasformazioni
-            <TrendingUp className="w-5 h-5 ml-2" />
+            <TrendingUp className="w-5 h-5 ml-2" aria-hidden="true" />
           </Link>
         </div>
       </div>
