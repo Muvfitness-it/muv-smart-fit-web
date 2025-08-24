@@ -253,7 +253,7 @@ const AdminBlogEditor = () => {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              URL finale: <code className="bg-muted px-1 rounded text-xs">/blog/{slug || 'il-tuo-slug'}</code>
+              URL finale: <code className="bg-muted px-1 rounded text-xs">www.muvfitness.it/{slug || 'il-tuo-slug'}</code>
             </p>
             <p className="text-xs text-amber-600 mt-1">
               ⚠️ Modifica lo slug solo se necessario. Cambiarlo dopo la pubblicazione può danneggiare i link esistenti.
