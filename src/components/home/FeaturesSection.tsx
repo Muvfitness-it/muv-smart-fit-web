@@ -57,27 +57,19 @@ const FeaturesSection = () => {
             <p className="text-gray-300">Risultati rapidi con elettrostimolazione guidata</p>
           </Link>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl border border-gray-600">
+          <Link 
+            to="/servizi/pancafit-postura-legnago" 
+            className="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-2xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-300 transform hover:scale-105 border border-gray-600 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50"
+            aria-label="Scopri i servizi per mal di schiena e rigidità"
+          >
             <h3 className="text-xl font-bold mb-4 text-brand-primary">Mal di schiena e rigidità</h3>
             <p className="text-gray-300 mb-4">Pancafit + Pilates Reformer per postura corretta</p>
             <div className="flex gap-2 flex-wrap">
-              <Link 
-                to="/servizi/pancafit-postura-legnago" 
-                className="text-sm text-brand-secondary hover:text-white underline focus:outline-none focus:ring-2 focus:ring-brand-secondary"
-                aria-label="Scopri il servizio Pancafit per la postura"
-              >
-                Pancafit
-              </Link>
+              <span className="text-sm text-brand-secondary">Pancafit</span>
               <span className="text-gray-500">•</span>
-              <Link 
-                to="/servizi/pilates-reformer-legnago" 
-                className="text-sm text-brand-secondary hover:text-white underline focus:outline-none focus:ring-2 focus:ring-brand-secondary"
-                aria-label="Scopri il servizio Pilates Reformer"
-              >
-                Pilates Reformer
-              </Link>
+              <span className="text-sm text-brand-secondary">Pilates Reformer</span>
             </div>
-          </div>
+          </Link>
           
           <Link 
             to="/servizi/cellulite-vacuum-pressoterapia-legnago" 
