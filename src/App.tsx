@@ -55,7 +55,6 @@ import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 import CookieConsent from "./components/security/CookieConsent";
-import RedirectHandler from "./components/SEO/RedirectHandler";
 
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
@@ -69,10 +68,7 @@ import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
-import SEOAudit from "./pages/SEOAudit";
-import QAReport from "./pages/QAReport";
-import QAReadOnlyAudit from "./pages/QAReadOnlyAudit";
-import QAAuditDelta from "./pages/QAAuditDelta";
+import QAReport from "./pages/qa-report";
 import Recensioni from "./pages/Recensioni";
 import FaqGbp from "./pages/FaqGbp";
 import MediaKitProofPosts from "./pages/MediaKitProofPosts";
@@ -86,11 +82,10 @@ const AppContent = () => {
 
   return (
     <SessionSecurity>
-      <RedirectHandler />
       <SecurityHeaders />
       <PerformanceOptimizer />
       <CriticalCSS />
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-gray-900 text-white">
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
@@ -108,7 +103,7 @@ const AppContent = () => {
             {/* Skip to content link for accessibility */}
             <a 
               href="#main" 
-              className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+              className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
             >
               Salta al contenuto principale
             </a>
@@ -161,12 +156,9 @@ const AppContent = () => {
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
-                 <Route path="/analytics" element={<Analytics />} />
+                <Route path="/analytics" element={<Analytics />} />
         <Route path="/qa-report" element={<QAReport />} />
-        <Route path="/qa-audit" element={<QAReadOnlyAudit />} />
-        <Route path="/qa-audit-delta" element={<QAAuditDelta />} />
-         <Route path="/seo-report" element={<SEOAudit />} />
-         <Route path="/recensioni" element={<Recensioni />} />
+        <Route path="/recensioni" element={<Recensioni />} />
         <Route path="/faq-gbp" element={<FaqGbp />} />
         <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
                 

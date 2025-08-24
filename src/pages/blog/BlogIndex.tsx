@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import AdvancedSEO from '@/components/SEO/AdvancedSEO';
+import { Helmet } from "react-helmet";
 import { Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LazyImage from "@/components/ui/LazyImage";
@@ -31,7 +31,7 @@ interface Category {
   slug: string;
 }
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 9;
 
 const BlogIndex = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -109,15 +109,22 @@ const BlogIndex = () => {
 
   return (
     <>
-      <AdvancedSEO
-        title={pageTitle}
-        description={pageDescription}
-        canonical={canonical}
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Blog', url: '/blog/' }
-        ]}
-      />
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonical} />
+        {prevUrl && <link rel="prev" href={`https://www.muvfitness.it${prevUrl}`} />}
+        {nextUrl && <link rel="next" href={`https://www.muvfitness.it${nextUrl}`} />}
+        <link rel="alternate" type="application/rss+xml" title="MUV Fitness Blog RSS" href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.muvfitness.it/" },
+            { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.muvfitness.it/blog" },
+          ],
+        })}</script>
+      </Helmet>
 
       <header className="relative border-b border-border">
         {/* Background image + overlay for readability */}

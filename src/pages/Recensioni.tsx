@@ -25,7 +25,6 @@ const Recensioni = () => {
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.muvfitness.it/recensioni/" />
-        <link rel="alternate" hrefLang="it" href="https://www.muvfitness.it/recensioni/" />
         
         {/* FAQ Schema */}
         <script type="application/ld+json">

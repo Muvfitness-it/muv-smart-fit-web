@@ -7,26 +7,6 @@
 
 @layer base {
   :root {
-    /* Site Surgeon Brand & Accessibility Tokens */
-    --bg: #FFFFFF; 
-    --ink: #111111; 
-    --ink-2: #222; 
-    --muted: #555; 
-    --border: #E6E8EB;
-    --link: #0A58FF; 
-    --link-visited: #0747D9;
-    /* Brand hues per accenti di sezione */
-    --h-magenta: 312; 
-    --h-viola: 265; 
-    --h-blu: 215; 
-    --h-blu2: 205;
-    --accent-h: 312; 
-    --accent-s: 90%; 
-    --accent-l: 54%;
-    --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
-    --tint-10: hsl(var(--accent-h) 85% 97%); 
-    --tint-20: hsl(var(--accent-h) 85% 93%);
-    
     /* MUV Fitness Color Tokens - WCAG AA Compliant */
     --muv-text: 0 0% 7%;               /* #111 - high contrast on white */
     --muv-text-muted: 0 0% 29%;       /* #4A4A4A - readable gray */
@@ -37,6 +17,21 @@
     --muv-bg: 0 0% 100%;             /* #FFF - white background */
     --muv-bg-dark: 225 17% 11%;      /* #14161C - dark background */
     --muv-overlay: 0 0% 0% / 55%;    /* rgba(0,0,0,.55) - text overlay */
+    
+    /* Blog Article Tokens - Accessibility Focused */
+    --text: #111111; 
+    --text-muted: #444; 
+    --bg: #FFFFFF; 
+    --surface: #FFFFFF; 
+    --border: #E6E8EB;
+    /* Brand accent HSL: 312=magenta, 265=viola, 215=blu, 205=blu tenue */
+    --accent-h: 312; 
+    --accent-s: 90%; 
+    --accent-l: 54%;
+    --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+    --accent-ink: #0A0A0A;
+    --tint-10: hsl(var(--accent-h) 85% 97%);
+    --tint-20: hsl(var(--accent-h) 85% 93%);
     
     /* Shadcn compatibility using MUV tokens */
     --background: var(--muv-bg);
@@ -179,165 +174,12 @@
 
 @layer base {
   * {
-    border-color: hsl(var(--border));
+    @apply border-border;
   }
 
-  html {
-    color-scheme: light;
-  }
-  
   body {
-    background: var(--bg);
-    color: var(--ink);
-    font-size: clamp(16px, 1.6vw, 18px);
-    line-height: 1.6;
-  }
-
-  main p {
-    max-width: 72ch;
-  }
-
-  a {
-    color: var(--link);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  strong {
-    font-weight: 700;
-    color: var(--ink);
-  }
-
-  h1, h2, h3, h4 {
-    color: #0A0A0A;
-    line-height: 1.2;
-  }
-
-  /* Blocchi articolo guidati dall'accento (accessibili) */
-  .post-hero {
-    background: var(--tint-10);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 0;
-  }
-
-  .post-hero .label {
-    display: inline-block;
-    padding: .35rem .6rem;
-    background: var(--tint-20);
-    border: 1px solid var(--border);
-    border-radius: .5rem;
-  }
-
-  nav.toc {
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
-    background: #fff;
-    padding: 1rem;
-    margin: 1rem 0;
-  }
-
-  blockquote {
-    border-left: 4px solid var(--accent);
-    background: var(--tint-10);
-    padding: 1rem 1.25rem;
-    margin: 1rem 0;
-  }
-
-  .callout {
-    border-left: 4px solid var(--accent);
-    background: var(--tint-20);
-    padding: 1rem 1.25rem;
-    border-radius: .5rem;
-    margin: 1rem 0;
-  }
-
-  .key {
-    display: block;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    background: var(--tint-10);
-    border-left: 4px solid var(--accent);
-    font-weight: 700;
-    margin: 1rem 0;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    border: 1px solid var(--border);
-    padding: .6rem;
-  }
-
-  thead th {
-    background: var(--tint-10);
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: .5rem;
-    background: #fff;
-  }
-
-  /* CTA accessibili e anti-CLS */
-  .btn {
-    min-height: 44px;
-    line-height: 44px;
-    padding: 0 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
-  /* Varianti per aree (impostate per pagina o sezione) */
-  .area-dimagrimento { --accent-h: 312; } 
-  .area-postura { --accent-h: 265; } 
-  .area-drenaggio { --accent-h: 215; } 
-  .area-guide { --accent-h: 205; }
-
-  /* Logo sempre leggibile */
-  .brand {
-    display: flex;
-    align-items: center;
-  }
-
-  .site-logo {
-    height: clamp(36px, 5.2vh, 52px);
-    width: auto;
-    aspect-ratio: auto;
-    object-fit: contain;
-    image-rendering: auto;
-  }
-
-  .header {
-    background: #FFFFFF;
-  }
-
-  .header.is-scrolled {
-    box-shadow: 0 2px 10px rgb(0 0 0 / .06);
-  }
-
-  /* Testo su immagini/video: applica scrim */
-  .brand-on-media .site-logo {
-    filter: none;
-  }
-
-  .brand-on-media::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.15) 60%, transparent);
-  }
-
-  /* DARK MODE di sistema: mantieni superfici chiare nei contenuti */
-  @media (prefers-color-scheme: dark) {
-    article, .post-hero, nav.toc, .callout, blockquote {
-      background: #FFFFFF;
-      color: var(--ink);
-    }
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
   }
   
   /* Focus visibility - WCAG AA compliant */
@@ -368,7 +210,7 @@
 
   /* Text overlay for images - WCAG AA contrast */
   .text-overlay {
-    background: hsl(var(--muv-overlay));
+    background: var(--muv-overlay);
     backdrop-filter: blur(1px);
     border-radius: 8px;
     padding: 0.5rem 1rem;
@@ -896,25 +738,25 @@ aside.callout {
     contain: layout style paint;
   }
 
-  /* Blog Article Styling - Using Design System Tokens */
+  /* Blog Article Styling - White Theme with Accent Colors */
   .blog {
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
+    background: #fff;
+    color: #111;
     line-height: 1.7;
   }
 
   .blog a {
-    color: hsl(var(--foreground));
+    color: #111;
     text-decoration: underline;
   }
 
   .blog a:hover {
-    color: hsl(var(--brand-primary));
+    color: hsl(var(--accent-h, 312), 70%, 45%);
   }
 
   .blog .post-hero {
     padding: 2rem 0;
-    border-bottom: 1px solid hsl(var(--border));
+    border-bottom: 1px solid #e5e5e5;
     margin-bottom: 2rem;
   }
 
@@ -922,27 +764,27 @@ aside.callout {
     display: inline-block;
     font-size: 0.875rem;
     font-weight: 600;
-    color: hsl(var(--brand-primary));
-    background: hsl(var(--brand-primary) / 0.1);
+    color: hsl(var(--accent-h, 312), 70%, 45%);
+    background: hsl(var(--accent-h, 312), 70%, 95%);
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
   }
 
   .blog .post-hero h1 {
-    color: hsl(var(--foreground));
+    color: #111;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
 
   .blog .post-hero .meta {
-    color: hsl(var(--muted-foreground));
+    color: #666;
   }
 
   .blog .toc {
-    background: hsl(var(--muted) / 0.3);
-    border: 1px solid hsl(var(--border));
-    border-left: 4px solid hsl(var(--brand-primary));
+    background: #f8f9fa;
+    border: 1px solid #e5e5e5;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
     padding: 1.5rem;
     margin: 2rem 0;
     border-radius: 0.5rem;
@@ -950,21 +792,21 @@ aside.callout {
 
   .blog .toc h2,
   .blog .toc h3 {
-    color: hsl(var(--foreground));
+    color: #111;
     margin-top: 0;
   }
 
   .blog .callout {
-    background: hsl(var(--muted) / 0.3);
-    border-left: 4px solid hsl(var(--brand-primary));
+    background: #f8f9fa;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
     padding: 1.5rem;
     margin: 1.5rem 0;
     border-radius: 0 0.5rem 0.5rem 0;
   }
 
   .blog .blockquote {
-    background: hsl(var(--muted) / 0.3);
-    border-left: 4px solid hsl(var(--brand-primary));
+    background: #f8f9fa;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
     padding: 1.5rem;
     margin: 1.5rem 0;
     font-style: italic;
@@ -972,9 +814,9 @@ aside.callout {
   }
 
   .blog .key {
-    background: hsl(var(--brand-primary) / 0.1);
-    border: 1px solid hsl(var(--brand-primary) / 0.3);
-    border-left: 4px solid hsl(var(--brand-primary));
+    background: hsl(var(--accent-h, 312), 70%, 95%);
+    border: 1px solid hsl(var(--accent-h, 312), 70%, 80%);
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
     padding: 1rem 1.5rem;
     margin: 1rem 0;
     border-radius: 0 0.5rem 0.5rem 0;
@@ -984,7 +826,7 @@ aside.callout {
   .blog .prose-custom h2,
   .blog .prose-custom h3,
   .blog .prose-custom h4 {
-    color: hsl(var(--foreground));
+    color: #111;
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 1rem;

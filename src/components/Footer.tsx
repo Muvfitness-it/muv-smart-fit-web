@@ -21,23 +21,20 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-gray-900 text-gray-100 site-footer">
+    <footer className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
-              <Link to="/" className="brand-footer" aria-label="MUV Fitness Legnago">
-                <picture>
-                  <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: dark)" />
-                  <img 
-                    src="/assets/brand/muv-logo-light.svg" 
-                    alt="MUV Fitness Legnago" 
-                    width="220" 
-                    height="52" 
-                    className="footer-logo"
-                  />
-                </picture>
-              </Link>
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
+                alt="MUV Fitness Logo" 
+                className="h-16 w-auto object-contain"
+                onError={(e) => console.error('Footer logo error:', e)}
+                onLoad={() => console.log('Footer logo loaded')}
+              />
+            </Link>
             
             <div className="space-y-2">
               <div className="flex items-center space-x-2">

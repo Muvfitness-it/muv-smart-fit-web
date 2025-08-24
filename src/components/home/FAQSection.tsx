@@ -28,24 +28,24 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-background text-foreground">
+    <section className="py-20 bg-gray-900">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black mb-6 font-heading text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-black mb-6 font-heading text-white">
             Mini-FAQ
           </h2>
         </div>
         
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="bg-gray-100 border border-gray-200 rounded-2xl overflow-hidden">
+            <div key={index} className="bg-gray-800 border border-gray-700 rounded-2xl overflow-hidden">
               <button
-                className="w-full text-left p-6 flex items-center justify-between hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                className="w-full text-left p-6 flex items-center justify-between hover:bg-gray-700/50 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-primary"
                 onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 aria-expanded={openFaq === index}
                 aria-controls={`faq-answer-${index}`}
               >
-                <h3 className="text-lg font-bold text-gray-900">{faq.question}</h3>
+                <h3 className="text-lg font-bold text-white">{faq.question}</h3>
                 {openFaq === index ? (
                   <ChevronUp className="w-5 h-5 text-brand-primary flex-shrink-0" aria-hidden="true" />
                 ) : (
@@ -54,8 +54,8 @@ const FAQSection = () => {
               </button>
               
               {openFaq === index && (
-                <div className="px-6 pb-6 border-t border-gray-200" id={`faq-answer-${index}`}>
-                  <p className="text-gray-700 pt-4 leading-relaxed">{faq.answer}</p>
+                <div className="px-6 pb-6 border-t border-gray-700" id={`faq-answer-${index}`}>
+                  <p className="text-gray-300 pt-4 leading-relaxed">{faq.answer}</p>
                 </div>
               )}
             </div>

@@ -1,16 +1,6 @@
 User-agent: *
-Allow: /lovable-uploads/
-Allow: /images/
-Allow: /assets/
-Disallow: /admin/
-Disallow: /?s=
-Disallow: /search/
-Disallow: /*?replytocom=
-Disallow: /*?utm_*
-Disallow: /*?fbclid=
-
-# Sitemap
+Allow: /
+Disallow: /blog
+Disallow: /blog/tag/
+Disallow: /search
 Sitemap: https://www.muvfitness.it/sitemap.xml
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 1

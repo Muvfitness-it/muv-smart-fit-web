@@ -14,13 +14,12 @@ const Index = () => {
   useLeadTracking();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       <Helmet>
         <title>MUV Fitness Legnago – Fitness Intelligente con Personal Trainer</title>
         <meta name="description" content="EMS, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Percorsi su misura per dimagrimento, postura e cellulite. Prenota la consulenza gratuita." />
         <meta name="keywords" content="personal trainer legnago, ems legnago, pancafit legnago, pilates reformer legnago, fitness intelligente" />
         <link rel="canonical" href="https://www.muvfitness.it/" />
-        <link rel="alternate" hrefLang="it" href="https://www.muvfitness.it/" />
       </Helmet>
       <LocalBusinessSchema />
       

@@ -28,14 +28,14 @@ const PersonalTrainerLegnago = () => {
       "name": "MUV Fitness Legnago",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Via Venti Settembre, 5/7",
+        "streetAddress": "{{INDIRIZZO_ATTUALE_COMPLETO}}",
         "addressLocality": "Legnago",
         "addressRegion": "Veneto",
         "postalCode": "37045",
         "addressCountry": "IT"
       },
-      "telephone": "+39 351 338 0770",
-      "email": "info@muvfitness.it"
+      "telephone": "{{TELEFONO}}",
+      "email": "{{EMAIL}}"
     },
     "areaServed": "Legnago",
     "serviceType": "Personal Training",
@@ -104,7 +104,6 @@ const PersonalTrainerLegnago = () => {
         <meta name="description" content={pageDescription} />
         <meta name="keywords" content="Personal Trainer Legnago, allenamento personalizzato, small group, fitness coaching, obiettivi" />
         <link rel="canonical" href={canonicalUrl} />
-        <link rel="alternate" hrefLang="it" href={canonicalUrl} />
         
         {/* Open Graph */}
         <meta property="og:title" content={pageTitle} />
