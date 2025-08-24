@@ -193,7 +193,7 @@ const BlogCategory = () => {
               {formattedPosts.map((post) => (
                 <Card key={post.id} className="overflow-hidden">
                   {post.featured_image && (
-                    <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
+                    <Link to={`/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
                       <LazyImage
                         src={post.featured_image}
                         alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}
@@ -205,7 +205,7 @@ const BlogCategory = () => {
                   )}
                   <CardHeader>
                     <CardTitle className="text-xl">
-                      <Link to={`/blog/${post.slug}`} className="hover:underline">
+                      <Link to={`/${post.slug}`} className="hover:underline">
                         {post.title}
                       </Link>
                     </CardTitle>
@@ -217,7 +217,7 @@ const BlogCategory = () => {
                     )}
                     <div className="mt-4">
                       <Button asChild variant="outline" size="sm">
-                        <Link to={`/blog/${post.slug}`}>Leggi l'articolo</Link>
+                        <Link to={`/${post.slug}`}>Leggi l'articolo</Link>
                       </Button>
                     </div>
                   </CardContent>
@@ -244,7 +244,7 @@ const BlogCategory = () => {
                   {recommended.map((post) => (
                     <Card key={post.id} className="overflow-hidden">
                       {post.featured_image && (
-                        <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
+                        <Link to={`/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
                           <LazyImage
                             src={post.featured_image}
                             alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}

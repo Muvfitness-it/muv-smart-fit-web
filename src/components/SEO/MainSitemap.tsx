@@ -44,7 +44,7 @@ const MainSitemap: React.FC = () => {
         blogEntries = (posts || []).map(post => {
           const lastmod = (post.updated_at || post.published_at || new Date().toISOString()).split('T')[0];
           return `  <url>
-    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <loc>${baseUrl}/${post.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

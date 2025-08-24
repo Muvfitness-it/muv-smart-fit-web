@@ -15,7 +15,7 @@ const SitemapRoute: React.FC = () => {
           .order('updated_at', { ascending: false });
 
         const blogEntries = posts?.map(post => ({
-          loc: `https://www.muvfitness.it/blog/${post.slug}`,
+          loc: `https://www.muvfitness.it/${post.slug}`,
           lastmod: new Date(post.updated_at).toISOString().split('T')[0],
           changefreq: 'weekly',
           priority: 0.8

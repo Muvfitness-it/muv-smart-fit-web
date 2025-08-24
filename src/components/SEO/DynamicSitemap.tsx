@@ -37,10 +37,11 @@ export const generateSitemap = async (): Promise<string> => {
 
     if (posts) {
       dynamicPages = posts.map(post => ({
-        url: `/blog/${post.slug}`,
+        url: `/${post.slug}`,
         priority: '0.7',
         changefreq: 'weekly',
-        lastmod: post.updated_at || post.published_at
+        lastmod: post.updated_at || post.published_at,
+        isPost: true as const
       }));
     }
   } catch (error) {
@@ -54,8 +55,8 @@ export const generateSitemap = async (): Promise<string> => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${allPages.map(page => {
-  const isBlogPost = page.url.startsWith('/blog/') && page.url !== '/blog';
+${allPages.map((page: any) => {
+  const isBlogPost = !!page.isPost;
   
   let urlEntry = `  <url>
     <loc>${baseUrl}${page.url}</loc>
