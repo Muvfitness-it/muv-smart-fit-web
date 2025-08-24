@@ -46,6 +46,13 @@ const Team = () => {
       image: "https://baujoowgqeyraqnukkmw.supabase.co/storage/v1/object/sign/immagini/Thomas%20Gabrieli.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZmY3Y2EyNC1kNDQ4LTRhZjgtYjA3Ni1jZWQzNGU0OWEzMjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbW1hZ2luaS9UaG9tYXMgR2FicmllbGkuanBnIiwiaWF0IjoxNzUxNjE5NDA2LCJleHAiOjE3ODMxNTU0MDZ9.YPhebl_VsTVnLF3ehFhN2Ii2V5MOXfqNeqlAk708xc4",
       description: "Mi chiamo Thomas, sono Chinesiologo (Laurea Scienze Motorie) e Massoterapista (MCB/ausiliario sanitario). Il mio percorso di studi mi ha portato a sviluppare un approccio basato sull'embodied cognition.",
       specialization: "Massoterapista e Chinesiologo"
+    },
+    {
+      name: "Jenny",
+      role: "Personal Trainer & Istruttrice di Fitness",
+      image: "/lovable-uploads/08402c8f-6e39-4e66-ba12-844028213e91.png",
+      description: "Mi sono laureata in Scienze delle attività motorie e sportive e Scienze della nutrizione umana con l'obiettivo di aiutare le persone a raggiungere il proprio benessere a 360°! Ho scelto di far parte del team di MUV perché ritengo sia una realtà in cui la cura ed il benessere del cliente vengano poste in primo piano.",
+      specialization: "Benessere a 360° e Nutrizione"
     }
   ];
 
