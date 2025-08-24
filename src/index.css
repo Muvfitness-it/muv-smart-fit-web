@@ -368,7 +368,7 @@
 
   /* Text overlay for images - WCAG AA contrast */
   .text-overlay {
-    background: var(--muv-overlay);
+    background: hsl(var(--muv-overlay));
     backdrop-filter: blur(1px);
     border-radius: 8px;
     padding: 0.5rem 1rem;
