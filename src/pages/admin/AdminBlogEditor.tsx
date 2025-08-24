@@ -214,11 +214,25 @@ const AdminBlogEditor = () => {
             <Input 
               id="slug" 
               value={slug} 
-              onChange={e => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-'))}
-              placeholder="url-articolo-personalizzato" 
+              onChange={e => setSlug(e.target.value)}
+              onBlur={() => {
+                // Pulisci lo slug solo quando l'utente finisce di modificarlo
+                if (slug) {
+                  const cleanSlug = slug
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .trim()
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-');
+                  setSlug(cleanSlug);
+                }
+              }}
+              placeholder="es: allenamento-ems-principianti" 
             />
             <p className="text-xs text-muted-foreground mt-1">
-              URL finale: /blog/{slug || 'url-articolo'}
+              URL finale: <code className="bg-muted px-1 rounded">/blog/{slug || 'url-articolo'}</code>
             </p>
           </div>
           <div>
