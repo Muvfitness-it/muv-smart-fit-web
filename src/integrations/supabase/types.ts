@@ -737,6 +737,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      submit_blog_comment: {
+        Args: {
+          p_author_email: string
+          p_author_name: string
+          p_content: string
+          p_post_id: string
+        }
+        Returns: Json
+      }
       update_analytics_summary: {
         Args: Record<PropertyKey, never>
         Returns: undefined
