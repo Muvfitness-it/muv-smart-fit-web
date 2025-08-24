@@ -82,13 +82,23 @@ const AdminBlogEditor = () => {
   };
 
   const save = async (nextStatus?: 'draft' | 'published') => {
+    if (!title.trim()) {
+      toast({ title: 'Errore', description: 'Il titolo è obbligatorio', variant: 'destructive' });
+      return;
+    }
+    
+    if (!slug.trim()) {
+      toast({ title: 'Errore', description: 'Lo slug è obbligatorio', variant: 'destructive' });
+      return;
+    }
+
     setSaving(true);
     const payload: any = {
-      title,
-      slug: slug || slugify(title),
-      excerpt: excerpt || content.slice(0, 160),
-      content,
-      featured_image: featured || null,
+      title: title.trim(),
+      slug: slug.trim(),
+      excerpt: excerpt.trim() || content.replace(/<[^>]*>/g, '').slice(0, 160),
+      content: content.trim(),
+      featured_image: featured.trim() || null,
       status: nextStatus || status,
       category_id: categoryId || null,
     };
@@ -103,7 +113,11 @@ const AdminBlogEditor = () => {
     }
 
     if (error) {
-      toast({ title: 'Errore salvataggio', description: error.message, variant: 'destructive' });
+      if (error.message?.includes('duplicate key value violates unique constraint')) {
+        toast({ title: 'Errore slug duplicato', description: 'Questo slug è già in uso. Modificalo per renderlo unico.', variant: 'destructive' });
+      } else {
+        toast({ title: 'Errore salvataggio', description: error.message, variant: 'destructive' });
+      }
     } else {
       toast({ title: 'Salvato', description: nextStatus === 'published' ? 'Articolo pubblicato' : 'Bozza salvata' });
       navigate('/admin/blog');
@@ -196,8 +210,16 @@ const AdminBlogEditor = () => {
             <Input id="title" value={title} onChange={e => setTitle(e.target.value)} onBlur={onTitleBlur} />
           </div>
           <div>
-            <Label htmlFor="slug">Slug</Label>
-            <Input id="slug" value={slug} onChange={e => setSlug(slugify(e.target.value))} />
+            <Label htmlFor="slug">Slug URL</Label>
+            <Input 
+              id="slug" 
+              value={slug} 
+              onChange={e => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-'))}
+              placeholder="url-articolo-personalizzato" 
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              URL finale: /blog/{slug || 'url-articolo'}
+            </p>
           </div>
           <div>
             <Label htmlFor="excerpt">Excerpt (max 160 caratteri)</Label>

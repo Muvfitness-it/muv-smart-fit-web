@@ -64,6 +64,7 @@ import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
 import BlogArticle from "./pages/blog/BlogArticle";
 import AdminBlogList from "./pages/admin/AdminBlogList";
+import AdminBlogDrafts from "./pages/admin/AdminBlogDrafts";
 import AdminBlogEditor from "./pages/admin/AdminBlogEditor";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
@@ -146,6 +147,7 @@ const AppContent = () => {
                 <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/blog" element={<AdminBlogList />} />
+                <Route path="/admin/blog/bozze" element={<AdminBlogDrafts />} />
                 <Route path="/admin/blog/categorie" element={<AdminCategories />} />
                 <Route path="/admin/blog/create/ai" element={<AdminBlogCreateAI />} />
                 <Route path="/admin/blog/create/manual" element={<AdminBlogCreateManual />} />
