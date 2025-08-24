@@ -624,4 +624,122 @@
     will-change: transform;
     contain: layout style paint;
   }
+
+  /* Blog Article Styling - White Theme with Accent Colors */
+  .blog {
+    background: #fff;
+    color: #111;
+    line-height: 1.7;
+  }
+
+  .blog a {
+    color: #111;
+    text-decoration: underline;
+  }
+
+  .blog a:hover {
+    color: hsl(var(--accent-h, 312), 70%, 45%);
+  }
+
+  .blog .post-hero {
+    padding: 2rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+  }
+
+  .blog .post-hero-label {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--accent-h, 312), 70%, 45%);
+    background: hsl(var(--accent-h, 312), 70%, 95%);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog .post-hero h1 {
+    color: #111;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog .post-hero .meta {
+    color: #666;
+  }
+
+  .blog .toc {
+    background: #f8f9fa;
+    border: 1px solid #e5e5e5;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0.5rem;
+  }
+
+  .blog .toc h2,
+  .blog .toc h3 {
+    color: #111;
+    margin-top: 0;
+  }
+
+  .blog .callout {
+    background: #f8f9fa;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .blog .blockquote {
+    background: #f8f9fa;
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .blog .key {
+    background: hsl(var(--accent-h, 312), 70%, 95%);
+    border: 1px solid hsl(var(--accent-h, 312), 70%, 80%);
+    border-left: 4px solid hsl(var(--accent-h, 312), 70%, 50%);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .blog .prose-custom h2,
+  .blog .prose-custom h3,
+  .blog .prose-custom h4 {
+    color: #111;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog .prose-custom p {
+    margin-bottom: 1rem;
+  }
+
+  .blog .prose-custom ul,
+  .blog .prose-custom ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .blog .prose-custom li {
+    margin-bottom: 0.5rem;
+  }
+
+  .blog .prose-custom strong {
+    color: hsl(var(--accent-h, 312), 70%, 35%);
+    font-weight: 600;
+  }
+
+  .blog .prose-custom em {
+    color: #555;
+    font-style: italic;
+  }
 }

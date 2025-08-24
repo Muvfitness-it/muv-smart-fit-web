@@ -57,7 +57,7 @@ const CrawlerOptimizer: React.FC<CrawlerOptimizerProps> = ({
     crawlerContent.appendChild(locationEl);
     
     const contactEl = document.createElement('p');
-    contactEl.textContent = 'Contatti: +39 3291070374 - info@muvfitness.it';
+    contactEl.textContent = 'Contatti: +39 351 338 0770 - info@muvfitness.it';
     crawlerContent.appendChild(contactEl);
     
     // Rimuovi contenuto precedente se esiste

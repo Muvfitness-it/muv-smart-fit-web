@@ -62,7 +62,7 @@ const Prezzi = () => {
                     </div>
                   </div>
                   <Button asChild className="w-full mt-6">
-                    <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank">
+                    <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank">
                       Richiedi Prezzi
                     </a>
                   </Button>

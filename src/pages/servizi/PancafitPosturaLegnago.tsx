@@ -170,7 +170,7 @@ const PancafitPosturaLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
-                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <Heart className="mr-2 h-5 w-5" />
                     Valutazione Gratuita
                   </a>
@@ -401,7 +401,7 @@ const PancafitPosturaLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild>
-                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <Heart className="mr-2 h-5 w-5" />
                     WhatsApp: Prenota Subito
                   </a>

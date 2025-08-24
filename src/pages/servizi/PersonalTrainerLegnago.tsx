@@ -170,7 +170,7 @@ const PersonalTrainerLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700">
-                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <User className="mr-2 h-5 w-5" />
                     Consulenza Gratuita
                   </a>
@@ -396,7 +396,7 @@ const PersonalTrainerLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild>
-                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <User className="mr-2 h-5 w-5" />
                     WhatsApp: Prenota Subito
                   </a>

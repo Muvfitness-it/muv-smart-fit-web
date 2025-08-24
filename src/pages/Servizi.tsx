@@ -101,7 +101,7 @@ const Servizi = () => {
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
               <a 
-                href="https://wa.me/393291070374"
+                href="https://wa.me/393513380770"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"

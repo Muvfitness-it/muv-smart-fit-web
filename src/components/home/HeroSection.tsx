@@ -35,7 +35,7 @@ const HeroSection = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
           <a 
-            href="https://wa.me/393291070374"
+            href="https://wa.me/393513380770"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"
