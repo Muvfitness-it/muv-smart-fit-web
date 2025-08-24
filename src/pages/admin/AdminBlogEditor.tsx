@@ -210,14 +210,34 @@ const AdminBlogEditor = () => {
             <Input id="title" value={title} onChange={e => setTitle(e.target.value)} onBlur={onTitleBlur} />
           </div>
           <div>
-            <Label htmlFor="slug">Slug URL</Label>
+            <Label htmlFor="slug">Slug URL (modificabile)</Label>
             <Input 
               id="slug" 
               value={slug} 
               onChange={e => setSlug(e.target.value)}
-              onBlur={() => {
-                // Pulisci lo slug solo quando l'utente finisce di modificarlo
-                if (slug) {
+              placeholder="scrivi-il-tuo-slug-personalizzato"
+              className="bg-background border-input"
+              autoComplete="off"
+            />
+            <div className="flex gap-2 mt-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  if (title) {
+                    const autoSlug = slugify(title);
+                    setSlug(autoSlug);
+                  }
+                }}
+              >
+                Auto-genera da titolo
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
                   const cleanSlug = slug
                     .toLowerCase()
                     .normalize('NFD')
@@ -227,12 +247,16 @@ const AdminBlogEditor = () => {
                     .replace(/\s+/g, '-')
                     .replace(/-+/g, '-');
                   setSlug(cleanSlug);
-                }
-              }}
-              placeholder="es: allenamento-ems-principianti" 
-            />
+                }}
+              >
+                Pulisci slug
+              </Button>
+            </div>
             <p className="text-xs text-muted-foreground mt-1">
-              URL finale: <code className="bg-muted px-1 rounded">/blog/{slug || 'url-articolo'}</code>
+              URL finale: <code className="bg-muted px-1 rounded text-xs">/blog/{slug || 'il-tuo-slug'}</code>
+            </p>
+            <p className="text-xs text-amber-600 mt-1">
+              ⚠️ Modifica lo slug solo se necessario. Cambiarlo dopo la pubblicazione può danneggiare i link esistenti.
             </p>
           </div>
           <div>
