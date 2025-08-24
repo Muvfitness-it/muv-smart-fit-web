@@ -4,7 +4,7 @@ import LazyImage from '@/components/ui/LazyImage';
 const HeroSection = () => {
   return (
     <section 
-      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen above-fold hero-section" 
+      className="relative flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen above-fold hero-section has-media" 
     >
       <LazyImage 
         src="/images/fitness-professional-bg.jpg"

@@ -35,9 +35,9 @@ const LocalBusinessSchema: React.FC = () => {
     ],
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-      "width": 400,
-      "height": 400
+      "url": "https://www.muvfitness.it/assets/brand/muv-logo-dark.svg",
+      "width": 512,
+      "height": 120
     },
     "sameAs": [
       "https://www.facebook.com/MuvLegnago/",
@@ -107,9 +107,9 @@ const LocalBusinessSchema: React.FC = () => {
     "url": "https://www.muvfitness.it",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-      "width": 400,
-      "height": 400
+      "url": "https://www.muvfitness.it/assets/brand/muv-logo-dark.svg",
+      "width": 512,
+      "height": 120
     },
     "contactPoint": [
       {

@@ -21,21 +21,23 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-black text-white site-footer">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
-              <Link to="/" className="flex items-center">
-              <picture>
-                <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: light)" />
-                <img 
-                  src="/assets/brand/muv-logo-light.svg" 
-                  alt="MUV Fitness Logo" 
-                  className="h-16 w-auto object-contain"
-                />
-              </picture>
-            </Link>
+              <Link to="/" className="brand-footer" aria-label="MUV Fitness Legnago">
+                <picture>
+                  <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: dark)" />
+                  <img 
+                    src="/assets/brand/muv-logo-light.svg" 
+                    alt="MUV Fitness Legnago" 
+                    width="220" 
+                    height="52" 
+                    className="footer-logo"
+                  />
+                </picture>
+              </Link>
             
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
