@@ -27,13 +27,14 @@ const Footer = () => {
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
-                alt="MUV Fitness Logo" 
-                className="h-16 w-auto object-contain"
-                onError={(e) => console.error('Footer logo error:', e)}
-                onLoad={() => console.log('Footer logo loaded')}
-              />
+              <picture>
+                <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: light)" />
+                <img 
+                  src="/assets/brand/muv-logo-light.svg" 
+                  alt="MUV Fitness Logo" 
+                  className="h-16 w-auto object-contain"
+                />
+              </picture>
             </Link>
             
             <div className="space-y-2">

@@ -31,7 +31,7 @@ interface Category {
   slug: string;
 }
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 12;
 
 const BlogIndex = () => {
   const [searchParams, setSearchParams] = useSearchParams();
