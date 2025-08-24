@@ -11,7 +11,8 @@ const CriticalCSS = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--background)/0.8));
+        background: var(--bg);
+        color: var(--ink);
       }
       
       /* Critical button styles */

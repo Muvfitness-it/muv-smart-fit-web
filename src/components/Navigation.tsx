@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/muv-logo-original-transparent.png";
-// Use the new logo from public folder
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const [logoSrc, setLogoSrc] = useState<string>(logo);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -68,7 +65,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
           {/* Logo - sempre leggibile SVG */}
-          <a className="brand" href="/" aria-label="MUV Fitness Legnago">
+          <Link to="/" className="brand" aria-label="MUV Fitness Legnago">
             <picture>
               <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: dark)" />
               <img 
@@ -82,7 +79,7 @@ const Navigation = () => {
                 fetchPriority="high"
               />
             </picture>
-          </a>
+          </Link>
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-8 xl:space-x-10">
@@ -114,7 +111,7 @@ const Navigation = () => {
           {/* Panel */}
           <div className="relative z-[61] flex h-full flex-col bg-white backdrop-blur-md">
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
-              <a href="/" onClick={() => setIsOpen(false)} className="flex items-center">
+              <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                 <picture>
                   <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: dark)" />
                   <img 
@@ -123,7 +120,7 @@ const Navigation = () => {
                     className="h-10 w-auto object-contain"
                   />
                 </picture>
-              </a>
+              </Link>
               <button
                 aria-label="Chiudi menu"
                 onClick={() => setIsOpen(false)}

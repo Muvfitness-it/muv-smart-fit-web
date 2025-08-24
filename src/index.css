@@ -339,14 +339,7 @@
       color: var(--ink);
     }
   }
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-body);
-  }
+}
   
   /* Focus visibility - WCAG AA compliant */
   :focus-visible {

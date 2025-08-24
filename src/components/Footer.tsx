@@ -26,7 +26,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center">
+              <Link to="/" className="flex items-center">
               <picture>
                 <source srcSet="/assets/brand/muv-logo-light.svg" media="(prefers-color-scheme: light)" />
                 <img 
