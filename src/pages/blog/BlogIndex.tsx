@@ -201,41 +201,39 @@ const BlogIndex = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {formattedPosts.map((post) => (
-                  <Card key={post.id} className="overflow-hidden">
-                    {post.featured_image && (
-                      <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
-                        <LazyImage
-                          src={post.featured_image}
-                          alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}
-                          className="w-full h-48 object-cover"
-                          width={1200}
-                          height={630}
-                        />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {formattedPosts.map((post) => (
+                <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
+                  {post.featured_image && (
+                    <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
+                      <LazyImage
+                        src={post.featured_image}
+                        alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        width={1200}
+                        height={630}
+                      />
+                    </Link>
+                  )}
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-xl leading-tight">
+                      <Link to={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
+                        {post.title}
                       </Link>
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">{post.date}</p>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    {post.excerpt && (
+                      <p className="text-muted-foreground line-clamp-3 mb-4 leading-relaxed">{post.excerpt}</p>
                     )}
-                    <CardHeader>
-                      <CardTitle className="text-xl">
-                        <Link to={`/blog/${post.slug}`} className="hover:underline">
-                          {post.title}
-                        </Link>
-                      </CardTitle>
-                      <p className="text-sm text-muted-foreground">{post.date}</p>
-                    </CardHeader>
-                    <CardContent>
-                      {post.excerpt && (
-                        <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                      )}
-                      <div className="mt-4">
-                        <Button asChild variant="outline" size="sm">
-                          <Link to={`/blog/${post.slug}`}>Leggi l'articolo</Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                    <Button asChild variant="outline" size="sm" className="w-full">
+                      <Link to={`/blog/${post.slug}`}>Leggi l'articolo</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
               {totalPages > 1 && (
                 <nav className="flex items-center justify-center gap-2 mt-8" aria-label="Paginazione articoli">

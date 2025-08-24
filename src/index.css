@@ -241,6 +241,119 @@
   }
 }
 
+/* Blog theme and article styles */
+.blog {
+  background: white !important;
+  color: #111 !important;
+  --accent-hsl: hsl(var(--accent-h, 312), 65%, 55%);
+}
+
+/* Blog template components */
+.post-hero {
+  @apply py-8 border-b border-gray-200 mb-8;
+}
+
+.post-hero-label {
+  @apply text-sm font-medium text-gray-500 uppercase tracking-wide mb-2 block;
+}
+
+.post-hero h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4;
+}
+
+.post-hero .meta {
+  @apply text-sm text-gray-600;
+}
+
+/* Table of contents */
+nav.toc {
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-6 my-8;
+}
+
+nav.toc h3 {
+  @apply text-lg font-semibold text-gray-900 mb-4;
+  color: var(--accent-hsl) !important;
+}
+
+nav.toc ol,
+nav.toc ul {
+  @apply space-y-2 pl-0;
+}
+
+nav.toc li {
+  @apply list-none;
+}
+
+nav.toc a {
+  @apply text-gray-700 hover:text-gray-900 hover:underline transition-colors;
+  color: var(--accent-hsl) !important;
+}
+
+/* Content emphasis and callouts */
+.key {
+  @apply bg-gray-50 border-l-4 p-4 my-6 rounded-r-lg;
+  border-left-color: var(--accent-hsl) !important;
+  background: linear-gradient(90deg, var(--accent-hsl), transparent 2px), #f9fafb;
+}
+
+.callout,
+aside.callout {
+  @apply bg-blue-50 border border-blue-200 rounded-lg p-6 my-6;
+}
+
+.blockquote {
+  @apply border-l-4 border-gray-300 pl-6 italic text-gray-700 my-6;
+}
+
+/* Blog article content styling */
+.blog .prose-custom {
+  @apply max-w-none;
+}
+
+.blog .prose-custom p {
+  @apply text-gray-900 leading-relaxed mb-6;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.blog .prose-custom h2,
+.blog .prose-custom h3,
+.blog .prose-custom h4,
+.blog .prose-custom h5,
+.blog .prose-custom h6 {
+  @apply font-bold text-gray-900 mt-8 mb-4;
+  color: var(--accent-hsl) !important;
+}
+
+.blog .prose-custom h2 {
+  @apply text-2xl md:text-3xl;
+}
+
+.blog .prose-custom h3 {
+  @apply text-xl md:text-2xl;
+}
+
+.blog .prose-custom strong {
+  @apply font-semibold;
+  color: var(--accent-hsl) !important;
+}
+
+.blog .prose-custom a {
+  @apply underline hover:no-underline transition-all;
+  color: var(--accent-hsl) !important;
+}
+
+.blog .prose-custom ul,
+.blog .prose-custom ol {
+  @apply space-y-2 ml-6 mb-6;
+}
+
+.blog .prose-custom li {
+  @apply text-gray-900;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
 /* Stili personalizzati per gli articoli del blog */
 @layer components {
   /* Base post styling - Accessibility focused */
