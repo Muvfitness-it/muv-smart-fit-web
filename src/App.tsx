@@ -55,6 +55,7 @@ import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 import CookieConsent from "./components/security/CookieConsent";
+import RedirectHandler from "./components/SEO/RedirectHandler";
 
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
@@ -69,6 +70,7 @@ import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
 import QAReport from "./pages/qa-report";
+import SEOAudit from "./pages/SEOAudit";
 import Recensioni from "./pages/Recensioni";
 import FaqGbp from "./pages/FaqGbp";
 import MediaKitProofPosts from "./pages/MediaKitProofPosts";
@@ -82,6 +84,7 @@ const AppContent = () => {
 
   return (
     <SessionSecurity>
+      <RedirectHandler />
       <SecurityHeaders />
       <PerformanceOptimizer />
       <CriticalCSS />
@@ -156,9 +159,10 @@ const AppContent = () => {
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="/analytics" element={<Analytics />} />
-        <Route path="/qa-report" element={<QAReport />} />
-        <Route path="/recensioni" element={<Recensioni />} />
+                 <Route path="/analytics" element={<Analytics />} />
+         <Route path="/qa-report" element={<QAReport />} />
+         <Route path="/seo-report" element={<SEOAudit />} />
+         <Route path="/recensioni" element={<Recensioni />} />
         <Route path="/faq-gbp" element={<FaqGbp />} />
         <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
                 
