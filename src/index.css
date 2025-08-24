@@ -339,7 +339,6 @@
       color: var(--ink);
     }
   }
-}
   
   /* Focus visibility - WCAG AA compliant */
   :focus-visible {
