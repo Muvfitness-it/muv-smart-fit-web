@@ -17,6 +17,13 @@ interface SimpleCaptcha {
   answer: number;
 }
 
+interface CommentSubmissionResult {
+  success: boolean;
+  error?: string;
+  message?: string;
+  comment_id?: string;
+}
+
 const generateCaptcha = (): SimpleCaptcha => {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
@@ -166,42 +173,35 @@ export const SecureCommentForm: React.FC<SecureCommentFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Sanitize content
-      const sanitizedContent = sanitizeHtml(formData.content);
-
-      // Insert comment (will be pending by default)
-      const { error } = await supabase
-        .from('blog_comments')
-        .insert({
-          post_id: postId,
-          author_name: formData.author_name.trim(),
-          author_email: formData.author_email.toLowerCase().trim(),
-          content: sanitizedContent,
-          status: 'pending' // All comments start as pending
-        });
+      // Use the secure database function instead of direct insert
+      const { data, error } = await supabase.rpc('submit_blog_comment', {
+        p_post_id: postId,
+        p_author_name: formData.author_name.trim(),
+        p_author_email: formData.author_email.toLowerCase().trim(),
+        p_content: formData.content.trim()
+      }) as { data: CommentSubmissionResult | null, error: any };
 
       if (error) {
         console.error('Error submitting comment:', error);
+        toast({
+          title: "Errore",
+          description: "Impossibile inviare il commento. Riprova più tardi.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check if the function returned an error
+      if (data && !data.success) {
+        toast({
+          title: "Errore",
+          description: data.error || "Impossibile inviare il commento.",
+          variant: "destructive"
+        });
         
-        // Provide specific error messages based on the error
-        if (error.message.includes('check constraint') || error.message.includes('length')) {
-          toast({
-            title: "Errore di validazione",
-            description: "Controlla che tutti i campi rispettino i requisiti di lunghezza.",
-            variant: "destructive"
-          });
-        } else if (error.message.includes('email')) {
-          toast({
-            title: "Errore",
-            description: "L'indirizzo email non è in un formato valido.",
-            variant: "destructive"
-          });
-        } else {
-          toast({
-            title: "Errore",
-            description: "Impossibile inviare il commento. Riprova più tardi.",
-            variant: "destructive"
-          });
+        // Refresh captcha on security-related errors
+        if (data.error?.includes('Limite') || data.error?.includes('non consentito')) {
+          refreshCaptcha();
         }
         return;
       }
