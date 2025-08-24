@@ -274,7 +274,7 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
       articleData.title = `Scopri ${topic}: La Guida Completa di MUV Fitness`;
     }
 
-    // Genera slug se mancante
+    // Genera slug se mancante e gestisci duplicati
     if (!articleData.slug) {
       articleData.slug = articleData.title
         .toLowerCase()
@@ -286,6 +286,10 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
         .replace(/-+/g, "-")
         .substring(0, 60);
     }
+
+    // Add timestamp to make slug unique and prevent duplicates
+    const timestamp = Date.now().toString().slice(-6); // Last 6 digits
+    articleData.slug = `${articleData.slug}-${timestamp}`;
 
     // Pulisci e normalizza il contenuto HTML
     let cleanContent = articleData.content
