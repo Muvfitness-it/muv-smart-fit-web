@@ -49,8 +49,8 @@ serve(async (req) => {
       const pubDate = post.published_at ? new Date(post.published_at) : new Date(post.updated_at);
       const isRecent = (Date.now() - pubDate.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
       
-      let urlEntry = `  <url>
-    <loc>${baseUrl}/blog/${post.slug}</loc>
+       let urlEntry = `  <url>
+    <loc>${baseUrl}/${post.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>`;

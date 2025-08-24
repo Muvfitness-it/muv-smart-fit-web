@@ -144,7 +144,10 @@ const AppContent = () => {
                 
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/c/:slug" element={<BlogCategory />} />
-                <Route path="/blog/:slug" element={<BlogArticle />} />
+                <Route path="/blog/:slug" element={<Navigate to={`/${window.location.pathname.split('/blog/')[1]}`} replace />} />
+                
+                {/* Articles without /blog/ prefix */}
+                <Route path="/:slug" element={<BlogArticle />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/blog" element={<AdminBlogList />} />
                 <Route path="/admin/blog/bozze" element={<AdminBlogDrafts />} />

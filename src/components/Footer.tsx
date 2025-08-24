@@ -103,7 +103,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Ultimi articoli</h3>
             <div className="space-y-2">
               {latest.map(p => (
-                <Link key={p.slug} to={`/blog/${p.slug}`} className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                <Link key={p.slug} to={`/${p.slug}`} className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                   {p.title}
                 </Link>
               ))}

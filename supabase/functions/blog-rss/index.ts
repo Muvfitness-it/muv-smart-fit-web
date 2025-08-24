@@ -39,7 +39,7 @@ serve(async (req) => {
     const feedLink = `${siteUrl}/blog`;
 
     const items = (posts || []).map((p) => {
-      const link = `${siteUrl}/blog/${p.slug}`;
+      const link = `${siteUrl}/${p.slug}`;
       const pub = p.published_at ? new Date(p.published_at).toUTCString() : new Date().toUTCString();
       const desc = (p.excerpt || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       const title = (p.title || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

@@ -57,7 +57,7 @@ serve(async (req) => {
         .replace(/'/g, '&#39;');
       const keywords = (post.meta_keywords || 'fitness, allenamento, benessere, salute').toString();
 
-      return `  <url>\n    <loc>${baseUrl}/blog/${post.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <news:news>\n      <news:publication>\n        <news:name>MUV Fitness Blog</news:name>\n        <news:language>it</news:language>\n      </news:publication>\n      <news:publication_date>${pubDate.toISOString()}</news:publication_date>\n      <news:title>${cleanTitle}</news:title>\n      <news:keywords>${keywords}</news:keywords>\n    </news:news>\n  </url>`;
+      return `  <url>\n    <loc>${baseUrl}/${post.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <news:news>\n      <news:publication>\n        <news:name>MUV Fitness Blog</news:name>\n        <news:language>it</news:language>\n      </news:publication>\n      <news:publication_date>${pubDate.toISOString()}</news:publication_date>\n      <news:title>${cleanTitle}</news:title>\n      <news:keywords>${keywords}</news:keywords>\n    </news:news>\n  </url>`;
     }).join('\n');
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">\n${entries}\n</urlset>`;

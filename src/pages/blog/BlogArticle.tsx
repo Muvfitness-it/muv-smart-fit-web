@@ -96,7 +96,7 @@ const BlogArticle = () => {
 
   const title = post?.meta_title || (post ? `${post.title} - Blog MUV Fitness Legnago` : "Articolo - Blog");
   const description = post?.meta_description || post?.excerpt || "Leggi l'articolo sul blog di MUV Fitness Legnago.";
-  const canonical = slug ? `https://www.muvfitness.it/blog/${slug}` : undefined;
+  const canonical = slug ? `https://www.muvfitness.it/${slug}` : undefined;
 
   // JSON-LD Article + optional NewsArticle (ultime 48 ore)
   const isRecent = post?.published_at ? (Date.now() - new Date(post.published_at).getTime()) < 1000 * 60 * 60 * 48 : false;
@@ -298,7 +298,7 @@ const BlogArticle = () => {
                   {related.map((rp) => (
                     <Card key={rp.id} className="overflow-hidden">
                       {rp.featured_image && (
-                        <Link to={`/blog/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
+                        <Link to={`/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
                           <LazyImage
                             src={rp.featured_image}
                             alt={`Copertina articolo correlato ${rp.title}`}
@@ -310,13 +310,13 @@ const BlogArticle = () => {
                       )}
                       <CardHeader>
                         <CardTitle className="text-lg">
-                          <Link to={`/blog/${rp.slug}`} className="hover:underline">{rp.title}</Link>
+                          <Link to={`/${rp.slug}`} className="hover:underline">{rp.title}</Link>
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
                         {rp.excerpt && <p className="text-muted-foreground line-clamp-2">{rp.excerpt}</p>}
                         <div className="mt-3">
-                          <Button asChild size="sm" variant="outline"><Link to={`/blog/${rp.slug}`}>Leggi</Link></Button>
+                          <Button asChild size="sm" variant="outline"><Link to={`/${rp.slug}`}>Leggi</Link></Button>
                         </div>
                       </CardContent>
                     </Card>

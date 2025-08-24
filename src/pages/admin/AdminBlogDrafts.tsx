@@ -169,7 +169,7 @@ const AdminBlogDrafts = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground mb-2 font-mono">
-                  /blog/{draft.slug}
+                  /{draft.slug}
                 </div>
                 
                 {draft.excerpt && (

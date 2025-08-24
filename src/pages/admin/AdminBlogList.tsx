@@ -112,7 +112,7 @@ const AdminBlogList = () => {
                 </div>
                 <div className="flex gap-2">
                   <Button asChild variant="outline" size="sm"><Link to={`/admin/blog/${p.id}`}>Modifica</Link></Button>
-                  <Button asChild variant="ghost" size="sm"><Link to={`/blog/${p.slug}`}>Apri</Link></Button>
+                  <Button asChild variant="ghost" size="sm"><Link to={`/${p.slug}`}>Apri</Link></Button>
                 </div>
               </CardContent>
             </Card>
