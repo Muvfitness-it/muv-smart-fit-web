@@ -70,9 +70,9 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.send-booking-email]
-verify_jwt = false
+verify_jwt = true
 
 [functions.advanced-article-generator]
-verify_jwt = false
+verify_jwt = true
 
 # All other functions require JWT by default (no override here)

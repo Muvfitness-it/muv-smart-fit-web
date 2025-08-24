@@ -6,6 +6,26 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Rate limiting for security
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 3; // 3 requests per minute per IP
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now();
+  const clientData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
+  
+  if (now - clientData.lastReset > RATE_LIMIT_WINDOW) {
+    clientData.count = 0;
+    clientData.lastReset = now;
+  }
+  
+  clientData.count++;
+  rateLimitMap.set(ip, clientData);
+  
+  return clientData.count <= RATE_LIMIT_MAX_REQUESTS;
+};
+
 interface ArticleRequest {
   topic: string;
   wordCount: number;
@@ -41,7 +61,27 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown';
+  const authHeader = req.headers.get('authorization');
+
   try {
+    // Rate limiting check
+    if (!checkRateLimit(clientIP)) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: 'Troppe richieste. Riprova tra qualche minuto.' }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // JWT validation
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.warn('Missing or invalid authorization header', { ip: clientIP });
+      return new Response(
+        JSON.stringify({ error: 'Token di autorizzazione richiesto' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     const { topic, wordCount, tone, additionalContext, qualityModel = 'pro', createImage = false } = await req.json() as ArticleRequest;
     
     if (!topic || !topic.trim()) {

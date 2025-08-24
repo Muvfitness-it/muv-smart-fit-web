@@ -11,6 +11,38 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+// Rate limiting for security
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 5; // 5 emails per minute per IP
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now();
+  const clientData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
+  
+  if (now - clientData.lastReset > RATE_LIMIT_WINDOW) {
+    clientData.count = 0;
+    clientData.lastReset = now;
+  }
+  
+  clientData.count++;
+  rateLimitMap.set(ip, clientData);
+  
+  return clientData.count <= RATE_LIMIT_MAX_REQUESTS;
+};
+
+// HTML escaping for security
+const escapeHtml = (text: string): string => {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+};
+
 interface BookingEmailRequest {
   type: 'confirmation' | 'status_change';
   booking: {
@@ -351,10 +383,49 @@ const handler = async (req: Request): Promise<Response> => {
     );
   }
 
+  const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown';
+  const authHeader = req.headers.get('authorization');
+
   try {
+    // Rate limiting check
+    if (!checkRateLimit(clientIP)) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: 'Troppe richieste. Riprova tra qualche minuto.' }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // JWT validation
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.warn('Missing or invalid authorization header', { ip: clientIP });
+      return new Response(
+        JSON.stringify({ error: 'Token di autorizzazione richiesto' }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
     const { type, booking, previous_status }: BookingEmailRequest = await req.json();
 
-    console.log("Processing booking email:", { type, bookingId: booking.id, status: booking.status });
+    // Validate and escape user inputs to prevent injection
+    const safeBooking = {
+      ...booking,
+      client_name: escapeHtml(booking.client_name || ''),
+      client_email: escapeHtml(booking.client_email || ''),
+      client_phone: escapeHtml(booking.client_phone || ''),
+      message: escapeHtml(booking.message || ''),
+      service_type: escapeHtml(booking.service_type || '')
+    };
+
+    // Validate email format
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(booking.client_email)) {
+      return new Response(
+        JSON.stringify({ error: 'Formato email non valido' }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    console.log("Processing booking email:", { type, bookingId: safeBooking.id, status: safeBooking.status, ip: clientIP });
 
     // Email al cliente
     let customerEmailHtml = '';
