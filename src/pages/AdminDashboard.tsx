@@ -7,6 +7,7 @@ import { Plus, FileText, BarChart3, Settings, Users, LogOut } from 'lucide-react
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
+import { BlogContentFixer } from '@/components/admin/BlogContentFixer';
 import { SEOManager } from '@/components/admin/SEOManager';
 
 const AdminDashboard = () => {
