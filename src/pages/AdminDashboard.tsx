@@ -7,7 +7,7 @@ import { Plus, FileText, BarChart3, Settings, Users, LogOut } from 'lucide-react
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
-import { BlogContentFixer } from '@/components/admin/BlogContentFixer';
+import { SEOManager } from '@/components/admin/SEOManager';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -128,12 +128,12 @@ const AdminDashboard = () => {
             {/* Settings Tab */}
             <TabsContent value="settings" className="mt-6">
               <div className="space-y-6">
-                {/* Blog Content Fixer */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Blog Content Processor</CardTitle>
+                    <CardTitle>SEO & Performance Manager</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
+                    <SEOManager />
                     <BlogContentFixer />
                     <BlogThemeNormalizer />
                   </CardContent>

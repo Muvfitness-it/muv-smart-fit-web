@@ -16,7 +16,9 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
+import AdvancedSEO from '@/components/SEO/AdvancedSEO';
+import ArticleSchema from '@/components/SEO/ArticleSchema';
+import { getPostAccentHue, cleanBlogContent, processContentBlocks } from "@/utils/blogTheme";
 
 interface Post {
   id: string;
@@ -187,14 +189,31 @@ const BlogArticle = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        {canonical && <link rel="canonical" href={canonical} />}
-        {articleJsonLd && (<script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>)}
-        {newsJsonLd && (<script type="application/ld+json">{JSON.stringify(newsJsonLd)}</script>)}
-        {breadcrumbJsonLd && (<script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>)}
-      </Helmet>
+      <AdvancedSEO
+        title={title}
+        description={description}
+        canonical={canonical || ''}
+        ogImage={post?.featured_image}
+        type="article"
+        publishedTime={post?.published_at ? new Date(post.published_at).toISOString() : undefined}
+        modifiedTime={post?.published_at ? new Date(post.published_at).toISOString() : undefined}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog/' },
+          ...(category ? [{ name: category.name, url: `/blog/c/${category.slug}/` }] : []),
+          { name: post?.title || 'Articolo', url: canonical || '' }
+        ]}
+      />
+      {post && (
+        <ArticleSchema
+          headline={post.title}
+          datePublished={post.published_at || ''}
+          dateModified={post.published_at || ''}
+          image={post.featured_image}
+          url={canonical || ''}
+          excerpt={post.excerpt}
+        />
+      )}
 
       <article 
         className="container mx-auto px-4 py-10 blog" 

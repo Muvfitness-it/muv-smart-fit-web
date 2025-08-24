@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Helmet } from "react-helmet";
+import AdvancedSEO from '@/components/SEO/AdvancedSEO';
 import { Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LazyImage from "@/components/ui/LazyImage";
@@ -109,22 +109,15 @@ const BlogIndex = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={canonical} />
-        {prevUrl && <link rel="prev" href={`https://www.muvfitness.it${prevUrl}`} />}
-        {nextUrl && <link rel="next" href={`https://www.muvfitness.it${nextUrl}`} />}
-        <link rel="alternate" type="application/rss+xml" title="MUV Fitness Blog RSS" href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.muvfitness.it/" },
-            { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.muvfitness.it/blog" },
-          ],
-        })}</script>
-      </Helmet>
+      <AdvancedSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog/' }
+        ]}
+      />
 
       <header className="relative border-b border-border">
         {/* Background image + overlay for readability */}
