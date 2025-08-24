@@ -76,7 +76,7 @@ const cleanBlogContent = (content: string): string => {
   return cleaned;
 };
 
-// Process content for dynamic emphasis blocks
+// Enhanced TOC detection and content processing
 const processContentBlocks = (content: string): string => {
   let processed = content;
 
@@ -97,7 +97,8 @@ const processContentBlocks = (content: string): string => {
     }
   );
 
-  // Wrap table of contents sections
+  // Enhanced TOC detection - multiple patterns
+  // Pattern 1: Explicit "indice" headers with lists
   processed = processed.replace(
     /(<h[2-6][^>]*>.*?indice.*?<\/h[2-6]>.*?<ol>.*?<\/ol>)/gi,
     '<nav class="toc">$1</nav>'
@@ -108,10 +109,67 @@ const processContentBlocks = (content: string): string => {
     '<nav class="toc">$1</nav>'
   );
 
+  // Pattern 2: Lists with multiple numbered items (likely TOC)
+  processed = processed.replace(
+    /<ol[^>]*>((?:\s*<li[^>]*>.*?<\/li>\s*){3,})<\/ol>/gi,
+    (match, listContent) => {
+      // Check if list items contain navigation-like text
+      const hasNavText = /(?:come|cosa|quando|dove|perché|guida|passaggi|step)/i.test(listContent);
+      const itemCount = (listContent.match(/<li/gi) || []).length;
+      
+      if (hasNavText && itemCount >= 3) {
+        return `<nav class="toc"><ol>${listContent}</ol></nav>`;
+      }
+      return match;
+    }
+  );
+
+  // Pattern 3: Auto-generate TOC from content structure
+  const headings = [...processed.matchAll(/<h([2-6])[^>]*>(.*?)<\/h[2-6]>/gi)];
+  if (headings.length >= 3 && !processed.includes('class="toc"')) {
+    const tocItems = headings
+      .filter(([, level]) => parseInt(level) <= 4) // Only H2-H4
+      .map(([, , title]) => {
+        const cleanTitle = title.replace(/<[^>]*>/g, '').trim();
+        const slug = cleanTitle.toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-');
+        return `<li><a href="#${slug}">${cleanTitle}</a></li>`;
+      })
+      .join('');
+    
+    if (tocItems) {
+      const autoToc = `<nav class="toc">
+        <h3>Indice dei contenuti</h3>
+        <ol>${tocItems}</ol>
+      </nav>`;
+      
+      // Insert after first paragraph or at beginning
+      const firstParagraph = processed.match(/<\/header>[\s\S]*?<p[^>]*>.*?<\/p>/);
+      if (firstParagraph) {
+        processed = processed.replace(firstParagraph[0], firstParagraph[0] + '\n\n' + autoToc);
+      } else {
+        processed = autoToc + '\n\n' + processed;
+      }
+    }
+  }
+
   // Convert special boxes to callouts
   processed = processed.replace(
     /<div[^>]*class="[^"]*box[^"]*"[^>]*>(.*?)<\/div>/gi,
     '<aside class="callout">$1</aside>'
+  );
+
+  // Add IDs to headings for navigation
+  processed = processed.replace(
+    /<h([2-6])[^>]*>(.*?)<\/h[2-6]>/gi,
+    (match, level, title) => {
+      const cleanTitle = title.replace(/<[^>]*>/g, '').trim();
+      const id = cleanTitle.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+      return `<h${level} id="${id}">${title}</h${level}>`;
+    }
   );
 
   return processed;

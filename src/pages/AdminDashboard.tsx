@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Plus, FileText, BarChart3, Settings, Users, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -126,6 +127,16 @@ const AdminDashboard = () => {
             {/* Settings Tab */}
             <TabsContent value="settings" className="mt-6">
               <div className="space-y-6">
+                {/* Blog Theme Normalizer */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Blog Content Processor</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <BlogThemeNormalizer />
+                  </CardContent>
+                </Card>
+
                 <Card>
                   <CardHeader>
                     <CardTitle>Impostazioni Blog</CardTitle>
