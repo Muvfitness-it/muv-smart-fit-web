@@ -5,14 +5,27 @@ const RedirectHandler = () => {
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     
-    // Force canonical domain: https://www.muvfitness.it/
+    // Skip redirect on localhost and Lovable preview domains
+    const isPreviewDomain = (
+      url.hostname.includes('localhost') ||
+      url.hostname.includes('lovable.app') ||
+      url.hostname.includes('127.0.0.1') ||
+      url.hostname.includes('preview--')
+    );
+    
+    if (isPreviewDomain) {
+      console.log('RedirectHandler: Skipping redirect on preview domain:', url.hostname);
+      return;
+    }
+    
+    // Force canonical domain: https://www.muvfitness.it/ only on production
     const shouldRedirect = (
       url.protocol !== 'https:' || 
       url.hostname !== 'www.muvfitness.it' ||
       url.pathname.includes('//')
     );
     
-    if (shouldRedirect && !window.location.href.includes('localhost')) {
+    if (shouldRedirect) {
       let canonicalUrl = `https://www.muvfitness.it${url.pathname}`;
       
       // Clean double slashes
@@ -30,6 +43,7 @@ const RedirectHandler = () => {
       
       // Redirect with 301
       if (canonicalUrl !== currentUrl) {
+        console.log('RedirectHandler: Redirecting from', currentUrl, 'to', canonicalUrl);
         window.location.replace(canonicalUrl);
       }
     }
