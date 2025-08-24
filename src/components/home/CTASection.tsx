@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 
 const CTASection = () => {
   return (
-    <section className="py-20 bg-white text-gray-900">
+    <section className="py-20 bg-background text-foreground">
       <div className="max-w-5xl mx-auto text-center px-4">
         <Star className="w-16 h-16 text-brand-primary mx-auto mb-6 animate-pulse" />
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-6 font-heading">
@@ -33,11 +33,11 @@ const CTASection = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/blog" className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:shadow-lg text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
+          <Link to="/blog" className="bg-gradient-to-r from-brand-primary to-brand-secondary hover:shadow-lg text-primary-foreground px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
             📖 SCOPRI IL NOSTRO BLOG
           </Link>
           
-          <Link to="/contatti" className="bg-transparent border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
+          <Link to="/contatti" className="bg-transparent border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-primary-foreground px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
             📞 CONTATTACI
           </Link>
         </div>

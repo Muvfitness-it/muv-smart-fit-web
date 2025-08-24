@@ -106,10 +106,10 @@ const Navigation = () => {
           aria-label="Menu di navigazione"
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
+          <div className="absolute inset-0 bg-gray-900/60" onClick={() => setIsOpen(false)} />
 
           {/* Panel */}
-          <div className="relative z-[61] flex h-full flex-col bg-white backdrop-blur-md">
+          <div className="relative z-[61] flex h-full flex-col bg-background backdrop-blur-md">
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                 <picture>
@@ -137,7 +137,7 @@ const Navigation = () => {
                   to={item.path}
                   className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 ${
                     location.pathname === item.path
-                      ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
+                      ? 'text-gray-100 bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
                       : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                   style={{ animationDelay: `${index * 50}ms` }}

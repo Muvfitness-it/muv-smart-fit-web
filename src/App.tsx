@@ -90,7 +90,7 @@ const AppContent = () => {
       <SecurityHeaders />
       <PerformanceOptimizer />
       <CriticalCSS />
-      <div className="min-h-screen bg-white text-gray-900">
+      <div className="min-h-screen bg-background text-foreground">
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
         <Route path="/trasformazione-30-giorni" element={<Trasformazione30Giorni />} />
@@ -108,7 +108,7 @@ const AppContent = () => {
             {/* Skip to content link for accessibility */}
             <a 
               href="#main" 
-              className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+              className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded focus:outline-none"
             >
               Salta al contenuto principale
             </a>

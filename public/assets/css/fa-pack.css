@@ -42,8 +42,8 @@
 
 /* FA-01 Footer logo styling */
 .site-footer {
-  background: #14161C;
-  color: #ECEEF2;
+  background: hsl(var(--muv-bg-dark));
+  color: hsl(var(--muv-on-dark));
 }
 
 .footer-logo {
@@ -62,11 +62,11 @@
 }
 
 .site-footer a {
-  color: #DDE3FF;
+  color: hsl(var(--muv-on-dark) / 0.8);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .site-footer a:hover {
-  color: #FFFFFF;
+  color: hsl(var(--muv-on-dark));
 }

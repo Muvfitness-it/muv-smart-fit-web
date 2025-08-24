@@ -28,7 +28,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-white text-gray-900">
+    <section className="py-20 bg-background text-foreground">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-black mb-6 font-heading text-gray-900">

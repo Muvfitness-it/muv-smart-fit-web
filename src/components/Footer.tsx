@@ -21,7 +21,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-black text-white site-footer">
+    <footer className="bg-gray-900 text-gray-100 site-footer">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}
