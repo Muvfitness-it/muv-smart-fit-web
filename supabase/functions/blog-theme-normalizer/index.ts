@@ -235,9 +235,12 @@ serve(async (req) => {
         const cleanedContent = cleanBlogContent(post.content || '');
         const processedContent = processContentBlocks(cleanedContent);
         
-        // Generate hero section if not present or needs updating
+        // Generate hero section if not present and doesn't already have multiple titles
         let finalContent = processedContent;
-        if (!finalContent.includes('post-hero')) {
+        const hasExistingHero = finalContent.includes('post-hero');
+        const titleCount = (finalContent.match(/<h1[^>]*>/gi) || []).length;
+        
+        if (!hasExistingHero && titleCount === 0) {
           const hero = generateHero(post.title, post.published_at, post.reading_time);
           finalContent = hero + '\n\n' + finalContent;
         }

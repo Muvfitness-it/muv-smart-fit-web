@@ -228,21 +228,23 @@ const BlogArticle = () => {
               </BreadcrumbList>
             </Breadcrumb>
 
-            {/* Post Hero - Standard Format */}
-            <header className="post-hero mb-8 mt-4">
-              <span className="post-hero-label">Guida • Metodo MUV</span>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{post.title}</h1>
-              <p className="meta text-sm text-muted-foreground">
-                Team MUV • Aggiornato il {date} • Lettura {post.reading_time || 5} minuti
-              </p>
-              {category && (
-                <div className="mt-3">
-                  <Link to={`/blog/c/${category.slug}`}>
-                    <Badge variant="secondary">{category.name}</Badge>
-                  </Link>
-                </div>
-              )}
-            </header>
+            {/* Render hero only if content doesn't already have one */}
+            {!post.content.includes('post-hero') && (
+              <header className="post-hero mb-8 mt-4">
+                <span className="post-hero-label">Guida • Metodo MUV</span>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{post.title}</h1>
+                <p className="meta text-sm text-muted-foreground">
+                  Team MUV • Aggiornato il {date} • Lettura {post.reading_time || 5} minuti
+                </p>
+                {category && (
+                  <div className="mt-3">
+                    <Link to={`/blog/c/${category.slug}`}>
+                      <Badge variant="secondary">{category.name}</Badge>
+                    </Link>
+                  </div>
+                )}
+              </header>
+            )}
 
             {post.featured_image && (
               <div className="mb-8">
