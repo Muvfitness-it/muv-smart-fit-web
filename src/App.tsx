@@ -71,6 +71,7 @@ import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
 import SEOAudit from "./pages/SEOAudit";
 import QAReport from "./pages/QAReport";
+import QAReadOnlyAudit from "./pages/QAReadOnlyAudit";
 import Recensioni from "./pages/Recensioni";
 import FaqGbp from "./pages/FaqGbp";
 import MediaKitProofPosts from "./pages/MediaKitProofPosts";
@@ -160,7 +161,8 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                  <Route path="/analytics" element={<Analytics />} />
-         <Route path="/qa-report" element={<QAReport />} />
+        <Route path="/qa-report" element={<QAReport />} />
+        <Route path="/qa-audit" element={<QAReadOnlyAudit />} />
          <Route path="/seo-report" element={<SEOAudit />} />
          <Route path="/recensioni" element={<Recensioni />} />
         <Route path="/faq-gbp" element={<FaqGbp />} />
