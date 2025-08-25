@@ -64,7 +64,7 @@ const Navigation = () => {
     name: "Admin",
     path: "/admin/auth"
   }];
-  return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-transparent'}`}>
+  return <nav className={`fixed w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - made significantly larger */}
@@ -77,7 +77,7 @@ const Navigation = () => {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12' : 'h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20'}`}
+              className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12' : 'h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
