@@ -8,13 +8,13 @@ const HeroSection = () => {
   return (
     <>
       <section 
-        className="relative flex items-center justify-center min-h-screen pt-[var(--header-height)] above-fold hero-section overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
+        className="relative flex items-center justify-center min-h-screen pt-[calc(var(--header-height)+8px)] sm:pt-[var(--header-height)] above-fold hero-section overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
       >
         {/* Background Image with Enhanced Overlay */}
         <LazyImage 
           src="/images/fitness-professional-bg.jpg"
           alt="Personal Trainer Legnago - Centro Fitness MUV con EMS, Pancafit e Pilates Reformer"
-          className="absolute inset-0 opacity-30 hero-section object-cover"
+          className="absolute inset-0 opacity-30 hero-section object-cover z-0"
           priority={true}
           width={1920}
           height={1080}
@@ -23,11 +23,11 @@ const HeroSection = () => {
         />
         
         {/* Dynamic Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-brand-primary/20 to-brand-secondary/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-brand-accent/10 to-brand-primary/20"></div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/80 via-brand-primary/20 to-brand-secondary/30"></div>
+        <div className="absolute inset-0 z-0 bg-gradient-to-tr from-transparent via-brand-accent/10 to-brand-primary/20"></div>
         
         {/* Energy Elements Component */}
-        <EnergyElements variant="floating" />
+        <EnergyElements variant="floating" className="z-0" />
         
         {/* Main Content */}
         <div className="relative z-10 text-center px-4 max-w-6xl mx-auto animate-fade-in">
@@ -38,7 +38,7 @@ const HeroSection = () => {
             </span>
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 font-display text-white animate-slide-up" style={{animationDelay: '0.4s'}}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 font-display text-white animate-slide-up" style={{animationDelay: '0.4s'}}>
             <span className="block leading-tight drop-shadow-2xl">
               Il tuo <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">Personal Trainer</span>
             </span>
