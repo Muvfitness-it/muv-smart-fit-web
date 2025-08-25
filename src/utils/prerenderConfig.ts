@@ -20,7 +20,11 @@ export const prerenderRoutes = [
   '/trasformazione-30-giorni',
   '/personal-trainer-legnago',
   '/allenamento-ems-legnago',
-  '/pilates-legnago'
+  '/pilates-legnago',
+  '/palestra-legnago',
+  '/dimagrire-legnago', 
+  '/mal-di-schiena-legnago',
+  '/massaggio-sportivo-legnago'
 ];
 
 export const generateStaticSitemap = () => {
