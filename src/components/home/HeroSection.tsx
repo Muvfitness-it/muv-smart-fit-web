@@ -33,7 +33,7 @@ const HeroSection = () => {
         <div className="relative z-10 text-center px-4 max-w-6xl mx-auto animate-fade-in">
           {/* Pre-title Badge */}
           <div className="inline-block mb-6 animate-slide-up" style={{animationDelay: '0.2s'}}>
-            <span className="bg-gradient-to-r from-brand-primary to-brand-secondary text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider shadow-neon animate-neon-pulse">
+            <span className="bg-gradient-to-r from-brand-primary to-brand-secondary text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider animate-neon-pulse" style={{ boxShadow: 'var(--shadow-neon)' }}>
               🏆 Centro Fitness Smart #1 a Legnago
             </span>
           </div>

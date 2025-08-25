@@ -29,7 +29,8 @@ const NeonButton: React.FC<NeonButtonProps> = ({
     xl: 'px-10 py-5 text-xl'
   };
 
-  const glowEffect = glow ? 'animate-neon-pulse shadow-neon' : '';
+  const glowEffect = glow ? 'animate-neon-pulse' : '';
+  const glowStyle = glow ? { boxShadow: 'var(--shadow-neon)' } : {};
 
   return (
     <button
@@ -45,6 +46,7 @@ const NeonButton: React.FC<NeonButtonProps> = ({
         // Custom className
         className
       )}
+      style={glowStyle}
       {...props}
     >
       {/* Energy wave effect on hover */}
