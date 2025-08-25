@@ -1,6 +1,30 @@
 User-agent: *
 Allow: /
-Disallow: /blog
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /api/
+
+# Block search and filters to save crawl budget  
+Disallow: /blog?*
 Disallow: /blog/tag/
-Disallow: /search
+Disallow: /search*
+Disallow: /*?search=*
+Disallow: /*?filter=*
+
+# Allow important pages
+Allow: /blog
+Allow: /blog/
+Allow: /servizi/
+Allow: /contatti
+Allow: /chi-siamo
+
+# Crawl delay for bots
+Crawl-delay: 1
+
+# Sitemap
 Sitemap: https://www.muvfitness.it/sitemap.xml
+Sitemap: https://www.muvfitness.it/sitemap-blog.xml
+Sitemap: https://www.muvfitness.it/sitemap-main.xml
