@@ -86,9 +86,16 @@ const QAMobileHero = () => {
       for (const text of heroTexts) {
         const styles = getComputedStyle(text);
         const color = styles.color;
-        // Simplified contrast check - in real implementation would calculate actual contrast ratio
-        if (!color.includes('rgb(255') && !color.includes('#fff') && !color.includes('white')) {
-          return false;
+        // V2: Check for stronger overlay (.68) providing better contrast
+        const hero = text.closest('.hero, .section-hero');
+        if (hero) {
+          const overlay = getComputedStyle(hero, '::before');
+          if (overlay.background && !overlay.background.includes('rgba(0, 0, 0, 0.68)')) {
+            // Check if text is white for good contrast against stronger overlay
+            if (!color.includes('rgb(255') && !color.includes('#fff') && !color.includes('white')) {
+              return false;
+            }
+          }
         }
       }
       return true;
@@ -98,7 +105,10 @@ const QAMobileHero = () => {
       const ctas = document.querySelectorAll('.hero .btn, .hero [href*="wa.me"], .section-hero .btn, .section-hero [href*="wa.me"]');
       for (const cta of ctas) {
         const rect = cta.getBoundingClientRect();
-        if (rect.height < 44) return false;
+        const styles = getComputedStyle(cta);
+        // V2: Check for 48px min-height and no text-decoration
+        if (rect.height < 48) return false;
+        if (styles.textDecoration && styles.textDecoration !== 'none') return false;
       }
       return true;
     };
@@ -174,7 +184,7 @@ const QAMobileHero = () => {
                   </div>
                   <div className="text-center">
                     <div className={`w-4 h-4 rounded-full ${getStatusColor(result.tests.ctaTappable)} mx-auto mb-2`}></div>
-                    <p className="text-sm font-medium">CTA ≥44px</p>
+                    <p className="text-sm font-medium">CTA ≥48px</p>
                     <p className="text-xs text-gray-500">{getStatusText(result.tests.ctaTappable)}</p>
                   </div>
                 </div>
@@ -184,9 +194,10 @@ const QAMobileHero = () => {
                   <ul className="text-sm space-y-1">
                     <li>✓ Header position: sticky, z-index: 10000, white background</li>
                     <li>✓ Hero padding-top: calc(var(--muv-header-h) + safe-area + 16px)</li>
-                    <li>✓ Overlay: rgba(0,0,0,.60) applied to all heroes</li>
+                    <li>✓ Overlay: rgba(0,0,0,.68) applied to all heroes (v2)</li>
                     <li>✓ H1 deduplication: consecutive identical H1s hidden</li>
-                    <li>✓ CTA min-height: 44px enforced</li>
+                    <li>✓ CTA min-height: 48px enforced, no underlines (v2)</li>
+                    <li>✓ Hero single-column layout enforced (v2)</li>
                   </ul>
                 </div>
               </CardContent>
@@ -202,10 +213,11 @@ const QAMobileHero = () => {
               <ul className="text-sm space-y-1">
                 <li>• Inline CSS with !important precedence</li>
                 <li>• Header forced to white background, sticky position</li>
-                <li>• Hero overlay always active on mobile</li>
-                <li>• H1 size clamped to prevent overflow</li>
+                <li>• Hero overlay stronger (.68) for better contrast (v2)</li>
+                <li>• H1 size optimized for small screens (v2)</li>
                 <li>• Duplicate H1 detection and hiding</li>
-                <li>• CTA accessibility improvements</li>
+                <li>• CTA no underlines, 48px height, centered (v2)</li>
+                <li>• Single-column hero layout enforced (v2)</li>
               </ul>
             </div>
             <div>

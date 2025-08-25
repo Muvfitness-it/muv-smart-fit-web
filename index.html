@@ -296,6 +296,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .cta-sticky, .whatsapp-sticky { bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; z-index: 999 !important; }
     }
     </style>
+    
+    <!-- INLINE HOTFIX CSS V2 - MOBILE HERO DELTA -->
+    <style id="muv-hotfix-hero-inline-v2">
+    @media (max-width: 480px){
+      /* 1) Overlay un po' più forte per massima leggibilità */
+      .hero::before, .section-hero::before{ background: rgba(0,0,0,.68) !important; }
+
+      /* 2) CTA WhatsApp: niente sottolineatura, centrata, leggibile anche su 2 righe */
+      .hero .btn, .section-hero .btn,
+      .hero a.btn, .section-hero a.btn,
+      .hero [class*="btn"], .section-hero [class*="btn"]{
+        text-decoration: none !important;
+        -webkit-text-decoration-skip: none !important;
+        text-underline-offset: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        min-height: 48px !important;
+        line-height: 1.2 !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+        padding: 10px 18px !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        border: 0 !important;
+      }
+      /* Rimuovi underline da eventuali <u> o elementi interni */
+      .hero .btn *, .section-hero .btn *{ text-decoration: none !important; }
+
+      /* 3) Hero a UNA colonna: niente colonnine/box laterali accanto al testo */
+      .hero .grid, .section-hero .grid{ display: grid !important; grid-template-columns: 1fr !important; gap: 16px !important; }
+      /* Qualsiasi colonna/aside statistico accanto al testo, spostalo sotto */
+      .hero [class*="aside"], .section-hero [class*="aside"],
+      .hero [class*="stat"], .section-hero [class*="stat"]{ order: 2 !important; }
+
+      /* 4) Piccolo ritocco tipografico per H1 su iPhone piccoli */
+      .hero h1, .section-hero h1{ font-size: clamp(22px, 5.2vw, 30px) !important; }
+    }
+    </style>
   </head>
 
   <body>
