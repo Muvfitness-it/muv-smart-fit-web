@@ -1,11 +1,36 @@
-import { useEffect } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import ContactInfo from "../components/contact/ContactInfo";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const Contatti = () => {
-  // SEO is now handled by SEOHandler component globally
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contatti MUV Fitness Legnago",
+    "description": "Contatta MUV Fitness Legnago per informazioni, consulenze gratuite e appuntamenti. Ti rispondiamo in 10 minuti.",
+    "url": "https://www.muvfitness.it/contatti",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness Legnago",
+      "telephone": "+393513380770",
+      "email": "info@muvfitness.it",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Legnago",
+        "addressRegion": "Veneto",
+        "addressCountry": "IT"
+      }
+    }
+  };
 
   return (
+    <>
+      <SEOOptimizer
+        title="Contatti MUV Fitness Legnago | Prenota Consulenza Gratuita"
+        description="Contatta MUV Fitness Legnago per informazioni su Personal Training, EMS, Pancafit e Pilates. Ti richiamiamo in 10 minuti. WhatsApp: 351 338 0770"
+        canonicalUrl="https://www.muvfitness.it/contatti"
+        structuredData={structuredData}
+      />
     <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -73,6 +98,7 @@ const Contatti = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

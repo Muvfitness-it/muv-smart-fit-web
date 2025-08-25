@@ -1,17 +1,36 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dumbbell, CheckCircle, Star, Users, Clock, Target } from "lucide-react";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 const PersonalTraining = () => {
-  useEffect(() => {
-    document.title = "Personal Training Legnago | Allenamento Personalizzato 1-to-1 – MUV Smart Fit";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Personal Training esclusivo a Legnago con risultati garantiti in 30 giorni. Allenamenti 1-to-1 personalizzati, ambiente riservato, zero code. Prenota la tua prova gratuita.');
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Personal Training Legnago",
+    "description": "Personal Training esclusivo a Legnago con risultati garantiti in 30 giorni. Allenamenti 1-to-1 personalizzati, ambiente riservato, zero code.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness Legnago"
+    },
+    "areaServed": "Legnago",
+    "serviceType": "Personal Training",
+    "offers": {
+      "@type": "Offer",
+      "name": "Prova Gratuita Personal Training",
+      "description": "Prima consulenza e valutazione gratuita"
     }
-  }, []);
-  return <div className="min-h-screen bg-gray-900 text-white">
+  };
+
+  return (
+    <>
+      <SEOOptimizer
+        title="Personal Training Legnago | Allenamento Personalizzato 1-to-1 – MUV Fitness"
+        description="Personal Training esclusivo a Legnago con risultati garantiti in 30 giorni. Allenamenti 1-to-1 personalizzati, ambiente riservato, zero code. Prenota la tua prova gratuita."
+        canonicalUrl="https://www.muvfitness.it/servizi/personal-training"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-600/20 via-gray-900 to-purple-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -119,6 +138,8 @@ const PersonalTraining = () => {
           </div>
         </div>
       </section>
-    </div>;
+    </div>
+    </>
+  );
 };
 export default PersonalTraining;

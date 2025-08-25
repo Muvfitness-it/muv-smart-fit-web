@@ -5,20 +5,51 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ContactForm from "@/components/contact/ContactForm";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const Prezzi = () => {
-  const pageTitle = "Prezzi e Pacchetti MUV Legnago – Percorsi su Misura";
-  const pageDescription = "EMS, postura, cellulite, PT. Soluzioni mensili e pacchetti su misura. Prenota la consulenza gratuita.";
+  const pageTitle = "Prezzi e Pacchetti MUV Legnago – Percorsi Fitness su Misura";
+  const pageDescription = "EMS, Personal Training, Pancafit, Pilates e Cellulite Treatment a Legnago. Pacchetti mensili e soluzioni su misura. Prima consulenza GRATUITA. Prenota ora.";
   
   const whatsappMessage = encodeURIComponent("Ciao! Vorrei informazioni sui prezzi e pacchetti MUV Fitness.");
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Prezzi e Pacchetti MUV Fitness Legnago",
+    "description": pageDescription,
+    "url": "https://www.muvfitness.it/prezzi",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness Legnago",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "EMS Training",
+          "description": "Allenamento con elettrostimolazione muscolare - 20 minuti = 90 min palestra tradizionale"
+        },
+        {
+          "@type": "Offer", 
+          "name": "Personal Training",
+          "description": "Allenamento personalizzato 1:1 o Small Group con trainer qualificati"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pancafit & Postura",
+          "description": "Trattamento posturale per mal di schiena e tensioni muscolari"
+        }
+      ]
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href="https://www.muvfitness.it/prezzi/" />
-      </Helmet>
+      <SEOOptimizer
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl="https://www.muvfitness.it/prezzi"
+        structuredData={structuredData}
+      />
 
       <main className="pt-16">
         <section className="py-16 bg-gradient-to-br from-gray-900 to-purple-900">

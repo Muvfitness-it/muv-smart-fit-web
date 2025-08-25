@@ -1,8 +1,8 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, Download, MessageCircle, Phone } from "lucide-react";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const Recensioni = () => {
   const handleReputationClick = (platform: string) => {
@@ -15,67 +15,61 @@ const Recensioni = () => {
     }
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Perché è utile la tua recensione?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le recensioni aiutano altre persone a scoprire i nostri servizi e ci permettono di migliorare continuamente la qualità del nostro centro fitness."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo richiede?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lasciare una recensione richiede circa 60 secondi: basta aprire Google, cercare MUV Fitness Legnago e cliccare sulle stelle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Posso restare anonimo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le recensioni su Google e Facebook sono pubbliche e mostrano il tuo nome. Puoi usare iniziali o nickname se preferisci maggiore privacy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Cosa è utile raccontare?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Racconta il tuo obiettivo iniziale, come ti sei trovato con staff e tecnologie, e i risultati ottenuti in termini di centimetri, settimane o sensazioni."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Se ho avuto un problema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Se hai avuto problemi, contattaci prima direttamente su WhatsApp o telefono. Preferiamo risolvere insieme qualsiasi questione prima che diventi pubblica."
+        }
+      }
+    ]
+  };
+
   return (
     <>
-      <Helmet>
-        <title>Recensioni MUV Fitness Legnago – Come lasciarle in 60 secondi</title>
-        <meta 
-          name="description" 
-          content="Lascia una recensione per MUV Fitness Legnago: ci aiuta a migliorare e aiuta chi ci scopre. Guida rapida per Google, Facebook e altri canali." 
-        />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.muvfitness.it/recensioni/" />
-        
-        {/* FAQ Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "Perché è utile la tua recensione?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Le recensioni aiutano altre persone a scoprire i nostri servizi e ci permettono di migliorare continuamente la qualità del nostro centro fitness."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Quanto tempo richiede?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Lasciare una recensione richiede circa 60 secondi: basta aprire Google, cercare MUV Fitness Legnago e cliccare sulle stelle."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Posso restare anonimo?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Le recensioni su Google e Facebook sono pubbliche e mostrano il tuo nome. Puoi usare iniziali o nickname se preferisci maggiore privacy."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Cosa è utile raccontare?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Racconta il tuo obiettivo iniziale, come ti sei trovato con staff e tecnologie, e i risultati ottenuti in termini di centimetri, settimane o sensazioni."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Se ho avuto un problema?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Se hai avuto problemi, contattaci prima direttamente su WhatsApp o telefono. Preferiamo risolvere insieme qualsiasi questione prima che diventi pubblica."
-                }
-              }
-            ]
-          })}
-        </script>
-      </Helmet>
+      <SEOOptimizer
+        title="Recensioni MUV Fitness Legnago – Come lasciarle in 60 secondi"
+        description="Lascia una recensione per MUV Fitness Legnago: ci aiuta a migliorare e aiuta chi ci scopre. Guida rapida per Google, Facebook e altri canali."
+        canonicalUrl="https://www.muvfitness.it/recensioni"
+        structuredData={structuredData}
+      />
 
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
         <div className="container mx-auto px-4 pt-32 pb-16">

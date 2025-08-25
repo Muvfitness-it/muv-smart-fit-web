@@ -1,11 +1,29 @@
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const ChiSiamo = () => {
-  // SEO is now handled by SEOHandler component globally
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Chi Siamo - MUV Fitness Legnago",
+    "description": "Scopri MUV Fitness Legnago: il primo centro fitness smart della zona. Staff qualificato, tecnologie innovative, risultati garantiti in 30 giorni.",
+    "url": "https://www.muvfitness.it/chi-siamo",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "MUV Fitness Legnago",
+      "description": "Centro fitness innovativo a Legnago con EMS, Personal Training, Pancafit e tecnologie avanzate per il benessere e la forma fisica."
+    }
+  };
 
   return (
+    <>
+      <SEOOptimizer
+        title="Chi Siamo - MUV Fitness Legnago | Centro Fitness Smart e Innovativo"
+        description="Scopri MUV Fitness Legnago: il primo centro fitness smart della zona. Staff qualificato, tecnologie innovative EMS e Personal Training. Risultati garantiti in 30 giorni o rimborso completo."
+        canonicalUrl="https://www.muvfitness.it/chi-siamo"
+        structuredData={structuredData}
+      />
     
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
@@ -75,6 +93,7 @@ const ChiSiamo = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

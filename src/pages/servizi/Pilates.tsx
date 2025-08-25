@@ -1,22 +1,38 @@
 
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, CheckCircle, Flower, Flame, Heart } from "lucide-react";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const Pilates = () => {
-  useEffect(() => {
-    document.title = "Pilates Reformer Legnago | Lezioni Individuali e Small Group – MUV Smart Fit";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta. Prenota la tua lezione.');
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Pilates Reformer Legnago",
+    "description": "Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness Legnago"
+    },
+    "areaServed": "Legnago",
+    "serviceType": "Pilates Reformer",
+    "offers": {
+      "@type": "Offer",
+      "name": "Lezione Pilates Reformer",
+      "description": "Lezione individuale o small group su macchinari Reformer professionali"
     }
-  }, []);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <SEOOptimizer
+        title="Pilates Reformer Legnago | Lezioni Individuali e Small Group – MUV Fitness"
+        description="Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta. Prenota la tua lezione."
+        canonicalUrl="https://www.muvfitness.it/servizi/pilates"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-600/20 via-gray-900 to-pink-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -207,6 +223,7 @@ const Pilates = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

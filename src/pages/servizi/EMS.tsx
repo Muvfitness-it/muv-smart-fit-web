@@ -1,21 +1,38 @@
 
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp, Heart, RefreshCw } from "lucide-react";
+import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const EMS = () => {
-  useEffect(() => {
-    document.title = "EMS, Vacuum, Roll, Pressoterapia Legnago | Tecnologie Recupero – MUV Smart Fit";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Tecnologie avanzate a Legnago: EMS, Vacuum, Roll Shape e Pressoterapia. Allenamento intensivo e recupero muscolare ottimale. Prova gratuita disponibile.');
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "EMS Training Legnago",
+    "description": "Allenamento EMS, Vacuum, Roll Shape e Pressoterapia a Legnago. Tecnologie avanzate per dimagrimento rapido e recupero muscolare ottimale.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness Legnago"
+    },
+    "areaServed": "Legnago",
+    "serviceType": "EMS Training",
+    "offers": {
+      "@type": "Offer",
+      "name": "Prova Gratuita EMS",
+      "description": "Prima sessione EMS gratuita con valutazione completa"
     }
-  }, []);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <SEOOptimizer
+        title="EMS Training Legnago | Elettrostimolazione, Vacuum, Pressoterapia – MUV Fitness"
+        description="Allenamento EMS a Legnago: 20 minuti = 3 ore palestra. Vacuum therapy, Roll Shape, Pressoterapia. Tecnologie avanzate per dimagrimento e recupero. Prova gratuita."
+        canonicalUrl="https://www.muvfitness.it/servizi/ems"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-600/20 via-gray-900 to-blue-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -236,6 +253,7 @@ const EMS = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
