@@ -5,12 +5,12 @@ const NewHeroSection = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
+          backgroundImage: "url('/images/professional-bg.jpg')"
         }}
       />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-black/80" />
       
       {/* Content Container */}
       <div className="relative z-10 flex flex-col flex-1">
