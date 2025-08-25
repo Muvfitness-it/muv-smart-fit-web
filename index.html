@@ -537,8 +537,53 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .hero [class*="shadow"], .hero [class*="blend"], .section-hero [class*="shadow"], .section-hero [class*="blend"],
       .hero [style*="mix-blend-mode"], .section-hero [style*="mix-blend-mode"]{ mix-blend-mode:normal !important; text-shadow:none !important; filter:none !important; }
 
-      /* Evita collisioni con eventuale floating WhatsApp */
-      .whatsapp-sticky, .cta-sticky{ bottom:calc(env(safe-area-inset-bottom,0px)+12px) !important; z-index:999 !important; }
+  /* Evita collisioni con eventuale floating WhatsApp */
+  .whatsapp-sticky, .cta-sticky{ bottom:calc(env(safe-area-inset-bottom,0px)+12px) !important; z-index:999 !important; }
+}
+</style>
+
+<style id="muv-clean-hero-inline">
+@media (max-width:480px){
+  :root{ --muv-header-h:64px; }
+
+  /* Header pulito, sempre sopra */
+  .site-header, header[role="banner"], header, .navbar{
+    position:sticky !important; top:0 !important; z-index:10000 !important;
+    background:#FFFFFF !important; border-bottom:1px solid rgba(0,0,0,.06) !important;
+  }
+  .site-header img, header img[alt*="MUV"]{ height:40px !important; width:auto !important; object-fit:contain !important; }
+
+  /* Nuovo HERO "clean" */
+  #muvCleanHero{ position:relative !important; isolation:isolate !important; 
+    padding: calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 16px) 16px 20px 16px !important;
+    background:#0A0A0A; /* fallback */
+  }
+  #muvCleanHero::before{ /* overlay scuro per testo su eventuale bg */
+    content:""; position:absolute; inset:0; z-index:0; background:rgba(0,0,0,.68); pointer-events:none;
+  }
+  #muvCleanHero .inner{ position:relative; z-index:1; max-width:680px; margin:0 auto; }
+  #muvCleanHero h1{
+    font-size:clamp(22px,5.4vw,30px) !important; line-height:1.15 !important; margin:0 0 8px 0 !important; color:#FFF !important;
+    text-shadow:none !important; -webkit-text-stroke:0 !important;
+  }
+  #muvCleanHero .subtitle{ color:#E9EEF6 !important; margin:0 0 12px 0 !important; }
+  #muvCleanHero .ctaGroup{ display:flex; flex-direction:column; gap:12px; align-items:center; margin:12px 0 8px 0; }
+  #muvCleanHero .ctaGroup a, #muvCleanHero .ctaGroup button{
+    min-height:48px !important; display:inline-flex !important; align-items:center; justify-content:center; 
+    font-weight:800 !important; text-decoration:none !important; line-height:1.2 !important; 
+    padding:12px 18px !important; width:100% !important; max-width:520px !important;
+  }
+  #muvCleanHero .stats{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:10px; }
+  #muvCleanHero .stats > *{ margin:0 !important; }
+
+  /* Nascondi l'hero originale solo su mobile */
+  .muv-hide-original-hero{ display:none !important; }
+
+  /* Evita underline dentro CTA */
+  #muvCleanHero .ctaGroup *{ text-decoration:none !important; }
+
+  /* Evita collisioni con floating WhatsApp */
+  .whatsapp-sticky, .cta-sticky{ bottom:calc(env(safe-area-inset-bottom,0px)+12px) !important; z-index:999 !important; }
     }
     </style>
   </head>
@@ -748,7 +793,92 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     !btn.closest('.muv-cta-group') && (btn.textContent.includes('WhatsApp') || btn.textContent.includes('Consulenza'))
   );
   duplicateBtns.forEach(btn => btn.style.display = 'none');
-    })();
-    </script>
+})();
+</script>
+
+<script id="muv-clean-hero-inline-js">
+(()=>{ 
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const norm=t=>(t||"").replace(/\s+/g," ").trim();
+
+  // 1) header height -> variabile
+  const header = $('.site-header') || $('header[role="banner"]') || $('header') || $('.navbar');
+  if(header){ const hh = Math.max(56, Math.round(header.getBoundingClientRect().height||64));
+    document.documentElement.style.setProperty('--muv-header-h', hh+'px'); }
+
+  // 2) crea o aggiorna il nuovo hero
+  let newHero = $('#muvCleanHero');
+  if(!newHero){
+    newHero = document.createElement('section');
+    newHero.id = 'muvCleanHero';
+    newHero.innerHTML = `<div class="inner">
+        <h1 class="title"></h1>
+        <p class="subtitle" aria-live="polite"></p>
+        <div class="ctaGroup" role="group" aria-label="Azioni principali"></div>
+        <div class="stats" aria-label="Dati e risultati"></div>
+      </div>`;
+    // inserisci subito sotto l'header
+    const anchor = header || $('main'); 
+    (anchor?.parentNode || document.body).insertBefore(newHero, (anchor?.nextSibling||null));
+  }
+
+  // 3) trova l'hero originale più "probabile"
+  const candidates = $$('.section-hero, .hero, main section, [class*="hero"]');
+  let src = candidates.find(c=>c!==newHero && c.contains($('h1',c))) || $('main');
+  if(!src) src = document.body;
+
+  // 4) estrai contenuti (senza cambiare i testi)
+  const h1 = $('h1', src);
+  const sub = $('h2', src) || $('p', src);
+  const h1Text = norm(h1?.innerText)||'';
+  const subText = norm(sub?.innerText)||'';
+
+  // 5) build: titolo + sottotitolo
+  const tEl = $('.title', newHero); if(tEl && h1Text) tEl.textContent = h1Text;
+  const sEl = $('.subtitle', newHero); if(sEl && subText) sEl.textContent = subText;
+
+  // 6) CTA: prendi WhatsApp/Consulenza/Prenota/Contatti dal vecchio hero
+  const ctaGroup = $('.ctaGroup', newHero);
+  const isCTA = el => {
+    const txt = norm(el.textContent).toLowerCase();
+    return /(whatsapp|scrivici|consulenza|prenota|contatti)/.test(txt) || /(btn|button|cta)/i.test(el.className||'');
+  };
+  const oldCTAs = $$('a,button', src).filter(isCTA);
+  if(oldCTAs.length){
+    // pulisci e clona 1–3 CTA
+    ctaGroup.innerHTML = '';
+    oldCTAs.slice(0,3).forEach(el=>{
+      const clone = el.cloneNode(true);
+      clone.removeAttribute('style'); // rimuovi underline/stranezze inline
+      ctaGroup.appendChild(clone);
+    });
+  }
+
+  // 7) Stats/box: cattura fino a 3 blocchi con numeri evidenti (30+, 95%, 200+)
+  const statsWrap = $('.stats', newHero);
+  const statMatch = el => /(\d{2,}%?|\d+\+)/.test(norm(el.textContent));
+  const statCand = $$('[class*="stat"], [data-stat], .card, .box, li, p', src)
+    .filter(el=>statMatch(el)).slice(0,3);
+  if(statCand.length){
+    statsWrap.innerHTML=''; 
+    statCand.forEach(el=>statsWrap.appendChild(el.cloneNode(true)));
+  }
+
+  // 8) nascondi l'hero originale su mobile
+  if(src && src.id!=='muvCleanHero'){
+    src.classList.add('muv-hide-original-hero');
+  }
+
+  // 9) anti-collisione ulteriore: se il titolo tocca l'header, aumenta padding-top
+  const title = $('.title', newHero);
+  if(header && title){
+    const hr = header.getBoundingClientRect(), tr = title.getBoundingClientRect();
+    if(tr.top < hr.bottom + 8){
+      newHero.style.paddingTop = `calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 20px)`;
+    }
+  }
+})();
+</script>
   </body>
 </html>

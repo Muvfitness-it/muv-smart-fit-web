@@ -80,6 +80,7 @@ import AdminCategories from "./pages/admin/AdminCategories";
 import AdminBlogCreateAI from "./pages/admin/AdminBlogCreateAI";
 import AdminBlogCreateManual from "./pages/admin/AdminBlogCreateManual";
 import QAReport from "./pages/qa-report";
+import QACleanHeroMobile from "./pages/qa-clean-hero-mobile";
 import Recensioni from "./pages/Recensioni";
 import FaqGbp from "./pages/FaqGbp";
 import MediaKitProofPosts from "./pages/MediaKitProofPosts";
@@ -186,6 +187,7 @@ const AppContent = () => {
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/qa-report" element={<QAReport />} />
+                <Route path="/qa-clean-hero-mobile" element={<QACleanHeroMobile />} />
                 <Route path="/recensioni" element={<Recensioni />} />
                 <Route path="/faq-gbp" element={<FaqGbp />} />
                 <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
