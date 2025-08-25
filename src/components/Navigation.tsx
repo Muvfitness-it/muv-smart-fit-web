@@ -64,9 +64,9 @@ const Navigation = () => {
     name: "Admin",
     path: "/admin/auth"
   }];
-  return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
+  return <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 px-0 rounded-none lg:py-[14px] my-px mx-[50px]">
+        <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - made significantly larger */}
           <Link to="/" className="flex items-center">
             <img
@@ -77,14 +77,14 @@ const Navigation = () => {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-auto object-contain"
+              className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12' : 'h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
 
           {/* Desktop Navigation - Better spacing and alignment */}
-          <div className="hidden lg:flex items-center justify-center flex-1 space-x-8 xl:space-x-10">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-brand-primary ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
+          <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 xl:space-x-8">
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-xs xl:text-sm font-medium transition-colors duration-300 hover:text-brand-primary whitespace-nowrap ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
                 {item.name}
               </Link>)}
           </div>
