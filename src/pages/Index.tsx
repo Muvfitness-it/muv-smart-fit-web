@@ -61,6 +61,29 @@ const Index = () => {
       <LocalBusinessSchema />
       
       <HeroSection />
+      
+      {/* Mobile CTA Section - Solo Mobile */}
+      <section className="mobile-cta-section md:hidden">
+        <div className="mobile-cta-buttons">
+          <a 
+            href="https://wa.me/393513380770"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-cta-btn mobile-cta-whatsapp"
+            aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
+          >
+            📱 Scrivici su WhatsApp
+          </a>
+          <a 
+            href="/contatti" 
+            className="mobile-cta-btn mobile-cta-consulenza"
+            aria-label="Prenota Consulenza Gratuita presso MUV Fitness Legnago"  
+          >
+            🎯 Consulenza Gratuita
+          </a>
+        </div>
+      </section>
+      
       <FeaturesSection />
       <MethodSection />
       <ProofSection />
