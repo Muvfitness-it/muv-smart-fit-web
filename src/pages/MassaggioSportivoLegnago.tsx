@@ -13,7 +13,6 @@ const MassaggioSportivoLegnago = () => {
       durata: "30 minuti",
       descrizione: "Preparazione muscolare ottimale prima dell'attività sportiva",
       benefici: ["Attivazione circolazione", "Riscaldamento muscoli", "Prevenzione infortuni"],
-      prezzo: "€35",
       quando: "1-2 ore prima dell'attività"
     },
     {
@@ -21,7 +20,6 @@ const MassaggioSportivoLegnago = () => {
       durata: "45 minuti",
       descrizione: "Recupero rapido e smaltimento dell'acido lattico",
       benefici: ["Riduce affaticamento", "Elimina tossine", "Accelera recupero"],
-      prezzo: "€45",
       quando: "Entro 24 ore dall'attività"
     },
     {
@@ -29,7 +27,6 @@ const MassaggioSportivoLegnago = () => {
       durata: "60 minuti", 
       descrizione: "Trattamento specifico per tensioni e contratture muscolari",
       benefici: ["Rilassa tensioni", "Migliora flessibilità", "Riduce dolore"],
-      prezzo: "€55",
       quando: "In caso di contratture"
     },
     {
@@ -37,7 +34,6 @@ const MassaggioSportivoLegnago = () => {
       durata: "50 minuti",
       descrizione: "Stimolazione del sistema linfatico per eliminare liquidi",
       benefici: ["Riduce gonfiori", "Migliora drenaggio", "Tonifica tessuti"],
-      prezzo: "€50",
       quando: "Dopo intensi periodi di allenamento"
     }
   ];
@@ -223,7 +219,6 @@ const MassaggioSportivoLegnago = () => {
                       <Zap className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{massaggio.nome}</h3>
-                    <div className="text-2xl font-bold text-primary mb-1">{massaggio.prezzo}</div>
                     <div className="text-sm text-muted-foreground">{massaggio.durata}</div>
                   </div>
 

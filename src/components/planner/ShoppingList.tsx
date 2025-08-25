@@ -6,7 +6,7 @@ interface ShoppingItem {
   categoria: string;
   nome: string;
   quantita: string;
-  costo_calcolato_eur: number;
+  costo_calcolato_eur?: number;
 }
 
 interface ShoppingListData {
@@ -42,7 +42,7 @@ const ShoppingList: React.FC<ShoppingListProps> = ({
             <ShoppingCart className="w-10 h-10" />
             <span>Lista della Spesa</span>
           </h2>
-          <p className="text-gray-400 mt-1">Stima dei costi per il piano alimentare giornaliero.</p>
+          <p className="text-gray-400 mt-1">Ingredienti necessari per il piano alimentare giornaliero.</p>
         </div>
         <div className="space-y-6">
           {Object.entries(groupedList).map(([category, items]) => (
@@ -51,16 +51,14 @@ const ShoppingList: React.FC<ShoppingListProps> = ({
                 {category}
               </h3>
               <div className="space-y-2">
-                <div className="grid grid-cols-[minmax(0,6fr)_minmax(0,3fr)_minmax(0,3fr)] gap-x-4 text-sm font-semibold text-gray-400 px-2 py-1">
+                <div className="grid grid-cols-[minmax(0,8fr)_minmax(0,4fr)] gap-x-4 text-sm font-semibold text-gray-400 px-2 py-1">
                   <div className="text-left">Articolo</div>
                   <div className="text-center">Quantità</div>
-                  <div className="text-right">Costo</div>
                 </div>
                 {items.map((item, index) => (
-                  <div key={index} className="grid grid-cols-[minmax(0,6fr)_minmax(0,3fr)_minmax(0,3fr)] gap-x-4 items-center text-gray-300 border-b border-gray-700/50 py-2 px-2">
+                  <div key={index} className="grid grid-cols-[minmax(0,8fr)_minmax(0,4fr)] gap-x-4 items-center text-gray-300 border-b border-gray-700/50 py-2 px-2">
                     <span className="text-left break-words pr-2">{item.nome}</span>
                     <span className="text-center text-gray-400">{item.quantita}</span>
-                    <span className="text-right font-mono text-green-400">€ {item.costo_calcolato_eur.toFixed(2)}</span>
                   </div>
                 ))}
               </div>
@@ -68,13 +66,9 @@ const ShoppingList: React.FC<ShoppingListProps> = ({
           ))}
         </div>
         <div className="mt-8 pt-4 border-t-2 border-green-500/50">
-          <div className="flex justify-between items-center text-xl font-bold">
-            <span className="text-green-300">Totale Stimato:</span>
-            <span className="text-green-300">€ {shoppingListData.totale_calcolato_eur.toFixed(2)}</span>
+          <div className="text-center">
+            <span className="text-green-300 text-lg font-semibold">Lista completa generata!</span>
           </div>
-          <p className="text-xs text-gray-500 mt-2 text-right">
-            I prezzi sono stime basate sulla media di mercato e quantità.
-          </p>
         </div>
       </div>
       <div className="p-6 md:p-8 pt-4">

@@ -40,7 +40,6 @@ import Psicologo from "./pages/servizi/Psicologo";
 import Massoterapia from "./pages/servizi/Massoterapia";
 
 // New main pages
-import Prezzi from "./pages/Prezzi";
 import ComeArrivare from "./pages/ComeArrivare";
 import AdminAuth from "./pages/AdminAuth";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -162,7 +161,6 @@ const AppContent = () => {
                 <Route path="/allenamento-ems-legnago" element={<AllenamentoEMSLegnago />} />
                 <Route path="/pilates-legnago" element={<PilatesLegnago />} />
 
-                <Route path="/prezzi" element={<Prezzi />} />
                 <Route path="/come-arrivare" element={<ComeArrivare />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/risultati" element={<Risultati />} />
@@ -187,10 +185,10 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/analytics" element={<Analytics />} />
-        <Route path="/qa-report" element={<QAReport />} />
-        <Route path="/recensioni" element={<Recensioni />} />
-        <Route path="/faq-gbp" element={<FaqGbp />} />
-        <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
+                <Route path="/qa-report" element={<QAReport />} />
+                <Route path="/recensioni" element={<Recensioni />} />
+                <Route path="/faq-gbp" element={<FaqGbp />} />
+                <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />
                 
                 {/* Redirect /muv-planner to /contatti/ */}
                 <Route path="/muv-planner" element={<Navigate to="/contatti/" replace />} />

@@ -52,7 +52,7 @@ const FaqGbp = () => {
     },
     {
       question: "Quanto costano i percorsi?",
-      answer: "I percorsi sono personalizzati in base a obiettivi, frequenza e servizi scelti. I costi si definiscono sempre dopo la consulenza gratuita, quando capiamo insieme le tue necessità. Nessuna sorpresa: tutto chiaro e trasparente fin dall'inizio."
+      answer: "I percorsi sono completamente personalizzati in base a obiettivi, frequenza e servizi scelti. Offriamo sempre una consulenza gratuita dove capiamo insieme le tue necessità e definiamo il percorso più adatto. Tutto chiaro e trasparente fin dall'inizio."
     },
     {
       question: "È possibile provare?",

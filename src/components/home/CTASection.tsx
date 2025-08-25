@@ -23,7 +23,7 @@ const CTASection = () => {
             🎁 OFFERTA ESCLUSIVA LIMITATA - PRIMI 10 CLIENTI
           </h3>
           <p className="text-lg md:text-xl text-gray-200 mb-4 font-semibold">
-            <strong className="text-white">🆓 CHECK-UP COMPLETO GRATUITO</strong> (valore €80) + 
+            <strong className="text-white">🆓 CHECK-UP COMPLETO GRATUITO</strong> + 
             <strong className="text-viola-400"> PRIMA SEDUTA DI PROVA</strong> + 
             <strong className="text-blu-400"> PIANO PERSONALIZZATO</strong>
           </p>

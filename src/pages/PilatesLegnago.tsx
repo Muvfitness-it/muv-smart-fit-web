@@ -132,7 +132,7 @@ const PilatesLegnago: React.FC = () => {
               Cosa aspettarti: miglior controllo del core, riduzione dei compensi, più flessibilità e una postura più stabile. La qualità del gesto è centrale: i miglioramenti nascono dalla ripetizione corretta, non dalla difficoltà fine a sé stessa.
             </p>
             <p>
-              Costi e organizzazione: pacchetti flessibili e trasparenti, senza vincoli nascosti. Valutiamo insieme tempi, frequenza e modalità (individuale o small group) durante la prima lezione di prova.
+              Organizzazione: pacchetti flessibili e trasparenti, senza vincoli nascosti. Valutiamo insieme tempi, frequenza e modalità (individuale o small group) durante la prima lezione di prova.
             </p>
           </article>
           <div className="text-center mt-8">

@@ -37,7 +37,7 @@ const PersonalTrainerLegnago: React.FC = () => {
           {
             "@type": "Question",
             "name": "Quanto costa un personal trainer a Legnago?",
-            "acceptedAnswer": {"@type": "Answer","text": "Il costo varia in base alla frequenza e alla durata delle sedute. Offriamo pacchetti personalizzati e una prima consulenza gratuita per definire il percorso più adatto al tuo obiettivo."}
+            "acceptedAnswer": {"@type": "Answer","text": "I programmi variano in base alla frequenza e alla durata delle sedute. Offriamo pacchetti personalizzati e una prima consulenza gratuita per definire il percorso più adatto al tuo obiettivo."}
           },
           {
             "@type": "Question",
@@ -186,7 +186,7 @@ const PersonalTrainerLegnago: React.FC = () => {
               Alimentazione: nessuna dieta estrema. Ti forniamo linee guida pragmatiche (porzioni, frequenze, esempi di pasti) che si adattano a orari di lavoro, famiglia e socialità. Obiettivo: sostenibilità. Se necessario collaboriamo con professionisti della nutrizione per personalizzazioni più spinte.
             </p>
             <p>
-              Quanto costa? I pacchetti variano in base a frequenza e durata. Preferiamo costruire un preventivo dopo la consulenza, perché vogliamo offrirti il miglior equilibrio tra investimento e resa. In ogni caso, la trasparenza è totale: nessun vincolo nascosto, niente sorprese.
+              Investimento: I pacchetti variano in base a frequenza e durata. Preferiamo costruire un preventivo dopo la consulenza, perché vogliamo offrirti il miglior equilibrio tra servizi e resa. In ogni caso, la trasparenza è totale: nessun vincolo nascosto, niente sorprese.
             </p>
             <p>
               Errori comuni che eviterai: allenarti sempre “a sensazione”, inseguire solo il consumo calorico, cambiare programma troppo spesso, trascurare il recupero, ignorare la tecnica. Lavoreremo su priorità chiare: qualità del movimento, progressione dei carichi, gestione della fatica, routine brevi per la postura.

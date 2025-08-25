@@ -11,28 +11,24 @@ const PalestraLegnago = () => {
     {
       nome: "Personal Training",
       descrizione: "Allenamento personalizzato con trainer qualificati",
-      prezzo: "Da €45/sessione",
       durata: "60 minuti",
       benefici: ["Risultati garantiti", "Programma su misura", "Monitoraggio costante"]
     },
     {
       nome: "EMS Training",
       descrizione: "Elettrostimolazione muscolare per risultati in 20 minuti",
-      prezzo: "Da €35/sessione", 
       durata: "20 minuti",
       benefici: ["Tonificazione rapida", "Brucia grassi efficace", "Recupero muscolare"]
     },
     {
       nome: "Pilates",
       descrizione: "Miglioramento postura e flessibilità",
-      prezzo: "Da €25/lezione",
       durata: "50 minuti", 
       benefici: ["Postura corretta", "Core stability", "Flessibilità"]
     },
     {
       nome: "Pancafit",
       descrizione: "Riequilibrio posturale globale",
-      prezzo: "Da €40/sessione",
       durata: "45 minuti",
       benefici: ["Mal di schiena", "Rigidità muscolare", "Postura"]
     }
@@ -198,10 +194,6 @@ const PalestraLegnago = () => {
                   <p className="text-muted-foreground mb-4">{servizio.descrizione}</p>
                   
                   <div className="space-y-2 mb-4">
-                    <div className="flex justify-between text-sm">
-                      <span className="font-medium">Prezzo:</span>
-                      <span className="text-primary font-semibold">{servizio.prezzo}</span>
-                    </div>
                     <div className="flex justify-between text-sm">
                       <span className="font-medium">Durata:</span>
                       <span>{servizio.durata}</span>

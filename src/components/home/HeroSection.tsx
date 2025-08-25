@@ -76,7 +76,7 @@ const HeroSection = () => {
               aria-label="Prenota Consulenza Gratuita presso MUV Fitness Legnago"  
             >
               <div className="absolute inset-0 bg-gradient-to-r from-brand-accent via-brand-primary to-brand-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-energy-wave"></div>
-              <span className="relative z-10">🎯 Consulenza Gratuita (€80)</span>
+              <span className="relative z-10">🎯 Consulenza Gratuita</span>
             </Link>
           </div>
           

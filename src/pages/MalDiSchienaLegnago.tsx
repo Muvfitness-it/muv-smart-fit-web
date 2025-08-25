@@ -14,7 +14,6 @@ const MalDiSchienaLegnago = () => {
       sedute: "8-12 sedute",
       descrizione: "Riequilibrio posturale globale per eliminare tensioni e dolori",
       benefici: ["Riduce dolore lombare", "Migliora postura", "Previene recidive"],
-      prezzo: "€40/seduta",
       efficacia: "95%"
     },
     {
@@ -23,7 +22,6 @@ const MalDiSchienaLegnago = () => {
       sedute: "10-15 sedute",
       descrizione: "Esercizi specifici per rafforzare il core e stabilizzare la colonna",
       benefici: ["Rinforza addominali", "Stabilizza colonna", "Aumenta flessibilità"],
-      prezzo: "€35/seduta",
       efficacia: "90%"
     },
     {
@@ -32,7 +30,6 @@ const MalDiSchienaLegnago = () => {
       sedute: "12-16 sedute", 
       descrizione: "Programma personalizzato con esercizi correttivi specifici",
       benefici: ["Piano su misura", "Controllo costante", "Educazione posturale"],
-      prezzo: "€50/seduta",
       efficacia: "98%"
     }
   ];
@@ -268,7 +265,6 @@ const MalDiSchienaLegnago = () => {
                 <CardContent className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2">{trattamento.nome}</h3>
-                    <div className="text-3xl font-bold text-primary mb-2">{trattamento.prezzo}</div>
                     <div className="text-muted-foreground">{trattamento.durata} - {trattamento.sedute}</div>
                   </div>
 

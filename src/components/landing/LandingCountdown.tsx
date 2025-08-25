@@ -84,7 +84,7 @@ const LandingCountdown: React.FC<LandingCountdownProps> = ({
         </div>
         
         <p className="text-lg md:text-xl text-red-300 font-bold mt-6">
-          🔥 Solo <span className="text-white font-black">3 POSTI RIMASTI</span> a questo prezzo!
+          🔥 Solo <span className="text-white font-black">3 POSTI RIMASTI</span> per questo programma!
         </p>
       </div>
     </section>

@@ -142,7 +142,7 @@ const AllenamentoEMSLegnago: React.FC = () => {
         </section>
 
         <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Come iniziare e costi</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Come iniziare</h2>
           <p className="mb-4">Proponiamo una prova guidata gratuita per valutare risposta e obiettivi. I pacchetti EMS sono flessibili e trasparenti; definiamo insieme frequenza e durata in base al risultato desiderato e al tempo disponibile.</p>
           <p className="mb-4">Se vuoi un percorso completo, integra l’EMS con sedute di forza o Pilates in base alla priorità (dimagrimento, postura, performance). Prenota ora: in 2–3 settimane sentirai già la differenza.</p>
         </section>

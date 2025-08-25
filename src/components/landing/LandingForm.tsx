@@ -18,7 +18,7 @@ interface LandingFormProps {
 const LandingForm: React.FC<LandingFormProps> = ({
   campaignName,
   formTitle = "🎁 PRENOTA LA TUA CONSULENZA GRATUITA",
-  incentive = "Valore €80 - OGGI GRATIS per i primi 10",
+  incentive = "Check-up gratuito - OGGI per i primi 10",
   onSuccess
 }) => {
   const [formData, setFormData] = useState({

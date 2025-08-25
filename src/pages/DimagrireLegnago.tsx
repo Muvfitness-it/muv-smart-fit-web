@@ -13,24 +13,21 @@ const DimagrireLegnago = () => {
       durata: "4 settimane",
       perdita: "5-8 kg",
       descrizione: "Programma intensivo con elettrostimolazione per bruciare grassi velocemente",
-      benefici: ["Accelera metabolismo", "Tonifica muscoli", "Riduce cellulite"],
-      prezzo: "€280/mese"
+      benefici: ["Accelera metabolismo", "Tonifica muscoli", "Riduce cellulite"]
     },
     {
       nome: "Personal Training Dimagrante", 
       durata: "8 settimane",
       perdita: "8-12 kg",
       descrizione: "Allenamento personalizzato con coach esperto in dimagrimento",
-      benefici: ["Piano su misura", "Controllo nutrizionale", "Motivazione costante"],
-      prezzo: "€360/mese"
+      benefici: ["Piano su misura", "Controllo nutrizionale", "Motivazione costante"]
     },
     {
       nome: "Pacchetto Completo",
       durata: "12 settimane", 
       perdita: "12-18 kg",
       descrizione: "EMS + Personal Training + Consulenza nutrizionale completa",
-      benefici: ["Risultati garantiti", "Supporto 360°", "Mantenimento peso"],
-      prezzo: "€450/mese"
+      benefici: ["Risultati garantiti", "Supporto 360°", "Mantenimento peso"]
     }
   ];
 
@@ -208,7 +205,6 @@ const DimagrireLegnago = () => {
                 <CardContent className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2">{programma.nome}</h3>
-                    <div className="text-3xl font-bold text-primary mb-2">{programma.prezzo}</div>
                     <div className="text-muted-foreground">{programma.durata}</div>
                   </div>
 
