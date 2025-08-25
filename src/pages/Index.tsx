@@ -1,5 +1,5 @@
 
-import HeroSection from '@/components/home/HeroSection';
+import NewHeroSection from '@/components/home/NewHeroSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
 import MethodSection from '@/components/home/MethodSection';
 import ProofSection from '@/components/home/ProofSection';
@@ -60,7 +60,7 @@ const Index = () => {
       />
       <LocalBusinessSchema />
       
-      <HeroSection />
+      <NewHeroSection />
       
       {/* Mobile CTA Section - Solo Mobile */}
       <section className="mobile-cta-section md:hidden">
