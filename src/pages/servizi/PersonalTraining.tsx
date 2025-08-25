@@ -126,6 +126,25 @@ const PersonalTraining = () => {
             </div>
           </div>
 
+          {/* Local Areas */}
+          <div className="mb-16">
+            <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Personal Training in Tutta la <span className="text-pink-600">Bassa Veronese</span></h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Link to="/personal-trainer-legnago" className="block bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                <h4 className="text-lg font-bold text-pink-400 mb-2">Personal Trainer Legnago</h4>
+                <p className="text-gray-300">Allenamenti personalizzati nel centro di Legnago</p>
+              </Link>
+              <Link to="/bovolone-fitness" className="block bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                <h4 className="text-lg font-bold text-pink-400 mb-2">Fitness Bovolone</h4>
+                <p className="text-gray-300">Servizi fitness a 15 minuti da Bovolone</p>
+              </Link>
+              <Link to="/cerea-fitness" className="block bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                <h4 className="text-lg font-bold text-pink-400 mb-2">Fitness Cerea</h4>
+                <p className="text-gray-300">Personal training accessibile da Cerea</p>
+              </Link>
+            </div>
+          </div>
+
           {/* CTA */}
           <div className="text-center bg-gradient-to-r from-pink-600/20 to-purple-600/20 p-8 rounded-lg">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Pronto a Trasformare il Tuo Corpo?</h3>

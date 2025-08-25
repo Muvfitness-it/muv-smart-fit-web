@@ -64,6 +64,42 @@ const Index = () => {
       <FeaturesSection />
       <MethodSection />
       <ProofSection />
+      
+      {/* Local Areas Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-800">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+            Serviamo Tutta la <span className="text-brand-primary">Bassa Veronese</span>
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="/fitness-palestra-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Palestra Legnago</h3>
+              <p className="text-gray-300">Centro fitness completo nel cuore di Legnago</p>
+            </a>
+            <a href="/personal-trainer-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Personal Trainer Legnago</h3>
+              <p className="text-gray-300">Allenamento personalizzato 1-to-1</p>
+            </a>
+            <a href="/bovolone-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Bovolone Fitness</h3>
+              <p className="text-gray-300">A soli 15 minuti da Bovolone</p>
+            </a>
+            <a href="/cerea-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Cerea Fitness</h3>
+              <p className="text-gray-300">Facilmente raggiungibile da Cerea</p>
+            </a>
+            <a href="/san-bonifacio-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">San Bonifacio Fitness</h3>
+              <p className="text-gray-300">Servizi fitness avanzati per San Bonifacio</p>
+            </a>
+            <a href="/dimagrire-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Dimagrire Legnago</h3>
+              <p className="text-gray-300">Programmi dimagrimento personalizzati</p>
+            </a>
+          </div>
+        </div>
+      </section>
+      
       <FAQSection />
       <CTASection />
     </div>
