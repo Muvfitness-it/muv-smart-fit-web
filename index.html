@@ -489,10 +489,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       }
       .menu-toggle, .hamburger, button[aria-controls*="nav"]{ display:block !important; }
 
-      /* HERO FULL-WIDTH TESTUALE (1 colonna) */
-      .hero, .section-hero{ position:relative !important; isolation:isolate !important;
-        padding-top: calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 14px) !important;
-      }
+  /* HERO FULL-WIDTH TESTUALE (1 colonna) - Spazio ridotto */
+  .hero, .section-hero{ position:relative !important; isolation:isolate !important;
+    padding-top: calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 4px) !important;
+  }
       /* Overlay forte per leggibilità */
       .hero::before, .section-hero::before{
         content:""; position:absolute; inset:0; z-index:0; background:rgba(0,0,0,.68) !important; pointer-events:none;
@@ -511,13 +511,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       }
       .hero p, .section-hero p{ color:#E9EEF6 !important; margin:0 0 10px 0 !important; }
 
-      /* CTA SUBITO DOPO il testo, centrata, senza underline */
-      .muv-cta-group{ display:flex !important; flex-direction:column !important; gap:12px !important; align-items:center !important; }
-      .muv-cta-group .btn, .muv-cta-group a, .hero .btn, .section-hero .btn{
-        min-height:48px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important;
-        text-decoration:none !important; font-weight:800 !important; line-height:1.2 !important; padding:12px 18px !important; width:100% !important; max-width:520px !important;
-      }
-      .muv-cta-group .btn *, .hero .btn *{ text-decoration:none !important; }
+  /* CTA SUBITO DOPO il testo, centrata, senza underline - Rimuovi duplicati */
+  .muv-cta-group{ display:flex !important; flex-direction:column !important; gap:12px !important; align-items:center !important; }
+  .muv-cta-group .btn, .muv-cta-group a, .hero .btn, .section-hero .btn{
+    min-height:48px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    text-decoration:none !important; font-weight:800 !important; line-height:1.2 !important; padding:12px 18px !important; width:100% !important; max-width:520px !important;
+  }
+  .muv-cta-group .btn *, .hero .btn *{ text-decoration:none !important; }
+  
+  /* Nascondi pulsanti duplicati esterni al gruppo CTA */
+  .hero .flex:not(.muv-cta-group) a[href*="whatsapp"], 
+  .section-hero .flex:not(.muv-cta-group) a[href*="whatsapp"],
+  .hero .flex:not(.muv-cta-group) a[href*="contatti"],
+  .section-hero .flex:not(.muv-cta-group) a[href*="contatti"]{ display:none !important; }
 
       /* Sposta sotto i box/statistiche */
       .muv-hero-stats{ margin-top:10px !important; }
@@ -730,12 +736,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .filter(el => !ctaGroup.contains(el) && !el.closest('.muv-cta-group'));
       if(statCandidates.length){ statCandidates.forEach(el=>stats.appendChild(el)); ctaGroup.after(stats); }
 
-      // 4) Anti-collisione: se h1 tocca l'header, aumenta padding-top
-      const h = $('h1',hero) || $('h2',hero) || $('p',hero);
-      if(h && header){
-        const hr = header.getBoundingClientRect(), tr = h.getBoundingClientRect();
-        if(tr.top < hr.bottom + 8){ hero.style.paddingTop = `calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 16px)`; }
-      }
+  // 4) Anti-collisione: se h1 tocca l'header, aumenta padding-top (ridotto)
+  const h = $('h1',hero) || $('h2',hero) || $('p',hero);
+  if(h && header){
+    const hr = header.getBoundingClientRect(), tr = h.getBoundingClientRect();
+    if(tr.top < hr.bottom + 8){ hero.style.paddingTop = `calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 8px)`; }
+  }
+  
+  // 5) Rimuovi pulsanti duplicati dal DOM
+  const duplicateBtns = $$('a[href*="whatsapp"], a[href*="contatti"]', hero).filter(btn => 
+    !btn.closest('.muv-cta-group') && (btn.textContent.includes('WhatsApp') || btn.textContent.includes('Consulenza'))
+  );
+  duplicateBtns.forEach(btn => btn.style.display = 'none');
     })();
     </script>
   </body>
