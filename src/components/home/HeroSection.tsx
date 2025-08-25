@@ -8,7 +8,7 @@ const HeroSection = () => {
   return (
     <>
       <section 
-        className="relative flex items-center justify-center min-h-screen above-fold hero-section overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
+        className="relative flex items-center justify-center min-h-screen pt-[var(--header-height)] above-fold hero-section overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
       >
         {/* Background Image with Enhanced Overlay */}
         <LazyImage 

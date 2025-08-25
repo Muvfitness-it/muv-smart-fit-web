@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useResourceOptimization } from "./hooks/useResourceOptimization";
@@ -92,6 +92,9 @@ const AppContent = () => {
   useSiteVisitTracker();
   useResourceOptimization();
 
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
   return (
     <SessionSecurity>
       <SecurityHeaders />
@@ -119,7 +122,7 @@ const AppContent = () => {
             >
               Salta al contenuto principale
             </a>
-            <main id="main" className="pt-[var(--header-height)]">
+            <main id="main" className={isHome ? 'pt-0' : 'pt-[var(--header-height)]'}>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/chi-siamo" element={<ChiSiamo />} />
