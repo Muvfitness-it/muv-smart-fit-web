@@ -239,6 +239,63 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     </script>
     <link rel="stylesheet" href="/assets/css/muv-hotfix-hero.css">
+    
+    <!-- INLINE HOTFIX CSS - MOBILE HERO SURGEON -->
+    <style id="muv-hotfix-hero-inline">
+    @media (max-width: 480px){
+      :root{ --muv-header-h: 64px; }
+
+      /* 1) Header sempre sopra, su chip bianco */
+      .site-header, header[role="banner"], header, .navbar, .nav {
+        position: sticky !important; top: 0 !important; z-index: 10000 !important;
+        background: #FFFFFF !important;
+        -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+      }
+      .site-header img, header img { height: 40px !important; width: auto !important; object-fit: contain !important; }
+
+      /* 2) Hero correttamente spaziato e layerizzato */
+      .hero, .section-hero { position: relative !important; isolation: isolate !important;
+        padding-top: calc(var(--muv-header-h) + env(safe-area-inset-top, 0px) + 16px) !important;
+        padding-bottom: 20px !important;
+      }
+      /* overlay per contrasto SEMPRE attivo su mobile */
+      .hero::before, .section-hero::before {
+        content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        background: rgba(0,0,0,.60) !important;
+      }
+      /* contenuti sopra l'overlay */
+      .hero > *, .section-hero > * { position: relative !important; z-index: 1 !important; }
+
+      /* 3) Tipografia a prova di overflow */
+      .hero h1, .section-hero h1 { 
+        font-size: clamp(22px, 5.8vw, 32px) !important; line-height:1.15 !important; margin:0 0 6px 0 !important;
+        color:#FFF !important; text-shadow:none !important; -webkit-text-stroke:0 !important; letter-spacing:0 !important;
+        word-break: normal !important; overflow-wrap: anywhere !important;
+      }
+      .hero h2, .hero p, .section-hero h2, .section-hero p { color:#FFF !important; text-shadow:none !important; margin:0 0 8px 0 !important; }
+
+      /* 4) STOP a blend, ombre finte, duplicati "grigi" */
+      .hero [class*="shadow"], .hero [class*="blend"], .hero [style*="mix-blend-mode"],
+      .section-hero [class*="shadow"], .section-hero [class*="blend"], .section-hero [style*="mix-blend-mode"] {
+        mix-blend-mode: normal !important; filter:none !important; opacity:1 !important; text-shadow:none !important;
+      }
+      /* nascondi il secondo H1 consecutivo (duplicato) */
+      .hero h1 + h1, .section-hero h1 + h1 { display:none !important; }
+
+      /* 5) Neutralizza posizionamenti assoluti dei testi dell'hero che sfondano il header */
+      .hero [class*="absolute"], .section-hero [class*="absolute"],
+      .hero [style*="position:absolute"], .section-hero [style*="position:absolute"]{
+        position: static !important; left:auto !important; right:auto !important; top:auto !important; transform:none !important;
+      }
+
+      /* 6) CTA tappabile e non coperta */
+      .hero .btn, .section-hero .btn { min-height:44px !important; display:inline-flex !important; align-items:center !important; font-weight:700 !important; }
+      .hero .btn:focus-visible, .section-hero .btn:focus-visible { outline:3px solid #FFF !important; outline-offset:2px !important; }
+
+      /* 7) Evita collisione con eventuale CTA sticky globale */
+      .cta-sticky, .whatsapp-sticky { bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; z-index: 999 !important; }
+    }
+    </style>
   </head>
 
   <body>
@@ -353,5 +410,44 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script defer src="/assets/js/muv-hero-fix.js"></script>
+    
+    <!-- INLINE HOTFIX JS - MOBILE HERO SURGEON -->
+    <script id="muv-hotfix-hero-inline-js">
+    (()=>{ 
+      const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+      /* 1) Calcola altezza header reale e impostala come variabile per il padding dell'hero */
+      const header = $('.site-header') || $('header[role="banner"]') || $('header') || $('.navbar') || $('.nav');
+      if(header){
+        const hh = Math.max(56, Math.round(header.getBoundingClientRect().height||64));
+        document.documentElement.style.setProperty('--muv-header-h', hh+'px');
+      }
+      /* 2) Marca come "has-media" gli hero con bg image/video per garantire overlay (fallback se CSS non vede bg) */
+      $$('.hero, .section-hero').forEach(h=>{
+        const bg = getComputedStyle(h).backgroundImage;
+        if(bg && bg!=='none') h.classList.add('has-media');
+        if($('img,video,picture',h)) h.classList.add('has-media');
+      });
+      /* 3) Dedup H1: se due H1 hanno lo stesso testo, nascondi il duplicato (quello dopo) */
+      $$('.hero, .section-hero').forEach(h=>{
+        const hs = $$('h1',h);
+        if(hs.length>1){
+          const t0 = hs[0].innerText.replace(/\s+/g,' ').trim().toLowerCase();
+          for(let i=1;i<hs.length;i++){
+            const ti = hs[i].innerText.replace(/\s+/g,' ').trim().toLowerCase();
+            if(ti===t0){ hs[i].style.display='none'; hs[i].setAttribute('data-dup-hidden',''); }
+          }
+        }
+      });
+      /* 4) Anti-collisione: se h1/h2 tocca il header, aumenta padding-top dell'hero */
+      const bumpIfCollide = (h)=>{
+        const hh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--muv-header-h'))||64;
+        const t = $('h1',h) || $('h2',h) || $('p',h);
+        if(!t) return;
+        const tr = t.getBoundingClientRect(); const hr = header? header.getBoundingClientRect():{bottom:0, top:0, height:0};
+        if(tr.top < hr.bottom + 8){ h.style.paddingTop = `calc(${hh}px + env(safe-area-inset-top,0px) + 16px)`; }
+      };
+      $$('.hero, .section-hero').forEach(bumpIfCollide);
+    })();
+    </script>
   </body>
 </html>

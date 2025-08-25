@@ -1,0 +1,54 @@
+/* === MUV Hotfix Hero — MOBILE ONLY === */
+@media (max-width: 480px){
+  :root{ --muv-header-h: 64px; }
+
+  /* 1) Header sempre sopra, su chip bianco */
+  .site-header, header[role="banner"], header, .navbar, .nav {
+    position: sticky !important; top: 0 !important; z-index: 10000 !important;
+    background: #FFFFFF !important;
+    -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  }
+  .site-header img, header img { height: 40px !important; width: auto !important; object-fit: contain !important; }
+
+  /* 2) Hero correttamente spaziato e layerizzato */
+  .hero, .section-hero { position: relative !important; isolation: isolate !important;
+    padding-top: calc(var(--muv-header-h) + env(safe-area-inset-top, 0px) + 16px) !important;
+    padding-bottom: 20px !important;
+  }
+  /* overlay per contrasto SEMPRE attivo su mobile */
+  .hero::before, .section-hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: rgba(0,0,0,.60) !important;
+  }
+  /* contenuti sopra l'overlay */
+  .hero > *, .section-hero > * { position: relative !important; z-index: 1 !important; }
+
+  /* 3) Tipografia a prova di overflow */
+  .hero h1, .section-hero h1 { 
+    font-size: clamp(22px, 5.8vw, 32px) !important; line-height:1.15 !important; margin:0 0 6px 0 !important;
+    color:#FFF !important; text-shadow:none !important; -webkit-text-stroke:0 !important; letter-spacing:0 !important;
+    word-break: normal !important; overflow-wrap: anywhere !important;
+  }
+  .hero h2, .hero p, .section-hero h2, .section-hero p { color:#FFF !important; text-shadow:none !important; margin:0 0 8px 0 !important; }
+
+  /* 4) STOP a blend, ombre finte, duplicati "grigi" */
+  .hero [class*="shadow"], .hero [class*="blend"], .hero [style*="mix-blend-mode"],
+  .section-hero [class*="shadow"], .section-hero [class*="blend"], .section-hero [style*="mix-blend-mode"] {
+    mix-blend-mode: normal !important; filter:none !important; opacity:1 !important; text-shadow:none !important;
+  }
+  /* nascondi il secondo H1 consecutivo (duplicato) */
+  .hero h1 + h1, .section-hero h1 + h1 { display:none !important; }
+
+  /* 5) Neutralizza posizionamenti assoluti dei testi dell'hero che sfondano il header */
+  .hero [class*="absolute"], .section-hero [class*="absolute"],
+  .hero [style*="position:absolute"], .section-hero [style*="position:absolute"]{
+    position: static !important; left:auto !important; right:auto !important; top:auto !important; transform:none !important;
+  }
+
+  /* 6) CTA tappabile e non coperta */
+  .hero .btn, .section-hero .btn { min-height:44px !important; display:inline-flex !important; align-items:center !important; font-weight:700 !important; }
+  .hero .btn:focus-visible, .section-hero .btn:focus-visible { outline:3px solid #FFF !important; outline-offset:2px !important; }
+
+  /* 7) Evita collisione con eventuale CTA sticky globale */
+  .cta-sticky, .whatsapp-sticky { bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; z-index: 999 !important; }
+}
