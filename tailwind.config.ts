@@ -20,8 +20,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-				heading: ['Inter', 'system-ui', 'sans-serif'],
+				sans: ['Poppins', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+				heading: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+				display: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+				body: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -118,46 +120,75 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'slide-up': {
+					'0%': { opacity: '0', transform: 'translateY(30px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'slide-right': {
+					'0%': { opacity: '0', transform: 'translateX(-30px)' },
+					'100%': { opacity: '1', transform: 'translateX(0)' }
+				},
+				'slide-left': {
+					'0%': { opacity: '0', transform: 'translateX(30px)' },
+					'100%': { opacity: '1', transform: 'translateX(0)' }
+				},
+				'scale-in': {
+					'0%': { opacity: '0', transform: 'scale(0.9)' },
+					'100%': { opacity: '1', transform: 'scale(1)' }
 				},
 				'pulse-glow': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(199, 21, 133, 0.3)'
+					'0%, 100%': { boxShadow: '0 0 20px hsl(var(--brand-primary) / 0.4)' },
+					'50%': { boxShadow: '0 0 40px hsl(var(--brand-primary) / 0.8)' }
+				},
+				'neon-pulse': {
+					'0%, 100%': { 
+						boxShadow: '0 0 20px hsl(var(--brand-primary) / 0.8), 0 0 40px hsl(var(--brand-secondary) / 0.6)',
+						filter: 'brightness(1)'
 					},
-					'50%': {
-						boxShadow: '0 0 40px rgba(199, 21, 133, 0.6)'
+					'50%': { 
+						boxShadow: '0 0 30px hsl(var(--brand-primary) / 1), 0 0 60px hsl(var(--brand-secondary) / 0.8)',
+						filter: 'brightness(1.2)'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'gradient-shift': {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' }
+				},
+				'energy-wave': {
+					'0%': { transform: 'scaleX(0)', opacity: '1' },
+					'100%': { transform: 'scaleX(1)', opacity: '0' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out',
-				'bounce': 'bounce 2s infinite',
-				'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+				'fade-in': 'fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-up': 'slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'slide-right': 'slide-right 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'slide-left': 'slide-left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'scale-in': 'scale-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'neon-pulse': 'neon-pulse 2s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'gradient-shift': 'gradient-shift 3s ease infinite',
+				'energy-wave': 'energy-wave 1.5s ease-out infinite',
+				'bounce': 'bounce 2s infinite'
 			},
 			fontSize: {
 				'xs': ['0.75rem', { lineHeight: '1rem' }],

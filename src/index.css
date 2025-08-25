@@ -69,18 +69,27 @@
     --brand-secondary: var(--muv-accent);   
     --brand-accent: var(--muv-info);      
 
-    /* Typography */
-    --font-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    /* Typography - Fitness Revolution */
+    --font-heading: 'Montserrat', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-body: 'Poppins', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-display: 'Montserrat', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-    /* Gradients */
+    /* Enhanced Gradients - Dynamic Energy */
     --gradient-brand: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-primary) / 0.9), hsl(var(--brand-secondary) / 0.8));
-    --gradient-card: linear-gradient(135deg, hsl(var(--brand-primary) / 0.1), hsl(var(--brand-secondary) / 0.05));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-primary) / 0.95), hsl(var(--brand-secondary) / 0.85), hsl(var(--brand-accent) / 0.75));
+    --gradient-card: linear-gradient(135deg, hsl(var(--brand-primary) / 0.15), hsl(var(--brand-secondary) / 0.1));
+    --gradient-cta: linear-gradient(45deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
+    --gradient-neon: linear-gradient(45deg, hsl(var(--brand-primary) / 0.8), hsl(var(--brand-secondary) / 0.9), hsl(var(--brand-accent) / 0.7));
+    --gradient-energy: radial-gradient(circle at 30% 40%, hsl(var(--brand-primary) / 0.3), hsl(var(--brand-secondary) / 0.2), transparent 70%);
+    --gradient-dynamic: conic-gradient(from 45deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)), hsl(var(--brand-accent)), hsl(var(--brand-primary)));
     
-    /* Shadows */
-    --shadow-brand: 0 10px 30px -5px hsl(var(--brand-primary) / 0.3);
-    --shadow-glow: 0 0 40px hsl(var(--brand-primary) / 0.4);
-    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.1);
+    /* Enhanced Shadows - Depth & Glow */
+    --shadow-brand: 0 10px 30px -5px hsl(var(--brand-primary) / 0.4);
+    --shadow-glow: 0 0 50px hsl(var(--brand-primary) / 0.6);
+    --shadow-card: 0 8px 32px -4px hsl(0 0% 0% / 0.15);
+    --shadow-neon: 0 0 20px hsl(var(--brand-primary) / 0.8), 0 0 40px hsl(var(--brand-secondary) / 0.6);
+    --shadow-intense: 0 20px 60px -10px hsl(var(--brand-primary) / 0.5);
+    --shadow-floating: 0 30px 60px -12px hsl(0 0% 0% / 0.25);
     
     /* Header height variables for responsive layout */
     --header-height: 90px;
@@ -180,6 +189,25 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    scroll-behavior: smooth;
+  }
+  
+  /* Enhanced scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
   }
   
   /* Focus visibility - WCAG AA compliant */
@@ -224,6 +252,36 @@
   .touch-target {
     min-height: 44px;
     min-width: 44px;
+    font-family: var(--font-body);
+  }
+  
+  /* Enhanced button styles */
+  button:not(.unstyled), 
+  [role="button"]:not(.unstyled) {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  button:hover:not(.unstyled), 
+  [role="button"]:hover:not(.unstyled) {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+  
+  /* Heading enhancements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    font-weight: 900;
+    letter-spacing: -0.025em;
+  }
+  
+  h2 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
   
   /* Skip to content link */
