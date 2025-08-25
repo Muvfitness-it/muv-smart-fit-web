@@ -473,6 +473,68 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       }
     }
     </style>
+    
+    <!-- INLINE HOTFIX CSS - CLEAN STACK MOBILE LAYOUT -->
+    <style id="muv-cleanstack-inline">
+    @media (max-width:480px){
+      :root{ --muv-header-h:64px; }
+
+      /* HEADER PULITO */
+      .site-header, header[role="banner"], header, .navbar{
+        position:sticky !important; top:0 !important; z-index:10000 !important;
+        background:#FFF !important; border-bottom:1px solid rgba(0,0,0,.06) !important;
+      }
+      .site-header .brand img, header img[alt*="MUV"]{
+        height:40px !important; width:auto !important; object-fit:contain !important;
+      }
+      .menu-toggle, .hamburger, button[aria-controls*="nav"]{ display:block !important; }
+
+      /* HERO FULL-WIDTH TESTUALE (1 colonna) */
+      .hero, .section-hero{ position:relative !important; isolation:isolate !important;
+        padding-top: calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 14px) !important;
+      }
+      /* Overlay forte per leggibilità */
+      .hero::before, .section-hero::before{
+        content:""; position:absolute; inset:0; z-index:0; background:rgba(0,0,0,.68) !important; pointer-events:none;
+      }
+      .hero > *, .section-hero > *{ position:relative; z-index:1; }
+
+      /* Forza layout a UNA colonna nel hero */
+      .hero .grid, .section-hero .grid, 
+      .hero [class*="row"], .section-hero [class*="row"]{ display:block !important; }
+      .hero [class*="col"], .section-hero [class*="col"]{ width:100% !important; max-width:100% !important; float:none !important; }
+
+      /* Tipografia hero */
+      .hero h1, .section-hero h1{
+        font-size: clamp(22px,5.4vw,30px) !important; line-height:1.15 !important; margin:0 0 8px 0 !important;
+        color:#FFF !important; text-shadow:none !important; -webkit-text-stroke:0 !important;
+      }
+      .hero p, .section-hero p{ color:#E9EEF6 !important; margin:0 0 10px 0 !important; }
+
+      /* CTA SUBITO DOPO il testo, centrata, senza underline */
+      .muv-cta-group{ display:flex !important; flex-direction:column !important; gap:12px !important; align-items:center !important; }
+      .muv-cta-group .btn, .muv-cta-group a, .hero .btn, .section-hero .btn{
+        min-height:48px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important;
+        text-decoration:none !important; font-weight:800 !important; line-height:1.2 !important; padding:12px 18px !important; width:100% !important; max-width:520px !important;
+      }
+      .muv-cta-group .btn *, .hero .btn *{ text-decoration:none !important; }
+
+      /* Sposta sotto i box/statistiche */
+      .muv-hero-stats{ margin-top:10px !important; }
+      .muv-hero-stats > *{ margin-bottom:10px !important; }
+
+      /* Blocchi assoluti/blend che rompono il layout → neutralizza su mobile */
+      .hero [class*="absolute"], .section-hero [class*="absolute"],
+      .hero [style*="position:absolute"], .section-hero [style*="position:absolute"]{
+        position:static !important; left:auto !important; right:auto !important; top:auto !important; transform:none !important;
+      }
+      .hero [class*="shadow"], .hero [class*="blend"], .section-hero [class*="shadow"], .section-hero [class*="blend"],
+      .hero [style*="mix-blend-mode"], .section-hero [style*="mix-blend-mode"]{ mix-blend-mode:normal !important; text-shadow:none !important; filter:none !important; }
+
+      /* Evita collisioni con eventuale floating WhatsApp */
+      .whatsapp-sticky, .cta-sticky{ bottom:calc(env(safe-area-inset-bottom,0px)+12px) !important; z-index:999 !important; }
+    }
+    </style>
   </head>
 
   <body>
@@ -624,6 +686,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         if(tr.top < hr.bottom + 8){ h.style.paddingTop = `calc(${hh}px + env(safe-area-inset-top,0px) + 16px)`; }
       };
       $$('.hero, .section-hero').forEach(bumpIfCollide);
+    })();
+    </script>
+    
+    <!-- INLINE HOTFIX JS - CLEAN STACK MOBILE LAYOUT -->
+    <script id="muv-cleanstack-inline-js">
+    (()=>{ 
+      const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+      const header = $('.site-header') || $('header[role="banner"]') || $('header') || $('.navbar');
+      if(header){ const hh = Math.max(56, Math.round(header.getBoundingClientRect().height||64));
+        document.documentElement.style.setProperty('--muv-header-h', hh+'px'); }
+
+      // Trova il blocco hero principale
+      const hero = $('.section-hero') || $('.hero') || document.querySelector('main section') || $('main');
+      if(!hero) return; hero.classList.add('muv-hero');
+
+      // 1) Dedup H1 (titolo doppio/ombra)
+      const h1s = $$('h1', hero);
+      if(h1s.length>1){
+        const t0 = h1s[0].innerText.trim().toLowerCase();
+        for(let i=1;i<h1s.length;i++){
+          const ti = h1s[i].innerText.trim().toLowerCase();
+          if(ti===t0) { h1s[i].remove(); }
+        }
+      }
+
+      // 2) Crea/aggancia il gruppo CTA subito dopo titolo + sottotitolo
+      let ctaGroup = $('.muv-cta-group', hero);
+      if(!ctaGroup){ ctaGroup = document.createElement('div'); ctaGroup.className='muv-cta-group'; }
+      const buttons = $$('a,button', hero).filter(el=>{
+        const t = (el.textContent||'').toLowerCase();
+        return /whatsapp|scrivici|consulenza|prenota|contatti/.test(t) || /(btn|button|cta)/i.test(el.className||'');
+      });
+      buttons.forEach(b=>{ if(!ctaGroup.contains(b)) ctaGroup.appendChild(b); });
+
+      const title = $('h1', hero); const subtitle = $('h2', hero) || $('p', hero);
+      if(title){ title.after(subtitle||title); (subtitle||title).after(ctaGroup); }
+
+      // 3) Sposta box/statistiche DOPO le CTA
+      let stats = $('.muv-hero-stats', hero);
+      if(!stats){ stats = document.createElement('div'); stats.className='muv-hero-stats'; }
+      const statCandidates = $$('[class*="stat"], .stat, [data-stat], .card, .box', hero)
+        .filter(el => !ctaGroup.contains(el) && !el.closest('.muv-cta-group'));
+      if(statCandidates.length){ statCandidates.forEach(el=>stats.appendChild(el)); ctaGroup.after(stats); }
+
+      // 4) Anti-collisione: se h1 tocca l'header, aumenta padding-top
+      const h = $('h1',hero) || $('h2',hero) || $('p',hero);
+      if(h && header){
+        const hr = header.getBoundingClientRect(), tr = h.getBoundingClientRect();
+        if(tr.top < hr.bottom + 8){ hero.style.paddingTop = `calc(var(--muv-header-h) + env(safe-area-inset-top,0px) + 16px)`; }
+      }
     })();
     </script>
   </body>
