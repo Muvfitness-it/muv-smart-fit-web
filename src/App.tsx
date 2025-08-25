@@ -59,6 +59,12 @@ import CookieConsent from "./components/security/CookieConsent";
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
 
+// New SEO pages for Legnago
+import PalestraLegnago from "./pages/PalestraLegnago";
+import DimagrireLegnago from "./pages/DimagrireLegnago";
+import MalDiSchienaLegnago from "./pages/MalDiSchienaLegnago";
+import MassaggioSportivoLegnago from "./pages/MassaggioSportivoLegnago";
+
 
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
@@ -131,6 +137,12 @@ const AppContent = () => {
                 <Route path="/servizi/nutrizione" element={<Nutrizione />} />
                 <Route path="/servizi/psicologo" element={<Psicologo />} />
                 <Route path="/servizi/massoterapia" element={<Massoterapia />} />
+
+                {/* New SEO pages for Legnago keywords */}
+                <Route path="/palestra-legnago" element={<PalestraLegnago />} />
+                <Route path="/dimagrire-legnago" element={<DimagrireLegnago />} />
+                <Route path="/mal-di-schiena-legnago" element={<MalDiSchienaLegnago />} />
+                <Route path="/massaggio-sportivo-legnago" element={<MassaggioSportivoLegnago />} />
 
                 {/* Legacy SEO pages - redirects */}
                 <Route path="/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
