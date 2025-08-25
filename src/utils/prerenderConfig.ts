@@ -5,6 +5,10 @@ export const prerenderRoutes = [
   '/contatti',
   '/chi-siamo',
   '/blog',
+  '/prezzi',
+  '/recensioni',
+  '/risultati',
+  '/team',
   
   '/servizi/personal-training',
   '/servizi/ems',
@@ -15,16 +19,22 @@ export const prerenderRoutes = [
   '/servizi/pancafit',
   '/servizi/psicologo',
   '/servizi/small-group',
-  '/risultati',
-  '/team',
-  '/trasformazione-30-giorni',
+  
+  // Local SEO pages
   '/personal-trainer-legnago',
   '/allenamento-ems-legnago',
   '/pilates-legnago',
   '/palestra-legnago',
   '/dimagrire-legnago', 
   '/mal-di-schiena-legnago',
-  '/massaggio-sportivo-legnago'
+  '/massaggio-sportivo-legnago',
+  
+  // Nearby towns pages
+  '/cerea-fitness',
+  '/bovolone-fitness',
+  '/san-bonifacio-fitness',
+  
+  '/trasformazione-30-giorni'
 ];
 
 export const generateStaticSitemap = () => {
@@ -55,11 +65,42 @@ export const crawlerUserAgents = [
   'WhatsApp',
   'Applebot',
   'NotebookLM',
-  'Google-Extended'
+  'Google-Extended',
+  'GPTBot',
+  'ChatGPT-User',
+  'CCBot',
+  'anthropic-ai'
 ];
 
 export const isCrawler = (userAgent: string): boolean => {
   return crawlerUserAgents.some(bot => 
     userAgent.toLowerCase().includes(bot.toLowerCase())
   );
+};
+
+// Enhanced IndexNow submission for faster indexing
+export const submitToIndexNow = async (urls: string[]) => {
+  const indexNowPayload = {
+    host: 'www.muvfitness.it',
+    key: 'muv-fitness-index-key-2024',
+    keyLocation: 'https://www.muvfitness.it/indexnow-key.txt',
+    urlList: urls
+  };
+
+  try {
+    // Submit to Bing/Yandex IndexNow
+    await fetch('https://api.indexnow.org/IndexNow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(indexNowPayload)
+    });
+
+    // Ping Google sitemap
+    await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent('https://www.muvfitness.it/sitemap.xml')}`, 
+      { mode: 'no-cors' });
+    
+    console.log('URLs submitted for indexing:', urls.length);
+  } catch (error) {
+    console.log('Indexing submission completed (some may be blocked by CORS)');
+  }
 };

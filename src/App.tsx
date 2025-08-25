@@ -65,6 +65,11 @@ import DimagrireLegnago from "./pages/DimagrireLegnago";
 import MalDiSchienaLegnago from "./pages/MalDiSchienaLegnago";
 import MassaggioSportivoLegnago from "./pages/MassaggioSportivoLegnago";
 
+// Nearby towns SEO pages
+import CereaFitness from "./pages/CereaFitness";
+import BovaloneFitness from "./pages/BovaloneFitness";
+import SanBonifacioFitness from "./pages/SanBonifacioFitness";
+
 
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
@@ -143,6 +148,11 @@ const AppContent = () => {
                 <Route path="/dimagrire-legnago" element={<DimagrireLegnago />} />
                 <Route path="/mal-di-schiena-legnago" element={<MalDiSchienaLegnago />} />
                 <Route path="/massaggio-sportivo-legnago" element={<MassaggioSportivoLegnago />} />
+                
+                {/* Nearby towns SEO pages */}
+                <Route path="/cerea-fitness" element={<CereaFitness />} />
+                <Route path="/bovolone-fitness" element={<BovaloneFitness />} />
+                <Route path="/san-bonifacio-fitness" element={<SanBonifacioFitness />} />
 
                 {/* Legacy SEO pages - redirects */}
                 <Route path="/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />

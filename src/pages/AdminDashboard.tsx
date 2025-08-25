@@ -3,11 +3,12 @@ import { Helmet } from 'react-helmet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, FileText, BarChart3, Settings, Users, LogOut } from 'lucide-react';
+import { Plus, FileText, BarChart3, Settings, Users, LogOut, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
 import { BlogContentFixer } from '@/components/admin/BlogContentFixer';
+import BlogSEOAuditor from '@/components/SEO/BlogSEOAuditor';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -111,6 +112,19 @@ const AdminDashboard = () => {
                     </CardContent>
                   </Card>
                 </div>
+
+                {/* SEO Blog Auditor */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Search className="h-5 w-5" />
+                      Audit SEO Blog
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <BlogSEOAuditor />
+                  </CardContent>
+                </Card>
 
                 {/* Articles List */}
                 <div className="text-muted-foreground">Il blog è stato dismesso.</div>
