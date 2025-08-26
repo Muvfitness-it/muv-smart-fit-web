@@ -68,7 +68,7 @@ import MassaggioSportivoLegnago from "./pages/MassaggioSportivoLegnago";
 import CereaFitness from "./pages/CereaFitness";
 import BovaloneFitness from "./pages/BovaloneFitness";
 import SanBonifacioFitness from "./pages/SanBonifacioFitness";
-
+import { SecureDataHandler } from "@/components/security/SecureDataHandler";
 
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
@@ -98,6 +98,7 @@ const AppContent = () => {
   return (
     <SessionSecurity>
       <SecurityHeaders />
+      <SecureDataHandler />
       <PerformanceOptimizer />
       <CriticalCSS />
       <div className="min-h-screen bg-background text-foreground">

@@ -121,7 +121,7 @@ const ContactForm = () => {
       console.log('Sending contact form data:', formData);
       console.log('Current domain:', window.location.origin);
 
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+      const { data, error } = await supabase.functions.invoke('secure-contact', {
         body: {
           name: formData.nome.trim(),
           email: formData.email.toLowerCase().trim(),

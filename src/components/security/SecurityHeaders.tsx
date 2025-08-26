@@ -10,23 +10,22 @@ export const SecurityHeaders = () => {
 
   return (
     <Helmet>
-      {/* Content Security Policy - Hardened with dynamic nonces */}
+      {/* Content Security Policy - Hardened security with nonces */}
       <meta httpEquiv="Content-Security-Policy" content={`
         default-src 'self';
-        script-src 'self' 'nonce-${nonces.script}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net;
+        script-src 'self' 'nonce-${nonces.script}' https://www.googletagmanager.com https://www.google-analytics.com;
         style-src 'self' 'nonce-${nonces.style}' https://fonts.googleapis.com;
-        font-src 'self' https://fonts.gstatic.com data:;
-        img-src 'self' data: https: blob: https://baujoowgqeyraqnukkmw.supabase.co;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https://baujoowgqeyraqnukkmw.supabase.co https://www.google.com;
         connect-src 'self' https://baujoowgqeyraqnukkmw.supabase.co https://*.supabase.co wss://baujoowgqeyraqnukkmw.supabase.co wss://*.supabase.co https://api.ipify.org https://www.google-analytics.com;
         worker-src 'self' blob:;
         frame-ancestors 'self' https://*.lovable.app https://*.lovable.dev;
-        frame-src 'self' https://www.youtube.com https://youtube.com;
+        frame-src 'self' https://www.youtube.com;
         object-src 'none';
         base-uri 'self';
         form-action 'self' https://baujoowgqeyraqnukkmw.supabase.co;
         upgrade-insecure-requests;
         block-all-mixed-content;
-        require-trusted-types-for 'script';
       `} />
       
       {/* Prevent MIME type sniffing */}

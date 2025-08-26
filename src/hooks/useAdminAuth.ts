@@ -146,10 +146,9 @@ export const useAdminAuth = () => {
         return { error };
       }
 
-      // Se la registrazione è riuscita, prova a registrare come admin
-      if (data.user) {
-        await registerAsAdmin(data.user.id, email);
-      }
+      // SECURITY: Removed automatic admin registration
+      // Admin privileges must be granted through secure server-side processes
+      console.log('User registered successfully. Admin access requires manual approval.');
 
       toast({
         title: "Registrazione completata",
