@@ -13,12 +13,16 @@ const corsHeaders = {
 };
 
 interface ContactEmailRequest {
-  name: string;
+  nome?: string; // For LandingForm
+  name?: string; // For ContactForm
   email: string;
-  message: string;
+  messaggio?: string; // For LandingForm
+  message?: string; // For ContactForm
   telefono?: string;
-  city: string;
-  goal: string;
+  city?: string;
+  goal?: string;
+  campaign?: string;
+  source?: string;
 }
 
 // Simple in-memory rate limiting (reset on function restart)
@@ -43,17 +47,25 @@ const checkRateLimit = (ip: string): boolean => {
 };
 
 const validateInput = (data: any): string | null => {
+  // Get name from either field
+  const name = data.nome || data.name;
+  const message = data.messaggio || data.message;
+  
   // Basic input validation and sanitization
-  if (typeof data.name !== 'string' || data.name.trim().length < 2 || data.name.length > 100) {
+  if (!name || typeof name !== 'string' || name.trim().length < 2 || name.length > 100) {
     return 'Nome non valido';
   }
-  if (typeof data.message !== 'string' || data.message.trim().length < 10 || data.message.length > 2000) {
-    return 'Messaggio non valido (min 10, max 2000 caratteri)';
+  
+  // Message is optional for landing forms, but if present must be valid
+  if (message && (typeof message !== 'string' || message.trim().length < 1 || message.length > 2000)) {
+    return 'Messaggio non valido (max 2000 caratteri)';
   }
-  if (typeof data.city !== 'string' || data.city.trim().length < 2 || data.city.length > 100) {
+  
+  // City and goal are optional for landing forms
+  if (data.city && (typeof data.city !== 'string' || data.city.trim().length < 2 || data.city.length > 100)) {
     return 'Città non valida';
   }
-  if (typeof data.goal !== 'string' || data.goal.trim().length < 2 || data.goal.length > 200) {
+  if (data.goal && (typeof data.goal !== 'string' || data.goal.trim().length < 2 || data.goal.length > 200)) {
     return 'Obiettivo non valido';
   }
   
@@ -64,7 +76,7 @@ const validateInput = (data: any): string | null => {
     /(.)\1{10,}/gi,   // Repeated characters
   ];
   
-  const fullText = `${data.name} ${data.message} ${data.city} ${data.goal}`.toLowerCase();
+  const fullText = `${name} ${message || ''} ${data.city || ''} ${data.goal || ''}`.toLowerCase();
   for (const pattern of spamPatterns) {
     if (pattern.test(fullText)) {
       return 'Contenuto non consentito rilevato';
@@ -121,12 +133,15 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { name, email, message, telefono, city, goal } = requestData;
+    // Extract data from either form format
+    const name = requestData.nome || requestData.name;
+    const message = requestData.messaggio || requestData.message;
+    const { email, telefono, city, goal, campaign, source } = requestData;
 
-    // Validate required fields
-    if (!name || !email || !message || !city || !goal) {
+    // Validate required fields (email and name are always required)
+    if (!name || !email) {
       return new Response(
-        JSON.stringify({ error: "Campi obbligatori mancanti" }),
+        JSON.stringify({ error: "Nome e email sono obbligatori" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -150,10 +165,12 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedData = {
       name: name.trim().substring(0, 100),
       email: email.trim().toLowerCase(),
-      message: message.trim().substring(0, 2000),
+      message: message ? message.trim().substring(0, 2000) : '',
       telefono: telefono?.trim().substring(0, 20),
-      city: city.trim().substring(0, 100),
-      goal: goal.trim().substring(0, 200)
+      city: city ? city.trim().substring(0, 100) : '',
+      goal: goal ? goal.trim().substring(0, 200) : '',
+      campaign: campaign || '',
+      source: source || 'contact_form'
     };
 
     console.log("Processing contact form submission:", { 
@@ -168,16 +185,17 @@ const handler = async (req: Request): Promise<Response> => {
     const businessEmailResponse = await resend.emails.send({
       from: "Centro MUV <noreply@muvfitness.it>",
       to: ["info@muvfitness.it"],
-      subject: `Nuova richiesta di contatto da ${sanitizedData.name}`,
+      subject: `Nuova richiesta di contatto da ${sanitizedData.name}${sanitizedData.campaign ? ` - ${sanitizedData.campaign}` : ''}`,
       html: `
         <h2>Nuova richiesta di contatto</h2>
         <p><strong>Nome:</strong> ${sanitizedData.name}</p>
         <p><strong>Email:</strong> ${sanitizedData.email}</p>
-        <p><strong>Città:</strong> ${sanitizedData.city}</p>
-        <p><strong>Obiettivo:</strong> ${sanitizedData.goal}</p>
         ${sanitizedData.telefono ? `<p><strong>Telefono:</strong> ${sanitizedData.telefono}</p>` : ''}
-        <p><strong>Messaggio:</strong></p>
-        <p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>
+        ${sanitizedData.city ? `<p><strong>Città:</strong> ${sanitizedData.city}</p>` : ''}
+        ${sanitizedData.goal ? `<p><strong>Obiettivo:</strong> ${sanitizedData.goal}</p>` : ''}
+        ${sanitizedData.message ? `<p><strong>Messaggio:</strong></p><p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>` : '<p><strong>Messaggio:</strong> Nessun messaggio specificato</p>'}
+        ${sanitizedData.campaign ? `<p><strong>Campagna:</strong> ${sanitizedData.campaign}</p>` : ''}
+        <p><strong>Sorgente:</strong> ${sanitizedData.source}</p>
         <hr>
         <p><em>Questo messaggio è stato inviato dal modulo contatti del sito web.</em></p>
         <p><small>IP del cliente: ${clientIP}</small></p>
@@ -194,8 +212,7 @@ const handler = async (req: Request): Promise<Response> => {
       html: `
         <h2>Ciao ${sanitizedData.name}!</h2>
         <p>Grazie per averci contattato. Abbiamo ricevuto la tua richiesta per il check-up gratuito.</p>
-        <p><strong>Il tuo messaggio:</strong></p>
-        <p style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">${sanitizedData.message.replace(/\n/g, '<br>')}</p>
+        ${sanitizedData.message ? `<p><strong>Il tuo messaggio:</strong></p><p style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">${sanitizedData.message.replace(/\n/g, '<br>')}</p>` : ''}
         <p>Ti contatteremo presto per fissare il tuo appuntamento per il check-up completo del valore di €80, completamente gratuito per te.</p>
         <p>A presto!</p>
         <p><strong>Il Team di Centro MUV</strong></p>
