@@ -153,13 +153,6 @@ const Recensioni = () => {
                 </CardContent>
               </Card>
             </div>
-            {/* Sidebar */}
-            <div className="space-y-8">
-              {/* QR Code */}
-              <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg">Scarica il QR da stampare</CardTitle>
-                </CardHeader>
                 <CardContent className="text-center space-y-4">
                   <div className="bg-white p-4 rounded-lg inline-block">
                     <img 
