@@ -21,10 +21,10 @@ const Index = () => {
         "name": "MUV Fitness Legnago",
         "url": "https://www.muvfitness.it",
         "logo": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-        "description": "Centro fitness smart a Legnago con EMS, Personal Training, Pancafit, Pilates Reformer. Tecnologie avanzate per risultati garantiti.",
+        "description": "Centro fitness a Legnago con EMS, Personal Training, Pancafit, Pilates Reformer. Tecnologie avanzate per risultati garantiti.",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Via Roma 123",
+          "streetAddress": "Via Venti Settembre, 7",
           "addressLocality": "Legnago",
           "addressRegion": "Veneto",
           "postalCode": "37045",
@@ -53,7 +53,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-900">
       <SEOOptimizer
-        title="MUV Fitness Legnago – Centro Fitness Smart con Personal Trainer"
+        title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
         description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
         canonicalUrl="https://www.muvfitness.it/"
         structuredData={structuredData}
