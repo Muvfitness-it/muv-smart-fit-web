@@ -190,6 +190,7 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     scroll-behavior: smooth;
+    padding-top: var(--header-height);
   }
   
   /* Enhanced scrollbar */
