@@ -16,7 +16,7 @@ const NewHeroSection = () => {
       <div className="relative z-10 flex flex-col flex-1">
         
         {/* Title Section */}
-        <div className="flex-1 flex items-center justify-center px-4 py-20">
+        <div className="flex-1 flex items-center justify-center px-4 py-20 pt-[calc(var(--header-height)+1rem)] md:pt-[calc(var(--header-height)+2rem)]">
           <div className="text-center max-w-6xl mx-auto">
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 text-white leading-tight">
               <span className="block leading-tight drop-shadow-2xl">

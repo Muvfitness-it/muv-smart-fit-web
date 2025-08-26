@@ -64,7 +64,7 @@ const Navigation = () => {
     name: "Admin",
     path: "/admin/auth"
   }];
-  return <nav className={`site-header fixed w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - made significantly larger */}
