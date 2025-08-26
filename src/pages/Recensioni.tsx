@@ -84,26 +84,25 @@ const Recensioni = () => {
               <span className="text-brand-primary"> Inizia da Google – è il canale più utile.</span>
             </p>
           </div>
-
           <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* Main Review Section */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Google Reviews - Primary */}
-              <Card className="bg-gray-800/50 border-brand-primary/20 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-2xl">
-                    <Star className="w-6 h-6 text-yellow-500" />
-                    Lascia la tua recensione su Google (consigliato)
-                  </CardTitle>
-                </CardHeader>
+  {/* Main Review Section */}
+  <div className="lg:col-span-2 space-y-8">
+    {/* Google Reviews - Primary */}
+    <Card className="bg-gray-800/50 border-brand-primary/20 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3 text-2xl text-magenta-500">
+          <Star className="w-6 h-6 text-yellow-500" />
+          Lascia la tua recensione su Google (consigliato)
+        </CardTitle>
+      </CardHeader>
+    </Card>
+  </div>
+</div>
                 <CardContent className="space-y-6">
                   <Button 
                     size="lg"
                     className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-4 text-lg min-h-[44px]"
-                    onClick={() => {
-                      handleReputationClick('google');
-                      window.open('https://g.page/r/CffA03OKdKiQEBM/review', '_blank');
-                    }}
+                    onClick={() => handleReputationClick('google')}
                     aria-label="Lascia una recensione su Google per MUV Fitness Legnago"
                   >
                     <Star className="w-5 h-5 mr-2" />
@@ -112,7 +111,7 @@ const Recensioni = () => {
                   
                   <div className="bg-gray-900/50 rounded-lg p-4">
                     <h3 className="font-semibold mb-3 text-brand-primary">3 step veloci:</h3>
-                    <ol className="space-y-2 text-brand-accent">
+                    <ol className="space-y-2 text-gray-300">
                       <li className="flex items-start gap-2">
                         <span className="bg-brand-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">1</span>
                         Clicca il pulsante sopra (si apre Google)
@@ -171,7 +170,7 @@ const Recensioni = () => {
                   <CardTitle className="text-xl">Esempi utili (cosa scrivere)</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-4 text-brand-accent">
+                  <ul className="space-y-4 text-gray-300">
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
                       <strong className="text-white">Il tuo obiettivo iniziale:</strong> "Volevo perdere peso" / "Cercavo di risolvere il mal di schiena" / "Mi serviva più energia"
@@ -199,12 +198,30 @@ const Recensioni = () => {
                 <CardContent className="text-center space-y-4">
                   <div className="bg-white p-4 rounded-lg inline-block">
                     <img 
-                      src="/lovable-uploads/9e3cc6b3-cff1-4758-b569-e24dc60a40ec.png" 
+                      src="/media/qr/QR_MUV_recensioni.png" 
                       alt="QR recensioni MUV Fitness Legnago" 
                       width="200" 
                       height="200" 
                       loading="lazy"
                       className="w-full max-w-[200px] h-auto"
+                      onError={(e) => {
+                        // Fallback to canvas-generated QR
+                        e.currentTarget.style.display = 'none';
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 200;
+                        canvas.height = 200;
+                        const ctx = canvas.getContext('2d');
+                        if (ctx) {
+                          ctx.fillStyle = '#f3f4f6';
+                          ctx.fillRect(0, 0, 200, 200);
+                          ctx.fillStyle = '#374151';
+                          ctx.font = '14px sans-serif';
+                          ctx.textAlign = 'center';
+                          ctx.fillText('QR Code', 100, 95);
+                          ctx.fillText('in arrivo', 100, 115);
+                        }
+                        e.currentTarget.parentNode?.appendChild(canvas);
+                      }}
                     />
                   </div>
                   <Button 
@@ -224,7 +241,7 @@ const Recensioni = () => {
                   <CardTitle className="text-lg">Privacy e trasparenza</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-brand-accent text-sm leading-relaxed">
+                  <p className="text-gray-300 text-sm leading-relaxed">
                     Le recensioni su Google, Facebook e altre piattaforme sono pubbliche e visibili a tutti. 
                     Non offriamo incentivi economici per le recensioni – chiediamo solo onestà. 
                     La tua esperienza autentica è il miglior regalo per noi e per chi ci scoprirà.
