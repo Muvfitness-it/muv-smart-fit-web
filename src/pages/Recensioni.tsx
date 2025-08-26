@@ -130,40 +130,6 @@ const Recensioni = () => {
               </Card>
 
               {/* Other Channels */}
-              <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-xl">Altri canali utili</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      className="w-full justify-start text-left min-h-[44px] border-gray-600 hover:border-brand-primary hover:bg-brand-primary/10"
-                      onClick={() => handleReputationClick('facebook')}
-                    >
-                      Facebook Reviews
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      className="w-full justify-start text-left min-h-[44px] border-gray-600 hover:border-brand-primary hover:bg-brand-primary/10"
-                      onClick={() => handleReputationClick('wellhub')}
-                    >
-                      Wellhub Reviews
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      className="w-full justify-start text-left min-h-[44px] border-gray-600 hover:border-brand-primary hover:bg-brand-primary/10"
-                      onClick={() => handleReputationClick('tripadvisor')}
-                    >
-                      Tripadvisor Reviews
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Examples */}
               <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
                 <CardHeader>
@@ -187,7 +153,6 @@ const Recensioni = () => {
                 </CardContent>
               </Card>
             </div>
-
             {/* Sidebar */}
             <div className="space-y-8">
               {/* QR Code */}
