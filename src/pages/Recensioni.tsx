@@ -85,24 +85,24 @@ const Recensioni = () => {
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-  {/* Main Review Section */}
-  <div className="lg:col-span-2 space-y-8">
-    {/* Google Reviews - Primary */}
-    <Card className="bg-gray-800/50 border-brand-primary/20 backdrop-blur-sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3 text-2xl text-magenta-500">
-          <Star className="w-6 h-6 text-yellow-500" />
-          Lascia la tua recensione su Google (consigliato)
-        </CardTitle>
-      </CardHeader>
-    </Card>
-  </div>
-</div>
+            {/* Main Review Section */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Google Reviews - Primary */}
+              <Card className="bg-gray-800/50 border-brand-primary/20 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-2xl text-magenta-500">
+                    <Star className="w-6 h-6 text-yellow-500" />
+                    Lascia la tua recensione su Google (consigliato)
+                  </CardTitle>
+                </CardHeader>
                 <CardContent className="space-y-6">
                   <Button 
                     size="lg"
                     className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-4 text-lg min-h-[44px]"
-                    onClick={() => handleReputationClick('google')}
+                    onClick={() => {
+                      handleReputationClick('google');
+                      window.open('https://g.page/r/CffA03OKdKiQEBM/review', '_blank');
+                    }}
                     aria-label="Lascia una recensione su Google per MUV Fitness Legnago"
                   >
                     <Star className="w-5 h-5 mr-2" />
@@ -173,15 +173,15 @@ const Recensioni = () => {
                   <ul className="space-y-4 text-gray-300">
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-white">Il tuo obiettivo iniziale:</strong> "Volevo perdere peso" / "Cercavo di risolvere il mal di schiena" / "Mi serviva più energia"
+                      <strong className="text-magenta-500">Il tuo obiettivo iniziale:</strong> "Volevo perdere peso" / "Cercavo di risolvere il mal di schiena" / "Mi serviva più energia"
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-white">Come ti sei trovato:</strong> Staff attento, ambienti puliti, tecnologie innovative (EMS, Pilates Reformer, ecc.)
+                      <strong className="text-magenta-500">Come ti sei trovato:</strong> Staff attento, ambienti puliti, tecnologie innovative (EMS, Pilates Reformer, ecc.)
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-white">I risultati:</strong> Centimetri persi, settimane necessarie, energia ritrovata, postura migliorata
+                      <strong className="text-magenta-500">I risultati:</strong> Centimetri persi, settimane necessarie, energia ritrovata, postura migliorata
                     </li>
                   </ul>
                 </CardContent>
