@@ -152,47 +152,7 @@ const Recensioni = () => {
                   </ul>
                 </CardContent>
               </Card>
-            </div>
-                <CardContent className="text-center space-y-4">
-                  <div className="bg-white p-4 rounded-lg inline-block">
-                    <img 
-                      src="/media/qr/QR_MUV_recensioni.png" 
-                      alt="QR recensioni MUV Fitness Legnago" 
-                      width="200" 
-                      height="200" 
-                      loading="lazy"
-                      className="w-full max-w-[200px] h-auto"
-                      onError={(e) => {
-                        // Fallback to canvas-generated QR
-                        e.currentTarget.style.display = 'none';
-                        const canvas = document.createElement('canvas');
-                        canvas.width = 200;
-                        canvas.height = 200;
-                        const ctx = canvas.getContext('2d');
-                        if (ctx) {
-                          ctx.fillStyle = '#f3f4f6';
-                          ctx.fillRect(0, 0, 200, 200);
-                          ctx.fillStyle = '#374151';
-                          ctx.font = '14px sans-serif';
-                          ctx.textAlign = 'center';
-                          ctx.fillText('QR Code', 100, 95);
-                          ctx.fillText('in arrivo', 100, 115);
-                        }
-                        e.currentTarget.parentNode?.appendChild(canvas);
-                      }}
-                    />
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full min-h-[44px] border-gray-600 hover:border-brand-primary hover:bg-brand-primary/10"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Scarica QR in PNG
-                  </Button>
-                </CardContent>
-              </Card>
-
+            </div>     
               {/* Privacy */}
               <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
                 <CardHeader>
