@@ -630,6 +630,7 @@ export type Database = {
           id: string
           identifier: string
           requests_count: number | null
+          updated_at: string | null
           window_start: string | null
         }
         Insert: {
@@ -638,6 +639,7 @@ export type Database = {
           id?: string
           identifier: string
           requests_count?: number | null
+          updated_at?: string | null
           window_start?: string | null
         }
         Update: {
@@ -646,6 +648,7 @@ export type Database = {
           id?: string
           identifier?: string
           requests_count?: number | null
+          updated_at?: string | null
           window_start?: string | null
         }
         Relationships: []
