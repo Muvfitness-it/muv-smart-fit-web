@@ -63,6 +63,15 @@ const ContactForm = () => {
       return false;
     }
 
+    if (!formData.telefono.trim()) {
+      toast({
+        title: "Errore",
+        description: "Il telefono è obbligatorio.",
+        variant: "destructive"
+      });
+      return false;
+    }
+
     if (!formData.obiettivo.trim()) {
       toast({
         title: "Errore",
@@ -191,7 +200,7 @@ const ContactForm = () => {
           </div>
           
           <div>
-            <label htmlFor="telefono" className="block text-sm font-medium mb-2 text-gray-200">Telefono</label>
+            <label htmlFor="telefono" className="block text-sm font-medium mb-2 text-gray-200">Telefono *</label>
             <Input
               id="telefono"
               name="telefono"
@@ -201,6 +210,7 @@ const ContactForm = () => {
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="Il tuo numero di telefono"
               disabled={isSubmitting}
+              required
             />
           </div>
           
