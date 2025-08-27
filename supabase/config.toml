@@ -39,6 +39,16 @@ enable_leaked_password_protection = true
 timebox = 3600
 inactivity_timeout = 1800
 
+# Enable leaked password protection (security fix)
+[auth.password_security]
+password_min_length = 8
+password_require_uppercase = true
+password_require_lowercase = true 
+password_require_numbers = true
+password_require_special = true
+max_password_length = 128
+enable_leaked_password_protection = true
+
 # Secure endpoints - require authentication or HMAC
 [functions.log-visit]
 verify_jwt = false

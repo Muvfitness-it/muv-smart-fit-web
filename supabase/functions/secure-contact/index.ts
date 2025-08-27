@@ -144,7 +144,7 @@ serve(async (req) => {
     const rateLimitPassed = await checkRateLimit(clientIP, supabase);
     if (!rateLimitPassed) {
       // Log security event
-      await supabase.rpc('log_security_event', {
+      await supabase.rpc('log_security_event_safe', {
         event_type_param: 'rate_limit_exceeded',
         event_data_param: { endpoint: 'secure-contact', ip: clientIP },
         ip_param: clientIP
@@ -258,7 +258,7 @@ serve(async (req) => {
 
     if (isSpam || isSuspicious) {
       // Log security event
-      await supabase.rpc('log_security_event', {
+      await supabase.rpc('log_security_event_safe', {
         event_type_param: 'spam_detected',
         event_data_param: { 
           endpoint: 'secure-contact',
@@ -361,9 +361,9 @@ serve(async (req) => {
       // Continue processing even if user email fails
     }
 
-    // Log security audit event (without PII)
+    // Log security audit event (without PII) - using new safe function
     try {
-      await supabase.rpc('log_security_event', {
+      await supabase.rpc('log_security_event_safe', {
         event_type_param: 'contact_form_submission',
         event_data_param: {
           message_length: message.length,
@@ -402,7 +402,7 @@ serve(async (req) => {
     
     // Log security event for errors
     try {
-      await supabase.rpc('log_security_event', {
+      await supabase.rpc('log_security_event_safe', {
         event_type_param: 'contact_form_error',
         event_data_param: { 
           error_message: error.message,

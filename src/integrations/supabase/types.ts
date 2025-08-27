@@ -822,6 +822,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_security_event_safe: {
+        Args: {
+          event_data_param?: Json
+          event_type_param: string
+          ip_param?: string
+          user_agent_param?: string
+        }
+        Returns: undefined
+      }
       log_unauthorized_access_attempt: {
         Args: Record<PropertyKey, never>
         Returns: undefined
