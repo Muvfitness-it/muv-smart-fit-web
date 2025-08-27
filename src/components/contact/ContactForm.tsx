@@ -1,12 +1,10 @@
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useInputValidation } from "@/hooks/useInputValidation";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -18,207 +16,123 @@ const ContactForm = () => {
     obiettivo: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [csrfToken, setCsrfToken] = useState("");
-  const [submissionCount, setSubmissionCount] = useState(0);
-  const [lastSubmission, setLastSubmission] = useState(0);
-  const { validators, sanitizeHtml } = useInputValidation();
-
-  // Generate CSRF token on component mount
-  useEffect(() => {
-    const token = crypto.randomUUID();
-    setCsrfToken(token);
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
-    // Apply length limits and basic sanitization
-    let sanitizedValue = value;
-    
-    if (name === 'nome' || name === 'citta') {
-      sanitizedValue = value.slice(0, 50); // Limit name and city length
-    } else if (name === 'email') {
-      sanitizedValue = value.slice(0, 254); // Standard email max length
-    } else if (name === 'telefono') {
-      sanitizedValue = value.slice(0, 20); // Phone number limit
-    } else if (name === 'messaggio') {
-      sanitizedValue = value.slice(0, 2000); // Message limit
-    }
-    
     setFormData(prev => ({
       ...prev,
-      [name]: sanitizedValue
+      [name]: value
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Rate limiting check (max 3 submissions per 10 minutes)
-    const now = Date.now();
-    const timeWindow = 10 * 60 * 1000; // 10 minutes in milliseconds
-    
-    if (lastSubmission && (now - lastSubmission < timeWindow) && submissionCount >= 3) {
-      toast({
-        title: "Troppi tentativi",
-        description: "Hai effettuato troppi invii. Riprova tra qualche minuto.",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    // Reset submission count if outside time window
-    if (!lastSubmission || (now - lastSubmission >= timeWindow)) {
-      setSubmissionCount(0);
-    }
-    
-    // Comprehensive validation (telefono is optional)
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
+  const validateForm = () => {
+    if (!formData.nome.trim()) {
       toast({
         title: "Errore",
-        description: "Tutti i campi sono obbligatori.",
+        description: "Il nome è obbligatorio.",
         variant: "destructive"
       });
-      return;
+      return false;
     }
 
-    // Validate email
-    if (!validators.email(formData.email)) {
+    if (!formData.email.trim()) {
+      toast({
+        title: "Errore",
+        description: "L'email è obbligatoria.",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
       toast({
         title: "Errore",
         description: "Inserisci un indirizzo email valido.",
         variant: "destructive"
       });
-      return;
+      return false;
     }
 
-    // Validate name
-    if (!validators.name(formData.nome)) {
+    if (!formData.citta.trim()) {
       toast({
         title: "Errore",
-        description: "Il nome contiene caratteri non validi.",
+        description: "La città è obbligatoria.",
         variant: "destructive"
       });
-      return;
+      return false;
     }
 
-    // Validate phone if provided (telefono is optional)
-    if (formData.telefono && !validators.phone(formData.telefono)) {
+    if (!formData.obiettivo.trim()) {
       toast({
         title: "Errore",
-        description: "Inserisci un numero di telefono valido.",
+        description: "Seleziona un obiettivo.",
         variant: "destructive"
       });
-      return;
+      return false;
     }
 
-    // Sanitize message content
-    const sanitizedMessage = sanitizeHtml(formData.messaggio);
+    if (!formData.messaggio.trim()) {
+      toast({
+        title: "Errore",
+        description: "Il messaggio è obbligatorio.",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
 
     setIsSubmitting(true);
 
     try {
-      console.log('Sending contact form data:', {
-        nome: formData.nome,
-        email: formData.email,
-        citta: formData.citta,
-        obiettivo: formData.obiettivo,
-        messaggioLength: sanitizedMessage.length
-      });
-      console.log('Current domain:', window.location.origin);
-
-      // Send to secure-contact function
       const { data, error } = await supabase.functions.invoke('secure-contact', {
         body: {
           name: formData.nome.trim(),
           email: formData.email.toLowerCase().trim(),
-          message: sanitizedMessage,
+          message: formData.messaggio.trim(),
           telefono: formData.telefono.trim(),
           city: formData.citta.trim(),
-          goal: formData.obiettivo,
-          csrfToken: csrfToken,
-          timestamp: now
+          goal: formData.obiettivo
         }
       });
 
-      console.log('Response from edge function:', { data, error });
-
-      // Check for Supabase client errors (network, CORS, etc.)
       if (error) {
-        console.error('Supabase function error:', error);
-        
-        // Handle specific error types
-        if (error.message?.includes('FunctionsRelayError')) {
-          // Extract the actual error from the relay error
-          const match = error.message.match(/Edge Function returned a non-2xx status code: (\d+)/);
-          if (match) {
-            const statusCode = parseInt(match[1]);
-            if (statusCode === 429) {
-              throw new Error('Troppe richieste. Riprova tra 15 minuti.');
-            } else if (statusCode === 400) {
-              throw new Error('Dati del modulo non validi. Verifica tutti i campi.');
-            } else if (statusCode >= 500) {
-              throw new Error('Errore del server. Riprova più tardi.');
-            }
-          }
-        }
-        
-        throw new Error(error.message || 'Errore nella comunicazione con il server');
+        throw new Error(error.message || 'Errore nell\'invio del messaggio');
       }
 
-      // Check if the edge function returned an error response
       if (data?.success === false) {
-        console.error('Edge function returned error:', data);
         throw new Error(data.error || 'Errore del server');
       }
 
-      // Check if we have a successful response
-      if (!data || !data.success) {
-        console.error('Unexpected response format:', data);
-        throw new Error('Risposta del server non valida');
-      }
-
-      console.log('Email sent successfully:', data);
-
-      // Track successful submission
-      setSubmissionCount(prev => prev + 1);
-      setLastSubmission(now);
-
       toast({
         title: "Messaggio inviato!",
-        description: "Ti contatteremo presto per il tuo check-up gratuito. Controlla anche la tua email per la conferma.",
+        description: "Ti contatteremo presto per il tuo check-up gratuito.",
       });
       
-      setFormData({ nome: "", email: "", telefono: "", messaggio: "", citta: "", obiettivo: "" });
+      setFormData({ 
+        nome: "", 
+        email: "", 
+        telefono: "", 
+        messaggio: "", 
+        citta: "", 
+        obiettivo: "" 
+      });
+
     } catch (error: any) {
       console.error('Error sending contact form:', error);
       
-      // Provide more specific error messages
-      let errorMessage = "Si è verificato un errore nell'invio del messaggio.";
-      let errorTitle = "Errore";
-      
-      if (error.message?.includes('Failed to fetch')) {
-        errorMessage = "Problema di connessione. Verifica la tua connessione internet e riprova.";
-        errorTitle = "Connessione";
-      } else if (error.message?.includes('CORS')) {
-        errorMessage = "Errore di configurazione del server. Contattaci direttamente al +39 329 107 0374.";
-        errorTitle = "Configurazione";
-      } else if (error.message?.includes('Troppe richieste')) {
-        errorMessage = "Hai inviato troppe richieste. Per favore attendi 15 minuti prima di riprovare.";
-        errorTitle = "Limite raggiunto";
-      } else if (error.message?.includes('Dati del modulo non validi')) {
-        errorMessage = "Alcuni campi del modulo contengono errori. Verifica tutti i dati inseriti.";
-        errorTitle = "Dati non validi";
-      } else if (error.message?.includes('Contenuto non consentito')) {
-        errorMessage = "Il messaggio contiene contenuti non consentiti. Rimuovi eventuali link o contenuti commerciali.";
-        errorTitle = "Contenuto bloccato";
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-      
       toast({
-        title: errorTitle,
-        description: errorMessage,
+        title: "Errore",
+        description: error.message || "Si è verificato un errore nell'invio del messaggio.",
         variant: "destructive"
       });
     } finally {
