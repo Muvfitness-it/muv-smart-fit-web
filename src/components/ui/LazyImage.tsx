@@ -57,12 +57,17 @@ const LazyImage = ({
     setHasError(true);
     onError?.();
   };
-  // Generate WebP source if supported
+  // Generate WebP source with fallback
   const getWebPSrc = (originalSrc: string) => {
-    if (originalSrc.includes('.jpg') || originalSrc.includes('.png')) {
-      return originalSrc.replace(/\.(jpg|png)$/i, '.webp');
+    if (originalSrc.includes('.jpg') || originalSrc.includes('.jpeg') || originalSrc.includes('.png')) {
+      return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
     }
     return originalSrc;
+  };
+
+  // Generate srcSet for WebP with different sizes
+  const getWebPSrcSet = (originalSrcSet: string) => {
+    return originalSrcSet.replace(/\.(jpg|jpeg|png)/gi, '.webp');
   };
 
   return (
@@ -73,7 +78,11 @@ const LazyImage = ({
     >
       {isInView && !hasError ? (
         <picture>
-          <source srcSet={srcSet ? srcSet.replace(/\.(jpg|png)/gi, '.webp') : getWebPSrc(src)} type="image/webp" />
+          <source 
+            srcSet={srcSet ? getWebPSrcSet(srcSet) : getWebPSrc(src)} 
+            sizes={sizes}
+            type="image/webp" 
+          />
           <img
             src={src}
             srcSet={srcSet}
@@ -82,7 +91,7 @@ const LazyImage = ({
             width={width}
             height={height}
             className={cn(
-              "transition-opacity duration-500 ease-out",
+              "transition-opacity duration-500 ease-out w-full h-full object-cover",
               isLoaded ? "opacity-100" : "opacity-0",
               className
             )}
@@ -90,6 +99,7 @@ const LazyImage = ({
             onError={handleError}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
+            fetchPriority={priority ? "high" : "auto"}
           />
         </picture>
       ) : !hasError ? (

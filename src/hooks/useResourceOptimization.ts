@@ -2,20 +2,40 @@ import { useEffect } from 'react';
 
 export const useResourceOptimization = () => {
   useEffect(() => {
-    // Preload critical resources
+    // Preload critical resources with WebP support
     const preloadCriticalResources = () => {
       const criticalImages = [
-        '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png',
-        '/images/fitness-professional-bg.jpg'
+        {
+          webp: '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.webp',
+          fallback: '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png'
+        },
+        {
+          webp: '/images/fitness-professional-bg.webp',
+          fallback: '/images/fitness-professional-bg.jpg'
+        }
       ];
 
-      criticalImages.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = src;
-        link.fetchPriority = 'high';
-        document.head.appendChild(link);
+      criticalImages.forEach(({ webp, fallback }) => {
+        // Preload WebP if supported
+        if (window.navigator.userAgent.includes('Chrome') || 
+            window.navigator.userAgent.includes('Firefox') || 
+            window.navigator.userAgent.includes('Safari')) {
+          const webpLink = document.createElement('link');
+          webpLink.rel = 'preload';
+          webpLink.as = 'image';
+          webpLink.href = webp;
+          webpLink.fetchPriority = 'high';
+          webpLink.type = 'image/webp';
+          document.head.appendChild(webpLink);
+        } else {
+          // Fallback for older browsers
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'preload';
+          fallbackLink.as = 'image';
+          fallbackLink.href = fallback;
+          fallbackLink.fetchPriority = 'high';
+          document.head.appendChild(fallbackLink);
+        }
       });
     };
 

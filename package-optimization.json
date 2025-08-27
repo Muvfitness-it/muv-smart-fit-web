@@ -1,0 +1,11 @@
+{
+  "name": "image-optimization",
+  "version": "1.0.0",
+  "description": "Image optimization script for WebP conversion",
+  "scripts": {
+    "optimize-images": "node scripts/optimize-images.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

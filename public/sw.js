@@ -5,7 +5,9 @@ const IMAGE_CACHE = 'muv-images-v4';
 
 const urlsToCache = [
   '/',
+  '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.webp',
   '/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png',
+  '/images/fitness-professional-bg.webp',
   '/images/fitness-professional-bg.jpg',
   '/manifest.json'
 ];
@@ -50,8 +52,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Images strategy - Cache with fallback
-  if (request.destination === 'image') {
+  // Enhanced Images strategy - Cache with WebP support
+  if (request.destination === 'image' || request.url.includes('.webp')) {
     event.respondWith(
       caches.match(request).then(response => {
         if (response) return response;
@@ -68,6 +70,9 @@ self.addEventListener('fetch', (event) => {
           });
           
           return fetchResponse;
+        }).catch(() => {
+          // Fallback to placeholder if image fails
+          return caches.match('/placeholder.svg');
         });
       })
     );
