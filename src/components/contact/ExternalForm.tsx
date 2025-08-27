@@ -33,11 +33,17 @@ const ExternalForm = () => {
         toast.success('Messaggio inviato con successo! Ti risponderemo presto.');
         form.reset();
       } else {
-        throw new Error(`Errore invio (${response.status})`);
+        // Fallback to native form submission for CORS/403 errors
+        console.warn('Fetch failed, using native form submission');
+        form.submit();
+        return;
       }
     } catch (error) {
       console.error('Errore Formspree:', error);
-      toast.error("Errore nell'invio del messaggio. Riprova più tardi.");
+      // Fallback to native form submission
+      console.warn('Fetch error, using native form submission');
+      form.submit();
+      return;
     } finally {
       setIsSubmitting(false);
     }
@@ -48,7 +54,17 @@ const ExternalForm = () => {
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 text-foreground">Invia una Richiesta</h2>
         
-        <form onSubmit={handleSubmit} className="space-y-6 text-left">
+        <form 
+          onSubmit={handleSubmit} 
+          action="https://formspree.io/f/mblklzbq"
+          method="POST"
+          className="space-y-6 text-left"
+        >
+          {/* Hidden fields for Formspree */}
+          <input type="hidden" name="_subject" value="Nuova richiesta da MUV Fitness" />
+          <input type="hidden" name="page" value="Contatti" />
+          <input type="hidden" name="_gotcha" style={{ display: 'none' }} />
+          
           <div>
             <Label htmlFor="name" className="text-lg font-bold text-muted-foreground">
               Nome Completo
@@ -110,6 +126,18 @@ const ExternalForm = () => {
               <option value="Aumento massa muscolare">Aumento massa muscolare</option>
               <option value="Benessere generale">Benessere generale</option>
             </select>
+          </div>
+
+          <div>
+            <Label htmlFor="message" className="text-lg font-bold text-muted-foreground">
+              Messaggio (opzionale)
+            </Label>
+            <Textarea
+              name="message"
+              id="message"
+              placeholder="Raccontaci di più sui tuoi obiettivi o domande specifiche..."
+              className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg min-h-[100px]"
+            />
           </div>
           
           <Button 
