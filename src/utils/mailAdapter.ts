@@ -1,7 +1,7 @@
 // Lightweight mail adapter using Web3Forms
 // Docs: https://web3forms.com/
 
-export const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY"; // TODO: replace with your Web3Forms access key
+export const WEB3FORMS_ACCESS_KEY = "6a54b481-e1fd-4793-93d1-4ecf3635e353"; // TODO: replace with your Web3Forms access key
 
 export interface Web3FormsPayload {
   name: string;
