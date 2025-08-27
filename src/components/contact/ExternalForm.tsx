@@ -18,14 +18,12 @@ const ExternalForm = () => {
     const formData = new FormData(form);
 
     try {
-      const payload = Object.fromEntries(formData.entries());
       const response = await fetch('https://formspree.io/f/mblklzbq', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: formData,
       });
 
       const respText = await response.text();
@@ -101,9 +99,10 @@ const ExternalForm = () => {
               name="obiettivo"
               id="obiettivo"
               required
+              defaultValue=""
               className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg appearance-none"
             >
-              <option value="" disabled selected>Seleziona il tuo obiettivo</option>
+              <option value="" disabled>Seleziona il tuo obiettivo</option>
               <option value="Dimagrimento">Dimagrimento</option>
               <option value="Tonificazione">Tonificazione</option>
               <option value="Pilates">Pilates</option>
