@@ -175,6 +175,8 @@ serve(async (req) => {
       });
     }
 
+    console.log('Request body parsed successfully:', Object.keys(parsedBody));
+
     // Remove token validation - now uses enhanced rate limiting and input validation
 
     // Enhanced validation with sanitization
@@ -185,8 +187,17 @@ serve(async (req) => {
     const goal = sanitizeInput(parsedBody.goal?.trim() || '');
     const telefono = sanitizeInput(parsedBody.telefono?.trim() || '');
 
-    // Enhanced validation
+    console.log('Validation data:', { 
+      hasName: !!name, 
+      hasEmail: !!email, 
+      hasMessage: !!message,
+      hasCity: !!city,
+      hasGoal: !!goal
+    });
+
+    // Enhanced validation (telefono is optional)
     if (!name || !email || !message || !city || !goal) {
+      console.log('Missing required fields');
       return new Response(JSON.stringify({
         success: false,
         error: 'Tutti i campi obbligatori devono essere compilati'
@@ -199,6 +210,7 @@ serve(async (req) => {
     // Validate email format
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(email)) {
+      console.log('Invalid email format:', email);
       return new Response(JSON.stringify({
         success: false,
         error: 'Formato email non valido'
