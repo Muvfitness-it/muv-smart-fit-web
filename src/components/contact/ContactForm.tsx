@@ -72,8 +72,8 @@ const ContactForm = () => {
       setSubmissionCount(0);
     }
     
-    // Comprehensive validation
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.telefono.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
+    // Comprehensive validation (telefono is optional)
+    if (!formData.nome.trim() || !formData.email.trim() || !formData.messaggio.trim() || !formData.citta.trim() || !formData.obiettivo.trim()) {
       toast({
         title: "Errore",
         description: "Tutti i campi sono obbligatori.",
@@ -102,7 +102,7 @@ const ContactForm = () => {
       return;
     }
 
-    // Validate phone if provided
+    // Validate phone if provided (telefono is optional)
     if (formData.telefono && !validators.phone(formData.telefono)) {
       toast({
         title: "Errore",
@@ -118,10 +118,16 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      console.log('Sending contact form data:', formData);
+      console.log('Sending contact form data:', {
+        nome: formData.nome,
+        email: formData.email,
+        citta: formData.citta,
+        obiettivo: formData.obiettivo,
+        messaggioLength: sanitizedMessage.length
+      });
       console.log('Current domain:', window.location.origin);
 
-      // Remove exposed security token - use CAPTCHA instead
+      // Send to secure-contact function without security token
       const { data, error } = await supabase.functions.invoke('secure-contact', {
         body: {
           name: formData.nome.trim(),
@@ -237,7 +243,7 @@ const ContactForm = () => {
               id="telefono"
               name="telefono"
               type="text"
-              value={formData.telefono || ""}
+              value={formData.telefono}
               onChange={handleInputChange}
               className="bg-gray-700 border-gray-600 text-white"
               placeholder="Il tuo numero di telefono"
