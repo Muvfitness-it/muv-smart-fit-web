@@ -39,15 +39,23 @@ export const useResourceOptimization = () => {
       });
     };
 
-    // Optimize font loading
+    // Optimize critical font loading - Phase 2
     const optimizeFontLoading = () => {
-      const fontLink = document.createElement('link');
-      fontLink.rel = 'preload';
-      fontLink.as = 'font';
-      fontLink.href = 'https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2';
-      fontLink.type = 'font/woff2';
-      fontLink.crossOrigin = 'anonymous';
-      document.head.appendChild(fontLink);
+      const criticalFonts = [
+        'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew7.woff2', // Montserrat 400
+        'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCuM7Ew7.woff2', // Montserrat 600
+        'https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrJJfedw.woff2' // Poppins 400
+      ];
+      
+      criticalFonts.forEach(href => {
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'preload';
+        fontLink.as = 'font';
+        fontLink.href = href;
+        fontLink.type = 'font/woff2';
+        fontLink.crossOrigin = 'anonymous';
+        document.head.appendChild(fontLink);
+      });
     };
 
     // Defer non-critical JavaScript

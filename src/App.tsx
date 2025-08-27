@@ -8,6 +8,7 @@ import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useResourceOptimization } from "./hooks/useResourceOptimization";
 import { useEffect } from "react";
 import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
+import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -101,6 +102,7 @@ const AppContent = () => {
       <SecurityHeaders />
       <SecureDataHandler />
       <PerformanceOptimizer />
+      <FontOptimizer />
       <CriticalCSS />
       <div className="min-h-screen bg-background text-foreground">
       <Routes>
