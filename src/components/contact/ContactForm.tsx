@@ -121,13 +121,8 @@ const ContactForm = () => {
       console.log('Sending contact form data:', formData);
       console.log('Current domain:', window.location.origin);
 
-      // Add security token (in production, get this from environment or secure source)
-      const securityToken = 'temp_token_for_production_use_env_var';
-      
+      // Remove exposed security token - use CAPTCHA instead
       const { data, error } = await supabase.functions.invoke('secure-contact', {
-        headers: {
-          'x-security-token': securityToken
-        },
         body: {
           name: formData.nome.trim(),
           email: formData.email.toLowerCase().trim(),
@@ -136,8 +131,7 @@ const ContactForm = () => {
           city: formData.citta.trim(),
           goal: formData.obiettivo,
           csrfToken: csrfToken,
-          timestamp: now,
-          securityToken: securityToken
+          timestamp: now
         }
       });
 

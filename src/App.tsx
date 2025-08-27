@@ -69,6 +69,7 @@ import CereaFitness from "./pages/CereaFitness";
 import BovaloneFitness from "./pages/BovaloneFitness";
 import SanBonifacioFitness from "./pages/SanBonifacioFitness";
 import { SecureDataHandler } from "@/components/security/SecureDataHandler";
+import { AdminRoute } from "@/components/security/AdminRoute";
 
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogCategory from "./pages/blog/BlogCategory";
@@ -173,20 +174,20 @@ const AppContent = () => {
                 
                 {/* Articles without /blog/ prefix */}
                 <Route path="/:slug" element={<BlogArticle />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/blog" element={<AdminBlogList />} />
-                <Route path="/admin/blog/bozze" element={<AdminBlogDrafts />} />
-                <Route path="/admin/blog/categorie" element={<AdminCategories />} />
-                <Route path="/admin/blog/create/ai" element={<AdminBlogCreateAI />} />
-                <Route path="/admin/blog/create/manual" element={<AdminBlogCreateManual />} />
+                <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                <Route path="/admin/blog" element={<AdminRoute><AdminBlogList /></AdminRoute>} />
+                <Route path="/admin/blog/bozze" element={<AdminRoute><AdminBlogDrafts /></AdminRoute>} />
+                <Route path="/admin/blog/categorie" element={<AdminRoute><AdminCategories /></AdminRoute>} />
+                <Route path="/admin/blog/create/ai" element={<AdminRoute><AdminBlogCreateAI /></AdminRoute>} />
+                <Route path="/admin/blog/create/manual" element={<AdminRoute><AdminBlogCreateManual /></AdminRoute>} />
                 <Route path="/admin/blog/new" element={<Navigate to="/admin/blog/create/ai" replace />} />
-                <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
-                <Route path="/admin/utenti" element={<AdminUserManagement />} />
+                <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
+                <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                 
                 <Route path="/contatti" element={<Contatti />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                 <Route path="/qa-report" element={<QAReport />} />
                 <Route path="/qa-clean-hero-mobile" element={<QACleanHeroMobile />} />
                 <Route path="/recensioni" element={<Recensioni />} />
