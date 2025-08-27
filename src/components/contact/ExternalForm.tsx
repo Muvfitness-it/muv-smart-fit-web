@@ -44,53 +44,78 @@ const ExternalForm = () => {
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 text-foreground">Invia una Richiesta</h2>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <p className="text-muted-foreground leading-relaxed">
-            Compila il nostro modulo di contatto per ricevere informazioni dettagliate sui nostri servizi.
-            Ti risponderemo entro 10 minuti negli orari di apertura.
-          </p>
+        <form onSubmit={handleSubmit} className="space-y-6 text-left">
+          <div>
+            <Label htmlFor="name" className="text-lg font-bold text-muted-foreground">
+              Nome Completo
+            </Label>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              required
+              placeholder="Es. Mario Rossi"
+              className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg"
+            />
+          </div>
           
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="email" className="text-sm font-medium">
-                La tua email *
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="mt-1"
-                placeholder="esempio@email.com"
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="message" className="text-sm font-medium">
-                Il tuo messaggio *
-              </Label>
-              <Textarea
-                id="message"
-                name="message"
-                required
-                className="mt-1 min-h-[120px]"
-                placeholder="Scrivi qui la tua richiesta..."
-              />
-            </div>
+          <div>
+            <Label htmlFor="email" className="text-lg font-bold text-muted-foreground">
+              Email Migliore
+            </Label>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder="es. mario.rossi@email.com"
+              className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="phone" className="text-lg font-bold text-muted-foreground">
+              Numero di Telefono
+            </Label>
+            <Input
+              type="tel"
+              name="phone"
+              id="phone"
+              required
+              placeholder="Il tuo numero per essere ricontattato"
+              className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="obiettivo" className="text-lg font-bold text-muted-foreground">
+              Qual è il tuo obiettivo?
+            </Label>
+            <select
+              name="obiettivo"
+              id="obiettivo"
+              required
+              className="w-full mt-2 p-4 bg-card border-2 border-border rounded-lg focus:border-primary focus:ring-0 transition text-lg appearance-none"
+            >
+              <option value="" disabled selected>Seleziona il tuo obiettivo</option>
+              <option value="Dimagrimento">Dimagrimento</option>
+              <option value="Tonificazione">Tonificazione</option>
+              <option value="Pilates">Pilates</option>
+              <option value="Mal di schiena">Mal di schiena</option>
+              <option value="Aumento massa muscolare">Aumento massa muscolare</option>
+              <option value="Benessere generale">Benessere generale</option>
+            </select>
           </div>
           
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
+            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground py-4 text-xl font-bold rounded-lg transition-all duration-300 transform hover:scale-105"
           >
             {isSubmitting ? (
               'Invio in corso...'
             ) : (
-              <>
-                <Send className="w-5 h-5 mr-2" />
-                Invia Messaggio
-              </>
+              'CANDIDAMI PER LA TRASFORMAZIONE'
             )}
           </Button>
           
