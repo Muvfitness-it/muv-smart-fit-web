@@ -56,6 +56,11 @@ const ExternalForm = () => {
         
         <form 
           onSubmit={handleSubmit} 
+          onInvalid={(e) => {
+            const el = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+            console.debug('Campo non valido:', el.name || el.id);
+            toast.error('Per favore compila correttamente tutti i campi obbligatori.');
+          }}
           action="https://formspree.io/f/mblklzbq"
           method="POST"
           className="space-y-6 text-left"
