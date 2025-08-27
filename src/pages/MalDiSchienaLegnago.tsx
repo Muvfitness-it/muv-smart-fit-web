@@ -117,7 +117,7 @@ const MalDiSchienaLegnago = () => {
             "name": "MUV Fitness - Specialisti Mal di Schiena Legnago",
             "description": "Centro specializzato nel trattamento del mal di schiena a Legnago con Pancafit, Pilates terapeutico e personal training posturale",
             "url": "https://www.muvfitness.it/mal-di-schiena-legnago",
-            "telephone": "+39 351 338 0770",
+            "telephone": "+39 329 107 0374",
             "email": "info@muvfitness.it",
             "address": {
               "@type": "PostalAddress",
@@ -176,7 +176,7 @@ const MalDiSchienaLegnago = () => {
                 Valutazione Posturale Gratuita
               </Link>
               <a 
-                href="https://wa.me/393513380770?text=Ciao! Soffro di mal di schiena e vorrei una consulenza specialistica" 
+                href="https://wa.me/393291070374?text=Ciao! Soffro di mal di schiena e vorrei una consulenza specialistica" 
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-lg"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -414,7 +414,7 @@ const MalDiSchienaLegnago = () => {
               Valutazione Gratuita di 45 Minuti
             </Link>
             <a 
-              href="https://wa.me/393513380770?text=Ho mal di schiena da tempo e vorrei fissare una consulenza specialistica" 
+              href="https://wa.me/393291070374?text=Ho mal di schiena da tempo e vorrei fissare una consulenza specialistica" 
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
               target="_blank"
               rel="noopener noreferrer"
@@ -424,7 +424,7 @@ const MalDiSchienaLegnago = () => {
           </div>
 
           <div className="text-white/80 text-sm">
-            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 351 338 0770<br />
+            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 329 107 0374<br />
             ⏰ Lun-Ven 8:00-21:00 | Sab 8:00-12:00
           </div>
         </div>

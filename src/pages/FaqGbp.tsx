@@ -36,7 +36,7 @@ const FaqGbp = () => {
     },
     {
       question: "Serve appuntamento?",
-      answer: "Sì, lavoriamo sempre su appuntamento. I nostri ambienti sono riservati e ogni sessione è personalizzata. Puoi prenotare chiamando il +39 351 338 0770 o scrivendo su WhatsApp. Ti confermiamo sempre disponibilità entro poche ore."
+      answer: "Sì, lavoriamo sempre su appuntamento. I nostri ambienti sono riservati e ogni sessione è personalizzata. Puoi prenotare chiamando il +39 329 107 0374 o scrivendo su WhatsApp. Ti confermiamo sempre disponibilità entro poche ore."
     },
     {
       question: "Posso allenarmi se ho poco tempo?",

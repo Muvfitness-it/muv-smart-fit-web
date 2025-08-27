@@ -62,7 +62,7 @@ const StaticContentGenerator: React.FC<StaticContentGeneratorProps> = ({
             <h1>Contatti MUV Fitness</h1>
             <p>Prenota la tua consulenza gratuita e scopri come possiamo aiutarti a raggiungere i tuoi obiettivi di fitness.</p>
             <h2>Informazioni di Contatto</h2>
-            <p>Telefono: +39 351 338 0770</p>
+            <p>Telefono: +39 329 107 0374</p>
             <p>Email: info@muvfitness.it</p>
             <p>Indirizzo: Via Venti Settembre, 5/7 - 37045 Legnago (VR)</p>
             <h2>Orari di Apertura</h2>

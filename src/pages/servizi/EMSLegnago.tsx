@@ -170,7 +170,7 @@ const EMSLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <Zap className="mr-2 h-5 w-5" />
                     Prova Gratuita EMS
                   </a>
@@ -330,7 +330,7 @@ const EMSLegnago = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild>
-                  <a href={`https://wa.me/393513380770?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://wa.me/393291070374?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
                     <Zap className="mr-2 h-5 w-5" />
                     WhatsApp: Prenota Subito
                   </a>

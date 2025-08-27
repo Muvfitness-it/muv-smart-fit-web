@@ -115,7 +115,7 @@ const MassaggioSportivoLegnago = () => {
             "name": "MUV Fitness - Massaggio Sportivo Legnago",
             "description": "Centro specializzato in massaggio sportivo professionale per atleti e sportivi a Legnago",
             "url": "https://www.muvfitness.it/massaggio-sportivo-legnago",
-            "telephone": "+39 351 338 0770",
+            "telephone": "+39 329 107 0374",
             "email": "info@muvfitness.it",
             "address": {
               "@type": "PostalAddress",
@@ -168,7 +168,7 @@ const MassaggioSportivoLegnago = () => {
                 Prenota Massaggio Sportivo
               </Link>
               <a 
-                href="https://wa.me/393513380770?text=Ciao! Sono uno sportivo e vorrei prenotare un massaggio professionale" 
+                href="https://wa.me/393291070374?text=Ciao! Sono uno sportivo e vorrei prenotare un massaggio professionale" 
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-lg"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -411,7 +411,7 @@ const MassaggioSportivoLegnago = () => {
               Prenota il Tuo Massaggio
             </Link>
             <a 
-              href="https://wa.me/393513380770?text=Sono un atleta e vorrei prenotare un massaggio sportivo per migliorare le mie performance" 
+              href="https://wa.me/393291070374?text=Sono un atleta e vorrei prenotare un massaggio sportivo per migliorare le mie performance" 
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
               target="_blank"
               rel="noopener noreferrer"
@@ -421,7 +421,7 @@ const MassaggioSportivoLegnago = () => {
           </div>
 
           <div className="text-white/80 text-sm">
-            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 351 338 0770<br />
+            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 329 107 0374<br />
             ⏰ Lun-Ven 8:00-21:00 | Sab 8:00-12:00 | 🏆 Massaggi per tutti gli sport
           </div>
         </div>

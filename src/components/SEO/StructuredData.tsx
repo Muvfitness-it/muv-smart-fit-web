@@ -22,7 +22,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
           "alternateName": "MUV Fitness Legnago",
           "description": "Centro fitness esclusivo a Legnago specializzato in personal training, tecnologie avanzate EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti per il benessere.",
           "url": "https://www.muvfitness.it",
-          "telephone": "+393513380770",
+          "telephone": "+393291070374",
           "email": "info@muvfitness.it",
           "address": {
             "@type": "PostalAddress",

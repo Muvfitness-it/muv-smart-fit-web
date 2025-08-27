@@ -201,7 +201,7 @@ const ContactForm = () => {
         errorMessage = "Problema di connessione. Verifica la tua connessione internet e riprova.";
         errorTitle = "Connessione";
       } else if (error.message?.includes('CORS')) {
-        errorMessage = "Errore di configurazione del server. Contattaci direttamente al +39 351 338 0770.";
+        errorMessage = "Errore di configurazione del server. Contattaci direttamente al +39 329 107 0374.";
         errorTitle = "Configurazione";
       } else if (error.message?.includes('Troppe richieste')) {
         errorMessage = "Hai inviato troppe richieste. Per favore attendi 15 minuti prima di riprovare.";

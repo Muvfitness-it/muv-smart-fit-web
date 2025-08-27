@@ -12,7 +12,7 @@ const Contatti = () => {
     "mainEntity": {
       "@type": "LocalBusiness",
       "name": "MUV Fitness Legnago",
-      "telephone": "+393513380770",
+      "telephone": "+393291070374",
       "email": "info@muvfitness.it",
       "address": {
         "@type": "PostalAddress",
@@ -27,7 +27,7 @@ const Contatti = () => {
     <>
       <SEOOptimizer
         title="Contatti MUV Fitness Legnago | Prenota Consulenza Gratuita"
-        description="Contatta MUV Fitness Legnago per informazioni su Personal Training, EMS, Pancafit e Pilates. Ti richiamiamo in 10 minuti. WhatsApp: 351 338 0770"
+        description="Contatta MUV Fitness Legnago per informazioni su Personal Training, EMS, Pancafit e Pilates. Ti richiamiamo in 10 minuti. WhatsApp: 329 107 0374"
         canonicalUrl="https://www.muvfitness.it/contatti"
         structuredData={structuredData}
       />
@@ -47,7 +47,7 @@ const Contatti = () => {
           {/* Pulsanti CTA principali */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 sm:mb-16">
             <a 
-              href="https://wa.me/393513380770"
+              href="https://wa.me/393291070374"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"
@@ -56,9 +56,9 @@ const Contatti = () => {
               Scrivici su WhatsApp
             </a>
             <a
-              href="tel:+393513380770"
+              href="tel:+393291070374"
               className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 min-h-[44px]"
-              aria-label="Chiamaci al 351 338 0770"
+              aria-label="Chiamaci al 329 107 0374"
             >
               Chiamaci ora
             </a>

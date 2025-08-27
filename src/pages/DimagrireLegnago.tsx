@@ -112,7 +112,7 @@ const DimagrireLegnago = () => {
                 "postalCode": "37045",
                 "addressCountry": "IT"
               },
-              "telephone": "+39 351 338 0770"
+              "telephone": "+39 329 107 0374"
             },
             "areaServed": ["Legnago", "Verona", "Bassa Veronese"],
             "offers": [{
@@ -152,7 +152,7 @@ const DimagrireLegnago = () => {
                 Consulenza Dimagrimento Gratuita
               </Link>
               <a 
-                href="https://wa.me/393513380770?text=Ciao! Voglio dimagrire velocemente a Legnago. Quando posso iniziare?" 
+                href="https://wa.me/393291070374?text=Ciao! Voglio dimagrire velocemente a Legnago. Quando posso iniziare?" 
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-lg"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -350,7 +350,7 @@ const DimagrireLegnago = () => {
               Consulenza Gratuita di 45 Minuti
             </Link>
             <a 
-              href="https://wa.me/393513380770?text=Voglio dimagrire velocemente! Quando posso iniziare il mio percorso?" 
+              href="https://wa.me/393291070374?text=Voglio dimagrire velocemente! Quando posso iniziare il mio percorso?" 
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
               target="_blank"
               rel="noopener noreferrer"
@@ -360,7 +360,7 @@ const DimagrireLegnago = () => {
           </div>
 
           <div className="text-white/80 text-sm">
-            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 351 338 0770
+            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 329 107 0374
           </div>
         </div>
       </section>

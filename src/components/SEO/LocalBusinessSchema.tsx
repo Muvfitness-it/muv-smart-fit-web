@@ -11,7 +11,7 @@ const LocalBusinessSchema: React.FC = () => {
     "alternateName": "MUV Fitness",
     "description": "Centro fitness esclusivo a Legnago specializzato in personal training, tecnologia EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti posturali. Trasforma il tuo corpo con i nostri metodi innovativi.",
     "url": "https://www.muvfitness.it",
-    "telephone": "+39 351 338 0770",
+    "telephone": "+39 329 107 0374",
     "email": "info@muvfitness.it",
     "address": {
       "@type": "PostalAddress",
@@ -138,7 +138,7 @@ const LocalBusinessSchema: React.FC = () => {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+39 351 338 0770",
+        "telephone": "+39 329 107 0374",
         "contactType": "customer service",
         "email": "info@muvfitness.it",
         "areaServed": "IT",

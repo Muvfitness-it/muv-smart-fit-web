@@ -30,7 +30,7 @@ const Index = () => {
           "postalCode": "37045",
           "addressCountry": "IT"
         },
-        "telephone": "+393513380770",
+        "telephone": "+393291070374",
         "email": "info@muvfitness.it",
         "sameAs": [
           "https://www.facebook.com/muvfitness",
@@ -66,7 +66,7 @@ const Index = () => {
       <section className="mobile-cta-section md:hidden">
         <div className="mobile-cta-buttons">
           <a 
-            href="https://wa.me/393513380770"
+            href="https://wa.me/393291070374"
             target="_blank"
             rel="noopener noreferrer"
             className="mobile-cta-btn mobile-cta-whatsapp"

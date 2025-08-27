@@ -84,7 +84,7 @@ const PalestraLegnago = () => {
             "name": "MUV Fitness - Miglior Palestra Legnago",
             "description": "La miglior palestra di Legnago specializzata in personal training, EMS, Pilates e Pancafit per dimagrimento e tonificazione rapida",
             "url": "https://www.muvfitness.it/palestra-legnago",
-            "telephone": "+39 351 338 0770",
+            "telephone": "+39 329 107 0374",
             "email": "info@muvfitness.it",
             "address": {
               "@type": "PostalAddress",
@@ -147,12 +147,12 @@ const PalestraLegnago = () => {
                 Prenota Consulenza Gratuita
               </Link>
               <a 
-                href="https://wa.me/393513380770?text=Ciao! Voglio informazioni sulla miglior palestra di Legnago" 
+                href="https://wa.me/393291070374?text=Ciao! Voglio informazioni sulla miglior palestra di Legnago" 
                 className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                WhatsApp: +39 351 338 0770
+                WhatsApp: +39 329 107 0374
               </a>
             </div>
 
@@ -317,7 +317,7 @@ const PalestraLegnago = () => {
               Consulenza Gratuita
             </Link>
             <a 
-              href="https://wa.me/393513380770?text=Voglio iniziare il mio percorso nella miglior palestra di Legnago!" 
+              href="https://wa.me/393291070374?text=Voglio iniziare il mio percorso nella miglior palestra di Legnago!" 
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
               target="_blank"
               rel="noopener noreferrer"

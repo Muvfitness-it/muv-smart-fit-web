@@ -9,7 +9,7 @@ const QAReportNew = () => {
     { url: '/blog/ems-dimagrimento-legnago', status: 'success', notes: 'Hero, TOC, accent magenta EMS - VERIFICATO' },
     { url: '/blog/mal-di-schiena-pancafit-legnago', status: 'success', notes: 'Hero, TOC, accent viola postura - VERIFICATO' },
     { url: '/blog/cellulite-pressoterapia-legnago', status: 'success', notes: 'Hero, TOC, accent blu cellulite - VERIFICATO' },
-    { url: '/team', status: 'success', notes: 'Telefono +39 351 338 0770 aggiornato - VERIFICATO' },
+    { url: '/team', status: 'success', notes: 'Telefono +39 329 107 0374 aggiornato - VERIFICATO' },
     { url: '/contatti', status: 'success', notes: 'WhatsApp e telefono aggiornati - VERIFICATO' },
     { url: '/footer', status: 'success', notes: 'NAP uniformato - VERIFICATO' },
     { url: '/privacy', status: 'success', notes: 'Refusi località corretti - VERIFICATO' }
@@ -31,8 +31,8 @@ const QAReportNew = () => {
     {
       category: 'NAP - Standardizzazione',
       items: [
-        'Telefono uniformato: +39 351 338 0770 (sostituito +39 329 107 0374)',
-        'WhatsApp: 393513380770',
+        'Telefono uniformato: +39 329 107 0374 (nuovo numero)',
+        'WhatsApp: 393291070374',
         'Indirizzo: Via Venti Settembre, 5/7 – 37045 Legnago (VR)',
         'Email: info@muvfitness.it',
         'Orari: Lu–Ve 08:00–21:00; Sa 08:00–12:00; Do chiuso',
@@ -65,7 +65,7 @@ const QAReportNew = () => {
   const technicalChecks = [
     { check: 'CSS Blog Template', status: 'success', details: 'Aggiunto in index.css: .blog, .post-hero, .toc, .callout, .key' },
     { check: 'Accent Colors Dynamic', status: 'success', details: 'Implementato via CSS custom property --accent-h in BlogArticle' },
-    { check: 'NAP Consistency', status: 'success', details: '15+ files aggiornati con nuovo telefono +39 351 338 0770' },
+    { check: 'NAP Consistency', status: 'success', details: '15+ files aggiornati con nuovo telefono +39 329 107 0374' },
     { check: 'Content Sanitization', status: 'success', details: 'Rimossi pattern di colori inline da tutti i post blog' },
     { check: 'Performance', status: 'success', details: 'Mantenute ottimizzazioni lazy-loading e content-visibility' }
   ];
@@ -203,7 +203,7 @@ const QAReportNew = () => {
             <CardContent className="p-6 text-center bg-green-50">
               <div className="space-y-2">
                 <p>✅ <strong>Blog template</strong> implementato con successo - sfondo bianco, testi leggibili, accent dinamici per categoria</p>
-                <p>✅ <strong>NAP standardizzato</strong> su tutto il sito - telefono +39 351 338 0770 uniformato ovunque</p>
+                <p>✅ <strong>NAP standardizzato</strong> su tutto il sito - telefono +39 329 107 0374 uniformato ovunque</p>
                 <p>✅ <strong>Content cleanup</strong> completato - rimossi colori inline, convertite enfasi, normalizzati HTML</p>
                 <p>✅ <strong>Performance</strong> mantenute - lazy loading, content-visibility, ottimizzazioni CSS</p>
                 
