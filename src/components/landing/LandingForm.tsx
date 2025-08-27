@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Phone, Mail, User, MessageSquare, Gift, Shield } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { sendContactViaWeb3Forms } from '@/utils/mailAdapter';
 
 interface LandingFormProps {
   campaignName: string;
@@ -25,7 +26,8 @@ const LandingForm: React.FC<LandingFormProps> = ({
     nome: '',
     telefono: '',
     email: '',
-    messaggio: ''
+    messaggio: '',
+    botcheck: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -35,16 +37,32 @@ const LandingForm: React.FC<LandingFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Save to Supabase (assuming we have a contacts table)
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          ...formData,
-          campaign: campaignName,
-          source: 'landing_page'
-        }
+      const res = await sendContactViaWeb3Forms({
+        name: formData.nome.trim(),
+        email: formData.email.toLowerCase().trim(),
+        message: formData.messaggio.trim() || `Richiesta campagna ${campaignName}`,
+        telefono: formData.telefono.trim(),
+        campaign: campaignName,
+        source: 'landing_page',
+        botcheck: formData.botcheck,
+        subject: `Nuovo lead landing: ${campaignName} - ${formData.nome}`,
       });
 
-      if (error) throw error;
+      if (!res.success) throw new Error(res.message || 'Invio fallito');
+
+      // Non-blocking logging to edge function (ignore failures)
+      supabase.functions.invoke('secure-contact', {
+        body: {
+          name: formData.nome.trim(),
+          email: formData.email.toLowerCase().trim(),
+          message: formData.messaggio.trim(),
+          telefono: formData.telefono.trim(),
+          city: '',
+          goal: '',
+          campaign: campaignName,
+          transport: 'web3forms'
+        }
+      }).catch(() => {});
 
       toast({
         title: "🎉 Perfetto!",
@@ -52,13 +70,13 @@ const LandingForm: React.FC<LandingFormProps> = ({
       });
 
       // Reset form
-      setFormData({ nome: '', telefono: '', email: '', messaggio: '' });
+      setFormData({ nome: '', telefono: '', email: '', messaggio: '', botcheck: '' });
       
       if (onSuccess) onSuccess();
 
       // Track conversion
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'conversion', {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
           send_to: 'AW-CONVERSION_ID/CONVERSION_LABEL',
           campaign_name: campaignName
         });
@@ -100,6 +118,17 @@ const LandingForm: React.FC<LandingFormProps> = ({
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot anti-spam field */}
+              <input
+                type="text"
+                name="botcheck"
+                value={formData.botcheck}
+                onChange={handleChange}
+                className="hidden"
+                autoComplete="off"
+                tabIndex={-1}
+                aria-hidden="true"
+              />
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-white font-bold mb-2">

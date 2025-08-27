@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { sendContactViaWeb3Forms } from "@/utils/mailAdapter";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,8 @@ const ContactForm = () => {
     telefono: "",
     messaggio: "",
     citta: "",
-    obiettivo: ""
+    obiettivo: "",
+    botcheck: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -103,24 +105,34 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('secure-contact', {
+      const web3Res = await sendContactViaWeb3Forms({
+        name: formData.nome.trim(),
+        email: formData.email.toLowerCase().trim(),
+        message: formData.messaggio.trim(),
+        telefono: formData.telefono.trim(),
+        citta: formData.citta.trim(),
+        obiettivo: formData.obiettivo,
+        botcheck: formData.botcheck,
+        subject: `Nuovo contatto dal sito: ${formData.nome}`,
+        source: 'contact_form'
+      });
+
+      if (!web3Res.success) {
+        throw new Error(web3Res.message || "Errore nell'invio del messaggio");
+      }
+
+      // Non-blocking logging to edge function (ignore failures)
+      supabase.functions.invoke('secure-contact', {
         body: {
           name: formData.nome.trim(),
           email: formData.email.toLowerCase().trim(),
           message: formData.messaggio.trim(),
           telefono: formData.telefono.trim(),
           city: formData.citta.trim(),
-          goal: formData.obiettivo
+          goal: formData.obiettivo,
+          transport: 'web3forms'
         }
-      });
-
-      if (error) {
-        throw new Error(error.message || 'Errore nell\'invio del messaggio');
-      }
-
-      if (data?.success === false) {
-        throw new Error(data.error || 'Errore del server');
-      }
+      }).catch(() => {});
 
       toast({
         title: "Messaggio inviato!",
@@ -133,7 +145,8 @@ const ContactForm = () => {
         telefono: "", 
         messaggio: "", 
         citta: "", 
-        obiettivo: "" 
+        obiettivo: "",
+        botcheck: ""
       });
 
     } catch (error: any) {
@@ -154,6 +167,17 @@ const ContactForm = () => {
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 text-white">Invia una Richiesta</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Honeypot anti-spam field */}
+          <input
+            type="text"
+            name="botcheck"
+            value={formData.botcheck}
+            onChange={handleInputChange}
+            className="hidden"
+            autoComplete="off"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
           <div>
             <label htmlFor="nome" className="block text-sm font-medium mb-2 text-gray-200">Nome *</label>
             <Input
