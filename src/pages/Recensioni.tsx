@@ -229,10 +229,9 @@ const Recensioni = () => {
                   Prenota Consulenza
                 </a>
               </Button>
-            </div>
-            </div>
-          </div>
-        </section>
+                </div>
+              </div>
+            </section>
       </main>
 
       {/* Sticky Mobile CTA */}
