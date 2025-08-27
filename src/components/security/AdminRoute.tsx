@@ -45,11 +45,7 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
 
       // Log unauthorized access attempt
       if (!hasAdminRole) {
-        logFailedAuthorization({
-          attempted_route: location.pathname,
-          user_id: user.id,
-          reason: 'insufficient_privileges'
-        });
+        logFailedAuthorization('admin_route', location.pathname);
       }
     } catch (error) {
       console.error('Error in admin check:', error);

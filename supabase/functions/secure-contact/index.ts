@@ -89,24 +89,7 @@ async function checkRateLimit(ip: string, supabase: any): Promise<boolean> {
   }
 }
 
-// Enhanced security validation
-async function validateSecurityToken(token: string): Promise<boolean> {
-  if (!token) return false;
-  
-  try {
-    const secret = Deno.env.get('AI_ACCESS_KEY');
-    if (!secret) {
-      console.error('AI_ACCESS_KEY not configured');
-      return false;
-    }
-
-    // Simple token validation - in production, use proper cryptographic validation
-    return token === secret;
-  } catch (error) {
-    console.error('Security token validation error:', error);
-    return false;
-  }
-}
+// Remove token validation function - no longer needed
 
 // Input sanitization and validation
 function sanitizeInput(input: string): string {
@@ -192,42 +175,7 @@ serve(async (req) => {
       });
     }
 
-    // Validate security token (required for all requests)
-    const securityToken = req.headers.get('x-security-token') || parsedBody.securityToken;
-    if (!securityToken) {
-      // Log security event
-      await supabase.rpc('log_security_event', {
-        event_type_param: 'missing_security_token',
-        event_data_param: { endpoint: 'secure-contact' },
-        ip_param: clientIP
-      });
-
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'Token di sicurezza richiesto'
-      }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
-    }
-
-    const isValidToken = await validateSecurityToken(securityToken);
-    if (!isValidToken) {
-      // Log security event
-      await supabase.rpc('log_security_event', {
-        event_type_param: 'invalid_security_token',
-        event_data_param: { endpoint: 'secure-contact', token_preview: securityToken.substring(0, 8) },
-        ip_param: clientIP
-      });
-
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'Token di sicurezza non valido'
-      }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
-    }
+    // Remove token validation - now uses enhanced rate limiting and input validation
 
     // Enhanced validation with sanitization
     const name = sanitizeInput(parsedBody.name?.trim() || '');

@@ -7,29 +7,9 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Rate limiting storage
-const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10;
+// Remove in-memory rate limiting - now using database only
 
-function checkRateLimit(identifier: string): boolean {
-  const now = Date.now();
-  const record = rateLimitMap.get(identifier);
-  
-  if (!record || now - record.windowStart > RATE_LIMIT_WINDOW) {
-    rateLimitMap.set(identifier, { count: 1, windowStart: now });
-    return true;
-  }
-  
-  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false;
-  }
-  
-  record.count++;
-  return true;
-}
-
-// HMAC validation
+// HMAC validation (required for all requests)
 async function validateHmac(body: string, signature: string): Promise<boolean> {
   try {
     const key = Deno.env.get('AI_ACCESS_KEY');
@@ -60,6 +40,69 @@ async function validateHmac(body: string, signature: string): Promise<boolean> {
   }
 }
 
+// Database-backed rate limiting
+async function checkRateLimitDB(identifier: string, supabase: any): Promise<boolean> {
+  const endpoint = 'log-visit';
+  const now = new Date();
+  const windowMs = 60 * 1000; // 1 minute
+  const maxRequests = 30; // Reduced for security
+
+  try {
+    const { data: existing, error } = await supabase
+      .from('log_visit_hmac')
+      .select('*')
+      .eq('identifier', identifier)
+      .eq('endpoint', endpoint)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Rate limit check error:', error);
+      return false;
+    }
+
+    if (!existing) {
+      const { error: insertError } = await supabase
+        .from('log_visit_hmac')
+        .insert({
+          identifier: identifier,
+          endpoint: endpoint,
+          requests_count: 1,
+          window_start: now
+        });
+      
+      return !insertError;
+    }
+
+    const timeDiff = now.getTime() - new Date(existing.window_start).getTime();
+
+    if (timeDiff > windowMs) {
+      const { error: updateError } = await supabase
+        .from('log_visit_hmac')
+        .update({
+          requests_count: 1,
+          window_start: now
+        })
+        .eq('id', existing.id);
+      
+      return !updateError;
+    }
+
+    if (existing.requests_count >= maxRequests) {
+      return false;
+    }
+
+    const { error: updateError } = await supabase
+      .from('log_visit_hmac')
+      .update({ requests_count: existing.requests_count + 1 })
+      .eq('id', existing.id);
+    
+    return !updateError;
+  } catch (error) {
+    console.error('Rate limit check exception:', error);
+    return false;
+  }
+}
+
 function getClientIP(req: Request): string {
   return req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
          req.headers.get('x-real-ip') ||
@@ -82,9 +125,27 @@ serve(async (req) => {
 
   try {
     const clientIP = getClientIP(req);
+
+    // Initialize Supabase client with service role
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    const body = await req.text();
+    const signature = req.headers.get('x-signature');
     
-    // Rate limiting
-    if (!checkRateLimit(clientIP)) {
+    // Require HMAC validation for all requests
+    if (!signature || !(await validateHmac(body, signature))) {
+      console.warn(`Invalid or missing HMAC signature from IP: ${clientIP}`);
+      return new Response(JSON.stringify({ error: 'Invalid signature required' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Database-backed rate limiting
+    if (!(await checkRateLimitDB(clientIP, supabase))) {
       console.warn(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(JSON.stringify({ error: 'Rate limit exceeded' }), {
         status: 429,
@@ -92,19 +153,8 @@ serve(async (req) => {
       });
     }
 
-    const body = await req.text();
-    const signature = req.headers.get('x-signature');
-    
-    // Validate HMAC if signature is provided
-    if (signature && !(await validateHmac(body, signature))) {
-      console.warn(`Invalid HMAC signature from IP: ${clientIP}`);
-      return new Response(JSON.stringify({ error: 'Invalid signature' }), {
-        status: 403,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
-    }
-
     const data = JSON.parse(body);
+
     const { pagePath, actionType, calories, planType } = data;
 
     if (!pagePath) {
@@ -113,14 +163,6 @@ serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
-
-    // Initialize Supabase client with service role
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
-
-    // Log site visit
     if (pagePath) {
       const { error: visitError } = await supabase.from('site_visits').insert({
         page_path: pagePath,

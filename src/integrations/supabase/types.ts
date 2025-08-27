@@ -482,6 +482,33 @@ export type Database = {
         }
         Relationships: []
       }
+      log_visit_hmac: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          id: string
+          identifier: string
+          requests_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          identifier: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          identifier?: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       planner_usage: {
         Row: {
           action_type: string
