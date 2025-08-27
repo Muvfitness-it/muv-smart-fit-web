@@ -15,7 +15,19 @@ declare global {
         [key: string]: any;
       }
     ) => void;
+    dataLayer: any[];
   }
+}
+
+// Performance API extensions
+interface PerformanceEventTiming extends PerformanceEntry {
+  processingStart: number;
+  processingEnd: number;
+}
+
+interface LayoutShiftEntry extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
 }
 
 export {};

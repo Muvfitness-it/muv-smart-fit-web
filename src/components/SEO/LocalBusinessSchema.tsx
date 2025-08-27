@@ -8,7 +8,8 @@ const LocalBusinessSchema: React.FC = () => {
     "@type": "LocalBusiness",
     "@id": "https://www.muvfitness.it/#localbusiness",
     "name": "MUV Fitness Legnago",
-    "description": "Centro fitness a Legnago specializzato in personal training, EMS, Pilates, HIIT e nutrizione. Trasforma il tuo corpo in 30 giorni.",
+    "alternateName": "MUV Fitness",
+    "description": "Centro fitness esclusivo a Legnago specializzato in personal training, tecnologia EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti posturali. Trasforma il tuo corpo con i nostri metodi innovativi.",
     "url": "https://www.muvfitness.it",
     "telephone": "+39 351 338 0770",
     "email": "info@muvfitness.it",
@@ -22,16 +23,17 @@ const LocalBusinessSchema: React.FC = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 45.1919,
-      "longitude": 11.3058
+      "latitude": 45.1914,
+      "longitude": 11.3065
     },
     "openingHours": [
       "Mo-Fr 08:00-21:00",
       "Sa 08:00-12:00"
     ],
-    "priceRange": "€€",
+    "priceRange": "€€-€€€",
     "image": [
-      "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
+      "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+      "https://www.muvfitness.it/images/fitness-professional-bg.jpg"
     ],
     "logo": {
       "@type": "ImageObject",
@@ -44,11 +46,33 @@ const LocalBusinessSchema: React.FC = () => {
       "https://www.instagram.com/MuvLegnago/"
     ],
     "areaServed": [
-      "Legnago",
-      "Bassa Veronese", 
-      "Verona",
-      "Veneto"
+      {
+        "@type": "City",
+        "name": "Legnago"
+      },
+      {
+        "@type": "City", 
+        "name": "Verona"
+      },
+      {
+        "@type": "Place",
+        "name": "Bassa Veronese"
+      },
+      {
+        "@type": "City",
+        "name": "Cerea"
+      },
+      {
+        "@type": "City",
+        "name": "Bovolone"
+      },
+      {
+        "@type": "City",
+        "name": "San Bonifacio"
+      }
     ],
+    "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+    "currenciesAccepted": "EUR",
     "makesOffer": [
       {
         "@type": "Offer",

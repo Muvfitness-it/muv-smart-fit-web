@@ -146,6 +146,23 @@ const ContactForm = () => {
       // Check for Supabase client errors (network, CORS, etc.)
       if (error) {
         console.error('Supabase function error:', error);
+        
+        // Handle specific error types
+        if (error.message?.includes('FunctionsRelayError')) {
+          // Extract the actual error from the relay error
+          const match = error.message.match(/Edge Function returned a non-2xx status code: (\d+)/);
+          if (match) {
+            const statusCode = parseInt(match[1]);
+            if (statusCode === 429) {
+              throw new Error('Troppe richieste. Riprova tra 15 minuti.');
+            } else if (statusCode === 400) {
+              throw new Error('Dati del modulo non validi. Verifica tutti i campi.');
+            } else if (statusCode >= 500) {
+              throw new Error('Errore del server. Riprova più tardi.');
+            }
+          }
+        }
+        
         throw new Error(error.message || 'Errore nella comunicazione con il server');
       }
 
@@ -178,17 +195,29 @@ const ContactForm = () => {
       
       // Provide more specific error messages
       let errorMessage = "Si è verificato un errore nell'invio del messaggio.";
+      let errorTitle = "Errore";
       
       if (error.message?.includes('Failed to fetch')) {
         errorMessage = "Problema di connessione. Verifica la tua connessione internet e riprova.";
+        errorTitle = "Connessione";
       } else if (error.message?.includes('CORS')) {
-        errorMessage = "Errore di configurazione del server. Contattaci direttamente.";
+        errorMessage = "Errore di configurazione del server. Contattaci direttamente al +39 351 338 0770.";
+        errorTitle = "Configurazione";
+      } else if (error.message?.includes('Troppe richieste')) {
+        errorMessage = "Hai inviato troppe richieste. Per favore attendi 15 minuti prima di riprovare.";
+        errorTitle = "Limite raggiunto";
+      } else if (error.message?.includes('Dati del modulo non validi')) {
+        errorMessage = "Alcuni campi del modulo contengono errori. Verifica tutti i dati inseriti.";
+        errorTitle = "Dati non validi";
+      } else if (error.message?.includes('Contenuto non consentito')) {
+        errorMessage = "Il messaggio contiene contenuti non consentiti. Rimuovi eventuali link o contenuti commerciali.";
+        errorTitle = "Contenuto bloccato";
       } else if (error.message) {
         errorMessage = error.message;
       }
       
       toast({
-        title: "Errore",
+        title: errorTitle,
         description: errorMessage,
         variant: "destructive"
       });
