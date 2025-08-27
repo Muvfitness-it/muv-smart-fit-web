@@ -1,71 +1,56 @@
-import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { ExternalLink, MessageSquare } from 'lucide-react';
 
 const ExternalForm = () => {
-  const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    // Load the external script once
-    const existing = document.querySelector('script[src="https://link.drewcompany.it/js/form_embed.js"]');
-    if (!existing) {
-      const script = document.createElement('script');
-      script.src = 'https://link.drewcompany.it/js/form_embed.js';
-      script.async = true;
-      document.head.appendChild(script);
-    }
-  }, []);
-
   return (
-    <div className="w-full">
-      <div className="relative w-full min-h-[700px] rounded-lg overflow-hidden bg-gray-800">
-        <iframe
-          src="https://link.drewcompany.it/widget/form/CtTtu1r7yFEMPXlPJQEy"
-          style={{ width: '100%', height: '100%', border: 'none', borderRadius: '4px', minHeight: '700px' }}
-          id="inline-CtTtu1r7yFEMPXlPJQEy"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="landing"
-          data-height="undefined"
-          data-layout-iframe-id="inline-CtTtu1r7yFEMPXlPJQEy"
-          data-form-id="CtTtu1r7yFEMPXlPJQEy"
-          title="landing"
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
-          onError={() => setError(true)}
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
-
-      {(!loaded || error) && (
-        <div className="mt-4">
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-6 text-gray-200">
-              <p className="mb-4">Se il modulo non è visibile, aprilo in una nuova scheda:</p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href="https://link.drewcompany.it/widget/form/CtTtu1r7yFEMPXlPJQEy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex"
-                >
-                  <Button className="w-full sm:w-auto">Apri il modulo</Button>
-                </a>
-                <a href="https://wa.me/393291070374" target="_blank" rel="noopener noreferrer" className="inline-flex">
-                  <Button variant="outline" className="w-full sm:w-auto">Scrivici su WhatsApp</Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
+    <Card className="bg-gray-800 border-gray-700">
+      <CardContent className="p-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">Invia una Richiesta</h2>
+        <div className="space-y-6">
+          <p className="text-gray-300 leading-relaxed">
+            Compila il nostro modulo di contatto per ricevere informazioni dettagliate sui nostri servizi.
+            Ti risponderemo entro 10 minuti negli orari di apertura.
+          </p>
+          
+          <div className="flex flex-col gap-4">
+            <a
+              href="https://link.drewcompany.it/widget/form/CtTtu1r7yFEMPXlPJQEy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block w-full"
+            >
+              <Button className="w-full bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 hover:from-pink-700 hover:via-purple-600 hover:to-blue-600 text-white py-3 text-lg rounded-full transition-all duration-300 transform hover:scale-105">
+                <ExternalLink className="w-5 h-5 mr-2" />
+                Apri il Modulo di Contatto
+              </Button>
+            </a>
+            
+            <div className="text-center text-gray-400">oppure</div>
+            
+            <a
+              href="https://wa.me/393291070374"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block w-full"
+            >
+              <Button variant="outline" className="w-full border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-3 text-lg rounded-full transition-all duration-300">
+                <MessageSquare className="w-5 h-5 mr-2" />
+                Scrivici su WhatsApp
+              </Button>
+            </a>
+          </div>
+          
+          <div className="mt-6 p-4 bg-gray-700 rounded-lg">
+            <h3 className="text-white font-semibold mb-2">Contatto Diretto</h3>
+            <p className="text-gray-300 text-sm">
+              <strong>Telefono:</strong> +39 329 107 0374<br/>
+              <strong>Email:</strong> info@muvfitness.it
+            </p>
+          </div>
         </div>
-      )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
