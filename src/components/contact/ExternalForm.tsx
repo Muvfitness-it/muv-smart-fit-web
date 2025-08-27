@@ -18,22 +18,28 @@ const ExternalForm = () => {
     const formData = new FormData(form);
 
     try {
+      const payload = Object.fromEntries(formData.entries());
       const response = await fetch('https://formspree.io/f/mblklzbq', {
         method: 'POST',
-        body: formData,
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify(payload),
       });
+
+      const respText = await response.text();
+      console.debug('Formspree status:', response.status, 'body:', respText);
 
       if (response.ok) {
         toast.success('Messaggio inviato con successo! Ti risponderemo presto.');
         form.reset();
       } else {
-        throw new Error('Errore nell\'invio');
+        throw new Error(`Errore invio (${response.status})`);
       }
     } catch (error) {
-      toast.error('Errore nell\'invio del messaggio. Riprova più tardi.');
+      console.error('Errore Formspree:', error);
+      toast.error("Errore nell'invio del messaggio. Riprova più tardi.");
     } finally {
       setIsSubmitting(false);
     }
