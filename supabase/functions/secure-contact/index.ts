@@ -303,69 +303,91 @@ serve(async (req) => {
       console.warn('Lead tracking insert failed:', leadError);
     }
 
-    // Send business notification email with escaped content
-    const businessEmailResult = await resend.emails.send({
-      from: 'MUV Fitness <info@muvfitness.it>',
-      to: ['info@muvfitness.it'],
-      subject: `Nuovo contatto dal sito: ${escapeHtml(name)}`,
-      html: `
-        <h2>Nuovo messaggio di contatto</h2>
-        <p><strong>Nome:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Telefono:</strong> ${escapeHtml(telefono || 'Non fornito')}</p>
-        <p><strong>Città:</strong> ${escapeHtml(city)}</p>
-        <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
-        <p><strong>Messaggio:</strong></p>
-        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
-        <hr>
-        <p><small>IP: ${escapeHtml(clientIP)} | Data: ${new Date().toLocaleString('it-IT')}</small></p>
-      `,
-    });
+    // Send business notification email with enhanced error handling
+    let businessEmailResult;
+    try {
+      console.log('Attempting to send business notification email...');
+      businessEmailResult = await resend.emails.send({
+        from: 'MUV Fitness <info@muvfitness.it>',
+        to: ['info@muvfitness.it'],
+        subject: `Nuovo contatto dal sito: ${escapeHtml(name)}`,
+        html: `
+          <h2>Nuovo messaggio di contatto</h2>
+          <p><strong>Nome:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Telefono:</strong> ${escapeHtml(telefono || 'Non fornito')}</p>
+          <p><strong>Città:</strong> ${escapeHtml(city)}</p>
+          <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
+          <p><strong>Messaggio:</strong></p>
+          <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p><small>IP: ${escapeHtml(clientIP)} | Data: ${new Date().toLocaleString('it-IT')}</small></p>
+        `,
+      });
+      console.log('Business email sent successfully:', businessEmailResult.data?.id);
+    } catch (emailError) {
+      console.error('Failed to send business email:', emailError);
+      // Continue processing even if business email fails
+    }
 
-    console.log('Business email sent successfully:', businessEmailResult.data?.id);
-
-    // Send user confirmation email with escaped content
-    const userEmailResult = await resend.emails.send({
-      from: 'MUV Fitness <info@muvfitness.it>',
-      to: [email],
-      subject: 'Grazie per averci contattato - MUV Fitness',
-      html: `
-        <h2>Ciao ${escapeHtml(name)}!</h2>
-        <p>Grazie per averci contattato. Abbiamo ricevuto il tuo messaggio e ti risponderemo al più presto.</p>
-        
-        <h3>Riepilogo del tuo messaggio:</h3>
-        <p><strong>Città:</strong> ${escapeHtml(city)}</p>
-        <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
-        <p><strong>Messaggio:</strong> ${escapeHtml(message)}</p>
-        
-        <p>Il nostro team ti contatterà entro 24 ore per fornirti tutte le informazioni di cui hai bisogno.</p>
-        
-        <p>A presto,<br>Il team MUV Fitness</p>
-        
-        <hr>
-        <p><small>Questo è un messaggio automatico, non rispondere a questa email.</small></p>
-      `,
-    });
-
-    console.log('User confirmation email sent successfully:', userEmailResult.data?.id);
+    // Send user confirmation email with enhanced error handling
+    let userEmailResult;
+    try {
+      console.log('Attempting to send user confirmation email...');
+      userEmailResult = await resend.emails.send({
+        from: 'MUV Fitness <info@muvfitness.it>',
+        to: [email],
+        subject: 'Grazie per averci contattato - MUV Fitness',
+        html: `
+          <h2>Ciao ${escapeHtml(name)}!</h2>
+          <p>Grazie per averci contattato. Abbiamo ricevuto il tuo messaggio e ti risponderemo al più presto.</p>
+          
+          <h3>Riepilogo del tuo messaggio:</h3>
+          <p><strong>Città:</strong> ${escapeHtml(city)}</p>
+          <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
+          <p><strong>Messaggio:</strong> ${escapeHtml(message)}</p>
+          
+          <p>Il nostro team ti contatterà entro 24 ore per fornirti tutte le informazioni di cui hai bisogno.</p>
+          
+          <p>A presto,<br>Il team MUV Fitness</p>
+          
+          <hr>
+          <p><small>Questo è un messaggio automatico, non rispondere a questa email.</small></p>
+        `,
+      });
+      console.log('User confirmation email sent successfully:', userEmailResult.data?.id);
+    } catch (emailError) {
+      console.error('Failed to send user confirmation email:', emailError);
+      // Continue processing even if user email fails
+    }
 
     // Log security audit event (without PII)
-    await supabase.rpc('log_security_event', {
-      event_type_param: 'contact_form_submission',
-      event_data_param: {
-        message_length: message.length,
-        city_provided: !!city,
-        goal_provided: !!goal,
-        business_email_sent: !!businessEmailResult.data,
-        user_email_sent: !!userEmailResult.data,
-        timestamp: new Date().toISOString()
-      },
-      ip_param: clientIP
-    });
+    try {
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'contact_form_submission',
+        event_data_param: {
+          message_length: message.length,
+          city_provided: !!city,
+          goal_provided: !!goal,
+          business_email_sent: !!businessEmailResult?.data,
+          user_email_sent: !!userEmailResult?.data,
+          timestamp: new Date().toISOString()
+        },
+        ip_param: clientIP
+      });
+    } catch (logError) {
+      console.error('Failed to log security audit event:', logError);
+    }
+
+    // Always return success to user even if emails partially failed
+    const emailStatus = businessEmailResult?.data ? 'sent' : 'failed';
+    console.log('Form submission completed. Email status:', emailStatus);
 
     return new Response(JSON.stringify({
       success: true,
-      message: 'Messaggio inviato con successo'
+      message: emailStatus === 'sent' 
+        ? 'Messaggio inviato con successo. Riceverai una conferma via email.'
+        : 'Messaggio ricevuto con successo. Ti contatteremo al più presto.'
     }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
