@@ -1,7 +1,7 @@
 // Lightweight mail adapter using Web3Forms
 // Docs: https://web3forms.com/
 
-export const WEB3FORMS_ACCESS_KEY = "6a54b481-e1fd-4793-93d1-4ecf3635e353"; // TODO: replace with your Web3Forms access key
+export const WEB3FORMS_ACCESS_KEY: string = "6a54b481-e1fd-4793-93d1-4ecf3635e353"; // TODO: replace with your Web3Forms access key
 
 export interface Web3FormsPayload {
   name: string;
@@ -24,7 +24,7 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
     return { success: true, message: "Honeypot triggered - skipped" };
   }
 
-  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
+  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.trim().length < 10) {
     return { success: false, message: "WEB3FORMS_ACCESS_KEY non configurata" };
   }
 
