@@ -127,7 +127,7 @@ const ContactForm = () => {
       });
       console.log('Current domain:', window.location.origin);
 
-      // Send to secure-contact function without security token
+      // Send to secure-contact function
       const { data, error } = await supabase.functions.invoke('secure-contact', {
         body: {
           name: formData.nome.trim(),
@@ -141,14 +141,24 @@ const ContactForm = () => {
         }
       });
 
+      console.log('Response from edge function:', { data, error });
+
+      // Check for Supabase client errors (network, CORS, etc.)
       if (error) {
         console.error('Supabase function error:', error);
         throw new Error(error.message || 'Errore nella comunicazione con il server');
       }
 
-      if (data?.error) {
+      // Check if the edge function returned an error response
+      if (data?.success === false) {
         console.error('Edge function returned error:', data);
-        throw new Error(data.error);
+        throw new Error(data.error || 'Errore del server');
+      }
+
+      // Check if we have a successful response
+      if (!data || !data.success) {
+        console.error('Unexpected response format:', data);
+        throw new Error('Risposta del server non valida');
       }
 
       console.log('Email sent successfully:', data);
