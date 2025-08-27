@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { SecureHTMLRenderer } from "@/components/security/SecureHTMLRenderer";
 import { SecureCommentForm } from "@/components/security/SecureCommentForm";
+import { ApprovedComments } from "@/components/security/ApprovedComments";
 import LazyImage from "@/components/ui/LazyImage";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -324,6 +325,9 @@ const BlogArticle = () => {
                 </div>
               </section>
             )}
+            
+            {/* Display approved comments */}
+            <ApprovedComments postId={post.id} />
             
             {/* Secure Comment Form */}
             <SecureCommentForm postId={post.id} />

@@ -43,28 +43,15 @@ const useLeadTracking = () => {
     const utmMedium = urlParams.get('utm_medium') || undefined;
     const utmCampaign = urlParams.get('utm_campaign') || undefined;
 
-    // Get IP address
-    fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        setLeadData(prev => ({
-          ...prev,
-          sessionId,
-          ipAddress: data.ip,
-          utmSource,
-          utmMedium,
-          utmCampaign
-        }));
-      })
-      .catch(() => {
-        setLeadData(prev => ({
-          ...prev,
-          sessionId,
-          utmSource,
-          utmMedium,
-          utmCampaign
-        }));
-      });
+    // SECURITY FIX: Remove client-side IP fetching
+    // IP address will be captured server-side for better security
+    setLeadData(prev => ({
+      ...prev,
+      sessionId,
+      utmSource,
+      utmMedium,
+      utmCampaign
+    }));
 
     // Track page visits
     const updatePageVisits = () => {

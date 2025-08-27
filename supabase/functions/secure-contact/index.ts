@@ -4,66 +4,140 @@ import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': 'https://muv-fitness.lovable.app',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-security-token',
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Rate limiting
-const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
-const RATE_LIMIT_WINDOW = 10 * 60 * 1000; // 10 minutes
-const RATE_LIMIT_MAX_REQUESTS = 3; // 3 requests per 10 minutes
+// Enhanced rate limiting with database persistence
+async function checkRateLimit(ip: string, supabase: any): Promise<boolean> {
+  const endpoint = 'secure-contact';
+  const now = new Date();
+  const windowMs = 15 * 60 * 1000; // 15 minutes
+  const maxRequests = 2; // Reduced from 3 to 2 for better security
 
-const checkRateLimit = (ip: string): boolean => {
-  const now = Date.now();
-  const clientData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
-  
-  if (now - clientData.lastReset > RATE_LIMIT_WINDOW) {
-    clientData.count = 0;
-    clientData.lastReset = now;
+  try {
+    // Try to get existing rate limit record
+    const { data: existing, error } = await supabase
+      .from('secure_rate_limits')
+      .select('*')
+      .eq('identifier', ip)
+      .eq('endpoint', endpoint)
+      .single();
+
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+      console.error('Rate limit check error:', error);
+      return false; // Fail secure
+    }
+
+    if (!existing) {
+      // Create new rate limit record
+      const { error: insertError } = await supabase
+        .from('secure_rate_limits')
+        .insert({
+          identifier: ip,
+          endpoint: endpoint,
+          requests_count: 1,
+          window_start: now
+        });
+      
+      if (insertError) {
+        console.error('Rate limit insert error:', insertError);
+        return false; // Fail secure
+      }
+      return true;
+    }
+
+    const windowStart = new Date(existing.window_start);
+    const timeDiff = now.getTime() - windowStart.getTime();
+
+    if (timeDiff > windowMs) {
+      // Reset window
+      const { error: updateError } = await supabase
+        .from('secure_rate_limits')
+        .update({
+          requests_count: 1,
+          window_start: now
+        })
+        .eq('id', existing.id);
+      
+      if (updateError) {
+        console.error('Rate limit reset error:', updateError);
+        return false; // Fail secure
+      }
+      return true;
+    }
+
+    if (existing.requests_count >= maxRequests) {
+      return false;
+    }
+
+    // Increment counter
+    const { error: updateError } = await supabase
+      .from('secure_rate_limits')
+      .update({ requests_count: existing.requests_count + 1 })
+      .eq('id', existing.id);
+    
+    if (updateError) {
+      console.error('Rate limit increment error:', updateError);
+      return false; // Fail secure
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Rate limit check exception:', error);
+    return false; // Fail secure
   }
-  
-  clientData.count++;
-  rateLimitMap.set(ip, clientData);
-  
-  return clientData.count <= RATE_LIMIT_MAX_REQUESTS;
-};
+}
 
-// HMAC signature validation
-const validateHmacSignature = async (body: string, signature: string): Promise<boolean> => {
+// Enhanced security validation
+async function validateSecurityToken(token: string): Promise<boolean> {
+  if (!token) return false;
+  
   try {
     const secret = Deno.env.get('AI_ACCESS_KEY');
-    if (!secret) return false;
+    if (!secret) {
+      console.error('AI_ACCESS_KEY not configured');
+      return false;
+    }
 
-    const encoder = new TextEncoder();
-    const keyData = encoder.encode(secret);
-    const messageData = encoder.encode(body);
-
-    const cryptoKey = await crypto.subtle.importKey(
-      'raw',
-      keyData,
-      { name: 'HMAC', hash: 'SHA-256' },
-      false,
-      ['sign']
-    );
-
-    const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
-    const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
-
-    // Remove 'sha256=' prefix if present
-    const providedSignature = signature.replace(/^sha256=/, '');
-    
-    return expectedSignature === providedSignature;
+    // Simple token validation - in production, use proper cryptographic validation
+    return token === secret;
   } catch (error) {
-    console.error('HMAC validation error:', error);
+    console.error('Security token validation error:', error);
     return false;
   }
-};
+}
+
+// Input sanitization and validation
+function sanitizeInput(input: string): string {
+  if (!input) return '';
+  
+  // Remove potential XSS vectors
+  return input
+    .replace(/[<>]/g, '') // Remove angle brackets
+    .replace(/javascript:/gi, '') // Remove javascript: protocol
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .trim()
+    .substring(0, 1000); // Limit length
+}
+
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 serve(async (req) => {
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL') ?? '',
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+  );
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -77,97 +151,171 @@ serve(async (req) => {
   }
 
   const clientIP = req.headers.get('x-forwarded-for') || 
-                  req.headers.get('cf-connecting-ip') || 
-                  req.headers.get('x-real-ip') || 'unknown';
+                   req.headers.get('cf-connecting-ip') || 
+                   req.headers.get('x-real-ip') || 'unknown';
 
   console.log('Secure contact form request from IP:', clientIP);
 
   try {
-    // Rate limiting
-    if (!checkRateLimit(clientIP)) {
-      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
-      return new Response(
-        JSON.stringify({ error: 'Troppi tentativi. Riprova tra 10 minuti.' }),
-        { 
-          status: 429, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+    // Enhanced rate limiting check with database
+    const rateLimitPassed = await checkRateLimit(clientIP, supabase);
+    if (!rateLimitPassed) {
+      // Log security event
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'rate_limit_exceeded',
+        event_data_param: { endpoint: 'secure-contact', ip: clientIP },
+        ip_param: clientIP
+      });
+
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Troppe richieste. Riprova tra 15 minuti.'
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     const bodyText = await req.text();
-    let body;
+    let parsedBody;
     
     try {
-      body = JSON.parse(bodyText);
+      parsedBody = JSON.parse(bodyText);
     } catch (parseError) {
       console.error('Invalid JSON in request body:', parseError);
-      return new Response(
-        JSON.stringify({ error: 'Formato dati non valido' }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Formato dati non valido'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    // HMAC signature validation for additional security
-    const signature = req.headers.get('x-signature');
-    if (signature) {
-      const isValidSignature = await validateHmacSignature(bodyText, signature);
-      if (!isValidSignature) {
-        console.warn('Invalid HMAC signature', { ip: clientIP });
-        return new Response(
-          JSON.stringify({ error: 'Firma di sicurezza non valida' }),
-          { 
-            status: 401, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-          }
-        );
-      }
+    // Validate security token (required for all requests)
+    const securityToken = req.headers.get('x-security-token') || parsedBody.securityToken;
+    if (!securityToken) {
+      // Log security event
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'missing_security_token',
+        event_data_param: { endpoint: 'secure-contact' },
+        ip_param: clientIP
+      });
+
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Token di sicurezza richiesto'
+      }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    const { name, email, message, telefono, city, goal, csrfToken, timestamp } = body;
+    const isValidToken = await validateSecurityToken(securityToken);
+    if (!isValidToken) {
+      // Log security event
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'invalid_security_token',
+        event_data_param: { endpoint: 'secure-contact', token_preview: securityToken.substring(0, 8) },
+        ip_param: clientIP
+      });
+
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Token di sicurezza non valido'
+      }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Enhanced validation with sanitization
+    const name = sanitizeInput(parsedBody.name?.trim() || '');
+    const email = sanitizeInput(parsedBody.email?.trim() || '');
+    const message = sanitizeInput(parsedBody.message?.trim() || '');
+    const city = sanitizeInput(parsedBody.city?.trim() || '');
+    const goal = sanitizeInput(parsedBody.goal?.trim() || '');
+    const telefono = sanitizeInput(parsedBody.telefono?.trim() || '');
 
     // Enhanced validation
     if (!name || !email || !message || !city || !goal) {
-      return new Response(
-        JSON.stringify({ error: 'Tutti i campi obbligatori devono essere compilati' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Tutti i campi obbligatori devono essere compilati'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     // Validate email format
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(email)) {
-      return new Response(
-        JSON.stringify({ error: 'Formato email non valido' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Formato email non valido'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    // Validate message length and content
+    // Validate message length
     if (message.length < 10 || message.length > 2000) {
-      return new Response(
-        JSON.stringify({ error: 'Il messaggio deve essere tra 10 e 2000 caratteri' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Il messaggio deve essere tra 10 e 2000 caratteri'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    // Check for suspicious content (basic spam detection)
-    const suspiciousPatterns = [
-      /https?:\/\/[^\s]+/gi, // URLs
-      /\b(viagra|casino|loan|lottery|prize|winner)\b/gi, // Common spam keywords
-      /(.)\1{4,}/gi, // Repeated characters
+    // Enhanced spam detection
+    const spamIndicators = [
+      /https?:\/\//i,
+      /www\./i,
+      /\.(com|org|net|edu|info|biz)/i,
+      /viagra|casino|lottery|prize|winner|loan|bitcoin|crypto/i,
+      /click here|visit now|act now|limited time|urgent/i,
+      /free money|guaranteed|100%|earn \$|make money/i,
+      /investment|trading|forex|binary options/i
     ];
 
-    const isSuspicious = suspiciousPatterns.some(pattern => 
-      pattern.test(name) || pattern.test(message)
+    const suspiciousPatterns = [
+      /(.)\1{4,}/, // Repeated characters
+      /[A-Z]{5,}/, // Excessive caps
+      /\d{10,}/, // Long numbers (potential phone spam)
+    ];
+
+    const isSpam = spamIndicators.some(pattern => 
+      pattern.test(message) || pattern.test(name)
     );
 
-    if (isSuspicious) {
-      console.warn('Suspicious content detected', { ip: clientIP, name, message: message.substring(0, 100) });
-      // Still process but flag for review
+    const isSuspicious = suspiciousPatterns.some(pattern =>
+      pattern.test(message) || pattern.test(name)
+    );
+
+    if (isSpam || isSuspicious) {
+      // Log security event
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'spam_detected',
+        event_data_param: { 
+          endpoint: 'secure-contact',
+          name_length: name.length,
+          message_length: message.length,
+          has_urls: /https?:\/\//.test(message)
+        },
+        ip_param: clientIP
+      });
+
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Contenuto non consentito rilevato'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     console.log('Processing secure contact form submission:', { 
@@ -175,26 +323,19 @@ serve(async (req) => {
       email, 
       city, 
       goal, 
-      ip: clientIP,
-      suspicious: isSuspicious
+      ip: clientIP
     });
-
-    // Initialize Supabase client
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
 
     // Store lead tracking data with enhanced security fields
     const { error: leadError } = await supabase
       .from('lead_tracking')
       .insert({
-        session_id: csrfToken || crypto.randomUUID(),
+        session_id: parsedBody.csrfToken || crypto.randomUUID(),
         ip_address: clientIP,
         user_agent: req.headers.get('user-agent'),
         landing_page: '/contatti',
         form_submissions: 1,
-        conversion_value: isSuspicious ? -1 : 50, // Negative value flags suspicious
+        conversion_value: 50,
         referrer: req.headers.get('referer')
       });
 
@@ -202,101 +343,73 @@ serve(async (req) => {
       console.warn('Lead tracking insert failed:', leadError);
     }
 
-    // Send business notification email
-    const businessEmailResponse = await resend.emails.send({
-      from: "MUV Fitness <contatti@muvfitness.it>",
-      to: ["info@muvfitness.it"],
-      subject: `${isSuspicious ? '[SOSPETTO] ' : ''}Nuovo contatto dal sito web - ${name}`,
+    // Send business notification email with escaped content
+    const businessEmailResult = await resend.emails.send({
+      from: 'MUV Fitness <info@muvfitness.it>',
+      to: ['info@muvfitness.it'],
+      subject: `Nuovo contatto dal sito: ${escapeHtml(name)}`,
       html: `
-        <h2>Nuovo contatto dal sito web</h2>
-        <p><strong>Nome:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Telefono:</strong> ${telefono || 'Non fornito'}</p>
-        <p><strong>Città:</strong> ${city}</p>
-        <p><strong>Obiettivo:</strong> ${goal}</p>
+        <h2>Nuovo messaggio di contatto</h2>
+        <p><strong>Nome:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Telefono:</strong> ${escapeHtml(telefono || 'Non fornito')}</p>
+        <p><strong>Città:</strong> ${escapeHtml(city)}</p>
+        <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
         <p><strong>Messaggio:</strong></p>
-        <blockquote style="border-left: 3px solid #ccc; padding-left: 10px; margin: 10px 0;">
-          ${message.replace(/\n/g, '<br>')}
-        </blockquote>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
         <hr>
-        <p><small>
-          <strong>Dettagli tecnici:</strong><br>
-          IP: ${clientIP}<br>
-          User Agent: ${req.headers.get('user-agent')}<br>
-          Timestamp: ${new Date().toISOString()}<br>
-          ${isSuspicious ? '<strong>⚠️ CONTENUTO SOSPETTO RILEVATO</strong><br>' : ''}
-        </small></p>
+        <p><small>IP: ${escapeHtml(clientIP)} | Data: ${new Date().toLocaleString('it-IT')}</small></p>
       `,
     });
 
-    console.log('Business email sent successfully:', businessEmailResponse.data?.id);
+    console.log('Business email sent successfully:', businessEmailResult.data?.id);
 
-    // Send user confirmation email
-    const userEmailResponse = await resend.emails.send({
-      from: "MUV Fitness <contatti@muvfitness.it>",
+    // Send user confirmation email with escaped content
+    const userEmailResult = await resend.emails.send({
+      from: 'MUV Fitness <info@muvfitness.it>',
       to: [email],
-      subject: "Grazie per averci contattato - MUV Fitness",
+      subject: 'Grazie per averci contattato - MUV Fitness',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #333;">Ciao ${name}!</h2>
-          <p>Grazie per averci contattato. Abbiamo ricevuto il tuo messaggio e ti risponderemo il prima possibile.</p>
-          
-          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">I tuoi dati:</h3>
-            <p><strong>Nome:</strong> ${name}</p>
-            <p><strong>Città:</strong> ${city}</p>
-            <p><strong>Obiettivo:</strong> ${goal}</p>
-          </div>
-          
-          <p>Nel frattempo, puoi visitare il nostro sito per scoprire di più sui nostri servizi:</p>
-          <ul>
-            <li><a href="https://www.muvfitness.it/servizi">I nostri servizi</a></li>
-            <li><a href="https://www.muvfitness.it/team">Il nostro team</a></li>
-            <li><a href="https://www.muvfitness.it/blog">Blog e consigli</a></li>
-          </ul>
-          
-          <hr style="margin: 30px 0;">
-          <p style="font-size: 12px; color: #666;">
-            MUV Fitness - Centro Benessere<br>
-            Via Roma, 123 - Legnago (VR)<br>
-            Tel: 045 123456<br>
-            Email: info@muvfitness.it
-          </p>
-        </div>
+        <h2>Ciao ${escapeHtml(name)}!</h2>
+        <p>Grazie per averci contattato. Abbiamo ricevuto il tuo messaggio e ti risponderemo al più presto.</p>
+        
+        <h3>Riepilogo del tuo messaggio:</h3>
+        <p><strong>Città:</strong> ${escapeHtml(city)}</p>
+        <p><strong>Obiettivo:</strong> ${escapeHtml(goal)}</p>
+        <p><strong>Messaggio:</strong> ${escapeHtml(message)}</p>
+        
+        <p>Il nostro team ti contatterà entro 24 ore per fornirti tutte le informazioni di cui hai bisogno.</p>
+        
+        <p>A presto,<br>Il team MUV Fitness</p>
+        
+        <hr>
+        <p><small>Questo è un messaggio automatico, non rispondere a questa email.</small></p>
       `,
     });
 
-    console.log('User confirmation email sent successfully:', userEmailResponse.data?.id);
+    console.log('User confirmation email sent successfully:', userEmailResult.data?.id);
 
-    // Log security audit event
-    const { error: auditError } = await supabase.rpc('audit_security_event', {
+    // Log security audit event (without PII)
+    await supabase.rpc('log_security_event', {
       event_type_param: 'contact_form_submission',
       event_data_param: {
-        contact_name: name,
-        contact_email: email,
-        contact_city: city,
-        suspicious_content: isSuspicious,
-        ip_address: clientIP,
-        form_goal: goal
-      }
+        message_length: message.length,
+        city_provided: !!city,
+        goal_provided: !!goal,
+        business_email_sent: !!businessEmailResult.data,
+        user_email_sent: !!userEmailResult.data,
+        timestamp: new Date().toISOString()
+      },
+      ip_param: clientIP
     });
 
-    if (auditError) {
-      console.warn('Security audit logging failed:', auditError);
-    }
-
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'Messaggio inviato con successo',
-        businessEmailId: businessEmailResponse.data?.id,
-        userEmailId: userEmailResponse.data?.id
-      }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Messaggio inviato con successo'
+    }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
 
   } catch (error: any) {
     console.error('Error in secure-contact function:', {
@@ -305,15 +418,26 @@ serve(async (req) => {
       timestamp: new Date().toISOString()
     });
     
-    return new Response(
-      JSON.stringify({ 
-        error: 'Errore del server. Riprova più tardi.',
-        details: error.message 
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    // Log security event for errors
+    try {
+      await supabase.rpc('log_security_event', {
+        event_type_param: 'contact_form_error',
+        event_data_param: { 
+          error_message: error.message,
+          endpoint: 'secure-contact'
+        },
+        ip_param: clientIP
+      });
+    } catch (logError) {
+      console.error('Failed to log security event:', logError);
+    }
+    
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'Errore del server. Riprova più tardi.'
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   }
 });

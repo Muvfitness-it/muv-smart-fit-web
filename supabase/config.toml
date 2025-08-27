@@ -31,6 +31,14 @@ password_require_numbers = true
 password_require_special = true
 max_password_length = 128
 
+# Enhanced security settings
+[auth.external]
+enable_leaked_password_protection = true
+
+[auth.sessions]
+timebox = 3600
+inactivity_timeout = 1800
+
 # Secure endpoints - require authentication or HMAC
 [functions.log-visit]
 verify_jwt = false

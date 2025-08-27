@@ -86,6 +86,48 @@ export type Database = {
         }
         Relationships: []
       }
+      approved_comments: {
+        Row: {
+          author_name: string
+          content: string
+          created_at: string | null
+          id: string
+          original_comment_id: string | null
+          post_id: string | null
+        }
+        Insert: {
+          author_name: string
+          content: string
+          created_at?: string | null
+          id?: string
+          original_comment_id?: string | null
+          post_id?: string | null
+        }
+        Update: {
+          author_name?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          original_comment_id?: string | null
+          post_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approved_comments_original_comment_id_fkey"
+            columns: ["original_comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approved_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       auto_optimizer_logs: {
         Row: {
           actions: string[] | null
@@ -381,13 +423,6 @@ export type Database = {
             referencedRelation: "blog_comments"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "comment_submissions_comment_id_fkey"
-            columns: ["comment_id"]
-            isOneToOne: false
-            referencedRelation: "public_approved_comments"
-            referencedColumns: ["id"]
-          },
         ]
       }
       lead_tracking: {
@@ -561,6 +596,33 @@ export type Database = {
         }
         Relationships: []
       }
+      secure_rate_limits: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          id: string
+          identifier: string
+          requests_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          identifier: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          identifier?: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       security_audit_log: {
         Row: {
           created_at: string | null
@@ -671,41 +733,7 @@ export type Database = {
       }
     }
     Views: {
-      public_approved_comments: {
-        Row: {
-          author_name: string | null
-          content: string | null
-          created_at: string | null
-          id: string | null
-          post_id: string | null
-          status: string | null
-        }
-        Insert: {
-          author_name?: string | null
-          content?: string | null
-          created_at?: string | null
-          id?: string | null
-          post_id?: string | null
-          status?: string | null
-        }
-        Update: {
-          author_name?: string | null
-          content?: string | null
-          created_at?: string | null
-          id?: string | null
-          post_id?: string | null
-          status?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "blog_comments_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "blog_posts"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
       assign_user_role: {
@@ -755,6 +783,15 @@ export type Database = {
         Args: { user_id?: string }
         Returns: boolean
       }
+      log_security_event: {
+        Args: {
+          event_data_param?: Json
+          event_type_param: string
+          ip_param?: string
+          user_agent_param?: string
+        }
+        Returns: undefined
+      }
       log_unauthorized_access_attempt: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -791,12 +828,8 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
-      validate_request_hmac: {
-        Args: {
-          expected_key_name?: string
-          payload_text: string
-          signature_header: string
-        }
+      validate_captcha_token: {
+        Args: { token: string }
         Returns: boolean
       }
       verify_ai_token_access: {
