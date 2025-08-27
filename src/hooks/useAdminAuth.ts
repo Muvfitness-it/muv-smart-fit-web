@@ -36,62 +36,13 @@ export const useAdminAuth = () => {
     }
   };
 
+  // SECURITY FIX: Remove client-side admin bootstrap vulnerability
   const registerAsAdmin = async (userId: string, email: string) => {
-    try {
-      // Check if any admins exist first
-      const { data: existingAdmins } = await supabase
-        .from('user_roles')
-        .select('id')
-        .eq('role', 'admin')
-        .limit(1);
-
-      const isFirstAdmin = !existingAdmins || existingAdmins.length === 0;
-
-      // For first admin, allow direct role assignment
-      if (isFirstAdmin) {
-        const { error } = await supabase
-          .from('user_roles')
-          .insert({
-            user_id: userId,
-            role: 'admin'
-          });
-
-        if (!error) {
-          // Also insert into admin_users for backward compatibility
-          await supabase
-            .from('admin_users')
-            .insert({
-              user_id: userId,
-              email: email,
-              is_first_admin: true
-            });
-
-          setState(prev => ({ ...prev, isAdmin: true }));
-          logRoleChange(userId, 'admin', 'user');
-          
-          toast({
-            title: "Primo Amministratore Registrato",
-            description: "Sei il primo amministratore del sistema!",
-          });
-          return true;
-        }
-      } else {
-        // Subsequent admin requests require approval
-        toast({
-          title: "Richiesta Amministratore",
-          description: "Solo gli amministratori esistenti possono assegnare ruoli di amministratore",
-          variant: "destructive"
-        });
-        return false;
-      }
-    } catch (error) {
-      console.error('Error registering as admin:', error);
-      toast({
-        title: "Errore",
-        description: "Errore durante la registrazione amministratore",
-        variant: "destructive"
-      });
-    }
+    toast({
+      title: "Accesso Negato",
+      description: "La registrazione di amministratori è disabilitata per motivi di sicurezza. Contattare l'amministratore di sistema.",
+      variant: "destructive"
+    });
     return false;
   };
 

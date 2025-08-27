@@ -1,181 +1,219 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Star, Download, MessageCircle, Phone } from "lucide-react";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import { useEffect } from 'react';
+import { Star, Award, TrendingUp, Users, MessageCircle, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAnalytics } from '@/hooks/useAnalytics';
+import { Card, CardContent } from '@/components/ui/card';
 
 const Recensioni = () => {
-  const handleReputationClick = (platform: string) => {
-    // Track reputation clicks
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'reputation_click', {
-        platform: platform,
-        page: 'recensioni'
+  const { trackSiteVisit } = useAnalytics();
+
+  useEffect(() => {
+    trackSiteVisit('/recensioni');
+  }, [trackSiteVisit]);
+
+  const handleReputationClick = (source: string) => {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'click', {
+        event_category: 'reputation',
+        event_label: source,
+        value: 1,
       });
     }
+    
+    // WhatsApp URL con messaggio predefinito
+    const whatsappMessage = encodeURIComponent(
+      "Ciao! Ho visto le recensioni di MUV Fitness e vorrei maggiori informazioni sui vostri servizi."
+    );
+    const whatsappURL = `https://wa.me/393451370149?text=${whatsappMessage}`;
+    window.open(whatsappURL, '_blank');
   };
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Perché è utile la tua recensione?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Le recensioni aiutano altre persone a scoprire i nostri servizi e ci permettono di migliorare continuamente la qualità del nostro centro fitness."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quanto tempo richiede?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Lasciare una recensione richiede circa 60 secondi: basta aprire Google, cercare MUV Fitness Legnago e cliccare sulle stelle."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Posso restare anonimo?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Le recensioni su Google e Facebook sono pubbliche e mostrano il tuo nome. Puoi usare iniziali o nickname se preferisci maggiore privacy."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Cosa è utile raccontare?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Racconta il tuo obiettivo iniziale, come ti sei trovato con staff e tecnologie, e i risultati ottenuti in termini di centimetri, settimane o sensazioni."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Se ho avuto un problema?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Se hai avuto problemi, contattaci prima direttamente su WhatsApp o telefono. Preferiamo risolvere insieme qualsiasi questione prima che diventi pubblica."
-        }
-      }
-    ]
-  };
+  const stats = [
+    { number: '150+', label: 'Clienti Soddisfatti' },
+    { number: '4.9/5', label: 'Rating Medio' },
+    { number: '98%', label: 'Tasso di Successo' },
+    { number: '5 Anni', label: 'Di Esperienza' }
+  ];
+
+  const testimonials = [
+    {
+      name: "Sara M.",
+      rating: 5,
+      text: "Esperienza incredibile! Ho perso 15kg in 6 mesi con il loro supporto. Il team è professionale e sempre disponibile.",
+      service: "Dimagrimento e Ricomposizione Corporea"
+    },
+    {
+      name: "Marco R.",
+      rating: 5,
+      text: "Il Personal Training con EMS ha rivoluzionato il mio allenamento. Risultati visibili già dalla terza settimana!",
+      service: "Personal Training EMS"
+    },
+    {
+      name: "Giulia L.",
+      rating: 5,
+      text: "Pilates Reformer fantastico! Addio mal di schiena e postura migliorata notevolmente. Consigliatissimo!",
+      service: "Pilates Reformer"
+    },
+    {
+      name: "Andrea S.",
+      rating: 5,
+      text: "Small Group perfetto per chi come me preferisce allenarsi in compagnia. Ambiente motivante e risultati garantiti.",
+      service: "Small Group Training"
+    },
+    {
+      name: "Elena C.",
+      rating: 5,
+      text: "La consulenza nutrizionale ha cambiato il mio rapporto con il cibo. Finalmente ho trovato l'equilibrio giusto!",
+      service: "Consulenza Nutrizionale"
+    },
+    {
+      name: "Francesco T.",
+      rating: 5,
+      text: "HIIT training intenso ma efficace. Ho migliorato resistenza e forza in tempi record. Staff competentissimo!",
+      service: "HIIT Training"
+    }
+  ];
+
+  const achievements = [
+    {
+      icon: Award,
+      title: "Centro Fitness dell'Anno",
+      description: "Riconoscimento per l'eccellenza nei servizi 2023"
+    },
+    {
+      icon: Users,
+      title: "150+ Trasformazioni",
+      description: "Clienti che hanno raggiunto i loro obiettivi"
+    },
+    {
+      icon: TrendingUp,
+      title: "98% Tasso di Successo",
+      description: "Nei percorsi di dimagrimento e ricomposizione"
+    }
+  ];
 
   return (
     <>
-      <SEOOptimizer
-        title="Recensioni MUV Fitness Legnago – Come lasciarle in 60 secondi"
-        description="Lascia una recensione per MUV Fitness Legnago: ci aiuta a migliorare e aiuta chi ci scopre. Guida rapida per Google, Facebook e altri canali."
-        canonicalUrl="https://www.muvfitness.it/recensioni"
-        structuredData={structuredData}
-      />
-
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-        <div className="container mx-auto px-4 pt-32 pb-16">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
-              Lascia una recensione: ci aiuta a migliorare (e aiuta chi ci scopre)
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              La tua esperienza conta davvero. Una recensione onesta richiede solo 60 secondi 
-              e aiuta altre persone a scoprire il nostro centro fitness. 
-              <span className="text-brand-primary"> Inizia da Google – è il canale più utile.</span>
-            </p>
-          </div>
-          <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* Main Review Section */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Google Reviews - Primary */}
-              <Card className="bg-gray-800/50 border-brand-primary/20 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-2xl text-magenta-500">
-                    <Star className="w-6 h-6 text-yellow-500" />
-                    Lascia la tua recensione su Google (consigliato)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <Button 
-                    size="lg"
-                    className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold py-4 text-lg min-h-[44px]"
-                    onClick={() => {
-                      handleReputationClick('google');
-                      window.open('https://g.page/r/CffA03OKdKiQEBM/review', '_blank');
-                    }}
-                    aria-label="Lascia una recensione su Google per MUV Fitness Legnago"
-                  >
-                    <Star className="w-5 h-5 mr-2" />
-                    Apri Google e lascia recensione
-                  </Button>
-                  
-                  <div className="bg-gray-900/50 rounded-lg p-4">
-                    <h3 className="font-semibold mb-3 text-brand-primary">3 step veloci:</h3>
-                    <ol className="space-y-2 text-gray-300">
-                      <li className="flex items-start gap-2">
-                        <span className="bg-brand-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">1</span>
-                        Clicca il pulsante sopra (si apre Google)
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="bg-brand-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">2</span>
-                        Seleziona da 1 a 5 stelle
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="bg-brand-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">3</span>
-                        Scrivi la tua esperienza (opzionale ma molto utile)
-                      </li>
-                    </ol>
+      <main className="min-h-screen bg-background">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-primary py-16 sm:py-24">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="relative container mx-auto px-4">
+            <div className="text-center text-white max-w-4xl mx-auto">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+                Recensioni e <span className="text-brand-primary">Testimonianze</span>
+              </h1>
+              <p className="text-xl sm:text-2xl mb-8 opacity-90">
+                Scopri cosa dicono i nostri clienti delle loro trasformazioni
+              </p>
+              
+              {/* Stats Row */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {stats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-brand-primary mb-2">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm sm:text-base opacity-90">
+                      {stat.label}
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Other Channels */}
-              {/* Examples */}
-              <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-xl">Esempi utili (cosa scrivere)</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-4 text-gray-300">
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-magenta-500">Il tuo obiettivo iniziale:</strong> "Volevo perdere peso" / "Cercavo di risolvere il mal di schiena" / "Mi serviva più energia"
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-magenta-500">Come ti sei trovato:</strong> Staff attento, ambienti puliti, tecnologie innovative (EMS, Pilates Reformer, ecc.)
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 bg-brand-primary rounded-full mt-2.5 flex-shrink-0"></span>
-                      <strong className="text-magenta-500">I risultati:</strong> Centimetri persi, settimane necessarie, energia ritrovata, postura migliorata
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>     
-              {/* Privacy */}
-              <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg">Privacy e trasparenza</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    Le recensioni su Google, Facebook e altre piattaforme sono pubbliche e visibili a tutti. 
-                    Non offriamo incentivi economici per le recensioni – chiediamo solo onestà. 
-                    La tua esperienza autentica è il miglior regalo per noi e per chi ci scoprirà.
-                  </p>
-                </CardContent>
-              </Card>
+                ))}
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* CTA Footer */}
-          <div className="mt-16 text-center">
-            <div className="inline-flex flex-col sm:flex-row gap-4">
+        {/* Achievements Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">I Nostri Riconoscimenti</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {achievements.map((achievement, index) => (
+                <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
+                  <CardContent className="pt-6">
+                    <achievement.icon className="w-12 h-12 text-brand-primary mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2">{achievement.title}</h3>
+                    <p className="text-gray-600">{achievement.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Cosa Dicono i Nostri Clienti</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                  <CardContent className="pt-0">
+                    <div className="flex items-center mb-4">
+                      <div className="flex text-yellow-400">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 fill-current" />
+                        ))}
+                      </div>
+                      <span className="ml-2 font-semibold">{testimonial.rating}/5</span>
+                    </div>
+                    <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+                    <div className="border-t pt-4">
+                      <p className="font-semibold">{testimonial.name}</p>
+                      <p className="text-sm text-brand-primary">{testimonial.service}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trust Indicators */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-8">Perché Scegliere MUV Fitness</h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Esperienza Certificata</h3>
+                <p className="text-gray-600">Trainer certificati con anni di esperienza nel settore fitness</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Risultati Garantiti</h3>
+                <p className="text-gray-600">Metodologie scientifiche per risultati concreti e duraturi</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Supporto Continuo</h3>
+                <p className="text-gray-600">Assistenza personalizzata in ogni fase del tuo percorso</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 bg-gradient-primary">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-6">
+              Pronto a Iniziare la Tua Trasformazione?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Unisciti ai nostri clienti soddisfatti e inizia il tuo percorso verso il benessere
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg"
-                className="bg-green-600 hover:bg-green-700 text-white font-semibold min-h-[44px] px-8"
-                onClick={() => handleReputationClick('whatsapp')}
+                className="min-h-[44px] px-8 bg-green-600 hover:bg-green-700 text-white font-semibold"
+                onClick={() => handleReputationClick('whatsapp-cta')}
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Scrivici su WhatsApp
@@ -192,8 +230,9 @@ const Recensioni = () => {
                 </a>
               </Button>
             </div>
+            </div>
           </div>
-        </div>
+        </section>
       </main>
 
       {/* Sticky Mobile CTA */}

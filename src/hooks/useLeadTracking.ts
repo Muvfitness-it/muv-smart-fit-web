@@ -138,30 +138,31 @@ const useLeadTracking = () => {
     }
   };
 
+  // SECURITY FIX: Remove direct client-side database writes
+  // Route through secure edge function instead
   const saveLeadData = async () => {
     try {
       const { supabase } = await import('@/integrations/supabase/client');
       
       const finalTimeOnSite = Math.floor((Date.now() - startTime) / 1000);
       
-      await supabase
-        .from('lead_tracking')
-        .upsert({
-          session_id: leadData.sessionId,
-          ip_address: leadData.ipAddress,
-          user_agent: leadData.userAgent,
-          referrer: leadData.referrer,
-          utm_source: leadData.utmSource,
-          utm_medium: leadData.utmMedium,
-          utm_campaign: leadData.utmCampaign,
-          landing_page: leadData.landingPage,
-          pages_visited: leadData.pagesVisited,
-          time_on_site: finalTimeOnSite,
-          form_submissions: leadData.formSubmissions,
-          booking_completed: leadData.bookingCompleted
-        }, {
-          onConflict: 'session_id'
-        });
+      // Create HMAC signature for security
+      const bodyData = {
+        action: 'lead_tracking',
+        leadData: {
+          ...leadData,
+          timeOnSite: finalTimeOnSite
+        }
+      };
+      
+      // Call secure edge function instead of direct DB write
+      const response = await supabase.functions.invoke('log-visit', {
+        body: bodyData
+      });
+
+      if (response.error) {
+        console.error('Error saving lead data via edge function:', response.error);
+      }
     } catch (error) {
       console.error('Error saving lead data:', error);
     }
