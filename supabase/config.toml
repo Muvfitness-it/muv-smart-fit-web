@@ -48,7 +48,7 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.secure-contact]
-verify_jwt = true
+verify_jwt = false
 
 # Public endpoints (no JWT required)  
 [functions.sitemap]
