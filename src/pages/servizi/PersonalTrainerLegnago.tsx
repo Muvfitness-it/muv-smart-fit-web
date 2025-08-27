@@ -11,7 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import LazyImage from "@/components/ui/LazyImage";
-import ContactForm from "@/components/contact/ContactForm";
+import ExternalForm from "@/components/contact/ExternalForm";
 
 const PersonalTrainerLegnago = () => {
   const pageTitle = "Personal Trainer a Legnago – 1:1 & Small Group | MUV";
@@ -419,7 +419,7 @@ const PersonalTrainerLegnago = () => {
                 <h2 className="text-3xl font-bold mb-4">Richiedi Informazioni</h2>
                 <p className="text-gray-600">Ti richiamiamo entro 10 minuti negli orari di apertura</p>
               </div>
-              <ContactForm />
+              <ExternalForm />
             </div>
           </div>
         </section>

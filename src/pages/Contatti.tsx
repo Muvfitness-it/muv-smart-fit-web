@@ -1,4 +1,4 @@
-import ContactForm from "../components/contact/ContactForm";
+import ExternalForm from "../components/contact/ExternalForm";
 import ContactInfo from "../components/contact/ContactInfo";
 import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
@@ -65,7 +65,7 @@ const Contatti = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
-            <ContactForm />
+            <ExternalForm />
             <ContactInfo />
           </div>
           
