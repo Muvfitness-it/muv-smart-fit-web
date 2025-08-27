@@ -195,12 +195,12 @@ serve(async (req) => {
       hasGoal: !!goal
     });
 
-    // Enhanced validation (telefono is optional)
-    if (!name || !email || !message || !city || !goal) {
-      console.log('Missing required fields');
+    // Enhanced validation (telefono optional, city/goal optional)
+    if (!name || !email || !message) {
+      console.log('Missing required fields (name/email/message)');
       return new Response(JSON.stringify({
         success: false,
-        error: 'Tutti i campi obbligatori devono essere compilati'
+        error: 'Nome, email e messaggio sono obbligatori'
       }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
