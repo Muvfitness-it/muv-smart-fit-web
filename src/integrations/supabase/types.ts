@@ -120,6 +120,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "approved_comments_original_comment_id_fkey"
+            columns: ["original_comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_comments_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "approved_comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
@@ -421,6 +428,13 @@ export type Database = {
             columns: ["comment_id"]
             isOneToOne: false
             referencedRelation: "blog_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comment_submissions_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_comments_public"
             referencedColumns: ["id"]
           },
         ]
@@ -763,7 +777,44 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      blog_comments_public: {
+        Row: {
+          author_name: string | null
+          content: string | null
+          created_at: string | null
+          id: string | null
+          post_id: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          post_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          post_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       assign_user_role: {
