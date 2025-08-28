@@ -57,19 +57,14 @@ const LazyImage = ({
     setHasError(true);
     onError?.();
   };
-  // Generate WebP source with fallback
+  // Generate WebP source only if the original already points to a WebP file
   const getWebPSrc = (originalSrc: string) => {
-    if (originalSrc.includes('.jpg') || originalSrc.includes('.jpeg') || originalSrc.includes('.png')) {
-      return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-    }
-    return originalSrc;
+    return /\.webp($|\?)/i.test(originalSrc) ? originalSrc : '';
   };
-
-  // Generate srcSet for WebP with different sizes
+  // Preserve srcSet only if it already contains WebP variants
   const getWebPSrcSet = (originalSrcSet: string) => {
-    return originalSrcSet.replace(/\.(jpg|jpeg|png)/gi, '.webp');
+    return /\.webp/i.test(originalSrcSet) ? originalSrcSet : '';
   };
-
   return (
     <div 
       ref={imgRef} 
@@ -78,11 +73,13 @@ const LazyImage = ({
     >
       {isInView && !hasError ? (
         <picture>
-          <source 
-            srcSet={srcSet ? getWebPSrcSet(srcSet) : getWebPSrc(src)} 
-            sizes={sizes}
-            type="image/webp" 
-          />
+          {(srcSet ? getWebPSrcSet(srcSet) : getWebPSrc(src)) && (
+            <source 
+              srcSet={srcSet ? getWebPSrcSet(srcSet) : getWebPSrc(src)} 
+              sizes={sizes}
+              type="image/webp" 
+            />
+          )}
           <img
             src={src}
             srcSet={srcSet}
