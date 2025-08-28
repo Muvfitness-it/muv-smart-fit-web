@@ -24,9 +24,10 @@ export const ApprovedComments: React.FC<ApprovedCommentsProps> = ({ postId }) =>
     const loadComments = async () => {
       try {
         const { data, error } = await supabase
-          .from('approved_comments')
+          .from('blog_comments')
           .select('id, post_id, author_name, content, created_at')
           .eq('post_id', postId)
+          .eq('status', 'approved')
           .order('created_at', { ascending: false });
 
         if (error) {
