@@ -22,7 +22,7 @@ export const useAnalytics = () => {
   const trackSiteVisit = useCallback(async (pagePath: string) => {
     try {
       // Use secure log-visit edge function instead of direct database access
-      const { error } = await supabase.functions.invoke('log-visit', {
+      const { error } = await supabase.functions.invoke('log-visit-public', {
         body: { 
           pagePath,
           // Remove IP collection on client side for security
@@ -46,7 +46,7 @@ export const useAnalytics = () => {
       console.log('Tracking planner usage:', { actionType, calories, planType });
       
       // Use secure log-visit edge function for planner usage tracking
-      const { error } = await supabase.functions.invoke('log-visit', {
+      const { error } = await supabase.functions.invoke('log-visit-public', {
         body: { 
           pagePath: 'planner-usage',
           actionType,
