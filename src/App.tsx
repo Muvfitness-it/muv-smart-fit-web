@@ -55,6 +55,7 @@ import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import AIAuth from "./pages/AIAuth";
 import CookieConsent from "./components/security/CookieConsent";
+import FloatingCTA from "./components/ui/FloatingCTA";
 
 import AllenamentoEMSLegnago from "./pages/AllenamentoEMSLegnago";
 import PilatesLegnago from "./pages/PilatesLegnago";
@@ -207,6 +208,7 @@ const AppContent = () => {
         } />
         </Routes>
       </div>
+      <FloatingCTA />
       <CookieConsent />
     </SessionSecurity>
   );

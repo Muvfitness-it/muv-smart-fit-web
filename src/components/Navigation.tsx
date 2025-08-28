@@ -67,17 +67,17 @@ const Navigation = () => {
   return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
-          {/* Logo - made significantly larger */}
+          {/* Logo - optimized for mobile */}
           <Link to="/" className="flex items-center">
             <img
               src={logoSrc}
               alt="Logo MUV Fitness Legnago"
-              width={240}
-              height={72}
+              width={180}
+              height={54}
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className={`site-logo w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12' : 'h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24'}`}
+              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-8 sm:h-9 md:h-10' : 'h-10 sm:h-12 md:h-14 lg:h-16 xl:h-18'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
@@ -89,10 +89,14 @@ const Navigation = () => {
               </Link>)}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - enhanced visibility */}
           <div className="lg:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-white hover:text-brand-primary transition-colors min-h-[44px] min-w-[44px]" aria-label="Apri menu di navigazione">
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            <button 
+              onClick={() => setIsOpen(!isOpen)} 
+              className="text-white hover:text-brand-primary transition-colors min-h-[44px] min-w-[44px] bg-black/20 backdrop-blur-sm rounded-lg p-2 border border-white/20" 
+              aria-label="Apri menu di navigazione"
+            >
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
         </div>

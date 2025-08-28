@@ -8,6 +8,7 @@ import CTASection from '@/components/home/CTASection';
 import SEOOptimizer from '@/components/SEO/SEOOptimizer';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import useLeadTracking from '@/hooks/useLeadTracking';
+import { MessageCircle } from 'lucide-react';
 
 const Index = () => {
   // Initialize lead tracking
@@ -62,25 +63,29 @@ const Index = () => {
       
       <NewHeroSection />
       
-      {/* Mobile CTA Section - Solo Mobile */}
-      <section className="mobile-cta-section md:hidden">
-        <div className="mobile-cta-buttons">
-          <a 
-            href="https://wa.me/393291070374"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mobile-cta-btn mobile-cta-whatsapp"
-            aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
-          >
-            📱 Scrivici su WhatsApp
-          </a>
-          <a 
-            href="/contatti" 
-            className="mobile-cta-btn mobile-cta-consulenza"
-            aria-label="Prenota Consulenza Gratuita presso MUV Fitness Legnago"  
-          >
-            🎯 Consulenza Gratuita
-          </a>
+      {/* Mobile CTA Section - Enhanced */}
+      <section className="mobile-cta-section md:hidden py-8 px-4 bg-gray-800/50">
+        <div className="container mx-auto max-w-md">
+          <div className="flex flex-col gap-4">
+            <a 
+              href="https://wa.me/393291070374"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[56px]"
+              aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
+            >
+              <MessageCircle className="w-6 h-6" />
+              <span className="text-lg">Scrivici su WhatsApp</span>
+            </a>
+            <a 
+              href="/contatti" 
+              className="flex items-center justify-center gap-3 bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-secondary hover:to-brand-accent text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[56px]"
+              aria-label="Prenota Consulenza Gratuita presso MUV Fitness Legnago"  
+            >
+              <span className="text-2xl">🎯</span>
+              <span className="text-lg">Consulenza Gratuita</span>
+            </a>
+          </div>
         </div>
       </section>
       

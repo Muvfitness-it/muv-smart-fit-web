@@ -17,28 +17,28 @@ const FloatingCTA: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="whatsapp-sticky fixed bottom-6 right-6 z-50 flex flex-col gap-3 animate-slide-up">
-      {/* WhatsApp Button */}
+    <div className="whatsapp-sticky fixed bottom-4 right-4 z-50 flex flex-col gap-3 animate-slide-up">
+      {/* WhatsApp Button - Enhanced for mobile */}
       <a
         href="https://wa.me/393291070374"
         target="_blank"
         rel="noopener noreferrer"
-        className="group bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-pulse-glow"
+        className="group bg-green-500 hover:bg-green-600 text-white p-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-pulse-glow min-h-[56px] min-w-[56px] flex items-center justify-center"
         aria-label="Contattaci su WhatsApp"
       >
-        <MessageCircle className="w-6 h-6" />
+        <MessageCircle className="w-8 h-8" />
         <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
           Scrivici su WhatsApp
         </span>
       </a>
 
-      {/* Phone Button */}
+      {/* Phone Button - Enhanced for mobile */}
       <a
         href="tel:+393291070374"
-        className="group bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-secondary hover:to-brand-accent text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-neon-pulse"
+        className="group bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-secondary hover:to-brand-accent text-white p-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-neon-pulse min-h-[56px] min-w-[56px] flex items-center justify-center"
         aria-label="Chiamaci ora"
       >
-        <Phone className="w-6 h-6" />
+        <Phone className="w-8 h-8" />
         <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
           Chiamaci ora
         </span>
