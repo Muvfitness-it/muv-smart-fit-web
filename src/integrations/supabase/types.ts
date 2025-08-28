@@ -784,7 +784,6 @@ export type Database = {
           created_at: string | null
           id: string | null
           post_id: string | null
-          status: string | null
           updated_at: string | null
         }
         Insert: {
@@ -793,7 +792,6 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           post_id?: string | null
-          status?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -802,7 +800,6 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           post_id?: string | null
-          status?: string | null
           updated_at?: string | null
         }
         Relationships: [
