@@ -40,8 +40,8 @@ const ComeArrivare = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="font-semibold text-lg">MUV Fitness Legnago</p>
-                    <p className="text-gray-600 mb-4">Via Roma 123, 37045 Legnago (VR)</p>
-                    <p className="text-gray-600">Telefono: 045 123 4567</p>
+                    <p className="text-gray-600 mb-4">Via Venti Settembre, 5/7, 37045 Legnago (VR)</p>
+                    <p className="text-gray-600">Telefono: 329 107 0374</p>
                     <p className="text-gray-600">Email: info@muvfitness.it</p>
                   </CardContent>
                 </Card>
