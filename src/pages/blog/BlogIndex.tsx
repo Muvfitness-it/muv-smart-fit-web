@@ -205,7 +205,7 @@ const BlogIndex = () => {
               {formattedPosts.map((post) => (
                 <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
                   {post.featured_image && (
-                    <Link to={`/blog/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
+                    <Link to={`/${post.slug}`} aria-label={`Apri articolo ${post.title}`}>
                       <LazyImage
                         src={post.featured_image}
                         alt={`Copertina articolo ${post.title} - MUV Fitness Legnago`}
@@ -217,7 +217,7 @@ const BlogIndex = () => {
                   )}
                   <CardHeader className="pb-3">
                     <CardTitle className="text-xl leading-tight">
-                      <Link to={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
+                      <Link to={`/${post.slug}`} className="hover:text-primary transition-colors">
                         {post.title}
                       </Link>
                     </CardTitle>
@@ -228,7 +228,7 @@ const BlogIndex = () => {
                       <p className="text-muted-foreground line-clamp-3 mb-4 leading-relaxed">{post.excerpt}</p>
                     )}
                     <Button asChild variant="outline" size="sm" className="w-full">
-                      <Link to={`/blog/${post.slug}`}>Leggi l'articolo</Link>
+                      <Link to={`/${post.slug}`}>Leggi l'articolo</Link>
                     </Button>
                   </CardContent>
                 </Card>

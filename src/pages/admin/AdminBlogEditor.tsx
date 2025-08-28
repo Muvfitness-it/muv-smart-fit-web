@@ -120,6 +120,24 @@ const AdminBlogEditor = () => {
       }
     } else {
       toast({ title: 'Salvato', description: nextStatus === 'published' ? 'Articolo pubblicato' : 'Bozza salvata' });
+      
+      // Submit to search engines when published
+      if (nextStatus === 'published') {
+        try {
+          const postUrl = `https://www.muvfitness.it/${slug.trim()}`;
+          await supabase.functions.invoke('indexnow-submitter', {
+            body: { urls: [postUrl] }
+          });
+          toast({
+            title: "Invio automatico completato",
+            description: "Articolo inviato ai motori di ricerca",
+          });
+        } catch (indexError: any) {
+          console.error('IndexNow submission error:', indexError);
+          // Don't show error toast for IndexNow failures, it's not critical
+        }
+      }
+      
       navigate('/admin/blog');
     }
     setSaving(false);

@@ -256,7 +256,7 @@ const BlogCategory = () => {
                       )}
                       <CardHeader>
                         <CardTitle className="text-lg">
-                          <Link to={`/blog/${post.slug}`} className="hover:underline">
+                          <Link to={`/${post.slug}`} className="hover:underline">
                             {post.title}
                           </Link>
                         </CardTitle>
@@ -264,7 +264,7 @@ const BlogCategory = () => {
                       <CardContent>
                         {post.excerpt && <p className="text-muted-foreground line-clamp-2">{post.excerpt}</p>}
                         <div className="mt-3">
-                          <Button asChild size="sm" variant="outline"><Link to={`/blog/${post.slug}`}>Leggi</Link></Button>
+                          <Button asChild size="sm" variant="outline"><Link to={`/${post.slug}`}>Leggi</Link></Button>
                         </div>
                       </CardContent>
                     </Card>

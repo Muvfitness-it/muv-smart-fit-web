@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { IndexNowSubmitter } from "@/components/admin/IndexNowSubmitter";
 
 interface PostListItem {
   id: string;
@@ -110,9 +111,14 @@ const AdminBlogList = () => {
                   <Badge variant={p.status === "published" ? "default" : "secondary"}>{p.status}</Badge>
                   {p.published_at && <span className="text-xs text-muted-foreground">{new Date(p.published_at).toLocaleDateString("it-IT")}</span>}
                 </div>
-                <div className="flex gap-2">
-                  <Button asChild variant="outline" size="sm"><Link to={`/admin/blog/${p.id}`}>Modifica</Link></Button>
-                  <Button asChild variant="ghost" size="sm"><Link to={`/${p.slug}`}>Apri</Link></Button>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
+                    <Button asChild variant="outline" size="sm"><Link to={`/admin/blog/${p.id}`}>Modifica</Link></Button>
+                    <Button asChild variant="ghost" size="sm"><Link to={`/${p.slug}`}>Apri</Link></Button>
+                  </div>
+                  {p.status === 'published' && (
+                    <IndexNowSubmitter postSlug={p.slug} />
+                  )}
                 </div>
               </CardContent>
             </Card>
