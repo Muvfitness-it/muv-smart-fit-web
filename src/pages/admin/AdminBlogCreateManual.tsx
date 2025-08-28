@@ -59,6 +59,7 @@ const AdminBlogCreateManual: React.FC = () => {
         if (error) throw error;
         const { data } = supabase.storage.from("immagini").getPublicUrl(path);
         const url = data.publicUrl;
+        console.log('Generated image URL:', url); // Debug log
         const editor = quillRef.current?.getEditor();
         const range = editor?.getSelection(true);
         if (range) {

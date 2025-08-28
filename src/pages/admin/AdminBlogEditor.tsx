@@ -165,6 +165,7 @@ const AdminBlogEditor = () => {
       if (upErr) throw upErr;
       const { data } = supabase.storage.from('immagini').getPublicUrl(path);
       if (data?.publicUrl) {
+        console.log('Generated featured image URL:', data.publicUrl); // Debug log
         setFeatured(data.publicUrl);
         toast({ title: 'Immagine caricata', description: 'URL inserito automaticamente' });
       }

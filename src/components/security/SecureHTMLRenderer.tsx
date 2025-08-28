@@ -18,7 +18,7 @@ export const SecureHTMLRenderer = ({
     'a', 'img',
     'blockquote', 'code', 'pre'
   ],
-  allowedAttributes = ['href', 'src', 'alt', 'title', 'class']
+  allowedAttributes = ['href', 'src', 'alt', 'title', 'class', 'loading', 'decoding']
 }: SecureHTMLRendererProps) => {
   const sanitizedHTML = useMemo(() => {
     const cleanHTML = DOMPurify.sanitize(html, {
@@ -36,9 +36,36 @@ export const SecureHTMLRenderer = ({
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = cleanHTML;
     
+    // Fix external links
     const links = tempDiv.querySelectorAll('a[target="_blank"]');
     links.forEach(link => {
       link.setAttribute('rel', 'noopener noreferrer');
+    });
+    
+    // Fix image URLs - ensure Supabase storage images have correct URLs
+    const images = tempDiv.querySelectorAll('img');
+    images.forEach(img => {
+      const src = img.getAttribute('src');
+      if (src) {
+        // If it's a Supabase storage URL but doesn't include the full domain, fix it
+        if (src.startsWith('/storage/v1/object/public/immagini/') || 
+            src.includes('supabase.co/storage/v1/object/public/immagini/')) {
+          // URL is already correct
+        } else if (src.startsWith('blog/') || src.includes('immagini/blog/')) {
+          // Convert relative storage path to full URL
+          const cleanPath = src.replace(/^.*?blog\//, 'blog/');
+          const fullUrl = `https://baujoowgqeyraqnukkmw.supabase.co/storage/v1/object/public/immagini/${cleanPath}`;
+          img.setAttribute('src', fullUrl);
+        }
+        
+        // Add performance attributes if not present
+        if (!img.getAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+        if (!img.getAttribute('decoding')) {
+          img.setAttribute('decoding', 'async');
+        }
+      }
     });
     
     return tempDiv.innerHTML;
