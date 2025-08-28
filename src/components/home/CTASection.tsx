@@ -7,7 +7,7 @@ const CTASection = () => {
     <section className="py-20 bg-gray-900">
       <div className="max-w-5xl mx-auto text-center px-4">
         <Star className="w-16 h-16 text-magenta-400 mx-auto mb-6 animate-pulse" />
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-whait mb-6 font-heading">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-whaite mb-6 font-heading">
           🚀 SEI PRONTO A VEDERE IL <span className="text-magenta-400">CAMBIAMENTO</span> 
           <span className="text-viola-400 block md:inline"> CHE HAI SEMPRE SOGNATO?</span>
         </h2>
