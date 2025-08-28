@@ -77,7 +77,7 @@ const Navigation = () => {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-8 sm:h-9 md:h-10' : 'h-10 sm:h-12 md:h-14 lg:h-16 xl:h-18'}`}
+              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-6 sm:h-8 md:h-9 lg:h-10' : 'h-8 sm:h-10 md:h-12 lg:h-16 xl:h-18'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
@@ -93,10 +93,10 @@ const Navigation = () => {
           <div className="lg:hidden">
             <button 
               onClick={() => setIsOpen(!isOpen)} 
-              className="text-white hover:text-brand-primary transition-colors min-h-[44px] min-w-[44px] bg-black/20 backdrop-blur-sm rounded-lg p-2 border border-white/20" 
+              className="text-white hover:text-brand-primary transition-colors min-h-[48px] min-w-[48px] bg-black/30 backdrop-blur-md rounded-xl p-3 border-2 border-white/30 shadow-lg" 
               aria-label="Apri menu di navigazione"
             >
-              {isOpen ? <X size={32} /> : <Menu size={32} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>

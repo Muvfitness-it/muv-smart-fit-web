@@ -74,7 +74,7 @@ const Index = () => {
               className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[56px]"
               aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
             >
-              <MessageCircle className="w-6 h-6" />
+              <MessageCircle className="w-8 h-8" />
               <span className="text-lg">Scrivici su WhatsApp</span>
             </a>
             <a 
@@ -82,7 +82,7 @@ const Index = () => {
               className="flex items-center justify-center gap-3 bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-secondary hover:to-brand-accent text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[56px]"
               aria-label="Prenota Consulenza Gratuita presso MUV Fitness Legnago"  
             >
-              <span className="text-2xl">🎯</span>
+              <span className="text-3xl">🎯</span>
               <span className="text-lg">Consulenza Gratuita</span>
             </a>
           </div>
