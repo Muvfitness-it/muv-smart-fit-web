@@ -231,7 +231,7 @@ const BlogArticle = () => {
 
             {/* Render hero only if content doesn't already have one */}
             {!post.content.includes('post-hero') && (
-              <header className="post-hero mb-8 mt-4">
+              <header className="post-hero article-header mb-8 mt-4">
                 <span className="post-hero-label">Guida • Metodo MUV</span>
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{post.title}</h1>
                 <p className="meta text-sm text-muted-foreground">

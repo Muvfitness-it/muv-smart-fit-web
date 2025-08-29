@@ -613,8 +613,6 @@ aside.callout {
     object-fit: cover;
     clear: both;
     margin: 2rem auto;
-    position: relative;
-    z-index: 1;
   }
 
   /* Ensure proper spacing after images */
@@ -646,6 +644,14 @@ aside.callout {
     margin-top: 2rem !important;
     clear: both;
   }
+
+  /* Article header isolation to avoid overlap with content */
+  .blog .article-header { position: relative; isolation: isolate; }
+  .blog .article-header .article-hero { position: relative; z-index: 0; overflow: hidden; }
+  .blog .prose-custom { position: relative; z-index: 1; }
+  .blog .prose-custom > * { position: relative; z-index: 2; }
+  .blog .prose-custom > :first-child { margin-top: 1.25rem; }
+  .blog .prose-custom img, .blog .prose-custom picture { z-index: 0; }
   
   /* Miglioramenti responsive */
   @media (max-width: 768px) {
