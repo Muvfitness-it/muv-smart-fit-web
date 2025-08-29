@@ -1,7 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { HfInference } from 'https://esm.sh/@huggingface/inference@2.3.2';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const huggingFaceToken = Deno.env.get('HUGGING_FACE_ACCESS_TOKEN');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,11 +17,6 @@ serve(async (req) => {
   }
 
   try {
-    if (!openAIApiKey) {
-      console.error('OPENAI_API_KEY not configured');
-      throw new Error('OPENAI_API_KEY non configurata');
-    }
-
     // Rate limiting check (simple in-memory counter per IP)
     const clientIP = req.headers.get('x-forwarded-for') || 'unknown';
     console.log(`Image generation request from IP: ${clientIP}`);
@@ -44,6 +41,48 @@ serve(async (req) => {
 
     console.log('Generating image with prompt:', { prompt: prompt.slice(0, 100), size, quality });
 
+    // Try Hugging Face FLUX first (fast and free)
+    if (huggingFaceToken) {
+      try {
+        console.log('Trying Hugging Face FLUX...');
+        const hf = new HfInference(huggingFaceToken);
+        
+        const enhancedPrompt = `Professional fitness blog image: ${prompt}. Modern, clean and professional style, suitable for a high-quality fitness brand. High resolution, photorealistic.`;
+        
+        const image = await hf.textToImage({
+          inputs: enhancedPrompt,
+          model: 'black-forest-labs/FLUX.1-schnell',
+        });
+
+        // Convert the blob to a base64 string
+        const arrayBuffer = await image.arrayBuffer();
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
+        console.log('Hugging Face image generated successfully');
+        
+        return new Response(
+          JSON.stringify({ 
+            image: `data:image/png;base64,${base64}`,
+            provider: 'huggingface',
+            model: 'FLUX.1-schnell'
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      } catch (hfError) {
+        console.warn('Hugging Face failed, trying OpenAI fallback:', hfError);
+      }
+    } else {
+      console.log('Hugging Face token not available, trying OpenAI...');
+    }
+
+    // Fallback to OpenAI
+    if (!openAIApiKey) {
+      console.error('Both HuggingFace and OpenAI API keys not configured');
+      throw new Error('Servizio di generazione immagini temporaneamente non disponibile');
+    }
+
+    console.log('Using OpenAI as fallback...');
+    
     const response = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
@@ -87,7 +126,7 @@ serve(async (req) => {
       throw new Error('Formato immagine non valido');
     }
 
-    console.log('Image generated successfully:', { 
+    console.log('OpenAI image generated successfully:', { 
       model: 'gpt-image-1', 
       size, 
       quality, 
@@ -97,7 +136,9 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         image: `data:image/png;base64,${data.data[0].b64_json}`,
-        revised_prompt: data.data[0].revised_prompt 
+        revised_prompt: data.data[0].revised_prompt,
+        provider: 'openai',
+        model: 'gpt-image-1'
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
