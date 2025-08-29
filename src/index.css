@@ -439,6 +439,12 @@ aside.callout {
   .blog article img {
     border-radius: .5rem;
     background: #FFF;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
   
   .blog article table {
