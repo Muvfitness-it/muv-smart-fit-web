@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useGeminiAPI } from "@/hooks/useGeminiAPI";
+import { ImageOptimizer } from "@/components/admin/ImageOptimizer";
 
 interface Category { id: string; name: string; slug: string; }
 
@@ -226,6 +227,15 @@ const AdminBlogEditor = () => {
     }
   };
 
+  const handleOptimizedImageInsert = (markup: string) => {
+    // Insert optimized markup at the end of content
+    setContent(prev => prev + '\n\n' + markup);
+    toast({ 
+      title: 'Immagine inserita', 
+      description: 'Markup ottimizzato aggiunto al contenuto' 
+    });
+  };
+
   if (!isAdmin) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -388,6 +398,11 @@ const AdminBlogEditor = () => {
             <Button onClick={generateAI} disabled={aiLoading}>{aiLoading ? 'Generazione...' : 'Genera bozza'}</Button>
             <p className="text-xs text-muted-foreground mt-2">La bozza verrà inserita nel campo contenuto. Rivedi e modifica prima della pubblicazione.</p>
           </div>
+
+          <ImageOptimizer 
+            onImageInserted={handleOptimizedImageInsert}
+            className="mt-4"
+          />
         </div>
       </div>
     </main>
