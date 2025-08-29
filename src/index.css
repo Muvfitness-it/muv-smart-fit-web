@@ -604,13 +604,46 @@ aside.callout {
   }
   
   .prose-custom img {
-    @apply rounded-lg shadow-lg my-6 mx-auto;
+    @apply rounded-lg shadow-lg mx-auto;
     box-shadow: var(--shadow-card);
     background: #FFF;
     max-width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
+    clear: both;
+    margin: 2rem auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Ensure proper spacing after images */
+  .prose-custom img + * {
+    margin-top: 2rem !important;
+    clear: both;
+  }
+
+  /* Specific spacing for paragraphs after images */
+  .prose-custom img + p,
+  .prose-custom img + h1,
+  .prose-custom img + h2,
+  .prose-custom img + h3,
+  .prose-custom img + h4,
+  .prose-custom img + h5,
+  .prose-custom img + h6 {
+    margin-top: 2.5rem !important;
+    clear: both;
+  }
+
+  /* Picture element spacing */
+  .prose-custom picture {
+    display: block;
+    margin: 2rem auto;
+    clear: both;
+  }
+
+  .prose-custom picture + * {
+    margin-top: 2rem !important;
     clear: both;
   }
   
