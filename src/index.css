@@ -607,6 +607,11 @@ aside.callout {
     @apply rounded-lg shadow-lg my-6 mx-auto;
     box-shadow: var(--shadow-card);
     background: #FFF;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    clear: both;
   }
   
   /* Miglioramenti responsive */
