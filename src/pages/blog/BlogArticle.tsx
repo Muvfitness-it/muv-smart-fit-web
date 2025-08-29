@@ -244,20 +244,20 @@ const BlogArticle = () => {
                     </Link>
                   </div>
                 )}
+                {post.featured_image && (
+                  <figure className="article-hero mt-6">
+                    <LazyImage
+                      src={post.featured_image}
+                      alt={`Immagine di copertina per ${post.title} - MUV Fitness Legnago`}
+                      className="w-full h-[320px] md:h-[420px] object-cover rounded-xl"
+                      width={1200}
+                      height={630}
+                    />
+                  </figure>
+                )}
               </header>
             )}
 
-            {post.featured_image && (
-              <div className="mb-8">
-                <LazyImage
-                  src={post.featured_image}
-                  alt={`Immagine di copertina per ${post.title} - MUV Fitness Legnago`}
-                  className="w-full h-[320px] md:h-[420px] object-cover rounded-xl"
-                  width={1200}
-                  height={630}
-                />
-              </div>
-            )}
 
             <div className="prose-custom">
               <SecureHTMLRenderer
