@@ -5,7 +5,7 @@ export interface ArticleRequest {
   wordCount: number;
   tone: string;
   additionalContext?: string;
-  qualityModel?: 'pro' | 'flash';
+  qualityModel?: 'openai' | 'pro' | 'flash';
   createImage?: boolean;
 }
 

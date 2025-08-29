@@ -39,6 +39,7 @@ const tones = [
 
 const wordOptions = [1000, 2000, 3000];
 const qualityOptions = [
+  { value: "openai", label: "ChatGPT (OpenAI)" },
   { value: "pro", label: "Gemini Pro (Qualità)" },
   { value: "flash", label: "Gemini Flash (Veloce)" },
 ];
@@ -52,7 +53,7 @@ const AdminBlogCreateAI: React.FC = () => {
   const [words, setWords] = useState<number>(2000);
   const [tone, setTone] = useState<string>("coinvolgente");
   const [additionalContext, setAdditionalContext] = useState("");
-  const [qualityModel, setQualityModel] = useState<'pro' | 'flash'>('pro');
+  const [qualityModel, setQualityModel] = useState<'openai' | 'pro' | 'flash'>('openai');
   const [createImage, setCreateImage] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -212,7 +213,7 @@ const AdminBlogCreateAI: React.FC = () => {
 
               <div className="space-y-2">
                 <Label>Modello IA</Label>
-                <Select value={qualityModel} onValueChange={(v: 'pro' | 'flash') => setQualityModel(v)}>
+                <Select value={qualityModel} onValueChange={(v: 'openai' | 'pro' | 'flash') => setQualityModel(v)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Seleziona modello" />
                   </SelectTrigger>

@@ -31,7 +31,7 @@ interface ArticleRequest {
   wordCount: number;
   tone: string;
   additionalContext?: string;
-  qualityModel?: 'pro' | 'flash';
+  qualityModel?: 'openai' | 'pro' | 'flash';
   createImage?: boolean;
 }
 
@@ -82,7 +82,7 @@ serve(async (req) => {
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-    const { topic, wordCount, tone, additionalContext, qualityModel = 'pro', createImage = false } = await req.json() as ArticleRequest;
+    const { topic, wordCount, tone, additionalContext, qualityModel = 'openai', createImage = false } = await req.json() as ArticleRequest;
     
     if (!topic || !topic.trim()) {
       throw new Error('Argomento dell\'articolo è obbligatorio');
@@ -236,31 +236,55 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
       return JSON.parse(content);
     };
 
-    // Orchestrazione Gemini-first con fallback OpenAI
+    // Orchestrazione basata sul modello selezionato
     let articleData: ArticleResponse;
-    let usedProvider = 'gemini';
+    let usedProvider = qualityModel === 'openai' ? 'openai' : 'gemini';
 
-    try {
-      if (geminiApiKey) {
-        console.log('Attempting generation with Gemini...');
-        articleData = await tryGeminiGeneration();
-        console.log('Gemini generation successful');
-      } else {
-        throw new Error('Gemini API key not available');
-      }
-    } catch (geminiError) {
-      console.warn('Gemini failed, trying OpenAI fallback:', geminiError);
-      
-      if (!openAIApiKey) {
-        throw new Error('Both Gemini and OpenAI failed. No API keys available.');
-      }
-      
+    if (qualityModel === 'openai' && openAIApiKey) {
+      // Se specificatamente richiesto OpenAI, usa quello come primo tentativo
       try {
+        console.log('Attempting generation with OpenAI (user selected)...');
         articleData = await tryOpenAIGeneration();
-        usedProvider = 'openai';
-        console.log('OpenAI fallback successful');
+        console.log('OpenAI generation successful');
       } catch (openaiError) {
-        throw new Error(`Both providers failed. Gemini: ${geminiError.message}, OpenAI: ${openaiError.message}`);
+        console.warn('OpenAI failed, trying Gemini fallback:', openaiError);
+        
+        if (!geminiApiKey) {
+          throw new Error('Both OpenAI and Gemini failed. No backup API keys available.');
+        }
+        
+        try {
+          articleData = await tryGeminiGeneration();
+          usedProvider = 'gemini';
+          console.log('Gemini fallback successful');
+        } catch (geminiError) {
+          throw new Error(`Both providers failed. OpenAI: ${openaiError.message}, Gemini: ${geminiError.message}`);
+        }
+      }
+    } else {
+      // Default: prova prima Gemini, poi OpenAI come fallback
+      try {
+        if (geminiApiKey) {
+          console.log('Attempting generation with Gemini...');
+          articleData = await tryGeminiGeneration();
+          console.log('Gemini generation successful');
+        } else {
+          throw new Error('Gemini API key not available');
+        }
+      } catch (geminiError) {
+        console.warn('Gemini failed, trying OpenAI fallback:', geminiError);
+        
+        if (!openAIApiKey) {
+          throw new Error('Both Gemini and OpenAI failed. No API keys available.');
+        }
+        
+        try {
+          articleData = await tryOpenAIGeneration();
+          usedProvider = 'openai';
+          console.log('OpenAI fallback successful');
+        } catch (openaiError) {
+          throw new Error(`Both providers failed. Gemini: ${geminiError.message}, OpenAI: ${openaiError.message}`);
+        }
       }
     }
 
