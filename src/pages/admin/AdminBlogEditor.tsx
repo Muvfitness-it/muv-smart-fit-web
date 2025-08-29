@@ -35,8 +35,10 @@ const AdminBlogEditor = () => {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [featured, setFeatured] = useState("");
-  const [status, setStatus] = useState<'draft' | 'published'>("draft");
+  const [status, setStatus] = useState<'draft' | 'published' | 'scheduled'>("draft");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
+  const [scheduledDate, setScheduledDate] = useState("");
+  const [scheduledTime, setScheduledTime] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [saving, setSaving] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
@@ -72,6 +74,11 @@ const AdminBlogEditor = () => {
         setFeatured(data.featured_image || '');
         setStatus((data.status as any) || 'draft');
         setCategoryId(data.category_id || undefined);
+        if (data.scheduled_publish_at) {
+          const scheduledDate = new Date(data.scheduled_publish_at);
+          setScheduledDate(scheduledDate.toISOString().split('T')[0]);
+          setScheduledTime(scheduledDate.toTimeString().slice(0, 5));
+        }
       }
     };
     load();
@@ -81,7 +88,7 @@ const AdminBlogEditor = () => {
     if (!slug && title) setSlug(slugify(title));
   };
 
-  const save = async (nextStatus?: 'draft' | 'published') => {
+  const save = async (nextStatus?: 'draft' | 'published' | 'scheduled') => {
     if (!title.trim()) {
       toast({ title: 'Errore', description: 'Il titolo è obbligatorio', variant: 'destructive' });
       return;
@@ -90,6 +97,19 @@ const AdminBlogEditor = () => {
     if (!slug.trim()) {
       toast({ title: 'Errore', description: 'Lo slug è obbligatorio', variant: 'destructive' });
       return;
+    }
+
+    // Validazione per pubblicazione programmata
+    if (nextStatus === 'scheduled') {
+      if (!scheduledDate || !scheduledTime) {
+        toast({ title: 'Errore', description: 'Data e ora di pubblicazione sono obbligatorie per la programmazione', variant: 'destructive' });
+        return;
+      }
+      const scheduledDateTime = new Date(`${scheduledDate}T${scheduledTime}`);
+      if (scheduledDateTime <= new Date()) {
+        toast({ title: 'Errore', description: 'La data di pubblicazione deve essere futura', variant: 'destructive' });
+        return;
+      }
     }
 
     setSaving(true);
@@ -102,6 +122,13 @@ const AdminBlogEditor = () => {
       status: nextStatus || status,
       category_id: categoryId || null,
     };
+
+    // Aggiungi scheduled_publish_at se programmato
+    if (nextStatus === 'scheduled' && scheduledDate && scheduledTime) {
+      payload.scheduled_publish_at = new Date(`${scheduledDate}T${scheduledTime}`).toISOString();
+    } else if (nextStatus !== 'scheduled') {
+      payload.scheduled_publish_at = null;
+    }
 
     let error;
     if (isEdit) {
@@ -119,7 +146,12 @@ const AdminBlogEditor = () => {
         toast({ title: 'Errore salvataggio', description: error.message, variant: 'destructive' });
       }
     } else {
-      toast({ title: 'Salvato', description: nextStatus === 'published' ? 'Articolo pubblicato' : 'Bozza salvata' });
+      toast({ 
+        title: 'Salvato', 
+        description: nextStatus === 'published' ? 'Articolo pubblicato' : 
+                    nextStatus === 'scheduled' ? 'Articolo programmato per la pubblicazione' : 
+                    'Bozza salvata' 
+      });
       
       // Submit to search engines when published
       if (nextStatus === 'published') {
@@ -219,6 +251,7 @@ const AdminBlogEditor = () => {
           <Button variant="outline" onClick={() => navigate('/admin/blog')}>Annulla</Button>
           <Button disabled={saving} onClick={() => save('draft')}>{saving ? 'Salvataggio...' : 'Salva bozza'}</Button>
           <Button disabled={saving} variant="secondary" onClick={() => save('published')}>{saving ? '...' : 'Pubblica'}</Button>
+          <Button disabled={saving || !scheduledDate || !scheduledTime} onClick={() => save('scheduled')}>{saving ? '...' : 'Programma'}</Button>
         </div>
       </div>
 
@@ -312,11 +345,43 @@ const AdminBlogEditor = () => {
           </div>
           <div>
             <Label>Stato</Label>
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 flex-wrap">
               <Button variant={status === 'draft' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('draft')}>Bozza</Button>
               <Button variant={status === 'published' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('published')}>Pubblicato</Button>
+              <Button variant={status === 'scheduled' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('scheduled')}>Programmato</Button>
             </div>
           </div>
+          {(status === 'scheduled' || scheduledDate) && (
+            <div>
+              <Label>Programmazione pubblicazione</Label>
+              <div className="space-y-2 mt-2">
+                <div>
+                  <Label htmlFor="scheduled-date" className="text-sm">Data</Label>
+                  <Input
+                    id="scheduled-date"
+                    type="date"
+                    value={scheduledDate}
+                    onChange={e => setScheduledDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="scheduled-time" className="text-sm">Ora</Label>
+                  <Input
+                    id="scheduled-time"
+                    type="time"
+                    value={scheduledTime}
+                    onChange={e => setScheduledTime(e.target.value)}
+                  />
+                </div>
+                {scheduledDate && scheduledTime && (
+                  <p className="text-xs text-muted-foreground">
+                    Pubblicazione: {new Date(`${scheduledDate}T${scheduledTime}`).toLocaleString('it-IT')}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
           <div className="border rounded-lg p-4">
             <h2 className="font-semibold mb-2">Genera bozza con IA</h2>
             <Input placeholder="Argomento (es. Allenamento EMS per principianti)" value={aiTopic} onChange={e => setAiTopic(e.target.value)} className="mb-2" />
