@@ -1,28 +1,23 @@
 const NewHeroSection = () => {
   return (
-    <section className="relative min-h-screen flex flex-col">
+    <section className="lcp-hero-container">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/images/fitness-professional-bg.jpg')"
-        }}
-      />
+      <div className="lcp-bg-image" />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/80" />
+      <div className="lcp-bg-overlay" />
       
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col flex-1">
+      <div className="lcp-hero-content">
         
         {/* Title Section */}
-        <div className="flex-1 flex items-center justify-center px-4 py-20 pt-[calc(var(--header-height)+4rem)] md:pt-[calc(var(--header-height)+5rem)]">
-          <div className="text-center max-w-6xl mx-auto">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 text-white leading-tight">
-              <span className="block leading-tight drop-shadow-2xl">
-                Il tuo <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">Personal Trainer</span>
+        <div className="lcp-hero-main">
+          <div className="lcp-hero-inner">
+            <h1 className="lcp-text-responsive font-black mb-8 text-white leading-tight">
+              <span className="lcp-hero-text">
+                Il tuo <span className="lcp-gradient">Personal Trainer</span>
               </span>
-              <span className="block leading-tight drop-shadow-2xl">
+              <span className="lcp-hero-text">
                 a Legnago, <span className="text-brand-accent">senza palestre affollate.</span>
               </span>
             </h1>
