@@ -93,4 +93,72 @@ verify_jwt = true
 [functions.advanced-article-generator]
 verify_jwt = true
 
-# All other functions require JWT by default (no override here)
+# Secure admin functions require JWT
+[functions.admin-blog-create-ai]
+verify_jwt = true
+
+[functions.admin-blog-drafts]
+verify_jwt = true
+
+[functions.admin-blog-list]
+verify_jwt = true
+
+[functions.admin-categories]
+verify_jwt = true
+
+[functions.analytics-display]
+verify_jwt = true
+
+[functions.image-optimizer]
+verify_jwt = true
+
+[functions.indexnow-submitter]
+verify_jwt = true
+
+[functions.jsonld-optimizer]
+verify_jwt = true
+
+[functions.internal-linker]
+verify_jwt = true
+
+[functions.slug-normalizer]
+verify_jwt = true
+
+[functions.override-orchestrator]
+verify_jwt = true
+
+[functions.final-audit]
+verify_jwt = true
+
+[functions.content-fixer]
+verify_jwt = true
+
+[functions.blog-content-fixer]
+verify_jwt = true
+
+[functions.blog-theme-normalizer]
+verify_jwt = true
+
+[functions.restore-backups]
+verify_jwt = true
+
+[functions.runware-image]
+verify_jwt = true
+
+[functions.generate-image]
+verify_jwt = true
+
+[functions.gemini-image]
+verify_jwt = true
+
+[functions.gemini-provider]
+verify_jwt = true
+
+[functions.get-users]
+verify_jwt = true
+
+# Public analytics endpoint
+[functions.log-visit-public]
+verify_jwt = false
+
+# All other functions require JWT by default

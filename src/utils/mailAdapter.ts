@@ -1,7 +1,13 @@
 // Lightweight mail adapter using Web3Forms
 // Docs: https://web3forms.com/
 
-export const WEB3FORMS_ACCESS_KEY: string = "6a54b481-e1fd-4793-93d1-4ecf3635e353"; // TODO: replace with your Web3Forms access key
+// Use environment variable or fallback to stored key in localStorage for client-side forms
+export const getWeb3FormsAccessKey = (): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('web3forms_access_key') || '';
+  }
+  return '';
+};
 
 export interface Web3FormsPayload {
   name: string;
@@ -25,10 +31,11 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
   }
 
   // Try Web3Forms first
-  if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY.trim().length > 10) {
+  const accessKey = getWeb3FormsAccessKey();
+  if (accessKey && accessKey.trim().length > 10) {
     try {
       const body = {
-        access_key: WEB3FORMS_ACCESS_KEY,
+        access_key: accessKey,
         from_name: "MUV Fitness Website",
         subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
         ...payload,
