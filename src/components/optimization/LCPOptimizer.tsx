@@ -28,24 +28,62 @@ const LCPOptimizer = () => {
       document.head.appendChild(link);
     });
 
-    // Optimize LCP element specifically
+    // Optimize LCP element with debounced approach to prevent forced reflows
+    let optimizeTimeout: NodeJS.Timeout;
     const optimizeLCP = () => {
-      const lcpElement = document.querySelector('h1 .block.leading-tight.drop-shadow-2xl');
-      if (lcpElement) {
-        // Optimize critical rendering properties
-        (lcpElement as HTMLElement).style.willChange = 'auto';
-        (lcpElement as HTMLElement).style.contain = 'layout style paint';
-        (lcpElement as HTMLElement).style.fontKerning = 'normal';
-        (lcpElement as HTMLElement).style.textRendering = 'optimizeLegibility';
-      }
+      // Clear previous timeout to debounce rapid DOM changes
+      clearTimeout(optimizeTimeout);
+      
+      // Use requestAnimationFrame to batch DOM reads/writes and prevent forced reflows
+      optimizeTimeout = setTimeout(() => {
+        requestAnimationFrame(() => {
+          const lcpElement = document.querySelector('h1 .block.leading-tight.drop-shadow-2xl');
+          if (lcpElement && !(lcpElement as HTMLElement).dataset.optimized) {
+            // Batch all style changes together to minimize reflows
+            const element = lcpElement as HTMLElement;
+            element.style.cssText += `
+              will-change: auto;
+              contain: layout style paint;
+              font-kerning: normal;
+              text-rendering: optimizeLegibility;
+            `;
+            // Mark as optimized to prevent redundant operations
+            element.dataset.optimized = 'true';
+          }
+        });
+      }, 16); // Debounce with ~1 frame delay
     };
 
-    // Run optimization immediately and after DOM updates
+    // Run optimization after initial render
     optimizeLCP();
-    const observer = new MutationObserver(optimizeLCP);
-    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Use passive MutationObserver with limited scope to reduce impact
+    const observer = new MutationObserver((mutations) => {
+      // Only process if there are relevant changes
+      const hasRelevantChanges = mutations.some(mutation => 
+        mutation.type === 'childList' && 
+        mutation.addedNodes.length > 0 &&
+        Array.from(mutation.addedNodes).some(node => 
+          node.nodeType === Node.ELEMENT_NODE && 
+          (node as Element).querySelector?.('h1')
+        )
+      );
+      
+      if (hasRelevantChanges) {
+        optimizeLCP();
+      }
+    });
+    
+    // Observe only specific elements to reduce mutation frequency
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true,
+      attributes: false,
+      characterData: false
+    });
 
     return () => {
+      clearTimeout(optimizeTimeout);
       observer.disconnect();
       // Clean up preload links
       [heroImageLink, ...document.querySelectorAll('link[rel="preload"][as="font"]')]

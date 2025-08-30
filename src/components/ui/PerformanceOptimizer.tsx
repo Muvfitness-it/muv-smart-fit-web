@@ -64,22 +64,51 @@ const PerformanceOptimizer = () => {
     `;
     document.head.appendChild(criticalStyles);
 
-    // Optimize images after load
+    // Optimize images with requestAnimationFrame to prevent forced reflows
     const optimizeImages = () => {
-      const images = document.querySelectorAll('img:not([loading])');
-      images.forEach((img, index) => {
-        if (index > 2) { // Only first 3 images load eagerly
-          img.setAttribute('loading', 'lazy');
-          img.setAttribute('decoding', 'async');
+      requestAnimationFrame(() => {
+        const images = document.querySelectorAll('img:not([loading]):not([data-optimized])');
+        
+        // Batch DOM modifications to prevent layout thrashing
+        const imagesToOptimize = Array.from(images).slice(3); // Skip first 3 images
+        
+        if (imagesToOptimize.length > 0) {
+          imagesToOptimize.forEach((img) => {
+            img.setAttribute('loading', 'lazy');
+            img.setAttribute('decoding', 'async');
+            img.setAttribute('data-optimized', 'true');
+          });
         }
       });
     };
 
-    // Run after initial render
-    setTimeout(optimizeImages, 100);
+    // Use intersection observer instead of setTimeout for better performance
+    const imageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            optimizeImages();
+            imageObserver.disconnect(); // Run only once
+          }
+        });
+      },
+      { rootMargin: '100px' }
+    );
+
+    // Start observing after initial render
+    setTimeout(() => {
+      const heroSection = document.querySelector('section');
+      if (heroSection) {
+        imageObserver.observe(heroSection);
+      } else {
+        optimizeImages(); // Fallback if no hero section found
+      }
+    }, 100);
 
     // Clean up function
     return () => {
+      imageObserver.disconnect();
+      
       const preloadLinks = document.querySelectorAll('link[rel="preload"][as="image"]');
       preloadLinks.forEach(link => link.remove());
       
