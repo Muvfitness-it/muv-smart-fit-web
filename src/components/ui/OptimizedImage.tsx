@@ -9,6 +9,8 @@ interface OptimizedImageProps {
   height?: number;
   priority?: boolean;
   sizes?: string;
+  fallbackSrc?: string;
+  loading?: 'eager' | 'lazy';
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -21,12 +23,15 @@ const OptimizedImage = ({
   height,
   priority = false,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  fallbackSrc,
+  loading,
   onLoad,
   onError
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
   const imgRef = useRef<HTMLDivElement>(null);
 
   // Generate WebP source
@@ -68,8 +73,13 @@ const OptimizedImage = ({
   };
 
   const handleError = () => {
-    setHasError(true);
-    onError?.();
+    if (fallbackSrc && currentSrc !== fallbackSrc) {
+      setCurrentSrc(fallbackSrc);
+      setHasError(false);
+    } else {
+      setHasError(true);
+      onError?.();
+    }
   };
 
   return (
@@ -81,23 +91,23 @@ const OptimizedImage = ({
       {isInView && !hasError ? (
         <picture>
           <source 
-            srcSet={getWebPSrc(src)} 
+            srcSet={getWebPSrc(currentSrc)} 
             sizes={sizes}
             type="image/webp" 
           />
           <img
-            src={src}
+            src={currentSrc}
             alt={alt}
             width={width}
             height={height}
             sizes={sizes}
             className={cn(
-              "w-full h-full object-cover transition-opacity duration-300",
+              "w-full h-full object-contain transition-opacity duration-300",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             onLoad={handleLoad}
             onError={handleError}
-            loading={priority ? "eager" : "lazy"}
+            loading={loading || (priority ? "eager" : "lazy")}
             decoding="async"
             fetchPriority={priority ? "high" : "auto"}
           />
