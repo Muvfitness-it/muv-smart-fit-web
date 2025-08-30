@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
 import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
+import LCPOptimizer from "@/components/optimization/LCPOptimizer";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -105,6 +106,7 @@ const AppContent = () => {
       <PerformanceOptimizer />
       <FontOptimizer />
       <CriticalCSS />
+      <LCPOptimizer />
       <div className="min-h-screen bg-background text-foreground">
       <Routes>
         {/* Landing Pages - NO Navigation/Footer */}
