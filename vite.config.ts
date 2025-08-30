@@ -21,5 +21,21 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari13'],
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor chunks for better caching and TTI
+          'react-vendor': ['react', 'react-dom'],
+          'router-vendor': ['react-router-dom'],
+          'ui-vendor': ['lucide-react', '@radix-ui/react-slot'],
+          // Separate admin chunks to reduce main bundle
+          'admin-chunk': [
+            './src/pages/AdminDashboard',
+            './src/pages/AdminUserManagement',
+            './src/pages/Analytics'
+          ]
+        }
+      }
+    }
   },
 }));

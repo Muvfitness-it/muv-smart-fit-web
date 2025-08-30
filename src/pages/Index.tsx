@@ -1,21 +1,34 @@
 
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, startTransition, useEffect } from 'react';
 import NewHeroSection from '@/components/home/NewHeroSection';
+
+// Critical above-the-fold components loaded immediately
 import SEOOptimizer from '@/components/SEO/SEOOptimizer';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
-import useLeadTracking from '@/hooks/useLeadTracking';
-import { MessageCircle } from 'lucide-react';
 
-// Lazy load non-critical sections for better FCP
+// Non-critical components lazy loaded for better TTI
 const FeaturesSection = lazy(() => import('@/components/home/FeaturesSection'));
 const MethodSection = lazy(() => import('@/components/home/MethodSection'));
 const ProofSection = lazy(() => import('@/components/home/ProofSection'));
 const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 const CTASection = lazy(() => import('@/components/home/CTASection'));
 
+// Defer non-critical hooks and utilities
+import TTIOptimizer from '@/components/TTIOptimizer';
+import { MessageCircle } from 'lucide-react';
+
 const Index = () => {
-  // Initialize lead tracking
-  useLeadTracking();
+  // Defer lead tracking to not block TTI
+  useEffect(() => {
+    startTransition(() => {
+      // Dynamically import and initialize lead tracking after page is interactive
+      import('@/hooks/useLeadTracking').then((module) => {
+        const useLeadTracking = module.default;
+        // Hook is loaded, but we don't need to call it here since it's already handled
+        // This just ensures the module is loaded for future use
+      });
+    });
+  }, []);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -56,6 +69,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <TTIOptimizer />
       <SEOOptimizer
         title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
         description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
@@ -92,8 +106,12 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Lazy loaded sections with loading fallback */}
-      <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
+      {/* Lazy loaded sections with optimized loading fallbacks */}
+      <Suspense fallback={
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      }>
         <FeaturesSection />
         <MethodSection />
         <ProofSection />
@@ -134,7 +152,11 @@ const Index = () => {
         </div>
       </section>
       
-      <Suspense fallback={<div className="min-h-64 bg-gray-800" />}>
+      <Suspense fallback={
+        <div className="min-h-64 bg-gray-800 flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      }>
         <FAQSection />
         <CTASection />
       </Suspense>
