@@ -125,8 +125,8 @@
         margin: 0 auto;
       }
       
-      /* Background and overlay critical styles */
-      .lcp-bg-image {
+      /* Background with WebP support and fallback */
+      .lcp-bg-image-webp {
         position: absolute;
         top: 0;
         right: 0;
@@ -135,7 +135,15 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        /* Fallback for browsers that don't support WebP */
         background-image: url('/images/fitness-professional-bg.jpg');
+      }
+      
+      /* WebP support check and application */
+      @supports (background-image: url('data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA')) {
+        .lcp-bg-image-webp {
+          background-image: url('/images/fitness-professional-bg.webp');
+        }
       }
       
       .lcp-bg-overlay {

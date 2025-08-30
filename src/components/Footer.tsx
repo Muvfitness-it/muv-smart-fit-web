@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 // Use the new logo from public folder
 
 const Footer = () => {
@@ -54,12 +55,12 @@ const Footer = () => {
           {/* Logo and Contact Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png" 
-                alt="MUV Fitness Logo" 
+              <OptimizedImage
+                src="/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png"
+                alt="MUV Fitness Logo"
                 className="h-16 w-auto object-contain"
-                onError={(e) => console.error('Footer logo error:', e)}
-                onLoad={() => console.log('Footer logo loaded')}
+                width={64}
+                height={64}
               />
             </Link>
             

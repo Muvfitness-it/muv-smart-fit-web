@@ -1,8 +1,8 @@
 const NewHeroSection = () => {
   return (
     <section className="lcp-hero-container">
-      {/* Background Image */}
-      <div className="lcp-bg-image" />
+      {/* Background Image with WebP Support */}
+      <div className="lcp-bg-image-webp" />
       
       {/* Dark Overlay */}
       <div className="lcp-bg-overlay" />
