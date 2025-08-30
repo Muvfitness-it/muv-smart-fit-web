@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,9 +6,13 @@ import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
   const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);
-
+  const footerRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
+    let didLoad = false;
+
     const load = async () => {
+      if (didLoad) return;
+      didLoad = true;
       const { data } = await supabase
         .from('blog_posts')
         .select('title, slug, published_at')
@@ -17,11 +21,34 @@ const Footer = () => {
         .limit(3);
       setLatest((data || []).map(d => ({ title: d.title as string, slug: d.slug as string })));
     };
-    load();
+
+    // Prefer loading when footer is near viewport
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window && footerRef.current) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            load();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+
+      observer.observe(footerRef.current);
+      return () => observer.disconnect();
+    }
+
+    // Fallback: defer to idle or timeout
+    const ric = (window as any).requestIdleCallback as ((cb: () => void, opts?: any) => number) | undefined;
+    if (ric) {
+      ric(load, { timeout: 2000 });
+    } else {
+      const t = setTimeout(load, 1500);
+      return () => clearTimeout(t);
+    }
   }, []);
 
   return (
-    <footer className="bg-black text-white">
+    <footer ref={footerRef} className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           {/* Logo and Contact Info */}

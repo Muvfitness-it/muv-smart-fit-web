@@ -1,11 +1,15 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, Users, Calculator, Eye, Activity, BarChart3 } from 'lucide-react';
 
 const AnalyticsDisplay = () => {
-  const { analyticsData, isLoading } = useAnalytics();
+  const { analyticsData, isLoading, fetchAnalytics } = useAnalytics();
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   if (isLoading) {
     return (

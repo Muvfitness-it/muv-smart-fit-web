@@ -15,7 +15,7 @@ export const useAnalytics = () => {
     uniqueVisitorsToday: 0,
     plannerUsageToday: 0
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Remove IP collection function - handled securely on server side
 
@@ -114,9 +114,6 @@ export const useAnalytics = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [fetchAnalytics]);
 
   return {
     analyticsData,
