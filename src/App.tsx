@@ -160,7 +160,7 @@ const AppContent = () => {
               >
                 Salta al contenuto principale
               </a>
-              <main id="main" className={isHome ? 'pt-0' : 'pt-[var(--header-height)]'}>
+              <main id="main" className={isHome ? 'pt-0 relative z-10' : 'pt-[var(--header-height)] relative z-10'}>
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
                     <Route path="/" element={<Index />} />

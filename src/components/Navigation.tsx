@@ -64,7 +64,7 @@ const Navigation = () => {
     name: "Admin",
     path: "/admin/auth"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/90 backdrop-blur-sm'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
@@ -102,7 +102,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation - Fullscreen overlay */}
         <div
-          className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
+          className={`lg:hidden fixed inset-0 z-[9998] transition-opacity duration-300 ${
             isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
           role="dialog"
@@ -113,7 +113,7 @@ const Navigation = () => {
           <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
 
           {/* Panel */}
-          <div className="relative z-[61] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
+          <div className="relative z-[9997] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                 <OptimizedImage
