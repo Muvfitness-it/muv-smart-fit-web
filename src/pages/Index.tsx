@@ -1,14 +1,17 @@
 
+import { lazy, Suspense } from 'react';
 import NewHeroSection from '@/components/home/NewHeroSection';
-import FeaturesSection from '@/components/home/FeaturesSection';
-import MethodSection from '@/components/home/MethodSection';
-import ProofSection from '@/components/home/ProofSection';
-import FAQSection from '@/components/home/FAQSection';
-import CTASection from '@/components/home/CTASection';
 import SEOOptimizer from '@/components/SEO/SEOOptimizer';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import useLeadTracking from '@/hooks/useLeadTracking';
 import { MessageCircle } from 'lucide-react';
+
+// Lazy load non-critical sections for better FCP
+const FeaturesSection = lazy(() => import('@/components/home/FeaturesSection'));
+const MethodSection = lazy(() => import('@/components/home/MethodSection'));
+const ProofSection = lazy(() => import('@/components/home/ProofSection'));
+const FAQSection = lazy(() => import('@/components/home/FAQSection'));
+const CTASection = lazy(() => import('@/components/home/CTASection'));
 
 const Index = () => {
   // Initialize lead tracking
@@ -89,9 +92,12 @@ const Index = () => {
         </div>
       </section>
       
-      <FeaturesSection />
-      <MethodSection />
-      <ProofSection />
+      {/* Lazy loaded sections with loading fallback */}
+      <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
+        <FeaturesSection />
+        <MethodSection />
+        <ProofSection />
+      </Suspense>
       
       {/* Local Areas Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-800">
@@ -128,8 +134,10 @@ const Index = () => {
         </div>
       </section>
       
-      <FAQSection />
-      <CTASection />
+      <Suspense fallback={<div className="min-h-64 bg-gray-800" />}>
+        <FAQSection />
+        <CTASection />
+      </Suspense>
     </div>
   );
 };
