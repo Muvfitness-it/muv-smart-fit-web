@@ -28,16 +28,14 @@
     <link rel="dns-prefetch" href="https://api.ipify.org">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical Hero Image Preload for LCP - Highest Priority -->
-    <link rel="preload" as="image" href="/images/fitness-professional-bg.webp" type="image/webp" fetchpriority="high">
-    <link rel="preload" as="image" href="/images/fitness-professional-bg.jpg" type="image/jpeg" fetchpriority="high">
+    <!-- Critical LCP Font Loading - Immediate Priority -->
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" crossorigin>
     
-    <!-- Critical LCP Font Loading - Block for immediate text paint -->
-    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.woff2" crossorigin fetchpriority="high">
-    
-    <!-- Non-blocking font loading -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=block" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=block"></noscript>
+    <!-- Optimized Font Loading - Phase 2 -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap"></noscript>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -58,27 +56,11 @@
         unicode-range: U+0000-00FF;
       }
       
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
-        unicode-range: U+0000-00FF;
-      }
-      
       /* Reset and base */
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { 
-        margin: 0; 
-        background-color: #1f2937; 
-        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; 
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
+      body { margin: 0; background-color: #1f2937; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
       
-      /* Critical LCP element styles - Hero text optimized for immediate paint */
+      /* Critical LCP element styles - Hero text */
       .lcp-hero-text {
         font-family: 'Montserrat', 'Inter', ui-sans-serif, system-ui, sans-serif !important;
         font-weight: 900 !important;
@@ -91,14 +73,12 @@
         contain: layout style paint !important;
         display: block !important;
         filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)) !important;
-        transform: translateZ(0) !important; /* Force GPU acceleration */
       }
       
-      /* Critical responsive typography for LCP - Optimized breakpoints */
+      /* Critical responsive typography for LCP */
       .lcp-text-responsive {
         font-size: 1.875rem;
         line-height: 2.25rem;
-        transform: translateZ(0);
       }
       @media (min-width: 640px) { .lcp-text-responsive { font-size: 3rem; line-height: 1; } }
       @media (min-width: 768px) { .lcp-text-responsive { font-size: 3.75rem; line-height: 1; } }
@@ -111,18 +91,15 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        will-change: auto;
       }
       
-      /* Critical layout for hero section - Optimized for fast paint */
+      /* Critical layout for hero section */
       .lcp-hero-container {
         position: relative;
         min-height: 100vh;
         min-height: 100dvh;
         display: flex;
         flex-direction: column;
-        contain: layout style;
-        isolation: isolate;
       }
       
       .lcp-hero-content {
@@ -131,7 +108,6 @@
         display: flex;
         flex-direction: column;
         flex: 1 1 0%;
-        contain: layout;
       }
       
       .lcp-hero-main {
@@ -141,17 +117,15 @@
         justify-content: center;
         padding: 1rem;
         padding-top: calc(80px + 4rem);
-        contain: layout;
       }
       
       .lcp-hero-inner {
         text-align: center;
         max-width: 72rem;
         margin: 0 auto;
-        contain: layout;
       }
       
-      /* Optimized background with immediate paint */
+      /* Background with WebP support and fallback */
       .lcp-bg-image-webp {
         position: absolute;
         top: 0;
@@ -161,14 +135,11 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        will-change: auto;
-        transform: translateZ(0);
-        /* Immediate fallback for fast LCP */
+        /* Fallback for browsers that don't support WebP */
         background-image: url('/images/fitness-professional-bg.jpg');
-        background-color: #1f2937; /* Solid color fallback */
       }
       
-      /* WebP support with enhanced loading */
+      /* WebP support check and application */
       @supports (background-image: url('data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA')) {
         .lcp-bg-image-webp {
           background-image: url('/images/fitness-professional-bg.webp');
@@ -182,102 +153,47 @@
         bottom: 0;
         left: 0;
         background-color: rgb(0 0 0 / 0.8);
-        will-change: auto;
       }
       
-      /* Immediate visibility for critical content */
-      #root {
-        min-height: 100vh;
-        background-color: #1f2937;
-      }
-      
-      /* Loading states optimization */
-      .loading { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        height: 100vh; 
-        background-color: #1f2937;
-        color: white;
-      }
-      
-      /* Utility classes for brand colors */
-      .text-brand-primary { color: #ec4899; }
-      .text-brand-secondary { color: #8b5cf6; }
-      .text-brand-accent { color: #3b82f6; }
-      .bg-gray-900 { background-color: #111827; }
-      .text-white { color: white; }
-      .text-gray-200 { color: #e5e7eb; }
-      .font-black { font-weight: 900; }
-      .font-bold { font-weight: 700; }
-      .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-      .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-      .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-      .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-      .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-      .mb-8 { margin-bottom: 2rem; }
-      .mb-10 { margin-bottom: 2.5rem; }
-      .mt-2 { margin-top: 0.5rem; }
-      .space-y-6 > * + * { margin-top: 1.5rem; }
-      .max-w-4xl { max-width: 56rem; }
-      .mx-auto { margin-left: auto; margin-right: auto; }
-      .block { display: block; }
-      .drop-shadow-lg { filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); }
-      .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
-      .from-brand-primary { --tw-gradient-from: #ec4899; --tw-gradient-to: rgb(236 72 153 / 0); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-      .via-brand-secondary { --tw-gradient-to: rgb(139 92 246 / 0); --tw-gradient-stops: var(--tw-gradient-from), #8b5cf6, var(--tw-gradient-to); }
-      .to-brand-accent { --tw-gradient-to: #3b82f6; }
-      .bg-clip-text { -webkit-background-clip: text; background-clip: text; }
-      .text-transparent { color: transparent; }
-      .leading-tight { line-height: 1.25; }
+      /* Hide loading and static content initially */
+      .loading { display: flex; justify-content: center; align-items: center; height: 100vh; }
+      .static-content { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+      .static-content h1, .static-content h2, .static-content h3 { margin: 1rem 0; }
+      .static-content p { margin: 0.5rem 0; line-height: 1.6; }
+      .static-content ul { margin: 0.5rem 0; padding-left: 2rem; }
+      .static-content li { margin: 0.25rem 0; }
       
       /* Mobile hotfix styles inlined to prevent render blocking */
       @media (max-width: 480px) {
         :root { --header-h: 64px; }
         
-        /* Header optimization */
-        .site-header { 
-          position: sticky; 
-          top: 0; 
-          z-index: 1000; 
-          background: #FFF !important;
-          contain: layout style;
-        }
+        /* Header sempre sopra e con chip bianco per il logo */
+        .site-header { position: sticky; top: 0; z-index: 1000; background: #FFF !important; }
         .site-header .site-logo { height: 40px; width: auto; object-fit: contain; }
         
-        /* Hero optimization for mobile LCP */
-        .hero, .section-hero { 
-          position: relative; 
-          isolation: isolate;
-          contain: layout style;
-        }
+        /* Hero: layerizzazione corretta */
+        .hero, .section-hero { position: relative; isolation: isolate; }
         .hero.has-media::before, .section-hero.has-media::before {
-          content: ""; 
-          position: absolute; 
-          inset: 0; 
-          z-index: 0;
-          background: rgba(0,0,0,.60);
-          will-change: auto;
+          content: ""; position: absolute; inset: 0; z-index: 0;
+          background: rgba(0,0,0,.60); /* overlay per contrasto */
         }
+        /* Se non c'è la classe has-media ma esiste un bg-image, simula comunque overlay */
         .hero::before, .section-hero::before {
-          content: ""; 
-          position: absolute; 
-          inset: 0; 
-          z-index: 0; 
-          pointer-events: none;
+          content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background: rgba(0,0,0,.60);
-          will-change: auto;
         }
+        /* Overlay più forte quando richiesto dallo script QA */
         .hero.overlay-strong::before, .section-hero.overlay-strong::before,
         .hero.has-media.overlay-strong::before, .section-hero.has-media.overlay-strong::before {
           background: rgba(0,0,0,.68);
         }
+        /* Contenuto hero sopra l'overlay */
         .hero *, .section-hero * { position: relative; z-index: 1; }
         
-        /* Mobile spacing */
+        /* Spaziatura sotto l'header (safe area iOS inclusa) */
         .hero, .section-hero { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 16px); }
         
-        /* Mobile typography optimization */
+        /* Tipografia a prova di overflow */
         .hero h1, .section-hero h1 {
           font-size: clamp(22px, 5.8vw, 32px);
           line-height: 1.15;
@@ -286,44 +202,32 @@
           color: #FFF !important;
           text-shadow: none !important;
           -webkit-text-stroke: 0 !important;
-          word-break: normal; 
-          overflow-wrap: anywhere;
-          contain: layout style;
+          word-break: normal; overflow-wrap: anywhere;
         }
         .hero h2, .hero p, .section-hero h2, .section-hero p {
-          color: #FFF !important; 
-          text-shadow: none !important; 
-          margin: 0 0 8px 0;
+          color: #FFF !important; text-shadow: none !important; margin: 0 0 8px 0;
         }
         
-        /* Remove performance-killing effects on mobile */
+        /* Stop a blend/duplicati/ombre "finte" che creano la scritta grigia sotto */
         .hero [class*="shadow"], .hero [class*="blend"], .hero [style*="mix-blend-mode"],
         .section-hero [class*="shadow"], .section-hero [class*="blend"], .section-hero [style*="mix-blend-mode"] {
-          mix-blend-mode: normal !important; 
-          filter: none !important; 
-          opacity: 1 !important;
+          mix-blend-mode: normal !important; filter: none !important; opacity: 1 !important;
         }
+        /* Se ci sono due H1 consecutivi (effetto duplicato), nascondi il secondo su mobile */
         .hero h1 + h1, .section-hero h1 + h1 { display: none !important; }
+        
+        /* Colori dentro l'H1 (span blu/viola) → forza bianco per accessibilità */
         .hero h1 span, .section-hero h1 span { color: #FFF !important; background: transparent !important; }
         
-        /* CTA optimization */
+        /* CTA */
         .hero .btn, .section-hero .btn { 
-          min-height: 44px; 
-          display: inline-flex; 
-          align-items: center; 
-          font-weight: 700;
+          min-height: 44px; display: inline-flex; align-items: center; font-weight: 700;
           box-shadow: 0 3px 8px rgba(0,0,0,.25);
-          contain: layout style;
         }
-        .hero .btn:focus-visible, .section-hero .btn:focus-visible { 
-          outline: 3px solid #FFF; 
-          outline-offset: 2px; 
-        }
+        .hero .btn:focus-visible, .section-hero .btn:focus-visible { outline: 3px solid #FFF; outline-offset: 2px; }
         
-        .cta-sticky, .whatsapp-sticky { 
-          bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; 
-          z-index: 999; 
-        }
+        /* Evita che una CTA sticky (WhatsApp) copra il testo dell'hero */
+        .cta-sticky, .whatsapp-sticky { bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; z-index: 999; }
         .hero, .section-hero { padding-bottom: 20px; }
       }
     </style>

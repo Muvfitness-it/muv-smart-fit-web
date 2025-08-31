@@ -1,6 +1,3 @@
-import OptimizedImage from "@/components/ui/OptimizedImage";
-import logo from "@/assets/muv-logo-original-transparent.png";
-
 const NewHeroSection = () => {
   return (
     <section className="lcp-hero-container">
@@ -12,20 +9,6 @@ const NewHeroSection = () => {
       
       {/* Content Container */}
       <div className="lcp-hero-content">
-        
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <OptimizedImage
-            src={logo}
-            fallbackSrc="/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
-            alt="MUV Fitness Legnago Logo"
-            width={200}
-            height={60}
-            loading="eager"
-            priority={true}
-            className="h-16 md:h-20 lg:h-24 w-auto bg-transparent"
-          />
-        </div>
         
         {/* Title Section */}
         <div className="lcp-hero-main">

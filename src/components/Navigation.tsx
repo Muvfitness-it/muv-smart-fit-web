@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import OptimizedImage from "@/components/ui/OptimizedImage";
 import logo from "@/assets/muv-logo-original-transparent.png";
+// Use the new logo from public folder
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,20 +64,21 @@ const Navigation = () => {
     name: "Admin",
     path: "/admin/auth"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/90 backdrop-blur-sm'}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 min-h-[var(--header-height)] flex items-center ${isScrolled ? 'bg-gray-900/98 backdrop-blur-md shadow-xl' : 'bg-gray-900/70'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
           <Link to="/" className="flex items-center">
-            <OptimizedImage
+            <img
               src={logoSrc}
-              fallbackSrc="/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
               alt="Logo MUV Fitness Legnago"
               width={180}
               height={54}
               loading="eager"
-              priority={true}
-              className={`site-logo transition-all duration-300 bg-transparent ${isScrolled ? 'h-6 sm:h-8 md:h-9 lg:h-10' : 'h-8 sm:h-10 md:h-12 lg:h-16 xl:h-18'}`}
+              decoding="async"
+              fetchPriority="high"
+              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-6 sm:h-8 md:h-9 lg:h-10' : 'h-8 sm:h-10 md:h-12 lg:h-16 xl:h-18'}`}
+              onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
 
@@ -102,7 +103,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation - Fullscreen overlay */}
         <div
-          className={`lg:hidden fixed inset-0 z-[10000] transition-opacity duration-300 ${
+          className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
             isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
           role="dialog"
@@ -113,15 +114,13 @@ const Navigation = () => {
           <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
 
           {/* Panel */}
-          <div className="relative z-[10001] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
+          <div className="relative z-[61] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
-                <OptimizedImage
+                <img
                   src={logoSrc}
-                  fallbackSrc="/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
                   alt="Logo MUV Fitness Legnago"
-                  className="site-logo h-10"
-                  priority={true}
+                  className="site-logo h-10 w-auto object-contain"
                 />
               </Link>
               <button

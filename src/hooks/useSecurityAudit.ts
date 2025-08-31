@@ -12,21 +12,16 @@ export const useSecurityAudit = (user?: User | null) => {
 
   const logSecurityEvent = useCallback(async (event: SecurityEvent) => {
     try {
-      // Use PII-safe logging through database function
-      const { error } = await supabase.rpc('log_security_event_pii_safe', {
-        event_type_param: event.event_type,
-        event_data_param: event.event_data || null,
-        ip_param: null, // Let function handle IP extraction
-        user_agent_param: null // Let function handle user agent extraction
+      await supabase.functions.invoke('security-audit', {
+        body: {
+          ...event,
+          user_id: event.user_id || user?.id,
+        }
       });
-      
-      if (error) {
-        console.error('Failed to log security event:', error);
-      }
     } catch (error) {
       console.error('Failed to log security event:', error);
     }
-  }, []);
+  }, [user?.id]);
 
   return {
     logLoginAttempt: (success: boolean, email?: string) => 

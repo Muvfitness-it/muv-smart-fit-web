@@ -17,7 +17,7 @@ const FloatingCTA: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="whatsapp-sticky fixed bottom-4 right-4 z-[999] flex flex-col gap-3 animate-slide-up">
+    <div className="whatsapp-sticky fixed bottom-4 right-4 z-50 flex flex-col gap-3 animate-slide-up">
       {/* WhatsApp Button - Enhanced for mobile */}
       <a
         href="https://wa.me/393291070374"

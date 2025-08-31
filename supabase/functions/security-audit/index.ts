@@ -82,13 +82,16 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Use the new PII-safe logging function
-    const { error } = await supabase.rpc('log_security_event_pii_safe', {
-      event_type_param: body.event_type,
-      event_data_param: body.event_data || {},
-      ip_param: ip_address,
-      user_agent_param: user_agent
-    });
+    // Log the security event
+    const { error } = await supabase
+      .from('security_audit_log')
+      .insert({
+        user_id,
+        event_type: body.event_type,
+        event_data: body.event_data || {},
+        ip_address,
+        user_agent,
+      });
 
     if (error) {
       console.error('Error logging security event:', error);
