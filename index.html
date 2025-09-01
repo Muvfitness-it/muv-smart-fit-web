@@ -28,18 +28,27 @@
     <link rel="dns-prefetch" href="https://api.ipify.org">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical Hero Image Preload for FCP -->
-    <link rel="preload" as="image" href="/images/fitness-professional-bg.webp" type="image/webp">
-    <link rel="preload" as="image" href="/images/fitness-professional-bg.jpg" type="image/jpeg">
-    
-    <!-- Critical LCP Font Loading - Immediate Priority -->
+    <!-- Critical fonts only - Inline for instant render -->
     <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" crossorigin>
     
-    <!-- Optimized Font Loading - Phase 2 -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap"></noscript>
+    <!-- Deferred non-critical resources -->
+    <script>
+      // Load hero image after critical render
+      setTimeout(() => {
+        const img1 = new Image();
+        img1.src = '/images/fitness-professional-bg.webp';
+        const img2 = new Image(); 
+        img2.src = '/images/fitness-professional-bg.jpg';
+      }, 0);
+      
+      // Load fonts after critical content
+      window.addEventListener('DOMContentLoaded', () => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap';
+        document.head.appendChild(link);
+      });
+    </script>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">

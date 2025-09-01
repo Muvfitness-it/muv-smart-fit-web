@@ -16,11 +16,14 @@ const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 const CTASection = lazy(() => import('@/components/home/CTASection'));
 
 const Index = () => {
-  // Defer lead tracking to not block FCP
+  // Delay all non-critical functionality for faster FCP
   useEffect(() => {
-    import('@/hooks/useLeadTracking').then(({ default: useLeadTracking }) => {
-      useLeadTracking();
-    });
+    const timer = setTimeout(() => {
+      import('@/hooks/useLeadTracking').then(({ default: useLeadTracking }) => {
+        useLeadTracking();
+      });
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const structuredData = {
