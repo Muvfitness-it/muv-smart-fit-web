@@ -20,6 +20,16 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari13'],
+    target: ['es2022', 'edge89', 'firefox89', 'chrome89', 'safari15'],
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast']
+        }
+      }
+    }
   },
 }));
