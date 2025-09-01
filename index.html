@@ -557,20 +557,16 @@
     <!-- Contenuto dinamico React -->
     <div id="root"></div>
     
-    <!-- Async CSS loading to prevent render blocking -->
+    <!-- Non-blocking CSS loading -->
     <script>
-      // Simple async CSS loader
-      function loadCSS(href) {
-        var ss = document.createElement("link");
-        ss.rel = "stylesheet";
-        ss.href = href;
-        ss.media = "print";
-        ss.onload = function() { ss.media = "all"; };
-        document.head.appendChild(ss);
-      }
-      
-      // Load main CSS asynchronously to prevent render blocking
-      loadCSS('/assets/index-8ruxoxlJ.css');
+      // Since critical CSS is already inlined, load additional CSS without blocking
+      requestAnimationFrame(function() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/index.css';
+        link.media = 'all';
+        document.head.appendChild(link);
+      });
     </script>
     
     <!-- Main app script -->
