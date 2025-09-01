@@ -1,10 +1,10 @@
 
 import { lazy, Suspense, useEffect } from 'react';
 import FCPOptimizer from '@/components/optimization/FCP-Optimizer';
+import NewHeroSection from '@/components/home/NewHeroSection'; // Load immediately for Speed Index
 import { MessageCircle } from 'lucide-react';
 
-// Defer all non-critical imports to improve FCP
-const NewHeroSection = lazy(() => import('@/components/home/NewHeroSection'));
+// Defer only non-critical SEO components to improve Speed Index
 const SEOOptimizer = lazy(() => import('@/components/SEO/SEOOptimizer'));
 const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSchema'));
 
@@ -67,6 +67,9 @@ const Index = () => {
     <div className="min-h-screen bg-gray-900">
       {/* Critical above-the-fold content renders immediately */}
       <FCPOptimizer />
+      
+      {/* Hero section loads immediately for Speed Index */}
+      <NewHeroSection />
       
       {/* Defer non-critical SEO components */}
       <Suspense fallback={null}>
