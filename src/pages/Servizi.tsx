@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Activity, Heart, Users, TrendingUp } from "lucide-react";
+import { Zap, Activity, Heart, Users, TrendingUp, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
@@ -46,14 +46,22 @@ const Servizi = () => {
       description: "Un coach vero al tuo fianco; obiettivi chiari e progressioni misurabili.",
       benefits: "✓ Tecnica corretta ✓ Motivazione costante ✓ Programmazione su misura",
       link: "/servizi/personal-trainer-legnago"
+    },
+    {
+      icon: <Brain className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-indigo-600 mb-3 sm:mb-4" />,
+      title: "Nutrizione & Psicocoach",
+      subtitle: "Mente e corpo in equilibrio",
+      description: "Approccio integrato che unisce alimentazione sana e supporto mentale.",
+      benefits: "✓ Piani alimentari su misura ✓ Supporto psicologico ✓ Cambiamento duraturo",
+      link: "/servizi/nutrizione-psicocoach-legnago"
     }
   ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Helmet>
-        <title>Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum</title>
-        <meta name="description" content="5 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training. Scegli il tuo percorso ideale." />
+        <title>Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum, Nutrizione</title>
+        <meta name="description" content="6 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training, Nutrizione e Psicocoach. Scegli il tuo percorso ideale." />
         <link rel="canonical" href="https://www.muvfitness.it/servizi/" />
       </Helmet>
 
@@ -65,8 +73,8 @@ const Servizi = () => {
               <span className="text-pink-600 block sm:inline">Legnago</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
-              <strong>5 servizi specializzati</strong> per ogni obiettivo: dimagrimento rapido, postura corretta, 
-              cellulite, ricomposizione corporea. <span className="text-pink-400">Scegli il tuo percorso ideale</span>.
+              <strong>6 servizi specializzati</strong> per ogni obiettivo: dimagrimento rapido, postura corretta, 
+              cellulite, ricomposizione corporea, nutrizione e benessere mentale. <span className="text-pink-400">Scegli il tuo percorso ideale</span>.
             </p>
           </header>
           

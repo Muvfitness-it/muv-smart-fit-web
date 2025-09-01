@@ -33,6 +33,7 @@ const PancafitPosturaLegnago = lazy(() => import("./pages/servizi/PancafitPostur
 const PilatesReformerLegnago = lazy(() => import("./pages/servizi/PilatesReformerLegnago"));
 const CelluliteVacuumLegnago = lazy(() => import("./pages/servizi/CelluliteVacuumLegnago"));
 const PersonalTrainerLegnago = lazy(() => import("./pages/servizi/PersonalTrainerLegnago"));
+const NutrizionePsicocoach = lazy(() => import("./pages/servizi/NutrizionePsicocoach"));
 
 // Legacy service pages - lazy loaded
 const PersonalTraining = lazy(() => import("./pages/servizi/PersonalTraining"));
@@ -173,6 +174,7 @@ const AppContent = () => {
                     <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerLegnago />} />
                     <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<CelluliteVacuumLegnago />} />
                     <Route path="/servizi/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
+                    <Route path="/servizi/nutrizione-psicocoach-legnago" element={<NutrizionePsicocoach />} />
                     
                     {/* Legacy service pages for backward compatibility */}
                     <Route path="/servizi/personal-training" element={<PersonalTraining />} />
