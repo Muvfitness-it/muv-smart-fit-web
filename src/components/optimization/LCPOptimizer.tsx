@@ -37,7 +37,10 @@ const LCPOptimizer = () => {
       // Use requestAnimationFrame to batch DOM reads/writes and prevent forced reflows
       optimizeTimeout = setTimeout(() => {
         requestAnimationFrame(() => {
-          const lcpElement = document.querySelector('h1 .block.leading-tight.drop-shadow-2xl');
+          // Target the new LCP hero text element
+          const lcpElement = document.querySelector('.lcp-text-responsive, h1 .block.leading-tight.drop-shadow-2xl');
+          const heroContainer = document.querySelector('.lcp-hero-container');
+          
           if (lcpElement && !(lcpElement as HTMLElement).dataset.optimized) {
             // Batch all style changes together to minimize reflows
             const element = lcpElement as HTMLElement;
@@ -49,6 +52,16 @@ const LCPOptimizer = () => {
             `;
             // Mark as optimized to prevent redundant operations
             element.dataset.optimized = 'true';
+          }
+          
+          // Optimize hero container for better LCP
+          if (heroContainer && !(heroContainer as HTMLElement).dataset.optimized) {
+            const container = heroContainer as HTMLElement;
+            container.style.cssText += `
+              content-visibility: auto;
+              contain: layout style paint;
+            `;
+            container.dataset.optimized = 'true';
           }
         });
       }, 16); // Debounce with ~1 frame delay

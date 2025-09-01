@@ -166,6 +166,133 @@ const CriticalCSS = () => {
         to { transform: rotate(360deg); }
       }
       
+      /* Critical LCP Hero Section Styles */
+      .lcp-hero-container {
+        min-height: 100vh;
+        min-height: 100dvh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        contain: layout style paint;
+      }
+      
+      .lcp-bg-image-webp {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/fitness-professional-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        will-change: auto;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        z-index: 1;
+      }
+      
+      .lcp-bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.7) 100%);
+        z-index: 2;
+      }
+      
+      .lcp-hero-content {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        text-align: center;
+        contain: layout style;
+      }
+      
+      .lcp-hero-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .lcp-hero-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      
+      .lcp-text-responsive {
+        font-family: 'Montserrat', 'Inter', ui-sans-serif, system-ui, sans-serif;
+        font-weight: 900;
+        font-size: 2.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "kern" 1, "liga" 1;
+        color: white;
+        contain: layout style;
+        will-change: auto;
+      }
+      
+      .lcp-hero-text {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      
+      .lcp-gradient {
+        background: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      
+      /* Responsive text scaling for LCP optimization */
+      @media (min-width: 640px) {
+        .lcp-text-responsive {
+          font-size: 3.5rem;
+        }
+      }
+      
+      @media (min-width: 768px) {
+        .lcp-text-responsive {
+          font-size: 4.5rem;
+        }
+        
+        .lcp-hero-content {
+          padding: 3rem 1.5rem;
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .lcp-text-responsive {
+          font-size: 5.5rem;
+        }
+        
+        .lcp-hero-content {
+          padding: 4rem 2rem;
+        }
+      }
+      
+      @media (min-width: 1280px) {
+        .lcp-text-responsive {
+          font-size: 6rem;
+        }
+      }
+      
+      /* WebP background image fallback and optimization */
+      @supports (background-image: url('data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA')) {
+        .lcp-bg-image-webp {
+          background-image: url('/images/fitness-professional-bg.webp');
+        }
+      }
+      
       /* Prevent FOUC */
       .app-loading {
         background: hsl(var(--background));
