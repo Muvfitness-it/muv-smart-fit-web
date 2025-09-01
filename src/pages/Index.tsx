@@ -1,10 +1,12 @@
 
-import { lazy, Suspense } from 'react';
-import NewHeroSection from '@/components/home/NewHeroSection';
-import SEOOptimizer from '@/components/SEO/SEOOptimizer';
-import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
-import useLeadTracking from '@/hooks/useLeadTracking';
+import { lazy, Suspense, useEffect } from 'react';
+import FCPOptimizer from '@/components/optimization/FCP-Optimizer';
 import { MessageCircle } from 'lucide-react';
+
+// Defer all non-critical imports to improve FCP
+const NewHeroSection = lazy(() => import('@/components/home/NewHeroSection'));
+const SEOOptimizer = lazy(() => import('@/components/SEO/SEOOptimizer'));
+const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSchema'));
 
 // Lazy load non-critical sections for better FCP
 const FeaturesSection = lazy(() => import('@/components/home/FeaturesSection'));
@@ -14,8 +16,12 @@ const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 const CTASection = lazy(() => import('@/components/home/CTASection'));
 
 const Index = () => {
-  // Initialize lead tracking
-  useLeadTracking();
+  // Defer lead tracking to not block FCP
+  useEffect(() => {
+    import('@/hooks/useLeadTracking').then(({ default: useLeadTracking }) => {
+      useLeadTracking();
+    });
+  }, []);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -56,15 +62,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      <SEOOptimizer
-        title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
-        description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
-        canonicalUrl="https://www.muvfitness.it/"
-        structuredData={structuredData}
-      />
-      <LocalBusinessSchema />
+      {/* Critical above-the-fold content renders immediately */}
+      <FCPOptimizer />
       
-      <NewHeroSection />
+      {/* Defer non-critical SEO components */}
+      <Suspense fallback={null}>
+        <SEOOptimizer
+          title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
+          description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
+          canonicalUrl="https://www.muvfitness.it/"
+          structuredData={structuredData}
+        />
+        <LocalBusinessSchema />
+      </Suspense>
       
       {/* Mobile CTA Section - Enhanced */}
       <section className="mobile-cta-section md:hidden py-8 px-4 bg-gray-800/50">
