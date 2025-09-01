@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 
 const LCPOptimizer = () => {
   useEffect(() => {
-    // Preload critical hero image
-    const heroImageLink = document.createElement('link');
-    heroImageLink.rel = 'preload';
-    heroImageLink.as = 'image';
-    heroImageLink.href = '/images/fitness-professional-bg.jpg';
-    heroImageLink.fetchPriority = 'high';
-    document.head.appendChild(heroImageLink);
+    // Hero image already preloaded in HTML head for faster LCP
+    // Additional WebP preload for browsers that support it
+    const webpImageLink = document.createElement('link');
+    webpImageLink.rel = 'preload';
+    webpImageLink.as = 'image';
+    webpImageLink.href = '/images/fitness-professional-bg.webp';
+    webpImageLink.fetchPriority = 'high';
+    document.head.appendChild(webpImageLink);
 
     // Preload critical fonts immediately
     const fontLinks = [
@@ -99,7 +100,7 @@ const LCPOptimizer = () => {
       clearTimeout(optimizeTimeout);
       observer.disconnect();
       // Clean up preload links
-      [heroImageLink, ...document.querySelectorAll('link[rel="preload"][as="font"]')]
+      [webpImageLink, ...document.querySelectorAll('link[rel="preload"][as="font"]')]
         .forEach(link => link.remove());
     };
   }, []);
