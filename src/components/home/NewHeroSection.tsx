@@ -22,10 +22,10 @@ const NewHeroSection = () => {
               </span>
             </h1>
             
-            <div className="mb-10 space-y-6">
+            <div className="mb-6 space-y-4">
               <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg">
                 Risultati <span className="text-brand-accent">visibili in 30 giorni</span> con 
-                <span className="block mt-2 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent font-black text-2xl md:text-3xl lg:text-4xl">
+                <span className="block mt-1 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent font-black text-2xl md:text-3xl lg:text-4xl">
                   ⚡ Fitness Intelligente ⚡
                 </span>
               </p>
