@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useResourceOptimization } from "./hooks/useResourceOptimization";
-import { useEffect, lazy, Suspense } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
 import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
@@ -114,6 +114,14 @@ const AppContent = () => {
 
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  // Development log to verify single header instance
+  React.useEffect(() => {
+    const headers = document.querySelectorAll('nav.site-header');
+    if (headers.length > 1) {
+      console.warn(`Found ${headers.length} navigation headers, should be 1`);
+    }
+  }, [location.pathname]);
 
   return (
     <Suspense fallback={<RouteLoading />}>
