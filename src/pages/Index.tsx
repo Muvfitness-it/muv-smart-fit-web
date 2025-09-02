@@ -1,6 +1,6 @@
 
 import { lazy, Suspense, useEffect } from 'react';
-import FCPOptimizer from '@/components/optimization/FCP-Optimizer';
+
 import NewHeroSection from '@/components/home/NewHeroSection'; // Load immediately for Speed Index
 import { MessageCircle } from 'lucide-react';
 
@@ -65,9 +65,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      {/* Critical above-the-fold content renders immediately */}
-      <FCPOptimizer />
-      
+      {/* Hero section loads immediatamente per il miglior Speed Index */}
       {/* Hero section loads immediately for Speed Index */}
       <NewHeroSection />
       
