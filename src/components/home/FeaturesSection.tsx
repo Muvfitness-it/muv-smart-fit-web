@@ -15,23 +15,23 @@ const FeaturesSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center border border-gray-600">
-            <Clock className="w-12 h-12 text-brand-primary mx-auto mb-4" aria-hidden="true" />
+          <div className="glass-card p-6 rounded-2xl text-center hover-glass group">
+            <Clock className="w-12 h-12 text-brand-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
             <h3 className="text-lg font-bold mb-2 text-white">Sessioni su appuntamento, zero caos</h3>
           </div>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center border border-gray-600">
-            <Target className="w-12 h-12 text-brand-primary mx-auto mb-4" aria-hidden="true" />
+          <div className="glass-card p-6 rounded-2xl text-center hover-glass group">
+            <Target className="w-12 h-12 text-brand-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
             <h3 className="text-lg font-bold mb-2 text-white">Metodo + tecnologie → risultati misurabili</h3>
           </div>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center border border-gray-600">
-            <Heart className="w-12 h-12 text-brand-primary mx-auto mb-4" aria-hidden="true" />
+          <div className="glass-card p-6 rounded-2xl text-center hover-glass group">
+            <Heart className="w-12 h-12 text-brand-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
             <h3 className="text-lg font-bold mb-2 text-white">Team laureato e specializzato in postura</h3>
           </div>
           
-          <div className="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-2xl text-center border border-gray-600">
-            <Zap className="w-12 h-12 text-brand-primary mx-auto mb-4" aria-hidden="true" />
+          <div className="glass-card p-6 rounded-2xl text-center hover-glass group">
+            <Zap className="w-12 h-12 text-brand-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
             <h3 className="text-lg font-bold mb-2 text-white">Programmi su misura per obiettivi reali</h3>
           </div>
         </div>
@@ -64,7 +64,7 @@ const FeaturesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Link 
             to="/servizi/ems-legnago" 
-            className="group relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-600/50 hover:border-brand-primary/50 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-primary/25"
+            className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri il servizio EMS per dimagrimento rapido"
           >
             <div className="absolute top-4 right-4 w-3 h-3 bg-red-500 rounded-full animate-pulse" />
@@ -86,7 +86,7 @@ const FeaturesSection = () => {
           
           <Link 
             to="/servizi/pancafit-postura-legnago" 
-            className="group relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-600/50 hover:border-brand-primary/50 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-primary/25"
+            className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri i servizi per mal di schiena e rigidità"
           >
             <div className="absolute top-4 right-4 w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
@@ -112,7 +112,7 @@ const FeaturesSection = () => {
           
           <Link 
             to="/servizi/cellulite-vacuum-pressoterapia-legnago" 
-            className="group relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-600/50 hover:border-brand-primary/50 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-primary/25"
+            className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri i trattamenti per cellulite e ritenzione"
           >
             <div className="absolute top-4 right-4 w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
@@ -134,7 +134,7 @@ const FeaturesSection = () => {
           
           <Link 
             to="/servizi/personal-trainer-legnago" 
-            className="group relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-600/50 hover:border-brand-primary/50 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-primary/25"
+            className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri il servizio Personal Training"
           >
             <div className="absolute top-4 right-4 w-3 h-3 bg-green-500 rounded-full animate-pulse" />

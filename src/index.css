@@ -186,6 +186,23 @@ nav.site-header ~ nav.site-header {
   }
 }
 
+/* Pattern di sfondo raffinato per l'intero sito */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, hsl(var(--primary) / var(--pattern-opacity)) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, hsl(var(--secondary) / var(--pattern-opacity)) 1px, transparent 1px);
+  background-size: var(--pattern-size) var(--pattern-size);
+  background-position: 0 0, 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -272,21 +289,30 @@ nav.site-header ~ nav.site-header {
     filter: brightness(1.05);
   }
   
-  /* Heading enhancements */
+  /* Heading enhancements - gerarchia tipografica migliorata */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.2;
+    text-shadow: var(--text-shadow-elegant);
   }
   
   h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 900;
     letter-spacing: -0.025em;
+    text-shadow: var(--text-shadow-strong);
   }
   
   h2 {
+    font-size: clamp(1.75rem, 4vw, 3rem);
     font-weight: 800;
     letter-spacing: -0.02em;
+  }
+  
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 700;
   }
   
   /* Skip to content link */
@@ -713,7 +739,42 @@ aside.callout {
     box-shadow: var(--shadow-card);
   }
 
-  /* Performance optimizations */
+  /* ================================
+     GLASS MORPHISM COMPONENTS
+     ================================ */
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    transition: var(--transition-glass);
+  }
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-glass-hover);
+    transform: translateY(-4px);
+  }
+
+  .glass-header {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-header);
+  }
+
+  .glass-header.scrolled {
+    background: rgba(17, 24, 39, 0.95);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* ================================
+     ANIMAZIONI SOFISTICATE
+     ================================ */
+
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
   }
@@ -722,8 +783,25 @@ aside.callout {
     animation: slideUp 0.8s ease-out forwards;
   }
 
+  .animate-gentle-zoom {
+    animation: gentleZoom 6s ease-in-out infinite;
+  }
+
+  .animate-float-gentle {
+    animation: floatGently 4s ease-in-out infinite;
+  }
+
   .hover-scale-102:hover {
     transform: scale(1.02);
+  }
+
+  .hover-glass {
+    transition: var(--transition-glass);
+  }
+
+  .hover-glass:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
   }
 
   @keyframes fadeIn {
@@ -746,6 +824,16 @@ aside.callout {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @keyframes gentleZoom {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  @keyframes floatGently {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
   }
 
   /* Core Web Vitals optimizations */
