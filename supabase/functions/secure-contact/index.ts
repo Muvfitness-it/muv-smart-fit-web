@@ -185,8 +185,7 @@ serve(async (req) => {
     const message = sanitizeInput(parsedBody.message?.trim() || '');
     const city = sanitizeInput(parsedBody.city?.trim() || '');
     const goal = sanitizeInput(parsedBody.goal?.trim() || '');
-    const telefono = sanitizeInput(parsedBody.telefono?.trim() || '');
-
+    const telefono = sanitizeInput(parsedBody.telefono?.trim() || parsedBody.phone?.trim() || '');
     console.log('Validation data:', { 
       hasName: !!name, 
       hasEmail: !!email, 
