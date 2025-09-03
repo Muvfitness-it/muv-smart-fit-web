@@ -1,5 +1,5 @@
-import ExternalForm from "../components/contact/ExternalForm";
 import ContactInfo from "../components/contact/ContactInfo";
+import MUVContactForm from "../components/contact/MUVContactForm";
 import SEOOptimizer from "@/components/SEO/SEOOptimizer";
 
 const Contatti = () => {
@@ -65,7 +65,10 @@ const Contatti = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
-            <ExternalForm />
+            <MUVContactForm 
+              campaignName="Contatti MUV Fitness"
+              className="lg:col-span-1"
+            />
             <ContactInfo />
           </div>
           
