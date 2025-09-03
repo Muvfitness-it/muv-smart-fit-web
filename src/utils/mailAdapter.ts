@@ -49,7 +49,38 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
     }
   }
 
-  // Fallback to Supabase Edge Function with Resend
+  // Fallback to Formspree (no secrets required)
+  try {
+    const formspreeEndpoint = "https://formspree.io/f/mblklzbq";
+    const fsRes = await fetch(formspreeEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        phone: payload.telefono || payload.phone || "",
+        obiettivo: payload.obiettivo || "",
+        message: payload.message,
+        subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
+        source: payload.source || "website"
+      })
+    });
+
+    if (fsRes.ok) {
+      const data = await fsRes.json().catch(() => ({}));
+      return { success: true, data };
+    } else {
+      // If Formspree fails, continue to Supabase fallback
+      console.warn("Formspree failed, trying Supabase fallback.", await fsRes.text());
+    }
+  } catch (e) {
+    console.warn("Formspree error, trying Supabase fallback:", e);
+  }
+
+  // Final fallback to Supabase Edge Function with Resend (requires secret configured)
   try {
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(
@@ -71,12 +102,11 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
 
     if (error) throw error;
     return { success: true, data };
-    
   } catch (e: any) {
-    console.error("Both Web3Forms and Supabase failed:", e);
-    return { 
-      success: false, 
-      message: "Errore nell'invio. Chiamaci direttamente al 045 6302745 o scrivi a info@muvfitness.it" 
+    console.error("All transports failed:", e);
+    return {
+      success: false,
+      message: "Errore nell'invio. Riprova, oppure contattaci su WhatsApp (329 107 0374)."
     };
   }
 }
