@@ -81,11 +81,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
   };
 
   return (
-    <Card className={`glass-card border-brand-primary/30 ${className}`}>
+    <Card className={`bg-white border-brand-primary/30 shadow-xl ${className}`}>
       <CardContent className="p-8">
         <div className="text-center mb-8">
-          <p className="text-2xl font-heading brand-text mb-2">COMPILA IL MODULO:</p>
-          <p className="text-brand-accent/80 text-lg">(inserisci tutti i dati in modo corretto.)</p>
+          <p className="text-2xl font-heading text-gray-900 mb-2">COMPILA IL MODULO:</p>
+          <p className="text-gray-600 text-lg">(inserisci tutti i dati in modo corretto.)</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -101,7 +101,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
           />
 
           <div>
-            <label htmlFor="name" className="block text-lg font-bold text-foreground mb-2">
+            <label htmlFor="name" className="block text-lg font-bold text-gray-900 mb-2">
               Nome Completo
             </label>
             <input
@@ -112,12 +112,12 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               value={formData.name}
               onChange={handleChange}
               placeholder="Es. Mario Rossi"
-              className="w-full p-4 glass-input border-2 border-brand-primary/30 rounded-lg focus:border-brand-accent focus:ring-0 transition text-lg text-foreground placeholder:text-muted-foreground"
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-500"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-lg font-bold text-foreground mb-2">
+            <label htmlFor="email" className="block text-lg font-bold text-gray-900 mb-2">
               Email Migliore
             </label>
             <input
@@ -128,12 +128,12 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               value={formData.email}
               onChange={handleChange}
               placeholder="es. mario.rossi@email.com"
-              className="w-full p-4 glass-input border-2 border-brand-primary/30 rounded-lg focus:border-brand-accent focus:ring-0 transition text-lg text-foreground placeholder:text-muted-foreground"
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-500"
             />
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-lg font-bold text-foreground mb-2">
+            <label htmlFor="phone" className="block text-lg font-bold text-gray-900 mb-2">
               Numero di Telefono
             </label>
             <input
@@ -144,12 +144,12 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               value={formData.phone}
               onChange={handleChange}
               placeholder="Il tuo numero per essere ricontattato"
-              className="w-full p-4 glass-input border-2 border-brand-primary/30 rounded-lg focus:border-brand-accent focus:ring-0 transition text-lg text-foreground placeholder:text-muted-foreground"
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-500"
             />
           </div>
 
           <div>
-            <label htmlFor="obiettivo" className="block text-lg font-bold text-foreground mb-2">
+            <label htmlFor="obiettivo" className="block text-lg font-bold text-gray-900 mb-2">
               Qual è il tuo obiettivo?
             </label>
             <select
@@ -158,24 +158,24 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               required
               value={formData.obiettivo}
               onChange={handleChange}
-              className="w-full p-4 glass-input border-2 border-brand-primary/30 rounded-lg focus:border-brand-accent focus:ring-0 transition text-lg text-foreground appearance-none bg-transparent"
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 appearance-none"
             >
-              <option value="" className="bg-background text-foreground">Seleziona il tuo obiettivo</option>
-              <option value="Dimagrimento" className="bg-background text-foreground">Dimagrimento</option>
-              <option value="Tonificazione" className="bg-background text-foreground">Tonificazione</option>
-              <option value="Pilates" className="bg-background text-foreground">Pilates</option>
-              <option value="Mal di schiena" className="bg-background text-foreground">Mal di schiena</option>
-              <option value="Aumento massa muscolare" className="bg-background text-foreground">Aumento massa muscolare</option>
-              <option value="Benessere generale" className="bg-background text-foreground">Benessere generale</option>
+              <option value="" className="bg-white text-gray-900">Seleziona il tuo obiettivo</option>
+              <option value="Dimagrimento" className="bg-white text-gray-900">Dimagrimento</option>
+              <option value="Tonificazione" className="bg-white text-gray-900">Tonificazione</option>
+              <option value="Pilates" className="bg-white text-gray-900">Pilates</option>
+              <option value="Mal di schiena" className="bg-white text-gray-900">Mal di schiena</option>
+              <option value="Aumento massa muscolare" className="bg-white text-gray-900">Aumento massa muscolare</option>
+              <option value="Benessere generale" className="bg-white text-gray-900">Benessere generale</option>
             </select>
           </div>
 
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black font-black py-4 px-10 text-2xl rounded-lg font-heading transition-all duration-300 transform hover:scale-105 border-0"
+            className="w-full bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black font-bold py-4 px-6 text-xl rounded-lg transition-all duration-300 transform hover:scale-105 border-0"
           >
-            {isSubmitting ? 'INVIO IN CORSO...' : 'CANDIDAMI PER LA TRASFORMAZIONE'}
+            {isSubmitting ? 'INVIO IN CORSO...' : 'INVIA MODULO'}
           </Button>
         </form>
       </CardContent>
