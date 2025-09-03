@@ -758,6 +758,19 @@ aside.callout {
     transform: translateY(-4px);
   }
 
+  .glass-input {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-glass);
+  }
+
+  .glass-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: hsl(var(--brand-accent));
+    box-shadow: 0 0 0 2px hsl(var(--brand-accent) / 0.2);
+  }
+
   .glass-header {
     background: rgba(17, 24, 39, 0.8);
     backdrop-filter: blur(var(--glass-blur));

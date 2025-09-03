@@ -37,8 +37,8 @@ const CTASection = () => {
             📖 SCOPRI IL NOSTRO BLOG
           </Link>
           
-          <Link to="/contatti" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
-            📞 CONTATTACI
+          <Link to="/form-contatti" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105">
+            🚀 CANDIDATI SUBITO
           </Link>
         </div>
         

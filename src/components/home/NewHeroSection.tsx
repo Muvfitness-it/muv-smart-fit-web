@@ -40,6 +40,23 @@ const NewHeroSection = () => {
                 </p>
               </div>
             </div>
+            
+            {/* Call to Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+              <a 
+                href="/form-contatti" 
+                className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20"
+              >
+                🚀 CANDIDATI PER LA TRASFORMAZIONE
+              </a>
+              
+              <a 
+                href="tel:+393291070374" 
+                className="glass-card border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105"
+              >
+                📞 CHIAMA ORA
+              </a>
+            </div>
           </div>
         </div>
       </div>

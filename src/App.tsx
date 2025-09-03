@@ -24,6 +24,7 @@ const Servizi = lazy(() => import("./pages/Servizi"));
 const Team = lazy(() => import("./pages/Team"));
 const Risultati = lazy(() => import("./pages/Risultati"));
 const Contatti = lazy(() => import("./pages/Contatti"));
+const FormContatti = lazy(() => import("./pages/FormContatti"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 
@@ -232,6 +233,7 @@ const AppContent = () => {
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     
                     <Route path="/contatti" element={<Contatti />} />
+                    <Route path="/form-contatti" element={<FormContatti />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/cookie-policy" element={<CookiePolicy />} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />

@@ -326,6 +326,31 @@ const BlogArticle = () => {
               </section>
             )}
             
+            {/* Call to Action Section */}
+            <section className="my-12 p-8 glass-card rounded-2xl border-brand-primary/30 text-center">
+              <h3 className="text-2xl md:text-3xl font-heading font-black text-brand-primary mb-4">
+                🚀 PRONTO A TRASFORMARE IL TUO CORPO?
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                Applica quello che hai imparato con il supporto del Team MUV. 
+                <strong className="text-brand-accent"> Prima consulenza GRATUITA</strong> per i primi 10 clienti.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                  href="/form-contatti" 
+                  className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-6 py-3 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
+                >
+                  📝 CANDIDATI ORA
+                </a>
+                <a 
+                  href="tel:+393291070374" 
+                  className="glass-card border-2 border-brand-primary/30 text-foreground hover:bg-brand-primary/10 px-6 py-3 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
+                >
+                  📞 CHIAMA SUBITO
+                </a>
+              </div>
+            </section>
+
             {/* Display approved comments */}
             <ApprovedComments postId={post.id} />
             
