@@ -169,13 +169,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               <option value="Benessere generale" className="bg-white text-gray-900">Benessere generale</option>
             </select>
           </div>
-          
           <div>
-  <label for="message" class="block text-sm font-medium text-gray-900">Messaggio</label>
+  <label for="message" class="block text-lg font-bold text-gray-900 mb-2">Messaggio</label>
   <div class="mt-1">
-    <textarea id="message" name="message" rows="4" required class="block w-full rounded-md border-gray-300 bg-white text-gray-900 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" placeholder="Scrivi qui il tuo messaggio..."></textarea>
+    <textarea id="message" name="message" rows="4" required class="block w-full rounded-md border-gray-600 bg-gray-800 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" placeholder="Scrivi qui il tuo messaggio..."></textarea>
   </div>
-            
 </div>
           <Button
             type="submit"
