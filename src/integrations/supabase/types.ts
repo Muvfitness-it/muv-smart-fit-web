@@ -425,6 +425,60 @@ export type Database = {
           },
         ]
       }
+      data_retention_policies: {
+        Row: {
+          anonymize_after_days: number | null
+          created_at: string | null
+          id: string
+          last_cleanup: string | null
+          retention_days: number
+          table_name: string
+        }
+        Insert: {
+          anonymize_after_days?: number | null
+          created_at?: string | null
+          id?: string
+          last_cleanup?: string | null
+          retention_days: number
+          table_name: string
+        }
+        Update: {
+          anonymize_after_days?: number | null
+          created_at?: string | null
+          id?: string
+          last_cleanup?: string | null
+          retention_days?: number
+          table_name?: string
+        }
+        Relationships: []
+      }
+      enhanced_rate_limits: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          id: string
+          identifier: string
+          requests_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          identifier: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          identifier?: string
+          requests_count?: number | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       lead_tracking: {
         Row: {
           booking_completed: boolean | null
@@ -766,6 +820,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      anonymize_old_data: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       assign_user_role: {
         Args: {
           _assigned_by?: string
@@ -822,6 +880,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_security_event_pii_safe: {
+        Args: {
+          event_data_param?: Json
+          event_type_param: string
+          ip_param?: string
+          user_agent_param?: string
+        }
+        Returns: undefined
+      }
       log_security_event_safe: {
         Args: {
           event_data_param?: Json
@@ -853,6 +920,16 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      secure_contact_submission: {
+        Args: {
+          p_email: string
+          p_message: string
+          p_name: string
+          p_phone?: string
+          p_subject?: string
+        }
+        Returns: Json
       }
       submit_blog_comment: {
         Args: {

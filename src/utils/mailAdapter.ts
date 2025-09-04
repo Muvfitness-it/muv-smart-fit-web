@@ -24,33 +24,39 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
     return { success: true, message: "Honeypot triggered - skipped" };
   }
 
-  // Try Web3Forms first
-  if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY.trim().length > 10) {
-    try {
-      const body = {
-        access_key: WEB3FORMS_ACCESS_KEY,
-        from_name: "MUV Fitness Website",
-        subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
-        ...payload,
-      };
+  // Primary attempt: Secure Supabase Edge Function
+  try {
+    console.log('Attempting secure Supabase Edge Function submission...');
+    const { createClient } = await import("@supabase/supabase-js");
+    const supabase = createClient(
+      "https://baujoowgqeyraqnukkmw.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdWpvb3dncWV5cmFxbnVra213Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzcwNTYsImV4cCI6MjA2NTY1MzA1Nn0.pmeNPLBZVJjXwYGJP_T2vorYnw7LJ-DdE5RfD3VfIrw"
+    );
 
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.success === true) {
-        return { success: true, data };
+    const { data, error } = await supabase.functions.invoke('secure-contact', {
+      body: {
+        name: payload.name,
+        email: payload.email,
+        message: payload.message,
+        telefono: payload.telefono || '',
+        city: payload.citta || '',
+        goal: payload.obiettivo || ''
       }
-    } catch (e) {
-      console.warn("Web3Forms failed, trying Supabase fallback:", e);
+    });
+
+    if (!error && data?.success) {
+      console.log('Secure contact success:', data);
+      return { success: true, message: data.message || 'Message sent successfully' };
+    } else {
+      console.error('Secure contact failed:', error);
     }
+  } catch (error) {
+    console.error('Secure contact error:', error);
   }
 
-  // Fallback to Formspree (no secrets required)
+  // Fallback: Formspree
   try {
+    console.log('Attempting Formspree fallback...');
     const formspreeEndpoint = "https://formspree.io/f/mblklzbq";
     const fsRes = await fetch(formspreeEndpoint, {
       method: "POST",
@@ -71,42 +77,45 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
 
     if (fsRes.ok) {
       const data = await fsRes.json().catch(() => ({}));
-      return { success: true, data };
+      console.log('Formspree success');
+      return { success: true, message: 'Message sent successfully via Formspree' };
     } else {
-      // If Formspree fails, continue to Supabase fallback
-      console.warn("Formspree failed, trying Supabase fallback.", await fsRes.text());
+      console.error('Formspree failed:', fsRes.status, fsRes.statusText);
     }
-  } catch (e) {
-    console.warn("Formspree error, trying Supabase fallback:", e);
+  } catch (error) {
+    console.error('Formspree error:', error);
   }
 
-  // Final fallback to Supabase Edge Function with Resend (requires secret configured)
-  try {
-    const { createClient } = await import("@supabase/supabase-js");
-    const supabase = createClient(
-      "https://baujoowgqeyraqnukkmw.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdWpvb3dncWV5cmFxbnVra213Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzcwNTYsImV4cCI6MjA2NTY1MzA1Nn0.pmeNPLBZVJjXwYGJP_T2vorYnw7LJ-DdE5RfD3VfIrw"
-    );
+  // Final fallback: Web3Forms
+  if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY.trim().length > 10) {
+    try {
+      console.log('Attempting Web3Forms fallback...');
+      const body = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        from_name: "MUV Fitness Website",
+        subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
+        ...payload,
+      };
 
-    const { data, error } = await supabase.functions.invoke('secure-contact', {
-      body: {
-        name: payload.name,
-        email: payload.email,
-        message: payload.message,
-        telefono: payload.telefono || '',
-        city: payload.citta || '',
-        goal: payload.obiettivo || '',
-        transport: 'supabase_fallback'
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success === true) {
+        console.log('Web3Forms success');
+        return { success: true, data };
       }
-    });
-
-    if (error) throw error;
-    return { success: true, data };
-  } catch (e: any) {
-    console.error("All transports failed:", e);
-    return {
-      success: false,
-      message: "Errore nell'invio. Riprova, oppure contattaci su WhatsApp (329 107 0374)."
-    };
+    } catch (e) {
+      console.error("Web3Forms failed:", e);
+    }
   }
+
+  console.error("All transports failed");
+  return {
+    success: false,
+    message: "Errore nell'invio. Riprova, oppure contattaci su WhatsApp (329 107 0374)."
+  };
 }

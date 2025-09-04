@@ -171,18 +171,18 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
           </div>
 
           <div>
-          <label htmlFor="Message" className="block text-lg font-bold text-gray-900 mb-2">
+            <label htmlFor="message" className="block text-lg font-bold text-gray-900 mb-2">
               Messaggio
             </label>
-            <input
-              type="tex"
+            <textarea
               name="message"
               id="message"
               required
               value={formData.message}
               onChange={handleChange}
               placeholder="Scrivi qui il tuo messaggio"
-              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-700"
+              rows={4}
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-700 resize-vertical"
             />
           </div>
           
