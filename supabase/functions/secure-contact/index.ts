@@ -113,7 +113,7 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, "&#039;");
 }
 
-const resend = new Resend(Deno.env.get("re_4pBR8zBL_6dRXe2FPXKeGWKn3B6BsqpQ8"));
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 serve(async (req) => {
   const supabase = createClient(
