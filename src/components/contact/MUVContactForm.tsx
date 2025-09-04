@@ -169,7 +169,8 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               <option value="Benessere generale" className="bg-white text-gray-900">Benessere generale</option>
             </select>
           </div>
-
+          
+          <div>
           <label htmlFor="Message" className="block text-lg font-bold text-gray-900 mb-2">
               Messaggio
             </label>
