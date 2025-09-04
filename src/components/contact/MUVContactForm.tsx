@@ -8,6 +8,7 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  message: string;
   obiettivo: string;
   honeypot: string;
 }
@@ -27,12 +28,13 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
     name: '',
     email: '',
     phone: '',
+    message: '',
     obiettivo: '',
     honeypot: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -44,7 +46,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       return; // Bot detected
     }
     
-    if (!formData.name || !formData.email || !formData.phone || !formData.obiettivo) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.message || !formData.obiettivo) {
       toast.error('Compila tutti i campi richiesti');
       return;
     }
@@ -56,7 +58,9 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        message: `Obiettivo: ${formData.obiettivo}\nCampagna: ${campaignName}`,
+        message: formData.message,
+        telefono: formData.phone,
+        obiettivo: formData.obiettivo,
         access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '',
         subject: `Nuova candidatura MUV - ${formData.name}`,
         from_name: formData.name,
@@ -67,7 +71,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       
       if (result.success) {
         toast.success('🎉 Candidatura inviata con successo! Ti ricontatteremo presto.');
-        setFormData({ name: '', email: '', phone: '', obiettivo: '', honeypot: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', obiettivo: '', honeypot: '' });
         onSuccess?.();
       } else {
         throw new Error(result.message || 'Errore invio modulo');
