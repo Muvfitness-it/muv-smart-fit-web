@@ -74,7 +74,7 @@ const Team = () => {
       />
       
       <Navigation />
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-8 sm:py-12 lg:py-16 xl:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <header className="text-center mb-10 sm:mb-14 lg:mb-16">
