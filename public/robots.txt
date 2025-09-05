@@ -5,6 +5,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /auth/
+Disallow: /ai-auth/
 Disallow: /api/
 
 # Block search and filters to save crawl budget  
@@ -13,18 +14,38 @@ Disallow: /blog/tag/
 Disallow: /search*
 Disallow: /*?search=*
 Disallow: /*?filter=*
+Disallow: /*?utm_*
 
-# Allow important pages
+# Allow important pages explicitly
 Allow: /blog
 Allow: /blog/
 Allow: /servizi/
 Allow: /contatti
 Allow: /chi-siamo
+Allow: /team
+Allow: /risultati
+Allow: /trasformazione-30-giorni
 
-# Crawl delay for bots
+# Crawl delay for polite crawling
 Crawl-delay: 1
 
-# Sitemap
+# Sitemap locations
 Sitemap: https://www.muvfitness.it/sitemap.xml
+Sitemap: https://www.muvfitness.it/sitemap-main.xml  
 Sitemap: https://www.muvfitness.it/sitemap-blog.xml
-Sitemap: https://www.muvfitness.it/sitemap-main.xml
+
+# Additional bot directives
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /

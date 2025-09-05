@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp, Heart, Users } from "lucide-react";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
 
 const EMS = () => {
@@ -53,7 +53,7 @@ const EMS = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Allenamento EMS Legnago | Elettrostimolazione Muscolare MUV Fitness"
         description="Allenamento EMS a Legnago: 20 min = 3 ore palestra. Elettrostimolazione muscolare per dimagrire e tonificare rapidamente. Prova gratuita da MUV Fitness."
         keywords="allenamento EMS Legnago, elettrostimolazione muscolare, fitness Legnago, dimagrimento rapido, tonificazione muscolare"

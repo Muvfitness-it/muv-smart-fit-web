@@ -1,0 +1,341 @@
+// Static route definitions for SEO and sitemap generation
+export interface SEORouteConfig {
+  path: string;
+  title: string;
+  description: string;
+  keywords?: string;
+  priority: number;
+  changefreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  lastmod?: string;
+  ogImage?: string;
+  structuredData?: Record<string, any>;
+}
+
+const baseUrl = 'https://www.muvfitness.it';
+const defaultOgImage = 'https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png';
+
+export const staticRoutes: SEORouteConfig[] = [
+  // Homepage
+  {
+    path: '/',
+    title: 'Centro Fitness MUV Legnago | Personal Training & Dimagrimento',
+    description: 'Centro fitness esclusivo a Legnago (VR). Personal training 1-to-1, tecnologia EMS, Pilates e Pancafit per dimagrire rapidamente. Prenota la prova gratuita!',
+    keywords: 'centro fitness Legnago, personal trainer Legnago, dimagrimento, EMS, Pilates',
+    priority: 1.0,
+    changefreq: 'daily',
+    ogImage: defaultOgImage
+  },
+  
+  // Main pages
+  {
+    path: '/chi-siamo',
+    title: 'Chi Siamo | MUV Fitness Legnago - Il Tuo Centro Benessere',
+    description: 'Scopri MUV Fitness Legnago: centro fitness esclusivo con personal trainer certificati, tecnologie avanzate e approccio personalizzato al benessere.',
+    keywords: 'MUV Fitness, centro fitness Legnago, personal trainer, storia, team',
+    priority: 0.8,
+    changefreq: 'monthly'
+  },
+  
+  {
+    path: '/servizi',
+    title: 'Servizi Fitness Legnago | Personal Training, EMS, Pilates',
+    description: 'Scopri tutti i servizi di MUV Fitness Legnago: Personal Training, EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti posturali.',
+    keywords: 'servizi fitness Legnago, personal training, EMS, Pilates, HIIT, nutrizione',
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/team',
+    title: 'Team MUV Fitness Legnago | Personal Trainer Qualificati',
+    description: 'Conosci il team di MUV Fitness Legnago: personal trainer certificati, nutrizionisti e specialisti del benessere pronti a seguirti.',
+    keywords: 'team MUV Fitness, personal trainer Legnago, nutrizionisti, specialisti fitness',
+    priority: 0.7,
+    changefreq: 'monthly'
+  },
+  
+  {
+    path: '/risultati',
+    title: 'Risultati Ottenuti | Trasformazioni MUV Fitness Legnago',
+    description: 'Guarda le trasformazioni dei nostri clienti di Legnago. Risultati reali di dimagrimento e tonificazione con il metodo MUV Fitness.',
+    keywords: 'risultati fitness Legnago, trasformazioni, dimagrimento, prima e dopo',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/contatti',
+    title: 'Contatti MUV Fitness Legnago | Prenota la Tua Prova Gratuita',
+    description: 'Contatta MUV Fitness Legnago per prenotare la tua prova gratuita. Via Venti Settembre 5/7, Legnago (VR). Tel: 329 107 0374',
+    keywords: 'contatti MUV Fitness, prenota prova gratuita, Legnago fitness, Via Venti Settembre',
+    priority: 0.9,
+    changefreq: 'monthly'
+  },
+
+  // Service pages
+  {
+    path: '/servizi/personal-training',
+    title: 'Personal Training Legnago | Allenamento Personalizzato 1-to-1',
+    description: 'Personal Training a Legnago con trainer certificati. Programmi personalizzati per dimagrimento, tonificazione e benessere. Prova gratuita disponibile.',
+    keywords: 'personal training Legnago, allenamento personalizzato, trainer certificato, dimagrimento',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/ems',
+    title: 'Allenamento EMS Legnago | Elettrostimolazione Muscolare',
+    description: 'Allenamento EMS a Legnago: 20 minuti = 3 ore di palestra. Elettrostimolazione muscolare per dimagrire e tonificare rapidamente.',
+    keywords: 'allenamento EMS Legnago, elettrostimolazione muscolare, fitness veloce, tonificazione',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/pilates',
+    title: 'Pilates Legnago | Corsi e Lezioni Private MUV Fitness',
+    description: 'Pilates a Legnago per migliorare postura, flessibilità e forza del core. Lezioni di gruppo e private con istruttori qualificati.',
+    keywords: 'Pilates Legnago, postura, core, flessibilità, lezioni private',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/hiit',
+    title: 'Allenamento HIIT Legnago | High Intensity Interval Training',
+    description: 'HIIT a Legnago: allenamento ad alta intensità per bruciare grassi e migliorare la resistenza. Classi piccole e supporto personalizzato.',
+    keywords: 'HIIT Legnago, allenamento alta intensità, brucia grassi, resistenza',
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/nutrizione',
+    title: 'Nutrizionista Legnago | Consulenza Alimentare Personalizzata',
+    description: 'Consulenza nutrizionale a Legnago con piani alimentari personalizzati. Supporta i tuoi obiettivi fitness con la giusta alimentazione.',
+    keywords: 'nutrizionista Legnago, consulenza alimentare, piani personalizzati, dieta',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/psicologo',
+    title: 'Psicologo Sportivo Legnago | Mental Coaching MUV Fitness',
+    description: 'Psicologo sportivo a Legnago per mental coaching e gestione dello stress. Supporto psicologico per raggiungere i tuoi obiettivi fitness.',
+    keywords: 'psicologo sportivo Legnago, mental coaching, motivazione, stress',
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/massoterapia',
+    title: 'Massoterapia Legnago | Massaggi Terapeutici e Sportivi',
+    description: 'Massoterapia a Legnago per recupero muscolare e benessere. Massaggi terapeutici e sportivi con professionisti qualificati.',
+    keywords: 'massoterapia Legnago, massaggi sportivi, recupero muscolare, benessere',
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/pancafit',
+    title: 'Pancafit Legnago | Posturale e Stretching Decompensato',
+    description: 'Pancafit a Legnago per problemi posturali e mal di schiena. Stretching decompensato per rilassamento e riequilibrio muscolare.',
+    keywords: 'Pancafit Legnago, posturale, mal di schiena, stretching decompensato',
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/servizi/small-group',
+    title: 'Small Group Training Legnago | Allenamenti Gruppo Ristretto',
+    description: 'Small Group Training a Legnago: allenamenti in piccoli gruppi con attenzione personalizzata. Motivazione e risultati garantiti.',
+    keywords: 'small group training Legnago, allenamento gruppo, motivazione, personalizzato',
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+
+  // SEO location pages
+  {
+    path: '/personal-trainer-legnago',
+    title: 'Personal Trainer Legnago | Allenamento Personalizzato MUV Fitness',
+    description: 'Cerchi un personal trainer a Legnago? MUV Fitness offre allenamenti personalizzati con trainer certificati. Risultati garantiti, prova gratuita.',
+    keywords: 'personal trainer Legnago, allenatore personale, fitness Legnago, MUV',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/allenamento-ems-legnago',
+    title: 'Allenamento EMS Legnago | Elettrostimolazione Muscolare',
+    description: 'Allenamento EMS a Legnago con MUV Fitness. 20 minuti di elettrostimolazione = 3 ore di palestra tradizionale. Prenota la prova gratuita.',
+    keywords: 'EMS Legnago, elettrostimolazione, allenamento veloce, MUV Fitness',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/pilates-legnago',
+    title: 'Pilates Legnago | Corsi e Lezioni Private MUV Fitness',
+    description: 'Pilates a Legnago per postura e benessere. Corsi di gruppo e lezioni private con istruttori qualificati da MUV Fitness.',
+    keywords: 'Pilates Legnago, postura, core, MUV Fitness, lezioni private',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/palestra-legnago',
+    title: 'Palestra Legnago | Centro Fitness MUV - Personal Training',
+    description: 'La palestra di Legnago che fa la differenza: MUV Fitness offre personal training, EMS, Pilates in ambiente esclusivo e riservato.',
+    keywords: 'palestra Legnago, centro fitness, personal training, EMS, ambiente esclusivo',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/dimagrire-legnago',
+    title: 'Dimagrire Legnago | Programmi Dimagrimento MUV Fitness',
+    description: 'Vuoi dimagrire a Legnago? MUV Fitness offre programmi personalizzati con personal training, EMS e supporto nutrizionale per perdere peso.',
+    keywords: 'dimagrire Legnago, perdere peso, programmi dimagrimento, MUV Fitness',
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  
+  {
+    path: '/mal-di-schiena-legnago',
+    title: 'Mal di Schiena Legnago | Trattamenti Posturali MUV Fitness',
+    description: 'Soffri di mal di schiena a Legnago? MUV Fitness offre Pancafit e trattamenti posturali personalizzati per risolvere i tuoi problemi.',
+    keywords: 'mal di schiena Legnago, Pancafit, posturale, trattamenti schiena',
+    priority: 0.7,
+    changefreq: 'monthly'
+  },
+  
+  {
+    path: '/massaggio-sportivo-legnago',
+    title: 'Massaggio Sportivo Legnago | Recupero Muscolare MUV',
+    description: 'Massaggio sportivo a Legnago per recupero muscolare e performance. Trattamenti professionali da MUV Fitness per atleti e sportivi.',
+    keywords: 'massaggio sportivo Legnago, recupero muscolare, performance, MUV Fitness',
+    priority: 0.7,
+    changefreq: 'monthly'
+  },
+
+  // Nearby towns
+  {
+    path: '/cerea-fitness',
+    title: 'Fitness Cerea | Centro MUV Fitness - Personal Training',
+    description: 'Cerchi un centro fitness a Cerea? MUV Fitness Legnago è vicino a Cerea e offre personal training, EMS e servizi personalizzati.',
+    keywords: 'fitness Cerea, centro fitness, personal training, MUV Fitness, Legnago',
+    priority: 0.6,
+    changefreq: 'monthly'
+  },
+  
+  {
+    path: '/bovolone-fitness',
+    title: 'Fitness Bovolone | Centro MUV Fitness Legnago',
+    description: 'Centro fitness per Bovolone: MUV Fitness Legnago offre personal training, EMS, Pilates e servizi personalizzati a pochi km da Bovolone.',
+    keywords: 'fitness Bovolone, centro fitness, personal training, MUV Fitness',
+    priority: 0.6,
+    changefreq: 'monthly'
+  },
+  
+  {
+    path: '/san-bonifacio-fitness',
+    title: 'Fitness San Bonifacio | Centro MUV Fitness Legnago',
+    description: 'Centro fitness per San Bonifacio: MUV Fitness Legnago offre servizi di alta qualità a breve distanza da San Bonifacio.',
+    keywords: 'fitness San Bonifacio, centro fitness, personal training, MUV Fitness',
+    priority: 0.6,
+    changefreq: 'monthly'
+  },
+
+  // Landing pages
+  {
+    path: '/trasformazione-30-giorni',
+    title: 'Trasformazione 30 Giorni Legnago | Programma Intensivo MUV',
+    description: 'Trasformazione in 30 giorni a Legnago: programma intensivo con personal training, EMS e supporto nutrizionale. Risultati garantiti.',
+    keywords: 'trasformazione 30 giorni, programma intensivo, risultati rapidi, Legnago',
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+
+  // Blog
+  {
+    path: '/blog',
+    title: 'Blog Fitness | Consigli e Guide MUV Fitness Legnago',
+    description: 'Blog di MUV Fitness Legnago: consigli, guide e articoli su fitness, nutrizione, benessere e allenamento. Scopri i segreti del benessere.',
+    keywords: 'blog fitness, consigli allenamento, nutrizione, benessere, MUV Fitness',
+    priority: 0.8,
+    changefreq: 'daily'
+  },
+
+  // Legal pages
+  {
+    path: '/privacy',
+    title: 'Privacy Policy | MUV Fitness Legnago',
+    description: 'Informativa sulla privacy di MUV Fitness Legnago. Scopri come trattiamo i tuoi dati personali in conformità al GDPR.',
+    keywords: 'privacy policy, GDPR, dati personali, MUV Fitness',
+    priority: 0.3,
+    changefreq: 'yearly'
+  },
+  
+  {
+    path: '/cookie-policy',
+    title: 'Cookie Policy | MUV Fitness Legnago',
+    description: 'Informativa sui cookie di MUV Fitness Legnago. Scopri come utilizziamo i cookie per migliorare la tua esperienza sul sito.',
+    keywords: 'cookie policy, cookie, MUV Fitness, informativa',
+    priority: 0.3,
+    changefreq: 'yearly'
+  }
+];
+
+// Generate meta tags for a specific route
+export const generateMetaTags = (route: SEORouteConfig): string => {
+  const canonical = `${baseUrl}${route.path}`;
+  const ogImage = route.ogImage || defaultOgImage;
+  
+  return `
+    <title>${route.title}</title>
+    <meta name="description" content="${route.description}" />
+    ${route.keywords ? `<meta name="keywords" content="${route.keywords}" />` : ''}
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="${canonical}" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="${route.title}" />
+    <meta property="og:description" content="${route.description}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${canonical}" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="MUV Fitness" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${route.title}" />
+    <meta name="twitter:description" content="${route.description}" />
+    <meta name="twitter:image" content="${ogImage}" />
+  `.trim();
+};
+
+// Generate sitemap XML
+export const generateStaticSitemap = (): string => {
+  const currentDate = new Date().toISOString().split('T')[0];
+  
+  const urlEntries = staticRoutes.map(route => {
+    const lastmod = route.lastmod || currentDate;
+    return `  <url>
+    <loc>${baseUrl}${route.path}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${route.changefreq}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>`;
+  }).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>`;
+};
+
+// Get route config by path
+export const getRouteConfig = (path: string): SEORouteConfig | undefined => {
+  return staticRoutes.find(route => route.path === path);
+};
