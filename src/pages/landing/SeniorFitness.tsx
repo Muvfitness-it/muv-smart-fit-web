@@ -241,9 +241,6 @@ const SeniorFitness = () => {
                     <p className="text-muted-foreground text-sm mb-4">
                       Esercizi in acqua calda per chi ha problemi articolari severi. Peso ridotto e movimenti fluidi.
                     </p>
-                    <div className="text-lg font-bold text-brand-primary">
-                      Da 25€/sessione
-                    </div>
                   </CardContent>
                 </Card>
 
@@ -254,9 +251,6 @@ const SeniorFitness = () => {
                     <p className="text-muted-foreground text-sm mb-4">
                       Movimenti lenti e controllati per mantenere mobilità e forza muscolare. Gruppi piccoli.
                     </p>
-                    <div className="text-lg font-bold text-brand-secondary">
-                      Da 35€/settimana
-                    </div>
                   </CardContent>
                 </Card>
 
@@ -267,9 +261,6 @@ const SeniorFitness = () => {
                     <p className="text-muted-foreground text-sm mb-4">
                       Esercizi specifici per prevenire cadute e mantenere l'autonomia negli spostamenti.
                     </p>
-                    <div className="text-lg font-bold text-brand-accent">
-                      Da 40€/settimana
-                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -312,65 +303,6 @@ const SeniorFitness = () => {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Garanzie e Sicurezza */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-heading font-black mb-6">
-                La tua <span className="text-brand-primary">sicurezza</span> prima di tutto
-              </h2>
-
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                <Card className="p-6">
-                  <div className="text-4xl mb-4">🏥</div>
-                  <h3 className="text-xl font-bold mb-3">Personale Sanitario</h3>
-                  <p className="text-muted-foreground">
-                    Fisioterapisti e laureati in Scienze Motorie specializzati in geriatria. 
-                    <strong> Sempre presenti durante gli esercizi.</strong>
-                  </p>
-                </Card>
-
-                <Card className="p-6">
-                  <div className="text-4xl mb-4">📋</div>
-                  <h3 className="text-xl font-bold mb-3">Certificato Medico</h3>
-                  <p className="text-muted-foreground">
-                    Valutiamo insieme al tuo medico il programma più adatto. 
-                    <strong>Collaboriamo con specialisti geriatrici.</strong>
-                  </p>
-                </Card>
-
-                <Card className="p-6">
-                  <div className="text-4xl mb-4">🚑</div>
-                  <h3 className="text-xl font-bold mb-3">Protocolli Emergenza</h3>
-                  <p className="text-muted-foreground">
-                    Staff formato per emergenze cardiache e cadute. 
-                    <strong>Defibrillatore sempre disponibile.</strong>
-                  </p>
-                </Card>
-
-                <Card className="p-6">
-                  <div className="text-4xl mb-4">📞</div>
-                  <h3 className="text-xl font-bold mb-3">Assistenza H24</h3>
-                  <p className="text-muted-foreground">
-                    Supporto telefonico per dubbi o problemi anche fuori orario. 
-                    <strong>Non sei mai solo nel tuo percorso.</strong>
-                  </p>
-                </Card>
-              </div>
-
-              <div className="p-6 bg-brand-accent/10 rounded-2xl">
-                <p className="text-lg font-semibold text-brand-accent mb-2">
-                  🛡️ GARANZIA TOTALE SODDISFAZIONE
-                </p>
-                <p className="text-muted-foreground">
-                  Se entro 30 giorni non sei completamente soddisfatto dei risultati e della sicurezza, 
-                  <strong> rimborsiamo il 100% del tuo investimento.</strong> Zero rischi per te!
-                </p>
               </div>
             </div>
           </div>
