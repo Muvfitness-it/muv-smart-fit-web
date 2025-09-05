@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Spine, Heart, Shield, RefreshCw } from 'lucide-react';
+import { Activity, Heart, Shield, RefreshCw } from 'lucide-react';
 import pancafitInfographic from '@/assets/infographic-pancafit.jpg';
 
 const PancafitInfographic: React.FC = () => {
   const benefits = [
     {
-      icon: Spine,
+      icon: Activity,
       title: "Postura corretta",
       description: "Riallineamento della colonna vertebrale"
     },

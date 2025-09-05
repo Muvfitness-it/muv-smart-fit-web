@@ -15,6 +15,7 @@ const MethodSection = lazy(() => import('@/components/home/MethodSection'));
 const ProofSection = lazy(() => import('@/components/home/ProofSection'));
 const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 const CTASection = lazy(() => import('@/components/home/CTASection'));
+const LeadMagnetSection = lazy(() => import('@/components/sections/LeadMagnetSection'));
 
 const Index = () => {
   // Delay all non-critical functionality for faster FCP
@@ -73,6 +74,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* Lead Magnets and Educational Content */}
+      <Suspense fallback={<div className="h-32 animate-pulse bg-gray-800/50" />}>
+        <LeadMagnetSection />
+      </Suspense>
       
       {/* Lazy loaded sections with loading fallback */}
       <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>

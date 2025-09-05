@@ -170,6 +170,72 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_articles_seo: {
+        Row: {
+          author: string | null
+          category: string | null
+          city: string | null
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          keywords: string[] | null
+          meta_description: string | null
+          published_at: string | null
+          reading_time: number | null
+          slug: string
+          status: string | null
+          tags: string[] | null
+          target_audience: string | null
+          title: string
+          updated_at: string
+          views: number | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          city?: string | null
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug: string
+          status?: string | null
+          tags?: string[] | null
+          target_audience?: string | null
+          title: string
+          updated_at?: string
+          views?: number | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          city?: string | null
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string
+          status?: string | null
+          tags?: string[] | null
+          target_audience?: string | null
+          title?: string
+          updated_at?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
       blog_categories: {
         Row: {
           color: string | null
