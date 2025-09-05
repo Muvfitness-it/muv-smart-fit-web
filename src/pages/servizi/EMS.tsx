@@ -7,6 +7,7 @@ import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
+import EMSInfographic from "@/components/infographics/EMSInfographic";
 
 const EMS = () => {
   const structuredData = {
@@ -85,6 +86,13 @@ const EMS = () => {
             { text: "EMS Training" }
           ]}
         />
+
+        {/* Infografica EMS */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <EMSInfographic />
+          </div>
+        </section>
 
         {/* Introduzione EMS */}
         <section className="py-16 bg-gray-50">

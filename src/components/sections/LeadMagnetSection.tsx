@@ -1,7 +1,5 @@
 import React from 'react';
 import LeadMagnetCard from '@/components/leadmagnet/LeadMagnetCard';
-import EMSInfographic from '@/components/infographics/EMSInfographic';
-import PancafitInfographic from '@/components/infographics/PancafitInfographic';
 import VideoPlaceholder from '@/components/media/VideoPlaceholder';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -91,12 +89,6 @@ const LeadMagnetSection: React.FC = () => {
               rating={magnet.rating}
             />
           ))}
-        </div>
-
-        {/* Infographics */}
-        <div className="space-y-16 mb-16">
-          <EMSInfographic />
-          <PancafitInfographic />
         </div>
 
         {/* Video Demonstrations */}

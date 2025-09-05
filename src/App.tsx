@@ -41,6 +41,7 @@ const SmallGroup = lazy(() => import("./pages/servizi/SmallGroup"));
 const Nutrizione = lazy(() => import("./pages/servizi/Nutrizione"));
 const Psicologo = lazy(() => import("./pages/servizi/Psicologo"));
 const Massoterapia = lazy(() => import("./pages/servizi/Massoterapia"));
+const VacuumPressoterapia = lazy(() => import("./pages/servizi/VacuumPressoterapia"));
 
 // Main pages - lazy loaded
 const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
@@ -206,6 +207,7 @@ const AppContent = () => {
                     <Route path="/servizi/nutrizione" element={<Nutrizione />} />
                     <Route path="/servizi/psicologo" element={<Psicologo />} />
                     <Route path="/servizi/massoterapia" element={<Massoterapia />} />
+                    <Route path="/servizi/vacuum-pressoterapia" element={<VacuumPressoterapia />} />
 
                     {/* New SEO pages for Legnago keywords */}
                     <Route path="/palestra-legnago" element={<PalestraLegnago />} />

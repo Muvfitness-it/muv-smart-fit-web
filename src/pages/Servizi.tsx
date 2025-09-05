@@ -34,11 +34,11 @@ const Servizi = () => {
     },
     {
       icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-500 mb-3 sm:mb-4" />,
-      title: "Massoterapia e Pressoterapia",
-      subtitle: "Gambe leggere e drenaggio",
-      description: "Migliora microcircolo e drenaggio, riduci i cm dove serve.",
-      benefits: "✓ Drenaggio efficace ✓ Gambe leggere ✓ Pelle più uniforme",
-      link: "/servizi/massoterapia"
+      title: "Vacuum, Pressoterapia e Roll",
+      subtitle: "Addio cellulite e ritenzione",
+      description: "Trattamenti estetici avanzati per eliminare cellulite e rimodellare il corpo.",
+      benefits: "✓ Riduce cellulite 70% ✓ Elimina ritenzione idrica ✓ Pelle più tonica",
+      link: "/servizi/vacuum-pressoterapia"
     },
     {
       icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-3 sm:mb-4" />,

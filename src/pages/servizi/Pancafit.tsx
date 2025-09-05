@@ -5,6 +5,7 @@ import { Heart, CheckCircle, User, Shield, Target } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
 import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
+import PancafitInfographic from "@/components/infographics/PancafitInfographic";
 
 const Pancafit = () => {
   const structuredData = {
@@ -49,6 +50,13 @@ const Pancafit = () => {
             { text: "Pancafit" }
           ]}
         />
+
+        {/* Infografica Pancafit */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <PancafitInfographic />
+          </div>
+        </section>
 
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
