@@ -80,7 +80,7 @@ const DimagrireLegnago = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Helmet>
         <title>Dimagrire a Legnago Velocemente | Programmi Personalizzati MUV</title>
         <meta name="description" content="🔥 Dimagrire a Legnago con metodi scientifici! EMS, Personal Training e programmi su misura. Perdi 5-12 kg in 30 giorni. Consulenza gratuita!" />

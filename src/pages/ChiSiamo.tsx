@@ -21,7 +21,7 @@ const ChiSiamo = () => {
       />
       
       <Navigation />
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">

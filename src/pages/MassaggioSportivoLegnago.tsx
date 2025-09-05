@@ -93,7 +93,7 @@ const MassaggioSportivoLegnago = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Helmet>
         <title>Massaggio Sportivo Legnago | Recupero Muscolare Professionale MUV</title>
         <meta name="description" content="💪 Massaggio sportivo professionale a Legnago per atleti e sportivi. Pre-gara, post-gara, decontratturante. Migliora performance e recupero!" />

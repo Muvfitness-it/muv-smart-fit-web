@@ -41,7 +41,7 @@ const SanBonifacioFitness = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <StaticSEO
         title="Fitness San Bonifacio - Personal Training Avanzato | MUV Fitness"
         description="Centro fitness per San Bonifacio: MUV Fitness offre personal training avanzato, EMS, Pilates. A 20 minuti da San Bonifacio. Tecnologie uniche!"

@@ -62,7 +62,7 @@ const PalestraLegnago = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Helmet>
         <title>Miglior Palestra Legnago | MUV Fitness - Personal Trainer & EMS</title>
         <meta name="description" content="🏆 Miglior palestra a Legnago con personal trainer qualificati, EMS, Pilates e Pancafit. Risultati garantiti in 30 giorni. Prenota consulenza gratuita!" />

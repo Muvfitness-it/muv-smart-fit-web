@@ -50,7 +50,7 @@ const CereaFitness = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <StaticSEO
         title="Fitness Cerea - Personal Training e Palestra | MUV Fitness Legnago"
         description="Centro fitness per Cerea: MUV Fitness a Legnago serve Cerea con personal training, EMS, Pilates. A 15 minuti da Cerea. Consulenza gratuita!"

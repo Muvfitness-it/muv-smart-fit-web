@@ -95,7 +95,7 @@ const MalDiSchienaLegnago = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Helmet>
         <title>Mal di Schiena Legnago | Pancafit & Pilates Terapeutico MUV</title>
         <meta name="description" content="🎯 Risolvi il mal di schiena a Legnago con Pancafit, Pilates terapeutico e personal training posturale. 95% successi garantiti. Consulenza gratuita!" />

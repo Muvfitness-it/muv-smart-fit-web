@@ -44,7 +44,7 @@ const Psicologo = () => {
       />
       
       <Navigation />
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600/20 via-gray-900 to-purple-600/20">
         <div className="container mx-auto max-w-6xl text-center">

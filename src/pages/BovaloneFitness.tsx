@@ -41,7 +41,7 @@ const BovaloneFitness = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-900 text-white">
       <StaticSEO
         title="Fitness Bovolone - Palestra e Personal Training | MUV Fitness Legnago"
         description="Centro fitness per Bovolone: MUV Fitness a Legnago serve Bovolone con personal training, EMS, Pilates. A 10 minuti da Bovolone. Consulenza gratuita!"
