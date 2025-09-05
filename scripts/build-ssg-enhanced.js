@@ -31,6 +31,7 @@ const runEnhancedSSGBuild = async () => {
     
     // Step 3: Generate enhanced sitemaps
     console.log('🗺️ Generating enhanced sitemaps...');
+    await execAsync('node scripts/generate-blog-sitemap.js');
     await execAsync('node scripts/generateStaticSitemap.js');
     console.log('✅ Sitemaps generated\n');
     

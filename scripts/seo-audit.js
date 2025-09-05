@@ -122,6 +122,9 @@ class SEOAuditor {
       return;
     }
 
+    // Check sitemap validity
+    this.auditSitemaps();
+
     // Audit required pages
     for (const urlPath of REQUIRED_PAGES) {
       const filePath = urlPath === '/' 
@@ -228,6 +231,72 @@ ${totalErrors === 0 ? '✅ Build can proceed' : '❌ Build should be blocked due
 `;
 
     return report;
+  }
+
+  auditSitemaps() {
+    console.log('🗺️ Auditing sitemaps...');
+    
+    // Check if main sitemap exists
+    if (!existsSync('dist/sitemap.xml')) {
+      this.errors.push('Missing main sitemap (sitemap.xml)');
+    } else {
+      try {
+        const sitemapContent = readFileSync('dist/sitemap.xml', 'utf8');
+        
+        // Check if sitemap references blog sitemap when it's empty
+        if (sitemapContent.includes('sitemap-blog.xml')) {
+          if (existsSync('dist/sitemap-blog.xml')) {
+            const blogSitemapContent = readFileSync('dist/sitemap-blog.xml', 'utf8');
+            if (!blogSitemapContent.includes('<url>')) {
+              this.errors.push('Main sitemap references empty blog sitemap');
+            }
+          }
+        }
+      } catch (error) {
+        this.warnings.push(`Could not read sitemap.xml: ${error.message}`);
+      }
+    }
+    
+    // Check sitemap-main.xml
+    if (!existsSync('dist/sitemap-main.xml')) {
+      this.errors.push('Missing main static sitemap (sitemap-main.xml)');
+    } else {
+      try {
+        const mainSitemapContent = readFileSync('dist/sitemap-main.xml', 'utf8');
+        
+        // Check for redirect URLs
+        if (mainSitemapContent.includes('/personal-trainer-legnago')) {
+          this.errors.push('Main sitemap contains redirect URL: /personal-trainer-legnago');
+        }
+        
+        // Check if /recensioni is missing
+        if (!mainSitemapContent.includes('/recensioni')) {
+          this.warnings.push('Main sitemap missing /recensioni page');
+        }
+      } catch (error) {
+        this.warnings.push(`Could not read sitemap-main.xml: ${error.message}`);
+      }
+    }
+    
+    // Check blog sitemap
+    if (existsSync('dist/sitemap-blog.xml')) {
+      try {
+        const blogSitemapContent = readFileSync('dist/sitemap-blog.xml', 'utf8');
+        
+        // Check if blog sitemap is empty but should contain posts
+        if (!blogSitemapContent.includes('<url>')) {
+          // This should be checked against actual blog posts in database
+          this.warnings.push('Blog sitemap is empty - check if blog posts exist');
+        } else {
+          // Check for correct URL format (should be root-level, not /blog/)
+          if (blogSitemapContent.includes('/blog/')) {
+            this.errors.push('Blog sitemap contains incorrect URL format (/blog/ prefix)');
+          }
+        }
+      } catch (error) {
+        this.warnings.push(`Could not read sitemap-blog.xml: ${error.message}`);
+      }
+    }
   }
 
   generateRecommendations() {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 import seoData from '../src/utils/seoRoutes.data.json' assert { type: 'json' };
 
 const { baseUrl, routes: staticRoutes } = seoData;
@@ -26,16 +26,37 @@ ${urlEntries}
 
 // Generate sitemap index
 const generateSitemapIndex = () => {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
+  // Check if blog sitemap exists and is not empty
+  const blogSitemapPath = 'public/sitemap-blog.xml';
+  let includeBlogSitemap = false;
+  
+  try {
+    if (existsSync(blogSitemapPath)) {
+      const blogContent = readFileSync(blogSitemapPath, 'utf8');
+      // Check if sitemap contains actual URLs (not just empty structure)
+      includeBlogSitemap = blogContent.includes('<url>');
+    }
+  } catch (error) {
+    console.warn('Could not check blog sitemap:', error.message);
+  }
+  
+  const sitemaps = [
+    `  <sitemap>
     <loc>${baseUrl}/sitemap-main.xml</loc>
     <lastmod>${currentDate}</lastmod>
-  </sitemap>
-  <sitemap>
+  </sitemap>`
+  ];
+  
+  if (includeBlogSitemap) {
+    sitemaps.push(`  <sitemap>
     <loc>${baseUrl}/sitemap-blog.xml</loc>
     <lastmod>${currentDate}</lastmod>
-  </sitemap>
+  </sitemap>`);
+  }
+  
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemaps.join('\n')}
 </sitemapindex>`;
 };
 

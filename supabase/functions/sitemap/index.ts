@@ -58,7 +58,7 @@ serve(async (req) => {
     
     if (posts && posts.length > 0) {
       dynamicPages = posts.map((post: any) => ({
-        url: `/blog/${post.slug}`,
+        url: `/${post.slug}`,
         priority: '0.7',
         changefreq: 'weekly',
         lastmod: post.updated_at
@@ -72,7 +72,7 @@ serve(async (req) => {
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${allPages.map(page => {
-  const isBlogPost = page.url.startsWith('/blog/') && page.url !== '/blog';
+  const isBlogPost = page.url !== '/blog' && page.url !== '' && !page.url.startsWith('/servizi');
   
   let urlEntry = `  <url>
     <loc>${baseUrl}${page.url}</loc>
