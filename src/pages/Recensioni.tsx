@@ -125,16 +125,16 @@ const Recensioni = () => {
         </section>
 
         {/* Achievements Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-muted/50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">I Nostri Riconoscimenti</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">I Nostri Riconoscimenti</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {achievements.map((achievement, index) => (
                 <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
                   <CardContent className="pt-6">
                     <achievement.icon className="w-12 h-12 text-brand-primary mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">{achievement.title}</h3>
-                    <p className="text-gray-600">{achievement.description}</p>
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">{achievement.title}</h3>
+                    <p className="text-muted-foreground">{achievement.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -158,9 +158,9 @@ const Recensioni = () => {
                       </div>
                       <span className="ml-2 font-semibold">{testimonial.rating}/5</span>
                     </div>
-                    <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+                    <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
                     <div className="border-t pt-4">
-                      <p className="font-semibold">{testimonial.name}</p>
+                      <p className="font-semibold text-foreground">{testimonial.name}</p>
                       <p className="text-sm text-brand-primary">{testimonial.service}</p>
                     </div>
                   </CardContent>
@@ -171,30 +171,30 @@ const Recensioni = () => {
         </section>
 
         {/* Trust Indicators */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-muted/50">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">Perché Scegliere MUV Fitness</h2>
+            <h2 className="text-3xl font-bold mb-8 text-foreground">Perché Scegliere MUV Fitness</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
                 <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Esperienza Certificata</h3>
-                <p className="text-gray-600">Trainer certificati con anni di esperienza nel settore fitness</p>
+                <h3 className="text-xl font-semibold mb-2 text-foreground">Esperienza Certificata</h3>
+                <p className="text-muted-foreground">Trainer certificati con anni di esperienza nel settore fitness</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-white" />
+                  <TrendingUp className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Risultati Garantiti</h3>
-                <p className="text-gray-600">Metodologie scientifiche per risultati concreti e duraturi</p>
+                <h3 className="text-xl font-semibold mb-2 text-foreground">Risultati Garantiti</h3>
+                <p className="text-muted-foreground">Metodologie scientifiche per risultati concreti e duraturi</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
+                  <Users className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Supporto Continuo</h3>
-                <p className="text-gray-600">Assistenza personalizzata in ogni fase del tuo percorso</p>
+                <h3 className="text-xl font-semibold mb-2 text-foreground">Supporto Continuo</h3>
+                <p className="text-muted-foreground">Assistenza personalizzata in ogni fase del tuo percorso</p>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@ const Recensioni = () => {
       </main>
 
       {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700 p-4 z-40 sm:hidden">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-40 sm:hidden">
         <div className="flex gap-2">
           <Button 
             size="sm"
