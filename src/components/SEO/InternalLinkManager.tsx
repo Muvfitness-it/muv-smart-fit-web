@@ -31,7 +31,7 @@ const InternalLinkManager: React.FC<InternalLinkManagerProps> = ({
   const getLocalPages = () => {
     if (location === 'Legnago') {
       return [
-        { path: '/personal-trainer-legnago', title: 'Personal Trainer Legnago', icon: Users },
+        { path: '/servizi/personal-training', title: 'Personal Training', icon: Users },
         { path: '/palestra-legnago', title: 'Palestra Legnago', icon: MapPin },
         { path: '/dimagrire-legnago', title: 'Dimagrire Legnago', icon: Clock }
       ];

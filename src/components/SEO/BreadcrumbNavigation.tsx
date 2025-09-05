@@ -34,8 +34,6 @@ const BreadcrumbNavigation = () => {
       'blog': 'Blog',
       'privacy': 'Privacy Policy',
       'cookie-policy': 'Cookie Policy',
-      'personal-trainer-legnago': 'Personal Trainer Legnago',
-      'allenamento-ems-legnago': 'Allenamento EMS Legnago',
       'pilates-legnago': 'Pilates Legnago',
       'palestra-legnago': 'Palestra Legnago',
       'dimagrire-legnago': 'Dimagrire Legnago',

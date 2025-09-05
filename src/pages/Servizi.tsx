@@ -13,7 +13,7 @@ const Servizi = () => {
       subtitle: "Dimagrire e tonificare in 20'",
       description: "Elettrostimolazione guidata, 20' reali, ideale se hai poco tempo.",
       benefits: "✓ Dimagrimento rapido ✓ Attivazione profonda ✓ Protezione articolare",
-      link: "/servizi/ems-legnago"
+      link: "/servizi/ems"
     },
     {
       icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" />,
@@ -21,7 +21,7 @@ const Servizi = () => {
       subtitle: "Stop al mal di schiena",
       description: "Riorganizzazione posturale in decompensazione, respirazione mirata.",
       benefits: "✓ Riduzione rigidità ✓ Allungamento globale ✓ Respiro migliore",
-      link: "/servizi/pancafit-postura-legnago"
+      link: "/servizi/pancafit"
     },
     {
       icon: <Activity className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" />,
@@ -29,15 +29,15 @@ const Servizi = () => {
       subtitle: "Core, mobilità e postura",
       description: "Controllo motorio e stabilità del core in sicurezza.",
       benefits: "✓ Stabilità lombare ✓ Mobilità anche/colonna ✓ Forza controllata",
-      link: "/servizi/pilates-reformer-legnago"
+      link: "/servizi/pilates"
     },
     {
       icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-500 mb-3 sm:mb-4" />,
-      title: "Cellulite (Vacuum + Pressoterapia)",
+      title: "Massoterapia e Pressoterapia",
       subtitle: "Gambe leggere e drenaggio",
       description: "Migliora microcircolo e drenaggio, riduci i cm dove serve.",
       benefits: "✓ Drenaggio efficace ✓ Gambe leggere ✓ Pelle più uniforme",
-      link: "/servizi/cellulite-vacuum-pressoterapia-legnago"
+      link: "/servizi/massoterapia"
     },
     {
       icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-3 sm:mb-4" />,
@@ -45,7 +45,7 @@ const Servizi = () => {
       subtitle: "Coaching su misura, senza caos",
       description: "Un coach vero al tuo fianco; obiettivi chiari e progressioni misurabili.",
       benefits: "✓ Tecnica corretta ✓ Motivazione costante ✓ Programmazione su misura",
-      link: "/servizi/personal-trainer-legnago"
+      link: "/servizi/personal-training"
     },
     {
       icon: <Brain className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-indigo-600 mb-3 sm:mb-4" />,

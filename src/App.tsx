@@ -28,12 +28,7 @@ const FormContatti = lazy(() => import("./pages/FormContatti"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 
-// SEO service pages - lazy loaded
-const EMSLegnago = lazy(() => import("./pages/servizi/EMSLegnago"));
-const PancafitPosturaLegnago = lazy(() => import("./pages/servizi/PancafitPosturaLegnago"));
-const PilatesReformerLegnago = lazy(() => import("./pages/servizi/PilatesReformerLegnago"));
-const CelluliteVacuumLegnago = lazy(() => import("./pages/servizi/CelluliteVacuumLegnago"));
-const PersonalTrainerLegnago = lazy(() => import("./pages/servizi/PersonalTrainerLegnago"));
+// Service pages
 const NutrizionePsicocoach = lazy(() => import("./pages/servizi/NutrizionePsicocoach"));
 
 // Legacy service pages - lazy loaded
@@ -92,9 +87,7 @@ const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
 const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
 const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
 
-// QA and other pages - lazy loaded
-const QAReport = lazy(() => import("./pages/qa-report"));
-const QACleanHeroMobile = lazy(() => import("./pages/qa-clean-hero-mobile"));
+// Other pages - lazy loaded
 const Recensioni = lazy(() => import("./pages/Recensioni"));
 const FaqGbp = lazy(() => import("./pages/FaqGbp"));
 const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
@@ -177,15 +170,15 @@ const AppContent = () => {
                     <Route path="/chi-siamo" element={<ChiSiamo />} />
                     <Route path="/servizi" element={<Servizi />} />
                     
-                    {/* New SEO-optimized service pages */}
-                    <Route path="/servizi/ems-legnago" element={<EMSLegnago />} />
-                    <Route path="/servizi/pancafit-postura-legnago" element={<PancafitPosturaLegnago />} />
-                    <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerLegnago />} />
-                    <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<CelluliteVacuumLegnago />} />
-                    <Route path="/servizi/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
+                    {/* Service pages with SEO redirects */}
+                    <Route path="/servizi/ems-legnago" element={<Navigate to="/servizi/ems" replace />} />
+                    <Route path="/servizi/pancafit-postura-legnago" element={<Navigate to="/servizi/pancafit" replace />} />
+                    <Route path="/servizi/pilates-reformer-legnago" element={<Navigate to="/servizi/pilates" replace />} />
+                    <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<Navigate to="/servizi/massoterapia" replace />} />
+                    <Route path="/servizi/personal-trainer-legnago" element={<Navigate to="/servizi/personal-training" replace />} />
                     <Route path="/servizi/nutrizione-psicocoach-legnago" element={<NutrizionePsicocoach />} />
                     
-                    {/* Legacy service pages for backward compatibility */}
+                    {/* Main service pages */}
                     <Route path="/servizi/personal-training" element={<PersonalTraining />} />
                     <Route path="/servizi/ems" element={<EMS />} />
                     <Route path="/servizi/pancafit" element={<Pancafit />} />
@@ -208,7 +201,7 @@ const AppContent = () => {
                     <Route path="/san-bonifacio-fitness" element={<SanBonifacioFitness />} />
 
                     {/* Legacy SEO pages - redirects */}
-                    <Route path="/personal-trainer-legnago" element={<PersonalTrainerLegnago />} />
+                    <Route path="/personal-trainer-legnago" element={<Navigate to="/servizi/personal-training" replace />} />
                     <Route path="/allenamento-ems-legnago" element={<AllenamentoEMSLegnago />} />
                     <Route path="/pilates-legnago" element={<PilatesLegnago />} />
 
@@ -237,8 +230,6 @@ const AppContent = () => {
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/cookie-policy" element={<CookiePolicy />} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
-                    <Route path="/qa-report" element={<QAReport />} />
-                    <Route path="/qa-clean-hero-mobile" element={<QACleanHeroMobile />} />
                     <Route path="/recensioni" element={<Recensioni />} />
                     <Route path="/faq-gbp" element={<FaqGbp />} />
                     <Route path="/media-kit/proof-posts" element={<MediaKitProofPosts />} />

@@ -63,7 +63,7 @@ const FeaturesSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Link 
-            to="/servizi/ems-legnago" 
+            to="/servizi/ems" 
             className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri il servizio EMS per dimagrimento rapido"
           >
@@ -85,7 +85,7 @@ const FeaturesSection = () => {
           </Link>
           
           <Link 
-            to="/servizi/pancafit-postura-legnago" 
+            to="/servizi/pancafit" 
             className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri i servizi per mal di schiena e rigidità"
           >
@@ -111,7 +111,7 @@ const FeaturesSection = () => {
           </Link>
           
           <Link 
-            to="/servizi/cellulite-vacuum-pressoterapia-legnago" 
+            to="/servizi/massoterapia" 
             className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri i trattamenti per cellulite e ritenzione"
           >
@@ -133,7 +133,7 @@ const FeaturesSection = () => {
           </Link>
           
           <Link 
-            to="/servizi/personal-trainer-legnago" 
+            to="/servizi/personal-training" 
             className="group relative glass-card p-8 rounded-3xl hover:from-brand-primary/20 hover:to-brand-secondary/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-brand-primary/50 hover:shadow-2xl hover:shadow-brand-primary/25"
             aria-label="Scopri il servizio Personal Training"
           >

@@ -133,7 +133,7 @@ const Footer = () => {
               <Link to="/fitness-palestra-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Fitness Legnago
               </Link>
-              <Link to="/personal-trainer-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Personal Trainer Legnago
               </Link>
               <Link to="/bovolone-fitness" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">

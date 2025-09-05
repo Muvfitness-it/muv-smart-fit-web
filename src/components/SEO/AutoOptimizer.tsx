@@ -138,7 +138,7 @@ const injectInternalLinks = (path: string) => {
     { href: '/servizi/pancafit', text: 'Postura e mal di schiena: scopri Pancafit' },
     { href: '/servizi/ems', text: 'Tecnologia EMS: risultati in meno tempo' },
     { href: '/servizi/pilates', text: 'Pilates: stabilità e forza del core' },
-    { href: '/personal-trainer-legnago', text: 'Personal Trainer a Legnago' },
+    { href: '/servizi/personal-training', text: 'Personal Trainer a Legnago' },
   ];
 
   const ul = document.createElement('ul');

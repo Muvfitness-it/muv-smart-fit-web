@@ -38,10 +38,10 @@ const Navigation = () => {
     path: "/servizi"
   }, {
     name: "Personal Trainer",
-    path: "/personal-trainer-legnago"
+    path: "/servizi/personal-training"
   }, {
     name: "EMS",
-    path: "/allenamento-ems-legnago"
+    path: "/servizi/ems"
   }, {
     name: "Pilates",
     path: "/pilates-legnago"
