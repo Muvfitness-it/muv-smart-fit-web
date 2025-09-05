@@ -45,7 +45,7 @@ const ChiSiamo = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
               <img
-                src:"/lovable-uploads/470f5162-68c3-4cc1-8e0c-9402f101b13d.png"
+                image: "/lovable-uploads/470f5162-68c3-4cc1-8e0c-9402f101b13d.png"
                 alt="Centro fitness Centro fitness MUV Legnago con tecnologie avanzate e ambiente esclusivo"
                 className="rounded-lg shadow-xl w-full h-64 sm:h-80 object-cover"
                 loading="lazy"
