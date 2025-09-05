@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, TrendingUp, Target, Heart, Flame } from "lucide-react";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
 
 const HIIT = () => {
@@ -53,7 +53,7 @@ const HIIT = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Allenamento HIIT Legnago | Training Alta Intensità MUV Fitness"
         description="Allenamento HIIT a Legnago: brucia grassi, aumenta resistenza e accelera metabolismo. Training ad alta intensità per risultati rapidi. Prova gratuita!"
         keywords="allenamento HIIT Legnago, training alta intensità, brucia grassi, fitness Legnago, cardio intenso, metabolismo"

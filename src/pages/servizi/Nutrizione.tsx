@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Apple, CheckCircle, Brain, Heart, TrendingUp, Users, Target } from "lucide-react";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
 
 const Nutrizione = () => {
@@ -53,7 +53,7 @@ const Nutrizione = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Nutrizionista Legnago | Consulenza Alimentare MUV Fitness"
         description="Nutrizionista a Legnago: piani alimentari personalizzati per dimagrimento, massa muscolare e benessere. Consulenza gratuita. Approccio sostenibile."
         keywords="nutrizionista Legnago, consulenza nutrizionale, dieta personalizzata, dimagrimento, alimentazione sana, dietologo Verona"

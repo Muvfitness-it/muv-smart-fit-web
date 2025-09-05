@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 
 const Risultati = () => {
   const testimonianze = [
@@ -65,7 +65,7 @@ const Risultati = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Risultati Clienti MUV Fitness Legnago - Testimonianze e Trasformazioni Reali"
         description="Scopri i risultati reali dei nostri clienti: dimagrimento, tonificazione, risoluzione mal di schiena. Testimonianze verificate e trasformazioni documentate."
         keywords="risultati fitness legnago, testimonianze palestra, trasformazioni clienti muv, prima dopo fitness"

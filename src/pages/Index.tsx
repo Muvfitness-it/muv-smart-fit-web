@@ -5,7 +5,7 @@ import NewHeroSection from '@/components/home/NewHeroSection'; // Load immediate
 import { MessageCircle } from 'lucide-react';
 
 // Defer only non-critical SEO components to improve Speed Index
-import SimpleSEO from '@/components/SEO/SimpleSEO';
+import StaticSEO from '@/components/SEO/StaticSEO';
 const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSchema'));
 
 // Lazy load non-critical sections for better FCP
@@ -71,7 +71,7 @@ const Index = () => {
       
       {/* Defer non-critical SEO components */}
       <Suspense fallback={null}>
-        <SimpleSEO
+        <StaticSEO
           title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
           description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
           canonical="https://www.muvfitness.it/"

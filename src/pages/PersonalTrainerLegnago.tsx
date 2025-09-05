@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 
 const PersonalTrainerLegnago: React.FC = () => {
   const canonical = "https://www.muvfitness.it/personal-trainer-legnago/";
@@ -61,7 +61,7 @@ const PersonalTrainerLegnago: React.FC = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Personal Trainer a Legnago | Dimagrimento & Forza con MUV Fitness"
         description="Allenamenti 1-to-1 con trainer qualificati. Programmi su misura per dimagrire, tonificare e stare meglio. Prenota la consulenza gratuita a Legnago (VR)."
         canonical={canonical}
