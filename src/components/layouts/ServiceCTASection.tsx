@@ -30,7 +30,7 @@ export const ServiceCTASection: React.FC<ServiceCTASectionProps> = ({
   return (
     <section className="py-16 bg-gradient-to-r from-orange-600 to-red-600">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center text-white">
+        <div className="max-w-4xl mx-auto text-center text-primary-foreground">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">{title}</h2>
           <p className="text-xl mb-8">{description}</p>
           
@@ -38,7 +38,7 @@ export const ServiceCTASection: React.FC<ServiceCTASectionProps> = ({
             <Button 
               size="lg" 
               asChild 
-              className="bg-white text-orange-600 hover:bg-gray-100"
+              className="bg-background text-orange-600 hover:bg-muted"
             >
               {primaryButton.isExternal ? (
                 <a href={primaryButton.href} target="_blank" rel="noopener noreferrer">
@@ -57,7 +57,7 @@ export const ServiceCTASection: React.FC<ServiceCTASectionProps> = ({
                 size="lg" 
                 variant="outline" 
                 asChild 
-                className="border-white text-white hover:bg-white hover:text-orange-600"
+                className="border-primary-foreground text-primary-foreground hover:bg-background hover:text-orange-600"
               >
                 <Link to={secondaryButton.href}>
                   {secondaryButton.text}

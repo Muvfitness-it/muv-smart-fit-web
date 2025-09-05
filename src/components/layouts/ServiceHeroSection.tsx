@@ -59,16 +59,16 @@ export const ServiceHeroSection: React.FC<ServiceHeroSectionProps> = ({
                 <BreadcrumbItem>
                   {crumb.href ? (
                     <BreadcrumbLink asChild>
-                      <Link to={crumb.href} className="text-white/80 hover:text-white">
+                      <Link to={crumb.href} className="text-primary-foreground/80 hover:text-primary-foreground">
                         {crumb.text}
                       </Link>
                     </BreadcrumbLink>
                   ) : (
-                    <span className="text-white">{crumb.text}</span>
+                    <span className="text-primary-foreground">{crumb.text}</span>
                   )}
                 </BreadcrumbItem>
                 {index < breadcrumbs.length - 1 && (
-                  <BreadcrumbSeparator className="text-white/60" />
+                  <BreadcrumbSeparator className="text-primary-foreground/60" />
                 )}
               </React.Fragment>
             ))}
@@ -76,15 +76,15 @@ export const ServiceHeroSection: React.FC<ServiceHeroSectionProps> = ({
         </Breadcrumb>
 
         <div className="max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-orange-200 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-foreground to-orange-200 bg-clip-text text-transparent">
             {title}
           </h1>
           {subtitle && (
-            <p className="text-xl md:text-2xl text-gray-200 mb-4 leading-relaxed">
-              <strong className="text-white">{subtitle}</strong>
+            <p className="text-xl md:text-2xl text-primary-foreground/80 mb-4 leading-relaxed">
+              <strong className="text-primary-foreground">{subtitle}</strong>
             </p>
           )}
-          <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
+          <p className="text-xl md:text-2xl text-primary-foreground/80 mb-8 leading-relaxed">
             {description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -110,7 +110,7 @@ export const ServiceHeroSection: React.FC<ServiceHeroSectionProps> = ({
                 size="lg" 
                 variant="outline" 
                 asChild 
-                className="border-white text-white hover:bg-white hover:text-gray-900"
+                className="border-primary-foreground text-primary-foreground hover:bg-background hover:text-foreground"
               >
                 <Link to={secondaryButton.href}>
                   {secondaryButton.text}

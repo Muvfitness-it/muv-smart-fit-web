@@ -32,7 +32,7 @@ export const ServiceFAQSection: React.FC<ServiceFAQSectionProps> = ({
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">{faq.answer}</p>
+                  <p className="text-muted-foreground">{faq.answer}</p>
                 </CardContent>
               </Card>
             ))}

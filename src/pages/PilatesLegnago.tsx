@@ -1,9 +1,13 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import StaticSEO from "@/components/SEO/StaticSEO";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Clock, Heart, Users, Flower, Star } from "lucide-react";
+import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
+import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
+import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
+import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 
-const PilatesLegnago: React.FC = () => {
+const PilatesLegnago = () => {
   const canonical = "https://www.muvfitness.it/pilates-legnago/";
   const structuredData = {
     "@context": "https://schema.org",
@@ -29,7 +33,7 @@ const PilatesLegnago: React.FC = () => {
         "@type": "FAQPage",
         "mainEntity": [
           {"@type":"Question","name":"Quante lezioni servono per migliorare la postura?","acceptedAnswer":{"@type":"Answer","text":"I primi benefici si percepiscono in 4–6 settimane con 1–2 lezioni a settimana, in base al punto di partenza."}},
-          {"@type":"Question","name":"Reformer o Matwork: cosa scegliere?","acceptedAnswer":{"@type":"Answer","text":"Il Reformer aiuta a guidare il movimento e modulare l’intensità; il Matwork rafforza controllo e consapevolezza. Spesso li alterniamo per un percorso completo."}},
+          {"@type":"Question","name":"Reformer o Matwork: cosa scegliere?","acceptedAnswer":{"@type":"Answer","text":"Il Reformer aiuta a guidare il movimento e modulare l'intensità; il Matwork rafforza controllo e consapevolezza. Spesso li alterniamo per un percorso completo."}},
           {"@type":"Question","name":"È adatto se ho dolori lombari?","acceptedAnswer":{"@type":"Answer","text":"Sì, con le dovute precauzioni e dopo la valutazione iniziale. Lavoriamo su mobilità, core stability e respirazione per ridurre il carico sulla zona lombare."}},
           {"@type":"Question","name":"Posso fare una prova?","acceptedAnswer":{"@type":"Answer","text":"Sì, puoi prenotare una lezione di prova per conoscere metodo, trainer e macchinari, senza impegno."}}
         ]
@@ -37,113 +41,215 @@ const PilatesLegnago: React.FC = () => {
     ]
   };
 
+  const faqs = [
+    {
+      question: "Quante lezioni servono per migliorare la postura?",
+      answer: "I primi benefici si percepiscono in 4–6 settimane con 1–2 lezioni a settimana, in base al punto di partenza. La costanza è la chiave per consolidare i miglioramenti."
+    },
+    {
+      question: "Reformer o Matwork: cosa scegliere?",
+      answer: "Il Reformer aiuta a guidare il movimento e modulare l'intensità; il Matwork rafforza controllo e consapevolezza. Spesso alterniamo entrambi per un percorso completo."
+    },
+    {
+      question: "È adatto se ho dolori lombari?",
+      answer: "Sì, con le dovute precauzioni e dopo la valutazione iniziale. Lavoriamo su mobilità, core stability e respirazione per ridurre il carico sulla zona lombare."
+    },
+    {
+      question: "Posso fare una prova?",
+      answer: "Sì, puoi prenotare una lezione di prova per conoscere metodo, trainer e macchinari, senza impegno."
+    }
+  ];
+
+  const whatsappMessage = encodeURIComponent("Ciao! Sono interessato/a al Pilates Reformer e Matwork. Vorrei prenotare una lezione di prova per conoscere il programma.");
+
   return (
     <>
-      <StaticSEO
+      <ServicePageLayout
         title="Pilates a Legnago | Reformer & Matwork per Postura e Core"
         description="Lezioni individuali e piccoli gruppi. Migliora postura, core e flessibilità con insegnanti qualificati. Prenota ora a Legnago (VR)."
         canonical={canonical}
         structuredData={structuredData}
-      />
+        keywords="pilates legnago, reformer, matwork, postura, core stability, flessibilità, dolori schiena"
+      >
+        <ServiceHeroSection
+          title="Pilates a Legnago"
+          description="Reformer e Matwork per postura, core stability e flessibilità. Lezioni individuali o small group con macchinari professionali."
+          primaryButton={{
+            text: "Prenota Lezione di Prova",
+            href: `https://wa.me/393291070374?text=${whatsappMessage}`,
+            isExternal: true
+          }}
+          secondaryButton={{
+            text: "Contattaci",
+            href: "/contatti"
+          }}
+          breadcrumbs={[
+            { text: "Home", href: "/" },
+            { text: "Pilates a Legnago" }
+          ]}
+        />
 
-      <header className="bg-gradient-to-br from-purple-600/20 via-gray-900 to-pink-600/20">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Pilates a Legnago (Reformer e Matwork)</h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">Percorsi personalizzati per postura, core stability e flessibilità. Lezioni individuali o small group con macchinari professionali.</p>
-          <div className="flex gap-4 justify-center">
-            <Link to="/contatti"><Button className="bg-purple-600 hover:bg-purple-700 rounded-full px-8 py-4 text-lg">Prenota lezione di prova Pilates</Button></Link>
-            <Link to="/personal-trainer-legnago/"><Button variant="outline" className="rounded-full px-8 py-4 text-lg">Personal Trainer</Button></Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="bg-gray-900 text-white">
-        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Perché il Pilates funziona per schiena e postura</h2>
-          <article className="prose prose-invert max-w-none">
-            <p>
-              Il Pilates lavora sul controllo del movimento, sulla stabilità del core e sulla corretta attivazione dei muscoli posturali. Per questo è tra i metodi più efficaci per alleviare fastidi alla schiena, migliorare l’allineamento e sviluppare una forza elegante. In MUV Fitness uniamo precisione tecnica e progressioni accessibili: impari a muoverti meglio fin dalla prima seduta.
-            </p>
-            <p>
-              Le sedute includono esercizi di respirazione, mobilità, stabilità e allungamento, con un’attenzione costante alla qualità del gesto. Questo approccio permette di rinforzare in sicurezza, prevenire ricadute e trasferire benefici nella vita quotidiana.
-            </p>
-          </article>
-        </section>
-
-        <section className="bg-gradient-to-r from-purple-600/10 to-pink-600/10">
-          <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Reformer vs Matwork: differenze e percorsi</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+        {/* Perché funziona */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
-                <h3 className="text-2xl font-semibold mb-2">Reformer</h3>
-                <p>
-                  Il Reformer utilizza un carrello scorrevole e molle regolabili per guidare e intensificare il movimento. È ideale per chi cerca supporto nella tecnica, per la progressione controllata e per chi vuole sentire subito il lavoro muscolare in sicurezza.
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  Perché il <span className="text-orange-600">Pilates Funziona</span> per Schiena e Postura
+                </h2>
+                <p className="text-lg text-gray-600 mb-6">
+                  Il Pilates lavora sul controllo del movimento, sulla stabilità del core e sulla corretta attivazione dei muscoli posturali. Per questo è tra i metodi più efficaci per alleviare fastidi alla schiena, migliorare l'allineamento e sviluppare una forza elegante.
                 </p>
-                <h3 className="text-2xl font-semibold mt-6 mb-2">Matwork</h3>
-                <p>
-                  Il Matwork si svolge a corpo libero su tappetino e sviluppa controllo, equilibrio e consapevolezza. È perfetto per costruire basi solide e per mantenere i benefici nel tempo, anche con semplici routine a casa.
-                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-orange-600 mr-3 mt-0.5" />
+                    <span>Controllo del movimento e respirazione</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-orange-600 mr-3 mt-0.5" />
+                    <span>Stabilità del core profondo</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-orange-600 mr-3 mt-0.5" />
+                    <span>Miglioramento dell'allineamento posturale</span>
+                  </li>
+                </ul>
               </div>
-              <aside className="bg-gray-800 rounded-lg p-6">
-                <h3 className="text-2xl font-semibold mb-4">Caso reale (placeholder)</h3>
-                <p>
-                  Donna, 55 anni, dolore lombare ricorrente. 1 lezione Reformer/sett. + 1 lezione Matwork/sett. In 12 settimane: dolore ridotto, mobilità delle anche migliorata, postura più stabile e respirazione più fluida.
-                </p>
-              </aside>
+              <div className="bg-white p-8 rounded-lg border-2 hover:border-orange-200 transition-all">
+                <h3 className="text-2xl font-bold text-center mb-6">Benefici Immediati</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <Heart className="w-6 h-6 text-orange-600 mr-3" />
+                    <span>Riduzione tensioni muscolari</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Flower className="w-6 h-6 text-orange-600 mr-3" />
+                    <span>Maggiore flessibilità</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="w-6 h-6 text-orange-600 mr-3" />
+                    <span>Controllo e consapevolezza del corpo</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="w-6 h-6 text-orange-600 mr-3" />
+                    <span>Miglioramento della postura quotidiana</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Reformer vs Matwork */}
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              <span className="text-orange-600">Reformer vs Matwork:</span> Differenze e Percorsi
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-16">
+              <Card className="border-2 hover:border-orange-200 transition-all">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-orange-600">Pilates Reformer</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    Il Reformer utilizza un carrello scorrevole e molle regolabili per guidare e intensificare il movimento. È ideale per chi cerca supporto nella tecnica, per la progressione controllata e per chi vuole sentire subito il lavoro muscolare in sicurezza.
+                  </p>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• Supporto e guida nei movimenti</li>
+                    <li>• Resistenza variabile con le molle</li>
+                    <li>• Ideale per principianti e riabilitazione</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 hover:border-orange-200 transition-all">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-orange-600">Pilates Matwork</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">
+                    Il Matwork si svolge a corpo libero su tappetino e sviluppa controllo, equilibrio e consapevolezza. È perfetto per costruire basi solide e per mantenere i benefici nel tempo, anche con semplici routine a casa.
+                  </p>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• Sviluppo del controllo propriocettivo</li>
+                    <li>• Lavoro a corpo libero</li>
+                    <li>• Costruzione di basi solide</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Trainer qualificati */}
+            <div className="bg-gray-50 p-8 rounded-lg border mb-16">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Trainer Qualificati MUV</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-xl font-bold text-orange-600 mb-4">Competenza e Esperienza</h4>
+                  <p className="text-gray-600 mb-4">
+                    Le lezioni sono tenute da insegnanti qualificati che curano tecnica, respirazione e progressione. Ogni dettaglio è pensato per farti lavorare in sicurezza e ottenere benefici concreti.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-orange-600 mb-4">Dalla Valutazione alla Progressione</h4>
+                  <p className="text-gray-600">
+                    Prima lezione: valutazione posturale e definizione degli obiettivi. Quindi costruiamo un percorso su misura, con richiami periodici per verificare miglioramenti e calibrare intensità e difficoltà degli esercizi.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Percorsi personalizzati */}
+            <div className="mb-16">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Percorsi Personalizzati</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Card className="border-2 hover:border-orange-200 transition-all">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-orange-600">Mal di Schiena</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600">Percorsi specifici per alleviare dolori ricorrenti e migliorare la stabilità lombare.</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-orange-200 transition-all">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-orange-600">Lavoro Sedentario</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600">Combatti la rigidità da scrivania con esercizi mirati per mobilità e postura.</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-orange-200 transition-all">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-orange-600">Sport e Danza</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600">Preparazione fisica e prevenzione infortuni per atleti e danzatori.</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Chi segue le lezioni: trainer qualificati MUV</h2>
-          <p className="mb-4">Le lezioni sono tenute da insegnanti qualificati che curano tecnica, respirazione e progressione. Ogni dettaglio è pensato per farti lavorare in sicurezza e ottenere benefici concreti.</p>
-          <div className="bg-gray-800 rounded-lg p-6 mt-2">
-            <h3 className="text-2xl font-semibold mb-2">Dalla valutazione alla progressione</h3>
-            <p>
-              Prima lezione: valutazione posturale e definizione degli obiettivi. Quindi costruiamo un percorso su misura, con richiami periodici per verificare miglioramenti e calibrare intensità e difficoltà degli esercizi.
-            </p>
-          </div>
-        </section>
+        <ServiceFAQSection
+          title="Domande Frequenti sul Pilates"
+          faqs={faqs}
+        />
 
-        <section className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">FAQ</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gray-800 p-6 rounded-lg"><h3 className="text-xl font-semibold">Quante lezioni servono per migliorare la postura?</h3><p className="text-gray-300 mt-2">Con 1–2 lezioni/sett., i miglioramenti si notano in 4–6 settimane. La costanza è la chiave.</p></div>
-            <div className="bg-gray-800 p-6 rounded-lg"><h3 className="text-xl font-semibold">Reformer o Matwork: cosa scegliere?</h3><p className="text-gray-300 mt-2">Spesso alterniamo entrambi: il Reformer guida e intensifica, il Matwork consolida controllo e consapevolezza.</p></div>
-            <div className="bg-gray-800 p-6 rounded-lg"><h3 className="text-xl font-semibold">È adatto se ho dolori lombari?</h3><p className="text-gray-300 mt-2">Sì, dopo valutazione iniziale e con le dovute precauzioni. Focus su core stability e mobilità.</p></div>
-            <div className="bg-gray-800 p-6 rounded-lg"><h3 className="text-xl font-semibold">Posso fare una prova?</h3><p className="text-gray-300 mt-2">Certo: prenota una lezione di prova per conoscere metodo, trainer e macchinari.</p></div>
-          </div>
-          <div className="text-center mt-8"><Link to="/contatti"><Button className="bg-purple-600 hover:bg-purple-700 rounded-full px-8 py-4 text-lg">Prenota lezione di prova Pilates</Button></Link></div>
-        </section>
-      </main>
-
-      {/* Approfondimenti Pilates */}
-      <section className="bg-gray-900 text-white">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Percorsi, target e come iniziare</h2>
-          <article className="prose prose-invert max-w-none space-y-4">
-            <p>
-              Proponiamo percorsi personalizzati per diverse esigenze: mal di schiena ricorrente, rigidità da lavoro sedentario, recupero post-infortunio (in collaborazione con professionisti sanitari), preparazione fisica per danza o sport. La struttura delle lezioni alterna esercizi di mobilità, stabilità e controllo del respiro.
-            </p>
-            <p>
-              Un ciclo iniziale tipico prevede 8–12 lezioni per apprendere i principi, migliorare consapevolezza e costruire basi solide. In seguito, si può proseguire con lezioni individuali o small group, integrando eventualmente lavoro di forza leggero per potenziare i benefici posturali.
-            </p>
-            <p>
-              Cosa aspettarti: miglior controllo del core, riduzione dei compensi, più flessibilità e una postura più stabile. La qualità del gesto è centrale: i miglioramenti nascono dalla ripetizione corretta, non dalla difficoltà fine a sé stessa.
-            </p>
-            <p>
-              Organizzazione: pacchetti flessibili e trasparenti, senza vincoli nascosti. Valutiamo insieme tempi, frequenza e modalità (individuale o small group) durante la prima lezione di prova.
-            </p>
-          </article>
-          <div className="text-center mt-8">
-            <Link to="/contatti"><Button className="bg-purple-600 hover:bg-purple-700 rounded-full px-8 py-4 text-lg">Prenota la tua prova Pilates</Button></Link>
-          </div>
-        </div>
-      </section>
-
-      <div className="fixed bottom-4 inset-x-0 flex justify-center px-4 sm:hidden z-40">
-        <Link to="/contatti" className="w-full max-w-sm"><Button className="w-full bg-purple-600 hover:bg-purple-700 rounded-full py-4 text-base">Prenota lezione di prova</Button></Link>
-      </div>
+        <ServiceCTASection
+          title="Inizia il Tuo Percorso Pilates"
+          description="Prenota una lezione di prova per conoscere metodo, trainer e macchinari, senza impegno"
+          primaryButton={{
+            text: "Prenota Lezione di Prova",
+            href: `https://wa.me/393291070374?text=${whatsappMessage}`,
+            isExternal: true
+          }}
+          secondaryButton={{
+            text: "Contattaci",
+            href: "/contatti"
+          }}
+        />
+      </ServicePageLayout>
     </>
   );
 };
