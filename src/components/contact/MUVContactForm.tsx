@@ -17,19 +17,21 @@ interface MUVContactFormProps {
   campaignName?: string;
   onSuccess?: () => void;
   className?: string;
+  defaultObjective?: string;
 }
 
 const MUVContactForm: React.FC<MUVContactFormProps> = ({
   campaignName = "Candidatura Trasformazione MUV",
   onSuccess,
-  className = ""
+  className = "",
+  defaultObjective = ""
 }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
     message: '',
-    obiettivo: '',
+    obiettivo: defaultObjective,
     honeypot: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -171,6 +173,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               <option value="Mal di schiena" className="bg-white text-gray-900">Mal di schiena</option>
               <option value="Aumento massa muscolare" className="bg-white text-gray-900">Aumento massa muscolare</option>
               <option value="Benessere generale" className="bg-white text-gray-900">Benessere generale</option>
+              <option value="Fitness per gravidanza/post-parto" className="bg-white text-gray-900">Fitness per gravidanza/post-parto</option>
+              <option value="Fitness over 65 e ginnastica dolce" className="bg-white text-gray-900">Fitness over 65 e ginnastica dolce</option>
+              <option value="Riabilitazione e recupero infortuni" className="bg-white text-gray-900">Riabilitazione e recupero infortuni</option>
+              <option value="Cellulite e ritenzione idrica" className="bg-white text-gray-900">Cellulite e ritenzione idrica</option>
+              <option value="Preparazione atletica" className="bg-white text-gray-900">Preparazione atletica</option>
             </select>
           </div>
 

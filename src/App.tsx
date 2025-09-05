@@ -51,6 +51,9 @@ const Analytics = lazy(() => import("./pages/Analytics"));
 
 // Landing Pages - lazy loaded
 const Trasformazione30Giorni = lazy(() => import("./pages/landing/Trasformazione30Giorni"));
+const GravidanzaPostParto = lazy(() => import("./pages/landing/GravidanzaPostParto"));
+const SeniorFitness = lazy(() => import("./pages/landing/SeniorFitness"));
+const RiabilitazioneInfortuni = lazy(() => import("./pages/landing/RiabilitazioneInfortuni"));
 
 // Security components loaded on demand
 const SecurityHeaders = lazy(() => import("./components/security/SecurityHeaders").then(m => ({ default: m.SecurityHeaders })));
@@ -132,6 +135,21 @@ const AppContent = () => {
           <Route path="/trasformazione-30-giorni" element={
             <Suspense fallback={<RouteLoading />}>
               <Trasformazione30Giorni />
+            </Suspense>
+          } />
+          <Route path="/gravidanza-post-parto" element={
+            <Suspense fallback={<RouteLoading />}>
+              <GravidanzaPostParto />
+            </Suspense>
+          } />
+          <Route path="/senior-fitness" element={
+            <Suspense fallback={<RouteLoading />}>
+              <SeniorFitness />
+            </Suspense>
+          } />
+          <Route path="/riabilitazione-infortuni" element={
+            <Suspense fallback={<RouteLoading />}>
+              <RiabilitazioneInfortuni />
             </Suspense>
           } />
           
@@ -225,7 +243,10 @@ const AppContent = () => {
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     
-                    <Route path="/contatti" element={<Contatti />} />
+                     {/* Landing Pages - specialized for conversions */}
+                    <Route path="/gravidanza-post-parto" element={<Navigate to="/gravidanza-post-parto" />} />
+                    <Route path="/senior-fitness" element={<Navigate to="/senior-fitness" />} />
+                    <Route path="/riabilitazione-infortuni" element={<Navigate to="/riabilitazione-infortuni" />} />
                     <Route path="/form-contatti" element={<FormContatti />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/cookie-policy" element={<CookiePolicy />} />
