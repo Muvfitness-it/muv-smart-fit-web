@@ -1,0 +1,12 @@
+{
+  "name": "muv-fitness-ssg",
+  "version": "1.0.0", 
+  "scripts": {
+    "build": "npm run build",
+    "build:ssg": "npm run build && npm run generate:sitemaps && npm run seo:lint",
+    "generate:sitemaps": "node scripts/generateStaticSitemap.js",
+    "seo:lint": "node scripts/seoLint.js",
+    "prerender": "npm run build && npm run generate:sitemaps",
+    "deploy:ssg": "npm run build:ssg && echo 'Ready for deployment with SSG'"
+  }
+}

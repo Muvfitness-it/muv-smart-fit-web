@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import prerender from "vite-plugin-prerender";
+import { staticRoutes } from "./src/utils/seoRoutes";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -11,8 +13,18 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
+    mode === 'production' && prerender({
+      staticDir: path.join(__dirname, 'dist'),
+      routes: staticRoutes.map(route => route.path),
+      postProcess(renderedRoute: any) {
+        // Clean up and optimize the rendered HTML
+        renderedRoute.html = renderedRoute.html
+          .replace(/data-reactroot=""/, '')
+          .replace(/<!--[\s\S]*?-->/g, '');
+        return renderedRoute;
+      }
+    })
   ].filter(Boolean),
   resolve: {
     alias: {

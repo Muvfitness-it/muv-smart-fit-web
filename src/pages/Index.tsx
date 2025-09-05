@@ -6,6 +6,8 @@ import { MessageCircle } from 'lucide-react';
 
 // Defer only non-critical SEO components to improve Speed Index
 import StaticSEO from '@/components/SEO/StaticSEO';
+import SSGHeadUpdater from '@/components/SEO/SSGHeadUpdater';
+import { generateLocalBusinessSchema } from '@/utils/structuredDataSchemas';
 const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSchema'));
 
 // Lazy load non-critical sections for better FCP
@@ -26,42 +28,7 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "name": "MUV Fitness Legnago",
-        "url": "https://www.muvfitness.it",
-        "logo": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-        "description": "Centro fitness a Legnago con EMS, Personal Training, Pancafit, Pilates Reformer. Tecnologie avanzate per risultati garantiti.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via Venti Settembre, 7",
-          "addressLocality": "Legnago",
-          "addressRegion": "Veneto",
-          "postalCode": "37045",
-          "addressCountry": "IT"
-        },
-        "telephone": "+393291070374",
-        "email": "info@muvfitness.it",
-        "sameAs": [
-          "https://www.facebook.com/muvfitness",
-          "https://www.instagram.com/muvfitness"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "name": "MUV Fitness Legnago",
-        "url": "https://www.muvfitness.it",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://www.muvfitness.it/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    ]
-  };
+  const structuredData = generateLocalBusinessSchema();
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -71,7 +38,7 @@ const Index = () => {
       
       {/* Defer non-critical SEO components */}
       <Suspense fallback={null}>
-        <StaticSEO
+        <SSGHeadUpdater
           title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
           description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
           canonical="https://www.muvfitness.it/"
