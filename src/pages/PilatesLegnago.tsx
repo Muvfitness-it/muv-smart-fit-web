@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 
 const PilatesLegnago: React.FC = () => {
   const canonical = "https://www.muvfitness.it/pilates-legnago/";
@@ -39,10 +39,10 @@ const PilatesLegnago: React.FC = () => {
 
   return (
     <>
-      <SEOOptimizer
+      <SimpleSEO
         title="Pilates a Legnago | Reformer & Matwork per Postura e Core"
         description="Lezioni individuali e piccoli gruppi. Migliora postura, core e flessibilità con insegnanti qualificati. Prenota ora a Legnago (VR)."
-        canonicalUrl={canonical}
+        canonical={canonical}
         structuredData={structuredData}
       />
 

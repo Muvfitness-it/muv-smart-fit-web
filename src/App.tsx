@@ -7,7 +7,7 @@ import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
 import { useResourceOptimization } from "./hooks/useResourceOptimization";
 import React, { useEffect, lazy, Suspense } from "react";
-import PerformanceOptimizer from "@/components/ui/PerformanceOptimizer";
+
 import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
 import LCPOptimizer from "@/components/optimization/LCPOptimizer";
@@ -129,7 +129,7 @@ const AppContent = () => {
       <SessionSecurity>
         <SecurityHeaders />
         <SecureDataHandler />
-        <PerformanceOptimizer />
+        
         <FontOptimizer />
         <CriticalCSS />
         <LCPOptimizer />

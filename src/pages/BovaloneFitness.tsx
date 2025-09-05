@@ -1,5 +1,5 @@
 import React from 'react';
-import ConsolidatedSEO from '@/components/SEO/ConsolidatedSEO';
+import SimpleSEO from '@/components/SEO/SimpleSEO';
 import EnhancedFAQSchema from '@/components/SEO/EnhancedFAQSchema';
 import BreadcrumbSchema from '@/components/SEO/BreadcrumbSchema';
 
@@ -42,10 +42,10 @@ const BovaloneFitness = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ConsolidatedSEO
+      <SimpleSEO
         title="Fitness Bovolone - Palestra e Personal Training | MUV Fitness Legnago"
         description="Centro fitness per Bovolone: MUV Fitness a Legnago serve Bovolone con personal training, EMS, Pilates. A 10 minuti da Bovolone. Consulenza gratuita!"
-        canonicalUrl="https://www.muvfitness.it/bovolone-fitness"
+        canonical="https://www.muvfitness.it/bovolone-fitness"
         structuredData={structuredData}
       />
       <BreadcrumbSchema />

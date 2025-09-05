@@ -6,7 +6,7 @@ import CrawlerOptimizer from '@/components/SEO/CrawlerOptimizer';
 import StructuredData from '@/components/SEO/StructuredData';
 import AccessibilityEnhancer from '@/components/SEO/AccessibilityEnhancer';
 // SEOAudit disabilitato in produzione
-import PerformanceOptimizer from '@/components/SEO/PerformanceOptimizer';
+
 
 const SEOHandler: React.FC = () => {
   const location = useLocation();
@@ -304,8 +304,6 @@ const SEOHandler: React.FC = () => {
       {/* Accessibility Enhancement */}
       <AccessibilityEnhancer pageTitle={seoData.title} />
       
-      {/* Performance Optimization */}
-      <PerformanceOptimizer />
       {/* Enhanced SEO Components */}
       <StructuredData 
         type="SportsActivityLocation"

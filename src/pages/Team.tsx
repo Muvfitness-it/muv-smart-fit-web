@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import UnifiedSEO from "@/components/SEO/UnifiedSEO";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 
 const Team = () => {
   const teamMembers = [
@@ -58,7 +58,7 @@ const Team = () => {
 
   return (
     <>
-      <UnifiedSEO
+      <SimpleSEO
         title="Team MUV Fitness Legnago - Personal Trainer Certificati e Specialisti"
         description="Conosci il nostro team di personal trainer certificati, specialisti in EMS, Pancafit, Pilates e nutrizione. I migliori professionisti di Legnago."
         keywords="personal trainer legnago, team muv fitness, trainer certificati, specialisti fitness legnago"

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, CheckCircle, Flower, Flame, Heart } from "lucide-react";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 
 const Pilates = () => {
   const structuredData = {
@@ -26,10 +26,10 @@ const Pilates = () => {
 
   return (
     <>
-      <SEOOptimizer
+      <SimpleSEO
         title="Pilates Reformer Legnago | Lezioni Individuali e Small Group – MUV Fitness"
         description="Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta. Prenota la tua lezione."
-        canonicalUrl="https://www.muvfitness.it/servizi/pilates"
+        canonical="https://www.muvfitness.it/servizi/pilates"
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gray-900 text-white">

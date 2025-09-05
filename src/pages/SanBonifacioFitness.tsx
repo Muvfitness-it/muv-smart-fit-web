@@ -1,5 +1,5 @@
 import React from 'react';
-import ConsolidatedSEO from '@/components/SEO/ConsolidatedSEO';
+import SimpleSEO from '@/components/SEO/SimpleSEO';
 import EnhancedFAQSchema from '@/components/SEO/EnhancedFAQSchema';
 import BreadcrumbSchema from '@/components/SEO/BreadcrumbSchema';
 
@@ -42,10 +42,10 @@ const SanBonifacioFitness = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <ConsolidatedSEO
+      <SimpleSEO
         title="Fitness San Bonifacio - Personal Training Avanzato | MUV Fitness"
         description="Centro fitness per San Bonifacio: MUV Fitness offre personal training avanzato, EMS, Pilates. A 20 minuti da San Bonifacio. Tecnologie uniche!"
-        canonicalUrl="https://www.muvfitness.it/san-bonifacio-fitness"
+        canonical="https://www.muvfitness.it/san-bonifacio-fitness"
         structuredData={structuredData}
       />
       <BreadcrumbSchema />

@@ -1,6 +1,6 @@
 import ContactInfo from "../components/contact/ContactInfo";
 import MUVContactForm from "../components/contact/MUVContactForm";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 
 const Contatti = () => {
   const structuredData = {
@@ -25,10 +25,10 @@ const Contatti = () => {
 
   return (
     <>
-      <SEOOptimizer
+      <SimpleSEO
         title="Contatti MUV Fitness Legnago | Prenota Consulenza Gratuita"
         description="Contatta MUV Fitness Legnago per informazioni su Personal Training, EMS, Pancafit e Pilates. Ti richiamiamo in 10 minuti. WhatsApp: 329 107 0374"
-        canonicalUrl="https://www.muvfitness.it/contatti"
+        canonical="https://www.muvfitness.it/contatti"
         structuredData={structuredData}
       />
     <div className="min-h-screen bg-gray-900 text-white">

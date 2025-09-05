@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dumbbell, CheckCircle, Star, Users, Clock, Target } from "lucide-react";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 const PersonalTraining = () => {
   const structuredData = {
     "@context": "https://schema.org",
@@ -24,10 +24,10 @@ const PersonalTraining = () => {
 
   return (
     <>
-      <SEOOptimizer
+      <SimpleSEO
         title="Personal Training Legnago | Allenamento Personalizzato 1-to-1 – MUV Fitness"
         description="Personal Training esclusivo a Legnago con risultati garantiti in 30 giorni. Allenamenti 1-to-1 personalizzati, ambiente riservato, zero code. Prenota la tua prova gratuita."
-        canonicalUrl="https://www.muvfitness.it/servizi/personal-training"
+        canonical="https://www.muvfitness.it/servizi/personal-training"
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gray-900 text-white">

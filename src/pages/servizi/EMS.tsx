@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp, Heart, RefreshCw } from "lucide-react";
-import SEOOptimizer from "@/components/SEO/SEOOptimizer";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
 
 const EMS = () => {
   const structuredData = {
@@ -26,10 +26,10 @@ const EMS = () => {
 
   return (
     <>
-      <SEOOptimizer
+      <SimpleSEO
         title="EMS Training Legnago | Elettrostimolazione, Vacuum, Pressoterapia – MUV Fitness"
         description="Allenamento EMS a Legnago: 20 minuti = 3 ore palestra. Vacuum therapy, Roll Shape, Pressoterapia. Tecnologie avanzate per dimagrimento e recupero. Prova gratuita."
-        canonicalUrl="https://www.muvfitness.it/servizi/ems"
+        canonical="https://www.muvfitness.it/servizi/ems"
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-gray-900 text-white">
