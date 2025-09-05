@@ -1,230 +1,320 @@
-
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target, CheckCircle, Brain, Apple, Heart, TrendingUp } from "lucide-react";
+import { Apple, CheckCircle, Brain, Heart, TrendingUp, Users, Target } from "lucide-react";
+import SimpleSEO from "@/components/SEO/SimpleSEO";
+import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
 
 const Nutrizione = () => {
-  useEffect(() => {
-    document.title = "Consulenza Nutrizionale e Coaching Psicologico Legnago – MUV Smart Fit";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Consulenza nutrizionale e coaching psicologico a Legnago. Piani alimentari sostenibili e supporto mentale per risultati duraturi. Prenota la tua consulenza.');
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Nutrizionista Legnago",
+    "description": "Consulenza nutrizionale personalizzata a Legnago. Piani alimentari su misura per dimagrimento, aumento massa muscolare e benessere generale.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "MUV Fitness",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Viale dei Tigli 14",
+        "addressLocality": "Legnago",
+        "addressRegion": "VR",
+        "postalCode": "37045",
+        "addressCountry": "IT"
+      },
+      "telephone": "+39 347 1234567"
+    },
+    "areaServed": ["Legnago", "Verona", "Cerea", "Bovolone", "San Bonifacio"],
+    "serviceType": "Consulenza Nutrizionale"
+  };
+
+  const faqs = [
+    {
+      question: "Come funziona la consulenza nutrizionale a Legnago?",
+      answer: "La consulenza inizia con un'analisi completa delle tue abitudini alimentari, composizione corporea e obiettivi. Poi creiamo un piano nutrizionale personalizzato con monitoraggio costante."
+    },
+    {
+      question: "Il nutrizionista può aiutarmi a dimagrire?",
+      answer: "Sì, il nostro approccio si basa su piani alimentari sostenibili che favoriscono un dimagrimento graduale e duraturo, senza rinunce estreme o effetti yo-yo."
+    },
+    {
+      question: "Quanto costa la consulenza nutrizionale?",
+      answer: "Offriamo diverse opzioni: consulenza singola, pacchetti mensili e programmi integrati con l'allenamento. La prima consulenza è gratuita per valutare insieme il percorso migliore."
+    },
+    {
+      question: "Il piano alimentare tiene conto di intolleranze e allergie?",
+      answer: "Assolutamente sì. Personalizziamo ogni piano considerando intolleranze, allergie, preferenze alimentari e stile di vita per garantire un percorso sostenibile."
+    },
+    {
+      question: "Quanto tempo serve per vedere i risultati?",
+      answer: "I primi cambiamenti si notano già dopo 2-3 settimane. Risultati significativi e duraturi si ottengono in 2-3 mesi con un approccio costante e personalizzato."
     }
-  }, []);
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-600/20 via-gray-900 to-blue-600/20">
-        <div className="container mx-auto max-w-6xl text-center">
-          <div className="flex justify-center mb-6">
-            <Target className="w-16 h-16 text-green-500" />
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            Consulenza <span className="text-green-500">Nutrizionale</span><br />
-            e <span className="text-blue-500">Coaching Psicologico</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Piani alimentari sostenibili e supporto mentale per una trasformazione completa e duratura
-          </p>
-          <Link to="/contatti">
-            <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-full">
-              Prenota Consulenza Gratuita
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Approach */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Un Approccio <span className="text-green-500">Completo</span> e <span className="text-blue-500">Integrato</span>
-              </h2>
-              <p className="text-lg text-gray-300 mb-6">
-                Non crediamo nelle diete estreme o nei sacrifici insostenibili. Il nostro approccio integra 
-                nutrizione e psicologia per creare cambiamenti duraturi nel tempo, lavorando sia sul corpo 
-                che sulla mente.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Educazione alimentare, non diete temporanee</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Supporto psicologico per superare blocchi mentali</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Strategie sostenibili a lungo termine</span>
-                </li>
-              </ul>
+    <>
+      <SimpleSEO
+        title="Nutrizionista Legnago | Consulenza Alimentare MUV Fitness"
+        description="Nutrizionista a Legnago: piani alimentari personalizzati per dimagrimento, massa muscolare e benessere. Consulenza gratuita. Approccio sostenibile."
+        keywords="nutrizionista Legnago, consulenza nutrizionale, dieta personalizzata, dimagrimento, alimentazione sana, dietologo Verona"
+        canonical="https://www.muvfitness.it/servizi/nutrizione"
+        structuredData={structuredData}
+      />
+      <EnhancedFAQSchema faqs={faqs} pageTitle="Nutrizionista Legnago - Domande Frequenti" />
+      
+      <div className="min-h-screen bg-background text-foreground">
+        {/* Hero Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary/20 via-background to-secondary/20">
+          <div className="container mx-auto max-w-6xl text-center">
+            <div className="flex justify-center mb-6">
+              <Apple className="w-16 h-16 text-primary" />
             </div>
-            <div className="bg-gradient-to-br from-green-600/20 to-blue-600/20 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold text-center mb-6">Il Nostro Metodo</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <Apple className="w-6 h-6 text-green-500 mr-3" />
-                  <span>Nutrizione personalizzata</span>
-                </div>
-                <div className="flex items-center">
-                  <Brain className="w-6 h-6 text-blue-500 mr-3" />
-                  <span>Coaching mentale</span>
-                </div>
-                <div className="flex items-center">
-                  <Heart className="w-6 h-6 text-red-500 mr-3" />
-                  <span>Benessere emotivo</span>
-                </div>
-                <div className="flex items-center">
-                  <TrendingUp className="w-6 h-6 text-purple-500 mr-3" />
-                  <span>Risultati misurabili</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Services */}
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            I Nostri <span className="text-green-500">Servizi</span>
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <Apple className="w-8 h-8 text-green-500 mr-3" />
-                  <h3 className="text-2xl font-bold text-green-400">Consulenza Nutrizionale</h3>
-                </div>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Analisi della composizione corporea</li>
-                  <li>• Piano alimentare personalizzato</li>
-                  <li>• Educazione nutrizionale</li>
-                  <li>• Ricette e menu settimanali</li>
-                  <li>• Monitoraggio e adattamenti</li>
-                  <li>• Gestione di intolleranze e allergie</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <Brain className="w-8 h-8 text-blue-500 mr-3" />
-                  <h3 className="text-2xl font-bold text-blue-400">Coaching Psicologico</h3>
-                </div>
-                <ul className="space-y-2 text-gray-300">
-                  <li>• Gestione dello stress e ansia</li>
-                  <li>• Superamento del rapporto disfunzionale con il cibo</li>
-                  <li>• Motivazione e autostima</li>
-                  <li>• Tecniche di rilassamento</li>
-                  <li>• Gestione delle emozioni</li>
-                  <li>• Creazione di abitudini positive</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Benefits */}
-          <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Benefici dell'Approccio Integrato</h3>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-green-400">Perdita di Peso Sostenibile</h4>
-                <p className="text-gray-300">Dimagrimento graduale e duraturo senza rinunce estreme o effetti yo-yo.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-blue-400">Miglioramento dell'Umore</h4>
-                <p className="text-gray-300">Riduzione di stress, ansia e miglioramento del benessere mentale generale.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-purple-400">Energia e Vitalità</h4>
-                <p className="text-gray-300">Aumento dei livelli energetici e miglioramento della qualità del sonno.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-pink-400">Autostima</h4>
-                <p className="text-gray-300">Maggiore fiducia in se stessi e miglioramento dell'immagine corporea.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-yellow-400">Abitudini Sane</h4>
-                <p className="text-gray-300">Creazione di routine alimentari e comportamentali che durano nel tempo.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3 text-indigo-400">Salute Ottimale</h4>
-                <p className="text-gray-300">Miglioramento dei parametri ematici e riduzione del rischio di malattie.</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Process */}
-          <div className="bg-gradient-to-r from-green-600/10 to-blue-600/10 p-8 rounded-lg mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Il Nostro Percorso</h3>
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">1</span>
-                </div>
-                <h4 className="text-lg font-bold mb-2">Valutazione Iniziale</h4>
-                <p className="text-sm text-gray-300">Analisi completa di stato fisico, abitudini e obiettivi</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">2</span>
-                </div>
-                <h4 className="text-lg font-bold mb-2">Piano Personalizzato</h4>
-                <p className="text-sm text-gray-300">Creazione di strategie nutrizionali e psicologiche su misura</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">3</span>
-                </div>
-                <h4 className="text-lg font-bold mb-2">Monitoraggio</h4>
-                <p className="text-sm text-gray-300">Controlli regolari e adattamenti del piano</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold">4</span>
-                </div>
-                <h4 className="text-lg font-bold mb-2">Mantenimento</h4>
-                <p className="text-sm text-gray-300">Supporto per mantenere i risultati a lungo termine</p>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="text-center bg-gradient-to-r from-green-600/20 to-blue-600/20 p-8 rounded-lg">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Inizia la Tua Trasformazione Completa</h3>
-            <p className="text-lg text-gray-300 mb-6">Prenota una consulenza gratuita e scopri come possiamo aiutarti a raggiungere i tuoi obiettivi</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+              <span className="text-primary">Nutrizionista</span> Legnago
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Alimentazione personalizzata per raggiungere i tuoi obiettivi di salute e forma fisica
+            </p>
             <Link to="/contatti">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-full">
-                Prenota Consulenza Gratuita
+              <Button size="lg" className="text-lg px-8 py-4">
+                Consulenza Gratuita
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* Approccio Nutrizionale */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto max-w-6xl">
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  Il Nostro <span className="text-primary">Approccio Nutrizionale</span>
+                </h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Non crediamo nelle diete estreme o temporanee. Il nostro metodo si basa sull'educazione 
+                  alimentare e sulla creazione di abitudini sostenibili che ti accompagneranno per tutta la vita. 
+                  Ogni piano è studiato su misura per te, considerando i tuoi gusti, stile di vita e obiettivi.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-primary mr-3 mt-0.5" />
+                    <span>Piani alimentari completamente personalizzati</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-primary mr-3 mt-0.5" />
+                    <span>Educazione nutrizionale per l'autonomia</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-primary mr-3 mt-0.5" />
+                    <span>Monitoraggio costante e adattamenti</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-6 h-6 text-primary mr-3 mt-0.5" />
+                    <span>Integrazione con il programma di allenamento</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-card p-8 rounded-lg border">
+                <h3 className="text-2xl font-bold text-center mb-6">I Nostri Valori</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <Apple className="w-8 h-8 text-primary mx-auto mb-2" />
+                    <p className="font-semibold">Sostenibilità</p>
+                    <p className="text-sm text-muted-foreground">A lungo termine</p>
+                  </div>
+                  <div className="text-center">
+                    <Brain className="w-8 h-8 text-secondary mx-auto mb-2" />
+                    <p className="font-semibold">Educazione</p>
+                    <p className="text-sm text-muted-foreground">Alimentare</p>
+                  </div>
+                  <div className="text-center">
+                    <Heart className="w-8 h-8 text-destructive mx-auto mb-2" />
+                    <p className="font-semibold">Benessere</p>
+                    <p className="text-sm text-muted-foreground">Completo</p>
+                  </div>
+                  <div className="text-center">
+                    <TrendingUp className="w-8 h-8 text-primary mx-auto mb-2" />
+                    <p className="font-semibold">Risultati</p>
+                    <p className="text-sm text-muted-foreground">Misurabili</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Servizi Nutrizionali */}
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              I Nostri <span className="text-primary">Servizi Nutrizionali</span>
+            </h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-primary">Dimagrimento Sostenibile</h3>
+                  <p className="text-muted-foreground">Piani per perdere peso in modo graduale e duraturo, senza rinunce estreme o effetti yo-yo.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-secondary">Aumento Massa Muscolare</h3>
+                  <p className="text-muted-foreground">Alimentazione specifica per supportare la crescita muscolare e ottimizzare i risultati dell'allenamento.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-primary">Ricomposizione Corporea</h3>
+                  <p className="text-muted-foreground">Strategie nutrizionali per perdere grasso e aumentare la massa magra contemporaneamente.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-secondary">Alimentazione Sportiva</h3>
+                  <p className="text-muted-foreground">Piani specifici per atleti e sportivi per ottimizzare performance e recupero.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-primary">Gestione Patologie</h3>
+                  <p className="text-muted-foreground">Supporto nutrizionale per diabete, ipertensione, colesterolo alto e altre condizioni metaboliche.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-secondary">Educazione Alimentare</h3>
+                  <p className="text-muted-foreground">Workshop e consulenze per imparare a mangiare in modo consapevole e bilanciato.</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Processo Consulenza */}
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Il Nostro <span className="text-primary">Percorso</span>
+            </h2>
+            
+            <div className="grid md:grid-cols-4 gap-6 mb-16">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-white">1</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">Valutazione Iniziale</h4>
+                <p className="text-sm text-muted-foreground">Analisi completa di abitudini, composizione corporea e obiettivi</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-white">2</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">Piano Personalizzato</h4>
+                <p className="text-sm text-muted-foreground">Creazione del piano alimentare su misura per te</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-white">3</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">Monitoraggio</h4>
+                <p className="text-sm text-muted-foreground">Controlli regolari e adattamenti del piano</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-white">4</span>
+                </div>
+                <h4 className="text-lg font-bold mb-2">Autonomia</h4>
+                <p className="text-sm text-muted-foreground">Educazione per mantenere i risultati nel tempo</p>
+              </div>
+            </div>
+
+            {/* Cosa Include */}
+            <div className="bg-card p-8 rounded-lg border mb-16">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">Cosa Include la Consulenza</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Analisi della composizione corporea</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Piano alimentare personalizzato</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Lista della spesa settimanale</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Ricette e menu giornalieri</span>
+                  </li>
+                </ul>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Supporto via WhatsApp</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Adattamenti del piano</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Educazione nutrizionale</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                    <span>Integrazione con l'allenamento</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* FAQ Section */}
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Domande Frequenti sul <span className="text-primary">Nutrizionista a Legnago</span>
+            </h2>
+            
+            <div className="grid md:grid-cols-1 gap-6 mb-16">
+              {faqs.map((faq, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <h4 className="text-lg font-bold mb-3 text-primary">{faq.question}</h4>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* CTA Finale */}
+            <div className="text-center bg-primary/10 p-8 rounded-lg">
+              <div className="flex justify-center mb-4">
+                <Users className="w-12 h-12 text-primary" />
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Inizia la Tua Trasformazione Alimentare</h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                Prenota una consulenza nutrizionale gratuita e scopri come raggiungere i tuoi obiettivi con un approccio sostenibile
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/contatti">
+                  <Button size="lg" className="text-lg px-8 py-4">
+                    Consulenza Gratuita
+                  </Button>
+                </Link>
+                <Link to="/contatti">
+                  <Button variant="outline" size="lg" className="text-lg px-8 py-4">
+                    Chiama: 347 1234567
+                  </Button>
+                </Link>
+              </div>
+              <p className="text-sm text-muted-foreground mt-4">
+                📍 Viale dei Tigli 14, Legnago (VR) | Servizio per Legnago, Cerea, Bovolone, San Bonifacio
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 
