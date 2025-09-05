@@ -3,9 +3,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
-import StaticSEO from "@/components/SEO/StaticSEO";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Risultati = () => {
+  const faqs = [
+    {
+      question: "Quanto tempo ci vuole per vedere i primi risultati?",
+      answer: "Con l'EMS e il Personal Training MUV i primi risultati sono visibili già dopo 2-3 settimane. Il programma completo garantisce una trasformazione significativa in 30 giorni."
+    },
+    {
+      question: "I risultati sono duraturi nel tempo?",
+      answer: "Sì, i nostri programmi includono educazione alimentare e abitudini sostenibili che permettono di mantenere i risultati raggiunti nel lungo termine."
+    },
+    {
+      question: "Cosa rende i risultati MUV diversi da altri centri?",
+      answer: "L'approccio scientifico integrato: EMS per massimizzare l'efficacia, nutrizione personalizzata e supporto psicologico per garantire risultati duraturi e benessere completo."
+    }
+  ];
+
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getFAQSchema(faqs)
+  ];
+
   const testimonianze = [
     {
       name: "Maria B.",
@@ -65,11 +88,14 @@ const Risultati = () => {
 
   return (
     <>
-      <StaticSEO
-        title="Risultati Clienti MUV Fitness Legnago - Testimonianze e Trasformazioni Reali"
-        description="Scopri i risultati reali dei nostri clienti: dimagrimento, tonificazione, risoluzione mal di schiena. Testimonianze verificate e trasformazioni documentate."
-        keywords="risultati fitness legnago, testimonianze palestra, trasformazioni clienti muv, prima dopo fitness"
+      <UnifiedSEOHead
+        title="Risultati MUV Fitness Legnago | Trasformazioni EMS e Personal Training"
+        description="Scopri le incredibili trasformazioni dei clienti MUV Fitness a Legnago: dimagrimento, tonificazione e benessere con EMS, Personal Training e Nutrizione."
+        keywords="risultati fitness legnago, trasformazioni corpo verona, dimagrimento ems legnago, prima e dopo personal training"
+        structuredData={structuredData}
       />
+      
+      <Navigation />
       <div className="min-h-screen bg-background text-foreground">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
@@ -165,6 +191,7 @@ const Risultati = () => {
           </Card>
         </div>
       </section>
+      <Footer />
     </div>
     </>
   );

@@ -6,30 +6,10 @@ import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
 import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Massoterapia = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Massoterapia Legnago",
-    "description": "Massoterapia a Legnago: massaggi terapeutici, decontratturanti e rilassanti. Recupero muscolare, riduzione stress e benessere totale.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Viale dei Tigli 14",
-        "addressLocality": "Legnago",
-        "addressRegion": "VR",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+39 347 1234567"
-    },
-    "areaServed": ["Legnago", "Verona", "Cerea", "Bovolone", "San Bonifacio"],
-    "serviceType": "Massoterapia"
-  };
-
   const faqs = [
     {
       question: "Che differenza c'è tra massaggio rilassante e decontratturante?",
@@ -55,14 +35,25 @@ const Massoterapia = () => {
 
   const whatsappMessage = encodeURIComponent("Ciao! Sono interessato/a alla massoterapia. Vorrei prenotare un massaggio e conoscere i vostri trattamenti.");
 
+  const structuredData = [
+    getServiceSchema("Massoterapia Legnago", "Massoterapia a Legnago: massaggi terapeutici, decontratturanti e rilassanti. Recupero muscolare, riduzione stress e benessere totale.", "https://www.muvfitness.it/servizi/massoterapia"),
+    getFAQSchema(faqs)
+  ];
+
   return (
     <>
-      <ServicePageLayout
+      <UnifiedSEOHead
         title="Massoterapia Legnago | Massaggio Terapeutico e Benessere – MUV Fitness"
         description="Massoterapia a Legnago: massaggi terapeutici, decontratturanti e rilassanti. Recupero muscolare, riduzione stress e benessere totale. Prenota il tuo trattamento."
-        canonical="https://www.muvfitness.it/servizi/massoterapia"
-        structuredData={structuredData}
         keywords="massoterapia Legnago, massaggio decontratturante, massaggio rilassante, linfodrenaggio, massaggio sportivo, benessere"
+        structuredData={structuredData}
+      />
+      <ServicePageLayout
+        title=""
+        description=""
+        canonical=""
+        structuredData={null}
+        keywords=""
       >
         <ServiceHeroSection
           title="Massoterapia e Benessere"

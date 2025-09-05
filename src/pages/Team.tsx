@@ -1,9 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import StaticSEO from "@/components/SEO/StaticSEO";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getLocalBusinessSchema, getOrganizationSchema } from "@/utils/seoSchemas";
 
 const Team = () => {
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getOrganizationSchema()
+  ];
+
   const teamMembers = [
     {
       name: "Vincenzo Bocchino",
@@ -58,12 +66,15 @@ const Team = () => {
 
   return (
     <>
-      <StaticSEO
-        title="Team MUV Fitness Legnago - Personal Trainer Certificati e Specialisti"
-        description="Conosci il nostro team di personal trainer certificati, specialisti in EMS, Pancafit, Pilates e nutrizione. I migliori professionisti di Legnago."
-        keywords="personal trainer legnago, team muv fitness, trainer certificati, specialisti fitness legnago"
+      <UnifiedSEOHead
+        title="Team MUV Fitness Legnago | Personal Trainer Certificati Verona"
+        description="Conosci il team di esperti MUV Fitness: personal trainer certificati, nutrizionisti e massoterapisti a Legnago. Professionalità e risultati garantiti."
+        keywords="team personal trainer legnago, staff muv fitness, istruttori certificati verona, nutrizionista legnago, massoterapista"
+        structuredData={structuredData}
       />
-      <div className="min-h-screen bg-gray-900 text-white">
+      
+      <Navigation />
+      <div className="min-h-screen bg-background text-foreground">
       <section className="py-8 sm:py-12 lg:py-16 xl:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <header className="text-center mb-10 sm:mb-14 lg:mb-16">
@@ -125,6 +136,7 @@ const Team = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
     </>
   );

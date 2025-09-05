@@ -6,30 +6,10 @@ import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
 import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Nutrizione = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Nutrizionista Legnago",
-    "description": "Consulenza nutrizionale personalizzata a Legnago. Piani alimentari su misura per dimagrimento, aumento massa muscolare e benessere generale.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Viale dei Tigli 14",
-        "addressLocality": "Legnago",
-        "addressRegion": "VR",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+39 347 1234567"
-    },
-    "areaServed": ["Legnago", "Verona", "Cerea", "Bovolone", "San Bonifacio"],
-    "serviceType": "Consulenza Nutrizionale"
-  };
-
   const faqs = [
     {
       question: "Come funziona la consulenza nutrizionale a Legnago?",
@@ -55,14 +35,25 @@ const Nutrizione = () => {
 
   const whatsappMessage = encodeURIComponent("Ciao! Sono interessato/a alla consulenza nutrizionale. Vorrei prenotare la consulenza gratuita per conoscere il programma.");
 
+  const structuredData = [
+    getServiceSchema("Nutrizionista Legnago", "Consulenza nutrizionale personalizzata a Legnago. Piani alimentari su misura per dimagrimento, aumento massa muscolare e benessere generale.", "https://www.muvfitness.it/servizi/nutrizione"),
+    getFAQSchema(faqs)
+  ];
+
   return (
     <>
-      <ServicePageLayout
+      <UnifiedSEOHead
         title="Nutrizionista Legnago | Consulenza Alimentare MUV Fitness"
         description="Nutrizionista a Legnago: piani alimentari personalizzati per dimagrimento, massa muscolare e benessere. Consulenza gratuita. Approccio sostenibile."
         keywords="nutrizionista Legnago, consulenza nutrizionale, dieta personalizzata, dimagrimento, alimentazione sana, dietologo Verona"
-        canonical="https://www.muvfitness.it/servizi/nutrizione"
         structuredData={structuredData}
+      />
+      <ServicePageLayout
+        title=""
+        description=""
+        keywords=""
+        canonical=""
+        structuredData={null}
       >
         <ServiceHeroSection
           title="Nutrizionista Legnago"

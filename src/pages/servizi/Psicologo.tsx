@@ -1,22 +1,50 @@
 
-import { useEffect } from "react";
+import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Brain, CheckCircle, Heart, Target, Lightbulb, Users } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Psicologo = () => {
-  useEffect(() => {
-    document.title = "Psicologo Legnago | Coaching Motivazionale Fitness – MUV Smart Fit";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Psicologo e coaching motivazionale a Legnago. Supporto psicologico per raggiungere i tuoi obiettivi fitness e superare le barriere mentali. Consulenza gratuita.');
+  const faqs = [
+    {
+      question: "Come può aiutarmi lo psicologo per il fitness?",
+      answer: "Lo psicologo del fitness ti aiuta a superare blocchi mentali, mantenere la motivazione, costruire abitudini durature e migliorare il rapporto con il tuo corpo."
+    },
+    {
+      question: "È solo per persone con problemi psicologici?",
+      answer: "Assolutamente no! Il coaching psicologico è per chiunque voglia ottimizzare le proprie performance mentali e raggiungere obiettivi fitness con maggiore facilità."
+    },
+    {
+      question: "Quanto durano le sessioni di coaching psicologico?",
+      answer: "Le sessioni durano solitamente 50 minuti. La frequenza viene personalizzata in base ai tuoi obiettivi e può variare da settimanale a mensile."
+    },
+    {
+      question: "Il supporto psicologico è integrato con l'allenamento?",
+      answer: "Sì, lavoriamo in sinergia con i personal trainer per creare un approccio olistico che unisce benessere mentale e fisico per risultati ottimali."
     }
-  }, []);
+  ];
+
+  const structuredData = [
+    getServiceSchema("Psicologo Legnago", "Psicologo e coaching motivazionale a Legnago. Supporto psicologico per raggiungere i tuoi obiettivi fitness e superare le barriere mentali.", "https://www.muvfitness.it/servizi/psicologo"),
+    getFAQSchema(faqs)
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <UnifiedSEOHead
+        title="Psicologo Legnago | Coaching Motivazionale Fitness – MUV Fitness"
+        description="Psicologo e coaching motivazionale a Legnago. Supporto psicologico per raggiungere i tuoi obiettivi fitness e superare le barriere mentali. Consulenza gratuita."
+        keywords="psicologo legnago, coaching motivazionale, supporto psicologico fitness, mindset benessere, psicologo sport verona"
+        structuredData={structuredData}
+      />
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600/20 via-gray-900 to-purple-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -212,7 +240,9 @@ const Psicologo = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
+    </>
   );
 };
 

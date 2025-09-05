@@ -1,9 +1,21 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <UnifiedSEOHead
+        title="Privacy Policy MUV Fitness Legnago | Trattamento Dati Personali"
+        description="Informativa Privacy di MUV Fitness Legnago: come trattiamo i tuoi dati personali nel rispetto del GDPR per servizi fitness, consulenze e comunicazioni."
+        keywords="privacy policy muv fitness, trattamento dati personali legnago, gdpr centro fitness, informativa privacy palestra"
+        noindex={true}
+      />
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
@@ -144,7 +156,9 @@ const Privacy = () => {
           </Card>
         </div>
       </section>
+      <Footer />
     </div>
+    </>
   );
 };
 

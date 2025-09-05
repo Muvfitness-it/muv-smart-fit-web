@@ -1,9 +1,21 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 
 const CookiePolicy = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <UnifiedSEOHead
+        title="Cookie Policy MUV Fitness Legnago | Gestione Cookie e Privacy"
+        description="Cookie Policy di MUV Fitness Legnago: informazioni sui cookie utilizzati sul sito, finalità, gestione delle preferenze e diritti dell'utente."
+        keywords="cookie policy muv fitness, gestione cookie legnago, privacy web fitness, consenso cookie palestra"
+        noindex={true}
+      />
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
@@ -87,7 +99,9 @@ const CookiePolicy = () => {
           </Card>
         </div>
       </section>
+      <Footer />
     </div>
+    </>
   );
 };
 

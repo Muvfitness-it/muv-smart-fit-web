@@ -1,22 +1,50 @@
 
-import { useEffect } from "react";
+import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, CheckCircle, Heart, Zap, Target, TrendingUp } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const SmallGroup = () => {
-  useEffect(() => {
-    document.title = "HIIT Small Group Legnago | Allenamento di Gruppo ad Alta Intensità – MUV Smart Fit";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l\'energia del gruppo. Cardio, forza e divertimento.');
+  const faqs = [
+    {
+      question: "Quante persone al massimo in un HIIT Small Group?",
+      answer: "Massimo 3 persone per sessione per garantire attenzione personalizzata mantenendo l'energia motivante del gruppo."
+    },
+    {
+      question: "È adatto ai principianti l'HIIT Small Group?",
+      answer: "Sì, ogni esercizio viene adattato al livello dei partecipanti. Il trainer personalizza intensità e movimenti per tutti."
+    },
+    {
+      question: "Quanto dura una sessione HIIT Small Group?",
+      answer: "Ogni sessione dura 45 minuti: 10 minuti riscaldamento, 25 minuti HIIT intenso, 10 minuti defaticamento e stretching."
+    },
+    {
+      question: "Posso partecipare con amici o familiari?",
+      answer: "Assolutamente sì! È perfetto per allenarsi con amici, partner o familiari condividendo motivazione e divertimento."
     }
-  }, []);
+  ];
+
+  const structuredData = [
+    getServiceSchema("HIIT Small Group Legnago", "HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l'energia del gruppo. Cardio, forza e divertimento.", "https://www.muvfitness.it/servizi/small-group"),
+    getFAQSchema(faqs)
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <UnifiedSEOHead
+        title="HIIT Small Group Legnago | Allenamento di Gruppo ad Alta Intensità – MUV Fitness"
+        description="HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l'energia del gruppo. Cardio, forza e divertimento."
+        keywords="HIIT small group legnago, allenamento gruppo alta intensità, fitness gruppo verona, hiit motivazionale"
+        structuredData={structuredData}
+      />
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600/20 via-gray-900 to-red-600/20">
         <div className="container mx-auto max-w-6xl text-center">
@@ -220,7 +248,9 @@ const SmallGroup = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
+    </>
   );
 };
 

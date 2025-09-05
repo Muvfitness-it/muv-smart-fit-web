@@ -6,30 +6,10 @@ import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
 import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const HIIT = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Allenamento HIIT Legnago",
-    "description": "Allenamento HIIT ad alta intensità a Legnago. Brucia grassi, migliora resistenza e accelera il metabolismo in sessioni da 30-45 minuti.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Viale dei Tigli 14",
-        "addressLocality": "Legnago", 
-        "addressRegion": "VR",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+39 347 1234567"
-    },
-    "areaServed": ["Legnago", "Verona", "Cerea", "Bovolone", "San Bonifacio"],
-    "serviceType": "Allenamento HIIT"
-  };
-
   const faqs = [
     {
       question: "Cos'è l'allenamento HIIT e perché è così efficace?",
@@ -55,14 +35,25 @@ const HIIT = () => {
 
   const whatsappMessage = encodeURIComponent("Ciao! Sono interessato/a all'allenamento HIIT. Vorrei prenotare una prova gratuita per conoscere il programma.");
 
+  const structuredData = [
+    getServiceSchema("Allenamento HIIT Legnago", "Allenamento HIIT ad alta intensità a Legnago. Brucia grassi, migliora resistenza e accelera il metabolismo in sessioni da 30-45 minuti.", "https://www.muvfitness.it/servizi/hiit"),
+    getFAQSchema(faqs)
+  ];
+
   return (
     <>
-      <ServicePageLayout
+      <UnifiedSEOHead
         title="Allenamento HIIT Legnago | Training Alta Intensità MUV Fitness"
         description="Allenamento HIIT a Legnago: brucia grassi, aumenta resistenza e accelera metabolismo. Training ad alta intensità per risultati rapidi. Prova gratuita!"
         keywords="allenamento HIIT Legnago, training alta intensità, brucia grassi, fitness Legnago, cardio intenso, metabolismo"
-        canonical="https://www.muvfitness.it/servizi/hiit"
         structuredData={structuredData}
+      />
+      <ServicePageLayout
+        title=""
+        description=""
+        keywords=""
+        canonical=""
+        structuredData={null}
       >
         <ServiceHeroSection
           title="Allenamento HIIT Legnago"

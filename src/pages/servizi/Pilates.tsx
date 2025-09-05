@@ -6,26 +6,10 @@ import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
 import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Pilates = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Pilates Reformer Legnago",
-    "description": "Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness Legnago"
-    },
-    "areaServed": "Legnago",
-    "serviceType": "Pilates Reformer",
-    "offers": {
-      "@type": "Offer",
-      "name": "Lezione Pilates Reformer",
-      "description": "Lezione individuale o small group su macchinari Reformer professionali"
-    }
-  };
-
   const faqs = [
     {
       question: "Cos'è il Pilates Reformer e come funziona?",
@@ -51,14 +35,25 @@ const Pilates = () => {
 
   const whatsappMessage = encodeURIComponent("Ciao! Sono interessato/a al Pilates Reformer. Vorrei prenotare una lezione di prova per conoscere il programma.");
 
+  const structuredData = [
+    getServiceSchema("Pilates Reformer Legnago", "Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta.", "https://www.muvfitness.it/servizi/pilates"),
+    getFAQSchema(faqs)
+  ];
+
   return (
     <>
-      <ServicePageLayout
+      <UnifiedSEOHead
         title="Pilates Reformer Legnago | Lezioni Individuali e Small Group – MUV Fitness"
         description="Pilates con Reformer a Legnago: lezioni individuali e small group su macchinari professionali. Tonificazione, flessibilità e postura perfetta. Prenota la tua lezione."
-        canonical="https://www.muvfitness.it/servizi/pilates"
-        structuredData={structuredData}
         keywords="pilates reformer Legnago, pilates macchinari, tonificazione, flessibilità, postura, lezioni individuali"
+        structuredData={structuredData}
+      />
+      <ServicePageLayout
+        title=""
+        description=""
+        canonical=""
+        structuredData={null}
+        keywords=""
       >
         <ServiceHeroSection
           title="Pilates con Reformer"

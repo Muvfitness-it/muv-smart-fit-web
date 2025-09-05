@@ -1,37 +1,43 @@
+import { useState } from 'react';
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import ContactInfo from "../components/contact/ContactInfo";
 import MUVContactForm from "../components/contact/MUVContactForm";
-import StaticSEO from "@/components/SEO/StaticSEO";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Contatti = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "Contatti MUV Fitness Legnago",
-    "description": "Contatta MUV Fitness Legnago per informazioni, consulenze gratuite e appuntamenti. Ti rispondiamo in 10 minuti.",
-    "url": "https://www.muvfitness.it/contatti",
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness Legnago",
-      "telephone": "+393291070374",
-      "email": "info@muvfitness.it",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "addressCountry": "IT"
-      }
+  const faqs = [
+    {
+      question: "Dove si trova MUV Fitness?",
+      answer: "MUV Fitness si trova in Via Venti Settembre 5/7 a Legnago (VR). Siamo facilmente raggiungibili dal centro città e disponiamo di parcheggio."
+    },
+    {
+      question: "Quali sono gli orari di apertura?",
+      answer: "Siamo aperti dal lunedì al venerdì dalle 7:00 alle 21:00, il sabato dalle 8:00 alle 18:00. La domenica su appuntamento per servizi specifici."
+    },
+    {
+      question: "Come posso prenotare una consulenza gratuita?",
+      answer: "Puoi prenotare chiamando il 329 107 0374, inviando una email a info@muvfitness.it o compilando il form di contatto sul sito."
     }
-  };
+  ];
+
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getFAQSchema(faqs)
+  ];
 
   return (
     <>
-      <StaticSEO
-        title="Contatti MUV Fitness Legnago | Prenota Consulenza Gratuita"
-        description="Contatta MUV Fitness Legnago per informazioni su Personal Training, EMS, Pancafit e Pilates. Ti richiamiamo in 10 minuti. WhatsApp: 329 107 0374"
-        canonical="https://www.muvfitness.it/contatti"
+      <UnifiedSEOHead
+        title="Contatti MUV Fitness Legnago | Centro Fitness Via Venti Settembre"
+        description="Contatta MUV Fitness a Legnago: Via Venti Settembre 5/7, tel. 329 107 0374. Consulenza gratuita per EMS, Personal Training, Pilates e Nutrizione."
+        keywords="contatti muv fitness legnago, palestra via venti settembre, centro fitness verona telefono, appuntamento personal trainer"
         structuredData={structuredData}
       />
-    <div className="min-h-screen bg-gray-900 text-white">
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-12 sm:mb-16">
@@ -100,6 +106,7 @@ const Contatti = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
     </>
   );

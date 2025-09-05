@@ -1,31 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import StaticSEO from "@/components/SEO/StaticSEO";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { getLocalBusinessSchema, getOrganizationSchema } from "@/utils/seoSchemas";
 
 const ChiSiamo = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "Chi Siamo - MUV Fitness Legnago",
-    "description": "Scopri MUV Fitness Legnago: il primo centro fitness smart della zona. Staff qualificato, tecnologie innovative, risultati garantiti in 30 giorni.",
-    "url": "https://www.muvfitness.it/chi-siamo",
-    "mainEntity": {
-      "@type": "Organization",
-      "name": "MUV Fitness Legnago",
-      "description": "Centro fitness innovativo a Legnago con EMS, Personal Training, Pancafit e tecnologie avanzate per il benessere e la forma fisica."
-    }
-  };
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getOrganizationSchema()
+  ];
 
   return (
     <>
-      <StaticSEO
-        title="Chi Siamo - MUV Fitness Legnago | Centro Fitness Smart e Innovativo"
-        description="Scopri MUV Fitness Legnago: il primo centro fitness smart della zona. Staff qualificato, tecnologie innovative EMS e Personal Training. Risultati garantiti in 30 giorni o rimborso completo."
-        canonical="https://www.muvfitness.it/chi-siamo"
+      <UnifiedSEOHead
+        title="Chi Siamo - MUV Fitness Legnago | Centro Fitness Intelligente"
+        description="Scopri il team di MUV Fitness a Legnago: professionisti certificati in EMS, Personal Training, Pilates e Nutrizione. 5 anni di esperienza e risultati garantiti."
+        keywords="chi siamo muv fitness, team personal trainer legnago, centro fitness verona, staff qualificato ems pilates"
         structuredData={structuredData}
       />
-    
-    <div className="min-h-screen bg-gray-900 text-white">
+      
+      <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -92,6 +88,7 @@ const ChiSiamo = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
     </>
   );

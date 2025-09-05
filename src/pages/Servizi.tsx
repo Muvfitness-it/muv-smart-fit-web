@@ -56,6 +56,8 @@ const Servizi = () => {
       benefits: "✓ Piani alimentari su misura ✓ Supporto psicologico ✓ Cambiamento duraturo",
       link: "/servizi/nutrizione-psicocoach-legnago"
     }
+  ];
+
   const faqs = [
     {
       question: "Quale servizio è più adatto per dimagrire velocemente?",
