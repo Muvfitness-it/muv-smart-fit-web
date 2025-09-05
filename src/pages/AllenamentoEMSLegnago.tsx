@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SimpleSEO from "@/components/SEO/SimpleSEO";
+import StaticSEO from "@/components/SEO/StaticSEO";
 
 const AllenamentoEMSLegnago: React.FC = () => {
   const canonical = "https://www.muvfitness.it/allenamento-ems-legnago/";
@@ -44,7 +44,7 @@ const AllenamentoEMSLegnago: React.FC = () => {
 
   return (
     <>
-      <SimpleSEO
+      <StaticSEO
         title="Allenamento EMS a Legnago | Elettrostimolazione con Trainer"
         description="Sedute EMS guidate da professionisti per risultati in tempi ridotti. Dimagrimento, tonificazione e postura in sicurezza. Prova gratuita a Legnago."
         canonical={canonical}
