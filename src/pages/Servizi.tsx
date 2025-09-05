@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, Activity, Heart, Users, TrendingUp, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
+import { getServiceSchema, getFAQSchema } from '@/utils/seoSchemas';
 
 const Servizi = () => {
   const servizi = [
@@ -55,15 +56,47 @@ const Servizi = () => {
       benefits: "✓ Piani alimentari su misura ✓ Supporto psicologico ✓ Cambiamento duraturo",
       link: "/servizi/nutrizione-psicocoach-legnago"
     }
+  const faqs = [
+    {
+      question: "Quale servizio è più adatto per dimagrire velocemente?",
+      answer: "L'EMS è perfetto per il dimagrimento rapido: in 20 minuti attivi tutti i muscoli con un'intensità impossibile da raggiungere con l'allenamento tradizionale. Combina resistenza e cardio per massimizzare il consumo calorico."
+    },
+    {
+      question: "Posso combinare più servizi insieme?",
+      answer: "Assolutamente sì! I nostri protocolli integrano perfettamente EMS + Pilates per forza e stabilità, o Massoterapia + Nutrizione per un approccio completo al benessere. Ti consigliamo la combinazione migliore in base ai tuoi obiettivi."
+    },
+    {
+      question: "Quanto tempo serve per vedere i primi risultati?",
+      answer: "Con l'EMS e il Personal Training 1:1 i primi cambiamenti sono visibili già dopo 2 settimane. Il nostro protocollo garantisce risultati misurabili entro 30 giorni o rimborsiamo il percorso."
+    },
+    {
+      question: "I servizi sono adatti anche ai principianti?",
+      answer: "Tutti i nostri servizi sono modulabili e adatti a ogni livello. Iniziamo sempre con un'analisi della composizione corporea e un test posturale per personalizzare completamente il percorso alle tue capacità attuali."
+    },
+    {
+      question: "Che differenza c'è tra Personal Training 1:1 e Small Group?",
+      answer: "Il Personal Training 1:1 offre attenzione esclusiva e programmazione completamente personalizzata. Lo Small Group (max 3 persone) mantiene l'alta qualità dell'allenamento con un costo più accessibile, ideale per chi cerca motivazione di gruppo."
+    }
+  ];
+
+  const structuredData = [
+    getServiceSchema(
+      "Servizi Fitness MUV Legnago",
+      "Centro fitness con 6 servizi specializzati: EMS, Personal Training, Pilates Reformer, Pancafit, Massoterapia e Nutrizione. Programmi personalizzati per ogni obiettivo.",
+      "https://www.muvfitness.it/servizi"
+    ),
+    getFAQSchema(faqs)
   ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Helmet>
-        <title>Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum, Nutrizione</title>
-        <meta name="description" content="6 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training, Nutrizione e Psicocoach. Scegli il tuo percorso ideale." />
-        <link rel="canonical" href="https://www.muvfitness.it/servizi/" />
-      </Helmet>
+      <UnifiedSEOHead
+        title="Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum, Nutrizione"
+        description="6 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training, Nutrizione e Psicocoach. Scegli il tuo percorso ideale."
+        keywords="servizi fitness legnago, ems legnago, pilates legnago, personal trainer legnago, pancafit legnago, massoterapia legnago, nutrizione legnago"
+        canonicalUrl="https://www.muvfitness.it/servizi"
+        structuredData={structuredData}
+      />
 
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -98,6 +131,21 @@ const Servizi = () => {
               </Link>
             ))}
           </div>
+
+          {/* FAQ Section */}
+          <section className="mt-16 bg-gray-800/50 p-8 rounded-lg">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-white">
+              Domande Frequenti sui Nostri Servizi
+            </h2>
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border-b border-gray-700 pb-4">
+                  <h3 className="text-lg font-semibold text-pink-400 mb-2">{faq.question}</h3>
+                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* CTA Section */}
           <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-6 sm:p-8 rounded-lg border border-pink-600/30">

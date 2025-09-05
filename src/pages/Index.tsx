@@ -5,9 +5,8 @@ import NewHeroSection from '@/components/home/NewHeroSection'; // Load immediate
 import { MessageCircle } from 'lucide-react';
 
 // Defer only non-critical SEO components to improve Speed Index
-import StaticSEO from '@/components/SEO/StaticSEO';
-import SSGHeadUpdater from '@/components/SEO/SSGHeadUpdater';
-import { generateLocalBusinessSchema } from '@/utils/structuredDataSchemas';
+import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
+import { getLocalBusinessSchema, getOrganizationSchema, getWebSiteSchema } from '@/utils/seoSchemas';
 const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSchema'));
 
 // Lazy load non-critical sections for better FCP
@@ -28,7 +27,11 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const structuredData = generateLocalBusinessSchema();
+  const structuredData = [
+    getLocalBusinessSchema(),
+    getOrganizationSchema(),
+    getWebSiteSchema()
+  ];
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -36,16 +39,14 @@ const Index = () => {
       {/* Hero section loads immediately for Speed Index */}
       <NewHeroSection />
       
-      {/* Defer non-critical SEO components */}
-      <Suspense fallback={null}>
-        <SSGHeadUpdater
-          title="MUV Fitness Legnago – Centro Fitness con Personal Trainer"
-          description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
-          canonical="https://www.muvfitness.it/"
-          structuredData={structuredData}
-        />
-        <LocalBusinessSchema />
-      </Suspense>
+      {/* SEO Head - Critical for indexing */}
+      <UnifiedSEOHead
+        title="MUV Fitness Legnago – Centro Fitness con Personal Trainer EMS"
+        description="Centro fitness intelligente a Legnago: EMS, Personal Training 1:1, Pancafit, Pilates Reformer, Vacuum e Pressoterapia. Risultati garantiti in 30 giorni. Prenota la consulenza gratuita."
+        keywords="palestra legnago, personal trainer legnago, ems legnago, pilates legnago, fitness legnago, dimagrire legnago"
+        canonicalUrl="https://www.muvfitness.it/"
+        structuredData={structuredData}
+      />
       
       {/* Mobile CTA Section - Enhanced */}
       <section className="mobile-cta-section md:hidden py-8 px-4 bg-gray-800/50">
