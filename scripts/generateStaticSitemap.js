@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { writeFileSync } from 'fs';
-import { staticRoutes } from '../src/utils/seoRoutes.js';
+import seoData from '../src/utils/seoRoutes.data.json' assert { type: 'json' };
 
-const baseUrl = 'https://www.muvfitness.it';
+const { baseUrl, routes: staticRoutes } = seoData;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // Generate main sitemap with static routes

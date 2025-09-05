@@ -66,6 +66,11 @@ const analyzeHTMLFile = (filePath, relativeUrl) => {
       seoReport.info.push(`No structured data found: ${relativeUrl}`);
     }
     
+    // Check for default SEO placeholder (should be replaced by SSG)
+    if (content.includes('<!-- Default SEO - Will be replaced by SSG -->')) {
+      seoReport.errors.push(`Still contains default SEO placeholder (SSG didn't run): ${relativeUrl}`);
+    }
+    
     seoReport.urlsAnalyzed++;
     
   } catch (error) {
