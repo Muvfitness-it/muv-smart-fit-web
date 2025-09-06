@@ -127,6 +127,39 @@ try {
 
   console.log('✅ Static sitemaps and robots.txt generated successfully');
   console.log(`📊 Generated ${staticRoutes.length} URLs in sitemap-main.xml`);
+  
+  // Verify generated files
+  console.log('\n🔍 Verifying generated files...');
+  
+  const verifyFile = (path, expectedContent) => {
+    try {
+      const content = readFileSync(path, 'utf8');
+      if (content.includes(expectedContent)) {
+        console.log(`✅ ${path}: Valid`);
+        return true;
+      } else {
+        console.log(`❌ ${path}: Missing expected content`);
+        return false;
+      }
+    } catch (error) {
+      console.log(`❌ ${path}: ${error.message}`);
+      return false;
+    }
+  };
+  
+  const allValid = [
+    verifyFile('public/sitemap-main.xml', '<urlset'),
+    verifyFile('public/sitemap.xml', '<sitemapindex'),
+    verifyFile('public/robots.txt', 'Sitemap:')
+  ].every(Boolean);
+  
+  if (allValid) {
+    console.log('\n🎉 All files generated and verified successfully!');
+    console.log(`🌐 Sitemap index: ${baseUrl}/sitemap.xml`);
+  } else {
+    console.log('\n⚠️ Some files may have issues. Check the logs above.');
+  }
+  
 } catch (error) {
   console.error('❌ Error generating static sitemaps:', error);
   process.exit(1);
