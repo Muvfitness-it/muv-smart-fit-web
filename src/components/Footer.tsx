@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-// Use the new logo from public folder
+import muvLogo from "@/assets/muv-logo-transparent.png";
 
 const Footer = () => {
   const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);
@@ -56,7 +56,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <OptimizedImage
-                src="/src/assets/muv-logo-transparent.png"
+                src={muvLogo}
                 alt="MUV Fitness - Centro Benessere e Personal Training Legnago"
                 className="h-20 w-auto object-contain brightness-110"
                 width={80}
