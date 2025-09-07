@@ -71,6 +71,27 @@
       img1.src = '/images/fitness-professional-bg.webp';
       const img2 = new Image(); 
       img2.src = '/images/fitness-professional-bg.jpg';
+      
+      // Load main CSS asynchronously to prevent render blocking
+      const loadCSS = (href) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.media = 'print';
+        link.onload = () => { link.media = 'all'; };
+        document.head.appendChild(link);
+      };
+      
+      // Load main CSS bundle non-blocking
+      window.addEventListener('DOMContentLoaded', () => {
+        // Get the main CSS file from the head
+        const mainCSSLink = document.querySelector('link[href*="index-"][href$=".css"]');
+        if (mainCSSLink) {
+          const href = mainCSSLink.href;
+          mainCSSLink.remove();
+          loadCSS(href);
+        }
+      });
     </script>
     
     <!-- PWA Manifest -->
