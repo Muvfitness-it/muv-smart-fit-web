@@ -26,7 +26,8 @@ const Risultati = () => {
 
   const structuredData = [
     getLocalBusinessSchema(),
-    getFAQSchema(faqs)
+    // Remove separate FAQ schema to avoid duplicate FAQPage
+    // The FAQ data will be handled through page content instead
   ];
 
   const testimonianze = [
