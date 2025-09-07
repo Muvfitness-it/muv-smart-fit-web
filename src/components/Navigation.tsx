@@ -73,11 +73,11 @@ const Navigation = () => {
             <OptimizedImage
               src={logoSrc}
               alt="Logo MUV Fitness Legnago"
-              width={180}
-              height={54}
+              width={200}
+              height={60}
               priority={true}
-              sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 120px, 180px"
-              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-6 sm:h-8 md:h-9 lg:h-10' : 'h-8 sm:h-10 md:h-12 lg:h-16 xl:h-18'}`}
+              sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, (max-width: 1024px) 160px, 200px"
+              className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent drop-shadow-lg ${isScrolled ? 'h-10 sm:h-12 md:h-14 lg:h-16' : 'h-12 sm:h-16 md:h-18 lg:h-20 xl:h-24'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
           </Link>
@@ -120,11 +120,11 @@ const Navigation = () => {
                 <OptimizedImage
                   src="/lovable-uploads/bfb1580b-26fc-405c-9bf1-79d3a21fc285.png"
                   alt="Logo MUV Fitness Legnago"
-                  width={120}
-                  height={36}
+                  width={150}
+                  height={45}
                   priority={true}
-                  sizes="120px"
-                  className="site-logo h-10 w-auto object-contain"
+                  sizes="150px"
+                  className="site-logo h-12 w-auto object-contain drop-shadow-lg"
                 />
               </Link>
               <button
