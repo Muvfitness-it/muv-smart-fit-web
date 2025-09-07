@@ -8,7 +8,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const [logoSrc, setLogoSrc] = useState<string>(logo);
+  const [logoSrc, setLogoSrc] = useState<string>('/lovable-uploads/3c810b2b-3275-47fd-8d43-a3ead4abd35b.png');
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -118,7 +118,7 @@ const Navigation = () => {
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                 <OptimizedImage
-                  src={logoSrc}
+                  src="/lovable-uploads/3c810b2b-3275-47fd-8d43-a3ead4abd35b.png"
                   alt="Logo MUV Fitness Legnago"
                   width={120}
                   height={36}
