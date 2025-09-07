@@ -50,33 +50,27 @@
     <!-- Critical LCP image preload - highest priority -->
     <link rel="preload" as="image" href="/images/fitness-professional-bg.jpg" fetchpriority="high" />
     
-    <!-- Performance optimizations -->
+    <!-- Performance optimizations - Critical connection establishment -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://baujoowgqeyraqnukkmw.supabase.co" crossorigin>
     <link rel="dns-prefetch" href="https://api.ipify.org">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Critical fonts only - Inline for instant render -->
-    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.woff2" crossorigin>
+    <!-- Critical font preloads - Load immediately to break dependency chain -->
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v19/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin>
     
-    <!-- Deferred non-critical resources -->
+    <!-- Load critical fonts CSS immediately -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
+    
+    <!-- Preload other critical resources -->
     <script>
-      // Load hero image after critical render
-      setTimeout(() => {
-        const img1 = new Image();
-        img1.src = '/images/fitness-professional-bg.webp';
-        const img2 = new Image(); 
-        img2.src = '/images/fitness-professional-bg.jpg';
-      }, 0);
-      
-      // Load fonts after critical content
-      window.addEventListener('DOMContentLoaded', () => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap';
-        document.head.appendChild(link);
-      });
+      // Preload hero images immediately
+      const img1 = new Image();
+      img1.src = '/images/fitness-professional-bg.webp';
+      const img2 = new Image(); 
+      img2.src = '/images/fitness-professional-bg.jpg';
     </script>
     
     <!-- PWA Manifest -->
