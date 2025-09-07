@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-import muvLogo from "@/assets/muv-logo-original-transparent.png";
+import muvLogo from "@/assets/muv-logo-transparent.png";
 
 const Footer = () => {
   const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);

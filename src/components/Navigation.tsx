@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/muv-logo-original-transparent.png";
+import logo from "@/assets/muv-logo-transparent.png";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 // Use the new logo from public folder
 const Navigation = () => {
