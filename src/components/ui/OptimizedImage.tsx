@@ -9,6 +9,8 @@ interface OptimizedImageProps {
   height?: number;
   priority?: boolean;
   sizes?: string;
+  webpSrc?: string;
+  generateWebp?: boolean;
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -21,6 +23,8 @@ const OptimizedImage = ({
   height,
   priority = false,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  webpSrc,
+  generateWebp = false,
   onLoad,
   onError
 }: OptimizedImageProps) => {
@@ -29,13 +33,12 @@ const OptimizedImage = ({
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
-  // Generate WebP source
-  const getWebPSrc = (originalSrc: string) => {
-    if (originalSrc.includes('.jpg') || originalSrc.includes('.jpeg') || originalSrc.includes('.png')) {
-      return originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-    }
-    return originalSrc;
-  };
+// Optional WebP source handling: only use when explicitly provided or generated
+const webpCandidate = webpSrc ?? (
+  generateWebp && /\.(jpe?g|png)$/i.test(src)
+    ? src.replace(/\.(jpe?g|png)$/i, '.webp')
+    : undefined
+);
 
   useEffect(() => {
     if (priority) return;
@@ -80,11 +83,13 @@ const OptimizedImage = ({
     >
       {isInView && !hasError ? (
         <picture>
-          <source 
-            srcSet={getWebPSrc(src)} 
-            sizes={sizes}
-            type="image/webp" 
-          />
+          {webpCandidate ? (
+            <source 
+              srcSet={webpCandidate}
+              sizes={sizes}
+              type="image/webp"
+            />
+          ) : null}
           <img
             src={src}
             alt={alt}
