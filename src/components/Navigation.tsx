@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/muv-logo-original-transparent.png";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 // Use the new logo from public folder
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,14 +70,13 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
           <Link to="/" className="flex items-center">
-            <img
+            <OptimizedImage
               src={logoSrc}
               alt="Logo MUV Fitness Legnago"
               width={180}
               height={54}
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
+              priority={true}
+              sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 120px, 180px"
               className={`site-logo w-auto object-contain transition-all duration-300 bg-transparent ${isScrolled ? 'h-6 sm:h-8 md:h-9 lg:h-10' : 'h-8 sm:h-10 md:h-12 lg:h-16 xl:h-18'}`}
               onError={() => setLogoSrc('/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png')}
             />
@@ -117,9 +117,13 @@ const Navigation = () => {
           <div className="relative z-[61] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
-                <img
+                <OptimizedImage
                   src={logoSrc}
                   alt="Logo MUV Fitness Legnago"
+                  width={120}
+                  height={36}
+                  priority={true}
+                  sizes="120px"
                   className="site-logo h-10 w-auto object-contain"
                 />
               </Link>
