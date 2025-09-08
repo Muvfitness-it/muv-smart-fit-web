@@ -51,23 +51,10 @@ const Footer = () => {
   return (
     <footer ref={footerRef} className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-5 gap-8">
-          {/* Logo and Contact Info */}
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* Contact Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center">
-              <OptimizedImage
-                src={LOGO_URL}
-                alt="MUV Fitness - Centro Benessere e Personal Training Legnago"
-                className="h-36 w-auto object-contain bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
-                style={{
-                  filter: 'drop-shadow(0 0 12px rgba(255,255,255,0.8)) drop-shadow(0 0 6px rgba(0,0,0,0.6)) contrast(1.4) saturate(1.3) brightness(1.1)',
-                  WebkitFilter: 'drop-shadow(0 0 12px rgba(255,255,255,0.8)) drop-shadow(0 0 6px rgba(0,0,0,0.6)) contrast(1.4) saturate(1.3) brightness(1.1)'
-                }}
-                width={180}
-                height={108}
-              />
-            </Link>
-            
+            <h3 className="text-lg font-semibold mb-4">Contatti</h3>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-brand-primary" />
