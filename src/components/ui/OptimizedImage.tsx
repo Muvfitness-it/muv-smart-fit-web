@@ -13,6 +13,7 @@ interface OptimizedImageProps {
   generateWebp?: boolean;
   onLoad?: () => void;
   onError?: () => void;
+  style?: React.CSSProperties;
 }
 
 const OptimizedImage = ({
@@ -26,7 +27,8 @@ const OptimizedImage = ({
   webpSrc,
   generateWebp = false,
   onLoad,
-  onError
+  onError,
+  style
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -96,6 +98,7 @@ const webpCandidate = webpSrc ?? (
             width={width}
             height={height}
             sizes={sizes}
+            style={style}
             className={cn(
               "w-full h-full object-cover transition-opacity duration-300",
               isLoaded ? "opacity-100" : "opacity-0"

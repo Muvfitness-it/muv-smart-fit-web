@@ -72,11 +72,15 @@ const Navigation = () => {
             <OptimizedImage
               src={logoSrc}
               alt="Logo MUV Fitness Legnago"
-              width={240}
-              height={72}
+              width={300}
+              height={90}
               priority={true}
-              sizes="(max-width: 640px) 140px, (max-width: 768px) 160px, (max-width: 1024px) 200px, 240px"
-              className={`site-logo w-auto object-contain transition-all duration-300 drop-shadow-2xl filter contrast-125 saturate-110 ${isScrolled ? 'h-12 sm:h-14 md:h-16 lg:h-18' : 'h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32'}`}
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
+              className={`site-logo w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18 md:h-20 lg:h-22' : 'h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36'}`}
+              style={{
+                filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
+                WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
+              }}
               onError={() => setLogoSrc('/placeholder.svg')}
             />
           </Link>
@@ -119,11 +123,15 @@ const Navigation = () => {
                 <OptimizedImage
                   src={LOGO_URL}
                   alt="Logo MUV Fitness Legnago"
-                  width={180}
-                  height={54}
+                  width={220}
+                  height={66}
                   priority={true}
-                  sizes="180px"
-                  className="site-logo h-16 w-auto object-contain drop-shadow-2xl filter contrast-125 saturate-110"
+                  sizes="220px"
+                  className="site-logo h-20 w-auto object-contain"
+                  style={{
+                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
+                    WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
+                  }}
                 />
               </Link>
               <button

@@ -58,9 +58,13 @@ const Footer = () => {
               <OptimizedImage
                 src={LOGO_URL}
                 alt="MUV Fitness - Centro Benessere e Personal Training Legnago"
-                className="h-28 w-auto object-contain drop-shadow-2xl filter contrast-125 saturate-110"
-                width={140}
-                height={84}
+                className="h-32 w-auto object-contain"
+                style={{
+                  filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
+                  WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
+                }}
+                width={160}
+                height={96}
               />
             </Link>
             
