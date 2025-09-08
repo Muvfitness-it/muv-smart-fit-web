@@ -14,6 +14,8 @@ interface OptimizedImageProps {
   onLoad?: () => void;
   onError?: () => void;
   style?: React.CSSProperties;
+  objectFit?: 'cover' | 'contain';
+  overflowHidden?: boolean; // if false, do not hide overflow (useful for logos)
 }
 
 const OptimizedImage = ({
@@ -28,7 +30,9 @@ const OptimizedImage = ({
   generateWebp = false,
   onLoad,
   onError,
-  style
+  style,
+  objectFit = 'cover',
+  overflowHidden = true,
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -80,7 +84,7 @@ const webpCandidate = webpSrc ?? (
   return (
     <div 
       ref={imgRef}
-      className={cn("relative overflow-hidden", className)}
+      className={cn("relative", overflowHidden ? "overflow-hidden" : "", className)}
       style={width && height ? { aspectRatio: `${width}/${height}` } : undefined}
     >
       {isInView && !hasError ? (
@@ -100,7 +104,8 @@ const webpCandidate = webpSrc ?? (
             sizes={sizes}
             style={style}
             className={cn(
-              "w-full h-full object-cover transition-opacity duration-300",
+              "w-full h-full transition-opacity duration-300",
+              objectFit === 'contain' ? "object-contain" : "object-cover",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             onLoad={handleLoad}

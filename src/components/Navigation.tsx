@@ -76,7 +76,9 @@ const Navigation = () => {
               height={90}
               priority={true}
               sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
-              className={`site-logo w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-16 sm:h-18 md:h-20 lg:h-22' : 'h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36'}`}
+              className={`site-logo w-auto transition-all duration-300 ${isScrolled ? 'h-14 sm:h-16 md:h-18 lg:h-20' : 'h-16 sm:h-18 md:h-20 lg:h-24 xl:h-24'}`}
+              objectFit="contain"
+              overflowHidden={false}
               style={{
                 filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
                 WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
@@ -127,7 +129,9 @@ const Navigation = () => {
                   height={66}
                   priority={true}
                   sizes="220px"
-                  className="site-logo h-20 w-auto object-contain"
+                  className="site-logo h-20 w-auto"
+                  objectFit="contain"
+                  overflowHidden={false}
                   style={{
                     filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
                     WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
