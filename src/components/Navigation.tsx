@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import muvLogo from "@/assets/muv-logo-transparent.png";
 import OptimizedImage from "@/components/ui/OptimizedImage";
+const LOGO_URL = "/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const [logoSrc, setLogoSrc] = useState<string>(muvLogo);
+  const [logoSrc, setLogoSrc] = useState<string>(LOGO_URL);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -77,7 +77,7 @@ const Navigation = () => {
               priority={true}
               sizes="(max-width: 640px) 140px, (max-width: 768px) 160px, (max-width: 1024px) 200px, 240px"
               className={`site-logo w-auto object-contain transition-all duration-300 bg-white/95 rounded-xl p-3 shadow-lg border border-white/20 ${isScrolled ? 'h-12 sm:h-14 md:h-16 lg:h-18' : 'h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32'}`}
-              onError={() => setLogoSrc('/lovable-uploads/bfb1580b-26fc-405c-9bf1-79d3a21fc285.png')}
+              onError={() => setLogoSrc('/placeholder.svg')}
             />
           </Link>
 
@@ -117,7 +117,7 @@ const Navigation = () => {
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
               <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                 <OptimizedImage
-                  src={muvLogo}
+                  src={LOGO_URL}
                   alt="Logo MUV Fitness Legnago"
                   width={180}
                   height={54}

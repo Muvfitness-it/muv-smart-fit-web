@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-import muvLogo from "@/assets/muv-logo-transparent.png";
+const LOGO_URL = "/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png";
 
 const Footer = () => {
   const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);
@@ -56,7 +56,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <OptimizedImage
-                src={muvLogo}
+                src={LOGO_URL}
                 alt="MUV Fitness - Centro Benessere e Personal Training Legnago"
                 className="h-28 w-auto object-contain bg-white/95 rounded-lg p-3 shadow-lg"
                 width={140}

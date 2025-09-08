@@ -8,7 +8,7 @@ export const getLocalBusinessSchema = () => ({
   "alternateName": "MUV Fitness Legnago",
   "description": "Centro fitness intelligente a Legnago specializzato in EMS, Personal Training, Pilates Reformer, Pancafit, Massoterapia e Nutrizione. Risultati garantiti in 30 giorni.",
   "url": "https://www.muvfitness.it",
-  "logo": "https://www.muvfitness.it/assets/muv-logo-transparent.png",
+  "logo": "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",
   "image": [
     "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
     "https://www.muvfitness.it/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
@@ -105,7 +105,7 @@ export const getOrganizationSchema = () => ({
   "@id": "https://www.muvfitness.it/#organization",
   "name": "MUV Fitness",
   "url": "https://www.muvfitness.it",
-  "logo": "https://www.muvfitness.it/assets/muv-logo-transparent.png",
+  "logo": "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",
   "description": "Centro fitness intelligente con tecnologie avanzate per il benessere completo",
   "foundingDate": "2020",
   "numberOfEmployees": "5-10",
