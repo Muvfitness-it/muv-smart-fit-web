@@ -27,24 +27,13 @@ const Navigation = () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+  // Simplified main navigation - clean and focused
   const navItems = [{
-    name: "Home",
-    path: "/"
-  }, {
     name: "Chi Siamo",
     path: "/chi-siamo"
   }, {
     name: "Servizi",
     path: "/servizi"
-  }, {
-    name: "Personal Trainer",
-    path: "/servizi/personal-training"
-  }, {
-    name: "EMS",
-    path: "/servizi/ems"
-  }, {
-    name: "Pilates",
-    path: "/pilates-legnago"
   }, {
     name: "Team",
     path: "/team"
@@ -52,17 +41,8 @@ const Navigation = () => {
     name: "Risultati",
     path: "/risultati"
   }, {
-    name: "Blog",
-    path: "/blog"
-  }, {
-    name: "Recensioni",
-    path: "/recensioni"
-  }, {
     name: "Contatti",
     path: "/contatti"
-  }, {
-    name: "Admin",
-    path: "/admin/auth"
   }];
   return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center glass-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

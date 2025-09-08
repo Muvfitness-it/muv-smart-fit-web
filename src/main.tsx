@@ -1,6 +1,15 @@
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import PerformanceTracker from './components/optimization/PerformanceTracker'
+import AccessibilityEnhancer from './components/ui/AccessibilityEnhancer'
 
-// no-op rebuild: touch file to trigger fresh build
-createRoot(document.getElementById("root")!).render(<App />);
+// Enhanced app with performance and accessibility monitoring
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <PerformanceTracker />
+    <AccessibilityEnhancer />
+    <App />
+  </StrictMode>
+);

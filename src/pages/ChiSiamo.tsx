@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getOrganizationSchema } from "@/utils/seoSchemas";
 
 const ChiSiamo = () => {
@@ -19,6 +20,8 @@ const ChiSiamo = () => {
         keywords="chi siamo muv fitness, team personal trainer legnago, centro fitness verona, staff qualificato ems pilates"
         structuredData={structuredData}
       />
+      
+      <BreadcrumbNavigation />
       
       <Navigation />
     <div className="min-h-screen bg-gray-900 text-white">

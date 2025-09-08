@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getOrganizationSchema } from "@/utils/seoSchemas";
 
 const Team = () => {
@@ -72,6 +73,8 @@ const Team = () => {
         keywords="team personal trainer legnago, staff muv fitness, istruttori certificati verona, nutrizionista legnago, massoterapista"
         structuredData={structuredData}
       />
+      
+      <BreadcrumbNavigation />
       
       <Navigation />
       <div className="min-h-screen bg-gray-900 text-white">
