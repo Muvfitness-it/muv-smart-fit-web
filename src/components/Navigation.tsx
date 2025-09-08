@@ -76,7 +76,7 @@ const Navigation = () => {
               height={72}
               priority={true}
               sizes="(max-width: 640px) 140px, (max-width: 768px) 160px, (max-width: 1024px) 200px, 240px"
-              className={`site-logo w-auto object-contain transition-all duration-300 bg-white/95 rounded-xl p-3 shadow-lg border border-white/20 ${isScrolled ? 'h-12 sm:h-14 md:h-16 lg:h-18' : 'h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32'}`}
+              className={`site-logo w-auto object-contain transition-all duration-300 drop-shadow-2xl filter contrast-125 saturate-110 ${isScrolled ? 'h-12 sm:h-14 md:h-16 lg:h-18' : 'h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32'}`}
               onError={() => setLogoSrc('/placeholder.svg')}
             />
           </Link>
@@ -123,7 +123,7 @@ const Navigation = () => {
                   height={54}
                   priority={true}
                   sizes="180px"
-                  className="site-logo h-16 w-auto object-contain bg-white/95 rounded-lg p-2 shadow-lg"
+                  className="site-logo h-16 w-auto object-contain drop-shadow-2xl filter contrast-125 saturate-110"
                 />
               </Link>
               <button
