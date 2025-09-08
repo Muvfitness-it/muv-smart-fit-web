@@ -1,7 +1,8 @@
-// Lightweight mail adapter using Web3Forms
-// Docs: https://web3forms.com/
+// Lightweight mail adapter using Web3Forms and secure fallbacks
+// Environment variables should be set via Supabase Edge Functions or server-side
 
-export const WEB3FORMS_ACCESS_KEY: string = "6a54b481-e1fd-4793-93d1-4ecf3635e353"; // TODO: replace with your Web3Forms access key
+// DO NOT expose API keys in client-side code! These are fallback values only.
+export const WEB3FORMS_ACCESS_KEY: string = process.env.WEB3FORMS_ACCESS_KEY || "";
 
 export interface Web3FormsPayload {
   name: string;
@@ -29,8 +30,8 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
     console.log('Attempting secure Supabase Edge Function submission...');
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(
-      "https://baujoowgqeyraqnukkmw.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdWpvb3dncWV5cmFxbnVra213Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzcwNTYsImV4cCI6MjA2NTY1MzA1Nn0.pmeNPLBZVJjXwYGJP_T2vorYnw7LJ-DdE5RfD3VfIrw"
+      process.env.SUPABASE_URL || "https://baujoowgqeyraqnukkmw.supabase.co",
+      process.env.SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdWpvb3dncWV5cmFxbnVra213Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzcwNTYsImV4cCI6MjA2NTY1MzA1Nn0.pmeNPLBZVJjXwYGJP_T2vorYnw7LJ-DdE5RfD3VfIrw"
     );
 
     const { data, error } = await supabase.functions.invoke('secure-contact', {

@@ -100,8 +100,8 @@ const Index = () => {
               <h3 className="text-xl font-bold text-white mb-2">Palestra Legnago</h3>
               <p className="text-gray-300">Centro fitness completo nel cuore di Legnago</p>
             </a>
-            <a href="/personal-trainer-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
-              <h3 className="text-xl font-bold text-white mb-2">Personal Trainer Legnago</h3>
+            <a href="/servizi/personal-training" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">Personal Training</h3>
               <p className="text-gray-300">Allenamento personalizzato 1-to-1</p>
             </a>
             <a href="/bovolone-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">

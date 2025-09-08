@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import ContactInfo from "../components/contact/ContactInfo";
 import MUVContactForm from "../components/contact/MUVContactForm";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
 
 const Contatti = () => {
@@ -36,7 +35,8 @@ const Contatti = () => {
         structuredData={structuredData}
       />
       
-      <Navigation />
+      <BreadcrumbNavigation />
+      
     <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -106,7 +106,6 @@ const Contatti = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
     </>
   );

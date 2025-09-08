@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Zap, Activity, Heart, Users, TrendingUp, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
+import BreadcrumbNavigation from '@/components/SEO/BreadcrumbNavigation';
 import { getServiceSchema, getFAQSchema } from '@/utils/seoSchemas';
 
 const Servizi = () => {
@@ -99,6 +100,8 @@ const Servizi = () => {
         canonicalUrl="https://www.muvfitness.it/servizi"
         structuredData={structuredData}
       />
+
+      <BreadcrumbNavigation />
 
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { sendContactViaWeb3Forms } from '@/utils/mailAdapter';
+import GDPRConsent from '@/components/security/GDPRConsent';
 
 interface FormData {
   name: string;
@@ -11,6 +12,7 @@ interface FormData {
   message: string;
   obiettivo: string;
   honeypot: string;
+  gdprConsent: boolean;
 }
 
 interface MUVContactFormProps {
@@ -32,7 +34,8 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
     phone: '',
     message: '',
     obiettivo: defaultObjective,
-    honeypot: ''
+    honeypot: '',
+    gdprConsent: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -53,6 +56,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       return;
     }
 
+    if (!formData.gdprConsent) {
+      toast.error('È necessario accettare il trattamento dei dati per procedere');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -63,7 +71,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
         message: formData.message,
         telefono: formData.phone,
         obiettivo: formData.obiettivo,
-        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '',
+        access_key: process.env.WEB3FORMS_ACCESS_KEY || 'fallback-key',
         subject: `Nuova candidatura MUV - ${formData.name}`,
         from_name: formData.name,
         honeypot: formData.honeypot
@@ -73,7 +81,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       
       if (result.success) {
         toast.success('🎉 Candidatura inviata con successo! Ti ricontatteremo presto.');
-        setFormData({ name: '', email: '', phone: '', message: '', obiettivo: '', honeypot: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', obiettivo: '', honeypot: '', gdprConsent: false });
         onSuccess?.();
       } else {
         throw new Error(result.message || 'Errore invio modulo');
@@ -196,6 +204,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-700 resize-vertical"
             />
           </div>
+          
+          <GDPRConsent 
+            onConsentChange={(consented) => setFormData(prev => ({ ...prev, gdprConsent: consented }))}
+            required={true}
+          />
           
           <Button
             type="submit"
