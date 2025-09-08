@@ -11,6 +11,7 @@ const LocalBusinessSchema = lazy(() => import('@/components/SEO/LocalBusinessSch
 
 // Lazy load non-critical sections for better FCP
 const FeaturesSection = lazy(() => import('@/components/home/FeaturesSection'));
+const ProgramsSection = lazy(() => import('@/components/home/ProgramsSection'));
 const MethodSection = lazy(() => import('@/components/home/MethodSection'));
 const ProofSection = lazy(() => import('@/components/home/ProofSection'));
 const FAQSection = lazy(() => import('@/components/home/FAQSection'));
@@ -83,6 +84,7 @@ const Index = () => {
       {/* Lazy loaded sections with loading fallback */}
       <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
         <FeaturesSection />
+        <ProgramsSection />
         <MethodSection />
         <ProofSection />
       </Suspense>
@@ -94,7 +96,7 @@ const Index = () => {
             Serviamo Tutta la <span className="text-brand-primary">Bassa Veronese</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="/fitness-palestra-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+            <a href="/palestra-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Palestra Legnago</h3>
               <p className="text-gray-300">Centro fitness completo nel cuore di Legnago</p>
             </a>

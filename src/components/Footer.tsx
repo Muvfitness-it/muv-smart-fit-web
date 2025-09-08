@@ -51,7 +51,7 @@ const Footer = () => {
   return (
     <footer ref={footerRef} className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-8">
           {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold mb-4">Contatti</h3>
@@ -90,6 +90,9 @@ const Footer = () => {
               <Link to="/recensioni" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Recensioni
               </Link>
+              <Link to="/come-arrivare" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Come Arrivare
+              </Link>
             </div>
           </div>
 
@@ -115,14 +118,26 @@ const Footer = () => {
               <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Consulenza Nutrizionale
               </Link>
+              <Link to="/servizi/hiit" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                HIIT Training
+              </Link>
+              <Link to="/servizi/massoterapia" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Massoterapia
+              </Link>
+              <Link to="/servizi/vacuum-pressoterapia" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Vacuum Pressoterapia
+              </Link>
+              <Link to="/servizi/psicologo" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Psicologo dello Sport
+              </Link>
             </div>
           </div>
           {/* Zone di Servizio */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Zone di Servizio</h3>
             <div className="space-y-2">
-              <Link to="/fitness-palestra-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                Fitness Legnago
+              <Link to="/palestra-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Palestra Legnago
               </Link>
               <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 Personal Trainer Legnago
@@ -135,6 +150,25 @@ const Footer = () => {
               </Link>
               <Link to="/san-bonifacio-fitness" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
                 San Bonifacio
+              </Link>
+            </div>
+          </div>
+
+          {/* Approfondimenti */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Approfondimenti</h3>
+            <div className="space-y-2">
+              <Link to="/palestra-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Palestra Legnago
+              </Link>
+              <Link to="/mal-di-schiena-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Mal di Schiena
+              </Link>
+              <Link to="/massaggio-sportivo-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Massaggio Sportivo
+              </Link>
+              <Link to="/dimagrire-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+                Dimagrire Legnago
               </Link>
             </div>
           </div>
