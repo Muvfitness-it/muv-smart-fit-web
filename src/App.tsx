@@ -186,7 +186,7 @@ const AppContent = () => {
               >
                 Salta al contenuto principale
               </a>
-              <main id="main" className={isHome ? 'pt-0' : 'pt-[var(--header-height)]'}>
+              <main id="main" className="pt-[var(--header-height)]">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
                     <Route path="/" element={<Index />} />
