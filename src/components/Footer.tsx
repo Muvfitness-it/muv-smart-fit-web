@@ -56,9 +56,9 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
               <OptimizedImage
-                src="/lovable-uploads/bfb1580b-26fc-405c-9bf1-79d3a21fc285.png"
+                src={muvLogo}
                 alt="MUV Fitness - Centro Benessere e Personal Training Legnago"
-                className="h-28 w-auto object-contain brightness-150 contrast-125 drop-shadow-lg saturate-110"
+                className="h-28 w-auto object-contain bg-white/95 rounded-lg p-3 shadow-lg"
                 width={140}
                 height={84}
               />
