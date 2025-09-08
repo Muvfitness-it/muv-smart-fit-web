@@ -1,5 +1,6 @@
 
 import { lazy, Suspense, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import CompactHeroSection from '@/components/home/CompactHeroSection';
 import StickyMobileCTA from '@/components/home/StickyMobileCTA';
@@ -65,30 +66,30 @@ const Index = () => {
             Serviamo Tutta la <span className="text-brand-primary">Bassa Veronese</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="/palestra-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+            <Link to="/palestra-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Palestra Legnago</h3>
-              <p className="text-gray-300">Centro fitness completo nel cuore di Legnago</p>
-            </a>
-            <a href="/servizi/personal-training" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <p className="text-gray-200">Centro fitness completo nel cuore di Legnago</p>
+            </Link>
+            <Link to="/servizi/personal-training" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Personal Training</h3>
-              <p className="text-gray-300">Allenamento personalizzato 1-to-1</p>
-            </a>
-            <a href="/bovolone-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <p className="text-gray-200">Allenamento personalizzato 1-to-1</p>
+            </Link>
+            <Link to="/bovolone-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Bovolone Fitness</h3>
-              <p className="text-gray-300">A soli 15 minuti da Bovolone</p>
-            </a>
-            <a href="/cerea-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <p className="text-gray-200">A soli 15 minuti da Bovolone</p>
+            </Link>
+            <Link to="/cerea-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Cerea Fitness</h3>
-              <p className="text-gray-300">Facilmente raggiungibile da Cerea</p>
-            </a>
-            <a href="/san-bonifacio-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <p className="text-gray-200">Facilmente raggiungibile da Cerea</p>
+            </Link>
+            <Link to="/san-bonifacio-fitness" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">San Bonifacio Fitness</h3>
-              <p className="text-gray-300">Servizi fitness avanzati per San Bonifacio</p>
-            </a>
-            <a href="/dimagrire-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+              <p className="text-gray-200">Servizi fitness avanzati per San Bonifacio</p>
+            </Link>
+            <Link to="/dimagrire-legnago" className="block bg-gray-700 p-6 rounded-lg hover:bg-gray-600 transition-colors duration-300">
               <h3 className="text-xl font-bold text-white mb-2">Dimagrire Legnago</h3>
-              <p className="text-gray-300">Programmi dimagrimento personalizzati</p>
-            </a>
+              <p className="text-gray-200">Programmi dimagrimento personalizzati</p>
+            </Link>
           </div>
         </div>
       </section>
@@ -104,15 +105,16 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-black text-white mb-6">
             Pronto per la <span className="text-brand-accent">Trasformazione</span>?
           </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Consulenza gratuita + prova guidata. Nessun impegno, solo risultati concreti.
           </p>
-          <a 
-            href="/contatti" 
-            className="inline-block bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-xl"
+          <Link 
+            to="/contatti" 
+            className="no-underline min-h-[44px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-xl"
+            aria-label="Prenota la consulenza gratuita"
           >
             🚀 Prenota la Consulenza Gratuita
-          </a>
+          </Link>
         </div>
       </section>
       

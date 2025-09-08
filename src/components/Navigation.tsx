@@ -69,7 +69,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 xl:space-x-8">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-xs xl:text-sm font-medium transition-colors duration-300 hover:text-brand-primary whitespace-nowrap ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-brand-primary whitespace-nowrap ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
                 {item.name}
               </Link>)}
           </div>

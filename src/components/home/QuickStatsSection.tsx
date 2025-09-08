@@ -17,7 +17,7 @@ const QuickStatsSection = () => {
               <div className="text-3xl md:text-4xl font-black text-brand-accent mb-2">
                 {stat.number}
               </div>
-              <div className="text-sm md:text-base text-gray-300 font-medium">
+              <div className="text-sm md:text-base text-gray-100 font-medium">
                 {stat.label}
               </div>
             </div>
