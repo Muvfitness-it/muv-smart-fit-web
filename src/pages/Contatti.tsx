@@ -41,13 +41,19 @@ const Contatti = () => {
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-12 sm:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 px-2 leading-tight text-white">
-              Parla con noi: ti rispondiamo in pochi minuti
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 px-2 leading-tight text-white">
+              Trasforma il tuo corpo in 30 giorni
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-4 leading-relaxed">
-              <strong className="text-brand-primary">Ti richiamiamo entro 10 minuti</strong> negli orari di apertura. 
-              Scegli WhatsApp se preferisci un contatto rapido.
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto px-4 leading-relaxed mb-6">
+              <strong className="text-brand-primary">Consulenza gratuita</strong> senza impegno. 
+              Ti richiamiamo entro 10 minuti negli orari di apertura.
             </p>
+            
+            <div className="bg-brand-primary/20 border border-brand-primary/30 rounded-lg p-4 inline-block mb-6">
+              <p className="text-white text-base md:text-lg font-medium">
+                🔥 <strong>127+ trasformazioni completate</strong> quest'anno
+              </p>
+            </div>
           </header>
           
           {/* Pulsanti CTA principali */}
@@ -56,17 +62,17 @@ const Contatti = () => {
               href="https://wa.me/393291070374"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"
+              className="bg-green-600 hover:bg-green-700 text-white px-10 py-5 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl min-h-[64px] focus:outline-none focus:ring-4 focus:ring-green-300"
               aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
             >
-              Scrivici su WhatsApp
+              💬 SCRIVICI SU WHATSAPP
             </a>
             <a
               href="tel:+393291070374"
-              className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 min-h-[44px]"
+              className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-5 rounded-full font-bold transition-all duration-300 transform hover:scale-105 flex items-center justify-center min-h-[64px] text-lg shadow-xl"
               aria-label="Chiamaci al 329 107 0374"
             >
-              Chiamaci ora
+              📞 CHIAMACI ORA
             </a>
           </div>
           

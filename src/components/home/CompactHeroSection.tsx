@@ -17,14 +17,20 @@ const CompactHeroSection = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <h1 className="text-[clamp(28px,7vw,36px)] md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
-          Il tuo <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">Personal Trainer</span>
-          <br />a Legnago
+        <h1 className="text-[clamp(32px,7vw,42px)] md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+          Perdi <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">peso e tonifica</span>
+          <br />in soli 30 giorni
         </h1>
         
-        <p className="text-xl md:text-2xl text-white mb-8 font-semibold">
-          Risultati <span className="text-brand-accent">visibili in 30 giorni</span> con EMS + Pancafit
+        <p className="text-xl md:text-2xl text-white mb-6 font-semibold">
+          <span className="text-brand-accent">+127 trasformazioni</span> con il nostro metodo EMS + Pancafit
         </p>
+        
+        <div className="bg-brand-primary/20 border border-brand-primary/30 rounded-lg p-4 mb-6 inline-block">
+          <p className="text-white text-base md:text-lg font-medium">
+            ⏰ <strong>Solo 15 posti disponibili</strong> per novembre 2024
+          </p>
+        </div>
         
         {/* Compact Services */}
         <div className="flex flex-wrap justify-center gap-4 mb-8 text-base md:text-lg text-white">
@@ -38,20 +44,24 @@ const CompactHeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
             to="/contatti" 
-            className="no-underline min-h-[44px] flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105 shadow-xl"
+            className="no-underline min-h-[56px] flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-10 py-5 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl"
             aria-label="Prenota consulenza gratuita"
           >
-            🚀 Consulenza Gratuita
+            🎯 OTTIENI I RISULTATI CHE VUOI
           </Link>
           
           <a 
             href="tel:+393291070374" 
-            className="no-underline min-h-[44px] flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur text-white hover:bg-white/20 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300"
+            className="no-underline min-h-[56px] flex items-center justify-center border-2 border-white/40 bg-white/15 backdrop-blur text-white hover:bg-white/25 px-8 py-5 rounded-full text-lg font-bold transition-all duration-300"
             aria-label="Chiama ora il numero +39 329 107 0374"
           >
-            📞 Chiama Ora
+            📞 Chiamaci Ora
           </a>
         </div>
+        
+        <p className="text-white/80 text-sm mt-4">
+          ✓ Consulenza 100% gratuita ✓ Senza impegno ✓ Risposta in 10 minuti
+        </p>
       </div>
     </section>
   );

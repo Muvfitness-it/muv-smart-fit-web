@@ -51,8 +51,8 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       return; // Bot detected
     }
     
-    if (!formData.name || !formData.email || !formData.phone || !formData.message || !formData.obiettivo) {
-      toast.error('Compila tutti i campi richiesti');
+    if (!formData.name || !formData.email || !formData.phone) {
+      toast.error('Compila nome, email e telefono per continuare');
       return;
     }
 
@@ -98,8 +98,10 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
     <Card className={`bg-white border-brand-primary/30 shadow-xl ${className}`}>
       <CardContent className="p-8">
         <div className="text-center mb-8">
-          <p className="text-2xl font-heading text-gray-900 mb-2">COMPILA IL MODULO:</p>
-          <p className="text-gray-600 text-lg">(inserisci tutti i dati in modo corretto.)</p>
+          <p className="text-2xl font-heading text-gray-900 mb-2">OTTIENI LA TUA CONSULENZA GRATUITA</p>
+          <p className="text-gray-600 text-base">
+            ⏱️ <strong>Ci vogliono solo 30 secondi</strong> - Ti ricontatteremo entro 10 minuti
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -164,12 +166,11 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
 
           <div>
             <label htmlFor="obiettivo" className="block text-lg font-bold text-gray-900 mb-2">
-              Qual è il tuo obiettivo?
+              Qual è il tuo obiettivo? <span className="text-gray-500 font-normal">(opzionale)</span>
             </label>
             <select
               name="obiettivo"
               id="obiettivo"
-              required
               value={formData.obiettivo}
               onChange={handleChange}
               className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 appearance-none"
@@ -187,22 +188,23 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
               <option value="Cellulite e ritenzione idrica" className="bg-white text-gray-900">Cellulite e ritenzione idrica</option>
               <option value="Preparazione atletica" className="bg-white text-gray-900">Preparazione atletica</option>
             </select>
+            <p className="text-sm text-gray-500 mt-1">Ci aiuta a prepararci meglio per la tua consulenza</p>
           </div>
 
           <div>
             <label htmlFor="message" className="block text-lg font-bold text-gray-900 mb-2">
-              Messaggio
+              Messaggio <span className="text-gray-500 font-normal">(opzionale)</span>
             </label>
             <textarea
               name="message"
               id="message"
-              required
               value={formData.message}
               onChange={handleChange}
-              placeholder="Scrivi qui il tuo messaggio"
-              rows={4}
-              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-700 resize-vertical"
+              placeholder="Raccontaci qualcosa di più sui tuoi obiettivi..."
+              rows={3}
+              className="w-full p-4 bg-white border-2 border-gray-300 rounded-lg focus:border-brand-primary focus:ring-0 transition text-lg text-gray-900 placeholder:text-gray-500 resize-vertical"
             />
+            <p className="text-sm text-gray-500 mt-1">Non obbligatorio - puoi dircelo anche durante la consulenza</p>
           </div>
           
           <GDPRConsent 
@@ -213,10 +215,19 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black font-bold py-4 px-6 text-xl rounded-lg transition-all duration-300 transform hover:scale-105 border-0"
+            className="w-full bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white font-black py-6 px-6 text-xl rounded-lg transition-all duration-300 transform hover:scale-105 border-0 shadow-2xl min-h-[64px]"
           >
-            {isSubmitting ? 'INVIO IN CORSO...' : 'INVIA MODULO'}
+            {isSubmitting ? '⏳ INVIO IN CORSO...' : '🎯 OTTIENI LA TUA CONSULENZA GRATUITA'}
           </Button>
+          
+          <div className="text-center mt-4 space-y-2">
+            <p className="text-sm text-gray-600">
+              ✓ 100% Gratuito ✓ Nessun impegno ✓ Risposta garantita in 10 minuti
+            </p>
+            <p className="text-xs text-gray-500">
+              Oltre 127 persone hanno già trasformato il loro corpo con noi
+            </p>
+          </div>
         </form>
       </CardContent>
     </Card>

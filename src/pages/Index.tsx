@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import CompactHeroSection from '@/components/home/CompactHeroSection';
 import StickyMobileCTA from '@/components/home/StickyMobileCTA';
 import QuickStatsSection from '@/components/home/QuickStatsSection';
+import TrustBar from '@/components/home/TrustBar';
 
 // Defer only non-critical SEO components to improve Speed Index
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
@@ -36,6 +37,9 @@ const Index = () => {
     <div className="min-h-screen bg-gray-900">
       {/* Compact Hero Section */}
       <CompactHeroSection />
+      
+      {/* Trust Bar */}
+      <TrustBar />
       
       {/* SEO Head - Critical for indexing */}
       <UnifiedSEOHead
@@ -110,10 +114,10 @@ const Index = () => {
           </p>
           <Link 
             to="/contatti" 
-            className="no-underline min-h-[44px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-xl"
+            className="no-underline min-h-[56px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-10 py-5 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl"
             aria-label="Prenota la consulenza gratuita"
           >
-            🚀 Prenota la Consulenza Gratuita
+            🎯 OTTIENI I TUOI RISULTATI
           </Link>
         </div>
       </section>
