@@ -97,7 +97,7 @@ const ProgramsSection = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-brand-primary transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-brand-primary transition-colors duration-300">
                     {program.title}
                   </h3>
 
@@ -107,14 +107,14 @@ const ProgramsSection = () => {
                   </p>
 
                   {/* Description */}
-                  <p className="text-gray-300 text-sm mb-4 flex-1">
+                  <p className="text-gray-300 text-base mb-4 flex-1">
                     {program.description}
                   </p>
 
                   {/* Highlights */}
                   <div className="space-y-2 mb-6">
                     {program.highlights.map((highlight, index) => (
-                      <div key={index} className="flex items-center text-xs text-gray-400">
+                      <div key={index} className="flex items-center text-sm text-gray-400">
                         <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${program.gradient} mr-2 flex-shrink-0`} />
                         {highlight}
                       </div>
