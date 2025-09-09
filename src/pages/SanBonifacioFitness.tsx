@@ -2,6 +2,7 @@ import React from 'react';
 import StaticSEO from '@/components/SEO/StaticSEO';
 import EnhancedFAQSchema from '@/components/SEO/EnhancedFAQSchema';
 import BreadcrumbSchema from '@/components/SEO/BreadcrumbSchema';
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
 const SanBonifacioFitness = () => {
   const structuredData = {
@@ -50,6 +51,7 @@ const SanBonifacioFitness = () => {
       />
       <BreadcrumbSchema />
       <EnhancedFAQSchema faqs={faqs} pageTitle="Fitness San Bonifacio - Domande Frequenti" />
+      <BreadcrumbNavigation />
 
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">

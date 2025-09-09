@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from "react-helmet";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
 interface ServicePageLayoutProps {
   children: React.ReactNode;
@@ -47,6 +48,7 @@ export const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({
         )}
       </Helmet>
       
+      <BreadcrumbNavigation />
       <main>{children}</main>
     </>
   );

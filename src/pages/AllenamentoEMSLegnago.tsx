@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import StaticSEO from "@/components/SEO/StaticSEO";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
 const AllenamentoEMSLegnago: React.FC = () => {
   const canonical = "https://www.muvfitness.it/allenamento-ems-legnago/";
@@ -50,7 +51,8 @@ const AllenamentoEMSLegnago: React.FC = () => {
         canonical={canonical}
         structuredData={structuredData}
       />
-
+      
+      <BreadcrumbNavigation />
       <header className="bg-gradient-to-br from-purple-600/20 via-gray-900 to-blue-600/20">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Allenamento EMS a Legnago (Elettrostimolazione)</h1>

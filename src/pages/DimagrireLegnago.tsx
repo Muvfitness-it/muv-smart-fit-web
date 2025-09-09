@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Target, Zap, TrendingDown, Heart, Scale, Clock } from 'lucide-react';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
 const DimagrireLegnago = () => {
   const programmi = [
@@ -127,6 +128,7 @@ const DimagrireLegnago = () => {
       </Helmet>
       
       <LocalBusinessSchema />
+      <BreadcrumbNavigation />
 
       {/* Hero Section */}
       <section className="relative py-20 px-4 bg-gradient-to-br from-red-50 to-orange-50">

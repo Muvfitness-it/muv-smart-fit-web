@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
 const Privacy = () => {
   return (
@@ -15,6 +16,7 @@ const Privacy = () => {
       />
       
       <Navigation />
+      <BreadcrumbNavigation />
     <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
