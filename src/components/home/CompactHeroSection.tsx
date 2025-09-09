@@ -28,7 +28,7 @@ const CompactHeroSection = () => {
         
         <div className="bg-brand-primary/20 border border-brand-primary/30 rounded-lg p-4 mb-6 inline-block">
           <p className="text-white text-base md:text-lg font-medium">
-            ⏰ <strong>Solo 15 posti disponibili</strong> per novembre 2024
+            ⏰ <strong>Solo 15 posti disponibili</strong> al mese
           </p>
         </div>
         
