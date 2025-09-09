@@ -94,25 +94,25 @@ const BreadcrumbNavigation = () => {
             {breadcrumbs.map((crumb, index) => (
               <li key={crumb.path} className="flex items-center">
                 {index > 0 && (
-                  <ChevronRight className="w-4 h-4 text-muted-foreground mx-2" />
+                  <ChevronRight className="w-4 h-4 text-white mx-2" />
                 )}
                 {index === 0 ? (
                   <Link 
                     to={crumb.path} 
-                    className="flex items-center text-muted-foreground hover:text-primary transition-colors"
+                    className="flex items-center text-white font-bold hover:text-primary transition-colors"
                     aria-label="Torna alla homepage"
                   >
                     <Home className="w-4 h-4 mr-1" />
                     {crumb.label}
                   </Link>
                 ) : index === breadcrumbs.length - 1 ? (
-                  <span className="text-foreground font-medium" aria-current="page">
+                  <span className="text-white font-bold" aria-current="page">
                     {crumb.label}
                   </span>
                 ) : (
                   <Link 
                     to={crumb.path} 
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-white font-bold hover:text-primary transition-colors"
                   >
                     {crumb.label}
                   </Link>
