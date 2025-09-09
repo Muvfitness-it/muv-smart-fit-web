@@ -34,10 +34,10 @@ const CompactHeroSection = () => {
         
         {/* Compact Services */}
         <div className="flex flex-wrap justify-center gap-4 mb-8 text-base md:text-lg text-white">
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">⚡ EMS</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🧘 Pancafit</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">💪 Personal Training</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🌟 Pilates Reformer</span>
+          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">⚡ DIMAGRIMENTO</span>
+          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🧘 MAL DI SCHIENA</span>
+          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">💪 PERSONAL TRAINER</span>
+          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🌟 PILATES CON MACCHINARI</span>
         </div>
         
         {/* CTAs */}
