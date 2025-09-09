@@ -28,6 +28,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
   className = "",
   defaultObjective = ""
 }) => {
+  console.log('MUVContactForm component rendered');
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',

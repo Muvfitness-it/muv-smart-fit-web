@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import ContactInfo from "../components/contact/ContactInfo";
-import MUVContactForm from "../components/contact/MUVContactForm";
+import ContactInfo from "@/components/contact/ContactInfo";
+import MUVContactForm from "@/components/contact/MUVContactForm";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";

@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail } from "lucide-react";
 
+console.log('ContactInfo component loaded');
 const ContactInfo = () => {
   return (
     <div className="space-y-8">
