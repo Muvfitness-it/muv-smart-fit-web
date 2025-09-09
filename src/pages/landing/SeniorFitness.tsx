@@ -66,7 +66,7 @@ const SeniorFitness = () => {
       
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-brand-primary/10 via-background to-brand-secondary/10 pt-20 pb-16">
+        <section className="relative bg-gradient-to-br from-brand-primary/10 via-background to-brand-secondary/10 pt-[var(--header-height)] pb-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-6">
