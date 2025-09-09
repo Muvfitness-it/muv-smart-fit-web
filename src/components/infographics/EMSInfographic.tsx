@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Zap, Clock, Target, TrendingUp } from 'lucide-react';
-import emsInfographic from '@/assets/infographic-ems-new.jpg';
+import emsInfographic from '@/assets/infographic-ems-visual.jpg';
 
 const EMSInfographic: React.FC = () => {
   const benefits = [

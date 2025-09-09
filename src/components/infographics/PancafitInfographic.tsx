@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Activity, Heart, Shield, RefreshCw } from 'lucide-react';
-import pancafitInfographic from '@/assets/infographic-pancafit.jpg';
+import pancafitInfographic from '@/assets/infographic-pancafit-visual.jpg';
 
 const PancafitInfographic: React.FC = () => {
   const benefits = [

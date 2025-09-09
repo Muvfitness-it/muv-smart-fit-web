@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Droplets, Wind, RotateCw, Heart } from 'lucide-react';
-import vacuumInfographic from '@/assets/infographic-vacuum-pressoterapia.jpg';
+import vacuumInfographic from '@/assets/infographic-vacuum-visual.jpg';
 
 const VacuumPressoterapiaInfographic: React.FC = () => {
   const benefits = [

@@ -8,6 +8,7 @@ import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
+import PilatesInfographic from "@/components/infographics/PilatesInfographic";
 
 const Pilates = () => {
   const faqs = [
@@ -73,6 +74,13 @@ const Pilates = () => {
             { text: "Pilates Reformer" }
           ]}
         />
+
+        {/* Pilates Infographic */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <PilatesInfographic />
+          </div>
+        </section>
 
         {/* What is Pilates Reformer */}
         <section className="py-16 bg-gray-50">
