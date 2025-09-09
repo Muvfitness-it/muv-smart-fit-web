@@ -29,6 +29,9 @@ const Navigation = () => {
   }, [isOpen]);
   // Simplified main navigation - clean and focused
   const navItems = [{
+    name: "Home",
+    path: "/"
+  }, {
     name: "Chi Siamo",
     path: "/chi-siamo"
   }, {

@@ -33,11 +33,12 @@ const CompactHeroSection = () => {
         </div>
         
         {/* Compact Services */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8 text-base md:text-lg text-white">
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">⚡ DIMAGRIMENTO</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🧘 MAL DI SCHIENA</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">💪 PERSONAL TRAINER</span>
-          <span className="bg-white/15 border border-white/20 px-4 py-2 rounded-full">🌟 PILATES CON MACCHINARI</span>
+        <div className="flex flex-wrap justify-center gap-3 mb-8 text-sm md:text-base text-white">
+          <Link to="/dimagrire-legnago" className="bg-white/15 border border-white/20 px-4 py-2 rounded-full hover:bg-white/25 transition-colors duration-300 no-underline text-white">⚡ DIMAGRIMENTO</Link>
+          <Link to="/mal-di-schiena-legnago" className="bg-white/15 border border-white/20 px-4 py-2 rounded-full hover:bg-white/25 transition-colors duration-300 no-underline text-white">🧘 MAL DI SCHIENA</Link>
+          <Link to="/servizi/personal-training" className="bg-white/15 border border-white/20 px-4 py-2 rounded-full hover:bg-white/25 transition-colors duration-300 no-underline text-white">💪 PERSONAL TRAINER</Link>
+          <Link to="/servizi/pilates" className="bg-white/15 border border-white/20 px-4 py-2 rounded-full hover:bg-white/25 transition-colors duration-300 no-underline text-white">🌟 PILATES CON MACCHINARI</Link>
+          <Link to="/servizi/small-group" className="bg-white/15 border border-white/20 px-4 py-2 rounded-full hover:bg-white/25 transition-colors duration-300 no-underline text-white">🧘‍♀️ GINNASTICA DOLCE</Link>
         </div>
         
         {/* CTAs */}
