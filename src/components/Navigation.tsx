@@ -27,6 +27,24 @@ const Navigation = () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  // Keep main content padding in sync with actual header height
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      const header = document.querySelector('nav.site-header') as HTMLElement | null;
+      if (header) {
+        const height = header.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${height}px`);
+      }
+    };
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    window.addEventListener('orientationchange', updateHeaderHeight);
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+      window.removeEventListener('orientationchange', updateHeaderHeight);
+    };
+  }, [isScrolled, location.pathname]);
   // Simplified main navigation - clean and focused
   const navItems = [{
     name: "Home",
