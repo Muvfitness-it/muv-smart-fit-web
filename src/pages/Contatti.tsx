@@ -5,6 +5,8 @@ import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
 
+console.log('Contatti page loading...');
+
 const Contatti = () => {
   const faqs = [
     {
@@ -45,11 +47,11 @@ const Contatti = () => {
               Trasforma il tuo corpo in 30 giorni
             </h1>
             <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto px-4 leading-relaxed mb-6">
-              <strong className="text-brand-primary">Consulenza gratuita</strong> senza impegno. 
+              <strong className="text-primary">Consulenza gratuita</strong> senza impegno. 
               Ti richiamiamo entro 10 minuti negli orari di apertura.
             </p>
             
-            <div className="bg-brand-primary/20 border border-brand-primary/30 rounded-lg p-4 inline-block mb-6">
+            <div className="bg-primary/20 border border-primary/30 rounded-lg p-4 inline-block mb-6">
               <p className="text-white text-base md:text-lg font-medium">
                 🔥 <strong>127+ trasformazioni completate</strong> quest'anno
               </p>
