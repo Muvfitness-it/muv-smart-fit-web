@@ -68,15 +68,11 @@ const FloatingCTA = lazy(() => import("./components/ui/FloatingCTA"));
 // SEO pages - lazy loaded
 const AllenamentoEMSLegnago = lazy(() => import("./pages/AllenamentoEMSLegnago"));
 const PilatesLegnago = lazy(() => import("./pages/PilatesLegnago"));
-const PalestraLegnago = lazy(() => import("./pages/PalestraLegnago"));
+
 const DimagrireLegnago = lazy(() => import("./pages/DimagrireLegnago"));
 const MalDiSchienaLegnago = lazy(() => import("./pages/MalDiSchienaLegnago"));
 const MassaggioSportivoLegnago = lazy(() => import("./pages/MassaggioSportivoLegnago"));
 
-// Nearby towns SEO pages - lazy loaded
-const CereaFitness = lazy(() => import("./pages/CereaFitness"));
-const BovaloneFitness = lazy(() => import("./pages/BovaloneFitness"));
-const SanBonifacioFitness = lazy(() => import("./pages/SanBonifacioFitness"));
 
 // Security and admin components - lazy loaded
 const SecureDataHandler = lazy(() => import("@/components/security/SecureDataHandler").then(m => ({ default: m.SecureDataHandler })));
@@ -214,15 +210,9 @@ const AppContent = () => {
                     <Route path="/servizi/vacuum-pressoterapia" element={<VacuumPressoterapia />} />
 
                     {/* New SEO pages for Legnago keywords */}
-                    <Route path="/palestra-legnago" element={<PalestraLegnago />} />
                     <Route path="/dimagrire-legnago" element={<DimagrireLegnago />} />
                     <Route path="/mal-di-schiena-legnago" element={<MalDiSchienaLegnago />} />
                     <Route path="/massaggio-sportivo-legnago" element={<MassaggioSportivoLegnago />} />
-                    
-                    {/* Nearby towns SEO pages */}
-                    <Route path="/cerea-fitness" element={<CereaFitness />} />
-                    <Route path="/bovolone-fitness" element={<BovaloneFitness />} />
-                    <Route path="/san-bonifacio-fitness" element={<SanBonifacioFitness />} />
 
                     {/* Legacy SEO pages - redirects */}
                     <Route path="/personal-trainer-legnago" element={<Navigate to="/servizi/personal-training" replace />} />
