@@ -75,26 +75,29 @@
       const img2 = new Image(); 
       img2.src = '/images/fitness-professional-bg.jpg';
       
-      // Load main CSS asynchronously to prevent render blocking
-      const loadCSS = (href) => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        link.media = 'print';
-        link.onload = () => { link.media = 'all'; };
-        document.head.appendChild(link);
-      };
-      
-      // Load main CSS bundle non-blocking
-      window.addEventListener('DOMContentLoaded', () => {
-        // Get the main CSS file from the head
-        const mainCSSLink = document.querySelector('link[href*="index-"][href$=".css"]');
-        if (mainCSSLink) {
-          const href = mainCSSLink.href;
-          mainCSSLink.remove();
-          loadCSS(href);
-        }
-      });
+      // Make main CSS non-blocking using media-swap; handle existing and future links
+      (function() {
+        const makeNonBlocking = (link) => {
+          if (!link || link.dataset.asyncApplied) return;
+          link.media = 'print';
+          link.onload = () => { link.media = 'all'; link.onload = null; };
+          link.dataset.asyncApplied = 'true';
+        };
+        // Handle existing link
+        const existing = document.querySelector('link[href*="index-"][href$=".css"]');
+        if (existing) makeNonBlocking(existing);
+        // Observe future additions (in case Vite injects after this script)
+        const obs = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            m.addedNodes.forEach((node) => {
+              if (node.tagName === 'LINK' && node.rel === 'stylesheet' && node.href.includes('index-') && node.href.endsWith('.css')) {
+                makeNonBlocking(node);
+              }
+            });
+          }
+        });
+        obs.observe(document.documentElement || document, { childList: true, subtree: true });
+      })();
     </script>
     
     <!-- PWA Manifest -->
