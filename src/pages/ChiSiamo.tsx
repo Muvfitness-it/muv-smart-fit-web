@@ -44,8 +44,8 @@ const ChiSiamo = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
               <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center"
-                alt="Centro fitness Centro fitness MUV Legnago con tecnologie avanzate e ambiente esclusivo"
+                src="/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png"
+                alt="Trainer professionista MUV Fitness Legnago con tuta EMS, specializzato in allenamento personalizzato"
                 className="rounded-lg shadow-xl w-full h-64 sm:h-80 object-cover"
                 loading="lazy"
               />
