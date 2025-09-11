@@ -46,7 +46,7 @@ const ChiSiamo = () => {
               <img
                 src="/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png"
                 alt="Trainer professionista MUV Fitness Legnago con tuta EMS, specializzato in allenamento personalizzato"
-                className="rounded-lg shadow-xl w-full h-64 sm:h-80 object-cover"
+                className="rounded-lg shadow-xl w-full h-80 sm:h-96 lg:h-[500px] object-contain bg-gray-800"
                 loading="lazy"
               />
             </div>
