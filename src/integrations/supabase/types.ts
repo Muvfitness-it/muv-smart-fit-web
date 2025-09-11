@@ -925,7 +925,26 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profiles_secure: {
+        Row: {
+          activity_level: string | null
+          avatar_url: string | null
+          created_at: string | null
+          date_of_birth: string | null
+          email: string | null
+          first_name: string | null
+          fitness_goal: string | null
+          gender: string | null
+          height: number | null
+          id: string | null
+          last_name: string | null
+          phone: string | null
+          updated_at: string | null
+          user_id: string | null
+          weight: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       anonymize_old_data: {
@@ -955,6 +974,14 @@ export type Database = {
       current_user_has_role: {
         Args: { _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
+      }
+      decrypt_sensitive_field: {
+        Args: { encrypted_data: string; encryption_key?: string }
+        Returns: string
+      }
+      encrypt_sensitive_field: {
+        Args: { encryption_key?: string; input_text: string }
+        Returns: string
       }
       fix_and_format_articles: {
         Args: Record<PropertyKey, never>
