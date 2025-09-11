@@ -31,8 +31,9 @@ Crawl-delay: 1
 
 # Sitemap locations
 Sitemap: https://www.muvfitness.it/sitemap.xml
-Sitemap: https://www.muvfitness.it/sitemap-main.xml  
-Sitemap: https://www.muvfitness.it/sitemap-blog.xml
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/blog-sitemap
+Sitemap: https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/news-sitemap
 
 # Additional bot directives
 User-agent: GPTBot
