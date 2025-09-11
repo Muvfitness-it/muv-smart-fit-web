@@ -24,11 +24,16 @@ serve(async (req) => {
       .select('slug, published_at, updated_at, title')
       .eq('status', 'published')
       .not('published_at', 'is', null)
-      .order('published_at', { ascending: false });
+      .order('published_at', { ascending: false })
+      .limit(1000); // Limit to prevent huge sitemaps
 
     if (error) {
+      console.error('Database error:', error);
       throw error;
     }
+
+    console.log(`Found ${posts?.length || 0} published blog posts`);
+    
 
     if (!posts || posts.length === 0) {
       const emptySitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -97,12 +102,18 @@ ${sitemapEntries}
   } catch (error) {
     console.error('Error generating blog sitemap:', error);
     
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    // Return a basic XML error response instead of JSON
+    const errorSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Error: ${error.message} -->
+</urlset>`;
+    
+    return new Response(errorSitemap, {
+      status: 500,
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/xml',
+      },
+    });
   }
 });

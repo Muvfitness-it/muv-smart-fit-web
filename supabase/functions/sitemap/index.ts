@@ -116,12 +116,18 @@ ${allPages.map(page => {
   } catch (error) {
     console.error('Error generating sitemap:', error);
     
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    // Return a basic XML error response instead of JSON
+    const errorSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Error: ${error.message} -->
+</urlset>`;
+    
+    return new Response(errorSitemap, {
+      status: 500,
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/xml',
+      },
+    });
   }
 });
