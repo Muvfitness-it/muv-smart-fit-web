@@ -716,6 +716,48 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles_sensitive: {
+        Row: {
+          access_count: number | null
+          created_at: string
+          date_of_birth_encrypted: string | null
+          email_encrypted: string | null
+          email_hash: string | null
+          id: string
+          last_accessed: string | null
+          phone_encrypted: string | null
+          phone_hash: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_count?: number | null
+          created_at?: string
+          date_of_birth_encrypted?: string | null
+          email_encrypted?: string | null
+          email_hash?: string | null
+          id?: string
+          last_accessed?: string | null
+          phone_encrypted?: string | null
+          phone_hash?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_count?: number | null
+          created_at?: string
+          date_of_birth_encrypted?: string | null
+          email_encrypted?: string | null
+          email_hash?: string | null
+          id?: string
+          last_accessed?: string | null
+          phone_encrypted?: string | null
+          phone_hash?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           created_at: string | null
