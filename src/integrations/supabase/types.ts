@@ -721,12 +721,15 @@ export type Database = {
           access_count: number | null
           created_at: string
           date_of_birth_encrypted: string | null
+          date_of_birth_masked: string | null
           email_encrypted: string | null
           email_hash: string | null
+          email_masked: string | null
           id: string
           last_accessed: string | null
           phone_encrypted: string | null
           phone_hash: string | null
+          phone_masked: string | null
           updated_at: string
           user_id: string
         }
@@ -734,12 +737,15 @@ export type Database = {
           access_count?: number | null
           created_at?: string
           date_of_birth_encrypted?: string | null
+          date_of_birth_masked?: string | null
           email_encrypted?: string | null
           email_hash?: string | null
+          email_masked?: string | null
           id?: string
           last_accessed?: string | null
           phone_encrypted?: string | null
           phone_hash?: string | null
+          phone_masked?: string | null
           updated_at?: string
           user_id: string
         }
@@ -747,12 +753,15 @@ export type Database = {
           access_count?: number | null
           created_at?: string
           date_of_birth_encrypted?: string | null
+          date_of_birth_masked?: string | null
           email_encrypted?: string | null
           email_hash?: string | null
+          email_masked?: string | null
           id?: string
           last_accessed?: string | null
           phone_encrypted?: string | null
           phone_hash?: string | null
+          phone_masked?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -925,7 +934,26 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profiles_secure: {
+        Row: {
+          activity_level: string | null
+          avatar_url: string | null
+          created_at: string | null
+          date_of_birth: string | null
+          email: string | null
+          first_name: string | null
+          fitness_goal: string | null
+          gender: string | null
+          height: number | null
+          id: string | null
+          last_name: string | null
+          phone: string | null
+          updated_at: string | null
+          user_id: string | null
+          weight: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       anonymize_old_data: {
