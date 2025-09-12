@@ -964,6 +964,17 @@ export type Database = {
         Args: { input_content: string }
         Returns: string
       }
+      get_public_comments: {
+        Args: { p_post_id: string }
+        Returns: {
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+          status: string
+        }[]
+      }
       get_secure_profile_data: {
         Args: { target_user_id?: string }
         Returns: {
