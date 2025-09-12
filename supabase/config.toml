@@ -30,18 +30,15 @@ password_require_lowercase = true
 password_require_numbers = true
 password_require_special = true
 max_password_length = 128
-
-# Enhanced security settings
-[auth.external]
 enable_leaked_password_protection = true
 
 [auth.sessions]
 timebox = 3600
 inactivity_timeout = 1800
 
-# Reduce OTP expiry for better security (from default 86400 to 3600 = 1 hour)  
+# Optimized OTP expiry for better security (reduced from 300s to 180s)
 [auth.otp]
-expiry = 300
+expiry = 180
 
 # Secure endpoints - require authentication or HMAC
 [functions.log-visit]
