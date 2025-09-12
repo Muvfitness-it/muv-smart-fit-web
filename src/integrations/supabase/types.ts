@@ -983,26 +983,6 @@ export type Database = {
         Args: { input_content: string }
         Returns: string
       }
-      get_secure_profile: {
-        Args: { target_user_id?: string }
-        Returns: {
-          activity_level: string
-          avatar_url: string
-          created_at: string
-          date_of_birth: string
-          email: string
-          first_name: string
-          fitness_goal: string
-          gender: string
-          height: number
-          id: string
-          last_name: string
-          phone: string
-          updated_at: string
-          user_id: string
-          weight: number
-        }[]
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
