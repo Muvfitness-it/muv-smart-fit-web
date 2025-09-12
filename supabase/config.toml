@@ -39,6 +39,10 @@ enable_leaked_password_protection = true
 timebox = 3600
 inactivity_timeout = 1800
 
+# Reduce OTP expiry for better security (from default 86400 to 3600 = 1 hour)
+[auth.otp]
+expiry = 3600
+
 # Enable leaked password protection (security fix)
 [auth.password_security]
 password_min_length = 8

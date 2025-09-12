@@ -925,26 +925,7 @@ export type Database = {
       }
     }
     Views: {
-      profiles_secure: {
-        Row: {
-          activity_level: string | null
-          avatar_url: string | null
-          created_at: string | null
-          date_of_birth: string | null
-          email: string | null
-          first_name: string | null
-          fitness_goal: string | null
-          gender: string | null
-          height: number | null
-          id: string | null
-          last_name: string | null
-          phone: string | null
-          updated_at: string | null
-          user_id: string | null
-          weight: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       anonymize_old_data: {

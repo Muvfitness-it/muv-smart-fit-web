@@ -68,18 +68,17 @@ const AdminUserManagement: React.FC = () => {
         throw rolesError;
       }
 
-      // Then get profile data for each user
+      // Then get profile data for each user using secure function
         const usersWithProfiles = await Promise.all(
           (userRoles || []).map(async (userRole) => {
             const { data: profile } = await supabase
-              .from('profiles_secure')
-              .select('email, first_name, last_name')
-              .eq('user_id', userRole.user_id)
-              .single();
+              .rpc('get_secure_profile_data', { target_user_id: userRole.user_id });
+            
+            const profileData = profile && profile.length > 0 ? profile[0] : null;
             
             return {
               ...userRole,
-              profiles: profile || { email: 'Email non disponibile' }
+              profiles: profileData || { email: 'Email non disponibile', first_name: '', last_name: '' }
             };
           })
         );
