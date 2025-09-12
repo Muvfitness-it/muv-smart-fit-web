@@ -925,7 +925,38 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      approved_comments_public: {
+        Row: {
+          author_name: string | null
+          content: string | null
+          created_at: string | null
+          id: string | null
+          post_id: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          post_id?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          post_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approved_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       anonymize_old_data: {
@@ -964,15 +995,13 @@ export type Database = {
         Args: { input_content: string }
         Returns: string
       }
-      get_public_comments: {
+      get_approved_comments_for_post: {
         Args: { p_post_id: string }
         Returns: {
           author_name: string
           content: string
           created_at: string
           id: string
-          post_id: string
-          status: string
         }[]
       }
       get_secure_profile_data: {
