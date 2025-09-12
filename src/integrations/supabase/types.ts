@@ -973,6 +973,18 @@ export type Database = {
           id: string
         }[]
       }
+      get_comments_for_admin_moderation: {
+        Args: { p_limit?: number }
+        Returns: {
+          author_name: string
+          content: string
+          created_at: string
+          email_masked: string
+          id: string
+          post_id: string
+          status: string
+        }[]
+      }
       get_secure_profile_data: {
         Args: { target_user_id?: string }
         Returns: {
