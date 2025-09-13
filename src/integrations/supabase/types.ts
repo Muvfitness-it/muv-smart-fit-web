@@ -904,6 +904,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_update_comment_status: {
+        Args: { p_comment_id: string; p_status: string }
+        Returns: boolean
+      }
       anonymize_old_data: {
         Args: Record<PropertyKey, never>
         Returns: undefined
