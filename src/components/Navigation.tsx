@@ -56,9 +56,6 @@ const Navigation = () => {
     name: "Servizi",
     path: "/servizi"
   }, {
-    name: "Blog",
-    path: "/blog"
-  }, {
     name: "Team",
     path: "/team"
   }, {
@@ -67,6 +64,9 @@ const Navigation = () => {
   }, {
     name: "Contatti",
     path: "/contatti"
+  }, {
+    name: "Blog",
+    path: "/blog"
   }];
   return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center glass-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
