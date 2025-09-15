@@ -8,10 +8,13 @@ import StickyMobileCTA from '@/components/home/StickyMobileCTA';
 import QuickStatsSection from '@/components/home/QuickStatsSection';
 import TrustBar from '@/components/home/TrustBar';
 
-// Performance optimization imports
+// Performance optimization imports - mobile focused
 import FCPOptimizer from '@/components/optimization/FCP-Optimizer';
 import UnusedCodeRemover from '@/components/optimization/UnusedCodeRemover';
 import CacheOptimizer from '@/components/optimization/CacheOptimizer';
+import MobileOptimizer from '@/components/optimization/MobileOptimizer';
+import ImageCompressor from '@/components/optimization/ImageCompressor';
+import CSSMinifier from '@/components/optimization/CSSMinifier';
 
 // Defer only non-critical SEO components to improve Speed Index
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
@@ -44,8 +47,11 @@ const Index = () => {
 
   return (
     <>
-      {/* Critical performance optimizers - render first */}
+      {/* Critical performance optimizers - mobile first */}
+      <MobileOptimizer />
       <FCPOptimizer />
+      <ImageCompressor />
+      <CSSMinifier />
       <UnusedCodeRemover />
       <CacheOptimizer />
       
@@ -70,8 +76,10 @@ const Index = () => {
         
         {/* Programs Section */}
         <Suspense fallback={
-          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700 animate-pulse" 
-               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }} />
+          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700" 
+               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }}>
+            <div className="animate-pulse bg-gray-700 h-full rounded"></div>
+          </div>
         }>
           <div className="below-fold">
             <ProgramsSection />
@@ -80,8 +88,10 @@ const Index = () => {
         
         {/* Brief Method Preview */}
         <Suspense fallback={
-          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700 animate-pulse"
-               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }} />
+          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700"
+               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }}>
+            <div className="animate-pulse bg-gray-700 h-full rounded"></div>
+          </div>
         }>
           <div className="below-fold">
             <MethodSection />
@@ -91,26 +101,28 @@ const Index = () => {
         
         {/* Compact FAQ Section */}
         <Suspense fallback={
-          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700 animate-pulse"
-               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }} />
+          <div className="h-64 bg-gradient-to-r from-gray-800 to-gray-700"
+               style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 256px' }}>
+            <div className="animate-pulse bg-gray-700 h-full rounded"></div>
+          </div>
         }>
           <div className="below-fold">
             <FAQSection />
           </div>
         </Suspense>
 
-        {/* Final CTA - Simple */}
-        <section className="py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-center below-fold">
+        {/* Final CTA - Mobile optimized */}
+        <section className="py-12 md:py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-center below-fold">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-6">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 md:mb-6">
               Pronto per la <span className="text-brand-accent">Trasformazione</span>?
             </h2>
-            <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-200 mb-6 md:mb-8 max-w-2xl mx-auto">
               Consulenza gratuita + prova guidata. Nessun impegno, solo risultati concreti.
             </p>
             <Link 
               to="/contatti" 
-              className="no-underline min-h-[56px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-10 py-5 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl"
+              className="no-underline min-h-[44px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary to-brand-accent text-white px-6 md:px-10 py-3 md:py-5 rounded-full text-lg md:text-xl font-black transition-transform duration-200 transform active:scale-95 shadow-xl"
               aria-label="Prenota la consulenza gratuita"
             >
               🎯 OTTIENI I TUOI RISULTATI
