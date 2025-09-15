@@ -8,13 +8,8 @@ import StickyMobileCTA from '@/components/home/StickyMobileCTA';
 import QuickStatsSection from '@/components/home/QuickStatsSection';
 import TrustBar from '@/components/home/TrustBar';
 
-// Performance optimization imports - mobile focused
-import FCPOptimizer from '@/components/optimization/FCP-Optimizer';
-import UnusedCodeRemover from '@/components/optimization/UnusedCodeRemover';
-import CacheOptimizer from '@/components/optimization/CacheOptimizer';
-import MobileOptimizer from '@/components/optimization/MobileOptimizer';
-import ImageCompressor from '@/components/optimization/ImageCompressor';
-import CSSMinifier from '@/components/optimization/CSSMinifier';
+// Performance optimization imports - safe only
+import SafePerformanceOptimizer from '@/components/optimization/SafePerformanceOptimizer';
 
 // Defer only non-critical SEO components to improve Speed Index
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
@@ -47,13 +42,8 @@ const Index = () => {
 
   return (
     <>
-      {/* Critical performance optimizers - mobile first */}
-      <MobileOptimizer />
-      <FCPOptimizer />
-      <ImageCompressor />
-      <CSSMinifier />
-      <UnusedCodeRemover />
-      <CacheOptimizer />
+      {/* Safe performance optimizer only - no design interference */}
+      <SafePerformanceOptimizer />
       
       <div className="min-h-screen bg-gray-900">
         {/* Compact Hero Section */}

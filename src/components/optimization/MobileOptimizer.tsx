@@ -62,23 +62,23 @@ const MobileOptimizer = () => {
       const optimizeMobileCSS = () => {
         const mobileCSS = document.createElement('style');
         mobileCSS.textContent = `
-          /* Mobile performance CSS */
-          @media (max-width: 768px) {
-            /* Reduce animations on mobile */
-            * {
-              animation-duration: 0.15s !important;
-              transition-duration: 0.15s !important;
-            }
+            /* Mobile performance CSS - preserve design */
+            @media (max-width: 768px) {
+              /* Optimize animations duration for mobile */
+              * {
+                animation-duration: 0.2s !important;
+                transition-duration: 0.2s !important;
+              }
+              
+              /* Optimize fonts for mobile */
+              body {
+                font-display: swap;
+                text-rendering: optimizeSpeed;
+              }
             
-            /* Optimize fonts for mobile */
-            body {
-              font-display: swap;
-              text-rendering: optimizeSpeed;
-            }
-            
-            /* Reduce shadows and effects */
-            .shadow-2xl { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; }
-            .drop-shadow-lg { filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) !important; }
+            /* Reduce shadows and effects on mobile */
+            .shadow-2xl { box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.15) !important; }
+            .drop-shadow-lg { filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important; }
             
             /* Optimize hero for mobile LCP */
             .lcp-hero-container {
@@ -92,9 +92,11 @@ const MobileOptimizer = () => {
               contain-intrinsic-size: 1px 300px;
             }
             
-            /* Reduce gradient complexity */
-            .bg-gradient-to-r {
-              background: var(--brand-primary) !important;
+            /* Reduce gradient complexity on slow mobile only */
+            @media (max-width: 480px) and (connection: slow-2g) {
+              .bg-gradient-to-r {
+                background: hsl(var(--brand-primary)) !important;
+              }
             }
           }
         `;

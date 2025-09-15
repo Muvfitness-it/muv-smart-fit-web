@@ -54,22 +54,22 @@ const FCPOptimizer = memo(() => {
 
   return (
     <>
-      {/* Inline Critical CSS for LCP */}
+      {/* Inline Critical CSS for LCP - MINIMAL ONLY */}
       <style dangerouslySetInnerHTML={{
         __html: `
+          /* Only essential LCP CSS - preserve main styles */
           .lcp-hero-container{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-          .lcp-bg-image-webp{position:absolute;inset:0;background-image:url('/images/fitness-professional-bg.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;will-change:transform}
+          .lcp-bg-image-webp{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;will-change:transform}
           .lcp-bg-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.7),rgba(0,0,0,0.5))}
           .lcp-hero-content{position:relative;z-index:10;text-align:center;padding:0 1rem;max-width:1200px;margin:0 auto}
-          .lcp-gradient{background:linear-gradient(135deg,#ff6b6b,#4ecdc4);-webkit-background-clip:text;background-clip:text;color:transparent}
           @media(min-width:768px){.lcp-hero-content{padding:0 2rem}}
         `
       }} />
       
       {/* Critical Hero Content - Renders immediately */}
       <div className="lcp-hero-container">
-        {/* Background Image with WebP Support */}
-        <div className="lcp-bg-image-webp" />
+        {/* Background Image with WebP Support - use CSS background instead of hardcoded */}
+        <div className="lcp-bg-image-webp" style={{ backgroundImage: 'url("/images/fitness-professional-bg.jpg")' }} />
         
         {/* Dark Overlay */}
         <div className="lcp-bg-overlay" />

@@ -46,53 +46,32 @@ const CSSMinifier = () => {
       });
     };
 
-    // Remove unused CSS rules at runtime
+    // Remove unused CSS rules at runtime - DISABLED to prevent visual issues
     const removeUnusedCSS = () => {
-      // Common unused classes on this site
-      const unusedClasses = [
-        '.animate-ping',
-        '.animate-bounce',
-        '.rotate-45',
-        '.rotate-90',
-        '.scale-110',
-        '.scale-125',
-        '.skew-x-12',
-        '.skew-y-12',
-        '.space-y-16',
-        '.space-y-20',
-        '.space-y-24',
-        '.space-x-16',
-        '.space-x-20',
-        '.space-x-24',
-        '.grid-cols-7',
-        '.grid-cols-8',
-        '.grid-cols-9',
-        '.grid-cols-10',
-        '.grid-cols-11',
-        '.grid-cols-12'
-      ];
-
-      // Create a style to hide unused classes
-      const hideUnused = document.createElement('style');
-      hideUnused.textContent = unusedClasses.map(cls => `${cls}{display:none!important}`).join('');
-      document.head.appendChild(hideUnused);
+      // Commenting out to prevent breaking the design
+      // Only keep performance optimizations
+      console.log('CSS unused rule removal disabled to preserve design');
     };
 
-    // Defer non-critical CSS
+    // Defer non-critical CSS but preserve critical ones
     const deferNonCriticalCSS = () => {
-      const nonCriticalCSS = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical])');
+      const nonCriticalCSS = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical]):not([href*="index.css"]):not([href*="tailwind"])');
       
       nonCriticalCSS.forEach(link => {
-        // Convert to media="print" and load on window load
-        link.setAttribute('media', 'print');
-        link.addEventListener('load', () => {
-          link.setAttribute('media', 'all');
-        });
-        
-        // Fallback for browsers that don't fire load event
-        setTimeout(() => {
-          link.setAttribute('media', 'all');
-        }, 100);
+        const href = link.getAttribute('href');
+        // Don't defer main stylesheets
+        if (href && !href.includes('fonts.googleapis') && !href.includes('main') && !href.includes('app')) {
+          // Convert to media="print" and load on window load
+          link.setAttribute('media', 'print');
+          link.addEventListener('load', () => {
+            link.setAttribute('media', 'all');
+          });
+          
+          // Fallback for browsers that don't fire load event
+          setTimeout(() => {
+            link.setAttribute('media', 'all');
+          }, 100);
+        }
       });
     };
 
@@ -152,9 +131,9 @@ const CSSMinifier = () => {
       });
     };
 
-    // Run optimizations
+    // Run safe optimizations only
     optimizeCSS();
-    removeUnusedCSS();
+    // removeUnusedCSS(); // DISABLED to prevent design issues
     deferNonCriticalCSS();
     optimizeFonts();
     
