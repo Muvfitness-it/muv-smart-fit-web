@@ -69,7 +69,6 @@ export const useResourceOptimization = () => {
 
       // Optimize CSS delivery
       const optimizeCSSDelivery = () => {
-        // Inline critical CSS is already handled by FCPOptimizer
         // Defer non-critical CSS
         const nonCriticalCSS = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical])');
         nonCriticalCSS.forEach(link => {
