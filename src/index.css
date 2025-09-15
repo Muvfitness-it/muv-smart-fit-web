@@ -186,22 +186,7 @@ nav.site-header ~ nav.site-header {
   }
 }
 
-/* Pattern di sfondo raffinato per l'intero sito */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(circle at 25% 25%, hsl(var(--primary) / var(--pattern-opacity)) 2px, transparent 2px),
-    radial-gradient(circle at 75% 75%, hsl(var(--secondary) / var(--pattern-opacity)) 1px, transparent 1px);
-  background-size: var(--pattern-size) var(--pattern-size);
-  background-position: 0 0, 20px 20px;
-  pointer-events: none;
-  z-index: -1;
-}
+/* Pattern di sfondo rimosso per migliorare leggibilità */
 
 @layer base {
   * {
