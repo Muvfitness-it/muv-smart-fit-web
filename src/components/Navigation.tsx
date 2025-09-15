@@ -110,19 +110,19 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Fullscreen overlay */}
+        {/* Mobile Navigation - Fixed z-index and solid background */}
         {isOpen && (
           <div
-            className="lg:hidden fixed inset-0 z-[60]"
+            className="lg:hidden fixed inset-0 z-50"
             role="dialog"
             aria-modal="true"
             aria-label="Menu di navigazione"
           >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
+            <div className="absolute inset-0 bg-black/80" onClick={() => setIsOpen(false)} />
 
             {/* Panel */}
-            <div className="relative z-[61] flex h-full flex-col bg-gray-900/98">
+            <div className="relative z-51 flex h-full flex-col bg-gray-900">
               <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                   <OptimizedImage

@@ -308,7 +308,7 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    z-index: 9999;
+    z-index: 50;
   }
 }
 
@@ -831,20 +831,13 @@ aside.callout {
     50% { transform: translateY(-8px); }
   }
 
-  /* Core Web Vitals optimizations */
+  /* Simplified performance optimizations */
   img {
-    content-visibility: auto;
+    max-width: 100%;
+    height: auto;
   }
 
-  .contain-layout {
-    contain: layout;
-  }
-
-  .contain-paint {
-    contain: paint;
-  }
-
-  /* Reduce layout shift */
+  /* Basic aspect ratios without complex properties */
   .aspect-ratio-16-9 {
     aspect-ratio: 16 / 9;
   }
@@ -872,40 +865,15 @@ aside.callout {
     }
   }
 
-  /* Enhanced Performance Optimizations */
-  .optimized-container {
-    content-visibility: auto;
-    contain: layout style paint;
-    container-type: inline-size;
-  }
-
+  /* Simplified optimizations - removed complex properties */
   .optimized-image {
-    contain: layout style;
-    aspect-ratio: attr(width) / attr(height);
     object-fit: cover;
     object-position: center;
   }
 
+  /* Basic scroll optimization */
   .scroll-optimized {
-    will-change: transform;
     transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-
-  /* Critical rendering path optimizations */
-  .hero-section {
-    content-visibility: auto;
-    contain: layout style paint;
-  }
-
-  .above-fold {
-    contain: layout style;
-  }
-
-  .below-fold {
-    content-visibility: auto;
-    contain-intrinsic-size: 500px;
   }
 
   /* Reduce layout shifts */
@@ -920,18 +888,14 @@ aside.callout {
     100% { background-position: -200% 0; }
   }
 
-  /* Optimize paint operations */
+  /* Simplified paint operations */
   .gpu-accelerated {
     transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
   }
 
-  /* Reduce repaints on scroll */
+  /* Simplified fixed elements */
   .fixed-elements {
     position: fixed;
-    will-change: transform;
-    contain: layout style paint;
   }
 
   /* Blog Article Styling - White Theme with Accent Colors */
