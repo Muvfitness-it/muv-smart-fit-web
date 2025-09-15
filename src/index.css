@@ -5,10 +5,7 @@
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
-/* Double header protection */
-nav.site-header ~ nav.site-header {
-  display: none !important;
-}
+/* Header duplicate prevention removed - addressing root cause instead */
 
 @layer base {
   :root {

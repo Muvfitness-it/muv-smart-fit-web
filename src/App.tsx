@@ -58,12 +58,13 @@ const GravidanzaPostParto = lazy(() => import("./pages/landing/GravidanzaPostPar
 const SeniorFitness = lazy(() => import("./pages/landing/SeniorFitness"));
 const RiabilitazioneInfortuni = lazy(() => import("./pages/landing/RiabilitazioneInfortuni"));
 
-// Security components loaded on demand
-const SecurityHeaders = lazy(() => import("./components/security/SecurityHeaders").then(m => ({ default: m.SecurityHeaders })));
-const SessionSecurity = lazy(() => import("./components/security/SessionSecurity").then(m => ({ default: m.SessionSecurity })));
-const AIAuth = lazy(() => import("./pages/AIAuth"));
+// Security components - named imports  
+import { SecurityHeaders } from "./components/security/SecurityHeaders";
+import { SessionSecurity } from "./components/security/SessionSecurity";
+import { SecureDataHandler } from "@/components/security/SecureDataHandler";
 const CookieConsent = lazy(() => import("./components/security/CookieConsent"));
 const FloatingCTA = lazy(() => import("./components/ui/FloatingCTA"));
+const AIAuth = lazy(() => import("./pages/AIAuth"));
 
 // SEO pages - lazy loaded
 const AllenamentoEMSLegnago = lazy(() => import("./pages/AllenamentoEMSLegnago"));
@@ -74,9 +75,8 @@ const MalDiSchienaLegnago = lazy(() => import("./pages/MalDiSchienaLegnago"));
 const MassaggioSportivoLegnago = lazy(() => import("./pages/MassaggioSportivoLegnago"));
 
 
-// Security and admin components - lazy loaded
-const SecureDataHandler = lazy(() => import("@/components/security/SecureDataHandler").then(m => ({ default: m.SecureDataHandler })));
-const AdminRoute = lazy(() => import("@/components/security/AdminRoute").then(m => ({ default: m.AdminRoute })));
+// Security and admin components - named imports
+import { AdminRoute } from "@/components/security/AdminRoute";
 
 // Blog pages - lazy loaded
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
@@ -106,18 +106,10 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
-  useResourceOptimization();
+  // Removed useResourceOptimization() - was causing rendering issues
 
   const location = useLocation();
   const isHome = location.pathname === '/';
-
-  // Development log to verify single header instance
-  React.useEffect(() => {
-    const headers = document.querySelectorAll('nav.site-header');
-    if (headers.length > 1) {
-      console.warn(`Found ${headers.length} navigation headers, should be 1`);
-    }
-  }, [location.pathname]);
 
   return (
     <Suspense fallback={<RouteLoading />}>
@@ -125,11 +117,7 @@ const AppContent = () => {
         <SecurityHeaders />
         <SecureDataHandler />
         
-        <FontOptimizer />
-        <CriticalCSS />
-        <LCPOptimizer />
-        <LandingPageOptimizer />
-        <InternalLinkOptimizer />
+        {/* Removed problematic optimization components */}
         <div className="min-h-screen bg-background text-foreground">
         <Routes>
           {/* Landing Pages - NO Navigation/Footer */}
