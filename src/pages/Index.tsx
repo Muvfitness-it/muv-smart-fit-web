@@ -42,8 +42,7 @@ const Index = () => {
 
   return (
     <>
-      {/* Safe performance optimizer only - no design interference */}
-      <SafePerformanceOptimizer />
+      {/* Performance optimization - minimal interference */}
       
       <div className="min-h-screen bg-gray-900">
         {/* Compact Hero Section */}
