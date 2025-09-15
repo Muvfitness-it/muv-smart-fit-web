@@ -1,9 +1,71 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
-// Critical above-the-fold content for immediate rendering
+// Enhanced Critical Path Optimizer
 const FCPOptimizer = memo(() => {
+  useEffect(() => {
+    // Preload critical resources immediately
+    const preloadCritical = () => {
+      // Preload hero background image as highest priority
+      const heroImg = new Image();
+      heroImg.src = '/images/fitness-professional-bg.jpg';
+      heroImg.fetchPriority = 'high';
+      
+      // Preload critical CSS font files
+      const fontPreloads = [
+        'https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew7.woff2',
+        'https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrJJfedw.woff2'
+      ];
+      
+      fontPreloads.forEach(href => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'font';
+        link.type = 'font/woff2';
+        link.crossOrigin = 'anonymous';
+        link.href = href;
+        document.head.appendChild(link);
+      });
+    };
+
+    // Optimize LCP element immediately
+    const optimizeLCP = () => {
+      const lcpElements = document.querySelectorAll('.lcp-hero-container, .lcp-bg-image-webp');
+      lcpElements.forEach(el => {
+        const element = el as HTMLElement;
+        element.style.willChange = 'transform';
+        element.style.contain = 'layout style paint';
+        element.style.contentVisibility = 'visible';
+      });
+    };
+
+    // Remove render-blocking
+    const deferNonCritical = () => {
+      // Defer non-critical scripts
+      const scripts = document.querySelectorAll('script[src*="analytics"], script[src*="gtag"]');
+      scripts.forEach(script => {
+        script.setAttribute('defer', '');
+      });
+    };
+
+    preloadCritical();
+    optimizeLCP();
+    deferNonCritical();
+  }, []);
+
   return (
     <>
+      {/* Inline Critical CSS for LCP */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .lcp-hero-container{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+          .lcp-bg-image-webp{position:absolute;inset:0;background-image:url('/images/fitness-professional-bg.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;will-change:transform}
+          .lcp-bg-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.7),rgba(0,0,0,0.5))}
+          .lcp-hero-content{position:relative;z-index:10;text-align:center;padding:0 1rem;max-width:1200px;margin:0 auto}
+          .lcp-gradient{background:linear-gradient(135deg,#ff6b6b,#4ecdc4);-webkit-background-clip:text;background-clip:text;color:transparent}
+          @media(min-width:768px){.lcp-hero-content{padding:0 2rem}}
+        `
+      }} />
+      
       {/* Critical Hero Content - Renders immediately */}
       <div className="lcp-hero-container">
         {/* Background Image with WebP Support */}
