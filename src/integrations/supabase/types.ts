@@ -901,7 +901,57 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      blog_articles_public: {
+        Row: {
+          author: string | null
+          category: string | null
+          content: string | null
+          created_at: string | null
+          excerpt: string | null
+          featured_image: string | null
+          id: string | null
+          published_at: string | null
+          reading_time: number | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+          views: number | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+          views?: number | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+          views?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       admin_update_comment_status: {
@@ -1046,6 +1096,13 @@ export type Database = {
       repair_html_content: {
         Args: { input_content: string }
         Returns: string
+      }
+      resolve_redirect: {
+        Args: { path_to_check: string }
+        Returns: {
+          status_code: number
+          to_path: string
+        }[]
       }
       restore_and_fix_all_posts: {
         Args: Record<PropertyKey, never>

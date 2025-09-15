@@ -12,9 +12,7 @@ const RedirectResolver: React.FC = () => {
       try {
         const fromPath = location.pathname;
         const { data, error } = await supabase
-          .from('url_redirects')
-          .select('to_path, status_code')
-          .eq('from_path', fromPath)
+          .rpc('resolve_redirect', { path_to_check: fromPath })
           .maybeSingle();
 
         if (!active) return;
