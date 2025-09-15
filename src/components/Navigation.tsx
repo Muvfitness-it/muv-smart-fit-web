@@ -111,65 +111,65 @@ const Navigation = () => {
         </div>
 
         {/* Mobile Navigation - Fullscreen overlay */}
-        <div
-          className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
-            isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menu di navigazione"
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
+        {isOpen && (
+          <div
+            className="lg:hidden fixed inset-0 z-[60]"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu di navigazione"
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/60" onClick={() => setIsOpen(false)} />
 
-          {/* Panel */}
-          <div className="relative z-[61] flex h-full flex-col bg-gray-900/98 backdrop-blur-md">
-            <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
-              <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
-                <OptimizedImage
-                  src={LOGO_URL}
-                  alt="Logo MUV Fitness Legnago"
-                  width={220}
-                  height={66}
-                  priority={true}
-                  sizes="220px"
-                  className="site-logo h-20 w-auto"
-                  objectFit="contain"
-                  overflowHidden={false}
-                  style={{
-                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
-                    WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
-                  }}
-                />
-              </Link>
-              <button
-                aria-label="Chiudi menu"
-                onClick={() => setIsOpen(false)}
-                className="text-gray-200 hover:text-white"
-              >
-                <X size={28} />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
-              {navItems.map((item, index) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 ${
-                    location.pathname === item.path
-                      ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
-                      : 'text-gray-200 hover:text-white hover:bg-gray-800/80'
-                  }`}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
+            {/* Panel */}
+            <div className="relative z-[61] flex h-full flex-col bg-gray-900/98">
+              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
+                <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
+                  <OptimizedImage
+                    src={LOGO_URL}
+                    alt="Logo MUV Fitness Legnago"
+                    width={220}
+                    height={66}
+                    priority={true}
+                    sizes="220px"
+                    className="site-logo h-20 w-auto"
+                    objectFit="contain"
+                    overflowHidden={false}
+                    style={{
+                      filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
+                      WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
+                    }}
+                  />
                 </Link>
-              ))}
+                <button
+                  aria-label="Chiudi menu"
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-200 hover:text-white"
+                >
+                  <X size={28} />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+                {navItems.map((item, index) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 ${
+                      location.pathname === item.path
+                        ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
+                        : 'text-gray-200 hover:text-white hover:bg-gray-800/80'
+                    }`}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>;
 };
