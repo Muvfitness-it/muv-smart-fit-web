@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -39,6 +39,30 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
     gdprConsent: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Pre-carica dati dall'assistente AI se disponibili
+  useEffect(() => {
+    const aiData = localStorage.getItem('muvAssistantData');
+    if (aiData) {
+      try {
+        const parsedData = JSON.parse(aiData);
+        setFormData(prev => ({
+          ...prev,
+          name: parsedData.name || '',
+          message: parsedData.problem ? 
+            `🤖 Dall'Assistente AI:\nProblema: ${parsedData.problem}\n${parsedData.service ? `Servizio suggerito: ${parsedData.service}\n` : ''}\n${parsedData.notes ? `Note conversazione:\n${parsedData.notes}\n\n` : ''}---\nMessaggio aggiuntivo:\n` 
+            : prev.message,
+          obiettivo: parsedData.service || prev.obiettivo
+        }));
+        // Mostra notifica che i dati sono stati caricati
+        toast.success('✨ Dati caricati dalla chat con l\'assistente AI!');
+        // Rimuove i dati dopo il caricamento
+        localStorage.removeItem('muvAssistantData');
+      } catch (error) {
+        console.error('Errore nel caricamento dati AI:', error);
+      }
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
