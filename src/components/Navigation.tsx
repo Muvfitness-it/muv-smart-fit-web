@@ -53,28 +53,22 @@ const Navigation = () => {
       window.removeEventListener('orientationchange', updateHeaderHeight);
     };
   }, [isScrolled, location.pathname]);
-  // Simplified main navigation - clean and focused
+  // ULTRA-CLEAN NAVIGATION - 5 CORE PAGES ONLY
   const navItems = [{
     name: "Home",
     path: "/"
   }, {
-    name: "Chi Siamo",
-    path: "/chi-siamo"
-  }, {
     name: "Servizi",
     path: "/servizi"
   }, {
-    name: "Team",
-    path: "/team"
+    name: "Chi Siamo",
+    path: "/chi-siamo"
   }, {
     name: "Risultati",
     path: "/risultati"
   }, {
     name: "Contatti",
     path: "/contatti"
-  }, {
-    name: "Blog",
-    path: "/blog"
   }];
   return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary/95 backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
