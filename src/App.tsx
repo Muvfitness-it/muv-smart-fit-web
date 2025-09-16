@@ -184,7 +184,7 @@ const AppContent = () => {
               <Navigation />
               <a 
                 href="#main" 
-                className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+                className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
               >
                 Salta al contenuto principale
               </a>
@@ -197,8 +197,19 @@ const AppContent = () => {
                     <Route path="/chi-siamo" element={<ChiSiamo />} />
                     <Route path="/risultati" element={<Risultati />} />
                     <Route path="/contatti" element={<Contatti />} />
+                    <Route path="/team" element={<Team />} />
                     
-                    {/* ===== ADMIN ROUTES - HIDDEN FROM PUBLIC ===== */}
+                    {/* Legal pages - keep separate */}
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/cookie-policy" element={<CookiePolicy />} />
+                    
+                    {/* Blog Routes */}
+                    <Route path="/blog" element={<BlogIndex />} />
+                    <Route path="/blog/c/:slug" element={<BlogCategory />} />
+                    <Route path="/blog/:slug" element={<Navigate to={`/${window.location.pathname.split('/blog/')[1]}`} replace />} />
+                    <Route path="/:slug" element={<BlogArticle />} />
+                    
+                    {/* Admin Routes */}
                     <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
                     <Route path="/admin/blog" element={<AdminRoute><AdminBlogList /></AdminRoute>} />
                     <Route path="/admin/blog/bozze" element={<AdminRoute><AdminBlogDrafts /></AdminRoute>} />
@@ -210,15 +221,7 @@ const AppContent = () => {
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
-                    {/* ===== BLOG ROUTES ===== */}
-                    <Route path="/blog" element={<BlogIndex />} />
-                    <Route path="/blog/c/:slug" element={<BlogCategory />} />
-                    <Route path="/blog/:slug" element={<Navigate to={`/${window.location.pathname.split('/blog/')[1]}`} replace />} />
-                    <Route path="/:slug" element={<BlogArticle />} />
-                    
-                    {/* ===== SEO STRATEGIC REDIRECTS - ALL OLD PAGES → CORE SECTIONS ===== */}
-                    
-                    {/* Old service pages → Unified services */}
+                    {/* 301 Redirects - ALL old service pages to unified services */}
                     <Route path="/servizi/personal-training" element={<Navigate to="/servizi#dimagrimento" replace />} />
                     <Route path="/servizi/ems" element={<Navigate to="/servizi#dimagrimento" replace />} />
                     <Route path="/servizi/ems-legnago" element={<Navigate to="/servizi#dimagrimento" replace />} />
@@ -245,17 +248,12 @@ const AppContent = () => {
                     <Route path="/massaggio-sportivo-legnago" element={<Navigate to="/#servizi" replace />} />
                     
                     {/* Old standalone pages → Core pages */}
-                    <Route path="/team" element={<Navigate to="/chi-siamo" replace />} />
                     <Route path="/come-arrivare" element={<Navigate to="/contatti" replace />} />
                     <Route path="/form-contatti" element={<Navigate to="/contatti" replace />} />
                     <Route path="/recensioni" element={<Navigate to="/risultati" replace />} />
                     <Route path="/faq-gbp" element={<Navigate to="/#faq" replace />} />
                     <Route path="/media-kit/proof-posts" element={<Navigate to="/risultati" replace />} />
                     <Route path="/muv-planner" element={<Navigate to="/contatti" replace />} />
-                    
-                    {/* Legal pages - keep separate */}
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/cookie-policy" element={<CookiePolicy />} />
                     
                     <Route path="*" element={<NotFound />} />
                   </Routes>

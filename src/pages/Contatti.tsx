@@ -51,7 +51,7 @@ const Contatti = () => {
             </p>
             
             <div className="bg-primary/20 border border-primary/30 rounded-lg p-4 inline-block mb-6">
-              <p className="text-white text-base md:text-lg font-medium">
+              <p className="text-foreground text-base md:text-lg font-medium">
                 🔥 <strong>127+ trasformazioni completate</strong> quest'anno
               </p>
             </div>
@@ -70,7 +70,7 @@ const Contatti = () => {
             </a>
             <a
               href="tel:+393291070374"
-              className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-5 rounded-full font-bold transition-all duration-300 transform hover:scale-105 flex items-center justify-center min-h-[64px] text-lg shadow-xl"
+              className="bg-card text-foreground hover:bg-muted px-8 py-5 rounded-full font-bold transition-all duration-300 transform hover:scale-105 flex items-center justify-center min-h-[64px] text-lg shadow-xl border border-border"
               aria-label="Chiamaci al 329 107 0374"
             >
               📞 CHIAMACI ORA
@@ -87,25 +87,25 @@ const Contatti = () => {
           
           {/* Mini-FAQ per contatti */}
           <div className="mt-12 sm:mt-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-white">Domande frequenti</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">Domande frequenti</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-gray-800 rounded-lg border border-gray-700">
-                <h3 className="text-lg font-bold mb-3 text-white">Dove parcheggio?</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+              <div className="text-center p-6 bg-muted rounded-lg border border-border">
+                <h3 className="text-lg font-bold mb-3 text-foreground">Dove parcheggio?</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Posti auto gratuiti disponibili davanti al centro e nelle vie limitrofe.
                 </p>
               </div>
               
-              <div className="text-center p-6 bg-gray-800 rounded-lg border border-gray-700">
-                <h3 className="text-lg font-bold mb-3 text-white">Posso venire in pausa pranzo?</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+              <div className="text-center p-6 bg-muted rounded-lg border border-border">
+                <h3 className="text-lg font-bold mb-3 text-foreground">Posso venire in pausa pranzo?</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Sì, siamo aperti anche durante l'orario di pranzo su appuntamento.
                 </p>
               </div>
               
-              <div className="text-center p-6 bg-gray-800 rounded-lg border border-gray-700">
-                <h3 className="text-lg font-bold mb-3 text-white">Tempi per la prima prova?</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
+              <div className="text-center p-6 bg-muted rounded-lg border border-border">
+                <h3 className="text-lg font-bold mb-3 text-foreground">Tempi per la prima prova?</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Solitamente riusciamo a programmare la prima consulenza entro 2-3 giorni.
                 </p>
               </div>

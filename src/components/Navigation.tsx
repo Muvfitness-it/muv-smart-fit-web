@@ -70,7 +70,7 @@ const Navigation = () => {
     name: "Contatti",
     path: "/contatti"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary/95 backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
@@ -95,16 +95,27 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 xl:space-x-8">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-white hover:text-white/80 font-medium transition-colors text-sm xl:text-base whitespace-nowrap ${location.pathname === item.path ? 'text-white font-semibold border-b-2 border-white/80' : ''}`}>
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-primary-foreground hover:text-primary-foreground/80 font-medium transition-colors text-sm xl:text-base whitespace-nowrap ${location.pathname === item.path ? 'text-primary-foreground font-semibold border-b-2 border-primary-foreground/80' : ''}`}>
                 {item.name}
               </Link>)}
+              
+            {/* WhatsApp CTA Desktop */}
+            <a 
+              href="https://wa.me/393291070374"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 ml-4"
+              aria-label="Contattaci su WhatsApp"
+            >
+              💬 WhatsApp
+            </a>
           </div>
 
           {/* Mobile menu button - enhanced visibility */}
           <div className="lg:hidden">
             <button 
               onClick={() => setIsOpen(!isOpen)} 
-              className="text-white hover:text-brand-primary transition-colors min-h-[48px] min-w-[48px] bg-black/30 rounded-xl p-3 border-2 border-white/30 shadow-lg" 
+              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors min-h-[48px] min-w-[48px] bg-black/30 rounded-xl p-3 border-2 border-primary-foreground/30 shadow-lg" 
               aria-label="Apri menu di navigazione"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -112,7 +123,7 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Fixed z-index and solid background */}
+        {/* Mobile Navigation - Fixed z-index and light background */}
         {isOpen && (
           <div
             className="lg:hidden fixed inset-0 z-50"
@@ -124,8 +135,8 @@ const Navigation = () => {
             <div className="absolute inset-0 bg-black/80" onClick={() => setIsOpen(false)} />
 
             {/* Panel */}
-            <div className="relative z-[51] flex h-full flex-col bg-gray-900">
-              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
+            <div className="relative z-[51] flex h-full flex-col bg-card">
+              <div className="flex items-center justify-between px-4 py-4 border-b border-border">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                   <OptimizedImage
                     src={LOGO_URL}
@@ -146,7 +157,7 @@ const Navigation = () => {
                 <button
                   aria-label="Chiudi menu"
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-200 hover:text-white"
+                  className="text-foreground hover:text-primary"
                 >
                   <X size={28} />
                 </button>
@@ -159,8 +170,8 @@ const Navigation = () => {
                     to={item.path}
                     className={`block px-4 py-3 text-lg font-medium rounded-xl transition-colors duration-200 ${
                       location.pathname === item.path
-                        ? 'text-white bg-primary'
-                        : 'text-gray-200 hover:text-white hover:bg-gray-800/80'
+                        ? 'text-primary bg-primary/10'
+                        : 'text-foreground hover:text-primary hover:bg-muted'
                     }`}
                     style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setIsOpen(false)}
@@ -168,6 +179,18 @@ const Navigation = () => {
                     {item.name}
                   </Link>
                 ))}
+                
+                {/* WhatsApp CTA Mobile */}
+                <a 
+                  href="https://wa.me/393291070374"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 mt-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-semibold text-center transition-all duration-300"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Contattaci su WhatsApp"
+                >
+                  💬 Scrivici su WhatsApp
+                </a>
               </div>
             </div>
           </div>

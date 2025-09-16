@@ -49,11 +49,11 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer ref={footerRef} className="bg-card border-t border-border">
+    <footer ref={footerRef} className="bg-muted/30 border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-5 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {/* Contact Info */}
-          <div className="space-y-4">
+          <div>
             <h3 className="text-lg font-semibold mb-4 text-foreground">Contatti</h3>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
@@ -62,133 +62,34 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">+39 329 107 0374</span>
+                <a href="tel:+393291070374" className="text-muted-foreground hover:text-primary text-sm transition-colors">329 107 0374</a>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">info@muvfitness.it</span>
+                <a href="mailto:info@muvfitness.it" className="text-muted-foreground hover:text-primary text-sm transition-colors">info@muvfitness.it</a>
               </div>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Essential Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Link Rapidi</h3>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Collegamenti</h3>
             <div className="space-y-2">
-              <Link to="/chi-siamo" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Chi Siamo
-              </Link>
-              <Link to="/team" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Team
-              </Link>
-              <Link to="/risultati" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Risultati
-              </Link>
-              <Link to="/contatti" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Contatti
-              </Link>
-              <Link to="/recensioni" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Recensioni
-              </Link>
-              <Link to="/come-arrivare" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Come Arrivare
-              </Link>
+              <Link to="/chi-siamo" className="block text-muted-foreground hover:text-primary transition-colors">Chi Siamo</Link>
+              <Link to="/team" className="block text-muted-foreground hover:text-primary transition-colors">Team</Link>
+              <Link to="/risultati" className="block text-muted-foreground hover:text-primary transition-colors">Risultati</Link>
+              <Link to="/contatti" className="block text-muted-foreground hover:text-primary transition-colors">Contatti</Link>
             </div>
           </div>
 
-          {/* Services */}
+          {/* Core Services */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-foreground">Servizi</h3>
             <div className="space-y-2">
-              <Link to="/servizi/personal-training" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Personal Training
-              </Link>
-              <Link to="/servizi/ems" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Tecnologia EMS
-              </Link>
-              <Link to="/servizi/pancafit" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Pancafit
-              </Link>
-              <Link to="/servizi/pilates" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Pilates Reformer
-              </Link>
-              <Link to="/servizi/small-group" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Small Group
-              </Link>
-              <Link to="/servizi/nutrizione" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Consulenza Nutrizionale
-              </Link>
-              <Link to="/servizi/hiit" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                HIIT Training
-              </Link>
-              <Link to="/servizi/massoterapia" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Massoterapia
-              </Link>
-              <Link to="/servizi/vacuum-pressoterapia" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Vacuum Pressoterapia
-              </Link>
-              <Link to="/servizi/psicologo" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
-                Psicologo dello Sport
-              </Link>
-            </div>
-          </div>
-
-          {/* Approfondimenti */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Approfondimenti</h3>
-            <div className="space-y-2">
-              <Link to="/palestra-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                Palestra Legnago
-              </Link>
-              <Link to="/mal-di-schiena-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                Mal di Schiena
-              </Link>
-              <Link to="/massaggio-sportivo-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                Massaggio Sportivo
-              </Link>
-              <Link to="/dimagrire-legnago" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                Dimagrire Legnago
-              </Link>
-            </div>
-          </div>
-
-          {/* Ultimi Articoli */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Ultimi articoli</h3>
-            <div className="space-y-2">
-              {latest.map(p => (
-                <Link key={p.slug} to={`/${p.slug}`} className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
-                  {p.title}
-                </Link>
-              ))}
-              <a
-                href="https://baujoowgqeyraqnukkmw.functions.supabase.co/blog-rss"
-                className="block text-gray-400 hover:text-brand-primary text-sm"
-                aria-label="Feed RSS del blog MUV Fitness Legnago"
-              >RSS Feed</a>
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Seguici</h3>
-            <div className="flex space-x-4">
-              <a
-                href="https://www.facebook.com/MuvLegnago/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-full hover:bg-brand-primary transition-colors duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/MuvLegnago/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-full hover:bg-brand-primary transition-colors duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
+              <Link to="/servizi#dimagrimento" className="block text-muted-foreground hover:text-primary transition-colors">Dimagrimento</Link>
+              <Link to="/servizi#pilates" className="block text-muted-foreground hover:text-primary transition-colors">Pilates Reformer</Link>
+              <Link to="/servizi#vacuum" className="block text-muted-foreground hover:text-primary transition-colors">Vacuum + Pressoterapia</Link>
+              <Link to="/blog" className="block text-muted-foreground hover:text-primary transition-colors">Blog Fitness</Link>
             </div>
           </div>
         </div>
@@ -205,10 +106,10 @@ const Footer = () => {
             </div>
             
             <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
-              <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors duration-300">
+              <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary transition-colors duration-300">
+              <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary transition-colors">
                 Cookie Policy
               </Link>
             </div>
