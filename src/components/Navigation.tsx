@@ -16,15 +16,23 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Close menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll and add menu-open class when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
     } else {
       document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     }
     return () => {
       document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     };
   }, [isOpen]);
 
@@ -68,7 +76,7 @@ const Navigation = () => {
     name: "Blog",
     path: "/blog"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center glass-header ${isScrolled ? 'scrolled' : ''}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center ${isOpen ? 'bg-gray-900/98' : 'glass-header'} ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
@@ -102,7 +110,7 @@ const Navigation = () => {
           <div className="lg:hidden">
             <button 
               onClick={() => setIsOpen(!isOpen)} 
-              className="text-white hover:text-brand-primary transition-colors min-h-[48px] min-w-[48px] bg-black/30 backdrop-blur-md rounded-xl p-3 border-2 border-white/30 shadow-lg" 
+              className="text-white hover:text-brand-primary transition-colors min-h-[48px] min-w-[48px] bg-black/30 rounded-xl p-3 border-2 border-white/30 shadow-lg" 
               aria-label="Apri menu di navigazione"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -122,7 +130,7 @@ const Navigation = () => {
             <div className="absolute inset-0 bg-black/80" onClick={() => setIsOpen(false)} />
 
             {/* Panel */}
-            <div className="relative z-51 flex h-full flex-col bg-gray-900">
+            <div className="relative z-[51] flex h-full flex-col bg-gray-900">
               <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700/50">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                   <OptimizedImage

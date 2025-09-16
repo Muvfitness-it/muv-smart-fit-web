@@ -127,6 +127,16 @@
     }
   }
 
+  /* Glass variables */
+  :root {
+    --glass-blur: 12px;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --shadow-glass-hover: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --transition-glass: all 0.3s ease;
+    --transition-header: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   .dark {
     /* Dark mode using MUV tokens */
     --background: var(--muv-bg-dark);
@@ -764,6 +774,13 @@ aside.callout {
   .glass-header.scrolled {
     background: rgba(17, 24, 39, 0.95);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* Safari iOS fix - remove backdrop-filter when menu is open */
+  body.menu-open .site-header {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(17, 24, 39, 0.98) !important;
   }
 
   /* ================================
