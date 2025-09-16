@@ -27,64 +27,63 @@ const TransformHeroSection = () => {
           </div>
 
           {/* Main headline */}
-          <h1 className="text-responsive-2xl font-black text-brand-dark mb-8 leading-tight animate-fade-in">
+          <h1 className="text-responsive-2xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
             <span className="block mb-4">
-              Trasforma il tuo <span className="gradient-text">Corpo</span>
+              Trasforma il tuo <span className="text-primary font-black">Corpo</span>
             </span>
             <span className="block mb-4">
-              e la tua <span className="gradient-text">Vita</span>
+              e la tua <span className="text-primary font-black">Vita</span>
             </span>
-            <span className="block text-responsive-lg text-brand-dark/80 font-normal">
+            <span className="block text-responsive-lg text-muted-foreground font-normal">
               con MUV Fitness Legnago
             </span>
           </h1>
 
           {/* Value proposition */}
           <div className="max-w-4xl mx-auto mb-12 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <p className="text-responsive text-brand-dark/80 mb-8 leading-relaxed">
-              <strong className="text-brand-primary">Risultati visibili in 30 giorni</strong> con il nostro metodo scientifico che combina Personal Training, tecnologie avanzate e supporto completo.
+            <p className="text-responsive text-foreground/80 mb-8 leading-relaxed">
+              <strong className="text-primary">Risultati visibili in 30 giorni</strong> con il nostro metodo scientifico che combina Personal Training, tecnologie avanzate e supporto completo.
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-brand-primary/10 shadow-soft hover:shadow-primary transition-all duration-300 hover:scale-105">
-                <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 mx-auto">
+              <div className="bg-white/90 rounded-xl p-6 border border-border shadow-soft hover:shadow-primary/10 transition-all duration-300">
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Zap className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-brand-dark mb-2">EMS + Personal Training</h3>
-                <p className="text-sm text-brand-dark/70">20 minuti = 4 ore di palestra tradizionale</p>
+                <h3 className="font-bold text-foreground mb-2">EMS + Personal Training</h3>
+                <p className="text-sm text-muted-foreground">20 minuti = 4 ore di palestra tradizionale</p>
               </div>
               
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-brand-secondary/10 shadow-soft hover:shadow-secondary transition-all duration-300 hover:scale-105">
-                <div className="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center mb-4 mx-auto">
+              <div className="bg-white/90 rounded-xl p-6 border border-border shadow-soft hover:shadow-secondary/10 transition-all duration-300">
+                <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Target className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-brand-dark mb-2">Pilates + Pancafit</h3>
-                <p className="text-sm text-brand-dark/70">Risolvi mal di schiena e postura</p>
+                <h3 className="font-bold text-foreground mb-2">Pilates + Pancafit</h3>
+                <p className="text-sm text-muted-foreground">Risolvi mal di schiena e postura</p>
               </div>
               
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-brand-accent/10 shadow-soft hover:shadow-accent transition-all duration-300 hover:scale-105">
-                <div className="w-12 h-12 bg-gradient-accent rounded-xl flex items-center justify-center mb-4 mx-auto">
+              <div className="bg-white/90 rounded-xl p-6 border border-border shadow-soft hover:shadow-accent/10 transition-all duration-300">
+                <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Heart className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-brand-dark mb-2">Vacuum + Pressoterapia</h3>
-                <p className="text-sm text-brand-dark/70">Elimina cellulite e ritenzione idrica</p>
+                <h3 className="font-bold text-foreground mb-2">Vacuum + Pressoterapia</h3>
+                <p className="text-sm text-muted-foreground">Elimina cellulite e ritenzione idrica</p>
               </div>
             </div>
           </div>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <Link 
               to="/contatti" 
-              className="group btn-primary text-xl px-12 py-5 rounded-2xl shadow-primary hover:shadow-xl transition-all duration-300 inline-flex items-center gap-3 min-h-[64px]"
+              className="btn-primary text-xl px-12 py-4 rounded-xl inline-flex items-center gap-3 min-h-[56px]"
             >
               🎯 INIZIA LA TUA TRASFORMAZIONE
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             
             <Link 
               to="/chi-siamo" 
-              className="btn-outline text-lg px-10 py-4 rounded-2xl inline-flex items-center gap-2 min-h-[56px]"
+              className="btn-outline text-lg px-10 py-3 rounded-xl inline-flex items-center gap-2 min-h-[48px]"
             >
               📖 Scopri il Metodo MUV
             </Link>
@@ -96,17 +95,17 @@ const TransformHeroSection = () => {
               ✅ Prima consulenza GRATUITA • ✅ Nessun impegno • ✅ Risultati garantiti
             </p>
             
-            <div className="flex flex-wrap justify-center items-center gap-8 text-brand-dark/50 text-sm">
+            <div className="flex flex-wrap justify-center items-center gap-8 text-muted-foreground text-sm">
               <span className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 500+ Clienti Trasformati
               </span>
               <span className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-secondary rounded-full"></div>
                 10+ Anni di Esperienza
               </span>
               <span className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-accent rounded-full"></div>
                 Centro Certificato
               </span>
             </div>

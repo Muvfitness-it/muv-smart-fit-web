@@ -101,7 +101,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 xl:space-x-8">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-sm xl:text-base font-medium transition-colors duration-300 hover:text-brand-primary whitespace-nowrap ${location.pathname === item.path ? 'text-brand-primary border-b-2 border-brand-primary pb-1' : 'text-gray-200 hover:text-white'}`}>
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`nav-link text-sm xl:text-base whitespace-nowrap ${location.pathname === item.path ? 'nav-link-active' : ''}`}>
                 {item.name}
               </Link>)}
           </div>
@@ -163,9 +163,9 @@ const Navigation = () => {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`block px-4 py-3 text-lg font-medium rounded-xl transition-all duration-300 ${
+                    className={`block px-4 py-3 text-lg font-medium rounded-xl transition-colors duration-200 ${
                       location.pathname === item.path
-                        ? 'text-white bg-gradient-to-r from-brand-primary to-brand-secondary shadow-lg scale-[1.02]'
+                        ? 'text-white bg-primary'
                         : 'text-gray-200 hover:text-white hover:bg-gray-800/80'
                     }`}
                     style={{ animationDelay: `${index * 50}ms` }}

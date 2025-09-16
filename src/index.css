@@ -4,29 +4,29 @@
 
 @layer base {
   :root {
-    /* MUV Fitness Brand System - Colori dal Logo */
+    /* MUV Fitness Balanced Design System */
     --background: 0 0% 100%; /* Bianco puro */
-    --foreground: 330 15% 15%; /* Grigio molto scuro per leggibilità */
+    --foreground: 0 0% 9%; /* Nero quasi puro per massima leggibilità */
     --card: 0 0% 100%;
-    --card-foreground: 330 15% 15%;
+    --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 330 15% 15%;
+    --popover-foreground: 0 0% 9%;
     
-    /* Colori principali dal logo MUV */
-    --primary: 330 100% 44%; /* Magenta #E50064 */
+    /* Colori MUV come accenti strategici */
+    --primary: 330 100% 44%; /* Magenta #E50064 - per navigazione e CTA */
     --primary-foreground: 0 0% 100%;
-    --secondary: 259 100% 50%; /* Viola #7A00FF */
+    --secondary: 212 100% 50%; /* Blu #0077FF - per sezioni e accenti */
     --secondary-foreground: 0 0% 100%;
-    --accent: 212 100% 50%; /* Blu #0077FF */
+    --accent: 259 100% 50%; /* Viola #7A00FF - per hover e stati speciali */
     --accent-foreground: 0 0% 100%;
     
-    /* Colori di supporto chiari e luminosi */
-    --muted: 330 20% 96%; /* Rosa molto chiaro */
-    --muted-foreground: 330 15% 40%;
+    /* Colori neutrali per UI pulita */
+    --muted: 0 0% 96%; /* Grigio molto chiaro neutro */
+    --muted-foreground: 0 0% 45%; /* Grigio medio per testo secondario */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 330 20% 90%; /* Rosa molto chiaro per bordi */
-    --input: 330 10% 95%; /* Background input leggermente rosato */
+    --border: 0 0% 90%; /* Bordi grigi neutri */
+    --input: 0 0% 97%; /* Background input neutro */
     --ring: 330 100% 44%; /* Focus ring magenta */
     
     /* Chart colors con palette MUV */
@@ -36,26 +36,24 @@
     --chart-4: 330 80% 65%; /* Magenta chiaro */
     --chart-5: 259 80% 70%; /* Viola chiaro */
     
-    --radius: 0.75rem; /* Radius più ampio per look moderno */
+    --radius: 0.5rem; /* Radius moderato per look professionale */
     
-    /* Brand Colors specifici MUV */
+    /* Brand Colors MUV - uso strategico */
     --brand-primary: 330 100% 44%; /* Magenta #E50064 */
-    --brand-secondary: 259 100% 50%; /* Viola #7A00FF */
-    --brand-accent: 212 100% 50%; /* Blu #0077FF */
+    --brand-secondary: 212 100% 50%; /* Blu #0077FF */  
+    --brand-accent: 259 100% 50%; /* Viola #7A00FF */
     --brand-light: 0 0% 100%; /* Bianco puro */
-    --brand-dark: 330 15% 15%; /* Grigio scuro per testi */
+    --brand-dark: 0 0% 9%; /* Nero per massima leggibilità */
     
-    /* Gradienti caratteristici MUV */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-accent)), hsl(var(--brand-primary)));
-    --gradient-light: linear-gradient(135deg, hsl(var(--brand-light)), hsl(330 20% 98%));
+    /* Gradienti sottili per accenti */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-accent)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--brand-secondary)), hsl(var(--brand-primary)));
+    --gradient-light: linear-gradient(135deg, hsl(0 0% 98%), hsl(0 0% 100%));
     
-    /* Shadows con colori brand */
-    --shadow-primary: 0 10px 30px -10px hsl(var(--brand-primary) / 0.3);
-    --shadow-secondary: 0 10px 30px -10px hsl(var(--brand-secondary) / 0.3);
-    --shadow-accent: 0 10px 30px -10px hsl(var(--brand-accent) / 0.3);
-    --shadow-soft: 0 4px 20px -4px hsl(330 30% 20% / 0.1);
+    /* Shadows neutrali con tocco di colore */
+    --shadow-primary: 0 4px 20px -4px hsl(var(--brand-primary) / 0.15);
+    --shadow-secondary: 0 4px 20px -4px hsl(var(--brand-secondary) / 0.15);
+    --shadow-soft: 0 2px 12px -2px hsl(0 0% 0% / 0.08);
     
     /* Typography */
     --font-heading: 'Inter', system-ui, sans-serif;
@@ -67,23 +65,23 @@
   }
 
   .dark {
-    /* Modalità scura con colori MUV adattati */
-    --background: 330 15% 8%;
+    /* Modalità scura neutrale */
+    --background: 0 0% 8%;
     --foreground: 0 0% 95%;
-    --card: 330 15% 10%;
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 95%;
-    --popover: 330 15% 10%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 95%;
     --primary: 330 100% 55%; /* Magenta più chiaro per dark mode */
-    --primary-foreground: 330 15% 8%;
-    --secondary: 259 100% 60%; /* Viola più chiaro */
-    --secondary-foreground: 330 15% 8%;
-    --accent: 212 100% 60%; /* Blu più chiaro */
-    --accent-foreground: 330 15% 8%;
-    --muted: 330 15% 15%;
-    --muted-foreground: 330 10% 65%;
-    --border: 330 15% 20%;
-    --input: 330 15% 15%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 212 100% 60%; /* Blu più chiaro */
+    --secondary-foreground: 0 0% 8%;
+    --accent: 259 100% 60%; /* Viola più chiaro */
+    --accent-foreground: 0 0% 8%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
     --ring: 330 100% 55%;
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 95%;
@@ -106,33 +104,41 @@
 }
 
 @layer components {
-  /* Utility classes con nuovi colori MUV */
+  /* Utility classes bilanciate con colori MUV strategici */
   .btn-primary {
-    @apply bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-[var(--shadow-primary)];
+    @apply bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 shadow-[var(--shadow-soft)];
   }
   
   .btn-secondary {
-    @apply bg-gradient-to-r from-brand-secondary to-brand-accent text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-[var(--shadow-secondary)];
+    @apply bg-secondary hover:bg-secondary/90 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 shadow-[var(--shadow-soft)];
   }
   
   .btn-accent {
-    @apply bg-gradient-to-r from-brand-accent to-brand-primary text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-[var(--shadow-accent)];
+    @apply bg-accent hover:bg-accent/90 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-200 shadow-[var(--shadow-soft)];
   }
   
   .btn-outline {
-    @apply border-2 border-brand-primary text-brand-primary bg-transparent font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:bg-brand-primary hover:text-white hover:scale-105;
+    @apply border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white font-semibold py-2.5 px-6 rounded-lg transition-all duration-200;
   }
   
   .glass-card {
-    @apply bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl;
+    @apply bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-xl shadow-[var(--shadow-soft)];
   }
   
-  .gradient-text {
-    @apply bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent;
+  .gradient-text-accent {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .nav-link {
+    @apply text-foreground hover:text-primary font-medium transition-colors duration-200;
+  }
+  
+  .nav-link-active {
+    @apply text-primary font-semibold border-b-2 border-primary;
   }
   
   .section-padding {
-    @apply py-16 md:py-24 lg:py-32;
+    @apply py-12 md:py-16 lg:py-20;
   }
   
   .container-width {

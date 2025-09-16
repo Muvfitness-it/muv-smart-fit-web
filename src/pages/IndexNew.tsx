@@ -47,10 +47,10 @@ const IndexNew = () => {
         <section className="section-padding bg-gradient-to-r from-muted/30 to-background">
           <div className="container-width">
             <div className="text-center mb-16">
-              <h2 className="text-responsive-xl font-black text-brand-dark mb-6">
-                I Nostri <span className="gradient-text">Servizi Principali</span>
+              <h2 className="text-responsive-xl font-bold text-foreground mb-6">
+                I Nostri <span className="text-primary font-black">Servizi Principali</span>
               </h2>
-              <p className="text-responsive text-brand-dark/70 max-w-3xl mx-auto">
+              <p className="text-responsive text-muted-foreground max-w-3xl mx-auto">
                 Ogni servizio è progettato per risolvere problemi specifici e raggiungere obiettivi concreti
               </p>
             </div>
@@ -88,19 +88,19 @@ const IndexNew = () => {
               ].map((service, index) => (
                 <div 
                   key={index}
-                  className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200 shadow-soft hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+                  className="bg-white/95 rounded-2xl p-8 border border-border shadow-soft hover:shadow-lg transition-all duration-200 group"
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto group-hover:scale-110 transition-transform`}>
+                  <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-xl flex items-center justify-center text-3xl mb-6 mx-auto transition-transform`}>
                     {service.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-brand-dark mb-3 text-center">
+                  <h3 className="text-xl font-bold text-foreground mb-3 text-center">
                     {service.title}
                   </h3>
-                  <p className="text-brand-dark/70 text-center mb-4 text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-center mb-4 text-sm leading-relaxed">
                     {service.description}
                   </p>
-                  <div className="text-xs text-brand-dark/50 text-center border-t border-gray-200 pt-4">
-                    <strong className="text-brand-primary">Risolve:</strong><br />
+                  <div className="text-xs text-muted-foreground text-center border-t border-border pt-4">
+                    <strong className="text-primary">Risolve:</strong><br />
                     {service.problems}
                   </div>
                 </div>
@@ -128,25 +128,25 @@ const IndexNew = () => {
             <section className="section-padding bg-gradient-to-r from-brand-primary/5 to-brand-accent/5">
               <div className="container-width">
                 <div className="text-center">
-                  <h2 className="text-responsive-xl font-black text-brand-dark mb-12">
-                    Perché Scegliere <span className="gradient-text">MUV Fitness</span>
+                  <h2 className="text-responsive-xl font-bold text-foreground mb-12">
+                    Perché Scegliere <span className="text-primary font-black">MUV Fitness</span>
                   </h2>
                   
                   <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                     <div className="text-center">
-                      <div className="text-6xl font-black gradient-text mb-4">500+</div>
-                      <h3 className="font-bold text-brand-dark mb-2">Clienti Trasformati</h3>
-                      <p className="text-brand-dark/60 text-sm">In 10+ anni di attività</p>
+                      <div className="text-6xl font-black text-primary mb-4">500+</div>
+                      <h3 className="font-bold text-foreground mb-2">Clienti Trasformati</h3>
+                      <p className="text-muted-foreground text-sm">In 10+ anni di attività</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-6xl font-black gradient-text mb-4">30</div>
-                      <h3 className="font-bold text-brand-dark mb-2">Giorni per Vedere Risultati</h3>
-                      <p className="text-brand-dark/60 text-sm">Metodo scientificamente testato</p>
+                      <div className="text-6xl font-black text-primary mb-4">30</div>
+                      <h3 className="font-bold text-foreground mb-2">Giorni per Vedere Risultati</h3>
+                      <p className="text-muted-foreground text-sm">Metodo scientificamente testato</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-6xl font-black gradient-text mb-4">100%</div>
-                      <h3 className="font-bold text-brand-dark mb-2">Personalizzazione</h3>
-                      <p className="text-brand-dark/60 text-sm">Ogni percorso è unico</p>
+                      <div className="text-6xl font-black text-primary mb-4">100%</div>
+                      <h3 className="font-bold text-foreground mb-2">Personalizzazione</h3>
+                      <p className="text-muted-foreground text-sm">Ogni percorso è unico</p>
                     </div>
                   </div>
                 </div>
@@ -156,8 +156,8 @@ const IndexNew = () => {
             {/* Simple FAQ */}
             <section className="section-padding bg-background">
               <div className="container-width max-w-4xl">
-                <h2 className="text-responsive-xl font-black text-brand-dark text-center mb-12">
-                  Domande <span className="gradient-text">Frequenti</span>
+                <h2 className="text-responsive-xl font-bold text-foreground text-center mb-12">
+                  Domande <span className="text-primary font-black">Frequenti</span>
                 </h2>
                 
                 <div className="space-y-6">
@@ -175,12 +175,12 @@ const IndexNew = () => {
                       a: "Assolutamente sì! Pancafit e Pilates Reformer sono specificamente progettati per risolvere problemi posturali e mal di schiena."
                     }
                   ].map((faq, index) => (
-                    <details key={index} className="bg-white/70 rounded-2xl p-6 border border-gray-200 group">
-                      <summary className="font-bold text-brand-dark cursor-pointer text-lg mb-2 list-none flex items-center justify-between">
+                    <details key={index} className="bg-white/90 rounded-xl p-6 border border-border group">
+                      <summary className="font-bold text-foreground cursor-pointer text-lg mb-2 list-none flex items-center justify-between">
                         {faq.q}
-                        <span className="text-brand-primary group-open:rotate-45 transition-transform">+</span>
+                        <span className="text-primary group-open:rotate-45 transition-transform">+</span>
                       </summary>
-                      <p className="text-brand-dark/70 leading-relaxed mt-4 pl-4 border-l-4 border-brand-primary/20">
+                      <p className="text-muted-foreground leading-relaxed mt-4 pl-4 border-l-4 border-primary/20">
                         {faq.a}
                       </p>
                     </details>
@@ -192,10 +192,10 @@ const IndexNew = () => {
         )}
 
         {/* Final CTA */}
-        <section className="section-padding bg-gradient-primary text-white text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/20"></div>
+        <section className="section-padding bg-primary text-white text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/10"></div>
           <div className="container-width relative z-10">
-            <h2 className="text-responsive-xl font-black mb-6">
+            <h2 className="text-responsive-xl font-bold mb-6">
               Pronto per la tua <span className="text-yellow-300">Trasformazione</span>?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
@@ -203,7 +203,7 @@ const IndexNew = () => {
             </p>
             <Link 
               to="/contatti" 
-              className="inline-flex items-center gap-3 bg-white text-brand-primary font-black text-xl px-12 py-6 rounded-2xl hover:scale-105 transition-all duration-300 shadow-xl min-h-[72px]"
+              className="inline-flex items-center gap-3 bg-white text-primary font-bold text-xl px-12 py-5 rounded-xl hover:bg-gray-50 transition-colors duration-200 min-h-[64px]"
             >
               🚀 PRENOTA CONSULENZA GRATUITA
             </Link>
