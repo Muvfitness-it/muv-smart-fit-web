@@ -14,7 +14,7 @@ export interface MUVUserProfile {
 }
 
 export const useMUVAssistant = () => {
-  const { callGeminiAPI } = useGeminiAPI();
+  const { callOpenAIAPI } = useGeminiAPI();
 
   const askMUVAssistant = async (
     question: string, 
@@ -131,9 +131,18 @@ Rispondi come l'Assistente Virtuale MUV, mostrando competenza sui servizi e guid
     };
     
     try {
-      const result = await callGeminiAPI(payload);
-      if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-        const response = result.candidates[0].content.parts[0].text;
+      const result = await callOpenAIAPI(payload);
+      let response: string | undefined;
+
+      if (typeof result === 'string') {
+        response = result;
+      } else if (result?.candidates?.[0]?.content?.parts?.[0]?.text) {
+        response = result.candidates[0].content.parts[0].text;
+      } else if (result?.choices?.[0]?.message?.content) {
+        response = result.choices[0].message.content;
+      }
+      
+      if (response) {
         
         // Analizza la risposta per aggiornare il profilo utente
         const updatedProfile: MUVUserProfile = { ...userProfile };
