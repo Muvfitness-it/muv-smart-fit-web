@@ -24,20 +24,20 @@ const ChiSiamo = () => {
       <BreadcrumbNavigation />
       
       <Navigation />
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-12 sm:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 px-2 leading-tight text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 px-2 leading-tight text-foreground">
               Il primo centro fitness{" "}
-              <span className="text-brand-primary block sm:inline">smart</span>{" "}
+              <span className="text-primary block sm:inline">smart</span>{" "}
               di Legnago
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
               <strong>Non una palestra qualsiasi</strong>, ma l'evoluzione del fitness. 
               Dove scienza, tecnologia e passione si uniscono per trasformare il tuo corpo 
-              <span className="text-brand-primary block sm:inline"> in tempi da record</span>.
+              <span className="text-primary block sm:inline"> in tempi da record</span>.
             </p>
           </header>
           

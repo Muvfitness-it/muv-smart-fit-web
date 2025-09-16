@@ -76,7 +76,7 @@ const Navigation = () => {
     name: "Blog",
     path: "/blog"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center ${isOpen ? 'bg-gray-900/98' : 'glass-header'} ${isScrolled ? 'scrolled' : ''}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary/95 backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-3 xl:py-4">
           {/* Logo - optimized for mobile */}
@@ -101,7 +101,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Better spacing and alignment */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 xl:space-x-8">
-            {navItems.map(item => <Link key={item.name} to={item.path} className={`nav-link text-sm xl:text-base whitespace-nowrap ${location.pathname === item.path ? 'nav-link-active' : ''}`}>
+            {navItems.map(item => <Link key={item.name} to={item.path} className={`text-white hover:text-white/80 font-medium transition-colors text-sm xl:text-base whitespace-nowrap ${location.pathname === item.path ? 'text-white font-semibold border-b-2 border-white/80' : ''}`}>
                 {item.name}
               </Link>)}
           </div>

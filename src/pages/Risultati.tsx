@@ -97,18 +97,18 @@ const Risultati = () => {
       />
       
       <Navigation />
-      <div className="min-h-screen bg-gray-900 text-white">
+      <div className="min-h-screen bg-background text-foreground">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <header className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Risultati reali di clienti{" "}
-            <span className="text-brand-primary">veri</span>
+            <span className="text-primary">veri</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             <strong>Non promesse vuote, ma trasformazioni documentate.</strong> Queste sono le storie di persone come te 
             che hanno scelto MUV Fitness per cambiare la loro vita. 
-            <span className="text-brand-primary">Il prossimo potresti essere tu.</span>
+            <span className="text-primary">Il prossimo potresti essere tu.</span>
           </p>
           </header>
           

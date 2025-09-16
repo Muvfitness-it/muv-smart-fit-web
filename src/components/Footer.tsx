@@ -49,48 +49,48 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer ref={footerRef} className="bg-black text-white">
+    <footer ref={footerRef} className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4">Contatti</h3>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Contatti</h3>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-brand-primary" />
-                <span className="text-gray-300 text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
+                <MapPin className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-brand-primary" />
-                <span className="text-gray-300 text-sm">+39 329 107 0374</span>
+                <Phone className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">+39 329 107 0374</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-brand-primary" />
-                <span className="text-gray-300 text-sm">info@muvfitness.it</span>
+                <Mail className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">info@muvfitness.it</span>
               </div>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Link Rapidi</h3>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Link Rapidi</h3>
             <div className="space-y-2">
-              <Link to="/chi-siamo" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/chi-siamo" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Chi Siamo
               </Link>
-              <Link to="/team" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/team" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Team
               </Link>
-              <Link to="/risultati" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/risultati" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Risultati
               </Link>
-              <Link to="/contatti" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/contatti" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Contatti
               </Link>
-              <Link to="/recensioni" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/recensioni" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Recensioni
               </Link>
-              <Link to="/come-arrivare" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/come-arrivare" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Come Arrivare
               </Link>
             </div>
@@ -98,36 +98,36 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Servizi</h3>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Servizi</h3>
             <div className="space-y-2">
-              <Link to="/servizi/personal-training" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/personal-training" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Personal Training
               </Link>
-              <Link to="/servizi/ems" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/ems" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Tecnologia EMS
               </Link>
-              <Link to="/servizi/pancafit" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/pancafit" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Pancafit
               </Link>
-              <Link to="/servizi/pilates" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/pilates" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Pilates Reformer
               </Link>
-              <Link to="/servizi/small-group" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/small-group" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Small Group
               </Link>
-              <Link to="/servizi/nutrizione" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/nutrizione" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Consulenza Nutrizionale
               </Link>
-              <Link to="/servizi/hiit" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/hiit" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 HIIT Training
               </Link>
-              <Link to="/servizi/massoterapia" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/massoterapia" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Massoterapia
               </Link>
-              <Link to="/servizi/vacuum-pressoterapia" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/vacuum-pressoterapia" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Vacuum Pressoterapia
               </Link>
-              <Link to="/servizi/psicologo" className="block text-gray-300 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/servizi/psicologo" className="block text-muted-foreground hover:text-primary transition-colors duration-300">
                 Psicologo dello Sport
               </Link>
             </div>
@@ -193,22 +193,22 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8">
+        <div className="border-t border-border mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
-              <p className="text-gray-400 text-sm">
+              <p className="text-muted-foreground text-sm">
                 © 2024 MUV Fitness. Tutti i diritti riservati.
               </p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-muted-foreground text-sm">
                 P.IVA: 05281920289
               </p>
             </div>
             
             <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
-              <Link to="/privacy" className="text-gray-400 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors duration-300">
                 Privacy Policy
               </Link>
-              <Link to="/cookie-policy" className="text-gray-400 hover:text-brand-primary transition-colors duration-300">
+              <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary transition-colors duration-300">
                 Cookie Policy
               </Link>
             </div>

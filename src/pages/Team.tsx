@@ -77,17 +77,17 @@ const Team = () => {
       <BreadcrumbNavigation />
       
       <Navigation />
-      <div className="min-h-screen bg-gray-900 text-white">
+      <div className="min-h-screen bg-background text-foreground">
       <section className="py-8 sm:py-12 lg:py-16 xl:py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <header className="text-center mb-10 sm:mb-14 lg:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 text-foreground">
               I migliori Personal Trainer di{" "}
-              <span className="text-brand-primary block sm:inline">Legnago</span>
+              <span className="text-primary block sm:inline">Legnago</span>
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed px-4">
               <strong>Non troverai un team più qualificato e appassionato</strong> in tutta la provincia di Verona. 
-              Ogni specialista ha una missione: <span className="text-brand-primary">trasformare il tuo corpo e la tua vita</span>.
+              Ogni specialista ha una missione: <span className="text-primary">trasformare il tuo corpo e la tua vita</span>.
             </p>
           </header>
           

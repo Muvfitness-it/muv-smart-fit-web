@@ -92,7 +92,7 @@ const Servizi = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <UnifiedSEOHead
         title="Servizi MUV Fitness Legnago – EMS, Pancafit, Pilates, Vacuum, Nutrizione"
         description="6 servizi specializzati per fitness intelligente: EMS, Pancafit, Pilates Reformer, Vacuum+Pressoterapia, Personal Training, Nutrizione e Psicocoach. Scegli il tuo percorso ideale."
@@ -108,11 +108,11 @@ const Servizi = () => {
           <header className="text-center mb-12 sm:mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2">
               Servizi di Fitness Intelligente a{" "}
-              <span className="text-pink-600 block sm:inline">Legnago</span>
+              <span className="text-primary block sm:inline">Legnago</span>
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-2">
               <strong>6 servizi specializzati</strong> per ogni obiettivo: dimagrimento rapido, postura corretta, 
-              cellulite, ricomposizione corporea, nutrizione e benessere mentale. <span className="text-pink-400">Scegli il tuo percorso ideale</span>.
+              cellulite, ricomposizione corporea, nutrizione e benessere mentale. <span className="text-primary">Scegli il tuo percorso ideale</span>.
             </p>
           </header>
           
