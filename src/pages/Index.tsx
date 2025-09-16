@@ -2,9 +2,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// AI Assistant components
-import AIAssistantWidget from '@/components/ai/AIAssistantWidget';
-import AIAssistantModal from '@/components/ai/AIAssistantModal';
+import AIAssistantSection from '../components/home/AIAssistantSection';
 
 import CompactHeroSection from '@/components/home/CompactHeroSection';
 import StickyMobileCTA from '@/components/home/StickyMobileCTA';
@@ -24,9 +22,6 @@ const MethodSection = lazy(() => import('@/components/home/MethodSection'));
 const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 
 const Index = () => {
-  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
-  const [initialAIQuestion, setInitialAIQuestion] = useState<string>('');
-
   // Safe optimization initialization
   useEffect(() => {
     // Initialize safe resource optimization
@@ -37,11 +32,6 @@ const Index = () => {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
-
-  const handleStartConversation = (question: string) => {
-    setInitialAIQuestion(question);
-    setIsAIModalOpen(true);
-  };
 
   const structuredData = [
     getLocalBusinessSchema(),
@@ -91,55 +81,8 @@ const Index = () => {
           <MethodSection />
         </Suspense>
         
-        
         {/* AI Assistant Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6">
-                🤖 <span className="bg-gradient-to-r from-[hsl(var(--chart-1))] to-[hsl(var(--chart-2))] bg-clip-text text-transparent">Assistente Virtuale MUV</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-                Hai domande sul fitness, mal di schiena, dimagrimento o postura? 
-                Il nostro <strong className="text-[hsl(var(--chart-1))]">assistente AI specializzato</strong> ti guida verso la soluzione perfetta!
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-8 mb-10">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <h3 className="text-lg font-bold text-white mb-3">💬 Risposte Immediate</h3>
-                  <p className="text-gray-300 text-sm">
-                    Chatta con l'AI specializzata sui nostri servizi: EMS, Personal Training, Pilates, Vacuum terapia
-                  </p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <h3 className="text-lg font-bold text-white mb-3">🎯 Soluzioni Personalizzate</h3>
-                  <p className="text-gray-300 text-sm">
-                    Descrivi il tuo problema e ricevi consigli mirati su quale percorso è più adatto a te
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button
-                  onClick={() => handleStartConversation("Ciao! Sono interessato ai vostri servizi, potresti aiutarmi a capire quale è più adatto per me?")}
-                  className="bg-gradient-to-r from-[hsl(var(--chart-1))] to-[hsl(var(--chart-2))] text-white px-8 py-4 rounded-full text-lg font-bold hover:opacity-90 transition-opacity shadow-xl min-h-[44px]"
-                >
-                  💬 Inizia a Chattare
-                </button>
-                <button
-                  onClick={() => handleStartConversation("Ho mal di schiena e vorrei sapere come posso migliorare")}
-                  className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold hover:bg-white/30 transition-colors border border-white/30 min-h-[44px]"
-                >
-                  🩺 "Ho mal di schiena"
-                </button>
-              </div>
-              
-              <p className="text-sm text-gray-400 mt-6">
-                ⚡ Risposta in meno di 5 secondi • 🧠 Specializzato sui servizi MUV • 🎯 Gratuito al 100%
-              </p>
-            </div>
-          </div>
-        </section>
+        <AIAssistantSection />
 
         {/* Compact FAQ Section */}
         <Suspense fallback={
@@ -172,19 +115,6 @@ const Index = () => {
         {/* Sticky Mobile CTA */}
         <StickyMobileCTA />
       </div>
-
-      {/* AI Assistant Widget - always visible */}
-      <AIAssistantWidget
-        onOpenModal={() => setIsAIModalOpen(true)}
-        onStartConversation={handleStartConversation}
-      />
-
-      {/* AI Assistant Modal */}
-      <AIAssistantModal
-        isOpen={isAIModalOpen}
-        onClose={() => setIsAIModalOpen(false)}
-        initialQuestion={initialAIQuestion}
-      />
     </>
   );
 };

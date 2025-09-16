@@ -15,6 +15,8 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import LandingPageOptimizer from "./components/landing/LandingPageOptimizer";
 import InternalLinkOptimizer from "./components/seo/InternalLinkOptimizer";
+import AIAssistantWidget from "./components/ai/AIAssistantWidget";
+import AIAssistantModal from "./components/ai/AIAssistantModal";
 
 // Critical routes loaded immediately (homepage and essential pages)
 import Index from "./pages/Index";
@@ -110,6 +112,22 @@ const AppContent = () => {
 
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const [isAIModalOpen, setIsAIModalOpen] = React.useState(false);
+  const [aiInitialQuestion, setAiInitialQuestion] = React.useState<string | undefined>();
+
+  const handleOpenAIModal = () => setIsAIModalOpen(true);
+  const handleCloseAIModal = () => setIsAIModalOpen(false);
+  const handleStartConversation = (question: string) => {
+    setAiInitialQuestion(question);
+    setIsAIModalOpen(true);
+  };
+
+  // Show AI Assistant only on main pages (not landing pages or auth pages)
+  const showAIAssistant = !location.pathname.includes('/auth') && 
+                          !location.pathname.includes('/trasformazione-30-giorni') &&
+                          !location.pathname.includes('/gravidanza-post-parto') &&
+                          !location.pathname.includes('/senior-fitness') &&
+                          !location.pathname.includes('/riabilitazione-infortuni');
 
   return (
     <Suspense fallback={<RouteLoading />}>
@@ -255,6 +273,19 @@ const AppContent = () => {
         <Suspense fallback={null}>
           <FloatingCTA />
           <CookieConsent />
+          {showAIAssistant && (
+            <>
+              <AIAssistantWidget 
+                onOpenModal={handleOpenAIModal}
+                onStartConversation={handleStartConversation}
+              />
+              <AIAssistantModal 
+                isOpen={isAIModalOpen}
+                onClose={handleCloseAIModal}
+                initialQuestion={aiInitialQuestion}
+              />
+            </>
+          )}
         </Suspense>
       </SessionSecurity>
     </Suspense>
