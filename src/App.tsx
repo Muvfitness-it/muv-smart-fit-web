@@ -19,7 +19,8 @@ import AIAssistantWidget from "./components/ai/AIAssistantWidget";
 import AIAssistantModal from "./components/ai/AIAssistantModal";
 
 // Critical routes loaded immediately (homepage and essential pages)
-import Index from "./pages/Index";
+import IndexNew from "./pages/IndexNew";
+import ServiziUnified from "./pages/ServiziUnified";
 import NotFound from "./pages/NotFound";
 
 // Lazy load all other routes to reduce initial bundle
@@ -191,9 +192,9 @@ const AppContent = () => {
               <main id="main" className="pt-[var(--header-height)]">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
-                    <Route path="/" element={<Index />} />
+                    <Route path="/" element={<IndexNew />} />
                     <Route path="/chi-siamo" element={<ChiSiamo />} />
-                    <Route path="/servizi" element={<Servizi />} />
+                    <Route path="/servizi" element={<ServiziUnified />} />
                     
                     {/* Service pages with SEO redirects */}
                     <Route path="/servizi/ems-legnago" element={<Navigate to="/servizi/ems" replace />} />
