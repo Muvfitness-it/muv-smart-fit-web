@@ -6,12 +6,7 @@ interface GoogleAnalyticsProps {
   enabled?: boolean;
 }
 
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
-  }
-}
+// Global types are defined in vite-env.d.ts
 
 const GoogleAnalytics = ({ measurementId, enabled = true }: GoogleAnalyticsProps) => {
   const location = useLocation();
