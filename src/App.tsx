@@ -25,6 +25,7 @@ import NotFound from "./pages/NotFound";
 
 // Lazy load all other routes to reduce initial bundle
 const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
+const ChiSiamoNew = lazy(() => import("./pages/ChiSiamoNew"));
 const Servizi = lazy(() => import("./pages/Servizi"));
 const Team = lazy(() => import("./pages/Team"));
 const Risultati = lazy(() => import("./pages/Risultati"));
@@ -32,6 +33,16 @@ const Contatti = lazy(() => import("./pages/Contatti"));
 const FormContatti = lazy(() => import("./pages/FormContatti"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const FAQPage = lazy(() => import("./pages/FAQPage"));
+
+// New Service Pages
+const EMSPage = lazy(() => import("./pages/servizi/EMSPage"));
+const VacuumPage = lazy(() => import("./pages/servizi/VacuumPage"));
+const PilatesReformerPage = lazy(() => import("./pages/servizi/PilatesReformerPage"));
+const NutrizionePage = lazy(() => import("./pages/servizi/NutrizionePage"));
+
+// Landing Pages
+const ProvaGratuitaEMS = lazy(() => import("./pages/landing/ProvaGratuitaEMS"));
 
 // Service pages
 const NutrizionePsicocoach = lazy(() => import("./pages/servizi/NutrizionePsicocoach"));
@@ -194,10 +205,20 @@ const AppContent = () => {
                     {/* ===== CORE 5 PAGES - HIGH CONVERSION STRUCTURE ===== */}
                     <Route path="/" element={<HomeUltraConversion />} />
                     <Route path="/servizi" element={<ServiziUnified />} />
-                    <Route path="/chi-siamo" element={<ChiSiamo />} />
+                    <Route path="/servizi/ems" element={<EMSPage />} />
+                    <Route path="/servizi/vacuum" element={<VacuumPage />} />
+                    <Route path="/servizi/pilates-reformer" element={<PilatesReformerPage />} />
+                    <Route path="/servizi/nutrizione" element={<NutrizionePage />} />
+                    <Route path="/chi-siamo" element={<ChiSiamoNew />} />
+                    <Route path="/chi-siamo-legacy" element={<ChiSiamo />} />
                     <Route path="/risultati" element={<Risultati />} />
                     <Route path="/contatti" element={<Contatti />} />
                     <Route path="/team" element={<Team />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                    
+                    {/* Landing Pages */}
+                    <Route path="/prova-gratuita-ems" element={<ProvaGratuitaEMS />} />
+                    <Route path="/prenota" element={<ProvaGratuitaEMS />} />
                     
                     {/* Legal pages - keep separate */}
                     <Route path="/privacy" element={<Privacy />} />
