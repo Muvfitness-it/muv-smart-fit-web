@@ -106,8 +106,15 @@ const NutrizionePage = () => {
         title="Consulenza Nutrizionale a Legnago"
         subtitle="Il Tuo Percorso Verso un'Alimentazione Consapevole"
         description="Raggiungi i tuoi obiettivi con piani alimentari personalizzati. La nostra nutrizionista ti guida verso un rapporto sano e duraturo con il cibo."
-        ctaText="Prenota Consulenza"
-        ctaLink="#prenota"
+        primaryButton={{
+          text: "Prenota Consulenza",
+          href: "#prenota"
+        }}
+        breadcrumbs={[
+          { text: "Home", href: "/" },
+          { text: "Servizi", href: "/servizi" },
+          { text: "Nutrizione" }
+        ]}
         backgroundImage="/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
       />
 
@@ -253,17 +260,20 @@ const NutrizionePage = () => {
 
       <ServiceFAQSection
         title="Domande Frequenti sulla Consulenza Nutrizionale"
-        description="Tutto quello che devi sapere sui nostri servizi di nutrizione"
         faqs={faqs}
       />
 
       <ServiceCTASection
         title="Inizia il Tuo Percorso Nutrizionale"
         description="Prenota una consulenza e scopri come un'alimentazione personalizzata può trasformare il tuo benessere e i tuoi risultati."
-        ctaText="Prenota Consulenza"
-        ctaLink="#prenota"
-        secondaryCtaText="Chiama Ora"
-        secondaryCtaLink="tel:+393491234567"
+        primaryButton={{
+          text: "Prenota Consulenza",
+          href: "#prenota"
+        }}
+        secondaryButton={{
+          text: "Chiama Ora",
+          href: "tel:+393491234567"
+        }}
       />
     </ServicePageLayout>
   );

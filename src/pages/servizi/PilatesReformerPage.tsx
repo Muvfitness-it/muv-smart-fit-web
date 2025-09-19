@@ -97,8 +97,15 @@ const PilatesReformerPage = () => {
         title="Pilates Reformer a Legnago"
         subtitle="Rivoluziona la Tua Postura e il Tuo Benessere"
         description="Scopri il potere trasformativo del Pilates Reformer: postura perfetta, core forte e movimenti fluidi. Il metodo più efficace per il benessere della tua schiena."
-        ctaText="Prenota Lezione di Prova"
-        ctaLink="#prenota"
+        primaryButton={{
+          text: "Prenota Lezione di Prova",
+          href: "#prenota"
+        }}
+        breadcrumbs={[
+          { text: "Home", href: "/" },
+          { text: "Servizi", href: "/servizi" },
+          { text: "Pilates Reformer" }
+        ]}
         backgroundImage="/lovable-uploads/3c810b2b-3275-47fd-8d43-a3ead4abd35b.png"
       />
 
@@ -219,17 +226,20 @@ const PilatesReformerPage = () => {
 
       <ServiceFAQSection
         title="Domande Frequenti sul Pilates Reformer"
-        description="Tutto quello che devi sapere sul nostro metodo e le nostre lezioni"
         faqs={faqs}
       />
 
       <ServiceCTASection
         title="Inizia il Tuo Percorso di Benessere"
         description="Prenota una lezione di prova e scopri come il Pilates Reformer può trasformare la tua postura e il tuo benessere generale."
-        ctaText="Prenota Lezione di Prova"
-        ctaLink="#prenota"
-        secondaryCtaText="Scopri di Più"
-        secondaryCtaLink="tel:+393491234567"
+        primaryButton={{
+          text: "Prenota Lezione di Prova",
+          href: "#prenota"
+        }}
+        secondaryButton={{
+          text: "Scopri di Più",
+          href: "tel:+393491234567"
+        }}
       />
     </ServicePageLayout>
   );

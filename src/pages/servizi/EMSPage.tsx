@@ -89,8 +89,15 @@ const EMSPage = () => {
         title="Allenamento EMS a Legnago"
         subtitle="Elettrostimolazione Muscolare per Risultati Straordinari"
         description="Dimagrisci e tonifica il tuo corpo in tempi record con la tecnologia EMS più avanzata. 20 minuti di allenamento equivalgono a 4 ore di palestra tradizionale."
-        ctaText="Prenota Prova Gratuita EMS"
-        ctaLink="#prenota"
+        primaryButton={{
+          text: "Prenota Prova Gratuita EMS",
+          href: "#prenota"
+        }}
+        breadcrumbs={[
+          { text: "Home", href: "/" },
+          { text: "Servizi", href: "/servizi" },
+          { text: "EMS" }
+        ]}
         backgroundImage="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
       />
 
@@ -184,17 +191,20 @@ const EMSPage = () => {
 
       <ServiceFAQSection
         title="Domande Frequenti sull'EMS"
-        description="Tutto quello che devi sapere sull'allenamento con elettrostimolazione"
         faqs={faqs}
       />
 
       <ServiceCTASection
         title="Pronto a Trasformare il Tuo Corpo?"
         description="Prenota la tua prova gratuita di allenamento EMS e scopri cosa significa allenarsi con la tecnologia più avanzata."
-        ctaText="Prenota Prova Gratuita"
-        ctaLink="#prenota"
-        secondaryCtaText="Chiama Ora"
-        secondaryCtaLink="tel:+393491234567"
+        primaryButton={{
+          text: "Prenota Prova Gratuita",
+          href: "#prenota"
+        }}
+        secondaryButton={{
+          text: "Chiama Ora",
+          href: "tel:+393491234567"
+        }}
       />
     </ServicePageLayout>
   );

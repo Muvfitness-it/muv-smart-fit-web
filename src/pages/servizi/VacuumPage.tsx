@@ -97,8 +97,15 @@ const VacuumPage = () => {
         title="Vacuum Pressoterapia a Legnago"
         subtitle="Drenaggio Linfatico e Benessere per le Tue Gambe"
         description="Ritrova gambe leggere e toniche con la vacuum pressoterapia. Elimina ritenzione idrica, cellulite e migliora la circolazione con trattamenti piacevoli e rilassanti."
-        ctaText="Prenota Consulenza Gratuita"
-        ctaLink="#prenota"
+        primaryButton={{
+          text: "Prenota Consulenza Gratuita",
+          href: "#prenota"
+        }}
+        breadcrumbs={[
+          { text: "Home", href: "/" },
+          { text: "Servizi", href: "/servizi" },
+          { text: "Vacuum Pressoterapia" }
+        ]}
         backgroundImage="/lovable-uploads/db94c413-bfaa-4e3d-8dbd-08033a2a05f5.png"
       />
 
@@ -210,17 +217,20 @@ const VacuumPage = () => {
 
       <ServiceFAQSection
         title="Domande Frequenti sulla Vacuum Pressoterapia"
-        description="Tutto quello che devi sapere sui nostri trattamenti di drenaggio linfatico"
         faqs={faqs}
       />
 
       <ServiceCTASection
         title="Ritrova il Benessere delle Tue Gambe"
         description="Prenota una consulenza gratuita e scopri come la vacuum pressoterapia può aiutarti a sentirti meglio fin dalla prima seduta."
-        ctaText="Prenota Consulenza Gratuita"
-        ctaLink="#prenota"
-        secondaryCtaText="WhatsApp"
-        secondaryCtaLink="https://wa.me/393491234567?text=Ciao! Vorrei informazioni sulla vacuum pressoterapia"
+        primaryButton={{
+          text: "Prenota Consulenza Gratuita",
+          href: "#prenota"
+        }}
+        secondaryButton={{
+          text: "WhatsApp",
+          href: "https://wa.me/393491234567?text=Ciao! Vorrei informazioni sulla vacuum pressoterapia"
+        }}
       />
     </ServicePageLayout>
   );
