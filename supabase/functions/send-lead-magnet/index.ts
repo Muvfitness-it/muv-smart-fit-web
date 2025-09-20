@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email with PDF
     const emailResponse = await resend.emails.send({
-      from: "MUV Fitness <onboarding@resend.dev>",
+      from: "MUV Fitness <info@muvfitness.it>",
       to: [email],
       subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
       html: getEmailTemplate(name),
