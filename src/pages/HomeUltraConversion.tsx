@@ -6,6 +6,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
 import SafeResourceOptimizer from '@/components/optimization/SafeResourceOptimizer';
 import { getLocalBusinessSchema, getOrganizationSchema, getWebSiteSchema, getFAQSchema } from '@/utils/seoSchemas';
+import LeadMagnet from '@/components/leadmagnet/LeadMagnet';
+import EnhancedContactForm from '@/components/forms/EnhancedContactForm';
 
 const HomeUltraConversion = () => {
   useEffect(() => {
@@ -499,6 +501,26 @@ const HomeUltraConversion = () => {
           </div>
         </section>
 
+        {/* LEAD MAGNET SECTION */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Bonus Esclusivo per Te</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Scarica gratuitamente la nostra guida con i segreti del dimagrimento efficace
+              </p>
+            </div>
+            
+            <div className="max-w-lg mx-auto">
+              <LeadMagnet 
+                title="Guida Gratuita: 7 Segreti per Dimagrire"
+                description="Scopri come perdere peso velocemente con EMS, Vacuum e alimentazione corretta. Strategie testate su oltre 500 clienti."
+                buttonText="Scarica Gratis la Guida"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* 7. CONTATTI/MAP SECTION */}
         <section id="prenota" className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
@@ -514,135 +536,14 @@ const HomeUltraConversion = () => {
                 
                 <Card className="p-8">
                   <CardContent className="p-0">
-                    <form className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label htmlFor="nome" className="block text-sm font-medium text-foreground mb-2">Nome *</label>
-                          <input 
-                            type="text" 
-                            id="nome" 
-                            name="nome" 
-                            required 
-                            className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                            placeholder="Il tuo nome"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="cognome" className="block text-sm font-medium text-foreground mb-2">Cognome *</label>
-                          <input 
-                            type="text" 
-                            id="cognome" 
-                            name="cognome" 
-                            required 
-                            className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                            placeholder="Il tuo cognome"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="telefono" className="block text-sm font-medium text-foreground mb-2">Telefono *</label>
-                        <input 
-                          type="tel" 
-                          id="telefono" 
-                          name="telefono" 
-                          required 
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                          placeholder="+39 123 456 7890"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email</label>
-                        <input 
-                          type="email" 
-                          id="email" 
-                          name="email" 
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                          placeholder="la-tua@email.com"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="obiettivo" className="block text-sm font-medium text-foreground mb-2">Obiettivo principale *</label>
-                        <select 
-                          id="obiettivo" 
-                          name="obiettivo" 
-                          required 
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                        >
-                          <option value="">Seleziona il tuo obiettivo</option>
-                          <option value="dimagrire">Dimagrire</option>
-                          <option value="postura">Postura/Mal di schiena</option>
-                          <option value="tonificare">Tonificare</option>
-                          <option value="altro">Altro</option>
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="orario" className="block text-sm font-medium text-foreground mb-2">Preferenza oraria</label>
-                        <select 
-                          id="orario" 
-                          name="orario" 
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                        >
-                          <option value="">Seleziona orario preferito</option>
-                          <option value="mattina">Mattina (8:00 - 12:00)</option>
-                          <option value="pomeriggio">Pomeriggio (14:00 - 18:00)</option>
-                          <option value="sera">Sera (18:00 - 21:00)</option>
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="note" className="block text-sm font-medium text-foreground mb-2">Note aggiuntive</label>
-                        <textarea 
-                          id="note" 
-                          name="note" 
-                          rows={4}
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                          placeholder="Raccontaci i tuoi obiettivi o eventuali problematiche..."
-                        ></textarea>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <input 
-                            type="checkbox" 
-                            id="privacy" 
-                            name="privacy" 
-                            required 
-                            className="mt-1 w-4 h-4 text-primary border border-border rounded focus:ring-primary"
-                          />
-                          <label htmlFor="privacy" className="text-sm text-muted-foreground">
-                            Ho letto e accetto la <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link> *
-                          </label>
-                        </div>
-                        
-                        <div className="flex items-start gap-3">
-                          <input 
-                            type="checkbox" 
-                            id="marketing" 
-                            name="marketing" 
-                            className="mt-1 w-4 h-4 text-primary border border-border rounded focus:ring-primary"
-                          />
-                          <label htmlFor="marketing" className="text-sm text-muted-foreground">
-                            Acconsento al trattamento dei dati per finalità di marketing
-                          </label>
-                        </div>
-                      </div>
-                      
-                      <Button 
-                        type="submit" 
-                        size="lg" 
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 text-lg font-bold"
-                      >
-                        Prenota la tua Prova Gratuita
-                      </Button>
-                      
-                      <p className="text-center text-sm text-muted-foreground">
-                        Ti ricontatteremo entro 24 ore per confermare il tuo appuntamento
-                      </p>
-                    </form>
+                    <EnhancedContactForm 
+                      campaignName="Homepage Contact Form"
+                      source="homepage"
+                      title="Prenota la Tua Prova Gratuita"
+                      subtitle="Zero impegno. Ti richiamiamo entro 24 ore."
+                      showProgress={true}
+                      className="max-w-md mx-auto"
+                    />
                   </CardContent>
                 </Card>
               </div>

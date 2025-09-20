@@ -494,6 +494,50 @@ export type Database = {
         }
         Relationships: []
       }
+      email_sequences: {
+        Row: {
+          created_at: string
+          email_content: string
+          email_subject: string
+          id: string
+          lead_id: string
+          scheduled_at: string
+          sent_at: string | null
+          sequence_type: string
+          status: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_content: string
+          email_subject: string
+          id?: string
+          lead_id: string
+          scheduled_at: string
+          sent_at?: string | null
+          sequence_type: string
+          status?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_content?: string
+          email_subject?: string
+          id?: string
+          lead_id?: string
+          scheduled_at?: string
+          sent_at?: string | null
+          sequence_type?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_sequences_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       enhanced_rate_limits: {
         Row: {
           created_at: string | null
@@ -575,6 +619,54 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          campaign_name: string | null
+          contacted_at: string | null
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          name: string
+          notes: string | null
+          obiettivo: string | null
+          phone: string
+          source: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          campaign_name?: string | null
+          contacted_at?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          notes?: string | null
+          obiettivo?: string | null
+          phone: string
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          campaign_name?: string | null
+          contacted_at?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          notes?: string | null
+          obiettivo?: string | null
+          phone?: string
+          source?: string | null
+          status?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -896,6 +988,75 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      visitor_analytics: {
+        Row: {
+          bounce: boolean | null
+          browser: string | null
+          city: string | null
+          conversion: boolean | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          id: string
+          ip_address: unknown | null
+          os: string | null
+          page_path: string
+          page_views: number | null
+          referrer: string | null
+          session_id: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          visit_duration: number | null
+          visitor_id: string
+        }
+        Insert: {
+          bounce?: boolean | null
+          browser?: string | null
+          city?: string | null
+          conversion?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          ip_address?: unknown | null
+          os?: string | null
+          page_path: string
+          page_views?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visit_duration?: number | null
+          visitor_id: string
+        }
+        Update: {
+          bounce?: boolean | null
+          browser?: string | null
+          city?: string | null
+          conversion?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          ip_address?: unknown | null
+          os?: string | null
+          page_path?: string
+          page_views?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visit_duration?: number | null
+          visitor_id?: string
         }
         Relationships: []
       }

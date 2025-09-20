@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Clock, Target, Users, CheckCircle, Phone, MapPin } from 'lucide-react';
-import MUVContactForm from '@/components/contact/MUVContactForm';
+import EnhancedContactForm from '@/components/forms/EnhancedContactForm';
 
 const ProvaGratuitaEMS = () => {
   const structuredData = {
@@ -135,10 +135,12 @@ const ProvaGratuitaEMS = () => {
                 </Badge>
               </div>
 
-              <MUVContactForm 
+              <EnhancedContactForm 
                 campaignName="Prova Gratuita EMS Legnago"
-                defaultObjective="Dimagrimento con EMS"
-                className="space-y-4"
+                source="landing-ems"
+                title="Prenota la Tua Prova Gratuita EMS"
+                subtitle="Zero impegno. Ti richiamiamo entro 24 ore."
+                showProgress={true}
               />
 
               <div className="mt-6 text-center text-sm text-gray-500">
