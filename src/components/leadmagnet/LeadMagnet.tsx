@@ -42,18 +42,16 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Save lead to database
-      await supabase
-        .from('leads')
-        .insert([{
+      // Call the edge function to send the PDF via email
+      const { data, error } = await supabase.functions.invoke('send-lead-magnet', {
+        body: {
           name: formData.name,
           email: formData.email,
-          phone: formData.phone,
-          message: `Download lead magnet: ${title}`,
-          obiettivo: 'Lead Magnet Download',
-          campaign_name: 'Lead Magnet - Guida Dimagrimento',
-          source: 'lead-magnet'
-        }]);
+          phone: formData.phone
+        }
+      });
+
+      if (error) throw error;
 
       // Track conversion
       const visitorId = localStorage.getItem('visitor_id') || crypto.randomUUID();
@@ -71,16 +69,7 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
         }]);
 
       setIsDownloaded(true);
-      toast.success("Email inviata! Controlla la tua casella di posta.");
-      
-      // Simulate download (in a real app, you'd send the file via email)
-      setTimeout(() => {
-        // Create a dummy PDF download link
-        const link = document.createElement('a');
-        link.href = '#';
-        link.download = fileName;
-        link.click();
-      }, 1000);
+      toast.success("Guida inviata! Controlla la tua email per scaricare il PDF.");
 
     } catch (error) {
       console.error('Error submitting lead magnet form:', error);
@@ -99,12 +88,13 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
       <Card className={className}>
         <CardContent className="p-6 text-center">
           <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-          <h3 className="font-bold mb-2">Download Iniziato!</h3>
+          <h3 className="font-bold mb-2">Guida Inviata!</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Controlla la tua email per il link di download e ulteriori contenuti esclusivi.
+            Ti abbiamo inviato la guida "7 Segreti per Dimagrire" direttamente nella tua email. 
+            Controlla anche la cartella spam!
           </p>
           <div className="text-xs text-muted-foreground">
-            Non trovi l'email? Controlla la cartella spam o contattaci su WhatsApp
+            Nei prossimi giorni riceverai anche consigli esclusivi e storie di successo dei nostri clienti.
           </div>
         </CardContent>
       </Card>
