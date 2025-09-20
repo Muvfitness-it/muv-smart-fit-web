@@ -50,20 +50,20 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Error saving lead:', leadError);
     }
 
-    // Create PDF content
+    // Create PDF content using the generated guide
     const pdfContent = generatePDFGuide(name);
 
     // Send email with PDF
     const emailResponse = await resend.emails.send({
-      from: "MUV Fitness <info@muvfitnesslegnago.it>",
+      from: "MUV Fitness <onboarding@resend.dev>",
       to: [email],
-      subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire",
+      subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
       html: getEmailTemplate(name),
       attachments: [
         {
           filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
           content: pdfContent,
-          contentType: "application/pdf"
+          type: "application/pdf"
         }
       ]
     });

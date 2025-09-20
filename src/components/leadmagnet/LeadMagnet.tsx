@@ -69,11 +69,11 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
         }]);
 
       setIsDownloaded(true);
-      toast.success("Guida inviata! Controlla la tua email per scaricare il PDF.");
+      toast.success("✅ Guida inviata con successo! Controlla la tua casella di posta.");
 
     } catch (error) {
       console.error('Error submitting lead magnet form:', error);
-      toast.error("Errore nell'invio. Riprova più tardi.");
+      toast.error("❌ Errore nell'invio. Riprova più tardi o contattaci direttamente.");
     } finally {
       setIsSubmitting(false);
     }
