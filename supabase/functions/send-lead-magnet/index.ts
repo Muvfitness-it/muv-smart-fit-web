@@ -41,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       .insert({
         name,
         email,
-        phone,
+        phone: phone ?? '',
         source: 'lead_magnet',
         campaign_name: '7 Segreti per Dimagrire',
         status: 'new'
@@ -54,20 +54,38 @@ const handler = async (req: Request): Promise<Response> => {
     // Read the actual PDF file and convert to base64
     const pdfContent = await loadPDFGuide();
 
-    // Send email with PDF
-    const emailResponse = await resend.emails.send({
-      from: "MUV Fitness <info@muvfitness.it>",
-      to: [email],
-      subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
-      html: getEmailTemplate(name),
-      attachments: [
-        {
-          filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
-          content: pdfContent,
-          type: "application/pdf"
-        }
-      ]
-    });
+    // Send email with PDF - try verified domain first, fallback to resend default
+    let emailResponse;
+    try {
+      emailResponse = await resend.emails.send({
+        from: "MUV Fitness <info@muvfitness.it>",
+        to: [email],
+        subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
+        html: getEmailTemplate(name),
+        attachments: [
+          {
+            filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
+            content: pdfContent,
+            type: "application/pdf"
+          }
+        ]
+      });
+    } catch (fromError) {
+      console.log("Trying fallback sender due to:", fromError.message);
+      emailResponse = await resend.emails.send({
+        from: "MUV Fitness <onboarding@resend.dev>",
+        to: [email],
+        subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
+        html: getEmailTemplate(name),
+        attachments: [
+          {
+            filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
+            content: pdfContent,
+            type: "application/pdf"
+          }
+        ]
+      });
+    }
 
     // Schedule follow-up emails
     const followUpEmails = [
@@ -130,10 +148,13 @@ const handler = async (req: Request): Promise<Response> => {
 
 async function loadPDFGuide(): Promise<string> {
   try {
-    console.log("Loading PDF guide from file system...");
+    console.log("Loading PDF guide from function directory...");
     
-    // Read the actual PDF file from the public directory
-    const pdfPath = "./public/guide/7-segreti-per-dimagrire.pdf";
+    // Get the directory of the current module
+    const currentDir = new URL('.', import.meta.url).pathname;
+    const pdfPath = currentDir + 'lead-magnet.pdf';
+    
+    console.log("Attempting to read PDF from:", pdfPath);
     const pdfBytes = await Deno.readFile(pdfPath);
     
     console.log(`PDF loaded successfully, size: ${pdfBytes.length} bytes`);
@@ -144,40 +165,7 @@ async function loadPDFGuide(): Promise<string> {
     return base64PDF;
   } catch (error) {
     console.error("Error loading PDF file:", error);
-    
-    // Fallback: create a simple text-based content with proper UTF-8 encoding
-    console.log("Using fallback text content...");
-    const fallbackContent = `GUIDA GRATUITA: 7 SEGRETI PER DIMAGRIRE
-
-Questa e una guida completa per il dimagrimento.
-
-SEGRETO #1: L'ALIMENTAZIONE E L'80% DEL SUCCESSO
-Non esistono diete miracolose, ma esistono abitudini alimentari che accelerano il metabolismo.
-
-SEGRETO #2: L'EMS RIVOLUZIONA IL DIMAGRIMENTO
-20 minuti di EMS equivalgono a 4 ore di palestra tradizionale.
-
-SEGRETO #3: IL TIMING DEI PASTI
-Quando mangi e importante quanto cosa mangi.
-
-SEGRETO #4: L'IDRATAZIONE STRATEGICA
-2 litri d'acqua al giorno accelerano il metabolismo del 30%.
-
-SEGRETO #5: IL SONNO BRUCIA GRASSI
-7-8 ore di sonno ottimizzano gli ormoni del dimagrimento.
-
-SEGRETO #6: IL MOVIMENTO QUOTIDIANO
-10.000 passi + 2 allenamenti EMS = risultati garantiti.
-
-SEGRETO #7: LA MENTALITA VINCENTE
-Il mindset giusto mantiene i risultati nel tempo.
-
-Il Team MUV Fitness`;
-    
-    // Use TextEncoder to properly handle UTF-8, then encode to base64
-    const textEncoder = new TextEncoder();
-    const utf8Bytes = textEncoder.encode(fallbackContent);
-    return encodeBase64(utf8Bytes);
+    throw new Error(`Failed to load PDF: ${error.message}`);
   }
 }
 
