@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { encodeBase64 } from "https://deno.land/std@0.190.0/encoding/base64.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.0';
 
@@ -50,8 +51,8 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Error saving lead:', leadError);
     }
 
-    // Create PDF content using the generated guide
-    const pdfContent = generatePDFGuide(name);
+    // Read the actual PDF file and convert to base64
+    const pdfContent = await loadPDFGuide();
 
     // Send email with PDF
     const emailResponse = await resend.emails.send({
@@ -108,8 +109,17 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error("Error in send-lead-magnet function:", error);
+    console.error("Error details:", {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+    
     return new Response(
-      JSON.stringify({ error: "Errore nell'invio della guida" }),
+      JSON.stringify({ 
+        error: "Errore nell'invio della guida",
+        details: error.message 
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -118,81 +128,57 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generatePDFGuide(name: string): string {
-  // This is a simplified PDF content - in a real implementation, 
-  // you'd use a proper PDF library like PDFKit or similar
-  const content = `
-    GUIDA GRATUITA: 7 SEGRETI PER DIMAGRIRE
+async function loadPDFGuide(): Promise<string> {
+  try {
+    console.log("Loading PDF guide from file system...");
     
-    Ciao ${name}!
+    // Read the actual PDF file from the public directory
+    const pdfPath = "./public/guide/7-segreti-per-dimagrire.pdf";
+    const pdfBytes = await Deno.readFile(pdfPath);
     
-    Benvenuto/a nella famiglia MUV Fitness! 
+    console.log(`PDF loaded successfully, size: ${pdfBytes.length} bytes`);
     
-    Questa guida ti svelerà i 7 segreti che hanno aiutato centinaia di nostri clienti a raggiungere il loro peso forma.
+    // Convert to base64 using Deno's proper encoding
+    const base64PDF = encodeBase64(pdfBytes);
     
-    SEGRETO #1: L'ALIMENTAZIONE È L'80% DEL SUCCESSO
-    Non esistono diete miracolose, ma esistono abitudini alimentari che accelerano il metabolismo.
+    return base64PDF;
+  } catch (error) {
+    console.error("Error loading PDF file:", error);
     
-    SEGRETO #2: L'EMS RIVOLUZIONA IL DIMAGRIMENTO
-    20 minuti di EMS equivalgono a 4 ore di palestra tradizionale.
+    // Fallback: create a simple text-based content with proper UTF-8 encoding
+    console.log("Using fallback text content...");
+    const fallbackContent = `GUIDA GRATUITA: 7 SEGRETI PER DIMAGRIRE
+
+Questa e una guida completa per il dimagrimento.
+
+SEGRETO #1: L'ALIMENTAZIONE E L'80% DEL SUCCESSO
+Non esistono diete miracolose, ma esistono abitudini alimentari che accelerano il metabolismo.
+
+SEGRETO #2: L'EMS RIVOLUZIONA IL DIMAGRIMENTO
+20 minuti di EMS equivalgono a 4 ore di palestra tradizionale.
+
+SEGRETO #3: IL TIMING DEI PASTI
+Quando mangi e importante quanto cosa mangi.
+
+SEGRETO #4: L'IDRATAZIONE STRATEGICA
+2 litri d'acqua al giorno accelerano il metabolismo del 30%.
+
+SEGRETO #5: IL SONNO BRUCIA GRASSI
+7-8 ore di sonno ottimizzano gli ormoni del dimagrimento.
+
+SEGRETO #6: IL MOVIMENTO QUOTIDIANO
+10.000 passi + 2 allenamenti EMS = risultati garantiti.
+
+SEGRETO #7: LA MENTALITA VINCENTE
+Il mindset giusto mantiene i risultati nel tempo.
+
+Il Team MUV Fitness`;
     
-    SEGRETO #3: IL TIMING DEI PASTI
-    Quando mangi è importante quanto cosa mangi.
-    
-    SEGRETO #4: L'IDRATAZIONE STRATEGICA
-    2 litri d'acqua al giorno accelerano il metabolismo del 30%.
-    
-    SEGRETO #5: IL SONNO BRUCIA GRASSI
-    7-8 ore di sonno ottimizzano gli ormoni del dimagrimento.
-    
-    SEGRETO #6: IL MOVIMENTO QUOTIDIANO
-    10.000 passi al giorno + 2 allenamenti EMS settimanali = risultati garantiti.
-    
-    SEGRETO #7: LA MENTALITÀ VINCENTE
-    Il mindset giusto è la chiave per mantenere i risultati nel tempo.
-    
-    PIANO D'AZIONE DA 7 GIORNI:
-    
-    Giorno 1-2: Implementa i segreti 1 e 4
-    Giorno 3-4: Aggiungi i segreti 2 e 5  
-    Giorno 5-6: Integra i segreti 3 e 6
-    Giorno 7: Lavora sul segreto 7
-    
-    BONUS: RICETTE BRUCIA GRASSI
-    
-    Colazione Energetica MUV:
-    - 1 yogurt greco
-    - 1 cucchiaio di avena
-    - Frutti di bosco
-    - 1 cucchiaino di miele
-    
-    Pranzo Proteico:
-    - Petto di pollo grigliato
-    - Verdure saltate
-    - Quinoa
-    - Olio EVO
-    
-    Cena Leggera:
-    - Salmone al vapore
-    - Insalata mista
-    - Avocado
-    
-    PROSSIMI PASSI:
-    
-    Vuoi accelerare i tuoi risultati?
-    Prenota la tua PROVA GRATUITA di EMS:
-    
-    📞 Tel: 045 123 456
-    📧 Email: info@muvfitnesslegnago.it
-    🌐 Web: www.muvfitnesslegnago.it
-    
-    Ti aspettiamo in centro a Legnago!
-    
-    Il Team MUV Fitness
-  `;
-  
-  // Convert to base64 (simplified - in reality you'd generate a proper PDF)
-  return btoa(content);
+    // Use TextEncoder to properly handle UTF-8, then encode to base64
+    const textEncoder = new TextEncoder();
+    const utf8Bytes = textEncoder.encode(fallbackContent);
+    return encodeBase64(utf8Bytes);
+  }
 }
 
 function getEmailTemplate(name: string): string {
