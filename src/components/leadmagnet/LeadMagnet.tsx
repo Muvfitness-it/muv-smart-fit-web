@@ -43,13 +43,35 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Send via Formspree (same as other contact forms)
+      // Create the download URL (using window.location.origin to get the current domain)
+      const downloadUrl = `${window.location.origin}/guide/7-segreti-per-dimagrire.pdf`;
+      
+      // Send via Formspree with PDF download link included
       const emailResult = await sendContactViaWeb3Forms({
         name: formData.name,
         email: formData.email,
         phone: formData.phone || "",
-        message: `Richiesta guida gratuita: "${title}". Telefono: ${formData.phone || 'Non fornito'}.`,
-        subject: `Lead Magnet: ${formData.name} ha richiesto la guida`,
+        message: `Ciao ${formData.name},
+
+Grazie per il tuo interesse nella nostra guida "7 Segreti per Dimagrire"!
+
+🎁 SCARICA LA TUA GUIDA GRATUITA:
+${downloadUrl}
+
+La guida include:
+✓ I 3 errori più comuni nel dimagrimento
+✓ Come l'EMS accelera la perdita di peso del 300%
+✓ Piano alimentare di 7 giorni testato su 500+ clienti
+✓ Esercizi semplici da fare a casa
+
+Se hai problemi con il download, rispondi pure a questa email e ti assisteremo personalmente.
+
+Un saluto dal team di MUV Fitness!
+
+---
+Telefono fornito: ${formData.phone || 'Non fornito'}
+Fonte: Lead Magnet - sito web`,
+        subject: `🎁 La tua guida "7 Segreti per Dimagrire" è pronta - ${formData.name}`,
         source: "Lead Magnet - sito",
         campaign: "Lead Magnet Guida Dimagrimento"
       });
