@@ -54,8 +54,11 @@ const handler = async (req: Request): Promise<Response> => {
     // Read the actual PDF file and convert to base64
     const pdfContent = await loadPDFGuide();
 
-    // Send email with PDF - try verified domain first, fallback to resend default
+    // Send email with PDF - try Resend first, then Formspree as fallback
     let emailResponse;
+    let emailSent = false;
+    
+    // Try Resend first
     try {
       emailResponse = await resend.emails.send({
         from: "MUV Fitness <info@muvfitness.it>",
@@ -70,21 +73,71 @@ const handler = async (req: Request): Promise<Response> => {
           }
         ]
       });
+      emailSent = true;
+      console.log("Email sent via Resend (verified domain)");
     } catch (fromError) {
-      console.log("Trying fallback sender due to:", fromError.message);
-      emailResponse = await resend.emails.send({
-        from: "MUV Fitness <onboarding@resend.dev>",
-        to: [email],
-        subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
-        html: getEmailTemplate(name),
-        attachments: [
-          {
-            filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
-            content: pdfContent,
-            type: "application/pdf"
-          }
-        ]
-      });
+      console.log("Trying Resend fallback sender due to:", fromError.message);
+      try {
+        emailResponse = await resend.emails.send({
+          from: "MUV Fitness <onboarding@resend.dev>",
+          to: [email],
+          subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
+          html: getEmailTemplate(name),
+          attachments: [
+            {
+              filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
+              content: pdfContent,
+              type: "application/pdf"
+            }
+          ]
+        });
+        emailSent = true;
+        console.log("Email sent via Resend (fallback domain)");
+      } catch (resendError) {
+        console.error("Resend completely failed:", resendError.message);
+      }
+    }
+
+    // If Resend failed, try Formspree fallback
+    if (!emailSent) {
+      console.log("Attempting Formspree fallback...");
+      try {
+        const formspreeEndpoint = "https://formspree.io/f/mblklzbq";
+        const formspreeResponse = await fetch(formspreeEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone || "",
+            subject: "🎯 Richiesta guida GRATUITA: 7 Segreti per Dimagrire!",
+            message: `Ciao ${name}, grazie per aver richiesto la nostra guida "7 Segreti per Dimagrire". 
+            
+A causa di un problema tecnico temporaneo, ti invieremo la guida PDF tramite email manualmente entro 24 ore.
+
+Nel frattempo, puoi scaricarla direttamente da: https://muvfitnesslegnago.it/guide/7-segreti-per-dimagrire.pdf
+
+Se hai domande, contattaci su WhatsApp al 045 123 456.
+
+Grazie per la pazienza!
+Il Team MUV Fitness`,
+            source: "lead_magnet_fallback"
+          })
+        });
+
+        if (formspreeResponse.ok) {
+          emailSent = true;
+          emailResponse = { id: 'formspree-fallback' };
+          console.log("Notification sent via Formspree fallback");
+        } else {
+          console.error("Formspree failed:", formspreeResponse.status, formspreeResponse.statusText);
+        }
+      } catch (formspreeError) {
+        console.error("Formspree error:", formspreeError);
+      }
     }
 
     // Schedule follow-up emails
