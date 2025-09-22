@@ -80,7 +80,7 @@ const HomeUltraConversion = () => {
             <div className="mb-6 flex flex-wrap justify-center gap-4 text-sm">
               <span className="flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2">
                 <Star className="w-4 h-4 text-primary fill-current" />
-                <span className="text-foreground font-medium">★★★★★ Palestra della Salute</span>
+                <span className="text-foreground font-medium">★★★★★ La miglior Palestra di Legnago</span>
               </span>
             </div>
 
