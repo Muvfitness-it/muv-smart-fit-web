@@ -39,17 +39,23 @@ export async function sendContactViaWeb3Forms(payload: Web3FormsPayload): Promis
         name: payload.name,
         email: payload.email,
         message: payload.message,
-        telefono: payload.telefono || '',
-        city: payload.citta || '',
-        goal: payload.obiettivo || ''
+        telefono: payload.telefono || payload.phone || '',
+        city: payload.citta || payload.city || '',
+        goal: payload.obiettivo || payload.goal || ''
       }
     });
+
+    console.log('Supabase function response:', { data, error });
 
     if (!error && data?.success) {
       console.log('Secure contact success:', data);
       return { success: true, message: data.message || 'Message sent successfully' };
     } else {
-      console.error('Secure contact failed:', error);
+      console.error('Secure contact failed:', { error, data });
+      // If data has an error message, use it
+      if (data?.error) {
+        console.error('Edge function error:', data.error);
+      }
     }
   } catch (error) {
     console.error('Secure contact error:', error);

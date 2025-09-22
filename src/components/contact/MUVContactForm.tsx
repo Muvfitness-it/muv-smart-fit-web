@@ -106,7 +106,9 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
         honeypot: formData.honeypot
       };
 
+      console.log('Form payload:', payload);
       const result = await sendContactViaWeb3Forms(payload);
+      console.log('Form result:', result);
 
       if (result.success) {
         toast.success('🎉 Candidatura inviata con successo! Ti ricontatteremo presto.');
