@@ -81,6 +81,9 @@ verify_jwt = false
 [functions.send-booking-email]
 verify_jwt = true
 
+[functions.send-lead-magnet]
+verify_jwt = false
+
 [functions.advanced-article-generator]
 verify_jwt = true
 

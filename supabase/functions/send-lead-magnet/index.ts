@@ -1,9 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { encodeBase64 } from "https://deno.land/std@0.190.0/encoding/base64.ts";
+import { encode as encodeBase64 } from "https://deno.land/std@0.190.0/encoding/base64.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
+
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -35,8 +37,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Save lead to database
-    const { error: leadError } = await supabase
+    // Save lead to database and get the ID
+    const { data: leadData, error: leadError } = await supabase
       .from('leads')
       .insert({
         name,
@@ -45,41 +47,32 @@ const handler = async (req: Request): Promise<Response> => {
         source: 'lead_magnet',
         campaign_name: 'Accelera i Tuoi Risultati in Palestra',
         status: 'new'
-      });
+      })
+      .select()
+      .single();
 
     if (leadError) {
       console.error('Error saving lead:', leadError);
+      return new Response(
+        JSON.stringify({ error: "Errore nel salvare i dati" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
-    // Read the actual PDF file and convert to base64
-    const pdfContent = await loadPDFGuide();
+    const leadId = leadData.id;
 
     // Send email with PDF - try Resend first, then Formspree as fallback
     let emailResponse;
     let emailSent = false;
     
-    // Try Resend first
-    try {
-      emailResponse = await resend.emails.send({
-        from: "MUV Fitness <info@muvfitness.it>",
-        to: [email],
-        subject: "🚀 Il tuo EBOOK GRATUITO: Accelera i Tuoi Risultati in Palestra!",
-        html: getEmailTemplate(name),
-        attachments: [
-          {
-            filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
-            content: pdfContent,
-            type: "application/pdf"
-          }
-        ]
-      });
-      emailSent = true;
-      console.log("Email sent via Resend (verified domain)");
-    } catch (fromError) {
-      console.log("Trying Resend fallback sender due to:", fromError.message);
+    // Try Resend if available
+    if (resend) {
+      // Read the actual PDF file and convert to base64
+      const pdfContent = await loadPDFGuide();
+      
       try {
         emailResponse = await resend.emails.send({
-          from: "MUV Fitness <onboarding@resend.dev>",
+          from: "MUV Fitness <info@muvfitness.it>",
           to: [email],
           subject: "🚀 Il tuo EBOOK GRATUITO: Accelera i Tuoi Risultati in Palestra!",
           html: getEmailTemplate(name),
@@ -92,13 +85,34 @@ const handler = async (req: Request): Promise<Response> => {
           ]
         });
         emailSent = true;
-        console.log("Email sent via Resend (fallback domain)");
-      } catch (resendError) {
-        console.error("Resend completely failed:", resendError.message);
+        console.log("Email sent via Resend (verified domain)");
+      } catch (fromError) {
+        console.log("Trying Resend fallback sender due to:", fromError.message);
+        try {
+          emailResponse = await resend.emails.send({
+            from: "MUV Fitness <onboarding@resend.dev>",
+            to: [email],
+            subject: "🚀 Il tuo EBOOK GRATUITO: Accelera i Tuoi Risultati in Palestra!",
+            html: getEmailTemplate(name),
+            attachments: [
+              {
+                filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
+                content: pdfContent,
+                type: "application/pdf"
+              }
+            ]
+          });
+          emailSent = true;
+          console.log("Email sent via Resend (fallback domain)");
+        } catch (resendError) {
+          console.error("Resend completely failed:", resendError.message);
+        }
       }
+    } else {
+      console.log("Resend API key not available, skipping Resend...");
     }
 
-    // If Resend failed, try Formspree fallback
+    // If Resend failed or unavailable, try Formspree fallback
     if (!emailSent) {
       console.log("Attempting Formspree fallback...");
       try {
@@ -118,7 +132,7 @@ const handler = async (req: Request): Promise<Response> => {
             
 A causa di un problema tecnico temporaneo, ti invieremo l'ebook PDF tramite email manualmente entro 24 ore.
 
-Nel frattempo, puoi scaricarli direttamente da: https://muvfitnesslegnago.it/guide/accelera-i-tuoi-risultati-in-palestra.pdf
+Nel frattempo, puoi scaricarlo direttamente da: https://muvfitnesslegnago.it/guide/accelera-i-tuoi-risultati-in-palestra.pdf
 
 Se hai domande, contattaci su WhatsApp al 045 123 456.
 
@@ -140,29 +154,37 @@ Il Team MUV Fitness`,
       }
     }
 
-    // Schedule follow-up emails
-    const followUpEmails = [
-      {
-        sequence_type: 'welcome_series',
-        email_subject: '🔥 Hai già iniziato con l\'ebook?',
-        email_content: getFollowUpEmail1(name),
-        scheduled_at: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-        lead_id: null // We'll update this with the actual lead ID
-      },
-      {
-        sequence_type: 'welcome_series',
-        email_subject: '💪 La trasformazione di Marco: +15kg di massa magra',
-        email_content: getFollowUpEmail2(name),
-        scheduled_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
-        lead_id: null
-      }
-    ];
+    // Schedule follow-up emails with proper error handling
+    try {
+      const followUpEmails = [
+        {
+          sequence_type: 'welcome_series',
+          email_subject: '🔥 Hai già iniziato con l\'ebook?',
+          email_content: getFollowUpEmail1(name),
+          scheduled_at: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+          lead_id: leadId
+        },
+        {
+          sequence_type: 'welcome_series',
+          email_subject: '💪 La trasformazione di Marco: +15kg di massa magra',
+          email_content: getFollowUpEmail2(name),
+          scheduled_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
+          lead_id: leadId
+        }
+      ];
 
-    // Save email sequences
-    for (const emailSeq of followUpEmails) {
-      await supabase
-        .from('email_sequences')
-        .insert(emailSeq);
+      // Save email sequences
+      for (const emailSeq of followUpEmails) {
+        const { error: sequenceError } = await supabase
+          .from('email_sequences')
+          .insert(emailSeq);
+        
+        if (sequenceError) {
+          console.error('Error scheduling follow-up email:', sequenceError);
+        }
+      }
+    } catch (sequenceError) {
+      console.error('Error with email sequences:', sequenceError);
     }
 
     console.log("Email sent successfully:", emailResponse);
@@ -170,7 +192,9 @@ Il Team MUV Fitness`,
     return new Response(
       JSON.stringify({ 
         success: true,
-        message: "Guida inviata con successo! Controlla la tua email."
+        message: emailSent ? 
+          "Ebook inviato con successo! Controlla la tua email." :
+          "Richiesta ricevuta. Ti contatteremo presto con il tuo ebook."
       }),
       {
         status: 200,
