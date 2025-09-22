@@ -8,9 +8,8 @@ const ALLOWED_ORIGINS = [
 ];
 
 function corsHeaders(origin: string | null) {
-  const o = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
-    "Access-Control-Allow-Origin": o,
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS"
   };
@@ -18,6 +17,7 @@ function corsHeaders(origin: string | null) {
 
 Deno.serve(async (req) => {
   const origin = req.headers.get("origin");
+  console.log("send-lead-magnet request from origin:", origin);
   
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders(origin) });

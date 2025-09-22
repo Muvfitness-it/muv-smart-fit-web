@@ -53,10 +53,11 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
         })
       });
 
-      const data = await response.json();
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || "Errore nell'invio");
-      }
+const data = await response.json().catch(() => null);
+if (!response.ok || !data?.ok) {
+  const errText = !response.ok ? await response.text().catch(() => '') : (data?.error || 'Errore nell\'invio');
+  throw new Error(errText || "Errore nell'invio");
+}
 
       // Track conversion
       const visitorId = localStorage.getItem('visitor_id') || crypto.randomUUID();
@@ -76,10 +77,11 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
       setIsDownloaded(true);
       toast.success("✅ Guida inviata con successo! Controlla la tua casella di posta.");
 
-    } catch (error) {
-      console.error('Error submitting lead magnet form:', error);
-      toast.error("❌ Errore nell'invio. Riprova più tardi o contattaci direttamente.");
-    } finally {
+} catch (error) {
+  console.error('Error submitting lead magnet form:', error);
+  const message = error instanceof Error ? error.message : 'Errore nell\'invio. Riprova più tardi o contattaci direttamente.';
+  toast.error(`❌ ${message}`);
+} finally {
       setIsSubmitting(false);
     }
   };
