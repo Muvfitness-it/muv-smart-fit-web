@@ -108,9 +108,6 @@
     <meta name="apple-mobile-web-app-title" content="MUV Fitness">
     
     
-    <!-- Preload CSS -->
-    <link rel="preload" href="/css/index.css" as="style">
-    <link rel="stylesheet" href="/css/index.css">
     
     <!-- Security Headers - Single CSP -->
     <meta http-equiv="Content-Security-Policy" content="
@@ -360,17 +357,7 @@
     <!-- Contenuto dinamico React -->
     <div id="root"></div>
     
-    <!-- Non-blocking CSS loading -->
-    <script>
-      // Since critical CSS is already inlined, load additional CSS without blocking
-      requestAnimationFrame(function() {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = '/assets/index.css';
-        link.media = 'all';
-        document.head.appendChild(link);
-      });
-    </script>
+    <!-- Vite automatically handles CSS from src/index.css -->
     
     <!-- Main app script -->
     <script type="module" src="/src/main.tsx"></script>
