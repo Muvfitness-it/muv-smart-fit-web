@@ -89,11 +89,15 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
     setIsSubmitting(true);
 
     try {
+      const messageToSend = formData.message && formData.message.trim().length >= 10
+        ? formData.message
+        : `Richiesta consulenza dal sito.\nNome: ${formData.name}\nTelefono: ${formData.phone}\nObiettivo: ${formData.obiettivo || 'Non specificato'}`;
+
       const payload = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        message: formData.message,
+        message: messageToSend,
         telefono: formData.phone,
         obiettivo: formData.obiettivo,
         access_key: process.env.WEB3FORMS_ACCESS_KEY || 'fallback-key',
@@ -103,7 +107,7 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
       };
 
       const result = await sendContactViaWeb3Forms(payload);
-      
+
       if (result.success) {
         toast.success('🎉 Candidatura inviata con successo! Ti ricontatteremo presto.');
         setFormData({ name: '', email: '', phone: '', message: '', obiettivo: '', honeypot: '', gdprConsent: false });
