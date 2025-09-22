@@ -633,7 +633,7 @@ export type Database = {
           name: string
           notes: string | null
           obiettivo: string | null
-          phone: string
+          phone: string | null
           source: string | null
           status: string | null
           updated_at: string
@@ -648,7 +648,7 @@ export type Database = {
           name: string
           notes?: string | null
           obiettivo?: string | null
-          phone: string
+          phone?: string | null
           source?: string | null
           status?: string | null
           updated_at?: string
@@ -663,7 +663,7 @@ export type Database = {
           name?: string
           notes?: string | null
           obiettivo?: string | null
-          phone?: string
+          phone?: string | null
           source?: string | null
           status?: string | null
           updated_at?: string
