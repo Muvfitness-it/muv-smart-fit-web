@@ -75,7 +75,15 @@ const LeadMagnetModal: React.FC<LeadMagnetModalProps> = ({ isOpen, onClose, magn
   };
 
   const handleDownload = () => {
-    // In a real implementation, this would be a PDF download
+    // Create download link and trigger download
+    const link = document.createElement('a');
+    link.href = magnet.downloadUrl;
+    link.download = magnet.title.replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
     toast.success('Download iniziato! Controlla la cartella Download');
     setTimeout(() => {
       onClose();

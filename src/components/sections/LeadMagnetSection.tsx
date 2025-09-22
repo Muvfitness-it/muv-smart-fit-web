@@ -6,44 +6,44 @@ import { Card, CardContent } from '@/components/ui/card';
 const LeadMagnetSection: React.FC = () => {
   const leadMagnets = [
     {
-      title: "10 Esercizi per Eliminare il Mal di Schiena",
-      description: "Guida completa con esercizi specifici per risolvere lombalgia e cervicalgia in modo naturale.",
+      title: "7 Segreti per Dimagrire Velocemente",
+      description: "Scopri i metodi più efficaci per perdere peso in modo sano e duraturo con il nostro approccio scientifico.",
       benefits: [
-        "10 esercizi illustrati passo-passo",
-        "Programma giornaliero di 15 minuti",
-        "Consigli per prevenire ricadute",
-        "Tecniche di respirazione per rilassamento",
-        "Quando consultare un professionista"
+        "7 strategie comprovate per dimagrire",
+        "Piano alimentare bilanciato",
+        "Consigli per accelerare il metabolismo",
+        "Tecniche di allenamento mirate",
+        "Come mantenere i risultati nel tempo"
       ],
-      downloadUrl: "/guides/mal-di-schiena.pdf",
+      downloadUrl: "/guide/7-segreti-per-dimagrire.pdf",
       downloads: 2847,
       rating: 4.9
     },
     {
-      title: "Pilates in Gravidanza: Guida Sicura",
-      description: "Programma completo di Pilates pre-natale per un parto più facile e recupero veloce.",
+      title: "Accelera i Tuoi Risultati in Palestra", 
+      description: "Guida completa per massimizzare i risultati del tuo allenamento e raggiungere i tuoi obiettivi più velocemente.",
       benefits: [
-        "Esercizi sicuri per ogni trimestre",
-        "Preparazione del pavimento pelvico",
-        "Tecniche di respirazione per il parto",
-        "Programma post-parto per il recupero",
-        "Consigli nutrizionali specializzati"
+        "Tecniche di allenamento avanzate",
+        "Protocolli per forza e resistenza",
+        "Ottimizzazione del recupero",
+        "Programmazione dell'allenamento",
+        "Consigli nutrizionali per il fitness"
       ],
-      downloadUrl: "/guides/pilates-gravidanza.pdf",
+      downloadUrl: "/guide/accelera-i-tuoi-risultati-in-palestra.pdf",
       downloads: 1567,
       rating: 5.0
     },
     {
-      title: "Fitness Over 60: Mantenersi Giovani",
-      description: "Programma completo per rimanere attivi, forti e indipendenti dopo i 60 anni.",
+      title: "Fitness Smart: Allena Corpo e Mente",
+      description: "Approccio olistico al fitness che combina allenamento fisico, benessere mentale e stile di vita sano.",
       benefits: [
-        "Programma di ginnastica dolce illustrato",
-        "Esercizi per prevenire le cadute",
-        "Piano nutrizionale per senior",
-        "Test di autovalutazione funzionale",
-        "Consigli per l'attività quotidiana"
+        "Programma di allenamento completo",
+        "Tecniche di mindfulness per sportivi",
+        "Gestione dello stress attraverso il movimento",
+        "Equilibrio vita-allenamento",
+        "Motivazione e obiettivi sostenibili"
       ],
-      downloadUrl: "/guides/fitness-over-60.pdf",
+      downloadUrl: "/guide/7-segreti-per-dimagrire.pdf",
       downloads: 1789,
       rating: 4.8
     }
