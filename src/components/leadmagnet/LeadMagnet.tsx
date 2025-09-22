@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -136,6 +136,8 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
       </DialogTrigger>
 
       <DialogContent className="max-w-md">
+        <DialogTitle className="sr-only">Scarica la guida gratuita</DialogTitle>
+        <DialogDescription className="sr-only">Compila il modulo per ricevere l'ebook via email.</DialogDescription>
         <div className="text-center mb-6">
           <div className="bg-primary/10 p-4 rounded-lg inline-block mb-4">
             <Gift className="h-8 w-8 text-primary" />

@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
             {
               filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
               content: pdfContent,
-              type: "application/pdf"
+              contentType: "application/pdf"
             }
           ]
         });
@@ -98,7 +98,7 @@ const handler = async (req: Request): Promise<Response> => {
               {
                 filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
                 content: pdfContent,
-                type: "application/pdf"
+                contentType: "application/pdf"
               }
             ]
           });
@@ -225,21 +225,27 @@ Il Team MUV Fitness`,
 
 async function loadPDFGuide(): Promise<string> {
   try {
-    console.log("Loading PDF guide from function directory...");
-    
-    // Get the directory of the current module
-    const currentDir = new URL('.', import.meta.url).pathname;
-    const pdfPath = currentDir + 'lead-magnet.pdf';
-    
-    console.log("Attempting to read PDF from:", pdfPath);
-    const pdfBytes = await Deno.readFile(pdfPath);
-    
-    console.log(`PDF loaded successfully, size: ${pdfBytes.length} bytes`);
-    
-    // Convert to base64 using Deno's proper encoding
-    const base64PDF = encodeBase64(pdfBytes);
-    
-    return base64PDF;
+    console.log("Loading PDF guide...");
+
+    // Attempt 1: read local file packaged with the function
+    try {
+      const localUrl = new URL('./lead-magnet.pdf', import.meta.url);
+      const localBytes = await Deno.readFile(localUrl);
+      console.log(`PDF loaded locally, size: ${localBytes.length} bytes`);
+      return encodeBase64(localBytes);
+    } catch (localErr) {
+      console.log("Local PDF not found, falling back to public URL:", localErr?.message);
+    }
+
+    // Attempt 2: fetch from public site (ensures availability even if asset isn't bundled)
+    const publicUrl = 'https://muvfitnesslegnago.it/guide/accelera-i-tuoi-risultati-in-palestra.pdf';
+    const resp = await fetch(publicUrl);
+    if (!resp.ok) {
+      throw new Error(`Failed to fetch PDF from public URL: ${resp.status} ${resp.statusText}`);
+    }
+    const arr = new Uint8Array(await resp.arrayBuffer());
+    console.log(`PDF fetched from public URL, size: ${arr.length} bytes`);
+    return encodeBase64(arr);
   } catch (error) {
     console.error("Error loading PDF file:", error);
     throw new Error(`Failed to load PDF: ${error.message}`);
