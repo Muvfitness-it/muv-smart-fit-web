@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { sendContactViaWeb3Forms } from '@/utils/mailAdapter';
+import { sendContactViaWeb3Forms, type ContactFormPayload } from '@/utils/mailAdapter';
 import GDPRConsent from '@/components/security/GDPRConsent';
 
 interface FormData {
@@ -28,7 +28,6 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
   className = "",
   defaultObjective = ""
 }) => {
-  console.log('MUVContactForm component rendered');
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -93,22 +92,19 @@ const MUVContactForm: React.FC<MUVContactFormProps> = ({
         ? formData.message
         : `Richiesta consulenza dal sito.\nNome: ${formData.name}\nTelefono: ${formData.phone}\nObiettivo: ${formData.obiettivo || 'Non specificato'}`;
 
-      const payload = {
+      const payload: ContactFormPayload = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         message: messageToSend,
-        telefono: formData.phone,
         obiettivo: formData.obiettivo,
-        access_key: process.env.WEB3FORMS_ACCESS_KEY || 'fallback-key',
         subject: `Nuova candidatura MUV - ${formData.name}`,
-        from_name: formData.name,
-        honeypot: formData.honeypot
+        campaign: campaignName,
+        source: "website",
+        botcheck: formData.honeypot
       };
 
-      console.log('Form payload:', payload);
       const result = await sendContactViaWeb3Forms(payload);
-      console.log('Form result:', result);
 
       if (result.success) {
         toast.success('🎉 Candidatura inviata con successo! Ti ricontatteremo presto.');
