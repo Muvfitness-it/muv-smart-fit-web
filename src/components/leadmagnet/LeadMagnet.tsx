@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { sendContactViaWeb3Forms } from '@/utils/mailAdapter';
 import { Download, Gift, CheckCircle, Star, Users } from 'lucide-react';
 
 interface LeadMagnetProps {
@@ -42,46 +43,63 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Call the simplified edge function
-      const response = await fetch("https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/send-lead-magnet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name: formData.name, 
-          email: formData.email, 
-          source: "Lead Magnet - sito" 
-        })
+      // Send via Formspree (same as other contact forms)
+      const emailResult = await sendContactViaWeb3Forms({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || "",
+        message: `Richiesta guida gratuita: "${title}". Telefono: ${formData.phone || 'Non fornito'}.`,
+        subject: `Lead Magnet: ${formData.name} ha richiesto la guida`,
+        source: "Lead Magnet - sito",
+        campaign: "Lead Magnet Guida Dimagrimento"
       });
 
-const data = await response.json().catch(() => null);
-if (!response.ok || !data?.ok) {
-  const errText = !response.ok ? await response.text().catch(() => '') : (data?.error || 'Errore nell\'invio');
-  throw new Error(errText || "Errore nell'invio");
-}
+      if (!emailResult.success) {
+        throw new Error(emailResult.message || "Errore nell'invio email");
+      }
+
+      // Save to database for analytics
+      try {
+        await fetch("https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/send-lead-magnet", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            name: formData.name, 
+            email: formData.email, 
+            source: "Lead Magnet - sito" 
+          })
+        });
+      } catch (dbError) {
+        console.log('Analytics save failed (non-critical):', dbError);
+      }
 
       // Track conversion
       const visitorId = localStorage.getItem('visitor_id') || crypto.randomUUID();
       localStorage.setItem('visitor_id', visitorId);
 
-      await supabase
-        .from('visitor_analytics')
-        .insert([{
-          visitor_id: visitorId,
-          page_path: window.location.pathname,
-          referrer: document.referrer,
-          user_agent: navigator.userAgent,
-          conversion: true,
-          utm_campaign: 'Lead Magnet'
-        }]);
+      try {
+        await supabase
+          .from('visitor_analytics')
+          .insert([{
+            visitor_id: visitorId,
+            page_path: window.location.pathname,
+            referrer: document.referrer,
+            user_agent: navigator.userAgent,
+            conversion: true,
+            utm_campaign: 'Lead Magnet'
+          }]);
+      } catch (analyticsError) {
+        console.log('Analytics insert failed (non-critical):', analyticsError);
+      }
 
       setIsDownloaded(true);
-      toast.success("✅ Guida inviata con successo! Controlla la tua casella di posta.");
+      toast.success("✅ Guida inviata con successo! Controlla la tua casella di posta e la cartella spam.");
 
-} catch (error) {
-  console.error('Error submitting lead magnet form:', error);
-  const message = error instanceof Error ? error.message : 'Errore nell\'invio. Riprova più tardi o contattaci direttamente.';
-  toast.error(`❌ ${message}`);
-} finally {
+    } catch (error) {
+      console.error('Error submitting lead magnet form:', error);
+      const message = error instanceof Error ? error.message : 'Errore nell\'invio. Riprova più tardi o contattaci direttamente.';
+      toast.error(`❌ ${message}`);
+    } finally {
       setIsSubmitting(false);
     }
   };
