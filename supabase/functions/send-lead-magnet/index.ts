@@ -43,7 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
         email,
         phone: phone ?? '',
         source: 'lead_magnet',
-        campaign_name: '7 Segreti per Dimagrire',
+        campaign_name: 'Accelera i Tuoi Risultati in Palestra',
         status: 'new'
       });
 
@@ -63,11 +63,11 @@ const handler = async (req: Request): Promise<Response> => {
       emailResponse = await resend.emails.send({
         from: "MUV Fitness <info@muvfitness.it>",
         to: [email],
-        subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
+        subject: "🚀 Il tuo EBOOK GRATUITO: Accelera i Tuoi Risultati in Palestra!",
         html: getEmailTemplate(name),
         attachments: [
           {
-            filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
+            filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
             content: pdfContent,
             type: "application/pdf"
           }
@@ -81,11 +81,11 @@ const handler = async (req: Request): Promise<Response> => {
         emailResponse = await resend.emails.send({
           from: "MUV Fitness <onboarding@resend.dev>",
           to: [email],
-          subject: "🎯 La tua guida GRATUITA: 7 Segreti per Dimagrire!",
+          subject: "🚀 Il tuo EBOOK GRATUITO: Accelera i Tuoi Risultati in Palestra!",
           html: getEmailTemplate(name),
           attachments: [
             {
-              filename: "7-segreti-per-dimagrire-muv-fitness.pdf",
+              filename: "accelera-i-tuoi-risultati-in-palestra-muv-fitness.pdf",
               content: pdfContent,
               type: "application/pdf"
             }
@@ -113,12 +113,12 @@ const handler = async (req: Request): Promise<Response> => {
             name: name,
             email: email,
             phone: phone || "",
-            subject: "🎯 Richiesta guida GRATUITA: 7 Segreti per Dimagrire!",
-            message: `Ciao ${name}, grazie per aver richiesto la nostra guida "7 Segreti per Dimagrire". 
+            subject: "🚀 Richiesta ebook GRATUITO: Accelera i Tuoi Risultati in Palestra!",
+            message: `Ciao ${name}, grazie per aver richiesto il nostro ebook "Accelera i Tuoi Risultati in Palestra". 
             
-A causa di un problema tecnico temporaneo, ti invieremo la guida PDF tramite email manualmente entro 24 ore.
+A causa di un problema tecnico temporaneo, ti invieremo l'ebook PDF tramite email manualmente entro 24 ore.
 
-Nel frattempo, puoi scaricarla direttamente da: https://muvfitnesslegnago.it/guide/7-segreti-per-dimagrire.pdf
+Nel frattempo, puoi scaricarli direttamente da: https://muvfitnesslegnago.it/guide/accelera-i-tuoi-risultati-in-palestra.pdf
 
 Se hai domande, contattaci su WhatsApp al 045 123 456.
 
@@ -144,14 +144,14 @@ Il Team MUV Fitness`,
     const followUpEmails = [
       {
         sequence_type: 'welcome_series',
-        email_subject: '🔥 Hai già iniziato con i 7 Segreti?',
+        email_subject: '🔥 Hai già iniziato con l\'ebook?',
         email_content: getFollowUpEmail1(name),
         scheduled_at: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
         lead_id: null // We'll update this with the actual lead ID
       },
       {
         sequence_type: 'welcome_series',
-        email_subject: '💪 La trasformazione di Sara: da 78kg a 65kg',
+        email_subject: '💪 La trasformazione di Marco: +15kg di massa magra',
         email_content: getFollowUpEmail2(name),
         scheduled_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
         lead_id: null
@@ -241,28 +241,28 @@ function getEmailTemplate(name: string): string {
     <body>
         <div class="container">
             <div class="header">
-                <h1>🎯 Ecco la tua guida GRATUITA!</h1>
-                <p>Ciao ${name}, i tuoi 7 Segreti per Dimagrire sono pronti!</p>
+                <h1>🚀 Ecco il tuo ebook GRATUITO!</h1>
+                <p>Ciao ${name}, il tuo ebook "Accelera i Tuoi Risultati in Palestra" è pronto!</p>
             </div>
             
             <div class="content">
-                <p>Congratulazioni! Hai appena fatto il primo passo verso la tua trasformazione.</p>
+                <p>Congratulazioni! Hai appena fatto il primo passo verso una trasformazione fisica straordinaria.</p>
                 
                 <div class="benefits">
-                    <h3>📎 Nella guida allegata troverai:</h3>
+                    <h3>📎 Nel tuo ebook troverai:</h3>
                     <ul>
-                        <li>✅ I 7 segreti utilizzati dai nostri clienti di successo</li>
-                        <li>✅ Piano d'azione da 7 giorni step-by-step</li>
-                        <li>✅ Ricette brucia grassi esclusive</li>
-                        <li>✅ Come l'EMS può accelerare i tuoi risultati</li>
-                        <li>✅ Strategie di mindset vincente</li>
+                        <li>✅ Strategie avanzate per accelerare i risultati in palestra</li>
+                        <li>✅ Tecniche di allenamento ad alta intensità</li>
+                        <li>✅ Come l'EMS può potenziare ogni tuo workout</li>
+                        <li>✅ Piani nutrizionali per massimizzare i guadagni</li>
+                        <li>✅ Segreti dei professionisti del fitness</li>
                     </ul>
                 </div>
                 
-                <p><strong>💡 Consiglio speciale:</strong> Leggi la guida oggi stesso e inizia ad applicare il primo segreto!</p>
+                <p><strong>💡 Consiglio speciale:</strong> Leggi l'ebook oggi stesso e inizia ad applicare la prima strategia!</p>
                 
-                <h3>🚀 Vuoi risultati ancora più veloci?</h3>
-                <p>Prenota la tua <strong>PROVA GRATUITA di EMS</strong> e scopri come accelerare il tuo dimagrimento del 300%!</p>
+                <h3>🚀 Vuoi risultati ancora più esplosivi?</h3>
+                <p>Prenota la tua <strong>PROVA GRATUITA di EMS</strong> e scopri come accelerare i tuoi risultati del 300%!</p>
                 
                 <center>
                     <a href="https://muvfitnesslegnago.it/prova-gratuita-ems" class="cta-button">
@@ -270,7 +270,7 @@ function getEmailTemplate(name: string): string {
                     </a>
                 </center>
                 
-                <p>Nei prossimi giorni riceverai altre email con consigli esclusivi e storie di successo dei nostri clienti.</p>
+                <p>Nei prossimi giorni riceverai altre email con consigli esclusivi e storie di successo dei nostri atleti.</p>
                 
                 <p>A presto,<br>
                 <strong>Il Team MUV Fitness</strong></p>
@@ -290,9 +290,9 @@ function getEmailTemplate(name: string): string {
 function getFollowUpEmail1(name: string): string {
   return `
     <h2>🔥 Ciao ${name}, hai già iniziato?</h2>
-    <p>Ieri ti ho inviato la guida "7 Segreti per Dimagrire" e spero tu l'abbia già letta!</p>
+    <p>Ieri ti ho inviato l'ebook "Accelera i Tuoi Risultati in Palestra" e spero tu l'abbia già letto!</p>
     <p>Oggi voglio condividere con te una storia incredibile...</p>
-    <p><strong>📖 La storia di Marco:</strong> In 8 settimane ha perso 12kg grazie all'EMS + i 7 segreti.</p>
+    <p><strong>📖 La storia di Marco:</strong> In 12 settimane ha guadagnato 8kg di massa magra grazie all'EMS + le strategie dell'ebook.</p>
     <p>Il suo segreto? Ha prenotato subito la prova gratuita!</p>
     <a href="https://muvfitnesslegnago.it/prova-gratuita-ems">🚀 Prenota anche tu la tua prova gratuita</a>
   `;
@@ -300,15 +300,15 @@ function getFollowUpEmail1(name: string): string {
 
 function getFollowUpEmail2(name: string): string {
   return `
-    <h2>💪 ${name}, ti presento Sara!</h2>
-    <p>Sara aveva 38 anni, 2 figli e pesava 78kg. Oggi pesa 65kg ed è più in forma che mai!</p>
+    <h2>💪 ${name}, ti presento Andrea!</h2>
+    <p>Andrea aveva 35 anni, lavorava in ufficio e non riusciva a vedere risultati in palestra. Oggi ha il fisico che ha sempre sognato!</p>
     <p><strong>Come ha fatto?</strong></p>
     <ul>
-      <li>✅ Ha applicato i 7 segreti della guida</li>
+      <li>✅ Ha applicato le strategie dell'ebook</li>
       <li>✅ 2 sedute EMS a settimana</li>
-      <li>✅ Ha seguito il nostro programma nutrizionale</li>
+      <li>✅ Ha seguito il nostro programma di forza</li>
     </ul>
-    <p>Risultato: -13kg in 4 mesi!</p>
+    <p>Risultato: +10kg di massa magra in 6 mesi!</p>
     <p>Anche tu puoi farcela. Inizia con la tua prova gratuita!</p>
     <a href="https://muvfitnesslegnago.it/prova-gratuita-ems">💯 Prenota ora la tua trasformazione</a>
   `;
