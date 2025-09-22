@@ -73,7 +73,6 @@ const SeniorFitness = lazy(() => import("./pages/landing/SeniorFitness"));
 const RiabilitazioneInfortuni = lazy(() => import("./pages/landing/RiabilitazioneInfortuni"));
 
 // Security components - named imports  
-import { SecurityHeaders } from "./components/security/SecurityHeaders";
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import { SecureDataHandler } from "@/components/security/SecureDataHandler";
 const CookieConsent = lazy(() => import("./components/security/CookieConsent"));
@@ -144,7 +143,7 @@ const AppContent = () => {
   return (
     <Suspense fallback={<RouteLoading />}>
       <SessionSecurity>
-        <SecurityHeaders />
+        
         <SecureDataHandler />
         
         {/* Removed problematic optimization components */}

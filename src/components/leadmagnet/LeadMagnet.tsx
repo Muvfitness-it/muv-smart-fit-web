@@ -42,16 +42,21 @@ const LeadMagnet: React.FC<LeadMagnetProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Call the edge function to send the PDF via email
-      const { data, error } = await supabase.functions.invoke('send-lead-magnet', {
-        body: {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone
-        }
+      // Call the simplified edge function
+      const response = await fetch("https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/send-lead-magnet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          name: formData.name, 
+          email: formData.email, 
+          source: "Lead Magnet - sito" 
+        })
       });
 
-      if (error) throw error;
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || "Errore nell'invio");
+      }
 
       // Track conversion
       const visitorId = localStorage.getItem('visitor_id') || crypto.randomUUID();

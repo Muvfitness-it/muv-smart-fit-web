@@ -107,168 +107,24 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MUV Fitness">
     
-    <!-- Critical CSS for LCP optimization -->
-    <style>
-      /* Critical font face declarations for immediate rendering */
-      @font-face {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 900;
-        font-display: swap;
-        src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.woff2') format('woff2');
-        unicode-range: U+0000-00FF;
-      }
-      
-      /* Reset and base */
-      body { margin: 0; background-color: #1f2937; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
-      * { box-sizing: border-box; }
-      
-      /* Critical LCP element styles - Hero text */
-      .lcp-hero-text {
-        font-family: 'Montserrat', 'Inter', ui-sans-serif, system-ui, sans-serif !important;
-        font-weight: 900 !important;
-        color: white !important;
-        line-height: 1.1 !important;
-        letter-spacing: -0.025em !important;
-        text-rendering: optimizeLegibility !important;
-        font-feature-settings: "kern" 1, "liga" 1 !important;
-        will-change: auto !important;
-        contain: layout style paint !important;
-        display: block !important;
-        filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)) !important;
-      }
-      
-      /* Critical responsive typography for LCP */
-      .lcp-text-responsive {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-      }
-      @media (min-width: 640px) { .lcp-text-responsive { font-size: 3rem; line-height: 1; } }
-      @media (min-width: 768px) { .lcp-text-responsive { font-size: 3.75rem; line-height: 1; } }
-      @media (min-width: 1024px) { .lcp-text-responsive { font-size: 4.5rem; line-height: 1; } }
-      @media (min-width: 1280px) { .lcp-text-responsive { font-size: 6rem; line-height: 1; } }
-      
-      /* Critical gradient for hero text */
-      .lcp-gradient {
-        background: linear-gradient(to right, #ec4899, #8b5cf6, #3b82f6);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      
-      /* Critical layout for hero section */
-      .lcp-hero-container {
-        position: relative;
-        min-height: 100vh;
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .lcp-hero-content {
-        position: relative;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 0%;
-      }
-      
-      .lcp-hero-main {
-        flex: 1 1 0%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        padding-top: calc(80px + 4rem);
-      }
-      
-      .lcp-hero-inner {
-        text-align: center;
-        max-width: 72rem;
-        margin: 0 auto;
-      }
-      
-      /* Background with WebP support and fallback */
-      .lcp-bg-image-webp {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        /* Fallback for browsers that don't support WebP */
-        background-image: url('/images/fitness-professional-bg.jpg');
-      }
-      
-      /* WebP support check and application */
-      @supports (background-image: url('data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA')) {
-        .lcp-bg-image-webp {
-          background-image: url('/images/fitness-professional-bg.webp');
-        }
-      }
-      
-      .lcp-bg-overlay {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgb(0 0 0 / 0.8);
-      }
-      
-      /* Hide loading and static content initially */
-      .loading { display: flex; justify-content: center; align-items: center; height: 100vh; }
-      .static-content { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-      .static-content h1, .static-content h2, .static-content h3 { margin: 1rem 0; }
-      .static-content p { margin: 0.5rem 0; line-height: 1.6; }
-      .static-content ul { margin: 0.5rem 0; padding-left: 2rem; }
-      .static-content li { margin: 0.25rem 0; }
-      
-      /* Essential mobile styles - clean and minimal */
-      @media (max-width: 480px) {
-        :root { --header-h: 64px; }
-        
-        /* Hero sections responsive spacing */
-        .hero, .section-hero { 
-          padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 16px); 
-          padding-bottom: 20px; 
-        }
-        
-        /* Clean typography */
-        .hero h1, .section-hero h1 {
-          font-size: clamp(22px, 5.8vw, 32px);
-          line-height: 1.15;
-          letter-spacing: 0;
-          margin: 0 0 6px 0;
-          word-break: normal; 
-          overflow-wrap: anywhere;
-        }
-        
-        /* CTA accessibility */
-        .hero .btn, .section-hero .btn { 
-          min-height: 44px; 
-          display: inline-flex; 
-          align-items: center; 
-          font-weight: 700;
-          box-shadow: 0 3px 8px rgba(0,0,0,.25);
-        }
-        
-        /* Sticky elements positioning */
-        .cta-sticky, .whatsapp-sticky { 
-          bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important; 
-          z-index: 999; 
-        }
-      }
-    </style>
     
-    <!-- Security Headers -->
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://fonts.googleapis.com https://link.drewcompany.it https://*.drewcompany.it; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://baujoowgqeyraqnukkmw.supabase.co wss://baujoowgqeyraqnukkmw.supabase.co https://api.ipify.org https://link.drewcompany.it https://*.drewcompany.it https://formspree.io https://api.formspree.io; frame-src 'self' https://link.drewcompany.it https://*.drewcompany.it; form-action 'self' https://formspree.io; object-src 'none';">
+    <!-- Preload CSS -->
+    <link rel="preload" href="/css/index.css" as="style">
+    <link rel="stylesheet" href="/css/index.css">
+    
+    <!-- Security Headers - Single CSP -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline';
+      style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+      font-src 'self' https://fonts.gstatic.com data:;
+      img-src 'self' data: https://www.google-analytics.com;
+      connect-src 'self' https://*.supabase.co https://region1.analytics.google.com https://www.google-analytics.com;
+      frame-src 'self';
+      base-uri 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+    ">
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="1mYwyt9eejbExEl_hKc46KgIQ8yx-OBp2OWCjs-RYz0" />
