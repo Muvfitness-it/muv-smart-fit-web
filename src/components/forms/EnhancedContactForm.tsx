@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { sendContactViaWeb3Forms } from '@/utils/mailAdapter';
 import { CheckCircle, Clock, Shield, Phone } from 'lucide-react';
 
 interface LeadFormData {
@@ -134,9 +135,31 @@ const EnhancedContactForm: React.FC<EnhancedContactFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      await submitLead(formData);
+      // Send via Formspree (same as other forms)
+      const emailResult = await sendContactViaWeb3Forms({
+        name: formData.name,
+        email: formData.email || "",
+        phone: formData.phone,
+        message: formData.message || `Prenotazione prova gratuita. Obiettivo: ${formData.obiettivo}`,
+        subject: `Prenotazione prova gratuita: ${formData.name}`,
+        source: formData.source,
+        campaign: formData.campaign_name,
+        obiettivo: formData.obiettivo
+      });
+
+      if (!emailResult.success) {
+        throw new Error(emailResult.message || "Errore nell'invio email");
+      }
+
+      // Save to database for analytics (non-critical)
+      try {
+        await submitLead(formData);
+      } catch (dbError) {
+        console.log('Database save failed (non-critical):', dbError);
+      }
+
       setIsSubmitted(true);
-      toast.success("Richiesta inviata! Ti contatteremo entro 24 ore.");
+      toast.success("✅ Richiesta inviata! Ti contatteremo entro 24 ore.");
       
       // Reset form after successful submission
       setTimeout(() => {
@@ -154,7 +177,9 @@ const EnhancedContactForm: React.FC<EnhancedContactFormProps> = ({
       }, 5000);
 
     } catch (error) {
-      toast.error("Errore nell'invio. Riprova o chiamaci direttamente.");
+      console.error('Error submitting booking form:', error);
+      const message = error instanceof Error ? error.message : 'Errore nell\'invio. Riprova più tardi o contattaci direttamente.';
+      toast.error(`❌ ${message}`);
     } finally {
       setIsSubmitting(false);
     }
