@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* MUV Fitness Balanced Design System */
-    --background: 0 0% 100%; /* Bianco puro */
-    --foreground: 0 0% 9%; /* Nero quasi puro per massima leggibilità */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
