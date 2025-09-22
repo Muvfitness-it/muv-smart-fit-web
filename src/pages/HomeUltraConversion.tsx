@@ -592,7 +592,7 @@ const HomeUltraConversion = () => {
                       <h4 className="font-semibold text-foreground">Orari</h4>
                       <div className="text-muted-foreground space-y-1">
                         <p>Lun-Ven: 8:00 - 21:00</p>
-                        <p>Sabato: 8:00 - 18:00</p>
+                        <p>Sabato: 8:00 - 12:00</p>
                         <p>Domenica: Chiuso</p>
                       </div>
                     </div>

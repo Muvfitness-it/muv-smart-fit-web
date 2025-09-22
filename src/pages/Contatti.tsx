@@ -14,7 +14,7 @@ const Contatti = () => {
     },
     {
       question: "Quali sono gli orari di apertura?",
-      answer: "Siamo aperti dal lunedì al venerdì dalle 7:00 alle 21:00, il sabato dalle 8:00 alle 18:00. La domenica su appuntamento per servizi specifici."
+      answer: "Siamo aperti dal lunedì al venerdì dalle 08:00 alle 21:00, il sabato dalle 8:00 alle 12:00. La domenica su appuntamento per servizi specifici."
     },
     {
       question: "Come posso prenotare una consulenza gratuita?",

@@ -55,9 +55,9 @@ const ComeArrivare = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      <p><strong>Lunedì - Venerdì:</strong> 7:00 - 21:00</p>
-                      <p><strong>Sabato:</strong> 8:00 - 19:00</p>
-                      <p><strong>Domenica:</strong> 9:00 - 18:00</p>
+                      <p><strong>Lunedì - Venerdì:</strong> 8:00 - 21:00</p>
+                      <p><strong>Sabato:</strong> 8:00 - 12:00</p>
+                      <p><strong>Domenica:</strong> Chiuso</p>
                     </div>
                   </CardContent>
                 </Card>
