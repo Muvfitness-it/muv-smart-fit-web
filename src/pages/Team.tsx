@@ -52,7 +52,7 @@ const Team = () => {
     {
       name: "Thomas Gabrieli",
       role: "Personal Trainer Senior",
-      image: "https://baujoowgqeyraqnukkmw.supabase.co/storage/v1/object/sign/immagini/Thomas%20Gabrieli.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZmY3Y2EyNC1kNDQ4LTRhZjgtYjA3Ni1jZWQzNGU0OWEzMjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbW1hZ2luaS9UaG9tYXMgR2FicmllbGkuanBnIiwiaWF0IjoxNzUxNjE5NDA2LCJleHAiOjE3ODMxNTU0MDZ9.YPhebl_VsTVnLF3ehFhN2Ii2V5MOXfqNeqlAk708xc4",
+      image: "/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png",
       description: "Mi chiamo Thomas, sono Chinesiologo (Laurea Scienze Motorie) e Massoterapista (MCB/ausiliario sanitario). Il mio percorso di studi mi ha portato a sviluppare un approccio basato sull'embodied cognition.",
       specialization: "Massoterapista e Chinesiologo"
     },
