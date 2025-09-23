@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import VideoBackground from './VideoBackground';
 
 const CompactHeroSection = () => {
   return (
     <section className="section-hero relative min-h-[75vh] flex items-center justify-center overflow-hidden bg-white">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-        style={{
-          backgroundImage: "url('/images/professional-bg.jpg')"
-        }}
+      {/* Background Video */}
+      <VideoBackground 
+        videoSrc="/videos/fitness-hero-bg"
+        fallbackImage="/images/professional-bg.jpg"
       />
       
       {/* Overlay */}
