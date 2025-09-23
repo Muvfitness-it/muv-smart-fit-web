@@ -183,6 +183,29 @@
     0% { box-shadow: 0 0 20px hsl(var(--brand-primary) / 0.3); }
     100% { box-shadow: 0 0 30px hsl(var(--brand-primary) / 0.6); }
   }
+
+  /* Hero Background Animations */
+  @keyframes slow-zoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes slow-pan {
+    0% { transform: scale(1.1) translateX(0px); }
+    25% { transform: scale(1.1) translateX(-10px); }
+    50% { transform: scale(1.1) translateX(-5px); }
+    75% { transform: scale(1.1) translateX(-15px); }
+    100% { transform: scale(1.1) translateX(0px); }
+  }
+
+  .animate-slow-zoom {
+    animation: slow-zoom 20s ease-in-out infinite;
+  }
+
+  .animate-slow-pan {
+    animation: slow-pan 30s ease-in-out infinite;
+  }
   
   /* Responsive text sizes */
   .text-responsive-xs { @apply text-sm md:text-base lg:text-lg; }
