@@ -26,32 +26,6 @@ const ChiSiamoNew = () => {
     }
   };
 
-  const teamMembers = [
-    {
-      name: "Sara Bianchi",
-      role: "Founder & Personal Trainer",
-      specialization: "EMS, Pilates Reformer",
-      certifications: ["Certificazione EMS MIHA", "Pilates Reformer Level 2", "Personal Trainer CONI"],
-      description: "Con oltre 8 anni di esperienza nel fitness, Sara è la mente dietro il Metodo MUV. Specializzata in tecnologie innovative per il fitness.",
-      image: "/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png"
-    },
-    {
-      name: "Dr.ssa Maria Rossi",
-      role: "Nutrizionista",
-      specialization: "Nutrizione Clinica, Piani Alimentari",
-      certifications: ["Laurea in Scienze della Nutrizione", "Iscrizione Albo Biologi", "Master in Nutrizione Sportiva"],
-      description: "Nutrizionista qualificata con approccio scientifico e personalizzato. Esperta in alimentazione per il fitness e il benessere.",
-      image: "/lovable-uploads/6a6b9274-a4a0-48ab-a512-74641f84240f.png"
-    },
-    {
-      name: "Marco Verdi",
-      role: "Massoterapista",
-      specialization: "Vacuum Pressoterapia, Massaggio Sportivo",
-      certifications: ["Diploma in Massoterapia", "Certificazione Vacuum Therapy", "Drenaggio Linfatico"],
-      description: "Specialista in tecniche manuali e trattamenti benessere. Esperto in vacuum pressoterapia e recupero muscolare.",
-      image: "/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png"
-    }
-  ];
 
   const values = [
     {
@@ -89,8 +63,8 @@ const ChiSiamoNew = () => {
         subtitle="Il Team MUV Fitness Legnago"
         description="Professionisti qualificati uniti dalla passione per il benessere. Scopri chi c'è dietro il Metodo MUV e la nostra filosofia centrata su tecnologia, personalizzazione e risultati."
         primaryButton={{
-          text: "Conosci il Team",
-          href: "#team"
+          text: "Scopri i Servizi",
+          href: "/servizi"
         }}
         secondaryButton={{
           text: "Prenota Consulenza",
@@ -153,48 +127,6 @@ const ChiSiamoNew = () => {
         </div>
       </section>
 
-      {/* Il Nostro Team */}
-      <section id="team" className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Il Nostro Team</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Professionisti qualificati con certificazioni specifiche e anni di esperienza nel settore
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square relative overflow-hidden">
-                  <img 
-                    src={member.image} 
-                    alt={`${member.name} - ${member.role} at MUV Fitness Legnago`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                  <p className="text-primary font-medium mb-2">{member.role}</p>
-                  <p className="text-sm text-muted-foreground mb-4">{member.specialization}</p>
-                  <p className="text-sm mb-4">{member.description}</p>
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm">Certificazioni:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {member.certifications.map((cert, certIndex) => (
-                        <Badge key={certIndex} variant="outline" className="text-xs">
-                          {cert}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Perché Scegliere MUV */}
       <section className="py-16 bg-muted/30">
