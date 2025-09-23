@@ -72,8 +72,30 @@ const HomeUltraConversion = () => {
 
       <div className="min-h-screen bg-background text-foreground">
         {/* 1. HERO SECTION - SECONDO SPECIFICA */}
-        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-accent/5">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5"></div>
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+          {/* Background image layer */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-30 animate-slow-zoom"
+            style={{ backgroundImage: "url('/images/fitness-professional-bg.jpg')", filter: 'brightness(0.9)' }}
+            aria-hidden="true"
+          />
+          {/* Optional video layer (loads if available) */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover opacity-25"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src="/videos/fitness-hero-bg.mp4" type="video/mp4" />
+            <source src="/videos/fitness-hero-bg.webm" type="video/webm" />
+          </video>
+          {/* Subtle brand gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background/60 to-accent/10" aria-hidden="true"></div>
+          {/* Previous subtle overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" aria-hidden="true"></div>
           
           <div className="relative z-10 container mx-auto px-4 text-center">
             {/* Trust Indicators */}
