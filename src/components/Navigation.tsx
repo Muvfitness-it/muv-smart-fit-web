@@ -70,7 +70,7 @@ const Navigation = () => {
     name: "Contatti",
     path: "/contatti"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-brand-secondary backdrop-blur-sm shadow-lg ${isOpen ? 'bg-brand-secondary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-1 sm:py-2 md:py-2 lg:py-2 xl:py-2">
           {/* Logo - optimized for mobile */}
