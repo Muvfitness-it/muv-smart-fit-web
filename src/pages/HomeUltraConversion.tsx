@@ -97,20 +97,20 @@ const HomeUltraConversion = () => {
           {/* 3D gradient border effects */}
           <div className="absolute inset-0" aria-hidden="true">
             {/* Top gradient border */}
-            <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-purple-500/30 via-pink-400/20 to-transparent"></div>
+            <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white/50 via-gray-200/30 to-transparent"></div>
             {/* Bottom gradient border */}
-            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-purple-500/30 via-pink-400/20 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/50 via-gray-200/30 to-transparent"></div>
             {/* Left gradient border */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-purple-500/30 via-pink-400/20 to-transparent"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/50 via-gray-200/30 to-transparent"></div>
             {/* Right gradient border */}
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-purple-500/30 via-pink-400/20 to-transparent"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/50 via-gray-200/30 to-transparent"></div>
             {/* Corner highlights for 3D effect */}
-            <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-white/40 to-transparent rounded-br-full"></div>
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/40 to-transparent rounded-bl-full"></div>
-            <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/40 to-transparent rounded-tr-full"></div>
-            <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-white/40 to-transparent rounded-tl-full"></div>
+            <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-white/60 to-transparent rounded-br-full"></div>
+            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/60 to-transparent rounded-bl-full"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/60 to-transparent rounded-tr-full"></div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-white/60 to-transparent rounded-tl-full"></div>
             {/* Inner shadow for depth */}
-            <div className="absolute inset-4 shadow-inner shadow-purple-500/20 pointer-events-none"></div>
+            <div className="absolute inset-4 shadow-inner shadow-gray-300/30 pointer-events-none"></div>
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center">
