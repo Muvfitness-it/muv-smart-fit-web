@@ -94,6 +94,20 @@ const HomeUltraConversion = () => {
           </video>
           {/* Milky white overlay with 3D border gradient */}
           <div className="absolute inset-0 bg-white/70" aria-hidden="true"></div>
+          
+          {/* Outline contour lines */}
+          <div className="absolute inset-0" aria-hidden="true">
+            {/* Main outer contour lines */}
+            <div className="absolute inset-4 border-2 border-white/90 rounded-lg"></div>
+            <div className="absolute inset-6 border border-gray-300/70 rounded-lg"></div>
+            <div className="absolute inset-8 border border-gray-200/50 rounded-lg"></div>
+            <div className="absolute inset-10 border border-gray-100/40 rounded-lg"></div>
+            
+            {/* Inner contour details */}
+            <div className="absolute inset-12 border border-white/60 rounded-lg"></div>
+            <div className="absolute inset-14 border border-gray-150/30 rounded-lg"></div>
+          </div>
+          
           {/* 3D gradient border effects */}
           <div className="absolute inset-0" aria-hidden="true">
             {/* Top gradient border */}
@@ -104,11 +118,13 @@ const HomeUltraConversion = () => {
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/50 via-gray-200/30 to-transparent"></div>
             {/* Right gradient border */}
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/50 via-gray-200/30 to-transparent"></div>
+            
             {/* Corner highlights for 3D effect */}
             <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-white/60 to-transparent rounded-br-full"></div>
             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/60 to-transparent rounded-bl-full"></div>
             <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/60 to-transparent rounded-tr-full"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-white/60 to-transparent rounded-tl-full"></div>
+            
             {/* Inner shadow for depth */}
             <div className="absolute inset-4 shadow-inner shadow-gray-300/30 pointer-events-none"></div>
           </div>
