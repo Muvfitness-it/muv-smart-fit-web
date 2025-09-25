@@ -92,10 +92,8 @@ const HomeUltraConversion = () => {
             <source src="/videos/fitness-hero-bg.mp4" type="video/mp4" />
             <source src="/videos/fitness-hero-bg.webm" type="video/webm" />
           </video>
-          {/* Subtle brand gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background/60 to-accent/10" aria-hidden="true"></div>
-          {/* Previous subtle overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" aria-hidden="true"></div>
+          {/* Milky white overlay */}
+          <div className="absolute inset-0 bg-white/70" aria-hidden="true"></div>
           
           <div className="relative z-10 container mx-auto px-4 text-center">
             {/* Trust Indicators */}
