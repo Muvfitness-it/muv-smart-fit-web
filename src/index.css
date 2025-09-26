@@ -225,6 +225,209 @@
   }
 }
 
+/* Blog Article Styles - Professional Typography */
+.blog {
+  --accent-color: hsl(var(--accent-h, 312) 85% 60%);
+  --accent-light: hsl(var(--accent-h, 312) 85% 95%);
+  --accent-dark: hsl(var(--accent-h, 312) 85% 30%);
+}
+
+.prose-custom {
+  @apply max-w-4xl mx-auto leading-relaxed text-base md:text-lg;
+  color: hsl(var(--foreground));
+  line-height: 1.75;
+}
+
+.prose-custom h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-black font-heading mb-6 mt-8;
+  color: hsl(var(--foreground));
+  line-height: 1.2;
+}
+
+.prose-custom h2 {
+  @apply text-2xl md:text-3xl font-bold font-heading mb-4 mt-8;
+  color: var(--accent-color);
+  border-bottom: 3px solid var(--accent-light);
+  padding-bottom: 0.5rem;
+}
+
+.prose-custom h3 {
+  @apply text-xl md:text-2xl font-semibold font-heading mb-3 mt-6;
+  color: hsl(var(--foreground));
+}
+
+.prose-custom h4 {
+  @apply text-lg md:text-xl font-semibold font-heading mb-3 mt-5;
+  color: var(--accent-dark);
+}
+
+.prose-custom h5, .prose-custom h6 {
+  @apply text-base md:text-lg font-semibold font-heading mb-2 mt-4;
+  color: hsl(var(--muted-foreground));
+}
+
+.prose-custom p {
+  @apply mb-4 text-muted-foreground;
+  text-align: justify;
+}
+
+.prose-custom ul, .prose-custom ol {
+  @apply mb-4 ml-6 space-y-2;
+}
+
+.prose-custom li {
+  @apply text-muted-foreground;
+}
+
+.prose-custom ul li {
+  @apply relative;
+}
+
+.prose-custom ul li::before {
+  content: "●";
+  color: var(--accent-color);
+  font-weight: bold;
+  position: absolute;
+  left: -1.25rem;
+}
+
+.prose-custom ol {
+  counter-reset: item;
+}
+
+.prose-custom ol li {
+  counter-increment: item;
+  position: relative;
+}
+
+.prose-custom ol li::before {
+  content: counter(item) ".";
+  color: var(--accent-color);
+  font-weight: bold;
+  position: absolute;
+  left: -2rem;
+  width: 1.5rem;
+  text-align: right;
+}
+
+.prose-custom blockquote {
+  @apply border-l-4 pl-6 py-4 my-6 italic;
+  border-left-color: var(--accent-color);
+  background: var(--accent-light);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.prose-custom img {
+  @apply rounded-lg shadow-lg my-6 w-full;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Post Hero Section */
+.post-hero {
+  @apply mb-8 text-center;
+}
+
+.post-hero-label {
+  @apply inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4;
+  background: var(--accent-light);
+  color: var(--accent-color);
+}
+
+.post-hero h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-black font-heading mb-4;
+  color: hsl(var(--foreground));
+  line-height: 1.1;
+}
+
+.post-hero .meta {
+  @apply text-muted-foreground mb-4;
+}
+
+/* Table of Contents */
+.toc {
+  @apply bg-card border border-border rounded-xl p-6 mb-8 shadow-sm;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-color);
+}
+
+.toc h3 {
+  @apply text-lg font-bold mb-4 flex items-center;
+  color: var(--accent-color);
+}
+
+.toc h3::before {
+  content: "📋";
+  margin-right: 0.5rem;
+}
+
+.toc ul {
+  @apply space-y-2 ml-0;
+  list-style: none;
+}
+
+.toc li {
+  @apply border-l-2 pl-4 py-1 transition-all duration-200;
+  border-left-color: transparent;
+}
+
+.toc li:hover {
+  border-left-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.toc a {
+  @apply text-muted-foreground hover:text-foreground no-underline transition-colors;
+}
+
+/* Callout Boxes */
+.callout {
+  @apply p-6 rounded-xl mb-6 border-l-4;
+  background: hsl(var(--muted));
+  border-left-color: var(--accent-color);
+}
+
+.callout.info {
+  @apply bg-blue-50 border-blue-500;
+  border-left-color: hsl(212 100% 50%);
+}
+
+.callout.warning {
+  @apply bg-yellow-50 border-yellow-500;
+  border-left-color: hsl(45 100% 50%);
+}
+
+.callout.success {
+  @apply bg-green-50 border-green-500;
+  border-left-color: hsl(120 100% 40%);
+}
+
+.callout.danger {
+  @apply bg-red-50 border-red-500;
+  border-left-color: hsl(0 100% 50%);
+}
+
+.callout h4 {
+  @apply font-bold text-lg mb-2 mt-0;
+  color: hsl(var(--foreground));
+}
+
+.callout p:last-child {
+  @apply mb-0;
+}
+
+/* Key Highlights */
+.key {
+  @apply inline-block px-3 py-1 rounded-lg font-semibold text-sm;
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Article Gallery */
+.article-hero {
+  @apply rounded-2xl overflow-hidden shadow-2xl;
+}
+
 /* Focus states for accessibility */
 :focus-visible {
   outline: 3px solid hsl(var(--brand-primary));

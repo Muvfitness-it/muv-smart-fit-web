@@ -195,170 +195,215 @@ const BlogArticle = () => {
         {breadcrumbJsonLd && (<script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>)}
       </Helmet>
 
-      <article 
-        className="container mx-auto px-4 py-10 blog" 
-        style={{ '--accent-h': accentHue } as React.CSSProperties}
-      >
-        {post ? (
-          <>
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/blog">Blog</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                {category && (
-                  <>
+      <div className="bg-gradient-to-b from-background to-muted/20 min-h-screen">
+        <article 
+          className="container mx-auto px-4 py-10 blog max-w-6xl" 
+          style={{ '--accent-h': accentHue } as React.CSSProperties}
+        >
+          {post ? (
+            <>
+              {/* Breadcrumb Navigation */}
+              <nav aria-label="Breadcrumb" className="mb-6">
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to="/">Home</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                       <BreadcrumbLink asChild>
-                        <Link to={`/blog/c/${category.slug}`}>{category.name}</Link>
+                        <Link to="/blog">Blog</Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
-                  </>
-                )}
-              </BreadcrumbList>
-            </Breadcrumb>
+                    {category && (
+                      <>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                          <BreadcrumbLink asChild>
+                            <Link to={`/blog/c/${category.slug}`}>{category.name}</Link>
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+                      </>
+                    )}
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </nav>
 
-            {/* Render hero only if content doesn't already have one */}
-            {!post.content.includes('post-hero') && (
-              <header className="post-hero article-header mb-8 mt-4">
-                <span className="post-hero-label">Guida • Metodo MUV</span>
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{post.title}</h1>
-                <p className="meta text-sm text-muted-foreground">
-                  Team MUV • Aggiornato il {date} • Lettura {post.reading_time || 5} minuti
-                </p>
-                {category && (
-                  <div className="mt-3">
-                    <Link to={`/blog/c/${category.slug}`}>
-                      <Badge variant="secondary">{category.name}</Badge>
-                    </Link>
-                  </div>
-                )}
-                {post.featured_image && (
-                  <figure className="article-hero mt-6">
-                    <LazyImage
-                      src={post.featured_image}
-                      alt={`Immagine di copertina per ${post.title} - MUV Fitness Legnago`}
-                      className="w-full h-[320px] md:h-[420px] object-cover rounded-xl"
-                      width={1200}
-                      height={630}
-                    />
-                  </figure>
-                )}
-              </header>
-            )}
-
-
-            <div className="prose-custom">
-              <SecureHTMLRenderer
-                html={post.content || ""}
-                className="max-w-none"
-              />
-            </div>
-
-            {galleryImages.length > 0 && (
-              <section aria-label="Galleria immagini" className="mt-10">
-                <h2 className="text-xl font-semibold mb-4">Galleria immagini</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {galleryImages.map((src, idx) => (
-                    <button
-                      key={src}
-                      type="button"
-                      onClick={() => setLightbox({ open: true, index: idx })}
-                      className="group relative focus:outline-none"
-                      aria-label={`Apri immagine ${idx + 1} in galleria`}
-                    >
-                      <LazyImage
-                        src={src}
-                        alt={`Galleria: ${post.title} - immagine ${idx + 1}`}
-                        className="w-full h-40 md:h-48 object-cover rounded-lg"
-                        width={800}
-                        height={600}
-                      />
-                      <span className="absolute inset-0 rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition" aria-hidden="true" />
-                    </button>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {related.length > 0 && (
-              <section className="mt-12">
-                <h2 className="text-2xl font-bold mb-6">Articoli correlati</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {related.map((rp) => (
-                    <Card key={rp.id} className="overflow-hidden">
-                      {rp.featured_image && (
-                        <Link to={`/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
-                          <LazyImage
-                            src={rp.featured_image}
-                            alt={`Copertina articolo correlato ${rp.title}`}
-                            className="w-full h-40 object-cover"
-                            width={800}
-                            height={450}
-                          />
+              {/* Article Header */}
+              {!post.content.includes('post-hero') && (
+                <header className="post-hero mb-12 bg-card/50 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-lg">
+                  <div className="text-center">
+                    <span className="post-hero-label">Guida Fitness • Metodo MUV</span>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4 bg-gradient-to-r from-foreground via-accent to-primary bg-clip-text text-transparent">
+                      {post.title}
+                    </h1>
+                    <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground mb-6">
+                      <span className="flex items-center gap-2">
+                        👥 <strong>Team MUV</strong>
+                      </span>
+                      <span className="flex items-center gap-2">
+                        📅 Aggiornato il <strong>{date}</strong>
+                      </span>
+                      <span className="flex items-center gap-2">
+                        ⏱️ Lettura <strong>{post.reading_time || 5} minuti</strong>
+                      </span>
+                    </div>
+                    {category && (
+                      <div className="mb-6">
+                        <Link to={`/blog/c/${category.slug}`}>
+                          <Badge variant="secondary" className="text-sm px-4 py-2">
+                            {category.name}
+                          </Badge>
                         </Link>
-                      )}
-                      <CardHeader>
-                        <CardTitle className="text-lg">
-                          <Link to={`/${rp.slug}`} className="hover:underline">{rp.title}</Link>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        {rp.excerpt && <p className="text-muted-foreground line-clamp-2">{rp.excerpt}</p>}
-                        <div className="mt-3">
-                          <Button asChild size="sm" variant="outline"><Link to={`/${rp.slug}`}>Leggi</Link></Button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {post.featured_image && (
+                    <figure className="article-hero mt-8">
+                      <LazyImage
+                        src={post.featured_image}
+                        alt={`Immagine di copertina per ${post.title} - MUV Fitness Legnago`}
+                        className="w-full h-[400px] md:h-[500px] lg:h-[600px] object-cover rounded-2xl shadow-2xl"
+                        width={1200}
+                        height={630}
+                      />
+                    </figure>
+                  )}
+                </header>
+              )}
+
+              {/* Article Content */}
+              <main className="prose-custom bg-card/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-border/30 shadow-sm">
+                <SecureHTMLRenderer
+                  html={post.content || ""}
+                  className="max-w-none"
+                />
+              </main>
+
+              {/* Image Gallery */}
+              {galleryImages.length > 0 && (
+                <section aria-label="Galleria immagini" className="mt-12 bg-card/30 backdrop-blur-sm rounded-2xl p-8 border border-border/30">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    🖼️ Galleria immagini
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {galleryImages.map((src, idx) => (
+                      <button
+                        key={src}
+                        type="button"
+                        onClick={() => setLightbox({ open: true, index: idx })}
+                        className="group relative focus:outline-none rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                        aria-label={`Apri immagine ${idx + 1} in galleria`}
+                      >
+                        <LazyImage
+                          src={src}
+                          alt={`Galleria: ${post.title} - immagine ${idx + 1}`}
+                          className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                          width={800}
+                          height={600}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+                          <span className="text-white text-sm font-medium pb-2">Visualizza</span>
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Related Articles */}
+              {related.length > 0 && (
+                <section className="mt-12 bg-card/30 backdrop-blur-sm rounded-2xl p-8 border border-border/30">
+                  <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+                    🔗 Articoli correlati
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {related.map((rp) => (
+                      <Card key={rp.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                        {rp.featured_image && (
+                          <Link to={`/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
+                            <div className="overflow-hidden">
+                              <LazyImage
+                                src={rp.featured_image}
+                                alt={`Copertina articolo correlato ${rp.title}`}
+                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                width={800}
+                                height={450}
+                              />
+                            </div>
+                          </Link>
+                        )}
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg leading-tight">
+                            <Link 
+                              to={`/${rp.slug}`} 
+                              className="hover:text-accent transition-colors duration-200"
+                            >
+                              {rp.title}
+                            </Link>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          {rp.excerpt && (
+                            <p className="text-muted-foreground line-clamp-3 mb-4">{rp.excerpt}</p>
+                          )}
+                          <Button asChild size="sm" variant="outline" className="w-full">
+                            <Link to={`/${rp.slug}`}>Leggi articolo</Link>
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </section>
+              )}
+              
+              {/* Call to Action Section */}
+              <section className="mt-12 p-8 md:p-12 glass-card rounded-2xl border-2 border-brand-primary/20 text-center bg-gradient-to-br from-brand-primary/5 via-brand-secondary/5 to-brand-accent/5">
+                <div className="max-w-2xl mx-auto">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black text-transparent bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text mb-6">
+                    🚀 PRONTO A TRASFORMARE IL TUO CORPO?
+                  </h3>
+                  <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                    Applica quello che hai imparato con il supporto del Team MUV. 
+                    <br />
+                    <strong className="text-brand-accent">Prima consulenza GRATUITA</strong> per i primi 10 clienti del mese.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a 
+                      href="/form-contatti" 
+                      className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-8 py-4 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    >
+                      📝 CANDIDATI ORA
+                    </a>
+                    <a 
+                      href="tel:+393291070374" 
+                      className="glass-card border-2 border-brand-primary/30 text-foreground hover:bg-brand-primary/10 px-8 py-4 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
+                    >
+                      📞 CHIAMA SUBITO
+                    </a>
+                  </div>
                 </div>
               </section>
-            )}
-            
-            {/* Call to Action Section */}
-            <section className="my-12 p-8 glass-card rounded-2xl border-brand-primary/30 text-center">
-              <h3 className="text-2xl md:text-3xl font-heading font-black text-brand-primary mb-4">
-                🚀 PRONTO A TRASFORMARE IL TUO CORPO?
-              </h3>
-              <p className="text-lg text-muted-foreground mb-6">
-                Applica quello che hai imparato con il supporto del Team MUV. 
-                <strong className="text-brand-accent"> Prima consulenza GRATUITA</strong> per i primi 10 clienti.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="/form-contatti" 
-                  className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-6 py-3 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
-                >
-                  📝 CANDIDATI ORA
-                </a>
-                <a 
-                  href="tel:+393291070374" 
-                  className="glass-card border-2 border-brand-primary/30 text-foreground hover:bg-brand-primary/10 px-6 py-3 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
-                >
-                  📞 CHIAMA SUBITO
-                </a>
-              </div>
-            </section>
 
-          </>
-        ) : (
-          <div className="space-y-4">
-            <div className="h-8 w-2/3 bg-muted animate-pulse rounded" />
-            <div className="h-6 w-1/3 bg-muted animate-pulse rounded" />
-            <div className="h-[320px] w-full bg-muted animate-pulse rounded-xl" />
-            <div className="h-40 w-full bg-muted animate-pulse rounded" />
-          </div>
-        )}
-      </article>
+            </>
+          ) : (
+            /* Loading State */
+            <div className="space-y-6 animate-pulse">
+              <div className="h-8 w-2/3 bg-muted rounded-lg" />
+              <div className="h-6 w-1/3 bg-muted rounded" />
+              <div className="h-[400px] w-full bg-muted rounded-2xl" />
+              <div className="space-y-3">
+                <div className="h-4 w-full bg-muted rounded" />
+                <div className="h-4 w-full bg-muted rounded" />
+                <div className="h-4 w-3/4 bg-muted rounded" />
+              </div>
+            </div>
+          )}
+        </article>
+      </div>
 
       {lightbox.open && (
         <div className="fixed inset-0 z-50 bg-black/80 p-4 flex items-center justify-center" onClick={() => setLightbox({ open: false, index: 0 })}>
