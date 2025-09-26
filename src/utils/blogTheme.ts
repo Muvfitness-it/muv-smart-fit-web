@@ -40,6 +40,18 @@ export const getPostAccentHue = (slug: string): number => {
 export const cleanBlogContent = (content: string): string => {
   let cleaned = content;
 
+  // Rimuovi completamente le sezioni dell'indice dei contenuti
+  cleaned = cleaned.replace(
+    /<(?:nav|div|section)[^>]*class="[^"]*toc[^"]*"[^>]*>.*?<\/(?:nav|div|section)>/gis,
+    ''
+  );
+  
+  // Rimuovi titoli che contengono "indice" e la lista che segue
+  cleaned = cleaned.replace(
+    /<h[2-6][^>]*>.*?indice.*?<\/h[2-6]>\s*(?:<(?:ul|ol)[^>]*>.*?<\/(?:ul|ol)>)?/gis,
+    ''
+  );
+
   // Elimina colori inline e sostituisci con <strong>
   cleaned = cleaned.replace(
     /(<span[^>]*style="[^"]*color:[^"]*"[^>]*>)(.*?)(<\/span>)/gi,
@@ -86,12 +98,6 @@ export const processContentBlocks = (content: string): string => {
   processed = processed.replace(
     /<p[^>]*class="[^"]*highlight[^"]*"[^>]*>(.*?)<\/p>/gi,
     '<p class="key">$1</p>'
-  );
-
-  // Wrap table of contents
-  processed = processed.replace(
-    /(<h[2-6][^>]*>.*?indice.*?<\/h[2-6]>)/gi,
-    '<nav class="toc">$1</nav>'
   );
 
   return processed;
