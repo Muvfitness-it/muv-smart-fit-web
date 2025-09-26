@@ -17,6 +17,51 @@ import {
 } from "@/components/ui/breadcrumb";
 import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
 
+interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
+// Funzione per generare ID sicuri dai titoli
+const generateTocId = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+};
+
+// Funzione per estrarre l'indice dei contenuti dall'HTML
+const extractTocFromHtml = (html: string): TocItem[] => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  
+  return Array.from(headings).map((heading) => {
+    const text = heading.textContent || '';
+    const level = parseInt(heading.tagName.charAt(1));
+    const id = generateTocId(text);
+    return { id, text, level };
+  });
+};
+
+// Funzione per aggiungere ID ai titoli nell'HTML
+const addIdsToHeadings = (html: string): string => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  
+  headings.forEach((heading) => {
+    const text = heading.textContent || '';
+    const id = generateTocId(text);
+    heading.setAttribute('id', id);
+  });
+  
+  return doc.body.innerHTML;
+};
+
 interface Post {
   id: string;
   title: string;
@@ -39,6 +84,8 @@ const BlogArticle = () => {
   const [category, setCategory] = useState<{ id: string; name: string; slug: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ open: boolean; index: number }>({ open: false, index: 0 });
   const [related, setRelated] = useState<Array<{ id: string; title: string; slug: string; excerpt: string | null; featured_image: string | null; published_at: string | null }>>([]);
+  const [processedContent, setProcessedContent] = useState<string>('');
+  const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -63,9 +110,15 @@ const BlogArticle = () => {
 
       // Clean and process content for accessibility and theming
       const cleanedContent = cleanBlogContent(data.content || '');
-      const processedContent = processContentBlocks(cleanedContent);
+      const processedHtml = processContentBlocks(cleanedContent);
       
-      setPost({ ...data, content: processedContent } as Post);
+      // Add IDs to headings and extract table of contents
+      const contentWithIds = addIdsToHeadings(processedHtml);
+      const toc = extractTocFromHtml(processedHtml);
+      
+      setProcessedContent(contentWithIds);
+      setTableOfContents(toc);
+      setPost({ ...data, content: contentWithIds } as Post);
 
       // Carica categoria se presente
       if ((data as any).category_id) {
@@ -82,6 +135,19 @@ const BlogArticle = () => {
     };
     load();
   }, [slug]);
+
+  // Smooth scroll to section
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100; // Offset for fixed header
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const date = useMemo(
     () => (post?.published_at ? new Date(post.published_at).toLocaleDateString("it-IT") : ""),
@@ -275,10 +341,34 @@ const BlogArticle = () => {
                 </header>
               )}
 
+              {/* Table of Contents */}
+              {tableOfContents.length > 0 && (
+                <nav className="toc mb-12">
+                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    📋 Indice dei contenuti
+                  </h2>
+                  <ul className="space-y-2">
+                    {tableOfContents.map((item) => (
+                      <li 
+                        key={item.id} 
+                        className={`level-${item.level}`}
+                      >
+                        <button
+                          onClick={() => scrollToSection(item.id)}
+                          className="text-left hover:text-accent transition-colors duration-200 text-sm leading-relaxed"
+                        >
+                          {item.text}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
+
               {/* Article Content */}
               <main className="prose-custom bg-card/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-border/30 shadow-sm">
                 <SecureHTMLRenderer
-                  html={post.content || ""}
+                  html={processedContent || ""}
                   className="max-w-none"
                 />
               </main>
