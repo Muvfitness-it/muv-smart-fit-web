@@ -139,29 +139,33 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Fixed z-index and light background */}
+        {/* Mobile Navigation - Full screen overlay with proper z-index */}
         {isOpen && (
           <div
-            className="lg:hidden fixed inset-0 z-50"
+            className="lg:hidden fixed inset-0 z-[9999]"
             role="dialog"
             aria-modal="true"
             aria-label="Menu di navigazione"
           >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/80" onClick={() => setIsOpen(false)} />
+            <div 
+              className="absolute inset-0 bg-black/90 backdrop-blur-sm" 
+              onClick={() => setIsOpen(false)} 
+            />
 
-            {/* Panel */}
-            <div className="relative z-[51] flex h-full flex-col bg-card">
-              <div className="flex items-center justify-between px-4 py-4 border-b border-border">
+            {/* Menu Panel - Slide from top */}
+            <div className="relative z-[10000] w-full h-full flex flex-col bg-white">
+              {/* Header with logo and close button */}
+              <div className="flex items-center justify-between px-6 py-4 bg-primary shadow-md">
                 <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center">
                   <OptimizedImage
                     src={LOGO_URL}
                     alt="Logo MUV Fitness Legnago"
-                    width={220}
-                    height={66}
+                    width={180}
+                    height={54}
                     priority={true}
-                    sizes="220px"
-                    className="site-logo h-20 w-auto"
+                    sizes="180px"
+                    className="site-logo h-12 w-auto"
                     objectFit="contain"
                     overflowHidden={false}
                     style={{
@@ -173,40 +177,51 @@ const Navigation = () => {
                 <button
                   aria-label="Chiudi menu"
                   onClick={() => setIsOpen(false)}
-                  className="text-foreground hover:text-primary"
+                  className="text-primary-foreground hover:text-primary-foreground/80 p-2 rounded-lg bg-black/20"
                 >
-                  <X size={28} />
+                  <X size={24} />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
-                {navItems.map((item, index) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`block px-4 py-3 text-lg font-medium rounded-xl transition-colors duration-200 ${
-                      location.pathname === item.path
-                        ? 'text-primary bg-primary/10'
-                        : 'text-foreground hover:text-primary hover:bg-muted'
-                    }`}
-                    style={{ animationDelay: `${index * 50}ms` }}
+              {/* Navigation Links */}
+              <div className="flex-1 overflow-y-auto bg-white px-6 py-8">
+                <div className="space-y-4">
+                  {navItems.map((item, index) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`
+                        flex items-center px-6 py-4 text-xl font-semibold rounded-xl 
+                        transition-all duration-300 transform hover:scale-105 border-2
+                        ${location.pathname === item.path
+                          ? 'bg-primary text-primary-foreground border-primary shadow-lg' 
+                          : 'bg-gray-50 text-gray-800 border-gray-200 hover:bg-primary hover:text-primary-foreground hover:border-primary'
+                        }
+                      `}
+                      style={{ 
+                        animationDelay: `${index * 100}ms`,
+                        minHeight: '60px'
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="text-center w-full">{item.name}</span>
+                    </Link>
+                  ))}
+                  
+                  {/* WhatsApp CTA Mobile - Enhanced */}
+                  <a 
+                    href="https://wa.me/393291070374"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center px-6 py-4 mt-8 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xl font-bold shadow-lg transition-all duration-300 transform hover:scale-105 border-2 border-green-500"
                     onClick={() => setIsOpen(false)}
+                    aria-label="Contattaci su WhatsApp"
+                    style={{ minHeight: '60px' }}
                   >
-                    {item.name}
-                  </Link>
-                ))}
-                
-                {/* WhatsApp CTA Mobile */}
-                <a 
-                  href="https://wa.me/393291070374"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block px-4 py-3 mt-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-semibold text-center transition-all duration-300"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Contattaci su WhatsApp"
-                >
-                  💬 Scrivici su WhatsApp
-                </a>
+                    <span className="mr-2 text-2xl">💬</span>
+                    Scrivici su WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
           </div>

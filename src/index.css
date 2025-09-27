@@ -296,16 +296,51 @@
       text-rendering: optimizeSpeed;
     }
     
+    /* Mobile menu open state */
+    body.menu-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+    
     .header-mobile {
       min-height: 64px;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
 
+    /* Ensure mobile menu is above everything */
+    .mobile-menu-overlay {
+      z-index: 9999 !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+    }
+
     /* Touch-friendly sizing */
     button, .btn, a[role="button"] {
       min-height: 44px;
       min-width: 44px;
+    }
+
+    /* Mobile menu links */
+    .mobile-nav-link {
+      min-height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      background: white !important;
+      border: 2px solid #e5e7eb !important;
+      margin-bottom: 8px !important;
+    }
+
+    .mobile-nav-link:hover {
+      background: hsl(var(--primary)) !important;
+      color: hsl(var(--primary-foreground)) !important;
+      border-color: hsl(var(--primary)) !important;
     }
 
     /* Optimize animations */
