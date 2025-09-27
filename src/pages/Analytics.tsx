@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import AnalyticsDisplay from '@/components/analytics/AnalyticsDisplay';
+import { AdminRoute } from '@/components/security/AdminRoute';
 
 const Analytics = () => {
   useEffect(() => {

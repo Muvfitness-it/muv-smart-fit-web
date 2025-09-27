@@ -258,7 +258,9 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
           usedProvider = 'gemini';
           console.log('Gemini fallback successful');
         } catch (geminiError) {
-          throw new Error(`Both providers failed. OpenAI: ${openaiError.message}, Gemini: ${geminiError.message}`);
+          const geminiErrorMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
+          const openaiErrorMsg = openaiError instanceof Error ? openaiError.message : 'Unknown error';
+          throw new Error(`Both providers failed. OpenAI: ${openaiErrorMsg}, Gemini: ${geminiErrorMsg}`);
         }
       }
     } else {
@@ -283,7 +285,9 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
           usedProvider = 'openai';
           console.log('OpenAI fallback successful');
         } catch (openaiError) {
-          throw new Error(`Both providers failed. Gemini: ${geminiError.message}, OpenAI: ${openaiError.message}`);
+          const geminiErrorMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
+          const openaiErrorMsg = openaiError instanceof Error ? openaiError.message : 'Unknown error';
+          throw new Error(`Both providers failed. Gemini: ${geminiErrorMsg}, OpenAI: ${openaiErrorMsg}`);
         }
       }
     }
@@ -364,21 +368,22 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in advanced-article-generator function:', error);
     
     let errorMessage = 'Errore nella generazione dell\'articolo';
     
-    if (error.message?.includes('API key')) {
+    const errorMsg = error?.message || String(error);
+    if (errorMsg?.includes('API key')) {
       errorMessage = 'Chiave API OpenAI non configurata correttamente';
-    } else if (error.message?.includes('quota') || error.message?.includes('insufficient_quota')) {
+    } else if (errorMsg?.includes('quota') || errorMsg?.includes('insufficient_quota')) {
       errorMessage = 'Quota API OpenAI esaurita';
-    } else if (error.message?.includes('rate limit')) {
+    } else if (errorMsg?.includes('rate limit')) {
       errorMessage = 'Troppe richieste. Riprova tra qualche minuto';
-    } else if (error.message?.includes('content_policy')) {
+    } else if (errorMsg?.includes('content_policy')) {
       errorMessage = 'Contenuto non conforme alle policy di OpenAI';
     } else {
-      errorMessage = error.message || 'Errore sconosciuto nella generazione';
+      errorMessage = errorMsg || 'Errore sconosciuto nella generazione';
     }
     
     return new Response(JSON.stringify({ error: errorMessage }), {
