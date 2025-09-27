@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* MUV Fitness Balanced Design System */
+    /* MUV Fitness Design System - Specifiche Rigorose */
     --background: 0 0% 100%;
     --foreground: 0 0% 9%;
     --card: 0 0% 100%;
@@ -12,17 +12,17 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
     
-    /* Colori MUV come accenti strategici */
-    --primary: 330 100% 44%; /* Magenta #E50064 - per navigazione e CTA */
+    /* Palette Colori Richiesta */
+    --primary: 214 100% 32%; /* Blu #1E3A8A - colore principale testi e titoli */
     --primary-foreground: 0 0% 100%;
-    --secondary: 212 100% 50%; /* Blu #0077FF - per sezioni e accenti */
+    --secondary: 156 100% 35%; /* Verde #10B981 - per accenti e successo */
     --secondary-foreground: 0 0% 100%;
-    --accent: 259 100% 50%; /* Viola #7A00FF - per hover e stati speciali */
+    --accent: 24 95% 53%; /* Arancione #F97316 - CTA e pulsanti */
     --accent-foreground: 0 0% 100%;
     
-    /* Colori neutrali per UI pulita */
-    --muted: 0 0% 96%; /* Grigio molto chiaro neutro */
-    --muted-foreground: 0 0% 45%; /* Grigio medio per testo secondario */
+    /* Colori neutrali - Specifiche */
+    --muted: 214 17% 82%; /* Grigio #CBD5E1 */
+    --muted-foreground: 215 14% 40%; /* Grigio medio per testo secondario */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%; /* Bordi grigi neutri */
@@ -55,9 +55,9 @@
     --shadow-secondary: 0 4px 20px -4px hsl(var(--brand-secondary) / 0.15);
     --shadow-soft: 0 2px 12px -2px hsl(0 0% 0% / 0.08);
     
-    /* Typography */
-    --font-heading: 'Inter', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    /* Typography - Font Poppins Richiesto */
+    --font-heading: 'Poppins', system-ui, sans-serif;
+    --font-body: 'Poppins', system-ui, sans-serif;
     
     /* Transitions smooth */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
