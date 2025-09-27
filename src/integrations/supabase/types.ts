@@ -146,6 +146,92 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_analytics: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          entry_time: string
+          exit_time: string | null
+          id: string
+          interactions: Json | null
+          ip_address: string | null
+          page_path: string
+          post_id: string | null
+          referrer: string | null
+          scroll_depth: number | null
+          search_prompt: string | null
+          search_query: string | null
+          session_id: string | null
+          time_on_page: number | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          visitor_id: string
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          entry_time?: string
+          exit_time?: string | null
+          id?: string
+          interactions?: Json | null
+          ip_address?: string | null
+          page_path: string
+          post_id?: string | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          search_prompt?: string | null
+          search_query?: string | null
+          session_id?: string | null
+          time_on_page?: number | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visitor_id: string
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          entry_time?: string
+          exit_time?: string | null
+          id?: string
+          interactions?: Json | null
+          ip_address?: string | null
+          page_path?: string
+          post_id?: string | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          search_prompt?: string | null
+          search_query?: string | null
+          session_id?: string | null
+          time_on_page?: number | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_analytics_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_articles_seo: {
         Row: {
           author: string | null
@@ -283,6 +369,30 @@ export type Database = {
           },
         ]
       }
+      blog_performance_summary: {
+        Row: {
+          id: string
+          metric_data: Json | null
+          metric_name: string
+          metric_value: number
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          metric_data?: Json | null
+          metric_name: string
+          metric_value?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          metric_data?: Json | null
+          metric_name?: string
+          metric_value?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_post_tags: {
         Row: {
           id: string
@@ -413,6 +523,59 @@ export type Database = {
           id?: string | null
         }
         Relationships: []
+      }
+      blog_search_analytics: {
+        Row: {
+          clicked_position: number | null
+          clicked_result_id: string | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          results_count: number | null
+          search_prompt: string | null
+          search_query: string
+          search_time: string
+          session_id: string | null
+          user_agent: string | null
+          visitor_id: string
+        }
+        Insert: {
+          clicked_position?: number | null
+          clicked_result_id?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          results_count?: number | null
+          search_prompt?: string | null
+          search_query: string
+          search_time?: string
+          session_id?: string | null
+          user_agent?: string | null
+          visitor_id: string
+        }
+        Update: {
+          clicked_position?: number | null
+          clicked_result_id?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          results_count?: number | null
+          search_prompt?: string | null
+          search_query?: string
+          search_time?: string
+          session_id?: string | null
+          user_agent?: string | null
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_search_analytics_clicked_result_id_fkey"
+            columns: ["clicked_result_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       blog_tags: {
         Row: {
@@ -1296,6 +1459,10 @@ export type Database = {
         Returns: Json
       }
       update_analytics_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      update_blog_performance_summary: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

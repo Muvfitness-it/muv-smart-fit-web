@@ -1,15 +1,28 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { useBlogAnalytics } from '@/hooks/useBlogAnalytics';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, Users, Calculator, Eye, Activity, BarChart3 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TrendingUp, Users, Calculator, Eye, Activity, BarChart3, BookOpen, RefreshCw } from 'lucide-react';
+import BlogAnalyticsDisplay from './BlogAnalyticsDisplay';
 
 const AnalyticsDisplay = () => {
   const { analyticsData, isLoading, fetchAnalytics } = useAnalytics();
+  const { fetchBlogAnalytics } = useBlogAnalytics();
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     fetchAnalytics();
-  }, [fetchAnalytics]);
+    fetchBlogAnalytics();
+    setLastUpdated(new Date());
+  }, [fetchAnalytics, fetchBlogAnalytics]);
+
+  const handleRefreshAll = async () => {
+    await Promise.all([fetchAnalytics(), fetchBlogAnalytics()]);
+    setLastUpdated(new Date());
+  };
 
   if (isLoading) {
     return (
@@ -70,63 +83,103 @@ const AnalyticsDisplay = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-gradient-to-r from-[hsl(var(--brand-primary))] to-[hsl(var(--brand-secondary))] shadow-lg">
-          <BarChart3 className="h-5 w-5 text-[hsl(var(--muv-on-dark))]" />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-gradient-to-r from-[hsl(var(--brand-primary))] to-[hsl(var(--brand-secondary))] shadow-lg">
+            <BarChart3 className="h-5 w-5 text-[hsl(var(--muv-on-dark))]" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">Dashboard Analytics</h2>
+            <p className="text-sm text-muted-foreground">
+              Statistiche in tempo reale
+              {lastUpdated && (
+                <span className="ml-2">
+                  • Aggiornato: {lastUpdated.toLocaleTimeString('it-IT')}
+                </span>
+              )}
+            </p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-xl font-semibold text-foreground">Dashboard Analytics</h2>
-          <p className="text-sm text-muted-foreground">Statistiche in tempo reale</p>
-        </div>
+        
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleRefreshAll}
+          disabled={isLoading}
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+          Aggiorna Tutto
+        </Button>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
-          const IconComponent = stat.icon;
-          return (
-            <Card 
-              key={index} 
-              className="relative overflow-hidden bg-card/80 border-border/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 group"
-            >
-              {/* Background gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-50 group-hover:opacity-70 transition-opacity`} />
-              
-              <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground/90 group-hover:text-foreground transition-colors">
-                  {stat.title}
-                </CardTitle>
-                <div className={`p-2 rounded-full bg-gradient-to-r ${stat.gradient} shadow-md`}>
-                  <IconComponent className="h-4 w-4 text-[hsl(var(--muv-on-dark))]" />
-                </div>
-              </CardHeader>
-              
-              <CardContent className="relative space-y-2">
-                <div className={`text-2xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                  {stat.value}
-                </div>
-                <p className="text-xs text-muted-foreground/70">
-                  {stat.description}
-                </p>
-                
-                {/* Progress indicator */}
-                <div className="mt-3 h-1 bg-muted/30 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full bg-gradient-to-r ${stat.gradient} rounded-full transition-all duration-1000 ease-out`}
-                    style={{ width: '75%' }}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      {/* Analytics Tabs */}
+      <Tabs defaultValue="general" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="general" className="flex items-center gap-2">
+            <BarChart3 className="h-4 w-4" />
+            Analytics Generali
+          </TabsTrigger>
+          <TabsTrigger value="blog" className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            Analytics Blog
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="general" className="space-y-6 mt-6">
+          {/* General Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {stats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <Card 
+                  key={index} 
+                  className="relative overflow-hidden bg-card/80 border-border/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 group"
+                >
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-50 group-hover:opacity-70 transition-opacity`} />
+                  
+                  <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-3">
+                    <CardTitle className="text-sm font-medium text-muted-foreground/90 group-hover:text-foreground transition-colors">
+                      {stat.title}
+                    </CardTitle>
+                    <div className={`p-2 rounded-full bg-gradient-to-r ${stat.gradient} shadow-md`}>
+                      <IconComponent className="h-4 w-4 text-[hsl(var(--muv-on-dark))]" />
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="relative space-y-2">
+                    <div className={`text-2xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
+                      {stat.value}
+                    </div>
+                    <p className="text-xs text-muted-foreground/70">
+                      {stat.description}
+                    </p>
+                    
+                    {/* Progress indicator */}
+                    <div className="mt-3 h-1 bg-muted/30 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full bg-gradient-to-r ${stat.gradient} rounded-full transition-all duration-1000 ease-out`}
+                        style={{ width: '75%' }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
 
-      {/* Activity indicator */}
-      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Activity className="h-3 w-3 animate-pulse text-[hsl(var(--brand-primary))]" />
-        <span>Aggiornato in tempo reale</span>
-      </div>
+          {/* Activity indicator */}
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <Activity className="h-3 w-3 animate-pulse text-[hsl(var(--brand-primary))]" />
+            <span>Aggiornato in tempo reale</span>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="blog" className="mt-6">
+          <BlogAnalyticsDisplay />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
