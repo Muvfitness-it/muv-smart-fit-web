@@ -9,6 +9,7 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
 import { BlogContentFixer } from '@/components/admin/BlogContentFixer';
 import BlogSEOAuditor from '@/components/SEO/BlogSEOAuditor';
+import BlogCopyHumanizer from '@/components/admin/BlogCopyHumanizer';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -150,6 +151,7 @@ const AdminDashboard = () => {
                   <CardContent className="space-y-6">
                     <BlogContentFixer />
                     <BlogThemeNormalizer />
+                    <BlogCopyHumanizer />
                   </CardContent>
                 </Card>
 

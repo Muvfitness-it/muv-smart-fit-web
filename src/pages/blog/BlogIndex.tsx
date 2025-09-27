@@ -14,6 +14,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
 
 interface Post {
   id: string;
