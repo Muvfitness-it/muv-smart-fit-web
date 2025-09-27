@@ -147,6 +147,26 @@
 }
 
 @layer utilities {
+  /* Mobile layout fixes */
+  body {
+    padding-top: var(--header-height, 80px);
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding-top: var(--header-height, 72px);
+    }
+    
+    .site-header {
+      min-height: 72px;
+    }
+    
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
   /* Animazioni personalizzate */
   .animate-float {
     animation: float 3s ease-in-out infinite;

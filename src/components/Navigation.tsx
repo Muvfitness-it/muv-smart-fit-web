@@ -70,9 +70,9 @@ const Navigation = () => {
     name: "Contatti",
     path: "/contatti"
   }];
-  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-purple-600 backdrop-blur-sm shadow-lg ${isOpen ? 'bg-purple-600' : ''}`}>
+  return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-1 sm:py-2 md:py-2 lg:py-2 xl:py-2">
+        <div className="flex justify-between items-center py-2 sm:py-3 md:py-3 lg:py-3 xl:py-3">
           {/* Logo - optimized for mobile */}
           <Link to="/" className="flex items-center">
             <OptimizedImage
@@ -82,7 +82,7 @@ const Navigation = () => {
               height={90}
               priority={true}
               sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
-              className={`site-logo w-auto transition-all duration-300 ${isScrolled ? 'h-10 sm:h-12 md:h-12 lg:h-14' : 'h-12 sm:h-14 md:h-14 lg:h-16 xl:h-16'}`}
+              className={`site-logo w-auto transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12 lg:h-14' : 'h-10 sm:h-12 md:h-14 lg:h-16 xl:h-18'}`}
               objectFit="contain"
               overflowHidden={false}
               style={{
