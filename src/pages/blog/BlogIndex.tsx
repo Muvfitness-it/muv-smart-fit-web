@@ -89,6 +89,8 @@ const BlogIndex = () => {
   const formattedPosts = useMemo(() =>
     posts.map(p => ({
       ...p,
+      title: humanizeTitle(p.title || ''),
+      excerpt: p.excerpt ? humanizeExcerpt(p.excerpt) : null,
       date: p.published_at ? new Date(p.published_at).toLocaleDateString("it-IT") : "",
     })),
     [posts]

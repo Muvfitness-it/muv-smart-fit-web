@@ -16,6 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
+import { humanizeText, humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
 
 
 interface Post {
@@ -65,8 +66,13 @@ const BlogArticle = () => {
       // Clean and process content for accessibility and theming
       const cleanedContent = cleanBlogContent(data.content || '');
       const processedContent = processContentBlocks(cleanedContent);
+
+      // Humanize for display (non distruttivo)
+      const humanized = humanizeText(processedContent);
+      const humanizedTitle = humanizeTitle(data.title || '');
+      const humanizedExcerpt = humanizeExcerpt(data.excerpt || '');
       
-      setPost({ ...data, content: processedContent } as Post);
+      setPost({ ...data, title: humanizedTitle, excerpt: humanizedExcerpt, content: humanized } as Post);
 
       // Carica categoria se presente
       if ((data as any).category_id) {

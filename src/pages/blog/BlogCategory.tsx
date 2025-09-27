@@ -12,6 +12,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
 
 interface Post {
   id: string;
@@ -98,6 +99,8 @@ const BlogCategory = () => {
   const formattedPosts = useMemo(() =>
     posts.map(p => ({
       ...p,
+      title: humanizeTitle(p.title || ''),
+      excerpt: p.excerpt ? humanizeExcerpt(p.excerpt) : null,
       date: p.published_at ? new Date(p.published_at).toLocaleDateString("it-IT") : "",
     })),
     [posts]
