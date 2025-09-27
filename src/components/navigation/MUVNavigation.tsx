@@ -24,6 +24,18 @@ const MUVNavigation = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   // Voci menu specifiche richieste (da sinistra a destra)
   const navItems = [
     { name: "Home", path: "/" },
@@ -36,7 +48,7 @@ const MUVNavigation = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md shadow-slate-300/50' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 w-full z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white shadow-md shadow-slate-300/50' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3">
           
