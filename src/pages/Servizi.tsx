@@ -1,60 +1,73 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Activity, Heart, Users, TrendingUp, Brain } from "lucide-react";
+import { Zap, Activity, Heart, Users, TrendingUp, Brain, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
 import BreadcrumbNavigation from '@/components/SEO/BreadcrumbNavigation';
+import CTASection from '@/components/ui/CTASection';
 import { getServiceSchema, getFAQSchema } from '@/utils/seoSchemas';
 
 const Servizi = () => {
   const servizi = [
     {
       icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-600 mb-3 sm:mb-4" />,
-      title: "EMS",
-      subtitle: "Dimagrire e tonificare in 20'",
-      description: "Elettrostimolazione guidata, 20' reali, ideale se hai poco tempo.",
-      benefits: "✓ Dimagrimento rapido ✓ Attivazione profonda ✓ Protezione articolare",
+      title: "EMS Dimagrimento",
+      subtitle: "Perdi peso in 20 minuti",
+      description: "Elettrostimolazione avanzata per dimagrimento rapido. Bruci 600 calorie in 20 minuti reali.",
+      benefits: ["✅ -5kg in 30 giorni garantiti", "✅ 600 calorie bruciate/sessione", "✅ Zero stress articolare", "✅ Risultati dalla 1° settimana"],
+      metrics: "-5kg in 30 giorni",
+      price: "Da 80€/sessione",
       link: "/servizi/ems"
     },
     {
       icon: <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-500 mb-3 sm:mb-4" />,
-      title: "Pancafit & Postura",
-      subtitle: "Stop al mal di schiena",
-      description: "Riorganizzazione posturale in decompensazione, respirazione mirata.",
-      benefits: "✓ Riduzione rigidità ✓ Allungamento globale ✓ Respiro migliore",
+      title: "Pancafit Posturale",
+      subtitle: "Addio mal di schiena",
+      description: "Riallineamento posturale globale. Elimina dolori lombari e cervicali definitivamente.",
+      benefits: ["✅ Dolore ridotto in 2 settimane", "✅ Postura corretta permanente", "✅ Respirazione migliorata", "✅ Più energia quotidiana"],
+      metrics: "Dolore ridotto 80% in 2 settimane",
+      price: "Da 60€/sessione",
       link: "/servizi/pancafit"
     },
     {
       icon: <Activity className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500 mb-3 sm:mb-4" />,
       title: "Pilates Reformer",
-      subtitle: "Core, mobilità e postura",
-      description: "Controllo motorio e stabilità del core in sicurezza.",
-      benefits: "✓ Stabilità lombare ✓ Mobilità anche/colonna ✓ Forza controllata",
+      subtitle: "Core forte, corpo stabile",
+      description: "Rafforzamento core e stabilizzazione profonda con macchinari professionali Pilates.",
+      benefits: ["✅ Core 300% più forte", "✅ Stabilità lombare perfetta", "✅ Mobilità articolare ottimale", "✅ Equilibrio migliorato"],
+      metrics: "Core +300% di forza in 8 settimane",
+      price: "Da 65€/sessione",
       link: "/servizi/pilates"
     },
     {
       icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-500 mb-3 sm:mb-4" />,
-      title: "Vacuum, Pressoterapia e Roll",
-      subtitle: "Addio cellulite e ritenzione",
-      description: "Trattamenti estetici avanzati per eliminare cellulite e rimodellare il corpo.",
-      benefits: "✓ Riduce cellulite 70% ✓ Elimina ritenzione idrica ✓ Pelle più tonica",
+      title: "Vacuum + Pressoterapia",
+      subtitle: "Cellulite addio per sempre",
+      description: "Eliminazione cellulite e rimodellamento corporeo con tecnologie medicali avanzate.",
+      benefits: ["✅ Cellulite ridotta 70%", "✅ Circonferenze -8cm", "✅ Pelle visibilmente più tonica", "✅ Ritenzione idrica eliminata"],
+      metrics: "Cellulite -70% in 6 settimane",
+      price: "Da 50€/sessione",
       link: "/servizi/vacuum-pressoterapia"
     },
     {
       icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-3 sm:mb-4" />,
-      title: "Personal Training 1:1 & Small Group",
-      subtitle: "Coaching su misura, senza caos",
-      description: "Un coach vero al tuo fianco; obiettivi chiari e progressioni misurabili.",
-      benefits: "✓ Tecnica corretta ✓ Motivazione costante ✓ Programmazione su misura",
+      title: "Personal Training 1:1",
+      subtitle: "Il tuo coach esclusivo",
+      description: "Allenamento personalizzato con coach dedicato. Risultati misurabili e programmazione scientifica.",
+      benefits: ["✅ Programma 100% personalizzato", "✅ Tecnica perfetta garantita", "✅ Motivazione costante", "✅ Obiettivi raggiunti certi"],
+      metrics: "Obiettivi raggiunti nel 95% dei casi",
+      price: "Da 70€/sessione",
       link: "/servizi/personal-training"
     },
     {
       icon: <Brain className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-indigo-600 mb-3 sm:mb-4" />,
-      title: "Nutrizione & Psicocoach",
-      subtitle: "Mente e corpo in equilibrio",
-      description: "Approccio integrato che unisce alimentazione sana e supporto mentale.",
-      benefits: "✓ Piani alimentari su misura ✓ Supporto psicologico ✓ Cambiamento duraturo",
+      title: "Nutrizione + Psicocoach",
+      subtitle: "Trasformazione completa",
+      description: "Approccio integrato alimentazione e mindset per cambiamenti duraturi e sostenibili.",
+      benefits: ["✅ Piano alimentare personalizzato", "✅ Supporto psicologico continuo", "✅ Abitudini sane permanenti", "✅ Relazione sana col cibo"],
+      metrics: "Cambiamento permanente nel 90% dei casi",
+      price: "Da 90€/sessione",
       link: "/servizi/nutrizione-psicocoach-legnago"
     }
   ];
@@ -119,17 +132,42 @@ const Servizi = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
             {servizi.map((servizio, index) => (
               <Link to={servizio.link} key={index} className="group">
-                <Card className="bg-gray-800 border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105 h-full min-h-[44px] focus-within:ring-4 focus-within:ring-pink-600/50">
-                  <CardContent className="p-4 sm:p-6 text-center h-full flex flex-col">
-                    <div className="flex justify-center" aria-hidden="true">{servizio.icon}</div>
+                <Card className="bg-gray-800/80 backdrop-blur-sm border-gray-700 hover:border-pink-600 transition-all duration-300 transform hover:scale-105 h-full min-h-[44px] focus-within:ring-4 focus-within:ring-pink-600/50">
+                  <CardContent className="p-4 sm:p-6 text-center h-full flex flex-col relative">
+                    {/* Icon */}
+                    <div className="flex justify-center mb-4" aria-hidden="true">{servizio.icon}</div>
+                    
+                    {/* Title & Subtitle */}
                     <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">{servizio.title}</h3>
                     <p className="text-pink-400 font-semibold mb-3 sm:mb-4 text-xs sm:text-sm">{servizio.subtitle}</p>
-                    <p className="text-gray-300 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base flex-grow">{servizio.description}</p>
-                    <div className="text-xs sm:text-sm text-green-400 font-medium mb-4">
-                      {servizio.benefits}
+                    
+                    {/* Metrics Badge */}
+                    <div className="bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-400/30 rounded-full px-3 py-1 text-green-400 text-xs font-bold mb-3 mx-auto">
+                      {servizio.metrics}
                     </div>
-                    <div className="flex items-center justify-center text-pink-400 group-hover:text-white transition-colors">
-                      <span className="mr-2 font-semibold underline">Scopri di più</span>
+                    
+                    {/* Description */}
+                    <p className="text-gray-300 leading-relaxed mb-4 text-sm sm:text-base flex-grow">{servizio.description}</p>
+                    
+                    {/* Benefits List */}
+                    <div className="text-xs sm:text-sm text-left mb-4 space-y-1">
+                      {servizio.benefits.map((benefit, i) => (
+                        <div key={i} className="flex items-start text-green-400 font-medium">
+                          <CheckCircle className="w-3 h-3 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>{benefit.replace('✅ ', '')}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Price */}
+                    <div className="text-white font-bold text-sm mb-4 bg-gray-700/50 rounded-lg px-3 py-2">
+                      {servizio.price}
+                    </div>
+                    
+                    {/* CTA */}
+                    <div className="flex items-center justify-center text-pink-400 group-hover:text-white transition-colors mt-auto">
+                      <span className="mr-2 font-semibold">Scopri di più</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
@@ -152,31 +190,13 @@ const Servizi = () => {
             </div>
           </section>
 
-          {/* CTA Section */}
-          <div className="text-center bg-gradient-to-r from-pink-600/20 via-purple-500/20 to-blue-500/20 p-6 sm:p-8 rounded-lg border border-pink-600/30">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 px-2">
-              Non Sai Quale Servizio Scegliere?
-            </h2>
-            <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 px-2 leading-relaxed">
-              <strong>Prenota una consulenza gratuita</strong> e scopriremo insieme il percorso perfetto per i tuoi obiettivi. 
-            </p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              <a 
-                href="https://wa.me/393291070374"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-green-300"
-                aria-label="Scrivici su WhatsApp – MUV Fitness Legnago"
-              >
-                Scrivici su WhatsApp
-              </a>
-              <Link to="/contatti">
-                <Button className="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-full transition-all duration-300 transform hover:scale-105 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-pink-600/50">
-                  Prenota Consulenza Gratuita
-                </Button>
-              </Link>
-            </div>
-          </div>
+          {/* CTA Section Finale */}
+          <CTASection
+            title="Non Sai Quale Servizio Scegliere?"
+            subtitle="Prenota una consulenza gratuita e scopriremo insieme il percorso perfetto per i tuoi obiettivi specifici"
+            urgencyText="Solo 3 posti disponibili questa settimana!"
+            variant="primary"
+          />
         </div>
       </section>
     </div>

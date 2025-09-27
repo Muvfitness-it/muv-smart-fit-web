@@ -53,22 +53,38 @@ const Navigation = () => {
       window.removeEventListener('orientationchange', updateHeaderHeight);
     };
   }, [isScrolled, location.pathname]);
-  // ULTRA-CLEAN NAVIGATION - 5 CORE PAGES ONLY
+  // MENU NAVIGATION - STRUTTURA RICHIESTA
   const navItems = [{
     name: "Home",
     path: "/"
   }, {
     name: "Servizi",
-    path: "/servizi"
+    path: "/servizi",
+    dropdown: true,
+    children: [
+      { name: "Personal Training", path: "/servizi/personal-training" },
+      { name: "EMS", path: "/servizi/ems" },
+      { name: "Pilates Reformer", path: "/servizi/pilates" },
+      { name: "Pancafit", path: "/servizi/pancafit" },
+      { name: "Vacuum + Pressoterapia", path: "/servizi/vacuum-pressoterapia" },
+      { name: "Nutrizione", path: "/servizi/nutrizione" }
+    ]
   }, {
-    name: "Chi Siamo",
-    path: "/chi-siamo"
+    name: "Tecnologie",
+    path: "/tecnologie"
   }, {
-    name: "Risultati",
-    path: "/risultati"
+    name: "Blog",
+    path: "/blog"
+  }, {
+    name: "Team",
+    path: "/team"
   }, {
     name: "Contatti",
     path: "/contatti"
+  }, {
+    name: "Prenotazione",
+    path: "/contatti",
+    isButton: true
   }];
   return <nav className={`site-header fixed top-0 left-0 right-0 w-full z-50 min-h-[var(--header-height)] flex items-center bg-primary backdrop-blur-sm shadow-lg ${isOpen ? 'bg-primary' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

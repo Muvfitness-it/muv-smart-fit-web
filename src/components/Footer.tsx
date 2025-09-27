@@ -51,11 +51,11 @@ const Footer = () => {
   return (
     <footer ref={footerRef} className="bg-muted/30 border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Contact Info */}
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* Contact Info & Orari */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Contatti</h3>
-            <div className="space-y-2">
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Contatti & Orari</h3>
+            <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-primary" />
                 <span className="text-muted-foreground text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
@@ -68,29 +68,74 @@ const Footer = () => {
                 <Mail className="w-4 h-4 text-primary" />
                 <a href="mailto:info@muvfitness.it" className="text-muted-foreground hover:text-primary text-sm transition-colors">info@muvfitness.it</a>
               </div>
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-muted-foreground text-sm font-semibold">Orari di Apertura:</p>
+                <p className="text-muted-foreground text-xs">Lun-Ven: 7:00 - 22:00</p>
+                <p className="text-muted-foreground text-xs">Sab: 8:00 - 19:00</p>
+                <p className="text-muted-foreground text-xs">Dom: 9:00 - 18:00</p>
+              </div>
             </div>
           </div>
 
-          {/* Essential Links */}
+          {/* Links Social */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Collegamenti</h3>
-            <div className="space-y-2">
-              <Link to="/chi-siamo" className="block text-muted-foreground hover:text-primary transition-colors">Chi Siamo</Link>
-              <Link to="/team" className="block text-muted-foreground hover:text-primary transition-colors">Team</Link>
-              <Link to="/risultati" className="block text-muted-foreground hover:text-primary transition-colors">Risultati</Link>
-              <Link to="/contatti" className="block text-muted-foreground hover:text-primary transition-colors">Contatti</Link>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Seguici</h3>
+            <div className="space-y-3">
+              <a href="https://www.facebook.com/muvfitness" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors">
+                <Facebook className="w-4 h-4" />
+                <span className="text-sm">Facebook</span>
+              </a>
+              <a href="https://www.instagram.com/muvfitness" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors">
+                <Instagram className="w-4 h-4" />
+                <span className="text-sm">Instagram</span>
+              </a>
+              <div className="space-y-2 pt-4">
+                <Link to="/chi-siamo" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Chi Siamo</Link>
+                <Link to="/team" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Team</Link>
+                <Link to="/risultati" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Risultati</Link>
+              </div>
             </div>
           </div>
 
-          {/* Core Services */}
+          {/* Servizi */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-foreground">Servizi</h3>
             <div className="space-y-2">
-              <Link to="/servizi#dimagrimento" className="block text-muted-foreground hover:text-primary transition-colors">Dimagrimento</Link>
-              <Link to="/servizi#pilates" className="block text-muted-foreground hover:text-primary transition-colors">Pilates Reformer</Link>
-              <Link to="/servizi#vacuum" className="block text-muted-foreground hover:text-primary transition-colors">Vacuum + Pressoterapia</Link>
-              <Link to="/blog" className="block text-muted-foreground hover:text-primary transition-colors">Blog Fitness</Link>
+              <Link to="/servizi/ems" className="block text-muted-foreground hover:text-primary transition-colors text-sm">EMS Dimagrimento</Link>
+              <Link to="/servizi/personal-training" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Personal Training</Link>
+              <Link to="/servizi/pilates" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Pilates Reformer</Link>
+              <Link to="/servizi/pancafit" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Pancafit</Link>
+              <Link to="/servizi/vacuum-pressoterapia" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Vacuum + Pressoterapia</Link>
+              <Link to="/servizi/nutrizione" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Nutrizione</Link>
             </div>
+          </div>
+
+          {/* Modulo Contatto Rapido */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Contatto Rapido</h3>
+            <form className="space-y-3">
+              <input
+                type="text"
+                placeholder="Nome"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Telefono"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+              >
+                Richiedi Info
+              </button>
+            </form>
+            <p className="text-xs text-muted-foreground mt-2">
+              Ti contatteremo entro 24h per la tua consulenza gratuita
+            </p>
           </div>
         </div>
 
