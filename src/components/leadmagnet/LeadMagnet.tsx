@@ -92,7 +92,7 @@ Fonte: Lead Magnet - sito web`,
           })
         });
       } catch (dbError) {
-        console.log('Analytics save failed (non-critical):', dbError);
+        // Analytics save failed, continue with process
       }
 
       // Track conversion
@@ -111,7 +111,7 @@ Fonte: Lead Magnet - sito web`,
             utm_campaign: 'Lead Magnet'
           }]);
       } catch (analyticsError) {
-        console.log('Analytics insert failed (non-critical):', analyticsError);
+        // Analytics insert failed, continue
       }
 
       setIsDownloaded(true);

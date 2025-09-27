@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
-import { useResourceOptimization } from "./hooks/useResourceOptimization";
+
 import React, { useEffect, lazy, Suspense } from "react";
 
 import FontOptimizer from "@/components/ui/FontOptimizer";
@@ -119,7 +119,6 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
-  // Removed useResourceOptimization() - was causing rendering issues
 
   const location = useLocation();
   const isHome = location.pathname === '/';

@@ -18,18 +18,7 @@ export const useBodyMeasurements = () => {
     setError('');
     
     try {
-      console.log('Adding body measurement - feature not yet implemented');
-      
-      // TODO: Implement body_measurements table
-      // const { data: { user }, error: authError } = await supabase.auth.getUser();
-      // 
-      // if (authError || !user) {
-      //   throw new Error('Devi essere autenticato');
-      // }
-
-      // const { data, error } = await supabase
-      //   .from('body_measurements')
-      //   .insert({
+      // Feature not yet implemented - requires database setup
       //     user_id: user.id,
       //     weight,
       //     height,
@@ -58,18 +47,7 @@ export const useBodyMeasurements = () => {
     setError('');
     
     try {
-      console.log('Getting body measurements - feature not yet implemented');
-      
-      // TODO: Implement body_measurements table
-      // const { data: { user }, error: authError } = await supabase.auth.getUser();
-      // 
-      // if (authError || !user) {
-      //   throw new Error('Devi essere autenticato');
-      // }
-
-      // const { data, error } = await supabase
-      //   .from('body_measurements')
-      //   .select('*')
+      // Feature not yet implemented - requires database setup
       //   .eq('user_id', user.id)
       //   .order('measured_at', { ascending: false });
 

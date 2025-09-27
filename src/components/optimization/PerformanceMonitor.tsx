@@ -84,8 +84,7 @@ const PerformanceMonitor = () => {
         });
       }
 
-      // Log performance metrics for debugging
-      console.log('Performance Metrics:', metrics);
+      // Performance metrics collected and sent to analytics
     };
 
     // Report metrics when page is loaded

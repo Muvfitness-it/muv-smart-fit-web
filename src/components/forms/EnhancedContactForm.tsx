@@ -155,7 +155,7 @@ const EnhancedContactForm: React.FC<EnhancedContactFormProps> = ({
       try {
         await submitLead(formData);
       } catch (dbError) {
-        console.log('Database save failed (non-critical):', dbError);
+        // Database save failed, continue with email success
       }
 
       setIsSubmitted(true);

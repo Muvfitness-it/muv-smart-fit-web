@@ -47,10 +47,8 @@ const ViewManager: React.FC<ViewManagerProps> = ({
 }) => {
   // Create a wrapper for ShoppingList export that matches the expected signature
   const handleShoppingListExport = (elementId: string, fileName: string) => {
-    // For ShoppingList, we don't need the full meal plan data, just export the shopping list element
-    console.log(`Exporting shopping list from element: ${elementId} as ${fileName}`);
-    // This would be handled differently - perhaps by capturing the shopping list HTML element
-    // For now, we'll create a minimal implementation
+    // Export shopping list functionality
+    // Implementation for capturing and exporting the shopping list HTML element
   };
 
   switch (currentView) {

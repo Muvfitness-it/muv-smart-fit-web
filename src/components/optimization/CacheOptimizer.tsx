@@ -5,9 +5,7 @@ const CacheOptimizer = () => {
   useEffect(() => {
     // Service Worker registration for caching
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log('SW registered for caching');
-      });
+      navigator.serviceWorker.register('/sw.js');
     }
 
     // Implement resource caching headers

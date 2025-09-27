@@ -70,14 +70,11 @@ const OptimizationPipeline: React.FC = () => {
     ));
 
     try {
-      console.log(`Invoking function: ${step.function}`);
-      
       const { data, error } = await supabase.functions.invoke(step.function, {
         body: { batchSize: step.function === 'auto-optimizer' ? 25 : 15 }
       });
 
       if (error) {
-        console.error(`Function ${step.function} error:`, error);
         throw new Error(`${error.message || 'Unknown error'}`);
       }
 

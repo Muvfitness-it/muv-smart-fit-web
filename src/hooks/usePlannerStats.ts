@@ -21,15 +21,10 @@ export const usePlannerStats = () => {
     setIsLoading(true);
     
     try {
-      // TODO: Implement database access when planner_usage table is created
-      // For now, use a mock value
-      console.log('Using mock planner usage stats...');
-      
-      const mockUsage = 1250 + Math.floor(Math.random() * 100); // Mock incrementing usage
+      // Mock usage statistics
+      const mockUsage = 1250 + Math.floor(Math.random() * 100);
       setTotalUsage(mockUsage);
       setLastFetch(now);
-      
-      console.log('Mock planner usage count:', mockUsage);
       
     } catch (error) {
       console.error('Error in mock planner stats:', error);
