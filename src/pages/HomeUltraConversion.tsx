@@ -140,13 +140,13 @@ const HomeUltraConversion = () => {
 
             {/* Headline Principale */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight text-foreground">
-              Dimagrisci con la tecnologia<br />
-              <span className="text-primary">più avanzata a Legnago</span>
+              Le scuse sono finite.<br />
+              <span className="text-primary">È ora di vedere risultati veri.</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
-              Allenamenti personalizzati, ambiente riservato e risultati rapidi con <strong className="text-primary">Metodo MUV: Vacuum, EMS, Pilates Reformer.</strong>
+              20 minuti che valgono più di ore di palestra tradizionale. <strong className="text-primary">Te lo dimostriamo.</strong>
             </p>
 
             {/* CTA Primaria */}
@@ -159,18 +159,18 @@ const HomeUltraConversion = () => {
                   size="lg" 
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 md:px-12 py-4 md:py-6 text-xl md:text-2xl font-black rounded-full shadow-lg hover:scale-105 transition-all duration-300 mb-4"
                 >
-                  Prenota la tua Prova Gratuita
+                  Voglio vedere se funziona
                 </Button>
               </a>
               <p className="text-sm text-muted-foreground">
-                Zero obblighi. Ti richiamiamo noi in giornata.
+                Senza impegni. Se non funziona, non paghi nulla.
               </p>
             </div>
 
             {/* Elementi Fiducia */}
             <div className="bg-card border border-border rounded-xl p-4 max-w-md mx-auto">
-              <p className="text-primary font-bold">⏰ Posti limitati per la Prova Gratuita</p>
-              <p className="text-sm text-muted-foreground">Prenota oggi</p>
+              <p className="text-primary font-bold">⏰ Solo 8 posti questo mese</p>
+              <p className="text-sm text-muted-foreground">Poi stop fino al prossimo</p>
             </div>
           </div>
         </section>
@@ -183,29 +183,29 @@ const HomeUltraConversion = () => {
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                   <Target className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Fino a -5 kg in 30 giorni</h3>
-                <p className="text-muted-foreground text-sm">Con protocolli mirati e personalizzati</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">-5 kg. Primo mese.</h3>
+                <p className="text-muted-foreground text-sm">Non è una promessa. È quello che succede.</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="w-8 h-8 text-secondary-foreground" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Postura e mal di schiena</h3>
-                <p className="text-muted-foreground text-sm">Ritrova mobilità e benessere</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">Bye bye mal di schiena</h3>
+                <p className="text-muted-foreground text-sm">Sai quella sensazione? Ecco, sparisce.</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-accent-foreground" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Personal trainer dedicato</h3>
-                <p className="text-muted-foreground text-sm">Zero affollamento, massima attenzione</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">Solo tu e il trainer</h3>
+                <p className="text-muted-foreground text-sm">Niente code. Niente distrazioni. Solo risultati.</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Tecnologie avanzate</h3>
-                <p className="text-muted-foreground text-sm">Vacuum + EMS + Pilates Reformer</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">Tecnologia seria</h3>
+                <p className="text-muted-foreground text-sm">Quella che fa la differenza davvero.</p>
               </div>
             </div>
           </div>

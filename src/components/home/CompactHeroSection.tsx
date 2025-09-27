@@ -28,17 +28,17 @@ const CompactHeroSection = () => {
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <h1 className="text-[clamp(32px,7vw,42px)] md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 leading-tight">
-          Perdi <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">peso e tonifica</span>
-          <br />in soli 30 giorni
+          Sai cosa succede quando <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">smetti di rimandare</span>
+          <br />i tuoi obiettivi?
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-800 mb-6 font-semibold">
-          <span className="text-brand-accent">+127 trasformazioni</span> con il nostro metodo EMS + Pancafit
+          Succede che <span className="text-brand-accent">finalmente funziona.</span> Come per i nostri 127 clienti.
         </p>
         
         <div className="bg-brand-primary/10 border border-brand-primary/30 rounded-lg p-4 mb-6 inline-block">
           <p className="text-gray-900 text-base md:text-lg font-medium">
-            ⏰ <strong>Solo 15 posti disponibili</strong> al mese
+            ⏰ Abbiamo <strong>solo 8 posti liberi</strong> questo mese
           </p>
         </div>
         
@@ -58,7 +58,7 @@ const CompactHeroSection = () => {
             className="no-underline min-h-[56px] flex items-center justify-center bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-10 py-5 rounded-full text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl"
             aria-label="Prenota consulenza gratuita"
           >
-            🎯 OTTIENI I RISULTATI CHE VUOI
+            🎯 PRENDO SUL SERIO I MIEI OBIETTIVI
           </Link>
           
           <a 

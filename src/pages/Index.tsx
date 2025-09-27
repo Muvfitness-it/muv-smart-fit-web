@@ -97,17 +97,17 @@ const Index = () => {
         <section className="py-12 md:py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-center">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 md:mb-6">
-              Pronto per la <span className="text-brand-accent">Trasformazione</span>?
+              Allora, <span className="text-brand-accent">che si fa?</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-200 mb-6 md:mb-8 max-w-2xl mx-auto">
-              Consulenza gratuita + prova guidata. Nessun impegno, solo risultati concreti.
+              Rimandi ancora o decidi di iniziare oggi?
             </p>
             <Link 
               to="/contatti" 
               className="no-underline min-h-[44px] inline-flex items-center justify-center bg-gradient-to-r from-brand-primary to-brand-accent text-white px-6 md:px-10 py-3 md:py-5 rounded-full text-lg md:text-xl font-black transition-transform duration-200 transform active:scale-95 shadow-xl"
               aria-label="Prenota la consulenza gratuita"
             >
-              🎯 OTTIENI I TUOI RISULTATI
+              🎯 BASTA, COMINCIO OGGI
             </Link>
           </div>
         </section>

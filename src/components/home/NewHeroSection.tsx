@@ -20,23 +20,23 @@ const NewHeroSection = () => {
           <div className="lcp-hero-inner">
             <h1 className="lcp-text-responsive font-black mb-8 text-white leading-tight animate-fade-in">
               <span className="lcp-hero-text block mb-2">
-                Il tuo <span className="lcp-gradient bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">Personal Trainer</span>
+                Il tuo corpo sta <span className="lcp-gradient bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">aspettando</span>
               </span>
               <span className="lcp-hero-text block">
-                a Legnago, <span className="text-brand-accent">senza palestre affollate.</span>
+                che tu prenda sul serio <span className="text-brand-accent">i tuoi risultati.</span>
               </span>
             </h1>
             
             <div className="mb-8 space-y-6 animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="glass-card p-6 rounded-2xl max-w-4xl mx-auto">
                 <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3">
-                  Risultati <span className="text-brand-accent">visibili in 30 giorni</span> con 
+                  Basta con gli allenamenti che <span className="text-brand-accent">non portano a niente.</span>
                 </p>
                 <div className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent font-black text-2xl md:text-3xl lg:text-4xl mb-4">
-                  ⚡ Fitness Intelligente ⚡
+                  ⚡ Tecnologie che Funzionano ⚡
                 </div>
                 <p className="text-lg md:text-xl text-gray-200 font-medium">
-                  EMS • Pancafit • Pilates Reformer • Vacuum • Pressoterapia
+                  20 minuti. Risultati veri. Zero tempo perso.
                 </p>
               </div>
             </div>
@@ -47,7 +47,7 @@ const NewHeroSection = () => {
                 href="/form-contatti" 
                 className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-black px-8 py-4 rounded-full text-lg md:text-xl font-black transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-white/20"
               >
-                🚀 CANDIDATI PER LA TRASFORMAZIONE
+                🎯 VOGLIO VEDERE I RISULTATI
               </a>
               
               <a 
