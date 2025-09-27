@@ -12,9 +12,13 @@ import TrustBar from '@/components/home/TrustBar';
 import CTASection from '@/components/ui/CTASection';
 import PerformanceOptimizer from '@/components/seo/PerformanceOptimizer';
 import AccessibilityControls from '@/components/ui/AccessibilityControls';
+import QualityChecker from '@/components/verification/QualityChecker';
 
-// Safe performance optimization
+// Performance optimization components
 import SafeResourceOptimizer from '@/components/optimization/SafeResourceOptimizer';
+import ResourcePreloader from '@/components/optimization/ResourcePreloader';
+import LCPOptimizer from '@/components/optimization/LCPOptimizer';
+import PerformanceMonitor from '@/components/optimization/PerformanceMonitor';
 
 // SEO components - essential for indexing
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
@@ -45,8 +49,14 @@ const Index = () => {
 
   return (
     <>
-      {/* Safe resource optimization */}
+      {/* Performance optimization suite */}
       <SafeResourceOptimizer />
+      <ResourcePreloader 
+        criticalImages={['/images/fitness-professional-bg.jpg']}
+        prefetchPages={['/servizi', '/contatti', '/chi-siamo']}
+      />
+      <LCPOptimizer />
+      <PerformanceMonitor />
       
       <div className="min-h-screen bg-gray-900">
         {/* New Hero Section with Value Proposition */}
@@ -119,6 +129,9 @@ const Index = () => {
         
         {/* Accessibility Controls */}
         <AccessibilityControls />
+        
+        {/* Quality Checker - Development only */}
+        <QualityChecker />
       </div>
     </>
   );

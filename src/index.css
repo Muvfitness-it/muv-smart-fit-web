@@ -276,6 +276,63 @@
     100% { box-shadow: 0 0 30px hsl(var(--brand-primary) / 0.6); }
   }
 
+  /* Performance optimizations */
+  .performance-optimized {
+    contain: layout style paint;
+    will-change: transform;
+  }
+
+  /* Critical performance styles */
+  img[fetchpriority="high"] {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px 600px;
+  }
+
+  /* Mobile-specific fixes */
+  @media (max-width: 768px) {
+    body {
+      padding-top: 64px; /* Header height */
+      font-display: swap;
+      text-rendering: optimizeSpeed;
+    }
+    
+    .header-mobile {
+      min-height: 64px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* Touch-friendly sizing */
+    button, .btn, a[role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Optimize animations */
+    * {
+      animation-duration: 0.2s !important;
+      transition-duration: 0.2s !important;
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    :root {
+      --primary: 220 100% 20%;
+      --background: 0 0% 100%;
+      --foreground: 0 0% 0%;
+    }
+  }
+
   /* Hero Background Animations */
   @keyframes slow-zoom {
     0% { transform: scale(1); }
