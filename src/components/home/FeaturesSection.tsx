@@ -74,7 +74,7 @@ const FeaturesSection = () => {
               </span>
             </div>
             <h3 className="text-2xl font-black mb-4 text-white group-hover:text-brand-primary transition-colors">
-              💥 Dimagrimento <span className="text-red-400">SHOCK</span> in 20 minuti
+              💥 Dimagrimento <span className="text-red-400">SHOCK</span> in 45 minuti
             </h3>
             <p className="text-gray-300 text-lg mb-4 group-hover:text-white transition-colors">
               <strong>-3kg in 2 settimane</strong> con EMS guidata da professionisti

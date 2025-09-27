@@ -15,7 +15,7 @@ const FAQSection = () => {
     },
     {
       question: "Ho poco tempo: ha senso iniziare?",
-      answer: "Assolutamente sì! L'EMS richiede solo 20 minuti reali + routine smart a casa. Perfetto per chi ha agenda piena."
+      answer: "Assolutamente sì! L'EMS richiede solo 45 minuti reali + routine smart a casa. Perfetto per chi ha agenda piena."
     },
     {
       question: "Mal di schiena: posso allenarmi?",

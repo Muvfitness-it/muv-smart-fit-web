@@ -17,7 +17,7 @@ const InternalLinkManager: React.FC<InternalLinkManagerProps> = ({
   const getRelatedServices = () => {
     const allServices = [
       { path: '/servizi/personal-training', title: 'Personal Training', description: 'Allenamento personalizzato 1-to-1' },
-      { path: '/servizi/ems', title: 'Allenamento EMS', description: '20 minuti = 3 ore di palestra' },
+      { path: '/servizi/ems', title: 'Allenamento EMS', description: '45 minuti = 3 ore di palestra' },
       { path: '/servizi/pilates', title: 'Pilates', description: 'Postura e core strength' },
       { path: '/servizi/hiit', title: 'HIIT', description: 'Alta intensità per bruciare grassi' },
       { path: '/servizi/nutrizione', title: 'Consulenza Nutrizionale', description: 'Piani alimentari personalizzati' },

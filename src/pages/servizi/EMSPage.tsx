@@ -43,7 +43,7 @@ const EMSPage = () => {
     },
     {
       icon: <Clock className="h-8 w-8 text-primary" />,
-      title: "20 Minuti",
+      title: "45 Minuti",
       description: "Sessioni brevi ma estremamente efficaci"
     },
     {
@@ -61,7 +61,7 @@ const EMSPage = () => {
   const faqs = [
     {
       question: "Quanto dura una sessione di EMS?",
-      answer: "Una sessione di allenamento EMS dura 20 minuti di stimolazione attiva, per un totale di 30-35 minuti includendo preparazione e defaticamento."
+      answer: "Una sessione di allenamento EMS dura 45 minuti di stimolazione attiva, per un totale di 30-35 minuti includendo preparazione e defaticamento."
     },
     {
       question: "È sicuro l'allenamento EMS?",
@@ -88,7 +88,7 @@ const EMSPage = () => {
       <ServiceHeroSection
         title="Allenamento EMS a Legnago"
         subtitle="Elettrostimolazione Muscolare per Risultati Straordinari"
-        description="Dimagrisci e tonifica il tuo corpo in tempi record con la tecnologia EMS più avanzata. 20 minuti di allenamento equivalgono a 4 ore di palestra tradizionale."
+        description="Dimagrisci e tonifica il tuo corpo in tempi record con la tecnologia EMS più avanzata. 45 minuti di allenamento equivalgono a 4 ore di palestra tradizionale."
         primaryButton={{
           text: "Prenota Prova Gratuita EMS",
           href: "#prenota"
@@ -177,7 +177,7 @@ const EMSPage = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Tempo Allenamento:</span>
-                    <span className="font-bold">Solo 20 minuti</span>
+                    <span className="font-bold">Solo 45 minuti</span>
                   </div>
                 </div>
                 <Button className="mt-6 w-full" size="lg">

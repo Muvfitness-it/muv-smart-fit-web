@@ -24,7 +24,7 @@ const FaqGbp = () => {
     },
     {
       question: "Avete EMS? In quanto dura una seduta?",
-      answer: "Sì, usiamo la tecnologia EMS (elettrostimolazione muscolare). Ogni seduta dura 20 minuti reali di allenamento, equivalenti a 90 minuti di palestra tradizionale. Consigliamo 1-2 sedute a settimana. Include sempre una valutazione iniziale per personalizzare intensità e programma."
+      answer: "Sì, usiamo la tecnologia EMS (elettrostimolazione muscolare). Ogni seduta dura 45 minuti reali di allenamento, equivalenti a 90 minuti di palestra tradizionale. Consigliamo 1-2 sedute a settimana. Include sempre una valutazione iniziale per personalizzare intensità e programma."
     },
     {
       question: "Trattate mal di schiena?",

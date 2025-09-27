@@ -62,7 +62,7 @@ const Servizi = () => {
   const faqs = [
     {
       question: "Quale servizio è più adatto per dimagrire velocemente?",
-      answer: "L'EMS è perfetto per il dimagrimento rapido: in 20 minuti attivi tutti i muscoli con un'intensità impossibile da raggiungere con l'allenamento tradizionale. Combina resistenza e cardio per massimizzare il consumo calorico."
+      answer: "L'EMS è perfetto per il dimagrimento rapido: in 45 minuti attivi tutti i muscoli con un'intensità impossibile da raggiungere con l'allenamento tradizionale. Combina resistenza e cardio per massimizzare il consumo calorico."
     },
     {
       question: "Posso combinare più servizi insieme?",

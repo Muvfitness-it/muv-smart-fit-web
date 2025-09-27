@@ -17,7 +17,7 @@ const FAQPage = () => {
         "name": "Quanto dura una seduta di allenamento EMS?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Una sessione EMS dura circa 20 minuti di allenamento attivo, per un totale di 30-35 minuti inclusi preparazione e defaticamento."
+          "text": "Una sessione EMS dura circa 45 minuti di allenamento attivo, per un totale di 30-35 minuti inclusi preparazione e defaticamento."
         }
       },
       {
@@ -38,7 +38,7 @@ const FAQPage = () => {
       faqs: [
         {
           question: "Quanto dura una sessione di allenamento EMS?",
-          answer: "Una sessione di allenamento EMS dura 20 minuti di stimolazione attiva, per un totale di 30-35 minuti includendo preparazione e defaticamento. È l'equivalente di 4 ore di palestra tradizionale!"
+          answer: "Una sessione di allenamento EMS dura 45 minuti di stimolazione attiva, per un totale di 30-35 minuti includendo preparazione e defaticamento. È l'equivalente di 4 ore di palestra tradizionale!"
         },
         {
           question: "L'allenamento EMS è sicuro?",

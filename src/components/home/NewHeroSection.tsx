@@ -36,7 +36,7 @@ const NewHeroSection = () => {
                   ⚡ Tecnologie che Funzionano ⚡
                 </div>
                 <p className="text-lg md:text-xl text-gray-200 font-medium">
-                  20 minuti. Risultati veri. Zero tempo perso.
+                  45 minuti. Risultati veri. Zero tempo perso.
                 </p>
               </div>
             </div>

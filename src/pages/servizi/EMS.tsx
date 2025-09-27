@@ -14,7 +14,7 @@ const EMS = () => {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Allenamento EMS Legnago",
-    "description": "Allenamento con elettrostimolazione (EMS) a Legnago. 20 minuti di allenamento equivalgono a 3 ore di palestra tradizionale. Risultati rapidi e duraturi.",
+    "description": "Allenamento con elettrostimolazione (EMS) a Legnago. 45 minuti di allenamento equivalgono a 3 ore di palestra tradizionale. Risultati rapidi e duraturi.",
     "provider": {
       "@type": "LocalBusiness",
       "name": "MUV Fitness",
@@ -35,7 +35,7 @@ const EMS = () => {
   const faqs = [
     {
       question: "Cos'è l'allenamento EMS e come funziona?",
-      answer: "L'EMS (elettrostimolazione muscolare) utilizza impulsi elettrici per attivare i muscoli durante l'esercizio, permettendo di allenare oltre 300 muscoli contemporaneamente in soli 20 minuti."
+      answer: "L'EMS (elettrostimolazione muscolare) utilizza impulsi elettrici per attivare i muscoli durante l'esercizio, permettendo di allenare oltre 300 muscoli contemporaneamente in soli 45 minuti."
     },
     {
       question: "L'allenamento EMS è sicuro?",
@@ -51,7 +51,7 @@ const EMS = () => {
     },
     {
       question: "Quante sessioni EMS servono a settimana?",
-      answer: "Per risultati ottimali consigliamo 2-3 sessioni a settimana da 20 minuti ciascuna. Questo garantisce recupero adeguato e progressi costanti."
+      answer: "Per risultati ottimali consigliamo 2-3 sessioni a settimana da 45 minuti ciascuna. Questo garantisce recupero adeguato e progressi costanti."
     }
   ];
 
@@ -70,7 +70,7 @@ const EMS = () => {
         
         <ServiceHeroSection
           title="Allenamento EMS Legnago"
-          description="20 minuti di elettrostimolazione = 3 ore di palestra tradizionale"
+          description="45 minuti di elettrostimolazione = 3 ore di palestra tradizionale"
           primaryButton={{
             text: "Prenota Prova Gratuita",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`,
@@ -104,7 +104,7 @@ const EMS = () => {
                 </h2>
                 <p className="text-lg text-gray-600 mb-6">
                   L'elettrostimolazione muscolare (EMS) rappresenta l'evoluzione del fitness moderno. 
-                  In soli 20 minuti attivi oltre 300 muscoli contemporaneamente, ottenendo risultati 
+                  In soli 45 minuti attivi oltre 300 muscoli contemporaneamente, ottenendo risultati 
                   che normalmente richiederebbero 3 ore di allenamento tradizionale.
                 </p>
                 <ul className="space-y-3">
@@ -132,7 +132,7 @@ const EMS = () => {
                   <div className="text-center">
                     <Clock className="w-8 h-8 text-orange-600 mx-auto mb-2" />
                     <p className="font-semibold">Tempo Efficace</p>
-                    <p className="text-sm text-gray-500">Solo 20 minuti</p>
+                    <p className="text-sm text-gray-500">Solo 45 minuti</p>
                   </div>
                   <div className="text-center">
                     <Dumbbell className="w-8 h-8 text-orange-600 mx-auto mb-2" />

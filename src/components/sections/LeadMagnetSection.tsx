@@ -52,7 +52,7 @@ const LeadMagnetSection: React.FC = () => {
   const videos = [
     {
       title: "Come Funziona l'EMS - Dimostrazione Pratica",
-      description: "Scopri come una sessione EMS di 20 minuti equivale a 4 ore di palestra tradizionale"
+      description: "Scopri come una sessione EMS di 45 minuti equivale a 4 ore di palestra tradizionale"
     },
     {
       title: "Pancafit® in Azione - Riequilibrio Posturale",

@@ -35,7 +35,7 @@ const DimagrireLegnago = () => {
   const metodiDimagrimento = [
     {
       metodo: "EMS Training",
-      tempo: "20 minuti",
+      tempo: "45 minuti",
       calorie: "600 kcal",
       descrizione: "Elettrostimolazione muscolare per massimizzare il consumo calorico"
     },

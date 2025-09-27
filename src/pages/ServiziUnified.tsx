@@ -19,11 +19,11 @@ const ServiziUnified = () => {
       icon: <Target className="w-12 h-12 text-white" />,
       title: 'Dimagrimento Rapido',
       subtitle: 'Perdi peso e tonifica il corpo',
-      description: 'Con EMS + Personal Training perdi grasso 4x più velocemente. Solo 20 minuti a sessione.',
+      description: 'Con EMS + Personal Training perdi grasso 4x più velocemente. Solo 45 minuti a sessione.',
       time: '20 min',
       frequency: '2-3 volte/sett',
       benefits: [
-        'Bruci 600 calorie in 20 minuti',
+        'Bruci 600 calorie in 45 minuti',
         'Tonifichi tutto il corpo',
         'Risultati visibili in 2 settimane',
         'Personal trainer dedicato'

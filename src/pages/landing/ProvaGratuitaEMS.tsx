@@ -91,7 +91,7 @@ const ProvaGratuitaEMS = () => {
               </p>
               
               <p className="text-lg mb-8 opacity-90">
-                20 minuti di allenamento EMS equivalgono a 4 ore di palestra tradizionale. 
+                45 minuti di allenamento EMS equivalgono a 4 ore di palestra tradizionale. 
                 Scopri il futuro del fitness a Legnago!
               </p>
 
@@ -188,7 +188,7 @@ const ProvaGratuitaEMS = () => {
                   ))}
                 </div>
                 <p className="mb-4 italic">
-                  "20 minuti che valgono ore di palestra. Finalmente un allenamento 
+                  "45 minuti che valgono ore di palestra. Finalmente un allenamento 
                   che si adatta ai miei tempi!"
                 </p>
                 <div className="font-semibold">

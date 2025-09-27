@@ -51,7 +51,7 @@ const TransformHeroSection = () => {
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">EMS + Personal Training</h3>
-                <p className="text-sm text-muted-foreground">20 minuti = 4 ore di palestra tradizionale</p>
+                <p className="text-sm text-muted-foreground">45 minuti = 4 ore di palestra tradizionale</p>
               </div>
               
               <div className="bg-white/90 rounded-xl p-6 border border-border shadow-soft hover:shadow-secondary/10 transition-all duration-300">

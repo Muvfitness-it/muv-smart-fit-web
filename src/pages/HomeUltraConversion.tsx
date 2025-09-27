@@ -23,7 +23,7 @@ const HomeUltraConversion = () => {
   const faqs = [
     {
       question: "Quanto dura una sessione di allenamento?",
-      answer: "Le sessioni EMS durano 20 minuti, Pilates Reformer 50 minuti, Vacuum+Pressoterapia 30 minuti. Ogni programma è studiato per massimizzare i risultati nel minor tempo possibile."
+      answer: "Le sessioni EMS durano 45 minuti, Pilates Reformer 50 minuti, Vacuum+Pressoterapia 30 minuti. Ogni programma è studiato per massimizzare i risultati nel minor tempo possibile."
     },
     {
       question: "Quando vedrò i primi risultati?",
@@ -146,7 +146,7 @@ const HomeUltraConversion = () => {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
-              20 minuti che valgono più di ore di palestra tradizionale. <strong className="text-primary">Te lo dimostriamo.</strong>
+              45 minuti che valgono più di ore di palestra tradizionale. <strong className="text-primary">Te lo dimostriamo.</strong>
             </p>
 
             {/* CTA Primaria */}
@@ -271,7 +271,7 @@ const HomeUltraConversion = () => {
                     </li>
                     <li className="flex items-center gap-2 text-muted-foreground">
                       <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span>Solo 20 minuti a sessione</span>
+                      <span>Solo 45 minuti a sessione</span>
                     </li>
                   </ul>
                   <Link to="/servizi#ems">
@@ -452,7 +452,7 @@ const HomeUltraConversion = () => {
                     ))}
                   </div>
                   <p className="text-foreground italic">
-                    "L'EMS ha rivoluzionato i miei allenamenti. In 20 minuti ottengo risultati che prima richiedevano ore in palestra."
+                    "L'EMS ha rivoluzionato i miei allenamenti. In 45 minuti ottengo risultati che prima richiedevano ore in palestra."
                   </p>
                   <p className="text-sm text-secondary font-semibold mt-4">+8 kg massa muscolare</p>
                 </CardContent>

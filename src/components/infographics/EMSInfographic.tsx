@@ -7,7 +7,7 @@ const EMSInfographic: React.FC = () => {
   const benefits = [
     {
       icon: Clock,
-      title: "20 minuti = 4 ore",
+      title: "45 minuti = 4 ore",
       description: "Una sessione EMS equivale a 4 ore di palestra tradizionale"
     },
     {

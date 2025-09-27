@@ -65,7 +65,7 @@ SERVIZI MUV CHE CONOSCI PERFETTAMENTE:
 - Ideale per: tutti i livelli, obiettivi specifici, motivazione extra
 
 ⚡ TECNOLOGIA EMS (Elettrostimolazione):
-- Allenamento di 20 minuti = 4 ore di palestra tradizionale
+- Allenamento di 45 minuti = 4 ore di palestra tradizionale
 - Stimolazione muscolare profonda e sicura
 - Ideale per: poco tempo, risultati rapidi, riabilitazione, tonificazione
 
