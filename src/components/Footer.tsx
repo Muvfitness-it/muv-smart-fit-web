@@ -70,9 +70,9 @@ const Footer = () => {
               </div>
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-muted-foreground text-sm font-semibold">Orari di Apertura:</p>
-                <p className="text-muted-foreground text-xs">Lun-Ven: 7:00 - 22:00</p>
-                <p className="text-muted-foreground text-xs">Sab: 8:00 - 19:00</p>
-                <p className="text-muted-foreground text-xs">Dom: 9:00 - 18:00</p>
+                <p className="text-muted-foreground text-xs">Lun-Ven: 8:00 - 21:00</p>
+                <p className="text-muted-foreground text-xs">Sab: 8:00 - 12:00</p>
+                <p className="text-muted-foreground text-xs">Dom: Chiusi</p>
               </div>
             </div>
           </div>

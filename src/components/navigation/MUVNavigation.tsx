@@ -48,7 +48,7 @@ const MUVNavigation = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 w-full z-[1000] transition-all duration-300 ${isScrolled ? 'bg-white shadow-md shadow-slate-300/50' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-300 ${isScrolled ? 'bg-white shadow-md shadow-slate-300/50' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3">
           
@@ -111,7 +111,7 @@ const MUVNavigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t">
+          <div className="lg:hidden fixed top-full left-0 right-0 bottom-0 bg-white shadow-lg border-t z-[9999] overflow-y-auto">
             <div className="container mx-auto px-4 py-4">
               <div className="flex flex-col space-y-4">
                 {navItems.map(item => (
