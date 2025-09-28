@@ -20,6 +20,7 @@ interface FormErrors {
   email?: string;
   telefono?: string;
   gdprConsent?: string;
+  general?: string;
 }
 
 const MUVLeadForm = () => {
@@ -99,8 +100,44 @@ const MUVLeadForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulazione invio form (sostituire con chiamata API reale)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Enhanced security validation
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+      const timestamp = Date.now().toString();
+      
+      // Additional client-side validation
+      if (formData.nome.trim().length < 2 || formData.nome.trim().length > 50) {
+        throw new Error('Nome deve essere tra 2 e 50 caratteri');
+      }
+      
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        throw new Error('Email non valida');
+      }
+      
+      if (!/^[\+]?[0-9\s\-\(\)]{8,15}$/.test(formData.telefono)) {
+        throw new Error('Numero di telefono non valido');
+      }
+      
+      // Secure form submission with CSRF protection
+      const response = await fetch('/api/secure-lead-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({
+          nome: formData.nome.trim(),
+          email: formData.email.toLowerCase().trim(),
+          telefono: formData.telefono.trim(),
+          csrf_token: csrfToken,
+          csrf_timestamp: timestamp,
+          lead_magnet: 'guida-ems-dimagrimento'
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Errore nell\'invio del form');
+      }
       
       setIsSuccess(true);
       setShowLeadMagnet(true);
@@ -113,8 +150,10 @@ const MUVLeadForm = () => {
         gdprConsent: false
       });
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Errore invio form:', error);
+      const errorMessage = error.message || 'Errore nell\'invio del form. Riprova più tardi.';
+      setErrors({ ...errors, general: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
