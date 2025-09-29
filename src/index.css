@@ -12,12 +12,12 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
     
-    /* Palette Colori Richiesta */
-    --primary: 214 100% 32%; /* Blu #1E3A8A - colore principale testi e titoli */
+    /* Palette Colori MUV Logo - Blu Intenso, Verde Brillante, Arancione/Corallo */
+    --primary: 213 100% 25%; /* Blu intenso MUV #003D82 - titoli e dettagli */
     --primary-foreground: 0 0% 100%;
-    --secondary: 156 100% 35%; /* Verde #10B981 - per accenti e successo */
+    --secondary: 141 84% 44%; /* Verde brillante MUV #16C77A - motivazione/energia */
     --secondary-foreground: 0 0% 100%;
-    --accent: 24 95% 53%; /* Arancione #F97316 - CTA e pulsanti */
+    --accent: 14 91% 60%; /* Arancione/Corallo MUV #FF5722 - CTA principali */
     --accent-foreground: 0 0% 100%;
     
     /* Colori neutrali - Specifiche */
@@ -38,16 +38,17 @@
     
     --radius: 0.5rem; /* Radius moderato per look professionale */
     
-    /* Brand Colors MUV - uso strategico */
-    --brand-primary: 330 100% 44%; /* Magenta #E50064 */
-    --brand-secondary: 212 100% 50%; /* Blu #0077FF */  
-    --brand-accent: 259 100% 50%; /* Viola #7A00FF */
+    /* Brand Colors MUV - dal logo ufficiale */
+    --brand-primary: 213 100% 25%; /* Blu intenso MUV #003D82 */
+    --brand-secondary: 141 84% 44%; /* Verde brillante MUV #16C77A */
+    --brand-accent: 14 91% 60%; /* Arancione/Corallo MUV #FF5722 */
     --brand-light: 0 0% 100%; /* Bianco puro */
-    --brand-dark: 0 0% 9%; /* Nero per massima leggibilità */
+    --brand-dark: 210 11% 15%; /* Grigio freddo per professionalità */
     
-    /* Gradienti sottili per accenti */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-accent)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--brand-secondary)), hsl(var(--brand-primary)));
+    /* Gradienti motivazionali MUV */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-secondary)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--brand-secondary)), hsl(var(--brand-accent)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-accent)), hsl(var(--brand-primary)));
     --gradient-light: linear-gradient(135deg, hsl(0 0% 98%), hsl(0 0% 100%));
     
     /* Shadows neutrali con tocco di colore */

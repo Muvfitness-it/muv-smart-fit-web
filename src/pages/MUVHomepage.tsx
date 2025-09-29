@@ -2,6 +2,8 @@
 import { Helmet } from 'react-helmet';
 import MUVNavigation from '@/components/navigation/MUVNavigation';
 import MUVHeroSection from '@/components/home/MUVHeroSection';
+import MUVMotivationSection from '@/components/home/MUVMotivationSection';
+import MUVCommunitySection from '@/components/home/MUVCommunitySection';
 import MUVBreadcrumb from '@/components/ui/MUVBreadcrumb';
 
 const MUVHomepage = () => {
@@ -33,7 +35,9 @@ const MUVHomepage = () => {
         {/* Spazio bianco minimo inter-elementi 40px - Specifica richiesta */}
         <div style={{ height: '40px' }} />
         
-        {/* Altre sezioni potrebbero essere aggiunte qui */}
+        {/* Sezioni Motivazionali ed Energizzanti */}
+        <MUVMotivationSection />
+        <MUVCommunitySection />
         
       </div>
     </>

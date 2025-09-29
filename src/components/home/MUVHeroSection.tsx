@@ -11,31 +11,47 @@ const MUVHeroSection = () => {
         aria-hidden="true"
       />
       
-      {/* Overlay nero opaco 40% - Specifica richiesta */}
-      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+      {/* Overlay sfumato blu MUV per profondità */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/70" aria-hidden="true" />
       
       {/* Content Container */}
       <div className="relative z-10 min-h-screen flex items-center">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
             
-            {/* Testo Hero - Sans-serif Poppins Bold 48px, colore #1E3A8A */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-[48px] font-bold text-primary leading-tight mb-8">
-              Massimo 4 persone - Risultati garantiti in 30 giorni
+            {/* Testo Hero Motivazionale - Poppins Bold, energia e determinazione */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-8 animate-fade-in">
+              <span className="block text-accent">Trasforma</span>
+              <span className="block">Il Tuo Corpo</span>
+              <span className="block text-secondary">In 30 Giorni</span>
             </h1>
+            <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Tecnologia EMS + Personal Training + Risultati Garantiti.<br/>
+              <strong className="text-accent">Massimo 4 persone per sessione</strong> per un'attenzione totale.
+            </p>
             
-            {/* CTA Primaria Arancione #F97316 - Specifiche richieste */}
-            <div className="mb-12">
+            {/* CTA Energizzante - Design Motivazionale */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
               <a 
                 href="/form-contatti"
-                className="inline-block bg-accent hover:bg-accent/80 text-accent-foreground px-8 py-4 text-lg font-poppins font-medium transition-all duration-300"
-                style={{ 
-                  fontSize: '18px',
-                  borderRadius: '12px'
-                }}
+                className="inline-flex items-center justify-center px-12 py-6 bg-accent hover:bg-accent/90 text-accent-foreground text-xl font-bold rounded-2xl shadow-accent hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-pulse-soft"
               >
-                Prenota la tua prova gratuita ora
+                🚀 Inizia Subito la Tua Trasformazione
               </a>
+              <a 
+                href="/risultati"
+                className="inline-flex items-center justify-center px-8 py-6 border-2 border-white text-white text-lg font-semibold rounded-2xl hover:bg-white hover:text-primary transition-all duration-300"
+              >
+                Guarda i Risultati Ottenuti
+              </a>
+            </div>
+            
+            {/* Garanzia Motivazionale */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto mb-12">
+              <p className="text-white text-lg font-semibold text-center">
+                💯 <span className="text-secondary">Garanzia 100% Soddisfatti o Rimborsati</span> 💯<br/>
+                <span className="text-sm opacity-90">Se non raggiungi i tuoi obiettivi in 30 giorni, ti rimborsiamo tutto</span>
+              </p>
             </div>
             
             {/* Tre Box Allineati Orizzontali - Uguale Dimensione con Icone SVG Blu */}
