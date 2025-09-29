@@ -12,16 +12,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
     
-    /* Palette Colori MUV Logo - Blu Intenso, Verde Brillante, Arancione/Corallo */
-    --primary: 213 100% 25%; /* Blu intenso MUV #003D82 - titoli e dettagli */
+    /* Specifiche Esatte Colori MUV */
+    --primary: 225 100% 31%; /* Blu logo specifico #1E3A8A */
     --primary-foreground: 0 0% 100%;
-    --secondary: 141 84% 44%; /* Verde brillante MUV #16C77A - motivazione/energia */
+    --secondary: 157 55% 44%; /* Verde supporto #10B981 */
     --secondary-foreground: 0 0% 100%;
-    --accent: 14 91% 60%; /* Arancione/Corallo MUV #FF5722 - CTA principali */
+    --accent: 22 89% 52%; /* Arancione CTA #F97316 */
     --accent-foreground: 0 0% 100%;
     
-    /* Colori neutrali - Specifiche */
-    --muted: 214 17% 82%; /* Grigio #CBD5E1 */
+    /* Colori neutrali - Specifiche Esatte */
+    --muted: 214 32% 78%; /* Grigio chiaro specifico #CBD5E1 */
     --muted-foreground: 215 14% 40%; /* Grigio medio per testo secondario */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -38,10 +38,10 @@
     
     --radius: 0.5rem; /* Radius moderato per look professionale */
     
-    /* Brand Colors MUV - dal logo ufficiale */
-    --brand-primary: 213 100% 25%; /* Blu intenso MUV #003D82 */
-    --brand-secondary: 141 84% 44%; /* Verde brillante MUV #16C77A */
-    --brand-accent: 14 91% 60%; /* Arancione/Corallo MUV #FF5722 */
+    /* Brand Colors MUV - Specifiche Esatte */
+    --brand-primary: 225 100% 31%; /* Blu logo #1E3A8A */
+    --brand-secondary: 157 55% 44%; /* Verde supporto #10B981 */
+    --brand-accent: 22 89% 52%; /* Arancione CTA #F97316 */
     --brand-light: 0 0% 100%; /* Bianco puro */
     --brand-dark: 210 11% 15%; /* Grigio freddo per professionalità */
     

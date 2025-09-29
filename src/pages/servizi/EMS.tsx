@@ -69,8 +69,8 @@ const EMS = () => {
         <EnhancedFAQSchema faqs={faqs} pageTitle="Allenamento EMS Legnago - Domande Frequenti" />
         
         <ServiceHeroSection
-          title="Allenamento EMS Legnago"
-          description="45 minuti di elettrostimolazione = 3 ore di palestra tradizionale"
+          title="EMS: Dimagrimento e Tonificazione Accelerati"
+          description="L'allenamento EMS (Elettrostimolazione Muscolare) consente di lavorare intensamente su tutti i gruppi muscolari, ottenendo risultati in metà del tempo rispetto a un allenamento tradizionale."
           primaryButton={{
             text: "Prenota Prova Gratuita",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`,
@@ -244,6 +244,26 @@ const EMS = () => {
           contactInfo="📞 347 1234567"
           locationInfo="📍 Viale dei Tigli 14, Legnago (VR) | Servizio per Legnago, Cerea, Bovolone, San Bonifacio"
         />
+
+        {/* CTA fissa in basso - Specifiche */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-4 shadow-lg">
+          <div className="container mx-auto text-center">
+            <a 
+              href="/contatti"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg transition-all duration-300 hover:opacity-80"
+              style={{ 
+                backgroundColor: '#F97316', 
+                color: 'white',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontWeight: '500',
+                borderRadius: '12px'
+              }}
+            >
+              Richiedi una consulenza gratuita
+            </a>
+          </div>
+        </div>
       </ServicePageLayout>
     </>
   );
