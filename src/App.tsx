@@ -19,7 +19,7 @@ import AIAssistantWidget from "./components/ai/AIAssistantWidget";
 import AIAssistantModal from "./components/ai/AIAssistantModal";
 
 // Critical routes loaded immediately (homepage and essential pages)
-import HomeUltraConversion from "./pages/HomeUltraConversion";
+import MUVHomepage from "./pages/MUVHomepage";
 import ServiziUnified from "./pages/ServiziUnified";
 import NotFound from "./pages/NotFound";
 
@@ -201,7 +201,7 @@ const AppContent = () => {
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
                     {/* ===== CORE 5 PAGES - HIGH CONVERSION STRUCTURE ===== */}
-                    <Route path="/" element={<HomeUltraConversion />} />
+                    <Route path="/" element={<MUVHomepage />} />
                     <Route path="/servizi" element={<ServiziUnified />} />
                     <Route path="/servizi/ems" element={<EMSPage />} />
                     <Route path="/servizi/vacuum" element={<VacuumPage />} />
