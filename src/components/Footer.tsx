@@ -58,7 +58,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
+                <span className="text-muted-foreground text-sm">Via Frattini, 113/D Legnago (VR)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary" />
@@ -71,7 +71,7 @@ const Footer = () => {
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-muted-foreground text-sm font-semibold">Orari di Apertura:</p>
                 <p className="text-muted-foreground text-xs">Lun-Ven: 8:00 - 21:00</p>
-                <p className="text-muted-foreground text-xs">Sab: 8:00 - 12:00</p>
+                <p className="text-muted-foreground text-xs">Sab: 9:00 - 14:00</p>
                 <p className="text-muted-foreground text-xs">Dom: Chiusi</p>
               </div>
             </div>
@@ -110,32 +110,15 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Modulo Contatto Rapido */}
+          {/* Link Utili */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-foreground">Contatto Rapido</h3>
-            <form className="space-y-3">
-              <input
-                type="text"
-                placeholder="Nome"
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Telefono"
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-              <button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm font-semibold transition-colors"
-              >
-                Richiedi Info
-              </button>
-            </form>
-            <p className="text-xs text-muted-foreground mt-2">
-              Ti contatteremo entro 24h per la tua consulenza gratuita
-            </p>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Link Utili</h3>
+            <div className="space-y-2">
+              <Link to="/blog" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Blog</Link>
+              <Link to="/faq" className="block text-muted-foreground hover:text-primary transition-colors text-sm">FAQ</Link>
+              <Link to="/contatti" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Prenotazione</Link>
+              <Link to="/come-arrivare" className="block text-muted-foreground hover:text-primary transition-colors text-sm">Come Arrivare</Link>
+            </div>
           </div>
         </div>
 

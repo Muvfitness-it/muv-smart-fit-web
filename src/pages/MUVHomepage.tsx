@@ -1,6 +1,7 @@
 // Homepage MUV - Landing Page Completa
 import { Helmet } from 'react-helmet';
 import MUVNavigation from '@/components/navigation/MUVNavigation';
+import MUVBreadcrumb from '@/components/ui/MUVBreadcrumb';
 import MUVHeroSection from '@/components/home/MUVHeroSection';
 import MUVValoriSection from '@/components/home/MUVValoriSection';
 import MUVEsperienzaSection from '@/components/home/MUVEsperienzaSection';
@@ -21,6 +22,11 @@ const MUVHomepage = () => {
 
       {/* Navigazione Sticky */}
       <MUVNavigation />
+      
+      {/* Breadcrumb */}
+      <div className="pt-[var(--header-height,80px)]">
+        <MUVBreadcrumb items={[{ name: 'Home' }]} />
+      </div>
       
       {/* Hero Section */}
       <MUVHeroSection />

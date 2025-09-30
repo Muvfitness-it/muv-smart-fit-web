@@ -44,7 +44,7 @@ const MUVNavigation = () => {
     { name: "Blog", path: "/blog" },
     { name: "Team", path: "/team" },
     { name: "Contatti", path: "/contatti" },
-    { name: "Prenotazione", path: "/form-contatti", isButton: true }
+    { name: "Prenotazione", path: "/contatti", isButton: true }
   ];
 
   return (
