@@ -33,7 +33,7 @@ const MUVFooter = () => {
                   lineHeight: '1.6'
                 }}
               >
-                Via Frattini 113/D<br />
+                Via Frattini, 113/D<br />
                 37045 Legnago (VR)
               </p>
             </div>
