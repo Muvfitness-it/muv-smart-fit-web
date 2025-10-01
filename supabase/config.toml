@@ -36,9 +36,14 @@ enable_leaked_password_protection = true
 timebox = 3600
 inactivity_timeout = 1800
 
-# Enhanced OTP expiry for better security (reduced from 180s to 120s)
+# Enhanced OTP expiry for better security (reduced to 60s)
 [auth.otp]
-expiry = 120
+expiry = 60
+
+# Rate limiting for enhanced security
+[auth.rate_limits]
+max_password_attempts = 5
+password_attempt_window = 900
 
 # Secure endpoints - require authentication or HMAC
 [functions.log-visit]
@@ -88,6 +93,9 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.automated-security-audit]
+verify_jwt = true
+
+[functions.data-retention-automation]
 verify_jwt = true
 
 # All other functions require JWT by default (no override here)

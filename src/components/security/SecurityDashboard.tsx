@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useSecurityAudit } from '@/hooks/useSecurityAudit';
+import { useSecurityMonitoring } from '@/hooks/useSecurityMonitoring';
 import { supabase } from '@/integrations/supabase/client';
-import { Shield, AlertTriangle, Eye, Clock, Users, Activity } from 'lucide-react';
+import { Shield, AlertTriangle, Eye, Clock, Users, Activity, PlayCircle, StopCircle, Trash2, RefreshCw } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface SecurityEvent {
   id: string;
@@ -33,6 +35,14 @@ export const SecurityDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { logSystemEvent } = useSecurityAudit();
+  const { 
+    metrics: monitoringMetrics, 
+    isMonitoring, 
+    runSecurityAudit, 
+    runDataRetention,
+    analyzeSecurityEvents 
+  } = useSecurityMonitoring();
+  const { toast } = useToast();
 
   const fetchSecurityMetrics = async () => {
     try {
@@ -77,9 +87,28 @@ export const SecurityDashboard: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleManualRefresh = () => {
+  const handleManualRefresh = async () => {
     logSystemEvent('security_dashboard_refresh');
-    fetchSecurityMetrics();
+    await fetchSecurityMetrics();
+    await analyzeSecurityEvents();
+  };
+
+  const handleRunAudit = async () => {
+    toast({
+      title: 'Audit Sicurezza Avviato',
+      description: 'L\'audit è in esecuzione...',
+    });
+    const result = await runSecurityAudit();
+    if (result) {
+      toast({
+        title: 'Audit Completato',
+        description: `Score: ${result.security_score}/100 - ${result.passed_checks}/${result.total_checks} checks passed`,
+      });
+    }
+  };
+
+  const handleRunRetention = async () => {
+    await runDataRetention();
   };
 
   const getEventIcon = (eventType: string) => {
@@ -116,16 +145,77 @@ export const SecurityDashboard: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-muv-primary">Dashboard Sicurezza</h2>
-        <Button 
-          onClick={handleManualRefresh} 
-          disabled={refreshing}
-          variant="outline"
-          size="sm"
-        >
-          <Clock className="h-4 w-4 mr-2" />
-          {refreshing ? 'Aggiornamento...' : 'Aggiorna'}
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={handleRunAudit} 
+            variant="outline"
+            size="sm"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Esegui Audit
+          </Button>
+          <Button 
+            onClick={handleRunRetention} 
+            variant="outline"
+            size="sm"
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Data Retention
+          </Button>
+          <Button 
+            onClick={handleManualRefresh} 
+            disabled={refreshing}
+            variant="outline"
+            size="sm"
+          >
+            <Clock className="h-4 w-4 mr-2" />
+            {refreshing ? 'Aggiornamento...' : 'Aggiorna'}
+          </Button>
+        </div>
       </div>
+
+      {/* Real-time Monitoring Status */}
+      <Card className={`border-2 ${
+        monitoringMetrics.threatLevel === 'CRITICAL' ? 'border-red-500' :
+        monitoringMetrics.threatLevel === 'HIGH' ? 'border-orange-500' :
+        monitoringMetrics.threatLevel === 'MEDIUM' ? 'border-yellow-500' :
+        'border-green-500'
+      }`}>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {isMonitoring ? (
+              <PlayCircle className="h-5 w-5 text-green-500 animate-pulse" />
+            ) : (
+              <StopCircle className="h-5 w-5 text-gray-400" />
+            )}
+            Monitoraggio Real-Time
+            <Badge variant={
+              monitoringMetrics.threatLevel === 'CRITICAL' ? 'destructive' :
+              monitoringMetrics.threatLevel === 'HIGH' ? 'destructive' :
+              monitoringMetrics.threatLevel === 'MEDIUM' ? 'secondary' :
+              'outline'
+            }>
+              {monitoringMetrics.threatLevel}
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <p className="text-sm text-muted-foreground">Minacce Attive</p>
+              <p className="text-2xl font-bold text-red-600">{monitoringMetrics.activeThreats}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Tentativi Bloccati</p>
+              <p className="text-2xl font-bold text-orange-600">{monitoringMetrics.blockedAttempts}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Allarmi Recenti</p>
+              <p className="text-2xl font-bold text-yellow-600">{monitoringMetrics.recentAlerts.length}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Security Metrics Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
