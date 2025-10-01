@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Heart, Shield, Clock, Star, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MUVContactForm from '@/components/contact/MUVContactForm';
+import { UnifiedContactForm } from '@/features/forms';
 
 const RiabilitazioneInfortuni = () => {
   const benefici = [
@@ -419,9 +419,11 @@ const RiabilitazioneInfortuni = () => {
               </div>
             </div>
 
-            <MUVContactForm 
-              campaignName="Riabilitazione Infortuni MUV"
+            <UnifiedContactForm 
+              campaign="Riabilitazione Infortuni MUV"
+              source="landing-riabilitazione"
               defaultObjective="Riabilitazione e recupero infortuni"
+              enableAIData={true}
             />
 
             <div className="text-center mt-8">

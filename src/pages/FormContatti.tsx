@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import MUVContactForm from "@/components/contact/MUVContactForm";
+import { UnifiedContactForm } from "@/features/forms";
 import { useNavigate } from "react-router-dom";
 
 const FormContatti = () => {
@@ -38,9 +38,11 @@ const FormContatti = () => {
               </div>
             </div>
 
-            <MUVContactForm 
-              campaignName="Trasformazione MUV 30 Giorni"
+            <UnifiedContactForm 
+              campaign="Trasformazione MUV 30 Giorni"
+              source="form-contatti-page"
               onSuccess={handleSuccess}
+              enableAIData={true}
             />
 
             <div className="text-center mt-8">

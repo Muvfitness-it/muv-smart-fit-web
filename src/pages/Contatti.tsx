@@ -1,5 +1,5 @@
 import ContactInfo from "@/components/contact/ContactInfo";
-import MUVContactForm from "@/components/contact/MUVContactForm";
+import { UnifiedContactForm } from "@/features/forms";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
@@ -78,9 +78,11 @@ const Contatti = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
-            <MUVContactForm 
-              campaignName="Contatti MUV Fitness"
+            <UnifiedContactForm 
+              campaign="Contatti MUV Fitness"
+              source="contatti-page"
               className="lg:col-span-1"
+              enableAIData={true}
             />
             <ContactInfo />
           </div>

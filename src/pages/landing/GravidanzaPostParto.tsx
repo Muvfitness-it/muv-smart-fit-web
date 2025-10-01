@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Heart, Baby, Shield, Clock, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MUVContactForm from '@/components/contact/MUVContactForm';
+import { UnifiedContactForm } from '@/features/forms';
 
 const GravidanzaPostParto = () => {
   const benefici = [
@@ -307,9 +307,11 @@ const GravidanzaPostParto = () => {
               </div>
             </div>
 
-            <MUVContactForm 
-              campaignName="Gravidanza e Post-Parto MUV"
+            <UnifiedContactForm 
+              campaign="Gravidanza e Post-Parto MUV"
+              source="landing-gravidanza"
               defaultObjective="Fitness per gravidanza/post-parto"
+              enableAIData={true}
             />
 
             <div className="text-center mt-8">

@@ -7,7 +7,7 @@ import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
 import PerformanceOptimizer from '@/features/performance';
 import { getLocalBusinessSchema, getOrganizationSchema, getWebSiteSchema, getFAQSchema } from '@/utils/seoSchemas';
 import LeadMagnet from '@/components/leadmagnet/LeadMagnet';
-import EnhancedContactForm from '@/components/forms/EnhancedContactForm';
+import { UnifiedContactForm } from '@/features/forms';
 
 const HomeUltraConversion = () => {
   useEffect(() => {
@@ -590,12 +590,11 @@ const HomeUltraConversion = () => {
                 
                 <Card className="p-8">
                   <CardContent className="p-0">
-                    <EnhancedContactForm 
-                      campaignName="Homepage Contact Form"
+                    <UnifiedContactForm 
+                      campaign="Homepage Contact Form"
                       source="homepage"
                       title="Prenota la Tua Prova Gratuita"
                       subtitle="Zero impegno. Ti richiamiamo entro 24 ore."
-                      showProgress={true}
                       className="max-w-md mx-auto"
                     />
                   </CardContent>

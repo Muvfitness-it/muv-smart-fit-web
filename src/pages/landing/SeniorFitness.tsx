@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Heart, Shield, Clock, Star, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MUVContactForm from '@/components/contact/MUVContactForm';
+import { UnifiedContactForm } from '@/features/forms';
 
 const SeniorFitness = () => {
   const benefici = [
@@ -340,9 +340,11 @@ const SeniorFitness = () => {
               </div>
             </div>
 
-            <MUVContactForm 
-              campaignName="Senior Fitness MUV"
+            <UnifiedContactForm 
+              campaign="Senior Fitness MUV"
+              source="landing-senior"
               defaultObjective="Fitness over 65 e ginnastica dolce"
+              enableAIData={true}
             />
 
             <div className="text-center mt-8">

@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Clock, Target, Users, CheckCircle, Phone, MapPin } from 'lucide-react';
-import EnhancedContactForm from '@/components/forms/EnhancedContactForm';
+import { UnifiedContactForm } from '@/features/forms';
 
 const ProvaGratuitaEMS = () => {
   const structuredData = {
@@ -135,12 +135,11 @@ const ProvaGratuitaEMS = () => {
                 </Badge>
               </div>
 
-              <EnhancedContactForm 
-                campaignName="Prova Gratuita EMS Legnago"
+              <UnifiedContactForm 
+                campaign="Prova Gratuita EMS Legnago"
                 source="landing-ems"
                 title="Prenota la Tua Prova Gratuita EMS"
                 subtitle="Zero impegno. Ti richiamiamo entro 24 ore."
-                showProgress={true}
               />
 
               <div className="mt-6 text-center text-sm text-gray-500">
