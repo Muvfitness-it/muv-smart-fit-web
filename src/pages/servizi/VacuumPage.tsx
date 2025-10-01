@@ -1,6 +1,6 @@
 import React from 'react';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { ServiceHeroSection } from '@/components/layouts/ServiceHeroSection';
+import { FlexibleHero } from '@/features/hero';
 import { ServiceCTASection } from '@/components/layouts/ServiceCTASection';
 import { ServiceFAQSection } from '@/components/layouts/ServiceFAQSection';
 import { Card, CardContent } from '@/components/ui/card';
@@ -93,11 +93,12 @@ const VacuumPage = () => {
       canonical="https://www.muvfitness.it/servizi/vacuum"
       structuredData={structuredData}
     >
-      <ServiceHeroSection
+      <FlexibleHero
+        variant="service"
         title="Vacuum Pressoterapia a Legnago"
         subtitle="Drenaggio Linfatico e Benessere per le Tue Gambe"
         description="Ritrova gambe leggere e toniche con la vacuum pressoterapia. Elimina ritenzione idrica, cellulite e migliora la circolazione con trattamenti piacevoli e rilassanti."
-        primaryButton={{
+        primaryCTA={{
           text: "Prenota Consulenza Gratuita",
           href: "#prenota"
         }}

@@ -7,6 +7,14 @@
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import React from 'react';
 
 export type HeroVariant = 'fullscreen' | 'compact' | 'service' | 'landing';
 export type HeroOverlay = 'gradient' | 'dark' | 'light' | 'none';
@@ -21,6 +29,11 @@ interface CTAButton {
 interface TrustIndicator {
   icon?: LucideIcon;
   text: string;
+}
+
+interface Breadcrumb {
+  text: string;
+  href?: string;
 }
 
 export interface FlexibleHeroProps {
@@ -43,6 +56,9 @@ export interface FlexibleHeroProps {
   trustIndicators?: TrustIndicator[];
   guarantee?: string;
   urgency?: string;
+  
+  // Breadcrumbs
+  breadcrumbs?: Breadcrumb[];
   
   // Styling
   className?: string;
@@ -95,6 +111,7 @@ export const FlexibleHero: React.FC<FlexibleHeroProps> = ({
   trustIndicators = [],
   guarantee,
   urgency,
+  breadcrumbs,
   className,
   contentClassName,
   animated = true
@@ -140,6 +157,32 @@ export const FlexibleHero: React.FC<FlexibleHeroProps> = ({
           contentClassName
         )}>
           <div className="max-w-5xl mx-auto text-center">
+            
+            {/* Breadcrumbs (optional) */}
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <Breadcrumb className="mb-6 flex justify-center">
+                <BreadcrumbList>
+                  {breadcrumbs.map((crumb, index) => (
+                    <React.Fragment key={index}>
+                      <BreadcrumbItem>
+                        {crumb.href ? (
+                          <BreadcrumbLink asChild>
+                            <Link to={crumb.href} className="text-white/80 hover:text-white">
+                              {crumb.text}
+                            </Link>
+                          </BreadcrumbLink>
+                        ) : (
+                          <span className="text-white">{crumb.text}</span>
+                        )}
+                      </BreadcrumbItem>
+                      {index < breadcrumbs.length - 1 && (
+                        <BreadcrumbSeparator className="text-white/60" />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </BreadcrumbList>
+              </Breadcrumb>
+            )}
             
             {/* Subtitle (optional) */}
             {subtitle && (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { ServiceHeroSection } from '@/components/layouts/ServiceHeroSection';
+import { FlexibleHero } from '@/features/hero';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Award, Heart, Target, Users, Star } from 'lucide-react';
@@ -58,15 +58,16 @@ const ChiSiamoNew = () => {
       canonical="https://www.muvfitness.it/chi-siamo"
       structuredData={structuredData}
     >
-      <ServiceHeroSection
+      <FlexibleHero
+        variant="service"
         title="Chi Siamo"
         subtitle="Il Team MUV Fitness Legnago"
         description="Professionisti qualificati uniti dalla passione per il benessere. Scopri chi c'è dietro il Metodo MUV e la nostra filosofia centrata su tecnologia, personalizzazione e risultati."
-        primaryButton={{
+        primaryCTA={{
           text: "Scopri i Servizi",
           href: "/servizi"
         }}
-        secondaryButton={{
+        secondaryCTA={{
           text: "Prenota Consulenza",
           href: "#prenota"
         }}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { ServiceHeroSection } from '@/components/layouts/ServiceHeroSection';
+import { FlexibleHero } from '@/features/hero';
 import { ServiceCTASection } from '@/components/layouts/ServiceCTASection';
 import { ServiceFAQSection } from '@/components/layouts/ServiceFAQSection';
 import { Card, CardContent } from '@/components/ui/card';
@@ -102,11 +102,12 @@ const NutrizionePage = () => {
       canonical="https://www.muvfitness.it/servizi/nutrizione"
       structuredData={structuredData}
     >
-      <ServiceHeroSection
+      <FlexibleHero
+        variant="service"
         title="Consulenza Nutrizionale a Legnago"
         subtitle="Il Tuo Percorso Verso un'Alimentazione Consapevole"
         description="Raggiungi i tuoi obiettivi con piani alimentari personalizzati. La nostra nutrizionista ti guida verso un rapporto sano e duraturo con il cibo."
-        primaryButton={{
+        primaryCTA={{
           text: "Prenota Consulenza",
           href: "#prenota"
         }}

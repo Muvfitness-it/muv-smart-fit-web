@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Apple, CheckCircle, Brain, Heart, TrendingUp, Users, Target } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
+import { FlexibleHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
@@ -55,15 +55,15 @@ const Nutrizione = () => {
         canonical=""
         structuredData={null}
       >
-        <ServiceHeroSection
+        <FlexibleHero
+          variant="service"
           title="Nutrizionista Legnago"
           description="Alimentazione personalizzata per raggiungere i tuoi obiettivi di salute e forma fisica"
-          primaryButton={{
+          primaryCTA={{
             text: "Consulenza Gratuita",
-            href: `https://wa.me/393291070374?text=${whatsappMessage}`,
-            isExternal: true
+            href: `https://wa.me/393291070374?text=${whatsappMessage}`
           }}
-          secondaryButton={{
+          secondaryCTA={{
             text: "Contattaci",
             href: "/contatti"
           }}

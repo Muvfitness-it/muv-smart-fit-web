@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, CheckCircle, User, Shield, Target } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
+import { FlexibleHero } from "@/features/hero";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import PancafitInfographic from "@/components/infographics/PancafitInfographic";
 
@@ -32,15 +32,15 @@ const Pancafit = () => {
         structuredData={structuredData}
         keywords="pancafit Legnago, mal di schiena, postura, riallineamento, dolori cronici"
       >
-        <ServiceHeroSection
+        <FlexibleHero
+          variant="service"
           title="Pancafit per Mal di Schiena"
           description="95% di successo nell'eliminare i dolori cronici e riallineare la postura"
-          primaryButton={{
+          primaryCTA={{
             text: "Prenota Valutazione Posturale",
-            href: `https://wa.me/393291070374?text=${whatsappMessage}`,
-            isExternal: true
+            href: `https://wa.me/393291070374?text=${whatsappMessage}`
           }}
-          secondaryButton={{
+          secondaryCTA={{
             text: "Contattaci",
             href: "/contatti"
           }}
@@ -50,6 +50,7 @@ const Pancafit = () => {
             { text: "Pancafit" }
           ]}
         />
+
 
         {/* Infografica Pancafit */}
         <section className="py-16">

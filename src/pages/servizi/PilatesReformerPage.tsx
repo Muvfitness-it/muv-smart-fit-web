@@ -1,6 +1,6 @@
 import React from 'react';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { ServiceHeroSection } from '@/components/layouts/ServiceHeroSection';
+import { FlexibleHero } from '@/features/hero';
 import { ServiceCTASection } from '@/components/layouts/ServiceCTASection';
 import { ServiceFAQSection } from '@/components/layouts/ServiceFAQSection';
 import { Card, CardContent } from '@/components/ui/card';
@@ -93,11 +93,12 @@ const PilatesReformerPage = () => {
       canonical="https://www.muvfitness.it/servizi/pilates-reformer"
       structuredData={structuredData}
     >
-      <ServiceHeroSection
+      <FlexibleHero
+        variant="service"
         title="Pilates Reformer a Legnago"
         subtitle="Rivoluziona la Tua Postura e il Tuo Benessere"
         description="Scopri il potere trasformativo del Pilates Reformer: postura perfetta, core forte e movimenti fluidi. Il metodo più efficace per il benessere della tua schiena."
-        primaryButton={{
+        primaryCTA={{
           text: "Prenota Lezione di Prova",
           href: "#prenota"
         }}

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HandHeart, CheckCircle, Sparkles, Heart, Zap, Shield } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { ServiceHeroSection } from "@/components/layouts/ServiceHeroSection";
+import { FlexibleHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
@@ -55,15 +55,15 @@ const Massoterapia = () => {
         structuredData={null}
         keywords=""
       >
-        <ServiceHeroSection
+        <FlexibleHero
+          variant="service"
           title="Massoterapia e Benessere"
           description="Recupero muscolare, rilassamento profondo e benessere totale per corpo e mente"
-          primaryButton={{
+          primaryCTA={{
             text: "Prenota Massaggio",
-            href: `https://wa.me/393291070374?text=${whatsappMessage}`,
-            isExternal: true
+            href: `https://wa.me/393291070374?text=${whatsappMessage}`
           }}
-          secondaryButton={{
+          secondaryCTA={{
             text: "Contattaci",
             href: "/contatti"
           }}
