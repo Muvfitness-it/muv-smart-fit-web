@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // New MUV Components
-import TransformHeroSection from '@/components/home/TransformHeroSection';
+import { FlexibleHero } from '@/features/hero';
 import AIAssistantSection from '@/components/home/AIAssistantSection';
-
-// Essential SEO
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
 import { getLocalBusinessSchema, getOrganizationSchema, getWebSiteSchema } from '@/utils/seoSchemas';
-
-// Performance optimization
-import SafeResourceOptimizer from '@/components/optimization/SafeResourceOptimizer';
+import PerformanceOptimizer from '@/features/performance';
 
 const IndexNew = () => {
   const [showFullContent, setShowFullContent] = useState(false);
 
+  const scrollToForm = () => {
+    const formElement = document.getElementById('contact-form');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    // Delay showing additional content for better LCP
     const timer = setTimeout(() => setShowFullContent(true), 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -29,7 +31,7 @@ const IndexNew = () => {
 
   return (
     <>
-      <SafeResourceOptimizer />
+      <PerformanceOptimizer />
       
       <UnifiedSEOHead
         title="MUV Fitness Legnago – Trasforma il Tuo Corpo in 30 Giorni"
@@ -41,7 +43,17 @@ const IndexNew = () => {
 
       <div className="min-h-screen bg-background">
         {/* Hero Section - Above the fold */}
-        <TransformHeroSection />
+        <FlexibleHero
+          variant="landing"
+          title="TRASFORMA IL TUO CORPO IN 30 GIORNI"
+          subtitle="🔥 PERDI FINO A 15KG CON IL METODO SCIENTIFICO MUV"
+          primaryCTA={{
+            text: "PRENOTA CONSULENZA GRATUITA",
+            onClick: scrollToForm
+          }}
+          guarantee="✅ Garanzia Soddisfatti o Rimborsati al 100%"
+          urgency="ULTIMI 3 POSTI DISPONIBILI A QUESTO PREZZO!"
+        />
 
         {/* Quick Services Preview */}
         <section className="section-padding bg-gradient-to-r from-muted/30 to-background">

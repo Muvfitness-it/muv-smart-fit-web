@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LandingTemplate from './LandingTemplate';
-import LandingHero from '@/components/landing/LandingHero';
+import { FlexibleHero } from '@/features/hero';
 import LandingBeforeAfter from '@/components/landing/LandingBeforeAfter';
 import LandingCountdown from '@/components/landing/LandingCountdown';
 import LandingForm from '@/components/landing/LandingForm';
@@ -79,11 +79,14 @@ const Trasformazione30Giorni = () => {
       keywords="dimagrire velocemente, perdere peso 30 giorni, MUV Legnago, fitness risultati garantiti"
       campaignName="trasformazione-30-giorni"
     >
-      <LandingHero
-        headline="TRASFORMA IL TUO CORPO IN 30 GIORNI"
-        subheadline="🔥 PERDI FINO A 15KG CON IL METODO SCIENTIFICO MUV • ✅ RISULTATI GARANTITI O RIMBORSO TOTALE"
-        ctaText="PRENOTA CONSULENZA GRATUITA"
-        onCtaClick={scrollToForm}
+      <FlexibleHero
+        variant="landing"
+        title="TRASFORMA IL TUO CORPO IN 30 GIORNI"
+        subtitle="🔥 PERDI FINO A 15KG CON IL METODO SCIENTIFICO MUV • ✅ RISULTATI GARANTITI O RIMBORSO TOTALE"
+        primaryCTA={{
+          text: "PRENOTA CONSULENZA GRATUITA",
+          onClick: scrollToForm
+        }}
         guarantee="✅ Garanzia Soddisfatti o Rimborsati al 100%"
         urgency="ULTIMI 3 POSTI DISPONIBILI A QUESTO PREZZO!"
       />

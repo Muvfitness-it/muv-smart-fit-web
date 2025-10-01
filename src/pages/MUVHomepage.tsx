@@ -1,13 +1,14 @@
-// Homepage MUV - Landing Page Completa
 import { Helmet } from 'react-helmet';
-import MUVNavigation from '@/components/navigation/MUVNavigation';
-import MUVHeroSection from '@/components/home/MUVHeroSection';
-import MUVValoriSection from '@/components/home/MUVValoriSection';
-import MUVServiziSection from '@/components/home/MUVServiziSection';
-import MUVTestimonialsSection from '@/components/home/MUVTestimonialsSection';
-import MUVTeamSection from '@/components/home/MUVTeamSection';
-import MUVCTAFinaleSection from '@/components/home/MUVCTAFinaleSection';
-import MUVFooter from '@/components/home/MUVFooter';
+import {
+  MUVNavigation,
+  MUVHeroSection,
+  MUVValoriSection,
+  MUVServiziSection,
+  MUVTestimonialsSection,
+  MUVTeamSection,
+  MUVCTAFinaleSection,
+  MUVFooter
+} from '@/features/sections';
 
 const MUVHomepage = () => {
   return (
@@ -19,43 +20,13 @@ const MUVHomepage = () => {
         <link rel="canonical" href="https://www.muvfitness.it/" />
       </Helmet>
 
-      {/* Navigazione Sticky */}
       <MUVNavigation />
-      
-      {/* Hero Section */}
       <MUVHeroSection />
-      
-      {/* Spazio 40px */}
-      <div style={{ height: '40px' }} />
-      
-      {/* Sezione Valori & Mission */}
       <MUVValoriSection />
-      
-      {/* Spazio 40px */}
-      <div style={{ height: '40px' }} />
-      
-      {/* Sezione Servizi */}
       <MUVServiziSection />
-      
-      {/* Spazio 40px */}
-      <div style={{ height: '40px' }} />
-      
-      {/* Sezione Storie & Testimonianze */}
       <MUVTestimonialsSection />
-      
-      {/* Spazio 40px */}
-      <div style={{ height: '40px' }} />
-      
-      {/* Sezione Team */}
       <MUVTeamSection />
-      
-      {/* Spazio 40px */}
-      <div style={{ height: '40px' }} />
-      
-      {/* Sezione CTA Finale */}
       <MUVCTAFinaleSection />
-      
-      {/* Footer */}
       <MUVFooter />
     </>
   );

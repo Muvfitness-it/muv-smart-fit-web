@@ -4,7 +4,7 @@ import { Heart, Target, Shield, ArrowRight, Phone, MessageSquare, Clock, Star, M
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
-import SafeResourceOptimizer from '@/components/optimization/SafeResourceOptimizer';
+import PerformanceOptimizer from '@/features/performance';
 import { getLocalBusinessSchema, getOrganizationSchema, getWebSiteSchema, getFAQSchema } from '@/utils/seoSchemas';
 import LeadMagnet from '@/components/leadmagnet/LeadMagnet';
 import EnhancedContactForm from '@/components/forms/EnhancedContactForm';
@@ -60,7 +60,7 @@ const HomeUltraConversion = () => {
 
   return (
     <>
-      <SafeResourceOptimizer />
+      <PerformanceOptimizer />
       
       <UnifiedSEOHead
         title="Dimagrisci con la tecnologia più avanzata a Legnago | MUV Fitness"

@@ -10,7 +10,7 @@ import React, { useEffect, lazy, Suspense } from "react";
 
 import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
-import LCPOptimizer from "@/components/optimization/LCPOptimizer";
+import PerformanceOptimizer from "@/features/performance";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import LandingPageOptimizer from "./components/landing/LandingPageOptimizer";
