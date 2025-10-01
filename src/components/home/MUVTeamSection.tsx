@@ -1,4 +1,3 @@
-// Sezione Chi Siamo / Team - MUV Fitness
 import OptimizedImage from '@/components/ui/OptimizedImage';
 
 const MUVTeamSection = () => {
@@ -18,46 +17,22 @@ const MUVTeamSection = () => {
   ];
 
   return (
-    <section className="py-20" style={{ backgroundColor: '#F9FAFB' }}>
+    <section className="section-light section-padding">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           
-          {/* Titolo */}
-          <h2 
-            className="text-center mb-6"
-            style={{ 
-              fontFamily: 'Poppins', 
-              fontSize: '42px', 
-              fontWeight: '700', 
-              color: '#1E3A8A' 
-            }}
-          >
+          <h2 className="text-heading-lg text-center mb-6">
             Il nostro team
           </h2>
           
-          {/* Testo descrittivo */}
-          <p 
-            className="text-center mb-16 mx-auto"
-            style={{ 
-              fontFamily: 'Poppins', 
-              fontSize: '18px', 
-              fontWeight: '400', 
-              color: '#374151',
-              maxWidth: '700px',
-              lineHeight: '1.8'
-            }}
-          >
+          <p className="text-body-lg text-center mb-16 mx-auto max-w-3xl">
             Siamo trainer e coach appassionati, specializzati in programmi EMS e motivazione personalizzata. Per noi ogni percorso è unico, proprio come te.
           </p>
           
-          {/* Team Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {team.map((member, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
-                <div style={{ aspectRatio: '16/12' }} className="overflow-hidden">
+              <div key={index} className="card-team">
+                <div className="aspect-[16/12] overflow-hidden">
                   <OptimizedImage
                     src={member.image}
                     alt={`${member.name} - ${member.role}`}
@@ -65,38 +40,13 @@ const MUVTeamSection = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 
-                    className="mb-1"
-                    style={{ 
-                      fontFamily: 'Poppins', 
-                      fontSize: '24px', 
-                      fontWeight: '700', 
-                      color: '#1E3A8A' 
-                    }}
-                  >
+                  <h3 className="text-heading-sm mb-1">
                     {member.name}
                   </h3>
-                  <p 
-                    className="mb-4"
-                    style={{ 
-                      fontFamily: 'Poppins', 
-                      fontSize: '16px', 
-                      fontWeight: '500', 
-                      color: '#10B981' 
-                    }}
-                  >
+                  <p className="text-lg font-medium text-secondary mb-4">
                     {member.role}
                   </p>
-                  <p 
-                    className="italic"
-                    style={{ 
-                      fontFamily: 'Poppins', 
-                      fontSize: '16px', 
-                      fontWeight: '400', 
-                      color: '#374151',
-                      lineHeight: '1.6'
-                    }}
-                  >
+                  <p className="text-body-md italic">
                     "{member.quote}"
                   </p>
                 </div>

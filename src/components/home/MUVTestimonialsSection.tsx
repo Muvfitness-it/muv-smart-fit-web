@@ -1,4 +1,3 @@
-// Sezione Storie & Testimonianze - MUV Fitness
 import { Quote } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -31,72 +30,40 @@ const MUVTestimonialsSection = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="section-white section-padding">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           
-          {/* Titolo */}
-          <h2 
-            className="text-center mb-16"
-            style={{ 
-              fontFamily: 'Poppins', 
-              fontSize: '42px', 
-              fontWeight: '700', 
-              color: '#1E3A8A' 
-            }}
-          >
+          <h2 className="text-heading-lg text-center mb-16">
             Le storie di chi ha scelto MUV
           </h2>
           
-          {/* Testimonial Rotante */}
-          <div className="relative bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-12 shadow-lg">
+          <div className="card-testimonial relative">
             <Quote 
               size={64} 
-              style={{ color: '#10B981', opacity: 0.2 }} 
-              className="absolute top-6 left-6"
+              className="absolute top-6 left-6 text-secondary opacity-20"
             />
             
             <div className="relative z-10 text-center">
-              <p 
-                className="mb-6 italic"
-                style={{ 
-                  fontFamily: 'Poppins', 
-                  fontSize: '24px', 
-                  fontWeight: '400', 
-                  color: '#1E3A8A',
-                  lineHeight: '1.6'
-                }}
-              >
+              <p className="text-2xl md:text-3xl italic text-primary mb-6 leading-relaxed">
                 "{testimonials[currentIndex].quote}"
               </p>
               
-              <div>
-                <p 
-                  style={{ 
-                    fontFamily: 'Poppins', 
-                    fontSize: '18px', 
-                    fontWeight: '700', 
-                    color: '#1E3A8A' 
-                  }}
-                >
-                  {testimonials[currentIndex].name}, {testimonials[currentIndex].age}
-                </p>
-              </div>
+              <p className="text-lg font-bold text-primary">
+                {testimonials[currentIndex].name}, {testimonials[currentIndex].age}
+              </p>
             </div>
             
-            {/* Indicators */}
             <div className="flex justify-center gap-2 mt-8">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className="transition-all duration-300"
-                  style={{
-                    width: currentIndex === index ? '32px' : '12px',
-                    height: '12px',
-                    borderRadius: '6px',
-                    backgroundColor: currentIndex === index ? '#10B981' : '#CBD5E1'
-                  }}
+                  className={`transition-all duration-300 rounded-full ${
+                    currentIndex === index 
+                      ? 'w-8 h-3 bg-secondary' 
+                      : 'w-3 h-3 bg-muted'
+                  }`}
                   aria-label={`Testimonial ${index + 1}`}
                 />
               ))}

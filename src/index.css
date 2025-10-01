@@ -145,6 +145,65 @@
   .container-width {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  /* Typography utility classes */
+  .text-heading-xl {
+    @apply font-heading text-4xl md:text-5xl font-bold text-primary;
+  }
+
+  .text-heading-lg {
+    @apply font-heading text-3xl md:text-4xl font-bold text-primary;
+  }
+
+  .text-heading-md {
+    @apply font-heading text-2xl md:text-3xl font-bold text-primary;
+  }
+
+  .text-heading-sm {
+    @apply font-heading text-xl md:text-2xl font-semibold text-primary;
+  }
+
+  .text-body-lg {
+    @apply font-body text-lg text-muted-foreground leading-relaxed;
+  }
+
+  .text-body-md {
+    @apply font-body text-base text-muted-foreground leading-relaxed;
+  }
+
+  .text-label {
+    @apply font-body text-sm font-medium text-foreground;
+  }
+
+  .text-footer {
+    @apply font-body text-sm text-muted;
+  }
+
+  /* Section utility classes */
+  .section-light {
+    @apply bg-gray-50;
+  }
+
+  .section-white {
+    @apply bg-white;
+  }
+
+  .section-dark {
+    @apply bg-gray-900 text-white;
+  }
+
+  /* Card utility classes */
+  .card-team {
+    @apply bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .card-testimonial {
+    @apply bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-8 md:p-12 shadow-lg;
+  }
+
+  .card-service {
+    @apply bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-secondary;
+  }
 }
 
 @layer utilities {
