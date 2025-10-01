@@ -3,7 +3,7 @@ import ImageSEO from '@/components/SEO/ImageSEO';
 
 const MUVHeroSection = () => {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: 'calc(100vh - 140px)' }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: 'calc(100vh - 68px)' }}>
       {/* Hero Background - Ottimizzata per SEO */}
       <ImageSEO
         src="/images/fitness-professional-bg.jpg"
@@ -20,8 +20,8 @@ const MUVHeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/70" aria-hidden="true" />
       
       {/* Content Container */}
-      <div className="relative z-10 flex items-center" style={{ minHeight: 'calc(100vh - 140px)' }}>
-        <div className="container mx-auto px-4 py-16">
+      <div className="relative z-10 flex items-center" style={{ minHeight: 'calc(100vh - 68px)' }}>
+        <div className="container mx-auto px-4 py-12">
           <div className="max-w-5xl mx-auto text-center">
             
             {/* Titolo H1 */}

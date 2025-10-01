@@ -72,7 +72,7 @@ const MUVCTAFinaleSection = () => {
 
   if (isSubmitted) {
     return (
-      <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700">
+      <section className="py-16 bg-gradient-to-br from-blue-900 to-blue-700">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-white rounded-2xl p-12 shadow-2xl">
@@ -110,7 +110,7 @@ const MUVCTAFinaleSection = () => {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700">
+    <section className="py-16 bg-gradient-to-br from-blue-900 to-blue-700">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           

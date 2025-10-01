@@ -20,7 +20,7 @@ const MUVTeamSection = () => {
   ];
 
   return (
-    <section className="py-20" style={{ backgroundColor: '#F9FAFB' }}>
+    <section className="py-16" style={{ backgroundColor: '#F9FAFB' }}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           
