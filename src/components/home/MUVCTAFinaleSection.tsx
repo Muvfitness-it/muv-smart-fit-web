@@ -1,25 +1,6 @@
 // Sezione CTA Finale con Form - MUV Fitness
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { z } from 'zod';
-
-// Schema di validazione sicura per il form
-const contactSchema = z.object({
-  nome: z.string()
-    .trim()
-    .min(2, { message: "Il nome deve contenere almeno 2 caratteri" })
-    .max(100, { message: "Il nome non può superare 100 caratteri" })
-    .regex(/^[a-zA-ZàèéìòùÀÈÉÌÒÙ\s'-]+$/, { message: "Il nome contiene caratteri non validi" }),
-  email: z.string()
-    .trim()
-    .email({ message: "Inserisci un indirizzo email valido" })
-    .max(255, { message: "L'email non può superare 255 caratteri" }),
-  telefono: z.string()
-    .trim()
-    .min(8, { message: "Il telefono deve contenere almeno 8 cifre" })
-    .max(20, { message: "Il telefono non può superare 20 caratteri" })
-    .regex(/^[\d\s+()-]+$/, { message: "Il telefono contiene caratteri non validi" })
-});
 
 const MUVCTAFinaleSection = () => {
   const { toast } = useToast();
@@ -33,34 +14,22 @@ const MUVCTAFinaleSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validazione sicura con zod
-    try {
-      const validatedData = contactSchema.parse(formData);
-      
-      // TODO: Inviare i dati validati al backend
-      // await sendToBackend(validatedData);
-      
-      setIsSubmitted(true);
+    // Basic validation
+    if (!formData.nome || !formData.email || !formData.telefono) {
       toast({
-        title: "Richiesta inviata!",
-        description: "Il nostro staff ti contatterà al più presto.",
+        title: "Errore",
+        description: "Compila tutti i campi per continuare",
+        variant: "destructive"
       });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const firstError = error.errors[0];
-        toast({
-          title: "Errore di validazione",
-          description: firstError.message,
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Errore",
-          description: "Si è verificato un errore. Riprova più tardi.",
-          variant: "destructive"
-        });
-      }
+      return;
     }
+
+    // Simulate form submission
+    setIsSubmitted(true);
+    toast({
+      title: "Richiesta inviata!",
+      description: "Il nostro staff ti contatterà al più presto.",
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +41,7 @@ const MUVCTAFinaleSection = () => {
 
   if (isSubmitted) {
     return (
-      <section className="py-16 bg-gradient-to-br from-blue-900 to-blue-700">
+      <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-white rounded-2xl p-12 shadow-2xl">
@@ -110,7 +79,7 @@ const MUVCTAFinaleSection = () => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-900 to-blue-700">
+    <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           

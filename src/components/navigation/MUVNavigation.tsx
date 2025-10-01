@@ -44,23 +44,23 @@ const MUVNavigation = () => {
     { name: "Blog", path: "/blog" },
     { name: "Team", path: "/team" },
     { name: "Contatti", path: "/contatti" },
-    { name: "Prenotazione", path: "/contatti", isButton: true }
+    { name: "Prenotazione", path: "/form-contatti", isButton: true }
   ];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 w-full z-[9999] transition-all duration-300 ${isScrolled ? 'bg-white shadow-md shadow-slate-300/50' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-2">
+        <div className="flex justify-between items-center py-3">
           
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <OptimizedImage
               src={LOGO_URL}
               alt="Logo MUV Fitness Legnago"
-              width={200}
-              height={60}
+              width={180}
+              height={54}
               priority={true}
-              className="h-14 w-auto transition-all duration-300"
+              className="h-12 w-auto transition-all duration-300"
             />
           </Link>
 

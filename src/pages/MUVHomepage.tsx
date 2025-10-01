@@ -1,9 +1,9 @@
 // Homepage MUV - Landing Page Completa
 import { Helmet } from 'react-helmet';
 import MUVNavigation from '@/components/navigation/MUVNavigation';
-import MUVBreadcrumb from '@/components/ui/MUVBreadcrumb';
 import MUVHeroSection from '@/components/home/MUVHeroSection';
 import MUVValoriSection from '@/components/home/MUVValoriSection';
+import MUVEsperienzaSection from '@/components/home/MUVEsperienzaSection';
 import MUVTestimonialsSection from '@/components/home/MUVTestimonialsSection';
 import MUVTeamSection from '@/components/home/MUVTeamSection';
 import MUVCTAFinaleSection from '@/components/home/MUVCTAFinaleSection';
@@ -22,22 +22,35 @@ const MUVHomepage = () => {
       {/* Navigazione Sticky */}
       <MUVNavigation />
       
-      {/* Breadcrumb */}
-      <div className="pt-[68px]">
-        <MUVBreadcrumb items={[{ name: 'Home' }]} />
-      </div>
-      
       {/* Hero Section */}
       <MUVHeroSection />
+      
+      {/* Spazio 40px */}
+      <div style={{ height: '40px' }} />
       
       {/* Sezione Valori & Mission */}
       <MUVValoriSection />
       
+      {/* Spazio 40px */}
+      <div style={{ height: '40px' }} />
+      
+      {/* Sezione Esperienza/Tour */}
+      <MUVEsperienzaSection />
+      
+      {/* Spazio 40px */}
+      <div style={{ height: '40px' }} />
+      
       {/* Sezione Storie & Testimonianze */}
       <MUVTestimonialsSection />
       
+      {/* Spazio 40px */}
+      <div style={{ height: '40px' }} />
+      
       {/* Sezione Team */}
       <MUVTeamSection />
+      
+      {/* Spazio 40px */}
+      <div style={{ height: '40px' }} />
       
       {/* Sezione CTA Finale */}
       <MUVCTAFinaleSection />

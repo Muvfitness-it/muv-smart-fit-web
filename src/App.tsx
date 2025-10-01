@@ -19,7 +19,7 @@ import AIAssistantWidget from "./components/ai/AIAssistantWidget";
 import AIAssistantModal from "./components/ai/AIAssistantModal";
 
 // Critical routes loaded immediately (homepage and essential pages)
-import MUVHomepage from "./pages/MUVHomepage";
+import HomeUltraConversion from "./pages/HomeUltraConversion";
 import ServiziUnified from "./pages/ServiziUnified";
 import NotFound from "./pages/NotFound";
 
@@ -122,7 +122,6 @@ const AppContent = () => {
 
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const isMUVHomepage = location.pathname === '/';
   const [isAIModalOpen, setIsAIModalOpen] = React.useState(false);
   const [aiInitialQuestion, setAiInitialQuestion] = React.useState<string | undefined>();
 
@@ -188,9 +187,6 @@ const AppContent = () => {
             </Suspense>
           } />
 
-          {/* Homepage - NO Navigation/Footer (usa MUVNavigation/MUVFooter interni) */}
-          <Route path="/" element={<MUVHomepage />} />
-
           {/* Regular Pages - WITH Navigation/Footer */}
           <Route path="/*" element={
             <>
@@ -204,6 +200,8 @@ const AppContent = () => {
               <main id="main" className="pt-[var(--header-height)]">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
+                    {/* ===== CORE 5 PAGES - HIGH CONVERSION STRUCTURE ===== */}
+                    <Route path="/" element={<HomeUltraConversion />} />
                     <Route path="/servizi" element={<ServiziUnified />} />
                     <Route path="/servizi/ems" element={<EMSPage />} />
                     <Route path="/servizi/vacuum" element={<VacuumPage />} />

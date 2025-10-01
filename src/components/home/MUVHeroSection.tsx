@@ -1,27 +1,22 @@
 // Hero Section - MUV Fitness Landing
-import ImageSEO from '@/components/SEO/ImageSEO';
-
 const MUVHeroSection = () => {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: 'calc(100vh - 68px)' }}>
-      {/* Hero Background - Ottimizzata per SEO */}
-      <ImageSEO
-        src="/images/fitness-professional-bg.jpg"
-        alt="Centro fitness MUV Fitness Legnago - Sala allenamento moderna con attrezzature professionali"
-        title="Palestra MUV Fitness Legnago"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-        priority={true}
+    <section className="relative min-h-screen w-full overflow-hidden">
+      {/* Hero Background */}
+      <div 
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('/images/fitness-professional-bg.jpg')`,
+        }}
+        aria-hidden="true"
       />
       
       {/* Overlay sfumato blu MUV */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-primary/70" aria-hidden="true" />
       
       {/* Content Container */}
-      <div className="relative z-10 flex items-center" style={{ minHeight: 'calc(100vh - 68px)' }}>
-        <div className="container mx-auto px-4 py-12">
+      <div className="relative z-10 min-h-screen flex items-center">
+        <div className="container mx-auto px-4 py-16">
           <div className="max-w-5xl mx-auto text-center">
             
             {/* Titolo H1 */}
@@ -37,7 +32,7 @@ const MUVHeroSection = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <a 
-                href="/contatti"
+                href="/form-contatti"
                 className="inline-flex items-center justify-center px-8 py-4 transition-all duration-300 hover:opacity-80"
                 style={{ 
                   backgroundColor: '#F97316', 
