@@ -1,13 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import OptimizedImage from "@/components/ui/OptimizedImage";
+
 const LOGO_URL = "/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png";
-const Navigation = () => {
+
+const Navigation = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const [logoSrc, setLogoSrc] = useState<string>(LOGO_URL);
+  
+  const handleLogoError = useCallback(() => {
+    setLogoSrc('/placeholder.svg');
+  }, []);
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -105,7 +112,7 @@ const Navigation = () => {
                 filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)',
                 WebkitFilter: 'drop-shadow(0 0 8px rgba(0,0,0,0.9)) drop-shadow(0 0 4px rgba(255,255,255,0.5)) contrast(1.3) saturate(1.2)'
               }}
-              onError={() => setLogoSrc('/placeholder.svg')}
+              onError={handleLogoError}
             />
           </Link>
 
@@ -228,5 +235,8 @@ const Navigation = () => {
         )}
       </div>
     </nav>;
-};
+});
+
+Navigation.displayName = 'Navigation';
+
 export default Navigation;

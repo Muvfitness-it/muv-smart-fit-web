@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import OptimizedImage from "@/components/ui/OptimizedImage";
+
 const LOGO_URL = "/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png";
 
-const Footer = () => {
+const Footer = memo(() => {
   const [latest, setLatest] = useState<Array<{ title: string; slug: string }>>([]);
   const footerRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
@@ -163,6 +164,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;
