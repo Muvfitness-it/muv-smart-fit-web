@@ -1,3 +1,5 @@
+import heroImage from '@/assets/hero-fitness-professional.jpg';
+
 // Hero Section - MUV Fitness Landing
 const MUVHeroSection = () => {
   return (
@@ -6,7 +8,7 @@ const MUVHeroSection = () => {
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/images/fitness-professional-bg.jpg')`,
+          backgroundImage: `url(${heroImage})`,
         }}
         aria-hidden="true"
       />

@@ -118,7 +118,7 @@ const ServiziUnified = () => {
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-8 mb-16">
               {services.map((service, index) => (
-                <Card key={service.id} className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
+                <Card key={service.id} id={service.id} className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
                   <CardContent className="p-0">
                     {/* Header colorato */}
                     <div className={`bg-gradient-to-br ${service.color} p-6 text-white text-center`}>

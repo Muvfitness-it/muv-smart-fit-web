@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import MUVNavigation from '@/components/navigation/MUVNavigation';
 import MUVHeroSection from '@/components/home/MUVHeroSection';
 import MUVValoriSection from '@/components/home/MUVValoriSection';
-import MUVEsperienzaSection from '@/components/home/MUVEsperienzaSection';
+import MUVServiziSection from '@/components/home/MUVServiziSection';
 import MUVTestimonialsSection from '@/components/home/MUVTestimonialsSection';
 import MUVTeamSection from '@/components/home/MUVTeamSection';
 import MUVCTAFinaleSection from '@/components/home/MUVCTAFinaleSection';
@@ -34,8 +34,8 @@ const MUVHomepage = () => {
       {/* Spazio 40px */}
       <div style={{ height: '40px' }} />
       
-      {/* Sezione Esperienza/Tour */}
-      <MUVEsperienzaSection />
+      {/* Sezione Servizi */}
+      <MUVServiziSection />
       
       {/* Spazio 40px */}
       <div style={{ height: '40px' }} />
