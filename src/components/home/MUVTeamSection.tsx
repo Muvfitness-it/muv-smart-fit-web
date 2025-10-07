@@ -6,7 +6,7 @@ const MUVTeamSection = () => {
       name: "Francesco",
       role: "Responsabile EMS",
       quote: "Motivare e supportare chi sceglie MUV è il mio obiettivo ogni giorno.",
-      image: "/lovable-uploads/francesco-muv.jpg"
+      image: "/lovable-uploads/francesco-muv.png"
     },
     {
       name: "Laura",
