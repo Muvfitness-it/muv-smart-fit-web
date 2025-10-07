@@ -54,7 +54,7 @@ const Team = () => {
     {
       name: "Thomas Gabrieli",
       role: "Personal Trainer Senior",
-      image: "/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png",
+      image: "",
       description:
         "Mi chiamo Thomas, sono Chinesiologo (Laurea Scienze Motorie) e Massoterapista (MCB/ausiliario sanitario). Il mio percorso di studi mi ha portato a sviluppare un approccio basato sull'embodied cognition.",
       specialization: "Massoterapista e Chinesiologo",
