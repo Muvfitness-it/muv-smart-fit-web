@@ -116,10 +116,10 @@ const Team = () => {
                     </div>
                     <div className="space-y-2 sm:space-y-3 lg:space-y-4">
                       <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-bold text-white">{member.name}</h3>
-                      <p className="text-brand-primary font-semibold text-sm sm:text-base lg:text-sm xl:text-base">
+                      <p className="text-pink-400 font-semibold text-sm sm:text-base lg:text-sm xl:text-base">
                         {member.role}
                       </p>
-                      <p className="text-brand-accent font-medium text-xs sm:text-sm lg:text-xs xl:text-sm">
+                      <p className="text-cyan-300 font-medium text-xs sm:text-sm lg:text-xs xl:text-sm">
                         {member.specialization}
                       </p>
                       <p className="text-gray-300 leading-relaxed text-xs sm:text-sm lg:text-sm xl:text-base px-1 sm:px-2">
@@ -132,14 +132,14 @@ const Team = () => {
             </div>
 
             {/* CTA Section */}
-            <div className="mt-12 sm:mt-16 lg:mt-20 text-center bg-gradient-to-r from-brand-primary/20 via-brand-accent/20 to-brand-info/20 p-6 sm:p-8 lg:p-10 rounded-lg border border-brand-primary/30">
+            <div className="mt-12 sm:mt-16 lg:mt-20 text-center bg-gradient-to-r from-gray-800/80 via-gray-700/80 to-gray-800/80 p-6 sm:p-8 lg:p-10 rounded-lg border border-pink-500/40">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-bold text-white mb-4 sm:mb-6 px-2">
                 Scegli il tuo specialista
               </h2>
-              <p className="text-sm sm:text-base lg:text-sm xl:text-base text-gray-300 mb-6 sm:mb-8 px-4 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-sm sm:text-base lg:text-sm xl:text-base text-white mb-6 sm:mb-8 px-4 leading-relaxed max-w-3xl mx-auto">
                 <strong>Ogni trainer ha competenze specifiche.</strong> Durante il check-up gratuito ti assegneremo lo
                 specialista perfetto per i tuoi obiettivi.{" "}
-                <span className="text-brand-primary">Risultati garantiti</span>.
+                <span className="text-pink-400 font-semibold">Risultati garantiti</span>.
               </p>
               <Link to="/contatti">
                 <Button
