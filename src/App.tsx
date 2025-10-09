@@ -6,6 +6,7 @@ import { queryClient } from "@/lib/queryClient";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useSiteVisitTracker } from "./hooks/useSiteVisitTracker";
+import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
 
 import React, { useEffect, lazy, Suspense } from "react";
 
@@ -19,6 +20,7 @@ import LandingPageOptimizer from "./components/landing/LandingPageOptimizer";
 import InternalLinkOptimizer from "./components/seo/InternalLinkOptimizer";
 import AIAssistantWidget from "./components/ai/AIAssistantWidget";
 import AIAssistantModal from "./components/ai/AIAssistantModal";
+import AccessibilityEnhancer from "./components/ui/AccessibilityEnhancer";
 
 // Critical routes loaded immediately (homepage and essential pages)
 import HomeUltraConversion from "./pages/HomeUltraConversion";
@@ -129,6 +131,7 @@ const RouteLoading = () => (
 const AppContent = () => {
   useScrollToTop();
   useSiteVisitTracker();
+  useGoogleAnalytics(); // Track page views
 
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -308,6 +311,7 @@ const AppContent = () => {
           </Routes>
         </div>
         <Suspense fallback={null}>
+          <AccessibilityEnhancer />
           <FloatingCTA />
           <CookieConsent />
           {showAIAssistant && (
