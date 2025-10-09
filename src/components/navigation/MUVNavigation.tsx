@@ -34,6 +34,7 @@ const MUVNavigation = () => {
   }, [isOpen]);
 
   const navItems = [
+    { name: "Home", path: "/" },
     { name: "Metodo", path: "/metodo" },
     { 
       name: "Servizi", 

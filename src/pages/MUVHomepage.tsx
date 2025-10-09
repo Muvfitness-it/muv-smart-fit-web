@@ -1,12 +1,10 @@
 import { Helmet } from 'react-helmet';
-import HeroComponent from '@/components/shared/HeroComponent';
+import { MinimalHero } from '@/features/hero';
 import ProofMetrics from '@/components/shared/ProofMetrics';
 import ServiceCard from '@/components/shared/ServiceCard';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
 import { Target, Heart, Droplet, Flame, Users, Calendar } from 'lucide-react';
-
-import { MUVNavigation, MUVFooter } from '@/features/sections';
 
 const MUVHomepage = () => {
   const servizi = [
@@ -143,12 +141,10 @@ const MUVHomepage = () => {
         </script>
       </Helmet>
 
-      <MUVNavigation />
-      
-      <HeroComponent
+      <MinimalHero
         title="Dimagrimento e Postura a Legnago mediante Tecnologie Avanzate e Approccio Scientifico"
         description="Il protocollo MUV combina EMS, Pilates Reformer e metodologie di riabilitazione posturale per risultati verificabili in 4-8 settimane."
-        variant="gradient"
+        gradient="dual"
         primaryCTA={{
           text: "Prenota la tua Prova Gratuita",
           href: "/contatti"
@@ -259,8 +255,6 @@ const MUVHomepage = () => {
           </div>
         </div>
       </section>
-      
-      <MUVFooter />
     </>
   );
 };
