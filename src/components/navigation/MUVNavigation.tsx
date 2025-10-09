@@ -34,13 +34,13 @@ const MUVNavigation = () => {
   }, [isOpen]);
 
   const navItems = [
-    { name: "Home", path: "/" },
+    { name: "Metodo", path: "/metodo" },
     { name: "Servizi", path: "/servizi" },
-    { name: "Tecnologie", path: "/tecnologie" },
-    { name: "Blog", path: "/blog" },
+    { name: "Risultati", path: "/risultati" },
+    { name: "Prezzi", path: "/prezzi" },
     { name: "Team", path: "/team" },
-    { name: "Contatti", path: "/contatti" },
-    { name: "Prenotazione", path: "/form-contatti", isButton: true }
+    { name: "Blog", path: "/blog" },
+    { name: "Prenota Prova Gratuita", path: "/contatti", isButton: true }
   ];
 
   return (

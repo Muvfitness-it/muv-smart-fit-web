@@ -4,39 +4,39 @@
 
 @layer base {
   :root {
-    /* MUV Fitness Design System - Specifiche Rigorose */
+    /* Brand Colors da Logo MUV */
+    --muv-magenta: 320 85% 45%;
+    --muv-violet: 280 70% 50%;
+    --muv-blue: 220 85% 45%;
+    
     --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
+    --foreground: 220 15% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 220 15% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    
-    /* Specifiche Esatte Colori MUV */
-    --primary: 225 100% 31%; /* Blu logo specifico #1E3A8A */
+    --popover-foreground: 220 15% 15%;
+    --primary: 320 85% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 157 55% 44%; /* Verde supporto #10B981 */
+    --primary-hover: 320 85% 38%;
+    --secondary: 280 70% 50%;
     --secondary-foreground: 0 0% 100%;
-    --accent: 22 89% 52%; /* Arancione CTA #F97316 */
+    --secondary-hover: 280 70% 43%;
+    --accent: 220 85% 45%;
     --accent-foreground: 0 0% 100%;
-    
-    /* Colori neutrali - Specifiche Esatte */
-    --muted: 214 32% 78%; /* Grigio chiaro specifico #CBD5E1 */
-    --muted-foreground: 215 14% 40%; /* Grigio medio per testo secondario */
+    --accent-hover: 220 85% 38%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 15% 40%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%; /* Bordi grigi neutri */
-    --input: 0 0% 97%; /* Background input neutro */
-    --ring: 330 100% 44%; /* Focus ring magenta */
-    
-    /* Chart colors con palette MUV */
-    --chart-1: 330 100% 44%; /* Magenta */
-    --chart-2: 259 100% 50%; /* Viola */
-    --chart-3: 212 100% 50%; /* Blu */
-    --chart-4: 330 80% 65%; /* Magenta chiaro */
-    --chart-5: 259 80% 70%; /* Viola chiaro */
-    
-    --radius: 0.5rem; /* Radius moderato per look professionale */
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 320 85% 45%;
+    --chart-1: 320 85% 45%;
+    --chart-2: 280 70% 50%;
+    --chart-3: 220 85% 45%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
     
     /* Brand Colors MUV - Specifiche Esatte */
     --brand-primary: 225 100% 31%; /* Blu logo #1E3A8A */
