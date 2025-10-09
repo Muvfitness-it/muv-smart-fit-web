@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, CheckCircle, Flower, Flame, Heart, Users } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
@@ -56,10 +56,10 @@ const Pilates = () => {
         structuredData={null}
         keywords=""
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Pilates con Reformer"
           description="Il metodo originale Pilates su macchinari professionali per un corpo tonico e flessibile"
+          gradient="secondary"
           primaryCTA={{
             text: "Prenota Lezione di Prova",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

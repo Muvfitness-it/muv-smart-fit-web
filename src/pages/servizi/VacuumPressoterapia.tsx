@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Droplets, Wind, RotateCw, CheckCircle, Star, Heart, Sparkles } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
@@ -68,10 +68,10 @@ const VacuumPressoterapia = () => {
       >
         <EnhancedFAQSchema faqs={faqs} pageTitle="Vacuum Pressoterapia Roll Legnago - Domande Frequenti" />
         
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Vacuum • Pressoterapia • Roll"
           description="Elimina cellulite e ritenzione idrica con i trattamenti estetici più avanzati"
+          gradient="accent"
           primaryCTA={{
             text: "Prenota Consulenza Gratuita",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

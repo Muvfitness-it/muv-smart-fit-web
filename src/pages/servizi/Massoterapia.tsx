@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HandHeart, CheckCircle, Sparkles, Heart, Zap, Shield } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
@@ -55,10 +55,10 @@ const Massoterapia = () => {
         structuredData={null}
         keywords=""
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Massoterapia e Benessere"
           description="Recupero muscolare, rilassamento profondo e benessere totale per corpo e mente"
+          gradient="secondary"
           primaryCTA={{
             text: "Prenota Massaggio",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

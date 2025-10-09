@@ -4,7 +4,7 @@ import { Zap, Activity, Heart, Waves, Flame, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
-import { FlexibleHero } from '@/features/hero';
+import { MinimalHero } from '@/features/hero';
 
 const ServiziCompleto = () => {
   const servizi = [
@@ -109,12 +109,10 @@ const ServiziCompleto = () => {
         canonicalUrl="https://www.muvfitness.it/servizi"
       />
 
-      <FlexibleHero
-        variant="service"
+      <MinimalHero
         title="I Nostri Servizi"
         description="6 soluzioni specializzate per ogni obiettivo. Tecnologia avanzata, metodi scientifici e supporto personalizzato per risultati garantiti."
-        backgroundImage="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
-        overlay="gradient"
+        gradient="dual"
         primaryCTA={{
           text: "Prenota una Prova Gratuita",
           href: "/form-contatti"

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, TrendingUp, Target, Heart, Flame } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
@@ -55,10 +55,10 @@ const HIIT = () => {
         canonical=""
         structuredData={null}
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Allenamento HIIT Legnago"
           description="Training ad alta intensità per bruciare grassi e migliorare le performance"
+          gradient="accent"
           primaryCTA={{
             text: "Prenota HIIT Gratuito",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

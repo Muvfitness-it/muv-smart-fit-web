@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dumbbell, CheckCircle, Star, Users, Clock, Target } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 
 const PersonalTraining = () => {
@@ -36,10 +36,10 @@ const PersonalTraining = () => {
         structuredData={structuredData}
         keywords="personal training Legnago, allenamento personalizzato, fitness Legnago, dimagrimento, tonificazione muscolare"
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Personal Training Esclusivo"
           description="Risultati garantiti in 30 giorni con allenamenti 1-to-1 completamente personalizzati"
+          gradient="dual"
           primaryCTA={{
             text: "Prenota Prova Gratuita",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

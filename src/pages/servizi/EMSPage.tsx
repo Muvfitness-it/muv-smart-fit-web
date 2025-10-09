@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { FlexibleHero } from '@/features/hero';
+import { MinimalHero } from '@/features/hero';
 import { ServiceCTASection } from '@/components/layouts/ServiceCTASection';
 import { ServiceFAQSection } from '@/components/layouts/ServiceFAQSection';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -85,11 +85,11 @@ const EMSPage = () => {
       canonical="https://www.muvfitness.it/servizi/ems"
       structuredData={structuredData}
     >
-      <FlexibleHero
-        variant="service"
+      <MinimalHero
         title="Allenamento EMS a Legnago"
         subtitle="Elettrostimolazione Muscolare per Risultati Straordinari"
         description="Dimagrisci e tonifica il tuo corpo in tempi record con la tecnologia EMS più avanzata. 45 minuti di allenamento equivalgono a 4 ore di palestra tradizionale."
+        gradient="primary"
         primaryCTA={{
           text: "Prenota Prova Gratuita EMS",
           href: "#prenota"
@@ -99,7 +99,6 @@ const EMSPage = () => {
           { text: "Servizi", href: "/servizi" },
           { text: "EMS" }
         ]}
-        backgroundImage="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
       />
 
       <section className="py-16 bg-muted/30">

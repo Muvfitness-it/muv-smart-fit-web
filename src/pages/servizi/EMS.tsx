@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap, CheckCircle, Clock, Dumbbell, TrendingUp, Heart, Users } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import EnhancedFAQSchema from "@/components/SEO/EnhancedFAQSchema";
@@ -68,10 +68,10 @@ const EMS = () => {
       >
         <EnhancedFAQSchema faqs={faqs} pageTitle="Allenamento EMS Legnago - Domande Frequenti" />
         
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="EMS: Dimagrimento e Tonificazione Accelerati"
           description="L'allenamento EMS (Elettrostimolazione Muscolare) consente di lavorare intensamente su tutti i gruppi muscolari, ottenendo risultati in metà del tempo rispetto a un allenamento tradizionale."
+          gradient="primary"
           primaryCTA={{
             text: "Prenota Prova Gratuita",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

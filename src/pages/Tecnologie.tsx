@@ -4,7 +4,7 @@ import { Zap, Activity, Waves, Target, Heart, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
-import { FlexibleHero } from '@/features/hero';
+import { MinimalHero } from '@/features/hero';
 
 const Tecnologie = () => {
   const tecnologie = [
@@ -109,12 +109,10 @@ const Tecnologie = () => {
         canonicalUrl="https://www.muvfitness.it/tecnologie"
       />
 
-      <FlexibleHero
-        variant="service"
+      <MinimalHero
         title="Le Nostre Tecnologie"
         description="6 tecnologie avanzate per risultati misurabili e garantiti. Ogni strumento è scelto per massimizzare efficacia e sicurezza."
-        backgroundImage="/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
-        overlay="gradient"
+        gradient="accent"
         primaryCTA={{
           text: "Prenota una Prova Gratuita",
           href: "/form-contatti"

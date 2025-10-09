@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, CheckCircle, User, Shield, Target } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 import PancafitInfographic from "@/components/infographics/PancafitInfographic";
 
@@ -32,10 +32,10 @@ const Pancafit = () => {
         structuredData={structuredData}
         keywords="pancafit Legnago, mal di schiena, postura, riallineamento, dolori cronici"
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Pancafit per Mal di Schiena"
           description="95% di successo nell'eliminare i dolori cronici e riallineare la postura"
+          gradient="secondary"
           primaryCTA={{
             text: "Prenota Valutazione Posturale",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

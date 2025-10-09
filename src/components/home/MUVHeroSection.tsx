@@ -1,14 +1,11 @@
-import heroImage from '@/assets/hero-fitness-professional.jpg';
-import { FlexibleHero } from '@/features/hero';
+import { MinimalHero } from '@/features/hero';
 
 const MUVHeroSection = () => {
   return (
-    <FlexibleHero
-      variant="fullscreen"
+    <MinimalHero
       title="Allenati Diversamente a Legnago"
       description="Scopri l'unico ambiente dove benessere, tecnologia e motivazione si incontrano per farti sentire protagonista del tuo cambiamento."
-      backgroundImage={heroImage}
-      overlay="gradient"
+      gradient="dual"
       primaryCTA={{
         text: "Prenota una visita gratuita",
         href: "/form-contatti"
@@ -17,7 +14,6 @@ const MUVHeroSection = () => {
         text: "Scopri la nostra filosofia",
         href: "#valori"
       }}
-      animated={true}
     />
   );
 };

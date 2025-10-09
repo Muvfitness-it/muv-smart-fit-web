@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Clock, Heart, Users, Flower, Star } from "lucide-react";
 import { ServicePageLayout } from "@/components/layouts/ServicePageLayout";
-import { FlexibleHero } from "@/features/hero";
+import { MinimalHero } from "@/features/hero";
 import { ServiceFAQSection } from "@/components/layouts/ServiceFAQSection";
 import { ServiceCTASection } from "@/components/layouts/ServiceCTASection";
 
@@ -71,10 +71,10 @@ const PilatesLegnago = () => {
         structuredData={structuredData}
         keywords="pilates legnago, reformer, matwork, postura, core stability, flessibilità, dolori schiena"
       >
-        <FlexibleHero
-          variant="service"
+        <MinimalHero
           title="Pilates a Legnago"
           description="Reformer e Matwork per postura, core stability e flessibilità. Lezioni individuali o small group con macchinari professionali."
+          gradient="secondary"
           primaryCTA={{
             text: "Prenota Lezione di Prova",
             href: `https://wa.me/393291070374?text=${whatsappMessage}`

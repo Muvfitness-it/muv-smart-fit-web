@@ -1,6 +1,6 @@
 import React from 'react';
 import { ServicePageLayout } from '@/components/layouts/ServicePageLayout';
-import { FlexibleHero } from '@/features/hero';
+import { MinimalHero } from '@/features/hero';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Award, Heart, Target, Users, Star } from 'lucide-react';
@@ -58,11 +58,11 @@ const ChiSiamoNew = () => {
       canonical="https://www.muvfitness.it/chi-siamo"
       structuredData={structuredData}
     >
-      <FlexibleHero
-        variant="service"
+      <MinimalHero
         title="Chi Siamo"
         subtitle="Il Team MUV Fitness Legnago"
         description="Professionisti qualificati uniti dalla passione per il benessere. Scopri chi c'è dietro il Metodo MUV e la nostra filosofia centrata su tecnologia, personalizzazione e risultati."
+        gradient="dual"
         primaryCTA={{
           text: "Scopri i Servizi",
           href: "/servizi"
@@ -75,7 +75,6 @@ const ChiSiamoNew = () => {
           { text: "Home", href: "/" },
           { text: "Chi Siamo" }
         ]}
-        backgroundImage="/lovable-uploads/bfb1580b-26fc-405c-9bf1-79d3a21fc285.png"
       />
 
       {/* La Nostra Storia */}
