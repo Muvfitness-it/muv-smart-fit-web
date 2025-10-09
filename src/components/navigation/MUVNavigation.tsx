@@ -68,6 +68,8 @@ const MUVNavigation = () => {
               width={180}
               height={54}
               priority={true}
+              objectFit="contain"
+              overflowHidden={false}
               className="h-12 w-auto transition-all duration-300"
             />
           </Link>
@@ -93,7 +95,7 @@ const MUVNavigation = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </Link>
-                  <div className="absolute left-0 mt-2 w-64 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-border">
+                  <div className="absolute left-0 top-full z-[10000] w-64 bg-white shadow-xl rounded-lg border border-border opacity-0 scale-95 pointer-events-none transform transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
                     {item.dropdown.map((subItem: { name: string; path: string }) => (
                       <Link
                         key={subItem.name}

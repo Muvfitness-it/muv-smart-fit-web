@@ -1,7 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Heart, Shield, Clock, Star, Activity } from 'lucide-react';
@@ -89,8 +87,6 @@ const RiabilitazioneInfortuni = () => {
         <link rel="canonical" href="https://www.muvfitness.it/riabilitazione-infortuni" />
       </Helmet>
 
-      <Navigation />
-      
       <main className="min-h-screen">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-brand-primary/10 via-background to-brand-secondary/10 pt-[var(--header-height)] pb-16">
@@ -435,8 +431,6 @@ const RiabilitazioneInfortuni = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   );
 };

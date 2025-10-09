@@ -3,8 +3,6 @@ import { Star, Award, TrendingUp, Users, MessageCircle, Phone } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { Card, CardContent } from '@/components/ui/card';
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 const Recensioni = () => {
   const { trackSiteVisit } = useAnalytics();
@@ -96,7 +94,6 @@ const Recensioni = () => {
 
   return (
     <>
-      <Navigation />
       <main className="min-h-screen bg-gray-900">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-gray-900 via-orange-900 to-gray-900 py-16 sm:py-24">
@@ -256,7 +253,6 @@ const Recensioni = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 };

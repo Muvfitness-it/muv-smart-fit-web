@@ -3,8 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
 
@@ -96,7 +94,6 @@ const Risultati = () => {
         structuredData={structuredData}
       />
       
-      <Navigation />
       <div className="min-h-screen bg-background text-foreground">
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
@@ -192,7 +189,6 @@ const Risultati = () => {
           </Card>
         </div>
       </section>
-      <Footer />
     </div>
     </>
   );

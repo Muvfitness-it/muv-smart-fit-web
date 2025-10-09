@@ -1,8 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getOrganizationSchema } from "@/utils/seoSchemas";
@@ -80,7 +78,6 @@ const Team = () => {
 
       <BreadcrumbNavigation />
 
-      <Navigation />
       <div className="min-h-screen bg-background text-foreground">
         <section className="py-8 sm:py-12 lg:py-16 xl:py-20 px-4 sm:px-6 lg:px-8">
           <div className="container mx-auto max-w-7xl">
@@ -153,7 +150,6 @@ const Team = () => {
             </div>
           </div>
         </section>
-        <Footer />
       </div>
     </>
   );

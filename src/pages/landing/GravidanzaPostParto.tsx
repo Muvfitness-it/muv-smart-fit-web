@@ -1,7 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Heart, Baby, Shield, Clock, Star } from 'lucide-react';
@@ -62,8 +60,6 @@ const GravidanzaPostParto = () => {
         <link rel="canonical" href="https://www.muvfitness.it/gravidanza-post-parto" />
       </Helmet>
 
-      <Navigation />
-      
       <main className="min-h-screen">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-brand-primary/10 via-background to-brand-secondary/10 pt-[var(--header-height)] pb-16">
@@ -323,8 +319,6 @@ const GravidanzaPostParto = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   );
 };

@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, CheckCircle, Heart, Zap, Target, TrendingUp } from "lucide-react";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
 
@@ -43,7 +41,6 @@ const SmallGroup = () => {
         structuredData={structuredData}
       />
       
-      <Navigation />
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-600/20 via-gray-900 to-red-600/20">
@@ -248,7 +245,6 @@ const SmallGroup = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
     </>
   );

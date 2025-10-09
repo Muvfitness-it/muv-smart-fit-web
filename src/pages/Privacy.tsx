@@ -1,7 +1,5 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 
@@ -15,7 +13,6 @@ const Privacy = () => {
         noindex={true}
       />
       
-      <Navigation />
       <BreadcrumbNavigation />
     <div className="min-h-screen bg-gray-900 text-white">
       <section className="py-20 px-4">
@@ -158,7 +155,6 @@ const Privacy = () => {
           </Card>
         </div>
       </section>
-      <Footer />
     </div>
     </>
   );
