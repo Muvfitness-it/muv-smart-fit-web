@@ -14,8 +14,8 @@ import FontOptimizer from "@/components/ui/FontOptimizer";
 import CriticalCSS from "@/components/CriticalCSS";
 import PerformanceOptimizer from "@/features/performance";
 import PerformanceMonitor from "@/features/performance/PerformanceMonitor";
-import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
+import MUVNavigation from "./components/navigation/MUVNavigation";
+import MUVFooter from "./components/home/MUVFooter";
 import LandingPageOptimizer from "./components/landing/LandingPageOptimizer";
 import InternalLinkOptimizer from "./components/seo/InternalLinkOptimizer";
 import AIAssistantWidget from "./components/ai/AIAssistantWidget";
@@ -26,6 +26,10 @@ import AccessibilityEnhancer from "./components/ui/AccessibilityEnhancer";
 import HomeUltraConversion from "./pages/HomeUltraConversion";
 import ServiziUnified from "./pages/ServiziUnified";
 import NotFound from "./pages/NotFound";
+
+// New Complete Services Page
+const ServiziCompleto = lazy(() => import("./pages/ServiziCompleto"));
+const Tecnologie = lazy(() => import("./pages/Tecnologie"));
 
 // Lazy load all other routes to reduce initial bundle
 const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
@@ -204,27 +208,28 @@ const AppContent = () => {
           {/* Regular Pages - WITH Navigation/Footer */}
           <Route path="/*" element={
             <>
-              <Navigation />
+              <MUVNavigation />
               <a 
                 href="#main" 
                 className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
               >
                 Salta al contenuto principale
               </a>
-              <main id="main" className="pt-[var(--header-height)]">
+              <main id="main">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
                     {/* ===== NEW MUV STRUCTURE - HOMEPAGE & CORE PAGES ===== */}
                     <Route path="/" element={<MUVHomepage />} />
                     <Route path="/metodo" element={<Metodo />} />
                     <Route path="/prezzi" element={<Prezzi />} />
-                    <Route path="/servizi" element={<ServiziUnified />} />
+                    <Route path="/servizi" element={<ServiziCompleto />} />
+                    <Route path="/tecnologie" element={<Tecnologie />} />
                     
                     {/* ===== NEW SERVICE PAGES - CANONICAL URLs ===== */}
                     <Route path="/servizi/ems-legnago" element={<EMSPage />} />
                     <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerPage />} />
-                    <Route path="/servizi/postura-mal-di-schiena-legnago" element={<Pancafit />} />
-                    <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<VacuumPage />} />
+                    <Route path="/servizi/pancafit-legnago" element={<Pancafit />} />
+                    <Route path="/servizi/vacuum-pressoterapia-legnago" element={<VacuumPage />} />
                     <Route path="/servizi/sauna-infrarossi-legnago" element={<SaunaInfrarossiPage />} />
                     <Route path="/servizi/over-60-legnago" element={<Over60Page />} />
                     
@@ -268,26 +273,24 @@ const AppContent = () => {
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
-                    {/* ===== LEGACY REDIRECTS - Handled by RedirectHandler + explicit fallbacks ===== */}
+                    {/* ===== LEGACY REDIRECTS - Clean up circular redirects ===== */}
                     {/* Old service pages redirect to new canonical URLs */}
-                    <Route path="/servizi/personal-training" element={<Navigate to="/servizi/ems-legnago/" replace />} />
-                    <Route path="/servizi/ems" element={<Navigate to="/servizi/ems-legnago/" replace />} />
-                    <Route path="/servizi/pancafit" element={<Navigate to="/servizi/postura-mal-di-schiena-legnago/" replace />} />
-                    <Route path="/servizi/pilates" element={<Navigate to="/servizi/pilates-reformer-legnago/" replace />} />
-                    <Route path="/servizi/hiit" element={<Navigate to="/servizi/ems-legnago/" replace />} />
-                    <Route path="/servizi/small-group" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/nutrizione" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/psicologo" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/massoterapia" element={<Navigate to="/servizi#vacuum" replace />} />
-                    <Route path="/servizi/vacuum-pressoterapia" element={<Navigate to="/servizi#vacuum" replace />} />
-                    <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<Navigate to="/servizi#vacuum" replace />} />
-                    <Route path="/servizi/nutrizione-psicocoach-legnago" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/personal-trainer-legnago" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/pancafit-postura-legnago" element={<Navigate to="/servizi#pilates" replace />} />
+                    <Route path="/servizi/personal-training" element={<Navigate to="/servizi/ems-legnago" replace />} />
+                    <Route path="/servizi/ems" element={<Navigate to="/servizi/ems-legnago" replace />} />
+                    <Route path="/servizi/pancafit" element={<Navigate to="/servizi/pancafit-legnago" replace />} />
+                    <Route path="/servizi/pilates" element={<Navigate to="/servizi/pilates-reformer-legnago" replace />} />
+                    <Route path="/servizi/hiit" element={<Navigate to="/servizi/ems-legnago" replace />} />
+                    <Route path="/servizi/small-group" element={<Navigate to="/servizi" replace />} />
+                    <Route path="/servizi/psicologo" element={<Navigate to="/servizi" replace />} />
+                    <Route path="/servizi/massoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />
+                    <Route path="/servizi/vacuum-pressoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />
+                    <Route path="/servizi/nutrizione-psicocoach-legnago" element={<Navigate to="/servizi" replace />} />
+                    <Route path="/servizi/personal-trainer-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
+                    <Route path="/servizi/pancafit-postura-legnago" element={<Navigate to="/servizi/pancafit-legnago" replace />} />
                     
-                    {/* SEO city pages → Home with anchor */}
-                    <Route path="/personal-trainer-legnago" element={<Navigate to="/#servizi" replace />} />
-                    <Route path="/allenamento-ems-legnago" element={<Navigate to="/#servizi" replace />} />
+                    {/* SEO city pages → specific services or home */}
+                    <Route path="/personal-trainer-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
+                    <Route path="/allenamento-ems-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
                     <Route path="/pilates-legnago" element={<Navigate to="/#servizi" replace />} />
                     <Route path="/dimagrire-legnago" element={<Navigate to="/#servizi" replace />} />
                     <Route path="/mal-di-schiena-legnago" element={<Navigate to="/#servizi" replace />} />
@@ -305,7 +308,7 @@ const AppContent = () => {
                   </Routes>
                 </Suspense>
               </main>
-              <Footer />
+              <MUVFooter />
             </>
           } />
           </Routes>

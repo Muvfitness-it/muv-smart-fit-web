@@ -35,7 +35,19 @@ const MUVNavigation = () => {
 
   const navItems = [
     { name: "Metodo", path: "/metodo" },
-    { name: "Servizi", path: "/servizi" },
+    { 
+      name: "Servizi", 
+      path: "/servizi",
+      dropdown: [
+        { name: "EMS Training", path: "/servizi/ems-legnago" },
+        { name: "Pilates Reformer", path: "/servizi/pilates-reformer-legnago" },
+        { name: "Postura & Mal di Schiena", path: "/servizi/pancafit-legnago" },
+        { name: "Vacuum & Pressoterapia", path: "/servizi/vacuum-pressoterapia-legnago" },
+        { name: "Sauna Infrarossi", path: "/servizi/sauna-infrarossi-legnago" },
+        { name: "Over 60", path: "/servizi/over-60-legnago" },
+      ]
+    },
+    { name: "Tecnologie", path: "/tecnologie" },
     { name: "Risultati", path: "/risultati" },
     { name: "Prezzi", path: "/prezzi" },
     { name: "Team", path: "/team" },
@@ -69,6 +81,29 @@ const MUVNavigation = () => {
                 >
                   {item.name}
                 </Link>
+              ) : item.dropdown ? (
+                <div key={item.name} className="relative group">
+                  <Link
+                    to={item.path}
+                    className="nav-link flex items-center gap-1"
+                  >
+                    {item.name}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </Link>
+                  <div className="absolute left-0 mt-2 w-64 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-border">
+                    {item.dropdown.map((subItem: { name: string; path: string }) => (
+                      <Link
+                        key={subItem.name}
+                        to={subItem.path}
+                        className="block px-4 py-3 text-foreground hover:bg-primary/10 hover:text-primary transition-colors first:rounded-t-lg last:rounded-b-lg"
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ) : (
                 <Link
                   key={item.name}
@@ -106,6 +141,28 @@ const MUVNavigation = () => {
                     >
                       {item.name}
                     </Link>
+                  ) : item.dropdown ? (
+                    <div key={item.name} className="border-b border-border/20 pb-2 mb-2">
+                      <Link
+                        to={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className="block text-foreground hover:text-primary font-semibold transition-colors py-2 text-center text-lg"
+                      >
+                        {item.name}
+                      </Link>
+                      <div className="pl-4 space-y-2 mt-2">
+                        {item.dropdown.map((subItem: { name: string; path: string }) => (
+                          <Link
+                            key={subItem.name}
+                            to={subItem.path}
+                            onClick={() => setIsOpen(false)}
+                            className="block text-muted-foreground hover:text-primary text-sm transition-colors py-2 text-center"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   ) : (
                     <Link
                       key={item.name}

@@ -193,7 +193,7 @@ export const FlexibleHero: React.FC<FlexibleHeroProps> = ({
             
             {/* Main Title */}
             <h1 className={cn(
-              'text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white',
+              'text-hero-title font-bold leading-tight mb-6 text-white',
               finalAnimated && 'animate-fade-in'
             )}>
               {title}

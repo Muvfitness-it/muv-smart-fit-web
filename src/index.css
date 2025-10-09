@@ -451,13 +451,29 @@
     animation: slow-pan 30s ease-in-out infinite;
   }
   
-  /* Responsive text sizes */
-  .text-responsive-xs { @apply text-sm md:text-base lg:text-lg; }
-  .text-responsive-sm { @apply text-base md:text-lg lg:text-xl; }
-  .text-responsive { @apply text-lg md:text-xl lg:text-2xl; }
-  .text-responsive-lg { @apply text-xl md:text-2xl lg:text-3xl; }
-  .text-responsive-xl { @apply text-2xl md:text-3xl lg:text-4xl; }
-  .text-responsive-2xl { @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl; }
+  /* Responsive text sizes - INCREASED FOR BETTER READABILITY */
+  .text-responsive-xs { @apply text-base md:text-lg lg:text-xl; }
+  .text-responsive-sm { @apply text-lg md:text-xl lg:text-2xl; }
+  .text-responsive { @apply text-xl md:text-2xl lg:text-3xl; }
+  .text-responsive-lg { @apply text-2xl md:text-3xl lg:text-4xl; }
+  .text-responsive-xl { @apply text-3xl md:text-4xl lg:text-5xl; }
+  .text-responsive-2xl { @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl; }
+  
+  /* Hero-specific text sizes - CRITICAL FIX */
+  .text-display {
+    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+    line-height: 1.1;
+  }
+  
+  .text-hero-title {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+    line-height: 1.15;
+  }
+  
+  .text-hero-subtitle {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+    line-height: 1.4;
+  }
   
   /* Skip link for accessibility */
   .skip-link {

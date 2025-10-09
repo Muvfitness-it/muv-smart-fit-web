@@ -49,7 +49,7 @@ export const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({
       </Helmet>
       
       <BreadcrumbNavigation />
-      <main>{children}</main>
+      <main className="pt-20">{children}</main>
     </>
   );
 };
