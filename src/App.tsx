@@ -37,11 +37,18 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 
+// New MUV Pages
+import MUVHomepage from "./pages/MUVHomepage";
+import Metodo from "./pages/Metodo";
+import Prezzi from "./pages/Prezzi";
+
 // New Service Pages
 const EMSPage = lazy(() => import("./pages/servizi/EMSPage"));
 const VacuumPage = lazy(() => import("./pages/servizi/VacuumPage"));
 const PilatesReformerPage = lazy(() => import("./pages/servizi/PilatesReformerPage"));
 const NutrizionePage = lazy(() => import("./pages/servizi/NutrizionePage"));
+const SaunaInfrarossiPage = lazy(() => import("./pages/servizi/SaunaInfrarossiPage"));
+const Over60Page = lazy(() => import("./pages/servizi/Over60Page"));
 
 // Landing Pages
 const ProvaGratuitaEMS = lazy(() => import("./pages/landing/ProvaGratuitaEMS"));
@@ -89,6 +96,9 @@ const DimagrireLegnago = lazy(() => import("./pages/DimagrireLegnago"));
 const MalDiSchienaLegnago = lazy(() => import("./pages/MalDiSchienaLegnago"));
 const MassaggioSportivoLegnago = lazy(() => import("./pages/MassaggioSportivoLegnago"));
 
+
+// SEO Components
+import RedirectHandler from "./components/SEO/RedirectHandler";
 
 // Security and admin components - named imports
 import { AdminRoute } from "@/components/security/AdminRoute";
@@ -144,6 +154,7 @@ const AppContent = () => {
       <SessionSecurity>
         <PerformanceMonitor />
         <SecureDataHandler />
+        <RedirectHandler />
         
         {/* Removed problematic optimization components */}
         <div className="min-h-screen bg-background text-foreground">
@@ -200,25 +211,39 @@ const AppContent = () => {
               <main id="main" className="pt-[var(--header-height)]">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
-                    {/* ===== CORE 5 PAGES - HIGH CONVERSION STRUCTURE ===== */}
-                    <Route path="/" element={<HomeUltraConversion />} />
+                    {/* ===== NEW MUV STRUCTURE - HOMEPAGE & CORE PAGES ===== */}
+                    <Route path="/" element={<MUVHomepage />} />
+                    <Route path="/metodo" element={<Metodo />} />
+                    <Route path="/prezzi" element={<Prezzi />} />
                     <Route path="/servizi" element={<ServiziUnified />} />
-                    <Route path="/servizi/ems" element={<EMSPage />} />
-                    <Route path="/servizi/vacuum" element={<VacuumPage />} />
-                    <Route path="/servizi/pilates-reformer" element={<PilatesReformerPage />} />
+                    
+                    {/* ===== NEW SERVICE PAGES - CANONICAL URLs ===== */}
+                    <Route path="/servizi/ems-legnago" element={<EMSPage />} />
+                    <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerPage />} />
+                    <Route path="/servizi/postura-mal-di-schiena-legnago" element={<Pancafit />} />
+                    <Route path="/servizi/cellulite-vacuum-pressoterapia-legnago" element={<VacuumPage />} />
+                    <Route path="/servizi/sauna-infrarossi-legnago" element={<SaunaInfrarossiPage />} />
+                    <Route path="/servizi/over-60-legnago" element={<Over60Page />} />
+                    
+                    {/* Additional service pages */}
                     <Route path="/servizi/nutrizione" element={<NutrizionePage />} />
+                    
+                    {/* Core pages */}
                     <Route path="/chi-siamo" element={<ChiSiamoNew />} />
                     <Route path="/chi-siamo-legacy" element={<ChiSiamo />} />
                     <Route path="/risultati" element={<Risultati />} />
                     <Route path="/contatti" element={<Contatti />} />
+                    <Route path="/form-contatti" element={<FormContatti />} />
                     <Route path="/team" element={<Team />} />
                     <Route path="/faq" element={<FAQPage />} />
+                    <Route path="/come-arrivare" element={<ComeArrivare />} />
+                    <Route path="/recensioni" element={<Recensioni />} />
                     
                     {/* Landing Pages */}
                     <Route path="/prova-gratuita-ems" element={<ProvaGratuitaEMS />} />
                     <Route path="/prenota" element={<ProvaGratuitaEMS />} />
                     
-                    {/* Legal pages - keep separate */}
+                    {/* Legal pages */}
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/cookie-policy" element={<CookiePolicy />} />
                     
@@ -240,14 +265,13 @@ const AppContent = () => {
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
-                    {/* 301 Redirects - ALL old service pages to unified services */}
-                    <Route path="/servizi/personal-training" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/ems" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/ems-legnago" element={<Navigate to="/servizi#dimagrimento" replace />} />
-                    <Route path="/servizi/pancafit" element={<Navigate to="/servizi#pilates" replace />} />
-                    <Route path="/servizi/pilates" element={<Navigate to="/servizi#pilates" replace />} />
-                    <Route path="/servizi/pilates-reformer-legnago" element={<Navigate to="/servizi#pilates" replace />} />
-                    <Route path="/servizi/hiit" element={<Navigate to="/servizi#dimagrimento" replace />} />
+                    {/* ===== LEGACY REDIRECTS - Handled by RedirectHandler + explicit fallbacks ===== */}
+                    {/* Old service pages redirect to new canonical URLs */}
+                    <Route path="/servizi/personal-training" element={<Navigate to="/servizi/ems-legnago/" replace />} />
+                    <Route path="/servizi/ems" element={<Navigate to="/servizi/ems-legnago/" replace />} />
+                    <Route path="/servizi/pancafit" element={<Navigate to="/servizi/postura-mal-di-schiena-legnago/" replace />} />
+                    <Route path="/servizi/pilates" element={<Navigate to="/servizi/pilates-reformer-legnago/" replace />} />
+                    <Route path="/servizi/hiit" element={<Navigate to="/servizi/ems-legnago/" replace />} />
                     <Route path="/servizi/small-group" element={<Navigate to="/servizi#dimagrimento" replace />} />
                     <Route path="/servizi/nutrizione" element={<Navigate to="/servizi#dimagrimento" replace />} />
                     <Route path="/servizi/psicologo" element={<Navigate to="/servizi#dimagrimento" replace />} />
