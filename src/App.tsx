@@ -119,6 +119,7 @@ const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
 const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
 const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
 const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
+const AdminSmallGroupSchedule = lazy(() => import("./pages/admin/AdminSmallGroupSchedule"));
 
 // Other pages - lazy loaded
 const Recensioni = lazy(() => import("./pages/Recensioni"));
@@ -237,6 +238,7 @@ const AppContent = () => {
                     
                     {/* Additional service pages */}
                     <Route path="/servizi/nutrizione" element={<NutrizionePage />} />
+                    <Route path="/servizi/small-group" element={<Suspense fallback={<RouteLoading />}><SmallGroup /></Suspense>} />
                     
                     {/* Core pages */}
                     <Route path="/chi-siamo" element={<ChiSiamoNew />} />
@@ -274,6 +276,7 @@ const AppContent = () => {
                     <Route path="/admin/blog/new" element={<Navigate to="/admin/blog/create/ai" replace />} />
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
+                    <Route path="/admin/small-group-schedule" element={<AdminRoute><Suspense fallback={<RouteLoading />}><AdminSmallGroupSchedule /></Suspense></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Clean up circular redirects ===== */}
@@ -283,7 +286,6 @@ const AppContent = () => {
                     <Route path="/servizi/pancafit" element={<Navigate to="/servizi/pancafit-legnago" replace />} />
                     <Route path="/servizi/pilates" element={<Navigate to="/servizi/pilates-reformer-legnago" replace />} />
                     <Route path="/servizi/hiit" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/servizi/small-group" element={<Navigate to="/servizi" replace />} />
                     <Route path="/servizi/psicologo" element={<Navigate to="/servizi" replace />} />
                     <Route path="/servizi/massoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />
                     <Route path="/servizi/vacuum-pressoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />

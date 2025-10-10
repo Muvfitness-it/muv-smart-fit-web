@@ -3,11 +3,15 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, CheckCircle, Heart, Zap, Target, TrendingUp } from "lucide-react";
+import { Users, CheckCircle, Heart, Zap, Target, TrendingUp, Activity, Flame, Music, Dumbbell } from "lucide-react";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import { getServiceSchema, getFAQSchema } from "@/utils/seoSchemas";
+import { WeeklySchedulePlanner } from "@/components/small-group/WeeklySchedulePlanner";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 const SmallGroup = () => {
+  const { isAdmin } = useAdminAuth();
+
   const faqs = [
     {
       question: "Quante persone al massimo in un HIIT Small Group?",
@@ -27,17 +31,28 @@ const SmallGroup = () => {
     }
   ];
 
+  const courses = [
+    { name: 'Postural Pilates', icon: Activity, description: 'Pilates posturale per migliorare allineamento e flessibilità', duration: '60 min', level: 'Tutti i livelli' },
+    { name: 'Pancafit', icon: Heart, description: 'Allungamento muscolare globale per benessere e postura', duration: '60 min', level: 'Tutti i livelli' },
+    { name: 'Ginnastica Dolce', icon: Heart, description: 'Esercizi a basso impatto per mobilità e benessere', duration: '60 min', level: 'Principiante' },
+    { name: 'Total Body', icon: Dumbbell, description: 'Allenamento completo per tonificare tutto il corpo', duration: '60 min', level: 'Intermedio' },
+    { name: 'Music Pump', icon: Music, description: 'Workout con bilanciere a ritmo di musica', duration: '60 min', level: 'Intermedio' },
+    { name: 'GAG', icon: Flame, description: 'Gambe, addome e glutei per tonificazione mirata', duration: '60 min', level: 'Tutti i livelli' },
+    { name: 'Funzionale', icon: Target, description: 'Allenamento funzionale per forza e agilità', duration: '60 min', level: 'Intermedio' },
+    { name: 'Tabata', icon: Zap, description: 'HIIT ad alta intensità con intervalli brevi', duration: '45 min', level: 'Avanzato' }
+  ];
+
   const structuredData = [
-    getServiceSchema("HIIT Small Group Legnago", "HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l'energia del gruppo. Cardio, forza e divertimento.", "https://www.muvfitness.it/servizi/small-group"),
+    getServiceSchema("Corsi Small Group Legnago", "Corsi fitness in piccoli gruppi a Legnago: Postural Pilates, Pancafit, Ginnastica Dolce, Total Body, Music Pump, GAG, Funzionale, Tabata. Massimo 12 persone.", "https://www.muvfitness.it/servizi/small-group"),
     getFAQSchema(faqs)
   ];
 
   return (
     <>
       <UnifiedSEOHead
-        title="HIIT Small Group Legnago | Allenamento di Gruppo ad Alta Intensità – MUV Fitness"
-        description="HIIT Small Group a Legnago: massimo 3 persone per sessione. Allenamento ad alta intensità con l'energia del gruppo. Cardio, forza e divertimento."
-        keywords="HIIT small group legnago, allenamento gruppo alta intensità, fitness gruppo verona, hiit motivazionale"
+        title="Corsi Small Group Legnago | Pilates, Pancafit, GAG, Total Body – MUV Fitness"
+        description="Corsi fitness in piccoli gruppi a Legnago: Postural Pilates, Pancafit, Ginnastica Dolce, Total Body, Music Pump, GAG, Funzionale, Tabata. Max 12 persone per attenzione personalizzata."
+        keywords="corsi small group legnago, pilates gruppo legnago, pancafit legnago, gag total body verona, corsi fitness piccoli gruppi"
         structuredData={structuredData}
       />
       
@@ -49,14 +64,14 @@ const SmallGroup = () => {
             <Users className="w-16 h-16 text-orange-600" />
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            HIIT <span className="text-orange-600">Small Group</span>
+            Corsi <span className="text-orange-600">Small Group</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Alta intensità in piccoli gruppi - Massimo 3 persone per l'energia perfetta
+            Allenamenti di gruppo con massimo 12 partecipanti - Attenzione personalizzata e motivazione di gruppo
           </p>
           <Link to="/contatti">
             <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 text-lg rounded-full">
-              Unisciti al Gruppo HIIT
+              Prenota il Tuo Corso
             </Button>
           </Link>
         </div>
@@ -68,96 +83,112 @@ const SmallGroup = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                HIIT con l'<span className="text-orange-600">Energia del Gruppo</span>
+                Allenati con l'<span className="text-orange-600">Energia del Gruppo</span>
               </h2>
               <p className="text-lg text-gray-300 mb-6">
-                Il HIIT Small Group combina l'intensità dell'allenamento ad alta intensità con la motivazione 
-                del gruppo. Con massimo 3 persone per sessione, ogni partecipante riceve attenzione personalizzata 
-                mentre si allena in un ambiente energico e stimolante.
+                I nostri corsi Small Group combinano l'attenzione personalizzata con la motivazione 
+                di gruppo. Con massimo 12 persone per sessione, ogni partecipante riceve la giusta attenzione 
+                mentre si allena in un ambiente energico, stimolante e inclusivo.
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Allenamento HIIT personalizzato</span>
+                  <span>8 tipologie diverse di corsi</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Motivazione extra del gruppo</span>
+                  <span>Attenzione personalizzata (max 12 persone)</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-6 h-6 text-green-400 mr-3 mt-0.5" />
-                  <span>Risultati accelerati</span>
+                  <span>Motivazione e risultati di gruppo</span>
                 </li>
               </ul>
             </div>
             <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold text-center mb-6">Vantaggi Esclusivi</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <Zap className="w-6 h-6 text-orange-500 mr-3" />
-                  <span>Intensità HIIT ottimale</span>
-                </div>
-                <div className="flex items-center">
-                  <Heart className="w-6 h-6 text-red-500 mr-3" />
-                  <span>Cardio e forza combinati</span>
-                </div>
-                <div className="flex items-center">
-                  <Target className="w-6 h-6 text-yellow-400 mr-3" />
-                  <span>Obiettivi di gruppo</span>
-                </div>
-                <div className="flex items-center">
-                  <TrendingUp className="w-6 h-6 text-green-500 mr-3" />
-                  <span>Performance migliorate</span>
-                </div>
+              <h3 className="text-2xl font-bold text-center mb-6">I Nostri Corsi</h3>
+              <div className="space-y-3 text-sm">
+                {courses.map((course, idx) => (
+                  <div key={idx} className="flex items-start gap-3 bg-white/5 p-3 rounded">
+                    <course.icon className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold">{course.name}</div>
+                      <div className="text-gray-400 text-xs">{course.description}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
+          {/* Weekly Schedule */}
+          <section className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+              Orari <span className="text-orange-600">Corsi Settimanali</span>
+            </h2>
+            <p className="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
+              Consulta il nostro planning settimanale aggiornato. Trova il corso perfetto per i tuoi orari!
+            </p>
+            
+            <WeeklySchedulePlanner />
+            
+            <div className="text-center mt-8">
+              <p className="text-sm text-gray-400 mb-4">
+                💡 Vuoi prenotare un corso? Contattaci subito!
+              </p>
+              <Link to="/contatti">
+                <Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700">
+                  Prenota il Tuo Posto
+                </Button>
+              </Link>
+            </div>
+          </section>
+
           {/* Benefits */}
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Perché Scegliere <span className="text-orange-600">HIIT Small Group</span>
+            Perché Scegliere i Nostri <span className="text-orange-600">Corsi Small Group</span>
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-orange-400">Brucia Grassi Massimo</h3>
-                <p className="text-gray-300">Il HIIT in gruppo amplifica l'effetto brucia-grassi, continuando a bruciare calorie per ore dopo l'allenamento.</p>
+                <h3 className="text-xl font-bold mb-3 text-orange-400">Varietà di Allenamenti</h3>
+                <p className="text-gray-300">8 tipologie diverse di corsi per non annoiarsi mai e allenare il corpo in modo completo ed equilibrato.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-red-400">Motivazione Contagiosa</h3>
-                <p className="text-gray-300">L'energia del gruppo ti spinge oltre i tuoi limiti, rendendo ogni sessione una sfida divertente.</p>
+                <h3 className="text-xl font-bold mb-3 text-red-400">Motivazione di Gruppo</h3>
+                <p className="text-gray-300">L'energia del gruppo ti spinge oltre i tuoi limiti, rendendo ogni sessione stimolante e divertente.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-yellow-400">Varietà Continua</h3>
-                <p className="text-gray-300">Ogni sessione è diversa con esercizi sempre nuovi per non annoiarsi mai.</p>
+                <h3 className="text-xl font-bold mb-3 text-yellow-400">Attenzione Personalizzata</h3>
+                <p className="text-gray-300">Con massimo 12 persone, ogni partecipante riceve la corretta attenzione e correzione posturale.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-green-400">Resistenza e Forza</h3>
-                <p className="text-gray-300">Migliora simultaneamente capacità cardiovascolare e forza muscolare.</p>
+                <h3 className="text-xl font-bold mb-3 text-green-400">Per Tutti i Livelli</h3>
+                <p className="text-gray-300">Dai principianti agli avanzati, ogni corso è adattabile al tuo livello di preparazione fisica.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-blue-400">Supporto Sociale</h3>
-                <p className="text-gray-300">Crea legami con persone che condividono la tua passione per le sfide.</p>
+                <h3 className="text-xl font-bold mb-3 text-blue-400">Istruttori Qualificati</h3>
+                <p className="text-gray-300">Team di professionisti certificati che ti guidano con competenza e passione.</p>
               </CardContent>
             </Card>
 
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-purple-400">Tempo Efficiente</h3>
-                <p className="text-gray-300">Massimi risultati in 30-45 minuti di allenamento intenso.</p>
+                <h3 className="text-xl font-bold mb-3 text-purple-400">Orari Flessibili</h3>
+                <p className="text-gray-300">Corsi disponibili in diversi orari della settimana per adattarsi ai tuoi impegni.</p>
               </CardContent>
             </Card>
           </div>

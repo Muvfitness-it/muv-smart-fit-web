@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, FileText, Users, Home } from 'lucide-react';
+import { Calendar, FileText, Users, Home, CalendarClock } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Sidebar,
@@ -17,6 +17,7 @@ import {
 const adminItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Gestione Articoli", url: "/admin/dashboard?tab=articles", icon: FileText },
+  { title: "Orari Small Group", url: "/admin/small-group-schedule", icon: CalendarClock },
   { title: "Gestione Utenti", url: "/admin/utenti", icon: Users },
 ];
 
