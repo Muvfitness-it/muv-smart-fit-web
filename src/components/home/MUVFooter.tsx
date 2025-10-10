@@ -14,7 +14,7 @@ const MUVFooter = () => {
                 MUV Fitness
               </h3>
               <p className="text-muted leading-relaxed">
-                Via Frattini 113/D<br />
+                Piazzetta Don Walter Soave, 2<br />
                 37045 Legnago (VR)
               </p>
             </div>

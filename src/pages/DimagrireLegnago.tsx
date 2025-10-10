@@ -107,7 +107,7 @@ const DimagrireLegnago = () => {
               "name": "MUV Fitness Legnago",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Via Venti Settembre, 5/7",
+                "streetAddress": "Piazzetta Don Walter Soave, 2",
                 "addressLocality": "Legnago",
                 "addressRegion": "Veneto",
                 "postalCode": "37045",
@@ -362,7 +362,7 @@ const DimagrireLegnago = () => {
           </div>
 
           <div className="text-white/80 text-sm">
-            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 329 107 0374
+            📍 Piazzetta Don Walter Soave 2, Legnago (VR) | 📞 +39 329 107 0374
           </div>
         </div>
       </section>

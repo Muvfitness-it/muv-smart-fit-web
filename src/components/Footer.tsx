@@ -59,7 +59,7 @@ const Footer = memo(() => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">Via Venti Settembre, 5/7 Legnago (VR)</span>
+                <span className="text-muted-foreground text-sm">Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary" />

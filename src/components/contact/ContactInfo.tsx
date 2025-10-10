@@ -13,8 +13,8 @@ const ContactInfo = () => {
               <div>
                 <h3 className="font-semibold text-white mb-1">Indirizzo</h3>
                 <p className="text-gray-300">
-                  Via Venti Settembre, 5/7<br />
-                  Legnago, (VR)<br />
+                  Piazzetta Don Walter Soave, 2<br />
+                  37045 Legnago (VR)<br />
                   Italia
                 </p>
               </div>

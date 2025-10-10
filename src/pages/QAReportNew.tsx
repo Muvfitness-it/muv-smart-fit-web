@@ -33,7 +33,7 @@ const QAReportNew = () => {
       items: [
         'Telefono uniformato: +39 329 107 0374 (nuovo numero)',
         'WhatsApp: 393291070374',
-        'Indirizzo: Via Venti Settembre, 5/7 – 37045 Legnago (VR)',
+        'Indirizzo: Piazzetta Don Walter Soave, 2 – 37045 Legnago (VR)',
         'Email: info@muvfitness.it',
         'Orari: Lu–Ve 08:00–21:00; Sa 08:00–12:00; Do chiuso',
         'Aggiornato JSON-LD LocalBusiness schema',

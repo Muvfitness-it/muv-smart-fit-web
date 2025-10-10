@@ -15,7 +15,7 @@ const GlobalSEO = () => {
           "description": "Centro Fitness MUV a Legnago: fitness intelligente con personal training, EMS, Pilates e tecnologie innovative.",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Via Venti Settembre, 5/7",
+            "streetAddress": "Piazzetta Don Walter Soave, 2",
             "addressLocality": "Legnago",
             "addressRegion": "VR",
             "postalCode": "37045",

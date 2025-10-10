@@ -32,7 +32,7 @@ const Privacy = () => {
               <section>
                 <h2 className="text-2xl font-bold mb-4 text-pink-600">1. Titolare del Trattamento</h2>
                 <p className="text-gray-300 leading-relaxed">
-                  Il Titolare del trattamento dei dati personali è <strong>MUV Fitness</strong>, con sede in Via Venti Settembre, 5/7, Legnago (VR), P.IVA: 05281920289.
+                  Il Titolare del trattamento dei dati personali è <strong>MUV Fitness</strong>, con sede in Piazzetta Don Walter Soave, 2 - Legnago (VR), P.IVA: 05281920289.
                   <br />
                   Email: info@muvfitness.it
                   <br />

@@ -121,7 +121,7 @@ const MalDiSchienaLegnago = () => {
             "email": "info@muvfitness.it",
             "address": {
               "@type": "PostalAddress",
-              "streetAddress": "Via Venti Settembre, 5/7",
+              "streetAddress": "Piazzetta Don Walter Soave, 2",
               "addressLocality": "Legnago",
               "addressRegion": "Veneto",
               "postalCode": "37045", 
@@ -424,7 +424,7 @@ const MalDiSchienaLegnago = () => {
           </div>
 
           <div className="text-white/80 text-sm">
-            📍 Via Venti Settembre 5/7, Legnago (VR) | 📞 +39 329 107 0374<br />
+            📍 Piazzetta Don Walter Soave 2, Legnago (VR) | 📞 +39 329 107 0374<br />
             ⏰ Lun-Ven 8:00-21:00 | Sab 8:00-12:00
           </div>
         </div>

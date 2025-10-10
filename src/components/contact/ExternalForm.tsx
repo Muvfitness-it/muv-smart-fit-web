@@ -52,7 +52,7 @@ const ExternalForm = () => {
               <h3 className="text-foreground font-semibold mb-2 text-lg">La Nostra Sede</h3>
               <p className="text-muted-foreground">
                 <strong>MUV Fitness</strong><br/>
-                Via Venti Settembre,5/7<br/>
+                Piazzetta Don Walter Soave, 2<br/>
                 37045 Legnago (VR)<br/>
                 Italia
               </p>

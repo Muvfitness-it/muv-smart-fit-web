@@ -164,8 +164,8 @@ const SEOHandler: React.FC = () => {
       case '/contatti':
         return {
           title: 'Contatti - MUV Smart Fit Legnago | Prenota la tua consulenza gratuita',
-          description: 'Contatta MUV Smart Fit a Legnago per una consulenza gratuita. Via Frattini 25, 37045 Legnago (VR). Tel: 0442 1790080. Siamo qui per aiutarti!',
-          keywords: 'contatti muv legnago, centro fitness legnago telefono, consulenza gratuita fitness, via frattini legnago',
+          description: 'Contatta MUV Smart Fit a Legnago per una consulenza gratuita. Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR). Tel: 329 107 0374. Siamo qui per aiutarti!',
+          keywords: 'contatti muv legnago, centro fitness legnago telefono, consulenza gratuita fitness, piazzetta don walter soave legnago',
           canonical: `${baseUrl}/contatti`,
           ogType: 'website',
           pageType: 'contatti' as const,
@@ -310,8 +310,8 @@ const SEOHandler: React.FC = () => {
         data={{
           name: "MUV Fitness",
           address: {
-            streetAddress: "Via Venti Settembre, 5/7",
-            addressLocality: "Legnago", 
+            streetAddress: "Piazzetta Don Walter Soave, 2",
+            addressLocality: "Legnago",
             addressRegion: "Veneto",
             postalCode: "37045",
             addressCountry: "IT"

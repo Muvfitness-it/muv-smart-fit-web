@@ -610,7 +610,7 @@ const HomeUltraConversion = () => {
                     <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <h4 className="font-semibold text-foreground">Indirizzo</h4>
-                      <p className="text-muted-foreground">Via Venti Settembre, 5/7<br />37045 Legnago (VR)</p>
+                      <p className="text-muted-foreground">Piazzetta Don Walter Soave, 2<br />37045 Legnago (VR)</p>
                     </div>
                   </div>
                   

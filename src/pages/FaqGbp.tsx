@@ -48,7 +48,7 @@ const FaqGbp = () => {
     },
     {
       question: "Parcheggio vicino?",
-      answer: "Siamo in Via Venti Settembre 5/7, zona centrale di Legnago. Parcheggio gratuito disponibile nelle vie limitrofe (Via Matteotti, Via Fatebenefratelli). A piedi dal centro storico in 3 minuti."
+      answer: "Siamo in Piazzetta Don Walter Soave 2, zona centrale di Legnago. Parcheggio gratuito disponibile nelle vie limitrofe (Via Matteotti, Via Fatebenefratelli). A piedi dal centro storico in 3 minuti."
     },
     {
       question: "Quanto costano i percorsi?",

@@ -108,7 +108,7 @@ const AccessibilityEnhancer: React.FC<AccessibilityEnhancerProps> = ({
         <p>
           Centro fitness esclusivo a Legnago specializzato in personal training, 
           tecnologie avanzate EMS, Pilates, HIIT, consulenza nutrizionale e benessere. 
-          Situato in Via Venti Settembre 5/7, serviamo clienti da tutta la Bassa Veronese.
+          Situato in Piazzetta Don Walter Soave 2, serviamo clienti da tutta la Bassa Veronese.
         </p>
       </div>
     </>

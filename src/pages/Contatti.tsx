@@ -10,7 +10,7 @@ const Contatti = () => {
   const faqs = [
     {
       question: "Dove si trova MUV Fitness?",
-      answer: "MUV Fitness si trova in Via Venti Settembre 5/7 a Legnago (VR). Siamo facilmente raggiungibili dal centro città e disponiamo di parcheggio."
+      answer: "MUV Fitness si trova in Piazzetta Don Walter Soave 2 a Legnago (VR). Siamo facilmente raggiungibili dal centro città e disponiamo di parcheggio."
     },
     {
       question: "Quali sono gli orari di apertura?",
@@ -30,9 +30,9 @@ const Contatti = () => {
   return (
     <>
       <UnifiedSEOHead
-        title="Contatti MUV Fitness Legnago | Centro Fitness Via Venti Settembre"
-        description="Contatta MUV Fitness a Legnago: Via Venti Settembre 5/7, tel. 329 107 0374. Consulenza gratuita per EMS, Personal Training, Pilates e Nutrizione."
-        keywords="contatti muv fitness legnago, palestra via venti settembre, centro fitness verona telefono, appuntamento personal trainer"
+        title="Contatti MUV Fitness Legnago | Centro Fitness Piazzetta Don Walter Soave"
+        description="Contatta MUV Fitness a Legnago: Piazzetta Don Walter Soave 2, tel. 329 107 0374. Consulenza gratuita per EMS, Personal Training, Pilates e Nutrizione."
+        keywords="contatti muv fitness legnago, palestra piazzetta don walter soave, centro fitness verona telefono, appuntamento personal trainer"
         structuredData={structuredData}
       />
       
