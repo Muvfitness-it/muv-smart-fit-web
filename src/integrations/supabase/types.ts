@@ -1133,6 +1133,51 @@ export type Database = {
         }
         Relationships: []
       }
+      small_group_schedule: {
+        Row: {
+          color: string | null
+          course_name: string
+          course_type: string
+          created_at: string | null
+          day_of_week: number
+          end_time: string
+          id: string
+          instructor: string | null
+          is_active: boolean | null
+          room: string | null
+          start_time: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          course_name: string
+          course_type: string
+          created_at?: string | null
+          day_of_week: number
+          end_time: string
+          id?: string
+          instructor?: string | null
+          is_active?: boolean | null
+          room?: string | null
+          start_time: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          course_name?: string
+          course_type?: string
+          created_at?: string | null
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          instructor?: string | null
+          is_active?: boolean | null
+          room?: string | null
+          start_time?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       url_redirects: {
         Row: {
           created_at: string
