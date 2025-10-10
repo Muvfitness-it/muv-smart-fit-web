@@ -45,6 +45,7 @@ const MUVNavigation = () => {
         { name: "Postura & Mal di Schiena", path: "/servizi/pancafit-legnago" },
         { name: "Vacuum & Pressoterapia", path: "/servizi/vacuum-pressoterapia-legnago" },
         { name: "Sauna Infrarossi", path: "/servizi/sauna-infrarossi-legnago" },
+        { name: "Corsi Small Group", path: "/servizi/small-group" },
         { name: "Over 60", path: "/servizi/over-60-legnago" },
       ]
     },
