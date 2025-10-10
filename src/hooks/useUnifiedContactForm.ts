@@ -150,11 +150,35 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
 
       if (result.success) {
         setIsSubmitted(true);
+        
+        // GA4 Tracking - Lead Generation
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'generate_lead', {
+            event_category: 'Contact_Form',
+            event_label: formData.obiettivo || 'General_Contact',
+            campaign: options.campaign || 'organic',
+            source: options.source || 'website',
+            value: 1
+          });
+          
+          (window as any).gtag('event', 'conversion', {
+            send_to: 'AW-10873340722/CONVERSION_LABEL',
+            value: 1.0,
+            currency: 'EUR'
+          });
+        }
+        
         toast({
           title: "Successo!",
           description: result.message || "Richiesta inviata con successo",
         });
+        
         options.onSuccess?.();
+        
+        // Redirect to thank you page after 1.5 seconds
+        setTimeout(() => {
+          window.location.href = '/grazie';
+        }, 1500);
       } else {
         throw new Error(result.error || 'Errore durante l\'invio');
       }

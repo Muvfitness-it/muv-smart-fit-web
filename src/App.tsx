@@ -124,6 +124,7 @@ const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateMa
 const Recensioni = lazy(() => import("./pages/Recensioni"));
 const FaqGbp = lazy(() => import("./pages/FaqGbp"));
 const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
+const Grazie = lazy(() => import("./pages/Grazie"));
 
 // Loading component for lazy routes
 const RouteLoading = () => (
@@ -242,6 +243,7 @@ const AppContent = () => {
                     <Route path="/chi-siamo-legacy" element={<ChiSiamo />} />
                     <Route path="/risultati" element={<Risultati />} />
                     <Route path="/contatti" element={<Contatti />} />
+                    <Route path="/grazie" element={<Suspense fallback={<RouteLoading />}><Grazie /></Suspense>} />
                     <Route path="/form-contatti" element={<FormContatti />} />
                     <Route path="/team" element={<Team />} />
                     <Route path="/faq" element={<FAQPage />} />

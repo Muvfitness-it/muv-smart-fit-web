@@ -17,7 +17,7 @@ export const getLocalBusinessSchema = () => ({
   "email": "info@muvfitness.it",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Via Venti Settembre, 5/7",
+    "streetAddress": "Piazzetta Don Walter Soave, 2",
     "addressLocality": "Legnago",
     "addressRegion": "Veneto",
     "postalCode": "37045",

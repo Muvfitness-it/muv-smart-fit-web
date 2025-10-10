@@ -104,7 +104,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="Mario Rossi"
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
                 errors.name 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'
@@ -128,7 +128,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="mario.rossi@email.com"
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
                 errors.email 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'
@@ -152,7 +152,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="+39 123 456 7890"
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
                 errors.phone 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'

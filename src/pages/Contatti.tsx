@@ -1,13 +1,17 @@
+import { useState, useEffect } from "react";
 import ContactInfo from "@/components/contact/ContactInfo";
 import { UnifiedContactForm } from "@/features/forms";
 import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
 import BreadcrumbNavigation from "@/components/SEO/BreadcrumbNavigation";
 import { getLocalBusinessSchema, getFAQSchema } from "@/utils/seoSchemas";
+import { supabase } from "@/integrations/supabase/client";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 console.log('Contatti page loading...');
 
 const Contatti = () => {
-  const faqs = [
+  // FAQ dinamiche da Supabase con fallback
+  const [faqs, setFaqs] = useState([
     {
       question: "Dove si trova MUV Fitness?",
       answer: "MUV Fitness si trova in Piazzetta Don Walter Soave 2 a Legnago (VR). Siamo facilmente raggiungibili dal centro città e disponiamo di parcheggio."
@@ -20,19 +24,48 @@ const Contatti = () => {
       question: "Come posso prenotare una consulenza gratuita?",
       answer: "Puoi prenotare chiamando il 329 107 0374, inviando una email a info@muvfitness.it o compilando il form di contatto sul sito."
     }
-  ];
+  ]);
 
+  // Carica FAQ dinamiche da Supabase
+  useEffect(() => {
+    const fetchFAQs = async () => {
+      const { data } = await supabase
+        .from('contact_faqs')
+        .select('question, answer')
+        .eq('is_active', true)
+        .order('order_index');
+      
+      if (data && data.length > 0) {
+        setFaqs(data);
+      }
+    };
+    fetchFAQs();
+  }, []);
+
+  // Structured Data con ContactPoint
   const structuredData = [
     getLocalBusinessSchema(),
-    getFAQSchema(faqs)
+    getFAQSchema(faqs),
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "MUV Fitness",
+        "telephone": "+39-329-107-0374",
+        "contactType": "Customer Service",
+        "availableLanguage": "Italian",
+        "areaServed": "Legnago, Verona"
+      }
+    }
   ];
 
   return (
     <>
       <UnifiedSEOHead
-        title="Contatti MUV Fitness Legnago | Centro Fitness Piazzetta Don Walter Soave"
-        description="Contatta MUV Fitness a Legnago: Piazzetta Don Walter Soave 2, tel. 329 107 0374. Consulenza gratuita per EMS, Personal Training, Pilates e Nutrizione."
-        keywords="contatti muv fitness legnago, palestra piazzetta don walter soave, centro fitness verona telefono, appuntamento personal trainer"
+        title="Contatta MUV Fitness Legnago – Richiedi Prova Gratuita e Trasformazione Corpo"
+        description="Contatta MUV Fitness a Legnago (Piazzetta Don Walter Soave 2). Consulenza gratuita, personal training EMS, Pilates Reformer, nutrizione. Ti richiamiamo in 10 minuti!"
+        keywords="contatti muv fitness legnago, richiedi prova gratuita legnago, personal trainer legnago contatti, palestra piazzetta don walter soave, prenotazione ems legnago"
         structuredData={structuredData}
       />
       
@@ -56,6 +89,33 @@ const Contatti = () => {
               </p>
             </div>
           </header>
+          
+          {/* Info Rapide */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 sm:mb-16">
+            <div className="bg-gradient-to-br from-pink-600 to-purple-600 p-6 rounded-xl text-white text-center shadow-xl hover:scale-105 transition-transform">
+              <MapPin className="w-8 h-8 mx-auto mb-3" />
+              <h3 className="font-bold mb-2">Vieni a Trovarci</h3>
+              <p className="text-sm">Piazzetta Don Walter Soave, 2<br/>37045 Legnago (VR)</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-600 to-teal-600 p-6 rounded-xl text-white text-center shadow-xl hover:scale-105 transition-transform">
+              <Phone className="w-8 h-8 mx-auto mb-3" />
+              <h3 className="font-bold mb-2">Chiamaci Ora</h3>
+              <a href="tel:+393291070374" className="text-lg font-bold hover:underline">
+                329 107 0374
+              </a>
+              <p className="text-xs mt-1">Lun-Ven 08:00-21:00</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-6 rounded-xl text-white text-center shadow-xl hover:scale-105 transition-transform">
+              <Mail className="w-8 h-8 mx-auto mb-3" />
+              <h3 className="font-bold mb-2">Scrivici</h3>
+              <a href="mailto:info@muvfitness.it" className="text-sm hover:underline break-all">
+                info@muvfitness.it
+              </a>
+              <p className="text-xs mt-1">Risposta in 24h</p>
+            </div>
+          </div>
           
           {/* Pulsanti CTA principali */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 sm:mb-16">
@@ -87,30 +147,38 @@ const Contatti = () => {
             <ContactInfo />
           </div>
           
-          {/* Mini-FAQ per contatti */}
+          {/* Mini-FAQ per contatti - Espanse */}
           <div className="mt-12 sm:mt-16">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">Domande frequenti</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-muted rounded-lg border border-border">
-                <h3 className="text-lg font-bold mb-3 text-foreground">Dove parcheggio?</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Posti auto gratuiti disponibili davanti al centro e nelle vie limitrofe.
-                </p>
-              </div>
-              
-              <div className="text-center p-6 bg-muted rounded-lg border border-border">
-                <h3 className="text-lg font-bold mb-3 text-foreground">Posso venire in pausa pranzo?</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Sì, siamo aperti anche durante l'orario di pranzo su appuntamento.
-                </p>
-              </div>
-              
-              <div className="text-center p-6 bg-muted rounded-lg border border-border">
-                <h3 className="text-lg font-bold mb-3 text-foreground">Tempi per la prima prova?</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Solitamente riusciamo a programmare la prima consulenza entro 2-3 giorni.
-                </p>
-              </div>
+              {faqs.slice(3, 9).map((faq, index) => (
+                <div key={index} className="text-center p-6 bg-muted rounded-lg border border-border hover:border-primary transition-colors">
+                  <h3 className="text-lg font-bold mb-3 text-foreground">{faq.question}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Mobile Sticky CTA */}
+          <div className="md:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-pink-600 to-purple-600 p-4 shadow-2xl z-50 animate-fade-in">
+            <div className="flex gap-2">
+              <a 
+                href="https://wa.me/393291070374"
+                className="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold text-center hover:bg-green-700 transition-colors"
+                aria-label="Contattaci su WhatsApp"
+              >
+                💬 WhatsApp
+              </a>
+              <a 
+                href="tel:+393291070374"
+                className="flex-1 bg-white text-gray-900 py-3 rounded-lg font-bold text-center hover:bg-gray-100 transition-colors"
+                aria-label="Chiamaci ora"
+              >
+                📞 Chiama
+              </a>
             </div>
           </div>
         </div>
