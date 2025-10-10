@@ -114,14 +114,15 @@
     <!-- Security Headers - Single CSP -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline';
+      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline' 'unsafe-eval';
       style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
       font-src 'self' https://fonts.gstatic.com data:;
-      img-src 'self' data: https://www.google-analytics.com;
-      connect-src 'self' https://*.supabase.co https://region1.analytics.google.com https://www.google-analytics.com https://formspree.io;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' https://*.supabase.co https://region1.analytics.google.com https://www.google-analytics.com wss://*.supabase.co;
       frame-src 'self';
       base-uri 'self';
-      form-action 'self';
+      form-action 'self' https://*.supabase.co;
+      worker-src 'self' blob:;
       upgrade-insecure-requests;
     ">
     
