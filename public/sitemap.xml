@@ -3,19 +3,19 @@
   <!-- Dynamic sitemaps from Edge Functions (always up-to-date) -->
   <sitemap>
     <loc>https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap</loc>
-    <lastmod>2025-01-11</lastmod>
+    <lastmod>2025-10-10</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/blog-sitemap</loc>
-    <lastmod>2025-01-11</lastmod>
+    <lastmod>2025-10-10</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/news-sitemap</loc>
-    <lastmod>2025-01-11</lastmod>
+    <lastmod>2025-10-10</lastmod>
   </sitemap>
   <!-- Static fallback sitemaps -->
   <sitemap>
     <loc>https://www.muvfitness.it/sitemap-main.xml</loc>
-    <lastmod>2025-01-05</lastmod>
+    <lastmod>2025-10-10</lastmod>
   </sitemap>
 </sitemapindex>
