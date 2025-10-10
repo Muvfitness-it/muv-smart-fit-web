@@ -11,11 +11,11 @@ const KitZeroPensieri = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-br from-accent/10 via-primary/5 to-secondary/10">
+    <section className="section-padding bg-gradient-to-br from-accent/10 via-primary/5 to-secondary/10" aria-label="Kit Zero Pensieri">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           
-          <Card className="relative overflow-hidden border-2 border-accent/30 bg-background/95 backdrop-blur-sm p-8 md:p-12 shadow-2xl">
+          <Card className="relative overflow-hidden border-2 border-accent/30 bg-background/95 backdrop-blur-sm p-8 md:p-12 shadow-2xl animate-scale-in">
             {/* Decorative gradient background */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-3xl -z-10 opacity-50" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-secondary/20 to-accent/20 rounded-full blur-3xl -z-10 opacity-50" />
@@ -23,8 +23,8 @@ const KitZeroPensieri = () => {
             <div className="relative z-10">
               {/* Icon and Title */}
               <div className="flex flex-col items-center text-center mb-8">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-accent to-primary mb-6 shadow-lg">
-                  <Sparkles className="w-10 h-10 text-white" strokeWidth={2} />
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-accent to-primary mb-6 shadow-lg animate-pulse">
+                  <Sparkles className="w-10 h-10 text-white" strokeWidth={2} aria-hidden="true" />
                 </div>
                 
                 <h2 className="text-heading-lg mb-3 bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
@@ -37,13 +37,15 @@ const KitZeroPensieri = () => {
               </div>
               
               {/* Items List */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8" role="list" aria-label="Contenuto Kit Zero Pensieri">
                 {items.map((item, index) => (
                   <div 
-                    key={index} 
-                    className="flex items-start gap-3 p-4 rounded-lg bg-muted/30 border border-border/50 hover:border-accent/50 transition-colors"
+                    key={index}
+                    role="listitem" 
+                    className="flex items-start gap-3 p-4 rounded-lg bg-muted/30 border border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-md animate-fade-in"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <Check className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                    <Check className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" strokeWidth={2.5} aria-hidden="true" />
                     <span className="text-body-md font-medium text-foreground">
                       {item}
                     </span>

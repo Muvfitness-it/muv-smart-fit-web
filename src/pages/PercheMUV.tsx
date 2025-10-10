@@ -225,9 +225,9 @@ const PercheMUV = () => {
       <KitZeroPensieri />
       
       {/* Metodologia MUV */}
-      <section className="section-padding bg-background">
+      <section className="section-padding bg-background" aria-label="Il Metodo MUV">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto animate-fade-in">
             <h2 className="text-heading-lg text-center mb-4">
               Il Metodo MUV in 4 Fasi
             </h2>
@@ -239,10 +239,14 @@ const PercheMUV = () => {
               {metodologia.map((fase, index) => {
                 const Icon = fase.icon;
                 return (
-                  <Card key={index} className="p-6 border-2 border-border hover:border-primary/50 transition-all hover:shadow-lg">
+                  <Card 
+                    key={index} 
+                    className="p-6 border-2 border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in"
+                    style={{ animationDelay: `${index * 150}ms` }}
+                  >
                     <div className="flex flex-col items-center text-center">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
-                        <Icon className="w-8 h-8 text-white" strokeWidth={2} />
+                        <Icon className="w-8 h-8 text-white" strokeWidth={2} aria-hidden="true" />
                       </div>
                       <h3 className="text-heading-sm mb-3">
                         {fase.title}
@@ -260,9 +264,9 @@ const PercheMUV = () => {
       </section>
       
       {/* Testimonials */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-muted/30" aria-label="Testimonianze clienti">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto animate-fade-in">
             <h2 className="text-heading-lg text-center mb-4">
               Cosa Dicono i Nostri Clienti
             </h2>
@@ -272,7 +276,11 @@ const PercheMUV = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={index} className="p-6 border-l-4 border-accent">
+                <Card 
+                  key={index} 
+                  className="p-6 border-l-4 border-accent transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
                   <p className="text-body-md text-muted-foreground italic mb-4">
                     "{testimonial.text}"
                   </p>
@@ -288,9 +296,9 @@ const PercheMUV = () => {
       </section>
       
       {/* CTA Finale */}
-      <section className="section-padding bg-gradient-to-br from-accent via-primary to-secondary">
+      <section className="section-padding bg-gradient-to-br from-accent via-primary to-secondary" aria-label="Chiamata all'azione">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <h2 className="text-heading-lg mb-4 text-white">
               Vieni a Provare La Differenza
             </h2>
