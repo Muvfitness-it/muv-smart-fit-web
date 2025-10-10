@@ -144,8 +144,8 @@ const SaunaInfrarossiPage = () => {
           href: "#contatti"
         }}
         secondaryCTA={{
-          text: "Scopri i Pacchetti",
-          href: "/prezzi"
+          text: "Perché MUV",
+          href: "/perche-muv"
         }}
       />
       

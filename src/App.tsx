@@ -46,7 +46,7 @@ const FAQPage = lazy(() => import("./pages/FAQPage"));
 // New MUV Pages
 import MUVHomepage from "./pages/MUVHomepage";
 import Metodo from "./pages/Metodo";
-import Prezzi from "./pages/Prezzi";
+import PercheMUV from "./pages/PercheMUV";
 
 // New Service Pages
 const EMSPage = lazy(() => import("./pages/servizi/EMSPage"));
@@ -221,7 +221,8 @@ const AppContent = () => {
                     {/* ===== NEW MUV STRUCTURE - HOMEPAGE & CORE PAGES ===== */}
                     <Route path="/" element={<MUVHomepage />} />
                     <Route path="/metodo" element={<Metodo />} />
-                    <Route path="/prezzi" element={<Prezzi />} />
+          <Route path="/perche-muv" element={<PercheMUV />} />
+          <Route path="/prezzi" element={<Navigate to="/perche-muv" replace />} />
                     <Route path="/servizi" element={<ServiziCompleto />} />
                     <Route path="/tecnologie" element={<Tecnologie />} />
                     

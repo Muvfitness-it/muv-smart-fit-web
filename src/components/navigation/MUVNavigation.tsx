@@ -50,7 +50,7 @@ const MUVNavigation = () => {
     },
     { name: "Tecnologie", path: "/tecnologie" },
     { name: "Risultati", path: "/risultati" },
-    { name: "Prezzi", path: "/prezzi" },
+    { name: "Perché MUV", path: "/perche-muv" },
     { name: "Team", path: "/team" },
     { name: "Blog", path: "/blog" },
     { name: "Prenota Prova Gratuita", path: "/contatti", isButton: true }
