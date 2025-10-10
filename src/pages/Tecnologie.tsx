@@ -24,21 +24,6 @@ const Tecnologie = () => {
       color: 'from-yellow-500 to-orange-500'
     },
     {
-      id: 'pilates-reformer',
-      icon: <Activity className="w-16 h-16" />,
-      name: 'Pilates Reformer',
-      subtitle: 'Tecnologia di Resistenza Variabile',
-      description: 'Macchina avanzata con sistema di molle e carrello che permette oltre 250 esercizi per postura, flessibilità e forza profonda.',
-      benefits: [
-        'Corregge squilibri posturali',
-        'Riduce mal di schiena cronico',
-        'Aumenta flessibilità e mobilità',
-        'Rinforza il core profondamente'
-      ],
-      link: '/servizi/pilates-reformer-legnago',
-      color: 'from-green-500 to-teal-500'
-    },
-    {
       id: 'vacuum',
       icon: <Waves className="w-16 h-16" />,
       name: 'Vacuum Therapy',
@@ -82,36 +67,21 @@ const Tecnologie = () => {
       ],
       link: '/servizi/sauna-infrarossi-legnago',
       color: 'from-red-500 to-orange-500'
-    },
-    {
-      id: 'pancafit',
-      icon: <Target className="w-16 h-16" />,
-      name: 'Pancafit®',
-      subtitle: 'Rieducazione Posturale Globale',
-      description: 'Attrezzo brevettato per allungamento decompensato che riequilibra catene muscolari e risolve problemi posturali alla radice.',
-      benefits: [
-        'Elimina dolori cronici',
-        'Riequilibra postura globalmente',
-        'Allunga catene muscolari',
-        'Previene infortuni futuri'
-      ],
-      link: '/servizi/pancafit-legnago',
-      color: 'from-indigo-500 to-purple-500'
     }
   ];
 
   return (
     <>
       <UnifiedSEOHead
-        title="Tecnologie MUV Fitness Legnago | EMS, Pilates Reformer, Vacuum, Pressoterapia"
-        description="Scopri le 6 tecnologie avanzate di MUV Fitness Legnago: EMS Training, Pilates Reformer, Vacuum Therapy, Pressoterapia, Sauna Infrarossi e Pancafit per risultati garantiti."
-        keywords="ems training legnago, pilates reformer legnago, vacuum therapy, pressoterapia legnago, sauna infrarossi, pancafit legnago, tecnologie fitness"
+        title="Tecnologie MUV Fitness Legnago | EMS, Vacuum Therapy, Pressoterapia, Sauna"
+        description="Scopri le 4 tecnologie avanzate di MUV Fitness Legnago: EMS Training, Vacuum Therapy, Pressoterapia e Sauna a Infrarossi per risultati garantiti."
+        keywords="ems training legnago, vacuum therapy, pressoterapia legnago, sauna infrarossi, tecnologie fitness avanzate"
         canonicalUrl="https://www.muvfitness.it/tecnologie"
       />
 
       <MinimalHero
         title="Le Nostre Tecnologie"
-        description="6 tecnologie avanzate per risultati misurabili e garantiti. Ogni strumento è scelto per massimizzare efficacia e sicurezza."
+        description="4 tecnologie avanzate per risultati misurabili e garantiti. Ogni strumento è scelto per massimizzare efficacia e sicurezza."
         gradient="accent"
         primaryCTA={{
           text: "Prenota una Prova Gratuita",
