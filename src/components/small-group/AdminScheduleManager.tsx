@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Plus, Edit, Trash2, Clock, User, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import '@/styles/print-schedule.css';
 
 interface ScheduleItem {
   id: string;
@@ -25,7 +26,7 @@ interface ScheduleItem {
 }
 
 const DAYS = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '12:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
 
 const COURSE_TYPES = [
   { value: 'postural-pilates', label: 'Postural Pilates', color: '#8B5CF6' },
@@ -318,8 +319,21 @@ export const AdminScheduleManager = () => {
       </div>
 
       {/* Grid View */}
-      <div className="overflow-x-auto">
-        <div className="min-w-max">
+      <div className="overflow-x-auto" id="schedule-planner">
+        {/* Logo e Header per stampa */}
+        <div className="hidden print:block mb-6 no-print-hide">
+          <img 
+            src="/lovable-uploads/muv-logo-transparent.png" 
+            alt="MUV Fitness Logo" 
+            className="h-20 w-auto mb-3"
+          />
+          <h1 className="text-3xl font-bold text-gray-900">MUV Fitness - Orari Corsi Small Group</h1>
+          <p className="text-sm text-gray-600 mt-2">
+            Aggiornato al {new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}
+          </p>
+        </div>
+
+        <div className="min-w-max schedule-grid">
           <div className="grid grid-cols-8 gap-2 mb-4">
             <div className="font-bold text-center"></div>
             {DAYS.slice(1).map(day => (

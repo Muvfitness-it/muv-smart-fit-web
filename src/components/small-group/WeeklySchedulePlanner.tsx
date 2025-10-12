@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Clock, User, MapPin } from 'lucide-react';
+import '@/styles/print-schedule.css';
 
 interface ScheduleItem {
   id: string;
@@ -19,7 +20,7 @@ interface ScheduleItem {
 }
 
 const DAYS = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '12:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
 
 export const WeeklySchedulePlanner = () => {
   const { data: schedule, isLoading } = useQuery({
@@ -61,8 +62,21 @@ export const WeeklySchedulePlanner = () => {
 
   return (
     <div className="w-full" id="schedule-planner">
+      {/* Logo e Header per stampa */}
+      <div className="hidden print:block mb-6 no-print-hide">
+        <img 
+          src="/lovable-uploads/muv-logo-transparent.png" 
+          alt="MUV Fitness Logo" 
+          className="h-20 w-auto mb-3"
+        />
+        <h1 className="text-3xl font-bold text-gray-900">MUV Fitness - Orari Corsi Small Group</h1>
+        <p className="text-sm text-gray-600 mt-2">
+          Aggiornato al {new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}
+        </p>
+      </div>
+
       {/* Desktop View */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto schedule-grid">
         <div className="min-w-max">
           <div className="grid grid-cols-8 gap-2 mb-4">
             <div className="font-bold text-center"></div>

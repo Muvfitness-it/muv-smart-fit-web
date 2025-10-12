@@ -4,31 +4,95 @@
     margin: 15mm;
   }
   
-  .no-print {
-    display: none !important;
+  /* Nascondi tutto tranne il planner */
+  body * {
+    visibility: hidden;
+  }
+  
+  #schedule-planner,
+  #schedule-planner * {
+    visibility: visible !important;
   }
   
   #schedule-planner {
-    page-break-inside: avoid;
-    color: black !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     background: white !important;
+    page-break-inside: avoid;
   }
   
+  /* Mostra header con logo per stampa */
+  .no-print-hide {
+    display: block !important;
+  }
+  
+  /* Nascondi tutti gli elementi UI */
+  .no-print,
+  button,
+  nav,
+  header,
+  footer,
+  .floating-cta,
+  aside,
+  [role="dialog"],
+  .dialog-trigger,
+  .edit-button,
+  .delete-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Ottimizza il grid per stampa */
   .schedule-grid {
     border-collapse: collapse;
+    width: 100%;
   }
   
   .schedule-cell {
     border: 1px solid #333 !important;
-    padding: 8px !important;
+    padding: 6px !important;
     background: white !important;
+    page-break-inside: avoid;
   }
   
-  nav, footer, button, .floating-cta {
+  /* Stili per le card dei corsi */
+  .schedule-grid [class*="Card"] {
+    border: 2px solid !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Nascondi pulsanti edit/delete nelle card */
+  .schedule-grid button,
+  .schedule-grid [class*="Button"] {
     display: none !important;
   }
   
+  /* Migliora leggibilità testo */
   body {
     background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Assicura che i colori delle card siano visibili */
+  [style*="background-color"],
+  [style*="backgroundColor"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Font più leggibile per stampa */
+  * {
+    font-family: 'Arial', sans-serif !important;
+  }
+  
+  /* Forza visualizzazione badge e icone */
+  .schedule-grid [class*="Badge"],
+  .schedule-grid svg {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
