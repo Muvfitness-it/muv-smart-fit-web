@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import HeroComponent from '@/components/shared/HeroComponent';
+import { MinimalHero } from '@/features/hero';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
 import { Heart, Shield, TrendingUp, Users, Award, Activity } from 'lucide-react';
@@ -154,11 +154,11 @@ const Over60Page = () => {
         </script>
       </Helmet>
       
-      <HeroComponent
+      <MinimalHero
         title="Active Aging Over 60 a Legnago"
         subtitle="Forza, Equilibrio, Autonomia"
         description="Protocolli certificati per mantenere massa muscolare, prevenire osteoporosi e ridurre rischio cadute. Allenamento sicuro, efficace e motivante per la tua età."
-        variant="gradient"
+        gradient="primary"
         primaryCTA={{
           text: "Prenota Valutazione Gratuita",
           href: "#contatti"

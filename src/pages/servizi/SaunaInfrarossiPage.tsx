@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import HeroComponent from '@/components/shared/HeroComponent';
+import { MinimalHero } from '@/features/hero';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
 import { Flame, Heart, Droplet, Zap, Shield, Clock } from 'lucide-react';
@@ -134,11 +134,11 @@ const SaunaInfrarossiPage = () => {
         </script>
       </Helmet>
       
-      <HeroComponent
+      <MinimalHero
         title="Sauna Infrarossi a Legnago"
         subtitle="Detox & Recovery"
         description="Detossificazione profonda, recupero muscolare accelerato e riduzione stress con tecnologia a infrarossi a spettro completo. Complemento ideale per ogni percorso fitness."
-        variant="solid"
+        gradient="dual"
         primaryCTA={{
           text: "Prenota Prova Gratuita",
           href: "#contatti"
