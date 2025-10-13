@@ -351,7 +351,7 @@ export const AdminScheduleManager = () => {
               {[1, 2, 3, 4, 5, 6].map(day => {
                 const course = getCourseForSlot(day, time);
                 return (
-                  <div key={`${day}-${time}`} className="min-h-[100px]">
+                  <div key={`${day}-${time}`} className="min-h-[60px]">
                     {course ? (
                       <Card 
                         className="h-full border-2 relative group"
@@ -360,8 +360,8 @@ export const AdminScheduleManager = () => {
                           backgroundColor: `${course.color || '#FF6B35'}15`
                         }}
                       >
-                        <CardContent className="p-3 h-full">
-                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                        <CardContent className="p-2 h-full flex items-center justify-center">
+                          <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                             <Button 
                               size="sm" 
                               variant="secondary"
@@ -385,29 +385,11 @@ export const AdminScheduleManager = () => {
                           </div>
                           
                           <Badge 
-                            className="text-[10px] mb-1"
+                            className="text-xs whitespace-nowrap"
                             style={{ backgroundColor: course.color || '#FF6B35' }}
                           >
                             {course.course_name}
                           </Badge>
-                          <div className="text-[10px] space-y-0.5 text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              {course.start_time.substring(0, 5)}-{course.end_time.substring(0, 5)}
-                            </div>
-                            {course.instructor && (
-                              <div className="flex items-center gap-1">
-                                <User className="w-3 h-3" />
-                                {course.instructor}
-                              </div>
-                            )}
-                            {course.room && (
-                              <div className="flex items-center gap-1">
-                                <MapPin className="w-3 h-3" />
-                                {course.room}
-                              </div>
-                            )}
-                          </div>
                         </CardContent>
                       </Card>
                     ) : (

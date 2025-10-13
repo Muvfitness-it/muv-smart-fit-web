@@ -95,7 +95,7 @@ export const WeeklySchedulePlanner = () => {
               {[1, 2, 3, 4, 5, 6].map(day => {
                 const course = getCourseForSlot(day, time);
                 return (
-                  <div key={`${day}-${time}`} className="min-h-[80px]">
+                  <div key={`${day}-${time}`} className="min-h-[50px]">
                     {course ? (
                       <Card 
                         className="h-full border-2 hover:shadow-lg transition-shadow cursor-pointer"
@@ -104,31 +104,13 @@ export const WeeklySchedulePlanner = () => {
                           backgroundColor: `${course.color || '#FF6B35'}15`
                         }}
                       >
-                        <CardContent className="p-3 h-full flex flex-col justify-between">
-                          <div>
-                            <Badge 
-                              className="text-[10px] mb-1 whitespace-nowrap"
-                              style={{ backgroundColor: course.color || '#FF6B35' }}
-                            >
-                              {course.course_name}
-                            </Badge>
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <Clock className="w-3 h-3" />
-                              <span>{course.start_time.substring(0, 5)}-{course.end_time.substring(0, 5)}</span>
-                            </div>
-                          </div>
-                          {course.instructor && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
-                              <User className="w-3 h-3" />
-                              <span className="truncate">{course.instructor}</span>
-                            </div>
-                          )}
-                          {course.room && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <MapPin className="w-3 h-3" />
-                              <span>{course.room}</span>
-                            </div>
-                          )}
+                        <CardContent className="p-2 h-full flex items-center justify-center">
+                          <Badge 
+                            className="text-xs whitespace-nowrap"
+                            style={{ backgroundColor: course.color || '#FF6B35' }}
+                          >
+                            {course.course_name}
+                          </Badge>
                         </CardContent>
                       </Card>
                     ) : (
