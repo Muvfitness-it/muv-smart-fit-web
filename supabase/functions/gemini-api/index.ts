@@ -16,71 +16,96 @@ serve(async (req) => {
   try {
     const { payload } = await req.json();
     
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      console.error('OPENAI_API_KEY not found');
-      throw new Error('API key di OpenAI non configurata');
+    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    if (!GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY not found');
+      throw new Error('API key di Gemini non configurata');
     }
 
-    console.log('Calling OpenAI API with payload:', typeof payload === 'string' ? payload.substring(0, 200) + '...' : payload);
+    console.log('Calling Gemini API with payload type:', typeof payload);
 
-    // Converti il payload in formato OpenAI
-    let messages;
+    // Converti payload in formato Gemini
+    let geminiPayload;
+    
     if (typeof payload === 'string') {
-      messages = [
-        { role: 'system', content: 'Sei un esperto scrittore di contenuti per blog di fitness. Rispondi sempre in italiano con contenuti professionali e ottimizzati SEO.' },
-        { role: 'user', content: payload }
-      ];
+      // Payload semplice stringa
+      geminiPayload = {
+        contents: [{
+          role: 'user',
+          parts: [{ text: payload }]
+        }]
+      };
+    } else if (payload.contents) {
+      // Payload già in formato Gemini
+      geminiPayload = payload;
+    } else if (payload.messages) {
+      // Converti da formato OpenAI a Gemini
+      geminiPayload = {
+        contents: payload.messages
+          .filter((msg: any) => msg.role !== 'system') // Gemini non supporta system messages separate
+          .map((msg: any) => ({
+            role: msg.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: msg.content }]
+          }))
+      };
     } else {
-      // Se il payload ha già il formato OpenAI, usalo direttamente
-      messages = payload.messages || [
-        { role: 'system', content: 'Sei un esperto scrittore di contenuti per blog di fitness. Rispondi sempre in italiano con contenuti professionali e ottimizzati SEO.' },
-        { role: 'user', content: payload.prompt || JSON.stringify(payload) }
-      ];
+      // Fallback
+      geminiPayload = {
+        contents: [{
+          role: 'user',
+          parts: [{ text: JSON.stringify(payload) }]
+        }]
+      };
     }
 
-    const requestBody = {
-      model: 'gpt-4.1-2025-04-14',
-      messages: messages,
-      max_tokens: 4000,
-      temperature: 0.7
-    };
+    console.log('Gemini API request prepared, contents count:', geminiPayload.contents.length);
 
-    console.log('OpenAI API request:', JSON.stringify({ model: requestBody.model, messages_count: requestBody.messages.length }));
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(geminiPayload)
+      }
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', response.status, errorText);
-      throw new Error(`Errore API OpenAI: ${response.status} - ${errorText}`);
+      console.error('Gemini API error:', response.status, errorText);
+      
+      // Gestisci errori specifici
+      if (response.status === 429) {
+        throw new Error('Limite richieste Gemini raggiunto. Riprova tra qualche minuto.');
+      } else if (response.status === 403) {
+        throw new Error('Chiave API Gemini non valida o scaduta.');
+      }
+      
+      throw new Error(`Errore API Gemini: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
-    console.log('OpenAI API response received, tokens used:', data.usage);
+    console.log('Gemini API response received');
 
-    // Estrai il testo dalla risposta di OpenAI
-    const generatedText = data?.choices?.[0]?.message?.content;
+    // Estrai il testo dalla risposta di Gemini
+    const generatedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    
     if (!generatedText) {
-      throw new Error('Nessun contenuto generato dall\'API di OpenAI');
+      console.error('Gemini response structure:', JSON.stringify(data, null, 2));
+      throw new Error('Nessun contenuto generato dall\'API di Gemini');
     }
 
-    return new Response(JSON.stringify({ content: generatedText }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ content: generatedText, candidates: data.candidates }), 
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
-    console.error('Error in openai-api function:', error);
+    console.error('Error in gemini-api function:', error);
     return new Response(
       JSON.stringify({ 
         error: error.message,
-        details: 'Errore nella chiamata all\'API di OpenAI. Verifica la configurazione dell\'API key.'
+        details: 'Errore nella chiamata all\'API di Gemini. Verifica la configurazione dell\'API key.'
       }), 
       {
         status: 500,
