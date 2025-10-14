@@ -69,7 +69,7 @@
     <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
     
     
-    <!-- Preload other critical resources -->
+    <!-- Preload critical CSS to eliminate render-blocking -->
     <script>
       // Preload hero images immediately
       const img1 = new Image();
@@ -77,28 +77,42 @@
       const img2 = new Image(); 
       img2.src = '/images/fitness-professional-bg.jpg';
       
-      // Make main CSS non-blocking using media-swap; handle existing and future links
+      // Intercept and make CSS non-blocking before Vite injects it
       (function() {
+        const originalAppendChild = Element.prototype.appendChild;
+        const originalInsertBefore = Element.prototype.insertBefore;
+        
         const makeNonBlocking = (link) => {
-          if (!link || link.dataset.asyncApplied) return;
-          link.media = 'print';
-          link.onload = () => { link.media = 'all'; link.onload = null; };
-          link.dataset.asyncApplied = 'true';
-        };
-        // Handle existing link
-        const existing = document.querySelector('link[href*="index-"][href$=".css"]');
-        if (existing) makeNonBlocking(existing);
-        // Observe future additions (in case Vite injects after this script)
-        const obs = new MutationObserver((mutations) => {
-          for (const m of mutations) {
-            m.addedNodes.forEach((node) => {
-              if (node.tagName === 'LINK' && node.rel === 'stylesheet' && node.href.includes('index-') && node.href.endsWith('.css')) {
-                makeNonBlocking(node);
-              }
-            });
+          if (link && link.tagName === 'LINK' && link.rel === 'stylesheet' && 
+              link.href && link.href.includes('index-') && link.href.endsWith('.css')) {
+            // Use preload + onload pattern for non-blocking CSS
+            link.rel = 'preload';
+            link.as = 'style';
+            link.onload = function() {
+              this.onload = null;
+              this.rel = 'stylesheet';
+            };
+            // Fallback for browsers that don't support preload
+            const noscript = document.createElement('noscript');
+            const fallbackLink = link.cloneNode();
+            fallbackLink.rel = 'stylesheet';
+            noscript.appendChild(fallbackLink);
+            if (link.parentNode) {
+              link.parentNode.insertBefore(noscript, link.nextSibling);
+            }
           }
-        });
-        obs.observe(document.documentElement || document, { childList: true, subtree: true });
+          return link;
+        };
+        
+        Element.prototype.appendChild = function(node) {
+          makeNonBlocking(node);
+          return originalAppendChild.call(this, node);
+        };
+        
+        Element.prototype.insertBefore = function(newNode, refNode) {
+          makeNonBlocking(newNode);
+          return originalInsertBefore.call(this, newNode, refNode);
+        };
       })();
     </script>
     
