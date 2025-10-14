@@ -104,6 +104,7 @@ const Navigation = memo(() => {
               width={300}
               height={90}
               priority={true}
+              generateWebp={true}
               sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
               className={`site-logo w-auto transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10 md:h-12 lg:h-14' : 'h-10 sm:h-12 md:h-14 lg:h-16 xl:h-18'}`}
               objectFit="contain"
@@ -171,6 +172,7 @@ const Navigation = memo(() => {
                     width={180}
                     height={54}
                     priority={true}
+                    generateWebp={true}
                     sizes="180px"
                     className="site-logo h-12 w-auto"
                     objectFit="contain"

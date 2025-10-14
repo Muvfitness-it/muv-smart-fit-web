@@ -72,6 +72,7 @@ const MUVEsperienzaSection = () => {
                 <OptimizedImage
                   src={image.src}
                   alt={image.alt}
+                  generateWebp={true}
                   className="w-full h-full object-cover"
                 />
               </div>

@@ -76,7 +76,7 @@ const HomeUltraConversion = () => {
           {/* Background image layer */}
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-30 animate-slow-zoom"
-            style={{ backgroundImage: "url('/images/fitness-professional-bg.jpg')", filter: 'brightness(0.9)' }}
+            style={{ backgroundImage: "image-set(url('/images/fitness-professional-bg.webp') type('image/webp'), url('/images/fitness-professional-bg.jpg') type('image/jpeg'))", filter: 'brightness(0.9)' }}
             aria-hidden="true"
           />
           {/* Optional video layer (loads if available) */}

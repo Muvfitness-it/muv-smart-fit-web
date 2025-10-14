@@ -131,7 +131,7 @@ const BlogIndex = () => {
 
       <header className="relative border-b border-border">
         {/* Background image + overlay for readability */}
-        <div className="absolute inset-0 bg-[url('/images/fitness-professional-bg.jpg')] bg-cover bg-center" aria-hidden="true" />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "image-set(url('/images/fitness-professional-bg.webp') type('image/webp'), url('/images/fitness-professional-bg.jpg') type('image/jpeg'))" }} aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/70" aria-hidden="true" />
 
         <div className="container relative mx-auto px-4 py-12 md:py-16 min-h-[280px] md:min-h-[360px] flex flex-col items-center justify-center text-center gap-6">

@@ -184,7 +184,10 @@ const CriticalCSS = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/images/fitness-professional-bg.jpg');
+        background-image: image-set(
+          url('/images/fitness-professional-bg.webp') type('image/webp'),
+          url('/images/fitness-professional-bg.jpg') type('image/jpeg')
+        );
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

@@ -27,6 +27,7 @@ const MUVMotivationSection = () => {
               alt="Squadra MUV Fitness durante allenamento di gruppo - energia e motivazione"
               width={600}
               height={400}
+              generateWebp={true}
               className="w-full h-[400px] object-cover"
             />
             <div className="absolute inset-0 bg-gradient-primary/20" />
