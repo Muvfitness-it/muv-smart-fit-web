@@ -13,11 +13,21 @@ export const useSchedulePDFExport = () => {
 
       toast.loading('Generazione PDF in corso...');
 
-      // Aumenta risoluzione per qualità stampa
+      // Forza scroll a inizio elemento per cattura completa
+      element.scrollIntoView({ block: 'start' });
+      
+      // Aspetta rendering completo
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Cattura con opzioni ottimizzate per qualità e completezza
       const canvas = await html2canvas(element, { 
-        scale: 2,
+        scale: 3,
         useCORS: true,
-        logging: false
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+        scrollY: -window.scrollY,
+        scrollX: -window.scrollX
       });
       
       const imgData = canvas.toDataURL('image/png');
@@ -28,28 +38,44 @@ export const useSchedulePDFExport = () => {
         format: 'a4'
       });
       
-      // Header
-      pdf.setFontSize(20);
+      // Header compatto
+      pdf.setFontSize(16);
       pdf.setTextColor(40, 40, 40);
-      pdf.text('MUV Fitness - Orari Corsi Small Group', 15, 15);
+      pdf.text('MUV Fitness - Orari Corsi Small Group', 12, 12);
       
-      pdf.setFontSize(10);
+      pdf.setFontSize(9);
       pdf.setTextColor(100, 100, 100);
       pdf.text(`Aggiornato al: ${new Date().toLocaleDateString('it-IT', { 
         day: '2-digit', 
         month: 'long', 
         year: 'numeric' 
-      })}`, 15, 22);
+      })}`, 12, 18);
       
-      // Schedule Image
-      const imgWidth = 267; // A4 landscape width - margins
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 15, 30, imgWidth, Math.min(imgHeight, 160));
+      // Calcolo dinamico dimensioni per fit A4
+      const pdfWidth = 277; // A4 landscape width (297mm - 2*10mm margin)
+      const pdfHeight = 190; // A4 landscape height (210mm - 20mm header/footer)
+      
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      // Scala se supera altezza disponibile
+      let finalWidth = imgWidth;
+      let finalHeight = imgHeight;
+      
+      if (imgHeight > pdfHeight) {
+        finalHeight = pdfHeight;
+        finalWidth = (canvas.width * pdfHeight) / canvas.height;
+      }
+      
+      // Centra orizzontalmente se necessario
+      const xOffset = (pdfWidth - finalWidth) / 2 + 10;
+      
+      pdf.addImage(imgData, 'PNG', xOffset, 22, finalWidth, finalHeight);
       
       // Footer
-      pdf.setFontSize(8);
+      pdf.setFontSize(7);
       pdf.setTextColor(80, 80, 80);
-      pdf.text('Piazzetta Don Walter Soave, 2 - Legnago (VR) | Tel: 329 107 0374 | www.muvfitness.it', 15, 195);
+      pdf.text('Piazzetta Don Walter Soave, 2 - Legnago (VR) | Tel: 329 107 0374 | www.muvfitness.it', 12, 205);
       
       pdf.save(filename);
       

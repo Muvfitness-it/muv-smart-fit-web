@@ -1,7 +1,7 @@
 @media print {
   @page {
     size: A4 landscape;
-    margin: 15mm;
+    margin: 10mm;
   }
   
   /* Nascondi tutto tranne il planner */
@@ -21,6 +21,24 @@
     width: 100%;
     background: white !important;
     page-break-inside: avoid;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Header compatto per stampa */
+  #schedule-planner h1 {
+    font-size: 18px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  #schedule-planner p {
+    font-size: 10px !important;
+  }
+  
+  #schedule-planner img {
+    height: 50px !important;
+    width: auto !important;
+    margin-bottom: 8px !important;
   }
   
   /* Mostra header con logo per stampa */
@@ -44,23 +62,50 @@
     visibility: hidden !important;
   }
   
-  /* Ottimizza il grid per stampa */
+  /* Ottimizza il grid per stampa - scala a 85% */
   .schedule-grid {
     border-collapse: collapse;
     width: 100%;
+    transform-origin: top left;
+    transform: scale(0.85);
   }
   
-  .schedule-cell {
-    border: 1px solid #333 !important;
-    padding: 6px !important;
-    background: white !important;
-    page-break-inside: avoid;
+  /* Grid headers compatti */
+  .schedule-grid > div:first-child > div {
+    font-size: 11px !important;
+    padding: 4px !important;
   }
   
-  /* Stili per le card dei corsi */
+  /* Orari laterali compatti */
+  .schedule-grid > div > div:first-child {
+    font-size: 10px !important;
+  }
+  
+  /* Celle schedule compatte */
+  .schedule-cell,
+  .schedule-grid > div > div {
+    padding: 3px !important;
+    min-height: 35px !important;
+  }
+  
+  /* Card più compatte */
   .schedule-grid [class*="Card"] {
-    border: 2px solid !important;
+    border: 1.5px solid !important;
     page-break-inside: avoid;
+    min-height: 35px !important;
+  }
+  
+  .schedule-grid [class*="CardContent"] {
+    padding: 3px !important;
+  }
+  
+  /* Badge compatti */
+  .schedule-grid [class*="Badge"] {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    white-space: nowrap !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   
   /* Nascondi pulsanti edit/delete nelle card */
@@ -90,7 +135,6 @@
   }
   
   /* Forza visualizzazione badge e icone */
-  .schedule-grid [class*="Badge"],
   .schedule-grid svg {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;

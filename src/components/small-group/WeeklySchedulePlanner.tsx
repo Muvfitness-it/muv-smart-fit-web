@@ -77,36 +77,36 @@ export const WeeklySchedulePlanner = () => {
 
       {/* Desktop View */}
       <div className="hidden md:block overflow-x-auto schedule-grid">
-        <div className="min-w-max">
-          <div className="grid grid-cols-8 gap-2 mb-4">
+        <div className="min-w-max print:min-w-full">
+          <div className="grid grid-cols-8 gap-2 mb-4 print:mb-1 print:gap-1">
             <div className="font-bold text-center"></div>
             {DAYS.slice(1).map(day => (
-              <div key={day} className="font-bold text-center text-sm bg-primary/10 p-2 rounded">
+              <div key={day} className="font-bold text-center text-sm bg-primary/10 p-2 rounded print:text-xs print:p-1">
                 {day}
               </div>
             ))}
           </div>
           
           {TIME_SLOTS.map(time => (
-            <div key={time} className="grid grid-cols-8 gap-2 mb-2">
-              <div className="flex items-center justify-center font-medium text-sm text-muted-foreground">
+            <div key={time} className="grid grid-cols-8 gap-2 mb-2 print:mb-1 print:gap-1">
+              <div className="flex items-center justify-center font-medium text-sm text-muted-foreground print:text-xs">
                 {time}
               </div>
               {[1, 2, 3, 4, 5, 6].map(day => {
                 const course = getCourseForSlot(day, time);
                 return (
-                  <div key={`${day}-${time}`} className="min-h-[50px]">
+                  <div key={`${day}-${time}`} className="min-h-[50px] print:min-h-[35px]">
                     {course ? (
                       <Card 
-                        className="h-full border-2 hover:shadow-lg transition-shadow cursor-pointer"
+                        className="h-full border-2 hover:shadow-lg transition-shadow cursor-pointer print:border print:shadow-none"
                         style={{ 
                           borderColor: course.color || '#FF6B35',
                           backgroundColor: `${course.color || '#FF6B35'}15`
                         }}
                       >
-                        <CardContent className="p-2 h-full flex items-center justify-center">
+                        <CardContent className="p-2 h-full flex items-center justify-center print:p-1">
                           <Badge 
-                            className="text-xs whitespace-nowrap"
+                            className="text-xs whitespace-nowrap print:text-[9px]"
                             style={{ backgroundColor: course.color || '#FF6B35' }}
                           >
                             {course.course_name}
