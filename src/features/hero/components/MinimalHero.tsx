@@ -93,7 +93,7 @@ export const MinimalHero: React.FC<MinimalHeroProps> = ({
             </p>
           )}
           
-          <h1 className="text-hero-title font-bold text-white mb-6 leading-tight animate-fade-in-up">
+          <h1 className="text-hero-title font-bold text-white mb-6 leading-tight">
             {title}
           </h1>
           
