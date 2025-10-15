@@ -133,52 +133,86 @@ const MUVNavigation = () => {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden fixed top-full left-0 right-0 bottom-0 bg-white shadow-lg border-t z-[9999] overflow-y-auto">
-            <div className="container mx-auto px-4 py-4">
-              <div className="flex flex-col space-y-4">
-                {navItems.map(item => (
-                  item.isButton ? (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className="btn-accent text-center"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ) : item.dropdown ? (
-                    <div key={item.name} className="border-b border-border/20 pb-2 mb-2">
+          <div className="lg:hidden fixed inset-0 z-[9999]" role="dialog" aria-modal="true">
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm" 
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+            
+            {/* Menu Panel */}
+            <div className="relative z-[10000] w-full max-h-screen flex flex-col bg-white">
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 bg-primary shadow-md">
+                <Link to="/" onClick={() => setIsOpen(false)}>
+                  <OptimizedImage
+                    src={LOGO_URL}
+                    alt="Logo MUV Fitness Legnago"
+                    width={150}
+                    height={45}
+                    priority={true}
+                    objectFit="contain"
+                    overflowHidden={false}
+                    className="h-10 w-auto"
+                  />
+                </Link>
+                <button 
+                  onClick={() => setIsOpen(false)} 
+                  className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  aria-label="Chiudi menu"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="flex-1 overflow-y-auto px-4 py-6">
+                <div className="flex flex-col space-y-4">
+                  {navItems.map(item => (
+                    item.isButton ? (
                       <Link
+                        key={item.name}
                         to={item.path}
+                        className="btn-accent text-center py-3"
                         onClick={() => setIsOpen(false)}
-                        className="block text-foreground hover:text-primary font-semibold transition-colors py-2 text-center text-lg"
                       >
                         {item.name}
                       </Link>
-                      <div className="pl-4 space-y-2 mt-2">
-                        {item.dropdown.map((subItem: { name: string; path: string }) => (
-                          <Link
-                            key={subItem.name}
-                            to={subItem.path}
-                            onClick={() => setIsOpen(false)}
-                            className="block text-muted-foreground hover:text-primary text-sm transition-colors py-2 text-center"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
+                    ) : item.dropdown ? (
+                      <div key={item.name} className="border-b border-border/20 pb-4">
+                        <Link
+                          to={item.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block text-foreground hover:text-primary font-semibold transition-colors py-2 text-lg"
+                        >
+                          {item.name}
+                        </Link>
+                        <div className="pl-4 space-y-2 mt-3">
+                          {item.dropdown.map((subItem: { name: string; path: string }) => (
+                            <Link
+                              key={subItem.name}
+                              to={subItem.path}
+                              onClick={() => setIsOpen(false)}
+                              className="block text-muted-foreground hover:text-primary text-sm transition-colors py-2"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className="nav-link py-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )
-                ))}
+                    ) : (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="text-foreground hover:text-primary font-medium transition-colors py-2 text-lg"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    )
+                  ))}
+                </div>
               </div>
             </div>
           </div>
