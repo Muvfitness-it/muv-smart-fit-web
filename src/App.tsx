@@ -23,8 +23,6 @@ import AIAssistantModal from "./components/ai/AIAssistantModal";
 import AccessibilityEnhancer from "./components/ui/AccessibilityEnhancer";
 
 // Critical routes loaded immediately (homepage and essential pages)
-import HomeUltraConversion from "./pages/HomeUltraConversion";
-import ServiziUnified from "./pages/ServiziUnified";
 import NotFound from "./pages/NotFound";
 
 // New Complete Services Page
@@ -33,8 +31,6 @@ const Tecnologie = lazy(() => import("./pages/Tecnologie"));
 
 // Lazy load all other routes to reduce initial bundle
 const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
-const ChiSiamoNew = lazy(() => import("./pages/ChiSiamoNew"));
-const Servizi = lazy(() => import("./pages/Servizi"));
 const Team = lazy(() => import("./pages/Team"));
 const Risultati = lazy(() => import("./pages/Risultati"));
 const Contatti = lazy(() => import("./pages/Contatti"));
@@ -63,16 +59,8 @@ const ProvaGratuitaEMS = lazy(() => import("./pages/landing/ProvaGratuitaEMS"));
 const NutrizionePsicocoach = lazy(() => import("./pages/servizi/NutrizionePsicocoach"));
 
 // Legacy service pages - lazy loaded
-const PersonalTraining = lazy(() => import("./pages/servizi/PersonalTraining"));
-const EMS = lazy(() => import("./pages/servizi/EMS"));
 const Pancafit = lazy(() => import("./pages/servizi/Pancafit"));
-const Pilates = lazy(() => import("./pages/servizi/Pilates"));
-const HIIT = lazy(() => import("./pages/servizi/HIIT"));
 const SmallGroup = lazy(() => import("./pages/servizi/SmallGroup"));
-const Nutrizione = lazy(() => import("./pages/servizi/Nutrizione"));
-const Psicologo = lazy(() => import("./pages/servizi/Psicologo"));
-const Massoterapia = lazy(() => import("./pages/servizi/Massoterapia"));
-const VacuumPressoterapia = lazy(() => import("./pages/servizi/VacuumPressoterapia"));
 
 // Main pages - lazy loaded
 const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
@@ -98,12 +86,6 @@ const GEOValidator = lazy(() => import("./components/SEO/GEOValidator"));
 const AIAuth = lazy(() => import("./pages/AIAuth"));
 
 // SEO pages - lazy loaded
-const PersonalTrainerLegnago = lazy(() => import("./pages/PersonalTrainerLegnago"));
-const AllenamentoEMSLegnago = lazy(() => import("./pages/AllenamentoEMSLegnago"));
-const PilatesLegnago = lazy(() => import("./pages/PilatesLegnago"));
-const DimagrireLegnago = lazy(() => import("./pages/DimagrireLegnago"));
-const MalDiSchienaLegnago = lazy(() => import("./pages/MalDiSchienaLegnago"));
-const MassaggioSportivoLegnago = lazy(() => import("./pages/MassaggioSportivoLegnago"));
 const FaqGbp = lazy(() => import("./pages/FaqGbp"));
 const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
 const Grazie = lazy(() => import("./pages/Grazie"));
@@ -247,8 +229,7 @@ const AppContent = () => {
                     <Route path="/servizi/small-group" element={<Suspense fallback={<RouteLoading />}><SmallGroup /></Suspense>} />
                     
                     {/* Core pages */}
-                    <Route path="/chi-siamo" element={<ChiSiamoNew />} />
-                    <Route path="/chi-siamo-legacy" element={<ChiSiamo />} />
+                    <Route path="/chi-siamo" element={<ChiSiamo />} />
                     <Route path="/risultati" element={<Risultati />} />
                     <Route path="/contatti" element={<Contatti />} />
                     <Route path="/grazie" element={<Suspense fallback={<RouteLoading />}><Grazie /></Suspense>} />
