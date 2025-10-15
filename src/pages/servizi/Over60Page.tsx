@@ -3,6 +3,7 @@ import { MinimalHero } from '@/features/hero';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
 import { Heart, Shield, TrendingUp, Users, Award, Activity } from 'lucide-react';
+import { getServiceSchemaData } from '@/config/businessData';
 
 const Over60Page = () => {
   const obiettivi = [
@@ -108,33 +109,7 @@ const Over60Page = () => {
     }
   ];
   
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Programma Fitness Over 60 Legnago",
-    "description": "Active aging a Legnago: protocolli certificati per mantenere forza, equilibrio e autonomia dopo i 60 anni. Prevenzione sarcopenia, osteoporosi e cadute.",
-    "provider": {
-      "@type": "HealthAndBeautyBusiness",
-      "name": "MUV Fitness Legnago"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Over 60 Active Aging",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Programma Over 60 Personalizzato"
-          }
-        }
-      ]
-    }
-  };
+  const serviceSchema = getServiceSchemaData('over-60');
   
   return (
     <>

@@ -8,32 +8,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Clock, Target, Shield, Users, Award } from 'lucide-react';
+import { getServiceSchemaData } from '@/config/businessData';
 
 const EMSPage = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Allenamento EMS",
-    "description": "Elettrostimolazione muscolare per dimagrimento e tonificazione a Legnago",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+393491234567"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    "serviceType": "Fitness Training"
-  };
+  const structuredData = getServiceSchemaData('ems-training');
 
   const benefits = [
     {

@@ -7,32 +7,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Target, Shield, Users, CheckCircle, Star, Award } from 'lucide-react';
+import { getServiceSchemaData } from '@/config/businessData';
 
 const PilatesReformerPage = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Pilates Reformer",
-    "description": "Corsi di Pilates Reformer a Legnago per postura, flessibilità e forza core",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+393491234567"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    "serviceType": "Fitness Training"
-  };
+  const structuredData = getServiceSchemaData('pilates-reformer');
 
   const benefits = [
     {

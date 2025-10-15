@@ -3,6 +3,7 @@ import { MinimalHero } from '@/features/hero';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
 import { Flame, Heart, Droplet, Zap, Shield, Clock } from 'lucide-react';
+import { getServiceSchemaData } from '@/config/businessData';
 
 const SaunaInfrarossiPage = () => {
   const benefici = [
@@ -88,33 +89,7 @@ const SaunaInfrarossiPage = () => {
     }
   ];
   
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Sauna Infrarossi Legnago",
-    "description": "Detossificazione profonda, recupero muscolare e riduzione stress con sauna a infrarossi a spettro completo. Protocolli certificati per benessere e dimagrimento.",
-    "provider": {
-      "@type": "HealthAndBeautyBusiness",
-      "name": "MUV Fitness Legnago"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Sauna Infrarossi",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Sessione Singola Sauna Infrarossi"
-          }
-        }
-      ]
-    }
-  };
+  const serviceSchema = getServiceSchemaData('sauna-infrarossi');
   
   return (
     <>

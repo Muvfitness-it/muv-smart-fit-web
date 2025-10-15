@@ -4,6 +4,7 @@ import ProofMetrics from '@/components/shared/ProofMetrics';
 import ServiceCard from '@/components/shared/ServiceCard';
 import FAQAccordion, { FAQItem } from '@/components/shared/FAQAccordion';
 import { UnifiedContactForm } from '@/features/forms';
+import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import { Target, Heart, Droplet, Flame, Users, Calendar } from 'lucide-react';
 
 const MUVHomepage = () => {
@@ -84,30 +85,6 @@ const MUVHomepage = () => {
       answer: "Certamente. Offriamo una prova gratuita completa di 90 minuti che include: valutazione posturale e composizione corporea, presentazione del protocollo personalizzato, sessione trial EMS o Reformer. Zero impegno."
     }
   ];
-  
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "HealthAndBeautyBusiness",
-    "name": "MUV Fitness Legnago",
-    "image": "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",
-    "description": "Centro fitness boutique a Legnago specializzato in dimagrimento, postura e tecnologie avanzate (EMS, Pilates Reformer, Vacuum Therapy)",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Via [Indirizzo]",
-      "addressLocality": "Legnago",
-      "addressRegion": "VR",
-      "postalCode": "37045",
-      "addressCountry": "IT"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 45.1919,
-      "longitude": 11.3047
-    },
-    "telephone": "+39 [telefono]",
-    "priceRange": "€€",
-    "openingHours": "Mo-Fr 09:00-21:00, Sa 09:00-13:00"
-  };
 
   return (
     <>
@@ -134,12 +111,9 @@ const MUVHomepage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="MUV Fitness Legnago | Dimagrimento e Postura" />
         <meta name="twitter:description" content="Tecnologie avanzate per risultati rapidi e duraturi" />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(localBusinessSchema)}
-        </script>
       </Helmet>
+
+      <LocalBusinessSchema />
 
       <MinimalHero
         title="Dimagrimento e Postura a Legnago mediante Tecnologie Avanzate e Approccio Scientifico"

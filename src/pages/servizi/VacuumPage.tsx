@@ -7,32 +7,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Droplets, Heart, Sparkles, Clock, Users, CheckCircle } from 'lucide-react';
+import { getServiceSchemaData } from '@/config/businessData';
 
 const VacuumPage = () => {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Vacuum Pressoterapia",
-    "description": "Trattamenti di pressoterapia e drenaggio linfatico a Legnago per cellulite e ritenzione idrica",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "MUV Fitness",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
-      },
-      "telephone": "+393491234567"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    "serviceType": "Beauty Treatment"
-  };
+  const structuredData = getServiceSchemaData('vacuum-pressoterapia');
 
   const benefits = [
     {
