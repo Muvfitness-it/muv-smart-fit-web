@@ -1,162 +1,49 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { getLocalBusinessSchemaData, BUSINESS_DATA } from '@/config/businessData';
 
+/**
+ * Componente LocalBusinessSchema
+ * Genera automaticamente schema markup da fonte di verità unica
+ */
 const LocalBusinessSchema: React.FC = () => {
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": "https://www.muvfitness.it/#localbusiness",
-    "name": "MUV Fitness Legnago",
-    "alternateName": "MUV Fitness",
-    "description": "Centro fitness esclusivo a Legnago specializzato in personal training, tecnologia EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti posturali. Trasforma il tuo corpo con i nostri metodi innovativi.",
-    "url": "https://www.muvfitness.it",
-    "telephone": "+39 329 107 0374",
-    "email": "info@muvfitness.it",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Piazzetta Don Walter Soave, 2",
-      "addressLocality": "Legnago",
-      "addressRegion": "Veneto",
-      "postalCode": "37045",
-      "addressCountry": "IT"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 45.1914,
-      "longitude": 11.3065
-    },
-    "openingHours": [
-      "Mo-Fr 08:00-21:00",
-      "Sa 08:00-12:00"
-    ],
-    "priceRange": "€€-€€€",
-    "image": [
-      "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-      "https://www.muvfitness.it/images/fitness-professional-bg.jpg"
-    ],
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-      "width": 400,
-      "height": 400
-    },
-    "sameAs": [
-      "https://www.facebook.com/MuvLegnago/",
-      "https://www.instagram.com/MuvLegnago/"
-    ],
-    "areaServed": [
-      {
-        "@type": "City",
-        "name": "Legnago"
-      },
-      {
-        "@type": "City", 
-        "name": "Verona"
-      },
-      {
-        "@type": "Place",
-        "name": "Bassa Veronese"
-      },
-      {
-        "@type": "City",
-        "name": "Cerea"
-      },
-      {
-        "@type": "City",
-        "name": "Bovolone"
-      },
-      {
-        "@type": "City",
-        "name": "San Bonifacio"
-      }
-    ],
-    "paymentAccepted": "Cash, Credit Card, Bank Transfer",
-    "currenciesAccepted": "EUR",
-    "makesOffer": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Personal Training",
-          "description": "Allenamento personalizzato con trainer certificati"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "EMS Training",
-          "description": "Elettrostimolazione muscolare per risultati rapidi"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Pilates",
-          "description": "Corsi di Pilates per migliorare postura e flessibilità"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Consulenza Nutrizionale",
-          "description": "Piani alimentari personalizzati per raggiungere i tuoi obiettivi"
-        }
-      }
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Servizi MUV Fitness Legnago",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service", 
-            "name": "Consulenza gratuita",
-            "description": "Valutazione posturale e corporea gratuita di 45 minuti"
-          }
-        }
-      ]
-    }
-  };
+  const localBusinessSchema = getLocalBusinessSchemaData();
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://www.muvfitness.it/#organization",
-    "name": "MUV Fitness Legnago",
-    "url": "https://www.muvfitness.it",
+    "@id": `${BUSINESS_DATA.web.domain}/#organization`,
+    "name": BUSINESS_DATA.name,
+    "url": BUSINESS_DATA.web.domain,
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
+      "url": BUSINESS_DATA.branding.logo,
       "width": 400,
       "height": 400
     },
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+39 329 107 0374",
+        "telephone": BUSINESS_DATA.contact.phone,
         "contactType": "customer service",
-        "email": "info@muvfitness.it",
-        "areaServed": "IT",
+        "email": BUSINESS_DATA.contact.email,
+        "areaServed": BUSINESS_DATA.address.countryCode,
         "availableLanguage": ["Italian", "English"]
       }
     ],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Piazzetta Don Walter Soave, 2",
-      "addressLocality": "Legnago",
-      "addressRegion": "Veneto",
-      "postalCode": "37045",
-      "addressCountry": "IT"
+      "streetAddress": BUSINESS_DATA.address.street,
+      "addressLocality": BUSINESS_DATA.address.city,
+      "addressRegion": BUSINESS_DATA.address.region,
+      "postalCode": BUSINESS_DATA.address.postalCode,
+      "addressCountry": BUSINESS_DATA.address.countryCode
     },
     "sameAs": [
-      "https://www.facebook.com/MuvLegnago/",
-      "https://www.instagram.com/MuvLegnago/"
-    ]
+      BUSINESS_DATA.social.facebook,
+      BUSINESS_DATA.social.instagram
+    ].filter(Boolean)
   };
 
   return (

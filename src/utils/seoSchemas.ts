@@ -1,124 +1,23 @@
 // Comprehensive structured data schemas for MUV Fitness
+// ⚠️ MIGRATO: Usa getLocalBusinessSchemaData() da src/config/businessData.ts
 
-export const getLocalBusinessSchema = () => ({
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://www.muvfitness.it/#localbusiness",
-  "name": "MUV Fitness",
-  "alternateName": "MUV Fitness Legnago",
-  "description": "Centro fitness intelligente a Legnago specializzato in EMS, Personal Training, Pilates Reformer, Pancafit, Massoterapia e Nutrizione. Risultati garantiti in 30 giorni.",
-  "url": "https://www.muvfitness.it",
-  "logo": "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",
-  "image": [
-    "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-    "https://www.muvfitness.it/lovable-uploads/29b9c5b1-c958-454c-9d7f-5d1c1b4f38ff.png"
-  ],
-  "telephone": "+39 329 107 0374",
-  "email": "info@muvfitness.it",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Piazzetta Don Walter Soave, 2",
-    "addressLocality": "Legnago",
-    "addressRegion": "Veneto",
-    "postalCode": "37045",
-    "addressCountry": "IT"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 45.1927,
-    "longitude": 11.3007
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "07:00",
-      "closes": "21:00"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday",
-      "opens": "08:00",
-      "closes": "18:00"
-    }
-  ],
-  "priceRange": "€€",
-  "currenciesAccepted": "EUR",
-  "paymentAccepted": ["Cash", "Credit Card", "Bank Transfer"],
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Legnago"
-    },
-    {
-      "@type": "City", 
-      "name": "Bovolone"
-    },
-    {
-      "@type": "City",
-      "name": "Cerea"
-    },
-    {
-      "@type": "City",
-      "name": "San Bonifacio"
-    }
-  ],
-  "sameAs": [
-    "https://www.facebook.com/muvfitness",
-    "https://www.instagram.com/muvfitness"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Servizi MUV Fitness",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "EMS Training",
-          "description": "Elettrostimolazione per dimagrimento e tonificazione in 20 minuti"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Personal Training",
-          "description": "Allenamento personalizzato 1:1 con coach certificato"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Pilates Reformer",
-          "description": "Pilates su macchinari per core stability e postura"
-        }
-      }
-    ]
-  }
-});
+import { getLocalBusinessSchemaData, BUSINESS_DATA } from '@/config/businessData';
+
+// Re-export della funzione centralizzata
+export const getLocalBusinessSchema = getLocalBusinessSchemaData;
 
 export const getOrganizationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://www.muvfitness.it/#organization",
-  "name": "MUV Fitness",
-  "url": "https://www.muvfitness.it",
-  "logo": "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",
-  "description": "Centro fitness intelligente con tecnologie avanzate per il benessere completo",
-  "foundingDate": "2020",
-  "numberOfEmployees": "5-10",
-  "slogan": "Fitness Intelligente",
-  "knowsAbout": [
-    "Fitness",
-    "Personal Training", 
-    "EMS Training",
-    "Pilates",
-    "Nutrizione",
-    "Massoterapia",
-    "Wellness"
-  ]
+  "@id": `${BUSINESS_DATA.web.domain}/#organization`,
+  "name": BUSINESS_DATA.name,
+  "url": BUSINESS_DATA.web.domain,
+  "logo": BUSINESS_DATA.branding.logo,
+  "description": BUSINESS_DATA.description,
+  "foundingDate": BUSINESS_DATA.business.foundingYear,
+  "numberOfEmployees": BUSINESS_DATA.business.employeeRange,
+  "slogan": BUSINESS_DATA.slogan,
+  "knowsAbout": BUSINESS_DATA.services.map(s => s.category)
 });
 
 export const getServiceSchema = (serviceName: string, serviceDescription: string, serviceUrl: string) => ({
@@ -129,17 +28,21 @@ export const getServiceSchema = (serviceName: string, serviceDescription: string
   "url": serviceUrl,
   "provider": {
     "@type": "LocalBusiness",
-    "name": "MUV Fitness",
-    "url": "https://www.muvfitness.it"
-  },
-  "areaServed": {
-    "@type": "City",
-    "name": "Legnago",
-    "containedInPlace": {
-      "@type": "AdministrativeArea",
-      "name": "Verona"
+    "name": BUSINESS_DATA.name,
+    "url": BUSINESS_DATA.web.domain,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": BUSINESS_DATA.address.street,
+      "addressLocality": BUSINESS_DATA.address.city,
+      "addressRegion": BUSINESS_DATA.address.region,
+      "postalCode": BUSINESS_DATA.address.postalCode,
+      "addressCountry": BUSINESS_DATA.address.countryCode
     }
   },
+  "areaServed": BUSINESS_DATA.areasServed.filter(a => a.isPrimary).map(area => ({
+    "@type": area.type,
+    "name": area.name
+  })),
   "serviceType": "Fitness Service",
   "category": "Health and Fitness"
 });

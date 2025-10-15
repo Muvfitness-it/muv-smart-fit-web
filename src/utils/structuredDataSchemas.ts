@@ -1,48 +1,10 @@
 // Structured data schemas for different page types
+// ⚠️ MIGRATO: Usa getLocalBusinessSchemaData() da src/config/businessData.ts
 
-export const generateLocalBusinessSchema = () => ({
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "MUV Fitness",
-  "image": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png",
-  "description": "Centro fitness esclusivo a Legnago specializzato in personal training, EMS, Pilates e programmi di dimagrimento personalizzati.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Viale dei Tigli 14",
-    "addressLocality": "Legnago",
-    "postalCode": "37045",
-    "addressRegion": "VR",
-    "addressCountry": "IT"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "45.1926",
-    "longitude": "11.3046"
-  },
-  "telephone": "+39 329 107 0374",
-  "url": "https://www.muvfitness.it",
-  "sameAs": [
-    "https://www.facebook.com/muvfitnesslegnago",
-    "https://www.instagram.com/muvfitness"
-  ],
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "07:00",
-      "closes": "22:00"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday",
-      "opens": "08:00",
-      "closes": "19:00"
-    }
-  ],
-  "priceRange": "€€",
-  "paymentAccepted": ["Cash", "Credit Card"],
-  "hasCredential": "Certified Personal Trainers"
-});
+import { getLocalBusinessSchemaData } from '@/config/businessData';
+
+// Re-export per retrocompatibilità
+export const generateLocalBusinessSchema = getLocalBusinessSchemaData;
 
 export const generateServiceSchema = (serviceName: string, description: string, price?: string) => ({
   "@context": "https://schema.org",

@@ -76,6 +76,7 @@ const VacuumPressoterapia = lazy(() => import("./pages/servizi/VacuumPressoterap
 
 // Main pages - lazy loaded
 const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
+const ZoneServite = lazy(() => import("./pages/ZoneServite"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminUserManagement = lazy(() => import("./pages/AdminUserManagement"));
