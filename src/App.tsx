@@ -98,12 +98,20 @@ const GEOValidator = lazy(() => import("./components/SEO/GEOValidator"));
 const AIAuth = lazy(() => import("./pages/AIAuth"));
 
 // SEO pages - lazy loaded
+const PersonalTrainerLegnago = lazy(() => import("./pages/PersonalTrainerLegnago"));
 const AllenamentoEMSLegnago = lazy(() => import("./pages/AllenamentoEMSLegnago"));
 const PilatesLegnago = lazy(() => import("./pages/PilatesLegnago"));
-
 const DimagrireLegnago = lazy(() => import("./pages/DimagrireLegnago"));
 const MalDiSchienaLegnago = lazy(() => import("./pages/MalDiSchienaLegnago"));
 const MassaggioSportivoLegnago = lazy(() => import("./pages/MassaggioSportivoLegnago"));
+const FaqGbp = lazy(() => import("./pages/FaqGbp"));
+const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
+const Grazie = lazy(() => import("./pages/Grazie"));
+const Recensioni = lazy(() => import("./pages/Recensioni"));
+
+// Local Landing Pages - Phase 5
+const PersonalTrainerCerea = lazy(() => import("./pages/local/PersonalTrainerCerea"));
+const PersonalTrainerMinerbe = lazy(() => import("./pages/local/PersonalTrainerMinerbe"));
 
 
 // SEO Components
@@ -123,12 +131,6 @@ const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
 const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
 const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
 const AdminSmallGroupSchedule = lazy(() => import("./pages/admin/AdminSmallGroupSchedule"));
-
-// Other pages - lazy loaded
-const Recensioni = lazy(() => import("./pages/Recensioni"));
-const FaqGbp = lazy(() => import("./pages/FaqGbp"));
-const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
-const Grazie = lazy(() => import("./pages/Grazie"));
 
 // Loading component for lazy routes
 const RouteLoading = () => (
@@ -254,7 +256,12 @@ const AppContent = () => {
                     <Route path="/team" element={<Team />} />
                     <Route path="/faq" element={<FAQPage />} />
                     <Route path="/come-arrivare" element={<ComeArrivare />} />
+                    <Route path="/zone-servite" element={<ZoneServite />} />
                     <Route path="/recensioni" element={<Recensioni />} />
+                    
+                    {/* Local Landing Pages - Phase 5 */}
+                    <Route path="/personal-trainer-cerea" element={<PersonalTrainerCerea />} />
+                    <Route path="/personal-trainer-minerbe" element={<PersonalTrainerMinerbe />} />
                     
                     {/* Landing Pages */}
                     <Route path="/prova-gratuita-ems" element={<ProvaGratuitaEMS />} />
