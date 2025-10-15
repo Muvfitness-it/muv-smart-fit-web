@@ -3,7 +3,9 @@
  * Tutti gli schemi JSON-LD per SEO avanzata
  */
 
-export { localBusinessSchema } from './localBusiness';
+export { getGEOLocalBusinessSchema } from './localBusiness';
+// Backward compatibility
+export { getGEOLocalBusinessSchema as localBusinessSchema } from './localBusiness';
 export { generateBreadcrumbSchema, breadcrumbPresets } from './breadcrumb';
 
 // Service Schema Generator
