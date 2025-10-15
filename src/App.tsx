@@ -81,6 +81,7 @@ const AdminAuth = lazy(() => import("./pages/AdminAuth"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminUserManagement = lazy(() => import("./pages/AdminUserManagement"));
 const Analytics = lazy(() => import("./pages/Analytics"));
+const LocalSEODashboard = lazy(() => import("./pages/admin/LocalSEODashboard"));
 
 // Landing Pages - lazy loaded
 const Trasformazione30Giorni = lazy(() => import("./pages/landing/Trasformazione30Giorni"));
@@ -93,6 +94,7 @@ import { SessionSecurity } from "./components/security/SessionSecurity";
 import { SecureDataHandler } from "@/components/security/SecureDataHandler";
 const CookieConsent = lazy(() => import("./components/security/CookieConsent"));
 const FloatingCTA = lazy(() => import("./components/ui/FloatingCTA"));
+const GEOValidator = lazy(() => import("./components/SEO/GEOValidator"));
 const AIAuth = lazy(() => import("./pages/AIAuth"));
 
 // SEO pages - lazy loaded
@@ -165,6 +167,7 @@ const AppContent = () => {
         <PerformanceMonitor />
         <SecureDataHandler />
         <RedirectHandler />
+        <GEOValidator />
         
         {/* Removed problematic optimization components */}
         <div className="min-h-screen bg-background text-foreground">
@@ -278,6 +281,7 @@ const AppContent = () => {
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     <Route path="/admin/small-group-schedule" element={<AdminRoute><Suspense fallback={<RouteLoading />}><AdminSmallGroupSchedule /></Suspense></AdminRoute>} />
+                    <Route path="/admin/local-seo" element={<AdminRoute><Suspense fallback={<RouteLoading />}><LocalSEODashboard /></Suspense></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Clean up circular redirects ===== */}
@@ -303,7 +307,8 @@ const AppContent = () => {
                     <Route path="/massaggio-sportivo-legnago" element={<Navigate to="/#servizi" replace />} />
                     
                     {/* Old standalone pages → Core pages */}
-                    <Route path="/come-arrivare" element={<Navigate to="/contatti" replace />} />
+                    <Route path="/come-arrivare" element={<Suspense fallback={<RouteLoading />}><ComeArrivare /></Suspense>} />
+                    <Route path="/zone-servite" element={<Suspense fallback={<RouteLoading />}><ZoneServite /></Suspense>} />
                     <Route path="/form-contatti" element={<Navigate to="/contatti" replace />} />
                     <Route path="/recensioni" element={<Navigate to="/risultati" replace />} />
                     <Route path="/faq-gbp" element={<Navigate to="/#faq" replace />} />
