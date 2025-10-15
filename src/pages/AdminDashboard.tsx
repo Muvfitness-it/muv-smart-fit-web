@@ -10,6 +10,7 @@ import { BlogThemeNormalizer } from '@/components/admin/BlogThemeNormalizer';
 import { BlogContentFixer } from '@/components/admin/BlogContentFixer';
 import BlogSEOAuditor from '@/components/SEO/BlogSEOAuditor';
 import BlogCopyHumanizer from '@/components/admin/BlogCopyHumanizer';
+import { GEOBlogGenerator } from '@/components/admin/GEOBlogGenerator';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('articles');
@@ -113,6 +114,9 @@ const AdminDashboard = () => {
                     </CardContent>
                   </Card>
                 </div>
+
+                {/* GEO Blog Generator */}
+                <GEOBlogGenerator />
 
                 {/* SEO Blog Auditor */}
                 <Card>
