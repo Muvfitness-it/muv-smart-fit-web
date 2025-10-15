@@ -1,14 +1,14 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { getLocalBusinessSchemaData, BUSINESS_DATA } from '@/config/businessData';
+import { getGEOLocalBusinessSchema } from '@/utils/schemas/localBusiness';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 /**
- * Componente LocalBusinessSchema
- * Genera automaticamente schema markup da fonte di verità unica
+ * Componente LocalBusinessSchema - GEO Optimized
+ * Schema markup ottimizzato per motori generativi
  */
 const LocalBusinessSchema: React.FC = () => {
-  const localBusinessSchema = getLocalBusinessSchemaData();
+  const localBusinessSchema = getGEOLocalBusinessSchema();
 
   const organizationSchema = {
     "@context": "https://schema.org",
