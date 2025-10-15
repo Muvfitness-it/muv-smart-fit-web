@@ -57,16 +57,16 @@ const EMSPage = () => {
 
   return (
     <ServicePageLayout
-      title="Allenamento EMS Legnago - Elettrostimolazione Muscolare | MUV Fitness"
-      description="Scopri l'allenamento EMS a Legnago. Elettrostimolazione muscolare per dimagrimento rapido e tonificazione. Prenota la tua prova gratuita da MUV Fitness."
-      keywords="EMS Legnago, elettrostimolazione muscolare, allenamento EMS, dimagrimento rapido Legnago, tonificazione EMS"
-      canonical="https://www.muvfitness.it/servizi/ems"
+      title="EMS Training Legnago | Elettrostimolazione Muscolare - Dimagrimento Rapido | MUV Fitness"
+      description="EMS Training a Legnago: la tecnologia di elettrostimolazione muscolare più avanzata per dimagrire velocemente. Brucia grassi efficace, risultati in 4 settimane. Prova gratuita MUV Fitness nel Basso Veronese."
+      keywords="EMS training Legnago, elettrostimolazione muscolare, dimagrire Legnago, personal trainer Legnago, brucia grassi efficace, dimagrimento rapido e sicuro, tecnologie per dimagrire"
+      canonical="https://www.muvfitness.it/servizi/ems-legnago/"
       structuredData={structuredData}
     >
       <MinimalHero
-        title="Allenamento EMS a Legnago"
-        subtitle="Elettrostimolazione Muscolare per Risultati Straordinari"
-        description="Dimagrisci e tonifica il tuo corpo in tempi record con la tecnologia EMS più avanzata. 45 minuti di allenamento equivalgono a 4 ore di palestra tradizionale."
+        title="EMS Training Legnago - Elettrostimolazione Muscolare"
+        subtitle="Il Sistema di Allenamento più Avanzato del Basso Veronese"
+        description="MUV Fitness Legnago offre EMS Training certificato: dimagrisci e tonifica il corpo in tempi record. La tecnologia di elettrostimolazione muscolare più efficace per perdere peso velocemente a Legnago. 45 minuti equivalgono a 4 ore di palestra tradizionale. Risultati visibili in 4 settimane."
         gradient="primary"
         primaryCTA={{
           text: "Prenota Prova Gratuita EMS",
@@ -75,7 +75,7 @@ const EMSPage = () => {
         breadcrumbs={[
           { text: "Home", href: "/" },
           { text: "Servizi", href: "/servizi" },
-          { text: "EMS" }
+          { text: "EMS Training" }
         ]}
       />
 

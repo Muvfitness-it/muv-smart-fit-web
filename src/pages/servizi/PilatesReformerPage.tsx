@@ -65,19 +65,19 @@ const PilatesReformerPage = () => {
 
   return (
     <ServicePageLayout
-      title="Pilates Reformer Legnago - Postura e Flessibilità | MUV Fitness"
-      description="Corsi Pilates Reformer a Legnago per migliorare postura, flessibilità e forza core. Lezioni individuali e piccoli gruppi. Prova gratuita."
-      keywords="Pilates Reformer Legnago, postura Legnago, mal di schiena, Pilates macchinari, core stability"
-      canonical="https://www.muvfitness.it/servizi/pilates-reformer"
+      title="Pilates Reformer Legnago | Ginnastica Posturale - Mal di Schiena | MUV Fitness"
+      description="Pilates Reformer a Legnago per mal di schiena e postura corretta. Ginnastica posturale efficace nel Basso Veronese. Correggi postura e dolori cronici con il metodo più avanzato. Valutazione posturale gratuita."
+      keywords="pilates reformer Legnago, ginnastica posturale Legnago, mal di schiena e postura, postura corretta, schiena sana, dolore lombare, cervicale e tensioni, pancafit method"
+      canonical="https://www.muvfitness.it/servizi/pilates-reformer-legnago/"
       structuredData={structuredData}
     >
       <MinimalHero
-        title="Pilates Reformer a Legnago"
-        subtitle="Rivoluziona la Tua Postura e il Tuo Benessere"
-        description="Scopri il potere trasformativo del Pilates Reformer: postura perfetta, core forte e movimenti fluidi. Il metodo più efficace per il benessere della tua schiena."
+        title="Pilates Reformer Legnago - Ginnastica Posturale"
+        subtitle="Elimina il Mal di Schiena e Migliora la Postura"
+        description="MUV Fitness Legnago offre Pilates Reformer professionale per mal di schiena e postura corretta. Ginnastica posturale efficace a Legnago con il metodo più avanzato. Postura e schiena sana in poche settimane. Valutazione posturale gratuita nel Basso Veronese."
         gradient="primary"
         primaryCTA={{
-          text: "Prenota Lezione di Prova",
+          text: "Prenota Valutazione Posturale Gratuita",
           href: "#prenota"
         }}
         breadcrumbs={[

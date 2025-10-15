@@ -92,7 +92,7 @@ const MUVHomepage = () => {
         <title>MUV Fitness Legnago | Dimagrimento e Postura con Tecnologie EMS, Pilates Reformer</title>
         <meta 
           name="description" 
-          content="Centro fitness boutique a Legnago (VR) specializzato in dimagrimento rapido, correzione posturale e riabilitazione. Tecnologie certificate: EMS, Pilates Reformer, Vacuum Therapy. Risultati verificabili in 4-8 settimane." 
+          content="MUV Fitness Legnago: il centro fitness intelligente con tecnologie avanzate per dimagrire e migliorare la postura. EMS Training, Pilates Reformer, Vacuum Therapy. Allenamenti personalizzati a Legnago con risultati in 4 settimane. Prova gratuita senza impegno." 
         />
         <meta 
           name="keywords" 
@@ -116,8 +116,8 @@ const MUVHomepage = () => {
       <LocalBusinessSchema />
 
       <MinimalHero
-        title="Dimagrimento e Postura a Legnago mediante Tecnologie Avanzate e Approccio Scientifico"
-        description="Il protocollo MUV combina EMS, Pilates Reformer e metodologie di riabilitazione posturale per risultati verificabili in 4-8 settimane."
+        title="MUV Fitness Legnago | Centro Fitness Intelligente con EMS, Pilates Reformer e Tecnologie Avanzate"
+        description="Il centro fitness più innovativo di Legnago. Tecnologie avanzate per dimagrire velocemente e correggere la postura: EMS Training, Pilates Reformer, Vacuum Therapy. Allenamenti personalizzati basati su scienza e risultati. Prova gratuita senza impegno."
         gradient="dual"
         primaryCTA={{
           text: "Prenota la tua Prova Gratuita",
@@ -139,12 +139,14 @@ const MUVHomepage = () => {
               Il Metodo MUV: Evidence-Based Fitness
             </h2>
             <p className="text-body-xl text-muted-foreground mb-8 leading-relaxed">
-              MUV Fitness è l'unico centro a Legnago che integra <strong>tecnologie certificate</strong> (EMS, Pilates Reformer, Vacuum Therapy), 
-              <strong> personalizzazione totale</strong> e <strong>supporto scientifico continuativo</strong> per garantire risultati misurabili e duraturi.
+              MUV Fitness Legnago è il centro fitness più innovativo del Basso Veronese. Integriamo <strong>tecnologie certificate</strong> (EMS Training, Pilates Reformer, Vacuum e Pressoterapia), 
+              <strong>personalizzazione totale</strong> e <strong>supporto scientifico continuativo</strong> per garantire risultati misurabili e duraturi. 
+              Il metodo più efficace per dimagrire in modo intelligente e risolvere problemi posturali nel Basso Veronese.
             </p>
             <p className="text-body-lg text-muted-foreground mb-12">
-              Non offriamo abbonamenti generici: ogni protocollo è costruito su misura, con valutazioni mensili, 
-              monitoraggio dei progressi e ottimizzazione costante. Il nostro approccio è evidence-based: ogni metodologia è validata scientificamente.
+              Non offriamo abbonamenti generici: ogni protocollo è costruito su misura con valutazioni mensili, 
+              monitoraggio dei progressi e ottimizzazione costante. Dimagrire velocemente con tecnologie per risultati visibili in 10 sedute. 
+              Allenamenti personalizzati a Legnago con approccio evidence-based: ogni metodologia è validata scientificamente.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
