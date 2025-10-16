@@ -7,6 +7,20 @@ import { GEO_BLOG_ARTICLES } from '@/utils/geoBlogArticles';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 
+// Mapping delle categorie testuali agli UUID del database
+const CATEGORY_MAPPING: Record<string, string> = {
+  'Dimagrimento': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Tecnologie Fitness': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Postura e Benessere': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Benessere e Recovery': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Fitness Over 40': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Postura e Salute': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Estetica e Corpo': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Senior Fitness': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Programmi Dimagrimento': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Benessere Olistico': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3' // Benessere
+};
+
 interface GenerationStatus {
   total: number;
   completed: number;
@@ -54,6 +68,8 @@ IMPORTANTE:
 `;
 
     try {
+      console.log('🔍 Generando articolo:', articleConfig.title);
+      
       const { data: functionData, error: functionError } = await supabase.functions.invoke('advanced-article-generator', {
         body: {
           topic: articleConfig.title,
@@ -64,10 +80,21 @@ IMPORTANTE:
         }
       });
 
-      if (functionError) throw functionError;
-      if (!functionData?.content) throw new Error('Nessun contenuto generato');
+      if (functionError) {
+        console.error('❌ Errore edge function:', functionError);
+        throw functionError;
+      }
+      if (!functionData?.content) {
+        console.error('❌ Nessun contenuto generato dalla funzione');
+        throw new Error('Nessun contenuto generato');
+      }
 
-      // Salva nel database
+      console.log('✅ Contenuto generato, salvataggio nel DB...');
+
+      // Mappa la categoria testuale all'UUID corretto
+      const categoryId = CATEGORY_MAPPING[articleConfig.category] || 'd44d1da4-bd48-46c4-98be-84c4a52c43e0';
+
+      // Salva nel database con i campi corretti
       const { error: dbError } = await supabase
         .from('blog_posts')
         .insert({
@@ -76,18 +103,21 @@ IMPORTANTE:
           content: functionData.content,
           excerpt: articleConfig.metaDescription,
           meta_description: articleConfig.metaDescription,
-          category: articleConfig.category,
+          meta_keywords: articleConfig.targetKeywords.join(', '), // ✅ Convertito in stringa
+          category_id: categoryId, // ✅ UUID corretto
           status: 'draft',
-          featured_image: null,
-          tags: articleConfig.targetKeywords,
-          seo_keywords: articleConfig.targetKeywords
+          featured_image: null
         });
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        console.error('❌ Errore DB insert:', dbError);
+        throw dbError;
+      }
 
+      console.log('✅ Articolo salvato con successo:', articleConfig.title);
       return { success: true };
     } catch (error) {
-      console.error('Errore generazione articolo:', error);
+      console.error('❌ Errore generale generazione articolo:', error);
       return { success: false, error };
     }
   };
