@@ -18,7 +18,12 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'Estetica e Corpo': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
   'Senior Fitness': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
   'Programmi Dimagrimento': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
-  'Benessere Olistico': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3' // Benessere
+  'Benessere Olistico': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Personal Training': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Small Group': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0', // Fitness
+  'Nutrizione': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Gravidanza e Post-Parto': '59b51208-1b5f-4b98-95c3-34e21dbe1fd3', // Benessere
+  'Programmi Speciali': 'd44d1da4-bd48-46c4-98be-84c4a52c43e0' // Fitness
 };
 
 interface GenerationStatus {
