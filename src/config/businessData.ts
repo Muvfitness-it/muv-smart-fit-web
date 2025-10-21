@@ -90,7 +90,7 @@ export const BUSINESS_DATA = {
   // === GOOGLE BUSINESS PROFILE ===
   google: {
     placeId: "ChIJM13JkjgTf0cR98DTc4p0qJA",
-    businessProfileUrl: "https://g.page/r/CXKiWEQjMq5oEBM/review",
+    businessProfileUrl: "https://g.page/r/CXKiWEQjMq5oEBM",
     reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJM13JkjgTf0cR98DTc4p0qJA"
   },
   
