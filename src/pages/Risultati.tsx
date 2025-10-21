@@ -108,6 +108,37 @@ const Risultati = () => {
             <span className="text-primary">Il prossimo potresti essere tu.</span>
           </p>
           </header>
+
+          {/* Widget Recensioni Google Reali */}
+          <section className="mb-16 bg-muted/30 rounded-lg p-8 border border-border">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
+              Le Recensioni Reali dei Nostri Clienti su <span className="text-brand-primary">Google</span>
+            </h2>
+            <p className="text-center text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Verificate e autentiche: scopri cosa dicono le persone che si sono allenate con noi
+            </p>
+            
+            <div 
+              dangerouslySetInnerHTML={{
+                __html: `
+                  <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
+                  <iframe 
+                    class='lc_reviews_widget' 
+                    src='https://reputationhub.site/reputation/widgets/review_widget/Zb8VPNmSwrV1NSOiqbzt' 
+                    frameborder='0' 
+                    scrolling='no' 
+                    style='min-width: 100%; width: 100%; border: none;'
+                    title="Recensioni Google MUV Fitness"
+                  ></iframe>
+                `
+              }}
+            />
+          </section>
+
+          {/* Storie di Trasformazione Dettagliate */}
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Le Loro Storie di <span className="text-brand-primary">Trasformazione</span>
+          </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonianze.map((testimonianza, index) => (
@@ -172,21 +203,27 @@ const Risultati = () => {
         </div>
       </section>
 
-      {/* Reviews Link */}
-      <section className="py-16 bg-muted/50">
+      {/* CTA Lascia Recensione */}
+      <section className="py-12 bg-gradient-to-r from-brand-primary/10 via-brand-accent/10 to-brand-info/10">
         <div className="container mx-auto px-4 text-center">
-          <Card className="bg-card/50 border-border backdrop-blur-sm max-w-md mx-auto">
-            <CardContent className="p-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Vuoi lasciare anche tu una recensione?</h3>
-              <p className="text-muted-foreground mb-6">La tua esperienza può aiutare altre persone a scoprire MUV Fitness</p>
-              <Button 
-                asChild 
-                className="w-full bg-brand-primary hover:bg-brand-primary/90 text-primary-foreground font-semibold min-h-[44px]"
-              >
-                <Link to="/recensioni">Come lasciare una recensione</Link>
-              </Button>
-            </CardContent>
-          </Card>
+          <h3 className="text-2xl font-bold text-foreground mb-3">
+            Ti sei allenato con noi? 🌟
+          </h3>
+          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+            La tua recensione aiuta altre persone a scoprire MUV Fitness. Bastano 30 secondi!
+          </p>
+          <Button 
+            asChild 
+            className="bg-brand-primary hover:bg-brand-primary/90 text-primary-foreground font-semibold px-8 py-3 min-h-[44px]"
+          >
+            <a 
+              href="https://g.page/r/CXKiWEQjMq5oEBM/review" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              Lascia una Recensione su Google
+            </a>
+          </Button>
         </div>
       </section>
     </div>
