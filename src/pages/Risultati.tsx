@@ -124,7 +124,7 @@ const Risultati = () => {
                   <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
                   <iframe 
                     class='lc_reviews_widget' 
-                    src='https://reputationhub.site/reputation/widgets/review_widget/Zb8VPNmSwrV1NSOiqbzt?widgetId=65112512f2a6d8997c705e9b' 
+                    src='https://reputationhub.site/reputation/widgets/review_widget/Zb8VPNmSwrV1NSOiqbzt' 
                     frameborder='0' 
                     scrolling='no' 
                     style='min-width: 100%; width: 100%; border: none;'
