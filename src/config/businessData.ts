@@ -87,6 +87,13 @@ export const BUSINESS_DATA = {
     tiktok: null
   },
   
+  // === GOOGLE BUSINESS PROFILE ===
+  google: {
+    placeId: "ChIJM13JkjgTf0cR98DTc4p0qJA",
+    businessProfileUrl: "https://g.page/r/CXKiWEQjMq5oEBM/review",
+    reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJM13JkjgTf0cR98DTc4p0qJA"
+  },
+  
   // === BRAND ASSETS ===
   branding: {
     logo: "https://www.muvfitness.it/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png",

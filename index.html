@@ -128,12 +128,12 @@
     <!-- Security Headers - Single CSP -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://reputationhub.site 'unsafe-inline' 'unsafe-eval';
+      script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://unpkg.com https://maps.googleapis.com 'unsafe-inline' 'unsafe-eval';
       style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
       font-src 'self' https://fonts.gstatic.com data:;
       img-src 'self' data: https: blob:;
-      connect-src 'self' https://*.supabase.co https://region1.analytics.google.com https://www.google-analytics.com https://search.google.com wss://*.supabase.co;
-      frame-src 'self' https://reputationhub.site https://search.google.com;
+      connect-src 'self' https://*.supabase.co https://region1.analytics.google.com https://www.google-analytics.com https://search.google.com https://maps.googleapis.com wss://*.supabase.co;
+      frame-src 'self' https://search.google.com;
       base-uri 'self';
       form-action 'self' https://*.supabase.co;
       worker-src 'self' blob:;
@@ -161,6 +161,9 @@
     
     <!-- Fonts -->
     <!-- Already loaded via preconnect above -->
+    
+    <!-- Google Maps Extended Components -->
+    <script async src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
     
     <!-- Schema Markup LocalBusiness -->
     <script type="application/ld+json">

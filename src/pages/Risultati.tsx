@@ -109,7 +109,7 @@ const Risultati = () => {
           </p>
           </header>
 
-          {/* Widget Recensioni Google Reali */}
+          {/* Widget Recensioni Google Ufficiale */}
           <section className="mb-16 bg-muted/30 rounded-lg p-8 border border-border">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
               Le Recensioni Reali dei Nostri Clienti su <span className="text-brand-primary">Google</span>
@@ -118,21 +118,32 @@ const Risultati = () => {
               Verificate e autentiche: scopri cosa dicono le persone che si sono allenate con noi
             </p>
             
+            {/* Google Reviews Widget */}
             <div 
+              className="max-w-5xl mx-auto"
               dangerouslySetInnerHTML={{
                 __html: `
-                  <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
-                  <iframe 
-                    class='lc_reviews_widget' 
-                    src='https://reputationhub.site/reputation/widgets/review_widget/Zb8VPNmSwrV1NSOiqbzt' 
-                    frameborder='0' 
-                    scrolling='no' 
-                    style='min-width: 100%; width: 100%; border: none;'
-                    title="Recensioni Google MUV Fitness"
-                  ></iframe>
+                  <gmpx-place-overview 
+                    place="ChIJM13JkjgTf0cR98DTc4p0qJA"
+                    size="large"
+                    google-logo-already-displayed>
+                  </gmpx-place-overview>
                 `
               }}
             />
+            
+            {/* CTA per lasciare recensione */}
+            <div className="text-center mt-8">
+              <a
+                href="https://search.google.com/local/writereview?placeid=ChIJM13JkjgTf0cR98DTc4p0qJA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary/90 text-primary-foreground px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 min-h-[44px]"
+              >
+                <Star className="w-5 h-5" />
+                Scrivi una Recensione su Google
+              </a>
+            </div>
           </section>
 
           {/* Storie di Trasformazione Dettagliate */}
