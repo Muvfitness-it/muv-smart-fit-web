@@ -102,9 +102,10 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
         }
         break;
       case 'phone':
-        const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,15}$/;
-        if (!value || (typeof value === 'string' && !phoneRegex.test(value))) {
-          return 'Numero di telefono non valido';
+        // Normalize phone: extract only digits
+        const digits = typeof value === 'string' ? value.replace(/\D/g, '') : '';
+        if (digits.length < 8 || digits.length > 16) {
+          return 'Inserisci un numero di telefono valido';
         }
         break;
       case 'gdprConsent':
@@ -135,6 +136,16 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
     // Validate all fields
     const validation = ContactService.validate(formData);
     if (!validation.isValid) {
+      // Map validation errors to field-specific errors
+      const fieldErrors: Record<string, string> = {};
+      validation.errors.forEach(errorMsg => {
+        if (errorMsg.toLowerCase().includes('nome')) fieldErrors.name = errorMsg;
+        else if (errorMsg.toLowerCase().includes('email')) fieldErrors.email = errorMsg;
+        else if (errorMsg.toLowerCase().includes('telefono')) fieldErrors.phone = errorMsg;
+        else if (errorMsg.toLowerCase().includes('gdpr') || errorMsg.toLowerCase().includes('dati')) fieldErrors.gdprConsent = errorMsg;
+      });
+      setErrors(fieldErrors);
+      
       toast({
         title: "Errore",
         description: validation.errors[0],

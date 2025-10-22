@@ -44,10 +44,10 @@ export class ContactService {
       errors.push('Inserisci un indirizzo email valido');
     }
 
-    // Phone validation
-    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,15}$/;
-    if (!data.phone || !phoneRegex.test(data.phone)) {
-      errors.push('Inserisci un numero di telefono valido (8-15 caratteri)');
+    // Phone validation - normalize and count only digits
+    const digits = data.phone?.replace(/\D/g, '') || '';
+    if (digits.length < 8 || digits.length > 16) {
+      errors.push('Inserisci un numero di telefono valido');
     }
 
     // GDPR consent validation

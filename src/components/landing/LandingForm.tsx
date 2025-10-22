@@ -41,7 +41,7 @@ const LandingForm: React.FC<LandingFormProps> = ({
         name: formData.nome.trim(),
         email: formData.email.toLowerCase().trim(),
         message: formData.messaggio.trim() || `Richiesta campagna ${campaignName}`,
-        telefono: formData.telefono.trim(),
+        phone: formData.telefono.trim(),
         campaign: campaignName,
         source: 'landing_page',
         botcheck: formData.botcheck,
