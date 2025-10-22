@@ -1,7 +1,5 @@
-// Contact form adapter using Formspree as primary channel
-// Matches the configuration of the live site
-
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mblklzbq";
+// Contact form adapter using Resend via Supabase Edge Function
+import { supabase } from "@/integrations/supabase/client";
 
 export interface ContactFormPayload {
   name: string;
@@ -28,46 +26,43 @@ export async function sendContactViaWeb3Forms(payload: ContactFormPayload): Prom
     return { success: true, message: "Honeypot triggered - skipped" };
   }
 
-  // Primary: Formspree (matching live site configuration)
   try {
-    const formData = {
-      name: payload.name,
-      email: payload.email,
-      phone: payload.phone || "",
-      obiettivo: payload.obiettivo || "",
-      message: payload.message,
-      subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
-      campaign: payload.campaign || "",
-      source: payload.source || "website",
-      _replyto: payload.email
-    };
-
-    const response = await fetch(FORMSPREE_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(formData)
+    console.log('Sending contact form via Supabase Edge Function...');
+    
+    const { data, error } = await supabase.functions.invoke('send-contact-email', {
+      body: {
+        name: payload.name,
+        email: payload.email,
+        phone: payload.phone || "",
+        obiettivo: payload.obiettivo || "",
+        message: payload.message,
+        subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
+        campaign: payload.campaign || "",
+        source: payload.source || "website"
+      }
     });
 
-    if (response.ok) {
+    if (error) {
+      console.error('Edge function error:', error);
+      throw error;
+    }
+
+    console.log('Edge function response:', data);
+
+    if (data?.success) {
       return { 
         success: true, 
-        message: 'Messaggio inviato con successo!' 
+        message: 'Messaggio inviato con successo!',
+        data: data
       };
     } else {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('Formspree error:', response.status, errorData);
-      throw new Error(`Formspree error: ${response.status}`);
+      throw new Error(data?.error || 'Unknown error from edge function');
     }
   } catch (error) {
-    console.error('Formspree submission failed:', error);
+    console.error('Contact form submission failed:', error);
+    return {
+      success: false,
+      message: "Errore nell'invio del messaggio. Riprova più tardi o contattaci su WhatsApp (329 107 0374)."
+    };
   }
-
-  // If Formspree fails, return error
-  return {
-    success: false,
-    message: "Errore nell'invio del messaggio. Riprova più tardi o contattaci su WhatsApp (329 107 0374)."
-  };
 }

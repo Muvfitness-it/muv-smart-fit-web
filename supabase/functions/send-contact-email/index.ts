@@ -1,90 +1,86 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
+import { Resend } from "npm:resend@4.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Updated CORS headers to include your domain
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Max-Age": "86400",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 interface ContactEmailRequest {
-  nome?: string; // For LandingForm
-  name?: string; // For ContactForm
+  name: string;
   email: string;
-  messaggio?: string; // For LandingForm
-  message?: string; // For ContactForm
-  telefono?: string;
-  city?: string;
-  goal?: string;
+  phone?: string;
+  obiettivo?: string;
+  message: string;
+  subject?: string;
   campaign?: string;
   source?: string;
 }
 
-// Simple in-memory rate limiting (reset on function restart)
-const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 3; // 3 requests per minute per IP
+// Rate limiting
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 5;
 
-const checkRateLimit = (ip: string): boolean => {
+function checkRateLimit(ip: string): boolean {
   const now = Date.now();
-  const clientData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
-  
-  // Reset counter if window has passed
-  if (now - clientData.lastReset > RATE_LIMIT_WINDOW) {
-    clientData.count = 0;
-    clientData.lastReset = now;
-  }
-  
-  clientData.count++;
-  rateLimitMap.set(ip, clientData);
-  
-  return clientData.count <= RATE_LIMIT_MAX_REQUESTS;
-};
+  const record = rateLimitMap.get(ip);
 
-const validateInput = (data: any): string | null => {
-  // Get name from either field
-  const name = data.nome || data.name;
-  const message = data.messaggio || data.message;
-  
-  // Basic input validation and sanitization
-  if (!name || typeof name !== 'string' || name.trim().length < 2 || name.length > 100) {
-    return 'Nome non valido';
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+
+  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
+// Input validation
+function validateInput(data: any): string | null {
+  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
+    return "Nome non valido";
+  }
+  if (data.name.length > 100) {
+    return "Nome troppo lungo";
   }
   
-  // Message is optional for landing forms, but if present must be valid
-  if (message && (typeof message !== 'string' || message.trim().length < 1 || message.length > 2000)) {
-    return 'Messaggio non valido (max 2000 caratteri)';
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!data.email || !emailRegex.test(data.email)) {
+    return "Email non valida";
   }
   
-  // City and goal are optional for landing forms
-  if (data.city && (typeof data.city !== 'string' || data.city.trim().length < 2 || data.city.length > 100)) {
-    return 'Città non valida';
+  if (!data.message || typeof data.message !== 'string' || data.message.trim().length < 10) {
+    return "Messaggio troppo corto (minimo 10 caratteri)";
   }
-  if (data.goal && (typeof data.goal !== 'string' || data.goal.trim().length < 2 || data.goal.length > 200)) {
-    return 'Obiettivo non valido';
+  if (data.message.length > 5000) {
+    return "Messaggio troppo lungo";
   }
   
-  // Check for potential spam patterns
-  const spamPatterns = [
-    /https?:\/\//gi,  // URLs
-    /\b(bitcoin|crypto|forex|casino|viagra|cialis)\b/gi,  // Common spam words
-    /(.)\1{10,}/gi,   // Repeated characters
-  ];
-  
-  const fullText = `${name} ${message || ''} ${data.city || ''} ${data.goal || ''}`.toLowerCase();
-  for (const pattern of spamPatterns) {
-    if (pattern.test(fullText)) {
-      return 'Contenuto non consentito rilevato';
-    }
+  // Check for spam patterns
+  const spamPatterns = /(viagra|casino|lottery|prize|winner|click here|buy now)/i;
+  if (spamPatterns.test(data.message) || spamPatterns.test(data.name)) {
+    return "Contenuto sospetto rilevato";
   }
   
   return null;
-};
+}
+
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
@@ -95,163 +91,175 @@ const handler = async (req: Request): Promise<Response> => {
   if (req.method !== "POST") {
     return new Response(
       JSON.stringify({ error: "Method not allowed" }),
-      {
-        status: 405,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 
   try {
     // Rate limiting
-    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown';
-    console.log(`Contact form request from IP: ${clientIP}`);
-    
+    const clientIP = req.headers.get("x-forwarded-for") || "unknown";
     if (!checkRateLimit(clientIP)) {
       console.warn(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(
-        JSON.stringify({ error: "Troppe richieste. Riprova tra qualche minuto." }),
-        {
-          status: 429,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        JSON.stringify({ error: "Troppi tentativi. Riprova tra un minuto." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const requestData: ContactEmailRequest = await req.json();
+    // Parse request body
+    const data: ContactEmailRequest = await req.json();
+    console.log("Received contact form submission:", { 
+      name: data.name, 
+      email: data.email,
+      hasPhone: !!data.phone,
+      hasObiettivo: !!data.obiettivo
+    });
 
-    // Validate and sanitize input
-    const validationError = validateInput(requestData);
+    // Validate input
+    const validationError = validateInput(data);
     if (validationError) {
-      console.warn(`Validation failed: ${validationError}`, { ip: clientIP });
+      console.error("Validation error:", validationError);
       return new Response(
         JSON.stringify({ error: validationError }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Extract data from either form format
-    const name = requestData.nome || requestData.name;
-    const message = requestData.messaggio || requestData.message;
-    const { email, telefono, city, goal, campaign, source } = requestData;
-
-    // Validate required fields (email and name are always required)
-    if (!name || !email) {
-      return new Response(
-        JSON.stringify({ error: "Nome e email sono obbligatori" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
+    // Sanitize inputs
+    const safeName = escapeHtml(data.name.trim());
+    const safeEmail = data.email.trim().toLowerCase();
+    const safePhone = data.phone ? escapeHtml(data.phone.trim()) : "";
+    const safeObiettivo = data.obiettivo ? escapeHtml(data.obiettivo.trim()) : "";
+    const safeMessage = escapeHtml(data.message.trim());
+    const safeSubject = data.subject ? escapeHtml(data.subject.trim()) : `Nuovo contatto dal sito: ${safeName}`;
+    const safeCampaign = data.campaign ? escapeHtml(data.campaign.trim()) : "";
+    const safeSource = data.source ? escapeHtml(data.source.trim()) : "website";
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(safeEmail)) {
       return new Response(
         JSON.stringify({ error: "Formato email non valido" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Sanitize data
-    const sanitizedData = {
-      name: name.trim().substring(0, 100),
-      email: email.trim().toLowerCase(),
-      message: message ? message.trim().substring(0, 2000) : '',
-      telefono: telefono?.trim().substring(0, 20),
-      city: city ? city.trim().substring(0, 100) : '',
-      goal: goal ? goal.trim().substring(0, 200) : '',
-      campaign: campaign || '',
-      source: source || 'contact_form'
-    };
-
-    console.log("Processing contact form submission:", { 
-      name: sanitizedData.name, 
-      email: sanitizedData.email, 
-      city: sanitizedData.city, 
-      goal: sanitizedData.goal,
-      ip: clientIP
-    });
-
-    // Send email to business - Updated to use verified domain
-    const businessEmailResponse = await resend.emails.send({
-      from: "Centro MUV <noreply@muvfitness.it>",
+    // Send email to business
+    const businessEmail = await resend.emails.send({
+      from: "MUV Fitness <noreply@muvfitness.it>",
       to: ["info@muvfitness.it"],
-      subject: `Nuova richiesta di contatto da ${sanitizedData.name}${sanitizedData.campaign ? ` - ${sanitizedData.campaign}` : ''}`,
+      replyTo: safeEmail,
+      subject: safeSubject,
       html: `
-        <h2>Nuova richiesta di contatto</h2>
-        <p><strong>Nome:</strong> ${sanitizedData.name}</p>
-        <p><strong>Email:</strong> ${sanitizedData.email}</p>
-        ${sanitizedData.telefono ? `<p><strong>Telefono:</strong> ${sanitizedData.telefono}</p>` : ''}
-        ${sanitizedData.city ? `<p><strong>Città:</strong> ${sanitizedData.city}</p>` : ''}
-        ${sanitizedData.goal ? `<p><strong>Obiettivo:</strong> ${sanitizedData.goal}</p>` : ''}
-        ${sanitizedData.message ? `<p><strong>Messaggio:</strong></p><p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>` : '<p><strong>Messaggio:</strong> Nessun messaggio specificato</p>'}
-        ${sanitizedData.campaign ? `<p><strong>Campagna:</strong> ${sanitizedData.campaign}</p>` : ''}
-        <p><strong>Sorgente:</strong> ${sanitizedData.source}</p>
-        <hr>
-        <p><em>Questo messaggio è stato inviato dal modulo contatti del sito web.</em></p>
-        <p><small>IP del cliente: ${clientIP}</small></p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+          <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: #2563eb; margin-bottom: 20px;">Nuovo Contatto dal Sito Web</h2>
+            
+            <div style="background-color: #f3f4f6; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+              <p style="margin: 5px 0;"><strong>Nome:</strong> ${safeName}</p>
+              <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${safeEmail}" style="color: #2563eb;">${safeEmail}</a></p>
+              ${safePhone ? `<p style="margin: 5px 0;"><strong>Telefono:</strong> ${safePhone}</p>` : ''}
+              ${safeObiettivo ? `<p style="margin: 5px 0;"><strong>Obiettivo:</strong> ${safeObiettivo}</p>` : ''}
+            </div>
+            
+            <div style="background-color: #fef3c7; padding: 15px; border-radius: 6px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
+              <h3 style="margin-top: 0; color: #92400e;">Messaggio</h3>
+              <p style="margin: 0; white-space: pre-wrap; color: #78350f;">${safeMessage}</p>
+            </div>
+            
+            ${safeCampaign || safeSource ? `
+              <div style="background-color: #e0e7ff; padding: 12px; border-radius: 6px; font-size: 12px;">
+                ${safeCampaign ? `<p style="margin: 3px 0;"><strong>Campaign:</strong> ${safeCampaign}</p>` : ''}
+                <p style="margin: 3px 0;"><strong>Source:</strong> ${safeSource}</p>
+              </div>
+            ` : ''}
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px;">
+              <p>Ricevuto il ${new Date().toLocaleString('it-IT')}</p>
+            </div>
+          </div>
+        </div>
       `,
     });
 
-    console.log("Business email sent successfully:", businessEmailResponse.data?.id);
+    console.log("Business email sent:", businessEmail);
 
-    // Send confirmation email to user - Updated to use verified domain
-    const userEmailResponse = await resend.emails.send({
-      from: "Centro MUV <noreply@muvfitness.it>",
-      to: [sanitizedData.email],
-      subject: "Conferma ricezione - Centro MUV",
+    // Send confirmation email to user
+    const userEmail = await resend.emails.send({
+      from: "MUV Fitness <noreply@muvfitness.it>",
+      to: [safeEmail],
+      subject: "Grazie per averci contattato - MUV Fitness",
       html: `
-        <h2>Ciao ${sanitizedData.name}!</h2>
-        <p>Grazie per averci contattato. Abbiamo ricevuto la tua richiesta per il check-up gratuito.</p>
-        ${sanitizedData.message ? `<p><strong>Il tuo messaggio:</strong></p><p style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">${sanitizedData.message.replace(/\n/g, '<br>')}</p>` : ''}
-        <p>Ti contatteremo presto per fissare il tuo appuntamento per il check-up completo del valore di €80, completamente gratuito per te.</p>
-        <p>A presto!</p>
-        <p><strong>Il Team di Centro MUV</strong></p>
-        <hr>
-        <p style="font-size: 12px; color: #666;">
-          Centro MUV - Legnago<br>
-          Tel: 3513380770<br>
-          Email: info@muvfitness.it
-        </p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+          <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: #2563eb; margin-bottom: 20px;">Grazie per averci contattato!</h2>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+              Ciao <strong>${safeName}</strong>,
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+              Abbiamo ricevuto il tuo messaggio e ti risponderemo al più presto, solitamente entro 24 ore.
+            </p>
+            
+            <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+              <p style="margin: 0; font-size: 14px; color: #6b7280;">
+                <strong>Riepilogo della tua richiesta:</strong><br><br>
+                ${safeMessage.substring(0, 200)}${safeMessage.length > 200 ? '...' : ''}
+              </p>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+              Nel frattempo, puoi visitare il nostro sito per scoprire di più sui nostri servizi:
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="https://www.muvfitness.it" style="display: inline-block; padding: 12px 30px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
+                Visita il Sito
+              </a>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+              Per qualsiasi urgenza, puoi contattarci anche su WhatsApp al <strong>329 107 0374</strong>.
+            </p>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px;">
+              <p style="margin: 5px 0;"><strong>MUV Fitness Legnago</strong></p>
+              <p style="margin: 5px 0;">Via Frattini 119, Legnago (VR)</p>
+              <p style="margin: 5px 0;">Tel: 0442 622799 | WhatsApp: 329 107 0374</p>
+              <p style="margin: 5px 0;">
+                <a href="mailto:info@muvfitness.it" style="color: #2563eb; text-decoration: none;">info@muvfitness.it</a>
+              </p>
+            </div>
+          </div>
+        </div>
       `,
     });
 
-    console.log("User confirmation email sent successfully:", userEmailResponse.data?.id);
+    console.log("User confirmation email sent:", userEmail);
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Email inviato con successo",
-        businessEmailId: businessEmailResponse.data?.id,
-        userEmailId: userEmailResponse.data?.id
+      JSON.stringify({
+        success: true,
+        message: "Email inviata con successo",
+        businessEmailId: businessEmail.data?.id,
+        userEmailId: userEmail.data?.id,
       }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
     return new Response(
       JSON.stringify({ 
-        error: "Errore nell'invio dell'email",
+        error: "Si è verificato un errore durante l'invio dell'email",
         details: error.message 
       }),
       {
         status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
   }

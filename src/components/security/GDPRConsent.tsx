@@ -12,9 +12,11 @@ interface GDPRConsentProps {
 const GDPRConsent: React.FC<GDPRConsentProps> = ({ onConsentChange, required = false }) => {
   const [consented, setConsented] = useState(false);
 
-  const handleConsentChange = (checked: boolean) => {
-    setConsented(checked);
-    onConsentChange(checked);
+  const handleConsentChange = (checked: boolean | "indeterminate") => {
+    // Convert to boolean (Radix UI Checkbox can pass "indeterminate")
+    const booleanValue = checked === true;
+    setConsented(booleanValue);
+    onConsentChange(booleanValue);
   };
 
   return (
