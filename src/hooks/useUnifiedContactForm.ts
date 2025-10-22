@@ -145,8 +145,19 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
 
     setIsSubmitting(true);
 
+    console.log('📤 Contact form submission:', {
+      hasName: !!formData.name,
+      hasEmail: !!formData.email,
+      hasPhone: !!formData.phone,
+      hasObjective: !!formData.obiettivo,
+      gdprConsent: formData.gdprConsent,
+      campaign: formData.campaign,
+      source: formData.source
+    });
+
     try {
       const result = await ContactService.submit(formData);
+      console.log('✅ Contact form result:', { success: result.success });
 
       if (result.success) {
         setIsSubmitted(true);
@@ -183,7 +194,7 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
         throw new Error(result.error || 'Errore durante l\'invio');
       }
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('❌ Form submission error:', error);
       toast({
         title: "Errore",
         description: "Errore nell'invio. Riprova o contattaci direttamente.",

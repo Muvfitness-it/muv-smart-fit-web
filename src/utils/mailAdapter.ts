@@ -27,7 +27,7 @@ export async function sendContactViaWeb3Forms(payload: ContactFormPayload): Prom
   }
 
   try {
-    console.log('Sending contact form via Supabase Edge Function...');
+    console.log('📧 Sending contact form via Supabase Edge Function...');
     
     const { data, error } = await supabase.functions.invoke('send-contact-email', {
       body: {
@@ -43,11 +43,21 @@ export async function sendContactViaWeb3Forms(payload: ContactFormPayload): Prom
     });
 
     if (error) {
-      console.error('Edge function error:', error);
+      console.error('❌ Edge function error:', error);
+      
+      // Check for authentication errors
+      if (error.message?.includes('401') || error.message?.includes('403') || error.message?.includes('Unauthorized')) {
+        console.error('🔒 Unauthorized function call - verify_jwt might be enabled');
+        return {
+          success: false,
+          message: "Servizio temporaneamente non disponibile. Riprova tra poco o contattaci su WhatsApp (329 107 0374)."
+        };
+      }
+      
       throw error;
     }
 
-    console.log('Edge function response:', data);
+    console.log('✅ Edge function response:', { success: data?.success });
 
     if (data?.success) {
       return { 
@@ -59,7 +69,7 @@ export async function sendContactViaWeb3Forms(payload: ContactFormPayload): Prom
       throw new Error(data?.error || 'Unknown error from edge function');
     }
   } catch (error) {
-    console.error('Contact form submission failed:', error);
+    console.error('❌ Contact form submission failed:', error);
     return {
       success: false,
       message: "Errore nell'invio del messaggio. Riprova più tardi o contattaci su WhatsApp (329 107 0374)."
