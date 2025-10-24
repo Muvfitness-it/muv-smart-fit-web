@@ -104,6 +104,45 @@ export type Database = {
           },
         ]
       }
+      authors: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          email: string | null
+          expertise: string | null
+          id: string
+          linkedin_url: string | null
+          name: string
+          role: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          expertise?: string | null
+          id?: string
+          linkedin_url?: string | null
+          name: string
+          role?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          expertise?: string | null
+          id?: string
+          linkedin_url?: string | null
+          name?: string
+          role?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       auto_optimizer_logs: {
         Row: {
           actions: string[] | null
@@ -429,6 +468,7 @@ export type Database = {
       blog_posts: {
         Row: {
           author_email: string | null
+          author_id: string | null
           author_name: string
           category_id: string | null
           content: string
@@ -452,6 +492,7 @@ export type Database = {
         }
         Insert: {
           author_email?: string | null
+          author_id?: string | null
           author_name?: string
           category_id?: string | null
           content: string
@@ -475,6 +516,7 @@ export type Database = {
         }
         Update: {
           author_email?: string | null
+          author_id?: string | null
           author_name?: string
           category_id?: string | null
           content?: string
@@ -497,6 +539,13 @@ export type Database = {
           views_count?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "blog_posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "authors"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "blog_posts_category_id_fkey"
             columns: ["category_id"]
@@ -1239,7 +1288,7 @@ export type Database = {
           created_at: string
           device_type: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           os: string | null
           page_path: string
           page_views: number | null
@@ -1261,7 +1310,7 @@ export type Database = {
           created_at?: string
           device_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           os?: string | null
           page_path: string
           page_views?: number | null
@@ -1283,7 +1332,7 @@ export type Database = {
           created_at?: string
           device_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           os?: string | null
           page_path?: string
           page_views?: number | null
@@ -1357,10 +1406,7 @@ export type Database = {
         Args: { p_comment_id: string; p_status: string }
         Returns: boolean
       }
-      anonymize_old_data: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      anonymize_old_data: { Args: never; Returns: undefined }
       assign_user_role: {
         Args: {
           _assigned_by?: string
@@ -1377,18 +1423,12 @@ export type Database = {
         }
         Returns: undefined
       }
-      clean_blog_content: {
-        Args: { input_content: string }
-        Returns: string
-      }
+      clean_blog_content: { Args: { input_content: string }; Returns: string }
       current_user_has_role: {
         Args: { _role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
       }
-      fix_and_format_articles: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      fix_and_format_articles: { Args: never; Returns: undefined }
       format_article_content: {
         Args: { input_content: string }
         Returns: string
@@ -1441,18 +1481,12 @@ export type Database = {
         }
         Returns: boolean
       }
-      hash_sensitive_field: {
-        Args: { input_text: string }
-        Returns: string
-      }
+      hash_sensitive_field: { Args: { input_text: string }; Returns: string }
       increment_article_views: {
         Args: { article_id: string }
         Returns: undefined
       }
-      is_admin: {
-        Args: { user_id?: string }
-        Returns: boolean
-      }
+      is_admin: { Args: { user_id?: string }; Returns: boolean }
       log_security_event: {
         Args: {
           event_data_param?: Json
@@ -1480,22 +1514,10 @@ export type Database = {
         }
         Returns: undefined
       }
-      log_unauthorized_access_attempt: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      log_unauthorized_lead_access: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      mask_sensitive_field: {
-        Args: { input_text: string }
-        Returns: string
-      }
-      repair_html_content: {
-        Args: { input_content: string }
-        Returns: string
-      }
+      log_unauthorized_access_attempt: { Args: never; Returns: undefined }
+      log_unauthorized_lead_access: { Args: never; Returns: undefined }
+      mask_sensitive_field: { Args: { input_text: string }; Returns: string }
+      repair_html_content: { Args: { input_content: string }; Returns: string }
       resolve_redirect: {
         Args: { path_to_check: string }
         Returns: {
@@ -1503,10 +1525,7 @@ export type Database = {
           to_path: string
         }[]
       }
-      restore_and_fix_all_posts: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      restore_and_fix_all_posts: { Args: never; Returns: undefined }
       revoke_user_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1533,18 +1552,9 @@ export type Database = {
         }
         Returns: Json
       }
-      update_analytics_summary: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      update_blog_performance_summary: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      validate_captcha_token: {
-        Args: { token: string }
-        Returns: boolean
-      }
+      update_analytics_summary: { Args: never; Returns: undefined }
+      update_blog_performance_summary: { Args: never; Returns: undefined }
+      validate_captcha_token: { Args: { token: string }; Returns: boolean }
       verify_ai_token_access: {
         Args: { token_input: string }
         Returns: {

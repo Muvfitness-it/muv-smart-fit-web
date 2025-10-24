@@ -17,7 +17,17 @@ import {
 } from "@/components/ui/breadcrumb";
 import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
 import { humanizeText, humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
+import { addInternalLinks } from "@/utils/internalLinker";
 
+
+interface Author {
+  id: string;
+  name: string;
+  bio: string | null;
+  role: string | null;
+  avatar_url: string | null;
+  expertise: string | null;
+}
 
 interface Post {
   id: string;
@@ -30,8 +40,10 @@ interface Post {
   featured_image: string | null;
   published_at: string | null;
   author_name: string | null;
+  author_id: string | null;
   category_id: string | null;
   reading_time?: number;
+  author?: Author;
 }
 
 const BlogArticle = () => {
@@ -47,7 +59,11 @@ const BlogArticle = () => {
       if (!slug) return;
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, content, excerpt, meta_title, meta_description, featured_image, published_at, author_name, category_id, reading_time")
+        .select(`
+          id, title, slug, content, excerpt, meta_title, meta_description, 
+          featured_image, published_at, author_name, author_id, category_id, reading_time,
+          author:authors(id, name, bio, role, avatar_url, expertise)
+        `)
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
@@ -67,8 +83,11 @@ const BlogArticle = () => {
       const cleanedContent = cleanBlogContent(data.content || '');
       const processedContent = processContentBlocks(cleanedContent);
 
+      // Apply internal linking for SEO
+      const linkedContent = addInternalLinks(processedContent, slug);
+
       // Humanize for display (non distruttivo)
-      const humanized = humanizeText(processedContent);
+      const humanized = humanizeText(linkedContent);
       const humanizedTitle = humanizeTitle(data.title || '');
       const humanizedExcerpt = humanizeExcerpt(data.excerpt || '');
       
@@ -112,7 +131,20 @@ const BlogArticle = () => {
     headline: post.title,
     datePublished: post.published_at || undefined,
     image: post.featured_image || undefined,
-    author: post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    author: post.author ? {
+      "@type": "Person",
+      name: post.author.name,
+      jobTitle: post.author.role || undefined,
+      description: post.author.bio || undefined,
+    } : post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "MUV Fitness Legnago",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.muvfitness.it/lovable-uploads/muv-logo-transparent.png"
+      }
+    },
     mainEntityOfPage: canonical,
   } : undefined;
   const newsJsonLd = post && isRecent ? {
@@ -121,7 +153,19 @@ const BlogArticle = () => {
     headline: post.title,
     datePublished: post.published_at || undefined,
     image: post.featured_image || undefined,
-    author: post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    author: post.author ? {
+      "@type": "Person",
+      name: post.author.name,
+      jobTitle: post.author.role || undefined,
+    } : post.author_name ? { "@type": "Person", name: post.author_name } : undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "MUV Fitness Legnago",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.muvfitness.it/lovable-uploads/muv-logo-transparent.png"
+      }
+    },
     mainEntityOfPage: canonical,
   } : undefined;
   const breadcrumbJsonLd = post ? {
@@ -290,40 +334,45 @@ const BlogArticle = () => {
                 />
               </main>
 
-              {/* Author Box */}
+              {/* Author Box - E-E-A-T Optimization */}
               <section className="mt-12 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-primary/50 shadow-md">
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   <div className="shrink-0">
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-3xl md:text-4xl font-bold text-white shadow-lg">
-                      MUV
-                    </div>
+                    {post.author?.avatar_url ? (
+                      <LazyImage
+                        src={post.author.avatar_url}
+                        alt={`${post.author.name} - ${post.author.role || 'Esperto MUV Fitness'}`}
+                        className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-lg ring-2 ring-primary/20"
+                        width={96}
+                        height={96}
+                      />
+                    ) : (
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-3xl md:text-4xl font-bold text-white shadow-lg">
+                        {(post.author?.name || post.author_name || "MUV").charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl md:text-2xl font-bold mb-2 text-foreground">
-                      {post.author_name || "Team MUV Fitness"}
+                      {post.author?.name || post.author_name || "Team MUV Fitness"}
                     </h3>
                     <p className="text-sm md:text-base text-muted-foreground font-medium mb-3">
-                      Centro Fitness MUV - Legnago (VR)
+                      {post.author?.role || "Centro Fitness MUV - Legnago (VR)"}
                     </p>
                     <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-                      Il Team MUV è composto da personal trainer certificati con oltre 10 anni di esperienza in allenamento personalizzato, 
-                      EMS training, Pilates Reformer, riabilitazione posturale e coaching nutrizionale. 
-                      Esperti nelle tecnologie più avanzate per fitness e benessere.
+                      {post.author?.bio || 
+                        "Il Team MUV è composto da personal trainer certificati con oltre 10 anni di esperienza in allenamento personalizzato, EMS training, Pilates Reformer, riabilitazione posturale e coaching nutrizionale. Esperti nelle tecnologie più avanzate per fitness e benessere."
+                      }
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        🏋️ EMS Training
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        🧘 Pilates Reformer
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        💪 Personal Training
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        🥗 Nutrizione
-                      </Badge>
-                    </div>
+                    {post.author?.expertise && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {post.author.expertise.split(',').map((exp, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs">
+                            {exp.trim()}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </section>
