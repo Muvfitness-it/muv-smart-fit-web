@@ -98,4 +98,13 @@ verify_jwt = true
 [functions.data-retention-automation]
 verify_jwt = true
 
+[functions.seo-monitor]
+verify_jwt = false
+
+[functions.seo-weekly-report]
+verify_jwt = false
+
+[functions.indexnow-submitter]
+verify_jwt = false
+
 # All other functions require JWT by default (no override here)

@@ -1155,6 +1155,101 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_monitoring_log: {
+        Row: {
+          canonical_url: string | null
+          check_date: string | null
+          created_at: string | null
+          days_in_current_status: number | null
+          featured_image: string | null
+          http_status_code: number | null
+          id: string
+          indexing_status: string
+          issues_detected: Json | null
+          last_crawled: string | null
+          meta_description: string | null
+          post_id: string | null
+          response_time_ms: number | null
+          status_changed_from: string | null
+          suggestions: Json | null
+          title: string | null
+          url: string
+        }
+        Insert: {
+          canonical_url?: string | null
+          check_date?: string | null
+          created_at?: string | null
+          days_in_current_status?: number | null
+          featured_image?: string | null
+          http_status_code?: number | null
+          id?: string
+          indexing_status: string
+          issues_detected?: Json | null
+          last_crawled?: string | null
+          meta_description?: string | null
+          post_id?: string | null
+          response_time_ms?: number | null
+          status_changed_from?: string | null
+          suggestions?: Json | null
+          title?: string | null
+          url: string
+        }
+        Update: {
+          canonical_url?: string | null
+          check_date?: string | null
+          created_at?: string | null
+          days_in_current_status?: number | null
+          featured_image?: string | null
+          http_status_code?: number | null
+          id?: string
+          indexing_status?: string
+          issues_detected?: Json | null
+          last_crawled?: string | null
+          meta_description?: string | null
+          post_id?: string | null
+          response_time_ms?: number | null
+          status_changed_from?: string | null
+          suggestions?: Json | null
+          title?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_monitoring_log_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seo_monitoring_summary: {
+        Row: {
+          id: string
+          last_check: string | null
+          metric_data: Json | null
+          metric_name: string
+          metric_value: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          last_check?: string | null
+          metric_data?: Json | null
+          metric_name: string
+          metric_value?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          last_check?: string | null
+          metric_data?: Json | null
+          metric_name?: string
+          metric_value?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       site_visits: {
         Row: {
           created_at: string

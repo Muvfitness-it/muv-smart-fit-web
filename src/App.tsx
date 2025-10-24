@@ -113,6 +113,7 @@ const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
 const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
 const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
 const AdminSmallGroupSchedule = lazy(() => import("./pages/admin/AdminSmallGroupSchedule"));
+const SEOMonitorDashboard = lazy(() => import("./pages/admin/SEOMonitorDashboard"));
 
 // Loading component for lazy routes
 const RouteLoading = () => (
@@ -270,6 +271,7 @@ const AppContent = () => {
                     <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
                     <Route path="/admin/small-group-schedule" element={<AdminRoute><Suspense fallback={<RouteLoading />}><AdminSmallGroupSchedule /></Suspense></AdminRoute>} />
                     <Route path="/admin/local-seo" element={<AdminRoute><Suspense fallback={<RouteLoading />}><LocalSEODashboard /></Suspense></AdminRoute>} />
+                    <Route path="/admin/seo-monitor" element={<AdminRoute><Suspense fallback={<RouteLoading />}><SEOMonitorDashboard /></Suspense></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Clean up circular redirects ===== */}
