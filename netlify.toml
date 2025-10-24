@@ -1,0 +1,18 @@
+# Netlify Configuration for MUV Fitness
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Server-side 301 redirects for SEO consolidation
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/:slug"
+  status = 301
+  force = true
+
+# Ensure SPA routing works correctly
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

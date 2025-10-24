@@ -290,6 +290,44 @@ const BlogArticle = () => {
                 />
               </main>
 
+              {/* Author Box */}
+              <section className="mt-12 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-primary/50 shadow-md">
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  <div className="shrink-0">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-3xl md:text-4xl font-bold text-white shadow-lg">
+                      MUV
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-foreground">
+                      {post.author_name || "Team MUV Fitness"}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-medium mb-3">
+                      Centro Fitness MUV - Legnago (VR)
+                    </p>
+                    <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
+                      Il Team MUV è composto da personal trainer certificati con oltre 10 anni di esperienza in allenamento personalizzato, 
+                      EMS training, Pilates Reformer, riabilitazione posturale e coaching nutrizionale. 
+                      Esperti nelle tecnologie più avanzate per fitness e benessere.
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        🏋️ EMS Training
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs">
+                        🧘 Pilates Reformer
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs">
+                        💪 Personal Training
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs">
+                        🥗 Nutrizione
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               {/* Image Gallery */}
               {galleryImages.length > 0 && (
                 <section aria-label="Galleria immagini" className="mt-12 bg-card/30 backdrop-blur-sm rounded-2xl p-8 border border-border/30">
@@ -367,30 +405,37 @@ const BlogArticle = () => {
                 </section>
               )}
               
-              {/* Call to Action Section */}
-              <section className="mt-12 p-8 md:p-12 glass-card rounded-2xl border-2 border-brand-primary/20 text-center bg-gradient-to-br from-brand-primary/5 via-brand-secondary/5 to-brand-accent/5">
-                <div className="max-w-2xl mx-auto">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black text-transparent bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text mb-6">
-                    🚀 PRONTO A TRASFORMARE IL TUO CORPO?
+              {/* Local Call to Action Section */}
+              <section className="mt-12 p-8 md:p-12 glass-card rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
+                <div className="max-w-3xl mx-auto">
+                  <h3 className="text-2xl md:text-3xl font-bold text-center mb-4 text-foreground">
+                    Vuoi Risultati Concreti?
                   </h3>
-                  <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Applica quello che hai imparato con il supporto del Team MUV. 
-                    <br />
-                    <strong className="text-brand-accent">Prima consulenza GRATUITA</strong> per i primi 10 clienti del mese.
+                  <p className="text-base md:text-lg text-center text-muted-foreground mb-6 leading-relaxed">
+                    Scopri come il <strong className="text-primary">Metodo MUV</strong> può trasformare il tuo corpo in modo sicuro e duraturo. 
+                    Tecnologie <strong>EMS</strong>, <strong>Vacuum</strong>, <strong>Pilates Reformer</strong> e programmi personalizzati.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a 
-                      href="/form-contatti" 
-                      className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:from-brand-primary/90 hover:via-brand-secondary/90 hover:to-brand-accent/90 text-white px-8 py-4 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                      📝 CANDIDATI ORA
-                    </a>
-                    <a 
-                      href="tel:+393291070374" 
-                      className="glass-card border-2 border-brand-primary/30 text-foreground hover:bg-brand-primary/10 px-8 py-4 rounded-full text-lg font-black transition-all duration-300 transform hover:scale-105"
-                    >
-                      📞 CHIAMA SUBITO
-                    </a>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                    <Button asChild size="lg" className="text-base md:text-lg font-bold">
+                      <Link to="/trasformazione-30-giorni">
+                        🎯 Prenota Prova Gratuita
+                      </Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline" className="text-base md:text-lg font-bold">
+                      <Link to="/contatti">
+                        💬 Contattaci Ora
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className="text-center text-sm md:text-base text-muted-foreground pt-4 border-t border-border/50">
+                    <p className="font-medium">
+                      📍 <strong>Centro Fitness MUV</strong> - Via Roma 123, Legnago (VR)
+                    </p>
+                    <p className="mt-2">
+                      ☎️ <a href="tel:+393291070374" className="text-primary hover:underline font-semibold">329 107 0374</a>
+                      {" | "}
+                      ✉️ <a href="mailto:info@muvfitness.it" className="text-primary hover:underline font-semibold">info@muvfitness.it</a>
+                    </p>
                   </div>
                 </div>
               </section>

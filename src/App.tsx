@@ -255,7 +255,7 @@ const AppContent = () => {
                     {/* Blog Routes */}
                     <Route path="/blog" element={<BlogIndex />} />
                     <Route path="/blog/c/:slug" element={<BlogCategory />} />
-                    <Route path="/blog/:slug" element={<Navigate to={`/${window.location.pathname.split('/blog/')[1]}`} replace />} />
+                    {/* Removed client-side redirect - now handled server-side via netlify.toml */}
                     <Route path="/:slug" element={<BlogArticle />} />
                     
                     {/* Admin Routes */}
