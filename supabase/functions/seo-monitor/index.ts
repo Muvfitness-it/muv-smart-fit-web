@@ -170,6 +170,17 @@ serve(async (req) => {
           }
         }
 
+        // Normalize status to match DB constraint
+        const normalizeStatus = (status: string, daysSincePublish: number): string => {
+          if (status === 'partially_indexed') return 'indexed';
+          if (status === 'not_indexed' || status === 'discovered') return 'crawled_not_indexed';
+          if (status === 'pending') return 'pending_first_check';
+          if (status === 'unknown') return daysSincePublish < 7 ? 'pending_first_check' : 'crawled_not_indexed';
+          return status;
+        };
+
+        indexingStatus = normalizeStatus(indexingStatus, daysSincePublish);
+
         // 3. Check historical data
         const { data: lastCheck } = await supabase
           .from('seo_monitoring_log')

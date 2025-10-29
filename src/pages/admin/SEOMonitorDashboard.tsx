@@ -203,13 +203,15 @@ const SEOMonitorDashboard = () => {
     try {
       setMonitoring(true);
       
-      const { error } = await supabase.functions.invoke('seo-monitor');
+      const { data, error } = await supabase.functions.invoke('seo-monitor');
       
       if (error) throw error;
       
       toast({
         title: "✅ Scansione completata",
-        description: "I dati sono stati aggiornati",
+        description: data 
+          ? `Indicizzati: ${data.indexed} | Non indicizzati: ${data.crawledNotIndexed} | Critici: ${data.critical}`
+          : "I dati sono stati aggiornati",
       });
       
       // Reload data after monitoring
