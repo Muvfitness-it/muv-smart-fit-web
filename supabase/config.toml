@@ -107,4 +107,13 @@ verify_jwt = false
 [functions.indexnow-submitter]
 verify_jwt = false
 
+[functions.gsc-oauth-init]
+verify_jwt = true
+
+[functions.gsc-oauth-callback]
+verify_jwt = false
+
+[functions.gsc-token-manager]
+verify_jwt = false
+
 # All other functions require JWT by default (no override here)

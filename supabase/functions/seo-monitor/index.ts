@@ -6,6 +6,65 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Helper: Get GSC Access Token
+async function getGSCAccessToken(supabaseUrl: string, supabaseKey: string): Promise<string | null> {
+  try {
+    const tokenManagerUrl = `${supabaseUrl}/functions/v1/gsc-token-manager`;
+    const response = await fetch(tokenManagerUrl, {
+      headers: { 'Authorization': `Bearer ${supabaseKey}` },
+    });
+
+    if (!response.ok) {
+      console.log('⚠️ GSC token manager not available or not authorized');
+      return null;
+    }
+
+    const data = await response.json();
+    return data.success ? data.accessToken : null;
+  } catch (error) {
+    console.error('Failed to get GSC access token:', error);
+    return null;
+  }
+}
+
+// Helper: Check URL with Google Search Console API
+async function checkURLWithGSC(url: string, accessToken: string) {
+  try {
+    const inspectUrl = 'https://searchconsole.googleapis.com/v1/urlInspection/index:inspect';
+    
+    const response = await fetch(inspectUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        inspectionUrl: url,
+        siteUrl: 'https://www.muvfitness.it/',
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('GSC API error:', response.status, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('✅ GSC API response for', url);
+    
+    return {
+      verdict: data.inspectionResult?.indexStatusResult?.verdict || 'UNKNOWN',
+      coverageState: data.inspectionResult?.indexStatusResult?.coverageState,
+      lastCrawlTime: data.inspectionResult?.indexStatusResult?.lastCrawlTime,
+      mobileUsable: data.inspectionResult?.mobileUsabilityResult?.verdict === 'PASS',
+    };
+  } catch (error) {
+    console.error('GSC inspection failed for', url, error);
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -17,6 +76,16 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     console.log('🔍 Starting SEO Monitor check...');
+
+    // Try to get GSC access token
+    const gscAccessToken = await getGSCAccessToken(supabaseUrl, supabaseServiceKey);
+    const useGSCAPI = !!gscAccessToken;
+    
+    if (useGSCAPI) {
+      console.log('✅ GSC API available - using official Google Search Console data');
+    } else {
+      console.log('⚠️ GSC API not available - using HTTP fallback');
+    }
 
     // 1. Fetch published posts
     const { data: posts, error: postsError } = await supabase
@@ -45,8 +114,21 @@ serve(async (req) => {
     for (const post of posts) {
       const url = `https://www.muvfitness.it/${post.slug}`;
       
+      let gscData = null;
+      let gscError = null;
+
+      // Try GSC API first if available
+      if (useGSCAPI && gscAccessToken) {
+        gscData = await checkURLWithGSC(url, gscAccessToken);
+        if (!gscData) {
+          gscError = 'GSC API check failed';
+        }
+        // Respect rate limits: 4 requests/sec max
+        await new Promise(resolve => setTimeout(resolve, 250));
+      }
+      
       try {
-        // Verify HTTP accessibility
+        // Verify HTTP accessibility (always as backup)
         const startTime = Date.now();
         const checkResponse = await fetch(url, { 
           method: 'HEAD',
@@ -54,20 +136,38 @@ serve(async (req) => {
         });
         const responseTime = Date.now() - startTime;
 
-        // Determine indexing status (simplified heuristic)
+        // Determine indexing status based on GSC data or HTTP fallback
         let indexingStatus = 'unknown';
         const daysSincePublish = Math.floor((Date.now() - new Date(post.published_at).getTime()) / (1000 * 60 * 60 * 24));
         
-        if (checkResponse.status === 200) {
-          if (daysSincePublish > 7) {
+        if (gscData) {
+          // Use GSC verdict for accurate status
+          if (gscData.verdict === 'PASS') {
             indexingStatus = 'indexed';
-          } else if (daysSincePublish >= 0) {
-            indexingStatus = 'pending_first_check';
+          } else if (gscData.verdict === 'PARTIAL') {
+            indexingStatus = 'partially_indexed';
+          } else if (gscData.verdict === 'FAIL') {
+            indexingStatus = 'not_indexed';
+          } else if (gscData.coverageState === 'Submitted and indexed') {
+            indexingStatus = 'indexed';
+          } else if (gscData.coverageState?.includes('Discovered')) {
+            indexingStatus = 'discovered';
+          } else {
+            indexingStatus = 'pending';
           }
-        } else if (checkResponse.status >= 400) {
-          indexingStatus = 'error';
         } else {
-          indexingStatus = 'crawled_not_indexed';
+          // HTTP fallback logic
+          if (checkResponse.status === 200) {
+            if (daysSincePublish > 7) {
+              indexingStatus = 'indexed';
+            } else if (daysSincePublish >= 0) {
+              indexingStatus = 'pending_first_check';
+            }
+          } else if (checkResponse.status >= 400) {
+            indexingStatus = 'error';
+          } else {
+            indexingStatus = 'crawled_not_indexed';
+          }
         }
 
         // 3. Check historical data
@@ -140,7 +240,7 @@ serve(async (req) => {
           suggestions.push('Ridurre title sotto i 60 caratteri');
         }
 
-        // 5. Insert log
+        // 5. Insert log with GSC data
         const { error: insertError } = await supabase
           .from('seo_monitoring_log')
           .insert({
@@ -157,7 +257,13 @@ serve(async (req) => {
             status_changed_from: statusChangedFrom,
             issues_detected: issues,
             suggestions: suggestions,
-            check_date: new Date().toISOString()
+            check_date: new Date().toISOString(),
+            // GSC API fields
+            gsc_verdict: gscData?.verdict || null,
+            gsc_coverage_state: gscData?.coverageState || null,
+            gsc_last_crawl_time: gscData?.lastCrawlTime || null,
+            gsc_mobile_usable: gscData?.mobileUsable || null,
+            gsc_check_error: gscError,
           });
 
         if (insertError) {
@@ -169,10 +275,11 @@ serve(async (req) => {
           status: indexingStatus,
           daysInStatus,
           issuesCount: issues.length,
-          httpStatus: checkResponse.status
+          httpStatus: checkResponse.status,
+          gscVerdict: gscData?.verdict || null
         });
 
-        console.log(`✅ ${post.slug}: ${indexingStatus} (${daysInStatus}d) - ${issues.length} issues`);
+        console.log(`✅ ${post.slug}: ${indexingStatus} ${gscData?.verdict ? `(GSC: ${gscData.verdict})` : ''} (${daysInStatus}d) - ${issues.length} issues`);
 
       } catch (error) {
         console.error(`Error checking ${post.slug}:`, error);
@@ -185,7 +292,8 @@ serve(async (req) => {
           title: post.meta_title || post.title,
           issues_detected: [`Error checking URL: ${String(error)}`],
           suggestions: ['Verificare accessibilità URL manualmente'],
-          check_date: new Date().toISOString()
+          check_date: new Date().toISOString(),
+          gsc_check_error: String(error)
         });
 
         results.push({
@@ -212,6 +320,7 @@ serve(async (req) => {
     ], { onConflict: 'metric_name' });
 
     console.log(`📈 Summary: ${indexed} indexed, ${crawledNotIndexed} not indexed, ${critical} critical`);
+    console.log(`🔑 GSC API: ${useGSCAPI ? 'ENABLED' : 'DISABLED'}`);
 
     return new Response(JSON.stringify({
       success: true,
@@ -219,6 +328,7 @@ serve(async (req) => {
       indexed,
       crawledNotIndexed,
       critical,
+      gscEnabled: useGSCAPI,
       results
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

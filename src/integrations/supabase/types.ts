@@ -709,6 +709,27 @@ export type Database = {
         }
         Relationships: []
       }
+      cron_logs: {
+        Row: {
+          executed_at: string | null
+          id: number
+          job_name: string
+          response: Json | null
+        }
+        Insert: {
+          executed_at?: string | null
+          id?: number
+          job_name: string
+          response?: Json | null
+        }
+        Update: {
+          executed_at?: string | null
+          id?: number
+          job_name?: string
+          response?: Json | null
+        }
+        Relationships: []
+      }
       data_retention_policies: {
         Row: {
           anonymize_after_days: number | null
@@ -804,6 +825,27 @@ export type Database = {
           identifier?: string
           requests_count?: number | null
           window_start?: string | null
+        }
+        Relationships: []
+      }
+      gsc_oauth_tokens: {
+        Row: {
+          created_at: string | null
+          id: number
+          refresh_token: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          refresh_token: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          refresh_token?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -1162,6 +1204,11 @@ export type Database = {
           created_at: string | null
           days_in_current_status: number | null
           featured_image: string | null
+          gsc_check_error: string | null
+          gsc_coverage_state: string | null
+          gsc_last_crawl_time: string | null
+          gsc_mobile_usable: boolean | null
+          gsc_verdict: string | null
           http_status_code: number | null
           id: string
           indexing_status: string
@@ -1181,6 +1228,11 @@ export type Database = {
           created_at?: string | null
           days_in_current_status?: number | null
           featured_image?: string | null
+          gsc_check_error?: string | null
+          gsc_coverage_state?: string | null
+          gsc_last_crawl_time?: string | null
+          gsc_mobile_usable?: boolean | null
+          gsc_verdict?: string | null
           http_status_code?: number | null
           id?: string
           indexing_status: string
@@ -1200,6 +1252,11 @@ export type Database = {
           created_at?: string | null
           days_in_current_status?: number | null
           featured_image?: string | null
+          gsc_check_error?: string | null
+          gsc_coverage_state?: string | null
+          gsc_last_crawl_time?: string | null
+          gsc_mobile_usable?: boolean | null
+          gsc_verdict?: string | null
           http_status_code?: number | null
           id?: string
           indexing_status?: string

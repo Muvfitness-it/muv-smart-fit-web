@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader2, RefreshCw, Send, FileEdit } from "lucide-react";
+import { Loader2, RefreshCw, Send, FileEdit, Unlock, CheckCircle, Key } from "lucide-react";
 
 interface SEOLog {
   id: string;
@@ -19,6 +19,9 @@ interface SEOLog {
   issues_detected: string[];
   suggestions: string[];
   check_date: string;
+  gsc_verdict?: string | null;
+  gsc_coverage_state?: string | null;
+  gsc_last_crawl_time?: string | null;
   blog_posts: { slug: string };
 }
 
@@ -43,6 +46,8 @@ const SEOMonitorDashboard = () => {
   const [filter, setFilter] = useState<string>("all");
   const [loading, setLoading] = useState(true);
   const [monitoring, setMonitoring] = useState(false);
+  const [gscAuthorized, setGscAuthorized] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(false);
 
   useEffect(() => {
     if (!authLoading) {
@@ -50,9 +55,67 @@ const SEOMonitorDashboard = () => {
         navigate('/admin/auth');
       } else {
         loadData();
+        checkGSCAuth();
       }
     }
   }, [isAdmin, authLoading, navigate]);
+
+  const checkGSCAuth = async () => {
+    setCheckingAuth(true);
+    try {
+      const { data } = await supabase
+        .from('gsc_oauth_tokens')
+        .select('refresh_token')
+        .eq('id', 1)
+        .maybeSingle();
+      
+      setGscAuthorized(!!data?.refresh_token);
+    } catch (error) {
+      console.error('Error checking GSC auth:', error);
+      setGscAuthorized(false);
+    } finally {
+      setCheckingAuth(false);
+    }
+  };
+
+  const handleAuthorizeGSC = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('gsc-oauth-init');
+      
+      if (error) throw error;
+      if (!data?.authUrl) throw new Error('No auth URL received');
+
+      // Open OAuth flow in new window
+      const width = 600;
+      const height = 700;
+      const left = window.screen.width / 2 - width / 2;
+      const top = window.screen.height / 2 - height / 2;
+      
+      window.open(
+        data.authUrl,
+        'GSC Authorization',
+        `width=${width},height=${height},left=${left},top=${top}`
+      );
+
+      toast({
+        title: "🔐 Autorizzazione in corso",
+        description: "Completa l'autorizzazione nella finestra popup",
+      });
+      
+      // Check auth status after 10 seconds
+      setTimeout(() => {
+        checkGSCAuth();
+      }, 10000);
+      
+    } catch (error: any) {
+      console.error('Error authorizing GSC:', error);
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -85,6 +148,9 @@ const SEOMonitorDashboard = () => {
           issues_detected,
           suggestions,
           check_date,
+          gsc_verdict,
+          gsc_coverage_state,
+          gsc_last_crawl_time,
           blog_posts!inner(slug)
         `)
         .order('check_date', { ascending: false });
@@ -206,19 +272,37 @@ const SEOMonitorDashboard = () => {
           <h1 className="text-3xl font-bold">📊 SEO Monitor</h1>
           <p className="text-muted-foreground mt-1">Monitoraggio indicizzazione articoli blog</p>
         </div>
-        <Button onClick={handleRunMonitor} disabled={monitoring} size="lg">
-          {monitoring ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Scansione in corso...
-            </>
-          ) : (
-            <>
-              <RefreshCw className="mr-2 h-4 w-4" />
-              Esegui Scansione
-            </>
+        <div className="flex flex-wrap gap-2">
+          {!gscAuthorized && !checkingAuth && (
+            <Button 
+              onClick={handleAuthorizeGSC}
+              variant="outline"
+              size="lg"
+            >
+              <Unlock className="mr-2 h-4 w-4" />
+              Autorizza GSC
+            </Button>
           )}
-        </Button>
+          {gscAuthorized && (
+            <Badge variant="default" className="gap-1 px-3 py-2 text-sm">
+              <CheckCircle className="h-4 w-4" />
+              GSC Autorizzato
+            </Badge>
+          )}
+          <Button onClick={handleRunMonitor} disabled={monitoring} size="lg">
+            {monitoring ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Scansione...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Esegui Scansione
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}
@@ -325,6 +409,19 @@ const SEOMonitorDashboard = () => {
                         <Badge className={statusBadge.className}>
                           {statusBadge.label}
                         </Badge>
+                        {log.gsc_verdict && (
+                          <Badge 
+                            variant={
+                              log.gsc_verdict === 'PASS' ? 'default' : 
+                              log.gsc_verdict === 'PARTIAL' ? 'secondary' : 
+                              'destructive'
+                            }
+                            className="gap-1"
+                          >
+                            <Key className="h-3 w-3" />
+                            GSC: {log.gsc_verdict}
+                          </Badge>
+                        )}
                         {isCritical && (
                           <Badge variant="destructive" className="bg-red-600">
                             🚨 CRITICO
@@ -343,6 +440,14 @@ const SEOMonitorDashboard = () => {
                           {log.url}
                         </a>
                       </div>
+
+                      {/* GSC Last Crawl */}
+                      {log.gsc_last_crawl_time && (
+                        <div className="text-sm mb-3">
+                          <span className="text-muted-foreground">Ultimo crawl Google: </span>
+                          <strong>{new Date(log.gsc_last_crawl_time).toLocaleString('it-IT')}</strong>
+                        </div>
+                      )}
 
                       {/* Days in status */}
                       {log.days_in_current_status > 0 && (
