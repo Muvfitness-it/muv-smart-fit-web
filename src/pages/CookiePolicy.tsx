@@ -30,6 +30,16 @@ const CookiePolicy = () => {
             <CardContent className="p-8 space-y-8">
               
               <section>
+                <h2 className="text-2xl font-bold mb-4 text-pink-600">Titolare del Sito</h2>
+                <p className="text-gray-300 leading-relaxed">
+                  Il presente sito è gestito da <strong>MUV Fitness S.r.l.</strong><br />
+                  Sede legale: Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)<br />
+                  P.IVA: 05281920289<br />
+                  Email: info@muvfitness.it
+                </p>
+              </section>
+
+              <section>
                 <h2 className="text-2xl font-bold mb-4 text-pink-600">Cosa sono i Cookie</h2>
                 <p className="text-gray-300 leading-relaxed">
                   I cookie sono piccoli file di testo che vengono automaticamente posizionati sul PC del navigatore quando visita un sito web. I cookie sono creati dal server del sito che si sta visitando e possono essere utilizzati in seguito dal medesimo sito, oppure da un sito diverso che sia in grado di riconoscerli.

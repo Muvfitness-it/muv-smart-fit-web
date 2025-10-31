@@ -7,13 +7,15 @@ const MUVFooter = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold text-secondary mb-4">MUV Fitness</h3>
-              <p className="text-muted leading-relaxed">
-                Piazzetta Don Walter Soave, 2<br />
-                37045 Legnago (VR)
-              </p>
-            </div>
+          <div>
+            <h3 className="text-xl font-bold text-secondary mb-4">MUV Fitness</h3>
+            <p className="text-muted leading-relaxed">
+              MUV Fitness S.r.l.<br />
+              Piazzetta Don Walter Soave, 2<br />
+              37045 Legnago (VR)<br />
+              P.IVA: 05281920289
+            </p>
+          </div>
 
             <div>
               <h3 className="text-xl font-bold text-secondary mb-4">Orari</h3>

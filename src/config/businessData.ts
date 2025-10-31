@@ -118,7 +118,7 @@ export const BUSINESS_DATA = {
     priceRange: "€€",
     currenciesAccepted: "EUR",
     paymentAccepted: ["Cash", "Credit Card", "Bank Transfer"],
-    vatNumber: null, // Aggiungere se pubblico
+    vatNumber: "05281920289",
   },
   
   // === ZONE SERVITE (per Local SEO) ===
@@ -308,7 +308,9 @@ export const getLocalBusinessSchemaData = () => ({
   "@type": BUSINESS_DATA.business.type,
   "@id": `${BUSINESS_DATA.web.domain}/#organization`,
   "name": BUSINESS_DATA.name,
+  "legalName": BUSINESS_DATA.legalName,
   "alternateName": BUSINESS_DATA.alternateName,
+  "vatID": `IT${BUSINESS_DATA.business.vatNumber}`,
   "description": BUSINESS_DATA.description,
   "url": BUSINESS_DATA.web.domain,
   "telephone": BUSINESS_DATA.contact.phone,
