@@ -6,13 +6,15 @@ const MUVTeamSection = () => {
       name: "Francesco",
       role: "Responsabile EMS",
       quote: "Motivare e supportare chi sceglie MUV è il mio obiettivo ogni giorno.",
-      image: "/lovable-uploads/francesco-muv.png"
+      image: "/lovable-uploads/francesco-muv.png",
+      alt: "Francesco - Personal Trainer EMS Legnago, specialista in elettrostimolazione e dimagrimento"
     },
     {
       name: "Laura",
       role: "Coach & Nutrizionista",
       quote: "Credo nel benessere a 360°, aiutando ogni cliente a raggiungere risultati concreti e sostenibili.",
-      image: "/lovable-uploads/df526450-5eb6-4c2b-a603-0d3470cb0484.png"
+      image: "/lovable-uploads/df526450-5eb6-4c2b-a603-0d3470cb0484.png",
+      alt: "Laura - Nutrizionista e Coach Wellness MUV Fitness Legnago, specialista in alimentazione per dimagrimento"
     }
   ];
 
@@ -35,7 +37,7 @@ const MUVTeamSection = () => {
                 <div className="aspect-[16/12] overflow-hidden">
                   <OptimizedImage
                     src={member.image}
-                    alt={`${member.name} - ${member.role}`}
+                    alt={member.alt}
                     className="w-full h-full object-cover"
                   />
                 </div>

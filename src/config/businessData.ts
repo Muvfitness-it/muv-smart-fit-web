@@ -315,6 +315,21 @@ export const getLocalBusinessSchemaData = () => ({
   "url": BUSINESS_DATA.web.domain,
   "telephone": BUSINESS_DATA.contact.phone,
   "email": BUSINESS_DATA.contact.email,
+  "areaServed": BUSINESS_DATA.areasServed.map(area => ({
+    "@type": "City",
+    "name": area
+  })),
+  "knowsAbout": [
+    "EMS Training",
+    "Pilates Reformer", 
+    "Vacuum Pressoterapia",
+    "Dimagrimento",
+    "Postura",
+    "Mal di Schiena",
+    "Fitness Over 60",
+    "Personal Training",
+    "Riabilitazione Sportiva"
+  ],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": BUSINESS_DATA.address.street,
@@ -352,10 +367,6 @@ export const getLocalBusinessSchemaData = () => ({
     BUSINESS_DATA.social.facebook,
     BUSINESS_DATA.social.instagram
   ].filter(Boolean),
-  "areaServed": BUSINESS_DATA.areasServed.map(area => ({
-    "@type": area.type,
-    "name": area.name
-  })),
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Servizi MUV Fitness Legnago",

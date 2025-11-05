@@ -24,7 +24,7 @@ const MUVMotivationSection = () => {
           <div className="relative overflow-hidden rounded-2xl shadow-primary">
             <OptimizedImage
               src="/images/fitness-professional-bg.jpg"
-              alt="Squadra MUV Fitness durante allenamento di gruppo - energia e motivazione"
+              alt="MUV Fitness Legnago - Personal trainer durante sessione EMS Training con cliente, tecnologie avanzate per dimagrimento rapido"
               width={600}
               height={400}
               generateWebp={true}

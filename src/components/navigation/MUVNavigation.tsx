@@ -64,16 +64,16 @@ const MUVNavigation = () => {
         <div className="flex justify-between items-center py-3">
           
           <Link to="/" className="flex items-center">
-            <OptimizedImage
-              src={LOGO_URL}
-              alt="Logo MUV Fitness Legnago"
-              width={180}
-              height={54}
-              priority={true}
-              objectFit="contain"
-              overflowHidden={false}
-              className="h-12 w-auto transition-all duration-300"
-            />
+        <OptimizedImage
+          src={LOGO_URL}
+          alt="MUV Fitness Legnago - Centro Fitness con EMS Training e Pilates Reformer"
+          width={180}
+          height={54}
+          priority={true}
+          objectFit="contain"
+          overflowHidden={false}
+          className="h-12 w-auto transition-all duration-300"
+        />
           </Link>
 
           <div className="hidden lg:flex items-center space-x-8">

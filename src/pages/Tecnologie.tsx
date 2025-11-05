@@ -87,6 +87,10 @@ const Tecnologie = () => {
           text: "Prenota una Prova Gratuita",
           href: "/form-contatti"
         }}
+        breadcrumbs={[
+          { text: "Home", href: "/" },
+          { text: "Tecnologie" }
+        ]}
       />
 
       <div className="min-h-screen bg-background">
