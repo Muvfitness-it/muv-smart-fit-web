@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Clock, Sparkles } from 'lucide-react';
+import { Clock, Sparkles, Zap } from 'lucide-react';
 import { useRelatedArticles, type RelatedArticle } from '@/hooks/useRelatedArticles';
+import { usePrefetchRelated } from '@/hooks/usePrefetchRelated';
 import { RelatedArticlesSkeleton } from './RelatedArticlesSkeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -24,6 +25,13 @@ export function RelatedArticles({
     maxResults
   });
 
+  // Strategic prefetching: triggers at 50% scroll
+  const { prefetched } = usePrefetchRelated({
+    articles: relatedArticles,
+    threshold: 0.5,
+    enabled: !loading && relatedArticles.length > 0
+  });
+
   if (loading) {
     return <RelatedArticlesSkeleton />;
   }
@@ -33,10 +41,16 @@ export function RelatedArticles({
   }
 
   return (
-    <section className="mt-16 mb-12">
+    <section className="mt-16 mb-12" data-prefetch-trigger>
       <div className="flex items-center gap-3 mb-8">
         <Sparkles className="w-6 h-6 text-primary" />
         <h2 className="text-3xl font-bold">Potrebbe Interessarti</h2>
+        {prefetched && (
+          <Badge variant="secondary" className="ml-auto text-xs gap-1.5">
+            <Zap className="w-3 h-3" />
+            Caricamento rapido attivo
+          </Badge>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -95,6 +109,8 @@ function RelatedArticleCard({
             alt={article.title}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             loading="lazy"
+            decoding="async"
+            fetchPriority="low"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
