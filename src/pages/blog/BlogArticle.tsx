@@ -18,6 +18,7 @@ import {
 import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlocks } from "@/utils/blogTheme";
 import { humanizeText, humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
 import { addInternalLinks } from "@/utils/internalLinker";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 
 interface Author {
@@ -52,7 +53,6 @@ const BlogArticle = () => {
   const [notFound, setNotFound] = useState(false);
   const [category, setCategory] = useState<{ id: string; name: string; slug: string } | null>(null);
   const [lightbox, setLightbox] = useState<{ open: boolean; index: number }>({ open: false, index: 0 });
-  const [related, setRelated] = useState<Array<{ id: string; title: string; slug: string; excerpt: string | null; featured_image: string | null; published_at: string | null }>>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -208,22 +208,6 @@ const BlogArticle = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [lightbox.open, galleryImages.length]);
 
-  useEffect(() => {
-    const loadRelated = async () => {
-      if (!post) return;
-      let query = supabase
-        .from('blog_posts')
-        .select('id, title, slug, excerpt, featured_image, published_at')
-        .eq('status', 'published')
-        .neq('id', post.id)
-        .order('published_at', { ascending: false })
-        .limit(3);
-      if (post.category_id) query = query.eq('category_id', post.category_id);
-      const { data } = await query;
-      setRelated(data || []);
-    };
-    loadRelated();
-  }, [post?.id, post?.category_id]);
 
   if (notFound) {
     return (
@@ -408,51 +392,15 @@ const BlogArticle = () => {
                 </section>
               )}
 
-              {/* Related Articles */}
-              {related.length > 0 && (
-                <section className="mt-12 bg-card/30 backdrop-blur-sm rounded-2xl p-8 border border-border/30">
-                  <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                    🔗 Articoli correlati
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {related.map((rp) => (
-                      <Card key={rp.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
-                        {rp.featured_image && (
-                          <Link to={`/${rp.slug}`} aria-label={`Apri articolo ${rp.title}`}>
-                            <div className="overflow-hidden">
-                              <LazyImage
-                                src={rp.featured_image}
-                                alt={`Copertina articolo correlato ${rp.title}`}
-                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                                width={800}
-                                height={450}
-                              />
-                            </div>
-                          </Link>
-                        )}
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-lg leading-tight">
-                            <Link 
-                              to={`/${rp.slug}`} 
-                              className="hover:text-accent transition-colors duration-200"
-                            >
-                              {rp.title}
-                            </Link>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          {rp.excerpt && (
-                            <p className="text-muted-foreground line-clamp-3 mb-4">{rp.excerpt}</p>
-                          )}
-                          <Button asChild size="sm" variant="outline" className="w-full">
-                            <Link to={`/${rp.slug}`}>Leggi articolo</Link>
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </section>
+              {/* Related Articles - AI-Powered Similarity Algorithm */}
+              {post && slug && (
+                <RelatedArticles
+                  currentPostId={post.id}
+                  currentSlug={slug}
+                  maxResults={3}
+                />
               )}
+              
               
               {/* Local Call to Action Section */}
               <section className="mt-12 p-8 md:p-12 glass-card rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
