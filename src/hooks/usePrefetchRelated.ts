@@ -1,11 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { RelatedArticle } from './useRelatedArticles';
+import type { ABTestConfig } from './useABTestPrefetch';
 
 interface UsePrefetchRelatedOptions {
   articles: RelatedArticle[];
   threshold?: number; // Scroll percentage to trigger prefetch (default 0.5 = 50%)
   enabled?: boolean;
+  abTestConfig?: ABTestConfig | null; // A/B test configuration
+  onPrefetchTriggered?: () => void; // Callback when prefetch is triggered
 }
 
 /**
@@ -15,10 +18,15 @@ interface UsePrefetchRelatedOptions {
 export function usePrefetchRelated({
   articles,
   threshold = 0.5,
-  enabled = true
+  enabled = true,
+  abTestConfig,
+  onPrefetchTriggered
 }: UsePrefetchRelatedOptions) {
   const [prefetched, setPrefetched] = useState(false);
   const navigate = useNavigate();
+
+  // Use A/B test threshold if available, otherwise use default
+  const effectiveThreshold = abTestConfig?.threshold ?? threshold;
 
   // Prefetch article data and images
   const prefetchArticle = useCallback((article: RelatedArticle) => {
@@ -51,7 +59,7 @@ export function usePrefetchRelated({
   const prefetchAllArticles = useCallback(() => {
     if (prefetched || !enabled || articles.length === 0) return;
 
-    console.log(`[Prefetch] Starting prefetch of ${articles.length} related articles`);
+    console.log(`[Prefetch] Starting prefetch of ${articles.length} related articles (threshold: ${effectiveThreshold * 100}%${abTestConfig ? `, variant: ${abTestConfig.variant}` : ''})`);
     
     articles.forEach((article, index) => {
       // Stagger prefetch requests to avoid overwhelming the browser
@@ -63,14 +71,18 @@ export function usePrefetchRelated({
 
     setPrefetched(true);
 
+    // Notify parent component
+    onPrefetchTriggered?.();
+
     // Track prefetch event
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'prefetch_triggered', {
         article_count: articles.length,
-        scroll_threshold: threshold
+        scroll_threshold: effectiveThreshold,
+        ab_variant: abTestConfig?.variant
       });
     }
-  }, [articles, prefetched, enabled, threshold, prefetchArticle]);
+  }, [articles, prefetched, enabled, effectiveThreshold, abTestConfig, prefetchArticle, onPrefetchTriggered]);
 
   // Scroll detection
   useEffect(() => {
@@ -81,7 +93,7 @@ export function usePrefetchRelated({
       const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercentage = scrolled / documentHeight;
 
-      if (scrollPercentage >= threshold) {
+      if (scrollPercentage >= effectiveThreshold) {
         prefetchAllArticles();
       }
     };
@@ -96,7 +108,7 @@ export function usePrefetchRelated({
         const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercentage = scrolled / documentHeight;
         
-        if (scrollPercentage >= threshold) {
+        if (scrollPercentage >= effectiveThreshold) {
           prefetchAllArticles();
         }
       }
@@ -108,7 +120,7 @@ export function usePrefetchRelated({
       window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [enabled, prefetched, threshold, prefetchAllArticles]);
+  }, [enabled, prefetched, effectiveThreshold, prefetchAllArticles]);
 
   // Intersection Observer for more precise prefetching
   // Triggers when "Related Articles" section enters viewport

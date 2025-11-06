@@ -1014,6 +1014,63 @@ export type Database = {
         }
         Relationships: []
       }
+      prefetch_ab_test: {
+        Row: {
+          article_slug: string
+          bounced: boolean | null
+          clicked_article_slug: string | null
+          clicked_position: number | null
+          created_at: string | null
+          id: string
+          prefetch_triggered: boolean | null
+          related_article_clicked: boolean | null
+          session_id: string
+          threshold: number
+          time_on_target_page: number | null
+          time_to_click: number | null
+          updated_at: string | null
+          user_agent: string | null
+          variant: string
+          visitor_id: string
+        }
+        Insert: {
+          article_slug: string
+          bounced?: boolean | null
+          clicked_article_slug?: string | null
+          clicked_position?: number | null
+          created_at?: string | null
+          id?: string
+          prefetch_triggered?: boolean | null
+          related_article_clicked?: boolean | null
+          session_id: string
+          threshold: number
+          time_on_target_page?: number | null
+          time_to_click?: number | null
+          updated_at?: string | null
+          user_agent?: string | null
+          variant: string
+          visitor_id: string
+        }
+        Update: {
+          article_slug?: string
+          bounced?: boolean | null
+          clicked_article_slug?: string | null
+          clicked_position?: number | null
+          created_at?: string | null
+          id?: string
+          prefetch_triggered?: boolean | null
+          related_article_clicked?: boolean | null
+          session_id?: string
+          threshold?: number
+          time_on_target_page?: number | null
+          time_to_click?: number | null
+          updated_at?: string | null
+          user_agent?: string | null
+          variant?: string
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           activity_level: string | null
@@ -1552,6 +1609,22 @@ export type Database = {
         }
         Relationships: []
       }
+      prefetch_ab_test_results: {
+        Row: {
+          avg_time_on_page_ms: number | null
+          avg_time_to_click_ms: number | null
+          bounce_count: number | null
+          bounce_rate_percentage: number | null
+          clicks_count: number | null
+          ctr_percentage: number | null
+          last_updated: string | null
+          prefetch_triggered_count: number | null
+          threshold: number | null
+          total_sessions: number | null
+          variant: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       admin_update_comment_status: {
@@ -1626,6 +1699,18 @@ export type Database = {
           weight: number
         }[]
       }
+      get_winning_prefetch_variant: {
+        Args: never
+        Returns: {
+          avg_time_on_page_ms: number
+          bounce_rate_percentage: number
+          confidence_level: string
+          ctr_percentage: number
+          total_sessions: number
+          winning_threshold: number
+          winning_variant: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1669,6 +1754,7 @@ export type Database = {
       log_unauthorized_access_attempt: { Args: never; Returns: undefined }
       log_unauthorized_lead_access: { Args: never; Returns: undefined }
       mask_sensitive_field: { Args: { input_text: string }; Returns: string }
+      refresh_prefetch_ab_test_results: { Args: never; Returns: undefined }
       repair_html_content: { Args: { input_content: string }; Returns: string }
       resolve_redirect: {
         Args: { path_to_check: string }

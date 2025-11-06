@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Clock, Sparkles, Zap } from 'lucide-react';
+import { Clock, Sparkles, Zap, FlaskConical } from 'lucide-react';
 import { useRelatedArticles, type RelatedArticle } from '@/hooks/useRelatedArticles';
 import { usePrefetchRelated } from '@/hooks/usePrefetchRelated';
+import { useABTestPrefetch } from '@/hooks/useABTestPrefetch';
 import { RelatedArticlesSkeleton } from './RelatedArticlesSkeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -25,11 +26,15 @@ export function RelatedArticles({
     maxResults
   });
 
-  // Strategic prefetching: triggers at 50% scroll
+  // A/B Testing for prefetch threshold
+  const { config: abTestConfig, trackPrefetchTriggered, trackArticleClick } = useABTestPrefetch(currentSlug);
+
+  // Strategic prefetching with A/B test integration
   const { prefetched } = usePrefetchRelated({
     articles: relatedArticles,
-    threshold: 0.5,
-    enabled: !loading && relatedArticles.length > 0
+    enabled: !loading && relatedArticles.length > 0,
+    abTestConfig,
+    onPrefetchTriggered: trackPrefetchTriggered
   });
 
   if (loading) {
@@ -42,15 +47,23 @@ export function RelatedArticles({
 
   return (
     <section className="mt-16 mb-12" data-prefetch-trigger>
-      <div className="flex items-center gap-3 mb-8">
+      <div className="flex items-center gap-3 mb-8 flex-wrap">
         <Sparkles className="w-6 h-6 text-primary" />
         <h2 className="text-3xl font-bold">Potrebbe Interessarti</h2>
-        {prefetched && (
-          <Badge variant="secondary" className="ml-auto text-xs gap-1.5">
-            <Zap className="w-3 h-3" />
-            Caricamento rapido attivo
-          </Badge>
-        )}
+        <div className="ml-auto flex gap-2">
+          {abTestConfig && (
+            <Badge variant="outline" className="text-xs gap-1.5">
+              <FlaskConical className="w-3 h-3" />
+              Test {abTestConfig.variant} ({abTestConfig.threshold * 100}%)
+            </Badge>
+          )}
+          {prefetched && (
+            <Badge variant="secondary" className="text-xs gap-1.5">
+              <Zap className="w-3 h-3" />
+              Caricamento rapido
+            </Badge>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -61,6 +74,7 @@ export function RelatedArticles({
             position={index}
             currentSlug={currentSlug}
             showSimilarityScore={showSimilarityScore}
+            onArticleClick={trackArticleClick}
           />
         ))}
       </div>
@@ -73,13 +87,15 @@ interface RelatedArticleCardProps {
   position: number;
   currentSlug: string;
   showSimilarityScore?: boolean;
+  onArticleClick?: (clickedSlug: string, position: number) => void;
 }
 
 function RelatedArticleCard({
   article,
   position,
   currentSlug,
-  showSimilarityScore = false
+  showSimilarityScore = false,
+  onArticleClick
 }: RelatedArticleCardProps) {
   const handleClick = () => {
     // Track analytics
@@ -93,6 +109,9 @@ function RelatedArticleCard({
           : 0
       });
     }
+
+    // Track for A/B test
+    onArticleClick?.(article.slug, position);
   };
 
   return (
