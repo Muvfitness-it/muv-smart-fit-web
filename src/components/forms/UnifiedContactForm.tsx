@@ -5,9 +5,10 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useUnifiedContactForm } from '@/hooks/useUnifiedContactForm';
 import GDPRConsent from '@/components/security/GDPRConsent';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, MessageSquare, Mail } from 'lucide-react';
 
 interface UnifiedContactFormProps {
   title?: string;
@@ -51,6 +52,9 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
     enableAIData
   });
 
+  // Estrai errore di submit per mostrarlo
+  const submissionError = errors.submit;
+
   if (isSubmitted) {
     return (
       <Card className={`glass-card ${className}`}>
@@ -72,6 +76,39 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
           <h2 className="text-heading-md mb-2">{title}</h2>
           <p className="text-body-md">{subtitle}</p>
         </div>
+
+        {/* Error Banner con Contatti Alternativi */}
+        {submissionError && !isSubmitted && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Errore durante l'invio</AlertTitle>
+            <AlertDescription>
+              <p className="mb-2">{submissionError}</p>
+              <p className="text-sm mb-3">
+                Se il problema persiste, contattaci direttamente:
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a 
+                  href="https://wa.me/393291070374"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm underline font-medium hover:no-underline"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  WhatsApp: 329 107 0374
+                </a>
+                <span className="text-muted-foreground">|</span>
+                <a 
+                  href="mailto:info@muvfitness.it"
+                  className="inline-flex items-center gap-2 text-sm underline font-medium hover:no-underline"
+                >
+                  <Mail className="w-4 h-4" />
+                  Email: info@muvfitness.it
+                </a>
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6" noValidate>
           {/* Honeypot field */}
@@ -221,6 +258,49 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
             {isSubmitting ? 'INVIO IN CORSO...' : 'INVIA RICHIESTA'}
           </Button>
         </form>
+
+        {/* Divider */}
+        <div className="relative my-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-muted"></div>
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Oppure contattaci direttamente
+            </span>
+          </div>
+        </div>
+
+        {/* Contatti Diretti - Sempre Visibili */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <a
+            href="https://wa.me/393291070374"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-4 border border-green-500/30 rounded-lg hover:bg-green-500/10 transition-colors group"
+          >
+            <MessageSquare className="w-6 h-6 text-green-600 group-hover:scale-110 transition-transform" />
+            <div>
+              <p className="font-semibold text-sm">WhatsApp</p>
+              <p className="text-xs text-muted-foreground">329 107 0374</p>
+            </div>
+          </a>
+          
+          <a
+            href="mailto:info@muvfitness.it"
+            className="flex items-center gap-3 p-4 border border-primary/30 rounded-lg hover:bg-primary/10 transition-colors group"
+          >
+            <Mail className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+            <div>
+              <p className="font-semibold text-sm">Email</p>
+              <p className="text-xs text-muted-foreground">info@muvfitness.it</p>
+            </div>
+          </a>
+        </div>
+
+        <p className="text-center text-xs text-muted-foreground mt-4">
+          📍 <strong>Sede:</strong> Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)
+        </p>
       </CardContent>
     </Card>
   );

@@ -36,7 +36,7 @@ const Privacy = () => {
                   <br />
                   Email: info@muvfitness.it
                   <br />
-                  Telefono: +39 3459188197
+                  WhatsApp: +39 329 107 0374
                 </p>
               </section>
 

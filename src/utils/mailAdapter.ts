@@ -21,58 +21,83 @@ export interface ContactFormResponse {
 }
 
 export async function sendContactViaWeb3Forms(payload: ContactFormPayload): Promise<ContactFormResponse> {
-  // Honeypot: if filled, silently succeed without sending
-  if (payload.botcheck && payload.botcheck.trim() !== "") {
-    return { success: true, message: "Honeypot triggered - skipped" };
+  console.log('📧 MailAdapter: Starting email send', {
+    name: payload.name,
+    email: payload.email,
+    campaign: payload.campaign,
+    timestamp: new Date().toISOString()
+  });
+  
+  // Check honeypot
+  if (payload.botcheck) {
+    console.warn('🤖 MailAdapter: Bot detected via honeypot');
+    return { success: false, message: 'Spam detected' };
   }
 
   try {
-    console.log('📧 Sending contact form via Supabase Edge Function...');
+    // Timeout protection: 15 secondi
+    const timeoutPromise = new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('Timeout: Edge function non risponde dopo 15 secondi')), 15000)
+    );
     
-    const { data, error } = await supabase.functions.invoke('send-contact-email', {
+    const supabasePromise = supabase.functions.invoke('send-contact-email', {
       body: {
         name: payload.name,
         email: payload.email,
-        phone: payload.phone || "",
-        obiettivo: payload.obiettivo || "",
-        message: payload.message,
-        subject: payload.subject || `Nuovo contatto dal sito: ${payload.name}`,
-        campaign: payload.campaign || "",
-        source: payload.source || "website"
+        phone: payload.phone || '',
+        message: payload.message || '',
+        obiettivo: payload.obiettivo || '',
+        campaign: payload.campaign || 'general',
+        source: payload.source || 'website'
       }
     });
+    
+    console.log('⏳ MailAdapter: Waiting for edge function response (max 15s)...');
+    
+    const { data, error } = await Promise.race([
+      supabasePromise,
+      timeoutPromise
+    ]);
 
     if (error) {
-      console.error('❌ Edge function error:', error);
+      console.error('❌ MailAdapter: Edge function error', {
+        errorMessage: error.message,
+        errorName: error.name,
+        errorCode: (error as any).code,
+        errorDetails: error
+      });
       
-      // Check for authentication errors
-      if (error.message?.includes('401') || error.message?.includes('403') || error.message?.includes('Unauthorized')) {
-        console.error('🔒 Unauthorized function call - verify_jwt might be enabled');
-        return {
-          success: false,
-          message: "Servizio temporaneamente non disponibile. Riprova tra poco o contattaci su WhatsApp (329 107 0374)."
-        };
+      // Errori specifici con messaggi user-friendly
+      if (error.message?.includes('timeout') || error.message?.includes('Timeout')) {
+        throw new Error('Il server impiega troppo tempo a rispondere. Riprova tra qualche secondo.');
+      }
+      if (error.message?.includes('rate limit')) {
+        throw new Error('Troppe richieste. Attendi 1 minuto prima di riprovare.');
+      }
+      if (error.message?.includes('spam')) {
+        throw new Error('La tua richiesta è stata bloccata. Contattaci su WhatsApp al 329 107 0374.');
+      }
+      if (error.message?.includes('network') || error.message?.includes('fetch')) {
+        throw new Error('Errore di connessione. Verifica la tua rete e riprova.');
       }
       
-      throw error;
+      throw new Error(error.message || 'Errore durante l\'invio della richiesta');
     }
 
-    console.log('✅ Edge function response:', { success: data?.success });
-
-    if (data?.success) {
-      return { 
-        success: true, 
-        message: 'Messaggio inviato con successo!',
-        data: data
-      };
-    } else {
-      throw new Error(data?.error || 'Unknown error from edge function');
-    }
-  } catch (error) {
-    console.error('❌ Contact form submission failed:', error);
-    return {
-      success: false,
-      message: "Errore nell'invio del messaggio. Riprova più tardi o contattaci su WhatsApp (329 107 0374)."
+    console.log('✅ MailAdapter: Email sent successfully', data);
+    return { 
+      success: true, 
+      message: 'Richiesta inviata con successo! Riceverai una conferma via email.' 
     };
+    
+  } catch (error: any) {
+    console.error('❌ MailAdapter: Catch-all error', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack?.split('\n').slice(0, 3).join('\n')
+    });
+    
+    // Rilancia l'errore per gestirlo a livello form
+    throw error;
   }
 }

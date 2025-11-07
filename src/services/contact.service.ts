@@ -44,10 +44,22 @@ export class ContactService {
       errors.push('Inserisci un indirizzo email valido');
     }
 
-    // Phone validation - normalize and count only digits
-    const digits = data.phone?.replace(/\D/g, '') || '';
-    if (digits.length < 8 || digits.length > 16) {
-      errors.push('Inserisci un numero di telefono valido');
+    // Phone validation - accetta formati italiani standard
+    const phone = data.phone?.trim() || '';
+    if (phone) {
+      const digits = phone.replace(/\D/g, '');
+      // Accetta: 329XXXXXXX (9 cifre), +39329XXXXXXX (11 cifre), 00393XXXXXXXX
+      if (digits.length < 9 || digits.length > 16) {
+        errors.push('Inserisci un numero di telefono valido (es: 329 107 0374)');
+      }
+      
+      // Verifica che inizi con prefisso italiano valido
+      const startsWithValid = /^(00393|393|\+393|3|00390|390|\+390|0)/.test(digits);
+      if (!startsWithValid) {
+        errors.push('Inserisci un numero italiano valido');
+      }
+    } else {
+      errors.push('Il numero di telefono è obbligatorio');
     }
 
     // GDPR consent validation

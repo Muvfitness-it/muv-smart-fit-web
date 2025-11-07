@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, AlertCircle } from 'lucide-react';
 
 interface GDPRConsentProps {
   onConsentChange: (consented: boolean) => void;
@@ -13,8 +13,16 @@ const GDPRConsent: React.FC<GDPRConsentProps> = ({ onConsentChange, required = f
   const [consented, setConsented] = useState(false);
 
   const handleConsentChange = (checked: boolean | "indeterminate") => {
-    // Convert to boolean (Radix UI Checkbox can pass "indeterminate")
+    // STRICT conversion: garantisce sempre boolean
     const booleanValue = checked === true;
+    
+    console.log('🔐 GDPR Consent Changed:', {
+      rawValue: checked,
+      rawType: typeof checked,
+      convertedValue: booleanValue,
+      convertedType: typeof booleanValue
+    });
+    
     setConsented(booleanValue);
     onConsentChange(booleanValue);
   };
@@ -65,9 +73,10 @@ const GDPRConsent: React.FC<GDPRConsentProps> = ({ onConsentChange, required = f
         </div>
         
         {!consented && required && (
-          <p className="text-xs text-destructive mt-2">
-            Il consenso è obbligatorio per procedere con l'invio del modulo.
-          </p>
+          <div className="flex items-center gap-2 text-xs text-destructive mt-2 bg-destructive/10 p-2 rounded">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>Il consenso è obbligatorio per procedere con l'invio del modulo.</span>
+          </div>
         )}
       </div>
     </Card>

@@ -128,47 +128,79 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // 🔍 LOG FASE 1: Dati form all'invio
+    console.group('📝 FORM SUBMIT - Phase 1: Initial Data');
+    console.log('FormData completo:', {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      obiettivo: formData.obiettivo,
+      gdprConsent: formData.gdprConsent,
+      gdprConsentType: typeof formData.gdprConsent,
+      honeypot: formData.honeypot,
+      campaign: formData.campaign,
+      source: formData.source
+    });
+    console.groupEnd();
+
     // Bot detection
     if (formData.honeypot) {
+      console.warn('🤖 BOT DETECTED - Honeypot filled:', formData.honeypot);
       return;
     }
 
-    // Validate all fields
+    // 🔍 LOG FASE 2: Validazione
+    console.group('🔍 FORM SUBMIT - Phase 2: Validation');
     const validation = ContactService.validate(formData);
+    console.log('Validation Result:', {
+      isValid: validation.isValid,
+      errors: validation.errors,
+      errorCount: validation.errors.length
+    });
+    console.groupEnd();
+
     if (!validation.isValid) {
-      // Map validation errors to field-specific errors
+      console.error('❌ VALIDATION FAILED:', validation.errors);
       const fieldErrors: Record<string, string> = {};
       validation.errors.forEach(errorMsg => {
         if (errorMsg.toLowerCase().includes('nome')) fieldErrors.name = errorMsg;
         else if (errorMsg.toLowerCase().includes('email')) fieldErrors.email = errorMsg;
         else if (errorMsg.toLowerCase().includes('telefono')) fieldErrors.phone = errorMsg;
-        else if (errorMsg.toLowerCase().includes('gdpr') || errorMsg.toLowerCase().includes('dati')) fieldErrors.gdprConsent = errorMsg;
+        else if (errorMsg.toLowerCase().includes('gdpr') || errorMsg.toLowerCase().includes('dati')) {
+          fieldErrors.gdprConsent = errorMsg;
+        }
       });
       setErrors(fieldErrors);
       
       toast({
-        title: "Errore",
+        title: "Errore di Validazione",
         description: validation.errors[0],
-        variant: "destructive"
+        variant: "destructive",
+        duration: 5000
       });
       return;
     }
 
     setIsSubmitting(true);
 
-    console.log('📤 Contact form submission:', {
-      hasName: !!formData.name,
-      hasEmail: !!formData.email,
-      hasPhone: !!formData.phone,
-      hasObjective: !!formData.obiettivo,
-      gdprConsent: formData.gdprConsent,
+    console.group('📤 FORM SUBMIT - Phase 3: Sending to Edge Function');
+    console.log('Calling ContactService.submit with:', {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      hasMessage: !!formData.message,
+      hasObiettivo: !!formData.obiettivo,
       campaign: formData.campaign,
-      source: formData.source
+      source: formData.source,
+      timestamp: new Date().toISOString()
     });
 
     try {
       const result = await ContactService.submit(formData);
-      console.log('✅ Contact form result:', { success: result.success });
+      
+      console.log('✅ SUBMIT SUCCESS:', result);
+      console.groupEnd();
 
       if (result.success) {
         setIsSubmitted(true);
@@ -204,12 +236,22 @@ export const useUnifiedContactForm = (options: UseContactFormOptions = {}) => {
       } else {
         throw new Error(result.error || 'Errore durante l\'invio');
       }
-    } catch (error) {
-      console.error('❌ Form submission error:', error);
+    } catch (error: any) {
+      console.group('❌ FORM SUBMIT - Phase 4: ERROR');
+      console.error('Error Details:', {
+        message: error.message,
+        name: error.name,
+        stack: error.stack,
+        fullError: error
+      });
+      console.groupEnd();
+      
+      setErrors({ submit: error.message || 'Errore durante l\'invio' });
       toast({
-        title: "Errore",
-        description: "Errore nell'invio. Riprova o contattaci direttamente.",
-        variant: "destructive"
+        title: "Errore Invio",
+        description: error.message || "Errore nell'invio. Riprova o contattaci su WhatsApp.",
+        variant: "destructive",
+        duration: 7000
       });
     } finally {
       setIsSubmitting(false);

@@ -96,6 +96,11 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log('📧 Edge Function: Request received', {
+      method: req.method,
+      timestamp: new Date().toISOString()
+    });
+
     // Rate limiting
     const clientIP = req.headers.get("x-forwarded-for") || "unknown";
     if (!checkRateLimit(clientIP)) {
@@ -108,6 +113,16 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Parse request body
     const data: ContactEmailRequest = await req.json();
+    
+    console.log('📦 Payload parsed:', {
+      name: data.name,
+      email: data.email,
+      hasPhone: !!data.phone,
+      hasMessage: !!data.message,
+      campaign: data.campaign,
+      source: data.source
+    });
+    
     console.log("Received contact form submission:", { 
       name: data.name, 
       email: data.email,
@@ -118,12 +133,13 @@ const handler = async (req: Request): Promise<Response> => {
     // Validate input
     const validationError = validateInput(data);
     if (validationError) {
-      console.error("Validation error:", validationError);
+      console.warn('❌ Validation failed:', validationError);
       return new Response(
         JSON.stringify({ error: validationError }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+    console.log('✅ Validation passed');
 
     // Sanitize inputs
     const safeName = escapeHtml(data.name.trim());
@@ -145,6 +161,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send email to business
+    console.log('📨 Sending business email to info@muvfitness.it...');
     const businessEmail = await resend.emails.send({
       from: "MUV Fitness <noreply@muvfitness.it>",
       to: ["info@muvfitness.it"],
@@ -182,9 +199,10 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Business email sent:", businessEmail);
+    console.log('✅ Business email sent:', businessEmail);
 
     // Send confirmation email to user
+    console.log('📨 Sending confirmation email to user...');
     const userEmail = await resend.emails.send({
       from: "MUV Fitness <noreply@muvfitness.it>",
       to: [safeEmail],
@@ -226,7 +244,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px;">
               <p style="margin: 5px 0;"><strong>MUV Fitness Legnago</strong></p>
               <p style="margin: 5px 0;">Via Frattini 119, Legnago (VR)</p>
-              <p style="margin: 5px 0;">Tel: 0442 622799 | WhatsApp: 329 107 0374</p>
+              <p style="margin: 5px 0;">WhatsApp: 329 107 0374 | Email: info@muvfitness.it</p>
               <p style="margin: 5px 0;">
                 <a href="mailto:info@muvfitness.it" style="color: #2563eb; text-decoration: none;">info@muvfitness.it</a>
               </p>
@@ -236,7 +254,7 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("User confirmation email sent:", userEmail);
+    console.log('✅ User confirmation sent:', userEmail);
 
     return new Response(
       JSON.stringify({
