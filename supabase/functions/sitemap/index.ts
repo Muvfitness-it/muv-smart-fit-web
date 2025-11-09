@@ -29,29 +29,46 @@ serve(async (req) => {
       throw error;
     }
 
+    // Helper to get current date with validation (prevents future dates)
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      
+      // If date is in future beyond Nov 2025, use Nov 2025 as fallback
+      if (year > 2025 || (year === 2025 && month > 10)) {
+        return '2025-11-09';
+      }
+      return now.toISOString().split('T')[0];
+    };
+
     // Generate main sitemap
     const baseUrl = 'https://www.muvfitness.it';
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = getCurrentDate();
     
+    // Only canonical URLs (no redirects)
     const staticPages = [
       { url: '', priority: '1.0', changefreq: 'daily' },
       { url: '/servizi', priority: '0.9', changefreq: 'weekly' },
+      { url: '/servizi/ems-legnago', priority: '0.9', changefreq: 'monthly' },
+      { url: '/servizi/pilates-reformer-legnago', priority: '0.9', changefreq: 'monthly' },
+      { url: '/servizi/pancafit-legnago', priority: '0.8', changefreq: 'monthly' },
+      { url: '/servizi/vacuum-pressoterapia-legnago', priority: '0.8', changefreq: 'monthly' },
+      { url: '/servizi/sauna-infrarossi-legnago', priority: '0.8', changefreq: 'monthly' },
+      { url: '/servizi/over-60-legnago', priority: '0.8', changefreq: 'monthly' },
+      { url: '/servizi/nutrizione', priority: '0.8', changefreq: 'monthly' },
+      { url: '/servizi/small-group', priority: '0.7', changefreq: 'monthly' },
       { url: '/chi-siamo', priority: '0.8', changefreq: 'monthly' },
       { url: '/contatti', priority: '0.9', changefreq: 'monthly' },
       { url: '/blog', priority: '0.9', changefreq: 'daily' },
-      { url: '/muv-planner', priority: '0.8', changefreq: 'weekly' },
-      { url: '/servizi/personal-training', priority: '0.8', changefreq: 'monthly' },
-      { url: '/servizi/ems', priority: '0.8', changefreq: 'monthly' },
-      { url: '/servizi/pilates', priority: '0.8', changefreq: 'monthly' },
-      { url: '/servizi/hiit', priority: '0.8', changefreq: 'monthly' },
-      { url: '/servizi/nutrizione', priority: '0.8', changefreq: 'monthly' },
-      { url: '/servizi/massoterapia', priority: '0.7', changefreq: 'monthly' },
-      { url: '/servizi/pancafit', priority: '0.7', changefreq: 'monthly' },
-      { url: '/servizi/psicologo', priority: '0.7', changefreq: 'monthly' },
-      { url: '/servizi/small-group', priority: '0.7', changefreq: 'monthly' },
       { url: '/risultati', priority: '0.8', changefreq: 'monthly' },
       { url: '/team', priority: '0.7', changefreq: 'monthly' },
-      { url: '/trasformazione-30-giorni', priority: '0.9', changefreq: 'weekly' },
+      { url: '/metodo', priority: '0.8', changefreq: 'monthly' },
+      { url: '/perche-muv', priority: '0.8', changefreq: 'monthly' },
+      { url: '/tecnologie', priority: '0.7', changefreq: 'monthly' },
+      { url: '/faq', priority: '0.7', changefreq: 'monthly' },
+      { url: '/privacy', priority: '0.3', changefreq: 'yearly' },
+      { url: '/cookie-policy', priority: '0.3', changefreq: 'yearly' },
     ];
 
     let dynamicPages = [];

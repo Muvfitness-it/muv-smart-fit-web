@@ -24,10 +24,6 @@ Allow: /contatti
 Allow: /chi-siamo
 Allow: /team
 Allow: /risultati
-Allow: /trasformazione-30-giorni
-
-# Crawl delay for polite crawling
-Crawl-delay: 1
 
 # Sitemap locations
 Sitemap: https://www.muvfitness.it/sitemap.xml

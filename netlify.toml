@@ -5,13 +5,159 @@
   publish = "dist"
 
 # Server-side 301 redirects for SEO consolidation
+
+# EMS Service redirects
+[[redirects]]
+  from = "/servizi/personal-training"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/ems"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/allenamento-ems-legnago"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/personal-trainer-legnago"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/hiit"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dimagrire-legnago"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+# Pilates redirects
+[[redirects]]
+  from = "/servizi/pilates"
+  to = "/servizi/pilates-reformer-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pilates-legnago"
+  to = "/servizi/pilates-reformer-legnago"
+  status = 301
+  force = true
+
+# Pancafit redirects
+[[redirects]]
+  from = "/servizi/pancafit"
+  to = "/servizi/pancafit-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mal-di-schiena-legnago"
+  to = "/servizi/pancafit-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/pancafit-postura-legnago"
+  to = "/servizi/pancafit-legnago"
+  status = 301
+  force = true
+
+# Vacuum/Massoterapia redirects
+[[redirects]]
+  from = "/servizi/massoterapia"
+  to = "/servizi/vacuum-pressoterapia-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/vacuum-pressoterapia"
+  to = "/servizi/vacuum-pressoterapia-legnago"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/massaggio-sportivo-legnago"
+  to = "/servizi/vacuum-pressoterapia-legnago"
+  status = 301
+  force = true
+
+# Other service redirects
+[[redirects]]
+  from = "/servizi/psicologo"
+  to = "/servizi"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/nutrizione-psicocoach-legnago"
+  to = "/servizi"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servizi/personal-trainer-legnago"
+  to = "/servizi/ems-legnago"
+  status = 301
+  force = true
+
+# Legacy pages redirects
+[[redirects]]
+  from = "/muv-planner"
+  to = "/contatti"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/form-contatti"
+  to = "/contatti"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/recensioni"
+  to = "/risultati"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq-gbp"
+  to = "/#faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/media-kit/proof-posts"
+  to = "/risultati"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/prezzi"
+  to = "/perche-muv"
+  status = 301
+  force = true
+
+# Blog redirect (slug consolidation)
 [[redirects]]
   from = "/blog/:slug"
   to = "/:slug"
   status = 301
   force = true
 
-# Ensure SPA routing works correctly
+# Ensure SPA routing works correctly (must be last)
 [[redirects]]
   from = "/*"
   to = "/index.html"

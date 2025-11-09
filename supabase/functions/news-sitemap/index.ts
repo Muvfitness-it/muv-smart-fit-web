@@ -33,6 +33,19 @@ serve(async (req) => {
 
     if (error) throw error;
 
+    // Helper to get current date with validation (prevents future dates)
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      
+      // If date is in future beyond Nov 2025, use Nov 2025 as fallback
+      if (year > 2025 || (year === 2025 && month > 10)) {
+        return '2025-11-09';
+      }
+      return now.toISOString().split('T')[0];
+    };
+
     const baseUrl = 'https://www.muvfitness.it';
 
     const recentPosts = (posts || []).filter((p: any) => {

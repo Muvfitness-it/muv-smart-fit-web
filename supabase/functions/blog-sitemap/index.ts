@@ -34,6 +34,18 @@ serve(async (req) => {
 
     console.log(`Found ${posts?.length || 0} published blog posts`);
     
+    // Helper to get current date with validation (prevents future dates)
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      
+      // If date is in future beyond Nov 2025, use Nov 2025 as fallback
+      if (year > 2025 || (year === 2025 && month > 10)) {
+        return '2025-11-09';
+      }
+      return now.toISOString().split('T')[0];
+    };
 
     if (!posts || posts.length === 0) {
       const emptySitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -50,7 +62,8 @@ serve(async (req) => {
 
     const baseUrl = 'https://www.muvfitness.it';
     const sitemapEntries = posts.map((post: any) => {
-      const lastmod = new Date(post.updated_at).toISOString().split('T')[0];
+      const postDate = new Date(post.updated_at);
+      const lastmod = postDate.toISOString().split('T')[0];
       const pubDate = post.published_at ? new Date(post.published_at) : new Date(post.updated_at);
       const isRecent = (Date.now() - pubDate.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
       

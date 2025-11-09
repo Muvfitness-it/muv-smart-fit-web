@@ -151,7 +151,7 @@ const AppContent = () => {
       <SessionSecurity>
         <PerformanceMonitor />
         <SecureDataHandler />
-        <RedirectHandler />
+        {/* RedirectHandler removed - all redirects now server-side in netlify.toml */}
         <GEOValidator />
         
         {/* Removed problematic optimization components */}
@@ -274,36 +274,12 @@ const AppContent = () => {
                     <Route path="/admin/seo-monitor" element={<AdminRoute><Suspense fallback={<RouteLoading />}><SEOMonitorDashboard /></Suspense></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
-                    {/* ===== LEGACY REDIRECTS - Clean up circular redirects ===== */}
-                    {/* Old service pages redirect to new canonical URLs */}
-                    <Route path="/servizi/personal-training" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/servizi/ems" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/servizi/pancafit" element={<Navigate to="/servizi/pancafit-legnago" replace />} />
-                    <Route path="/servizi/pilates" element={<Navigate to="/servizi/pilates-reformer-legnago" replace />} />
-                    <Route path="/servizi/hiit" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/servizi/psicologo" element={<Navigate to="/servizi" replace />} />
-                    <Route path="/servizi/massoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />
-                    <Route path="/servizi/vacuum-pressoterapia" element={<Navigate to="/servizi/vacuum-pressoterapia-legnago" replace />} />
-                    <Route path="/servizi/nutrizione-psicocoach-legnago" element={<Navigate to="/servizi" replace />} />
-                    <Route path="/servizi/personal-trainer-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/servizi/pancafit-postura-legnago" element={<Navigate to="/servizi/pancafit-legnago" replace />} />
+                    {/* ===== LEGACY REDIRECTS - Now handled server-side via netlify.toml ===== */}
+                    {/* All redirects moved to netlify.toml for better SEO (301 server-side vs client-side) */}
                     
-                    {/* SEO city pages → specific services or home */}
-                    <Route path="/personal-trainer-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/allenamento-ems-legnago" element={<Navigate to="/servizi/ems-legnago" replace />} />
-                    <Route path="/pilates-legnago" element={<Navigate to="/#servizi" replace />} />
-                    <Route path="/dimagrire-legnago" element={<Navigate to="/#servizi" replace />} />
-                    <Route path="/mal-di-schiena-legnago" element={<Navigate to="/#servizi" replace />} />
-                    <Route path="/massaggio-sportivo-legnago" element={<Navigate to="/#servizi" replace />} />
-                    
-                    {/* Old standalone pages → Core pages */}
+                    {/* Only keep pages that don't need redirects */}
                     <Route path="/come-arrivare" element={<Suspense fallback={<RouteLoading />}><ComeArrivare /></Suspense>} />
                     <Route path="/zone-servite" element={<Suspense fallback={<RouteLoading />}><ZoneServite /></Suspense>} />
-                    <Route path="/form-contatti" element={<Navigate to="/contatti" replace />} />
-                    <Route path="/recensioni" element={<Navigate to="/risultati" replace />} />
-                    <Route path="/faq-gbp" element={<Navigate to="/#faq" replace />} />
-                    <Route path="/media-kit/proof-posts" element={<Navigate to="/risultati" replace />} />
-                    <Route path="/muv-planner" element={<Navigate to="/contatti" replace />} />
                     
                     <Route path="*" element={<NotFound />} />
                   </Routes>
