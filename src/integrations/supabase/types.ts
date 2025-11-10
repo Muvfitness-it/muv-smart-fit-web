@@ -828,6 +828,90 @@ export type Database = {
         }
         Relationships: []
       }
+      gsc_alert_history: {
+        Row: {
+          alert_date: string
+          alert_message: string
+          alert_type: string
+          change_percentage: number
+          created_at: string
+          current_value: number
+          email_sent: boolean | null
+          email_sent_at: string | null
+          id: string
+          metric_name: string
+          previous_value: number
+          severity: string
+        }
+        Insert: {
+          alert_date?: string
+          alert_message: string
+          alert_type: string
+          change_percentage: number
+          created_at?: string
+          current_value: number
+          email_sent?: boolean | null
+          email_sent_at?: string | null
+          id?: string
+          metric_name: string
+          previous_value: number
+          severity: string
+        }
+        Update: {
+          alert_date?: string
+          alert_message?: string
+          alert_type?: string
+          change_percentage?: number
+          created_at?: string
+          current_value?: number
+          email_sent?: boolean | null
+          email_sent_at?: string | null
+          id?: string
+          metric_name?: string
+          previous_value?: number
+          severity?: string
+        }
+        Relationships: []
+      }
+      gsc_metrics_history: {
+        Row: {
+          check_date: string
+          clicks: number
+          created_at: string
+          ctr: number
+          id: string
+          impressions: number
+          metric_type: string
+          period_days: number
+          position: number
+          url: string | null
+        }
+        Insert: {
+          check_date?: string
+          clicks?: number
+          created_at?: string
+          ctr?: number
+          id?: string
+          impressions?: number
+          metric_type: string
+          period_days?: number
+          position?: number
+          url?: string | null
+        }
+        Update: {
+          check_date?: string
+          clicks?: number
+          created_at?: string
+          ctr?: number
+          id?: string
+          impressions?: number
+          metric_type?: string
+          period_days?: number
+          position?: number
+          url?: string | null
+        }
+        Relationships: []
+      }
       gsc_oauth_tokens: {
         Row: {
           created_at: string | null

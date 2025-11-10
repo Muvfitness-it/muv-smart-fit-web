@@ -5,9 +5,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader2, RefreshCw, Send, FileEdit, Unlock, CheckCircle, Key } from "lucide-react";
+import GSCMetricsDashboard from "@/components/admin/GSCMetricsDashboard";
 
 interface SEOLog {
   id: string;
@@ -349,37 +351,45 @@ const SEOMonitorDashboard = () => {
         </Card>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Button 
-          variant={filter === "all" ? "default" : "outline"} 
-          onClick={() => setFilter("all")}
-          size="sm"
-        >
-          Tutti ({logs.length})
-        </Button>
-        <Button 
-          variant={filter === "indexed" ? "default" : "outline"} 
-          onClick={() => setFilter("indexed")}
-          size="sm"
-        >
-          ✅ Indicizzati ({logs.filter(l => l.indexing_status === "indexed").length})
-        </Button>
-        <Button 
-          variant={filter === "not_indexed" ? "default" : "outline"} 
-          onClick={() => setFilter("not_indexed")}
-          size="sm"
-        >
-          ⏳ Non Indicizzati ({logs.filter(l => l.indexing_status === "crawled_not_indexed" || l.indexing_status === "pending_first_check").length})
-        </Button>
-        <Button 
-          variant={filter === "critical" ? "default" : "outline"} 
-          onClick={() => setFilter("critical")}
-          size="sm"
-        >
-          ⚠️ Critici ({logs.filter(l => (l.indexing_status === "crawled_not_indexed" || l.indexing_status === "pending_first_check") && l.days_in_current_status > 14).length})
-        </Button>
-      </div>
+      {/* Tabs Navigation */}
+      <Tabs defaultValue="articles" className="mt-8">
+        <TabsList>
+          <TabsTrigger value="articles">📄 Articoli</TabsTrigger>
+          <TabsTrigger value="metrics">📊 Metriche GSC</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="articles" className="mt-6">
+          {/* Filters */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <Button 
+              variant={filter === "all" ? "default" : "outline"} 
+              onClick={() => setFilter("all")}
+              size="sm"
+            >
+              Tutti ({logs.length})
+            </Button>
+            <Button 
+              variant={filter === "indexed" ? "default" : "outline"} 
+              onClick={() => setFilter("indexed")}
+              size="sm"
+            >
+              ✅ Indicizzati ({logs.filter(l => l.indexing_status === "indexed").length})
+            </Button>
+            <Button 
+              variant={filter === "not_indexed" ? "default" : "outline"} 
+              onClick={() => setFilter("not_indexed")}
+              size="sm"
+            >
+              ⏳ Non Indicizzati ({logs.filter(l => l.indexing_status === "crawled_not_indexed" || l.indexing_status === "pending_first_check").length})
+            </Button>
+            <Button 
+              variant={filter === "critical" ? "default" : "outline"} 
+              onClick={() => setFilter("critical")}
+              size="sm"
+            >
+              ⚠️ Critici ({logs.filter(l => (l.indexing_status === "crawled_not_indexed" || l.indexing_status === "pending_first_check") && l.days_in_current_status > 14).length})
+            </Button>
+          </div>
 
       {/* Articles List */}
       {loading ? (
@@ -508,6 +518,12 @@ const SEOMonitorDashboard = () => {
           })}
         </div>
       )}
+        </TabsContent>
+
+        <TabsContent value="metrics" className="mt-6">
+          <GSCMetricsDashboard />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };
