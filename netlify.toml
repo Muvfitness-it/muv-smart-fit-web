@@ -4,6 +4,35 @@
   command = "npm run build"
   publish = "dist"
 
+# Sitemap rewrites - servono Edge Functions dinamiche su dominio principale
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap-index"
+  status = 200
+  force = true
+  headers = {X-Robots-Tag = "all"}
+
+[[redirects]]
+  from = "/sitemap-main.xml"
+  to = "https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap-main"
+  status = 200
+  force = true
+  headers = {X-Robots-Tag = "all"}
+
+[[redirects]]
+  from = "/sitemap-blog.xml"
+  to = "https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap-blog"
+  status = 200
+  force = true
+  headers = {X-Robots-Tag = "all"}
+
+[[redirects]]
+  from = "/sitemap-news.xml"
+  to = "https://baujoowgqeyraqnukkmw.supabase.co/functions/v1/sitemap-news"
+  status = 200
+  force = true
+  headers = {X-Robots-Tag = "all"}
+
 # Server-side 301 redirects for SEO consolidation
 
 # EMS Service redirects

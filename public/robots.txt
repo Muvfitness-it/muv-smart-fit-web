@@ -26,13 +26,8 @@ Allow: /team
 Allow: /risultati
 Allow: /trasformazione-30-giorni
 
-# Crawl delay for polite crawling
-Crawl-delay: 1
-
-# Sitemap locations
+# Sitemap location - unica sitemap index automatica
 Sitemap: https://www.muvfitness.it/sitemap.xml
-Sitemap: https://www.muvfitness.it/sitemap-main.xml  
-Sitemap: https://www.muvfitness.it/sitemap-blog.xml
 
 # Additional bot directives
 User-agent: GPTBot
