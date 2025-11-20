@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 interface StructuredDataProps {
   type: 'Organization' | 'LocalBusiness' | 'HealthAndBeautyBusiness' | 'SportsActivityLocation' | 'Article' | 'WebPage' | 'FAQPage';
@@ -17,20 +18,20 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
         return {
           "@context": baseContext,
           "@type": type,
-          "@id": "https://www.muvfitness.it/#organization",
-          "name": "MUV Fitness",
-          "alternateName": "MUV Fitness Legnago",
-          "description": "Centro fitness esclusivo a Legnago specializzato in personal training, tecnologie avanzate EMS, Pilates, HIIT, consulenza nutrizionale e trattamenti per il benessere.",
-          "url": "https://www.muvfitness.it",
-          "telephone": "+393291070374",
-          "email": "info@muvfitness.it",
+          "@id": `${BUSINESS_DATA.web.domain}/#organization`,
+          "name": BUSINESS_DATA.name,
+          "alternateName": BUSINESS_DATA.alternateName,
+          "description": BUSINESS_DATA.description,
+          "url": BUSINESS_DATA.web.domain,
+          "telephone": BUSINESS_DATA.contact.phone,
+          "email": BUSINESS_DATA.contact.email,
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Piazzetta Don Walter Soave, 2",
-            "addressLocality": "Legnago",
-            "addressRegion": "Veneto",
-            "postalCode": "37045",
-            "addressCountry": "IT"
+            "streetAddress": BUSINESS_DATA.address.street,
+            "addressLocality": BUSINESS_DATA.address.city,
+            "addressRegion": BUSINESS_DATA.address.region,
+            "postalCode": BUSINESS_DATA.address.postalCode,
+            "addressCountry": BUSINESS_DATA.address.countryCode
           },
           "geo": {
             "@type": "GeoCoordinates",

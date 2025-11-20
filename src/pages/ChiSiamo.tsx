@@ -4,6 +4,7 @@ import { MinimalHero } from '@/features/hero';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Award, Heart, Target, Users, Star } from 'lucide-react';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 const ChiSiamoNew = () => {
   const structuredData = {
@@ -13,16 +14,16 @@ const ChiSiamoNew = () => {
     "description": "Scopri il team di MUV Fitness Legnago: professionisti qualificati specializzati in EMS, Vacuum, Pilates Reformer e nutrizione per il tuo benessere.",
     "mainEntity": {
       "@type": "LocalBusiness",
-      "name": "MUV Fitness",
+      "name": BUSINESS_DATA.name,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
+        "streetAddress": BUSINESS_DATA.address.street,
+        "addressLocality": BUSINESS_DATA.address.city,
+        "addressRegion": BUSINESS_DATA.address.region,
+        "postalCode": BUSINESS_DATA.address.postalCode,
+        "addressCountry": BUSINESS_DATA.address.countryCode
       },
-      "telephone": "+393491234567"
+      "telephone": BUSINESS_DATA.contact.phone
     }
   };
 

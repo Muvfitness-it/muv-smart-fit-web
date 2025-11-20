@@ -100,10 +100,10 @@ const generateGoogleCalendarLink = (booking: any) => {
 
   const params = new URLSearchParams({
     action: 'TEMPLATE',
-    text: `${serviceLabel} - MUV Wellness`,
+    text: `${serviceLabel} - MUV Fitness`,
     dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
-    details: `Appuntamento presso MUV Wellness Studio\nServizio: ${serviceLabel}\nNote: ${booking.message || 'Nessuna nota'}`,
-    location: 'MUV Wellness Studio, Legnago'
+    details: `Appuntamento presso MUV Fitness\nServizio: ${serviceLabel}\nNote: ${booking.message || 'Nessuna nota'}`,
+    location: 'MUV Fitness - Piazzetta Don Walter Soave, 2, 37045 Legnago (VR)'
   });
 
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
@@ -169,9 +169,10 @@ const getConfirmationEmailTemplate = async (booking: any) => {
         <div style="text-align: center; margin: 30px 0;">
           <p style="color: #666; margin-bottom: 15px;">Hai domande? Contattaci!</p>
           <div style="display: inline-block; text-align: left;">
-            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> 3513380770</p>
+            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> +39 329 107 0374</p>
             <p style="margin: 5px 0; color: #333;">📧 <strong>Email:</strong> info@muvfitness.it</p>
-            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Legnago</p>
+            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</p>
+            <p style="margin: 5px 0; color: #333;">📄 <strong>P.IVA:</strong> 05281920289</p>
           </div>
         </div>
       </div>
@@ -292,9 +293,10 @@ const getStatusChangeEmailTemplate = async (booking: any, previousStatus: string
         <div style="text-align: center; margin: 30px 0;">
           <p style="color: #666; margin-bottom: 15px;">Hai domande? Contattaci!</p>
           <div style="display: inline-block; text-align: left;">
-            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> 3513380770</p>
+            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> +39 329 107 0374</p>
             <p style="margin: 5px 0; color: #333;">📧 <strong>Email:</strong> info@muvfitness.it</p>
-            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Legnago</p>
+            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</p>
+            <p style="margin: 5px 0; color: #333;">📄 <strong>P.IVA:</strong> 05281920289</p>
           </div>
         </div>
       </div>

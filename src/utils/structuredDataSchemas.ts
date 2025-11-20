@@ -1,7 +1,7 @@
 // Structured data schemas for different page types
 // ⚠️ MIGRATO: Usa getLocalBusinessSchemaData() da src/config/businessData.ts
 
-import { getLocalBusinessSchemaData } from '@/config/businessData';
+import { getLocalBusinessSchemaData, BUSINESS_DATA } from '@/config/businessData';
 
 // Re-export per retrocompatibilità
 export const generateLocalBusinessSchema = getLocalBusinessSchemaData;
@@ -13,17 +13,17 @@ export const generateServiceSchema = (serviceName: string, description: string, 
   "description": description,
   "provider": {
     "@type": "LocalBusiness",
-    "name": "MUV Fitness",
+    "name": BUSINESS_DATA.name,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Viale dei Tigli 14",
-      "addressLocality": "Legnago",
-      "postalCode": "37045",
-      "addressRegion": "VR",
-      "addressCountry": "IT"
+      "streetAddress": BUSINESS_DATA.address.street,
+      "addressLocality": BUSINESS_DATA.address.city,
+      "postalCode": BUSINESS_DATA.address.postalCode,
+      "addressRegion": BUSINESS_DATA.address.region,
+      "addressCountry": BUSINESS_DATA.address.countryCode
     }
   },
-  "areaServed": "Legnago, Verona, Veneto",
+  "areaServed": BUSINESS_DATA.areasServed.map(area => area.name).join(", "),
   "serviceType": "Fitness Training",
   ...(price && { "offers": {
     "@type": "Offer",

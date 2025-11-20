@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 const GlobalSEO = () => {
   return (
@@ -9,24 +10,24 @@ const GlobalSEO = () => {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "MUV Fitness",
-          "url": "https://www.muvfitness.it",
-          "logo": "https://www.muvfitness.it/images/muv-logo.png",
-          "description": "Centro Fitness MUV a Legnago: fitness intelligente con personal training, EMS, Pilates e tecnologie innovative.",
+          "name": BUSINESS_DATA.name,
+          "url": BUSINESS_DATA.web.domain,
+          "logo": BUSINESS_DATA.branding.logo,
+          "description": BUSINESS_DATA.description,
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Piazzetta Don Walter Soave, 2",
-            "addressLocality": "Legnago",
-            "addressRegion": "VR",
-            "postalCode": "37045",
-            "addressCountry": "IT"
+            "streetAddress": BUSINESS_DATA.address.street,
+            "addressLocality": BUSINESS_DATA.address.city,
+            "addressRegion": BUSINESS_DATA.address.region,
+            "postalCode": BUSINESS_DATA.address.postalCode,
+            "addressCountry": BUSINESS_DATA.address.countryCode
           },
-          "telephone": "+39 123 456 7890",
-          "email": "info@muvfitness.it",
+          "telephone": BUSINESS_DATA.contact.phone,
+          "email": BUSINESS_DATA.contact.email,
           "sameAs": [
-            "https://www.facebook.com/muvfitness",
-            "https://www.instagram.com/muvfitness"
-          ]
+            BUSINESS_DATA.social.facebook,
+            BUSINESS_DATA.social.instagram
+          ].filter(Boolean)
         })}
       </script>
 

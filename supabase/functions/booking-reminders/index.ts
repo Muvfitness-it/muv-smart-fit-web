@@ -125,9 +125,10 @@ const getReminder24hTemplate = async (booking: any) => {
         <div style="text-align: center; margin: 30px 0;">
           <p style="color: #666; margin-bottom: 15px;">Hai domande? Contattaci!</p>
           <div style="display: inline-block; text-align: left;">
-            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> 3513380770</p>
+            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> +39 329 107 0374</p>
             <p style="margin: 5px 0; color: #333;">📧 <strong>Email:</strong> info@muvfitness.it</p>
-            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Legnago</p>
+            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</p>
+            <p style="margin: 5px 0; color: #333;">📄 <strong>P.IVA:</strong> 05281920289</p>
           </div>
         </div>
       </div>
@@ -247,8 +248,10 @@ const getFollowUpTemplate = (booking: any) => {
         <div style="text-align: center; margin: 30px 0;">
           <p style="color: #666; margin-bottom: 15px;">Hai domande o feedback?</p>
           <div style="display: inline-block; text-align: left;">
-            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> 3513380770</p>
+            <p style="margin: 5px 0; color: #333;">📞 <strong>Telefono:</strong> +39 329 107 0374</p>
             <p style="margin: 5px 0; color: #333;">📧 <strong>Email:</strong> info@muvfitness.it</p>
+            <p style="margin: 5px 0; color: #333;">📍 <strong>Indirizzo:</strong> Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</p>
+            <p style="margin: 5px 0; color: #333;">📄 <strong>P.IVA:</strong> 05281920289</p>
           </div>
         </div>
       </div>
