@@ -243,8 +243,9 @@ const handler = async (req: Request): Promise<Response> => {
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px;">
               <p style="margin: 5px 0;"><strong>MUV Fitness Legnago</strong></p>
-              <p style="margin: 5px 0;">Via Frattini 119, Legnago (VR)</p>
-              <p style="margin: 5px 0;">WhatsApp: 329 107 0374 | Email: info@muvfitness.it</p>
+              <p style="margin: 5px 0;">Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</p>
+              <p style="margin: 5px 0;">P.IVA: 05281920289</p>
+              <p style="margin: 5px 0;">WhatsApp: +39 329 107 0374 | Email: info@muvfitness.it</p>
               <p style="margin: 5px 0;">
                 <a href="mailto:info@muvfitness.it" style="color: #2563eb; text-decoration: none;">info@muvfitness.it</a>
               </p>

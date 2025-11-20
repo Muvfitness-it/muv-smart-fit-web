@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Clock, Target, Users, CheckCircle, Phone, MapPin } from 'lucide-react';
 import { UnifiedContactForm } from '@/features/forms';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 const ProvaGratuitaEMS = () => {
   const structuredData = {
@@ -16,19 +17,19 @@ const ProvaGratuitaEMS = () => {
     "priceCurrency": "EUR",
     "price": "0",
     "availability": "https://schema.org/LimitedAvailability",
-    "validThrough": "2024-12-31",
+    "validThrough": "2025-12-31",
     "offeredBy": {
       "@type": "LocalBusiness",
-      "name": "MUV Fitness",
+      "name": BUSINESS_DATA.name,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
+        "streetAddress": BUSINESS_DATA.address.street,
+        "addressLocality": BUSINESS_DATA.address.city,
+        "addressRegion": BUSINESS_DATA.address.region,
+        "postalCode": BUSINESS_DATA.address.postalCode,
+        "addressCountry": BUSINESS_DATA.address.countryCode
       },
-      "telephone": "+393491234567"
+      "telephone": BUSINESS_DATA.contact.phone
     }
   };
 

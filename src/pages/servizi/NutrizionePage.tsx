@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Apple, Target, TrendingUp, Users, CheckCircle, Award, Heart } from 'lucide-react';
+import { BUSINESS_DATA } from '@/config/businessData';
 
 const NutrizionePage = () => {
   const structuredData = {
@@ -16,20 +17,20 @@ const NutrizionePage = () => {
     "description": "Consulenza nutrizionale personalizzata a Legnago per dimagrimento e benessere",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "MUV Fitness",
+      "name": BUSINESS_DATA.name,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Via Roma 123",
-        "addressLocality": "Legnago",
-        "addressRegion": "Veneto",
-        "postalCode": "37045",
-        "addressCountry": "IT"
+        "streetAddress": BUSINESS_DATA.address.street,
+        "addressLocality": BUSINESS_DATA.address.city,
+        "addressRegion": BUSINESS_DATA.address.region,
+        "postalCode": BUSINESS_DATA.address.postalCode,
+        "addressCountry": BUSINESS_DATA.address.countryCode
       },
-      "telephone": "+393491234567"
+      "telephone": BUSINESS_DATA.contact.phone
     },
     "areaServed": {
       "@type": "City",
-      "name": "Legnago"
+      "name": BUSINESS_DATA.address.city
     },
     "serviceType": "Nutrition Counseling"
   };
