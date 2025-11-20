@@ -19,6 +19,7 @@ import { getPostAccentHue, cleanBlogContent, generatePostHero, processContentBlo
 import { humanizeText, humanizeTitle, humanizeExcerpt } from "@/utils/copyHumanizer";
 import { addInternalLinks } from "@/utils/internalLinker";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { BUSINESS_DATA } from "@/config/businessData";
 
 
 interface Author {
@@ -426,12 +427,12 @@ const BlogArticle = () => {
                   </div>
                   <div className="text-center text-sm md:text-base text-muted-foreground pt-4 border-t border-border/50">
                     <p className="font-medium">
-                      📍 <strong>Centro Fitness MUV</strong> - Via Roma 123, Legnago (VR)
+                      📍 <strong>{BUSINESS_DATA.name}</strong> - {BUSINESS_DATA.address.street}, {BUSINESS_DATA.address.postalCode} {BUSINESS_DATA.address.city} ({BUSINESS_DATA.address.province})
                     </p>
                     <p className="mt-2">
-                      ☎️ <a href="tel:+393291070374" className="text-primary hover:underline font-semibold">329 107 0374</a>
+                      ☎️ <a href={`tel:${BUSINESS_DATA.contact.whatsapp.replace(/\s/g, '')}`} className="text-primary hover:underline font-semibold">{BUSINESS_DATA.contact.whatsapp}</a>
                       {" | "}
-                      ✉️ <a href="mailto:info@muvfitness.it" className="text-primary hover:underline font-semibold">info@muvfitness.it</a>
+                      ✉️ <a href={`mailto:${BUSINESS_DATA.contact.email}`} className="text-primary hover:underline font-semibold">{BUSINESS_DATA.contact.email}</a>
                     </p>
                   </div>
                 </div>

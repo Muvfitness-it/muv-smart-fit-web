@@ -141,7 +141,7 @@ const LandingForm: React.FC<LandingFormProps> = ({
                     value={formData.nome}
                     onChange={handleChange}
                     required
-                    className="bg-gray-700 border-gray-600 text-white text-lg p-4"
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
                     placeholder="Il tuo nome completo"
                   />
                 </div>
@@ -157,7 +157,7 @@ const LandingForm: React.FC<LandingFormProps> = ({
                     value={formData.telefono}
                     onChange={handleChange}
                     required
-                    className="bg-gray-700 border-gray-600 text-white text-lg p-4"
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
                     placeholder="Il tuo numero di telefono"
                   />
                 </div>
@@ -174,7 +174,7 @@ const LandingForm: React.FC<LandingFormProps> = ({
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-gray-700 border-gray-600 text-white text-lg p-4"
+                  className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
                   placeholder="La tua email"
                 />
               </div>
@@ -188,7 +188,7 @@ const LandingForm: React.FC<LandingFormProps> = ({
                   name="messaggio"
                   value={formData.messaggio}
                   onChange={handleChange}
-                  className="bg-gray-700 border-gray-600 text-white text-lg p-4"
+                  className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
                   placeholder="Raccontaci brevemente il tuo obiettivo..."
                   rows={3}
                 />
