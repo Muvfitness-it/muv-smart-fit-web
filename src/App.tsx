@@ -70,6 +70,7 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminUserManagement = lazy(() => import("./pages/AdminUserManagement"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const LocalSEODashboard = lazy(() => import("./pages/admin/LocalSEODashboard"));
+const ContentManagement = lazy(() => import("./pages/admin/ContentManagement"));
 
 // Landing Pages - lazy loaded
 const Trasformazione30Giorni = lazy(() => import("./pages/landing/Trasformazione30Giorni"));
@@ -261,6 +262,7 @@ const AppContent = () => {
                     
                     {/* Admin Routes */}
                     <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    <Route path="/admin/contenuti-base" element={<AdminRoute><Suspense fallback={<RouteLoading />}><ContentManagement /></Suspense></AdminRoute>} />
                     <Route path="/admin/blog" element={<AdminRoute><AdminBlogList /></AdminRoute>} />
                     <Route path="/admin/blog/bozze" element={<AdminRoute><AdminBlogDrafts /></AdminRoute>} />
                     <Route path="/admin/blog/categorie" element={<AdminRoute><AdminCategories /></AdminRoute>} />
