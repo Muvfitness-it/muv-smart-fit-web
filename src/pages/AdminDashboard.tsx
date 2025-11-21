@@ -77,6 +77,19 @@ const AdminDashboard = () => {
                 {/* Quick Actions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Card className="hover:shadow-md transition-shadow cursor-pointer" 
+                        onClick={() => navigate('/admin/contenuti-base')}>
+                    <CardContent className="p-6 text-center">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <Settings className="w-6 h-6 text-primary" />
+                      </div>
+                      <h3 className="font-semibold mb-2">Gestione Contenuti</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Modifica colori, testi e contenuti senza toccare codice
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="hover:shadow-md transition-shadow cursor-pointer" 
                         onClick={() => navigate('/admin/blog/create/ai')}>
                     <CardContent className="p-6 text-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
