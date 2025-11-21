@@ -141,7 +141,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="Mario Rossi"
-              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] text-foreground ${
                 errors.name 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'
@@ -165,7 +165,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="mario.rossi@email.com"
-              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] text-foreground ${
                 errors.email 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'
@@ -189,7 +189,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder="+39 123 456 7890"
-              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] ${
+              className={`w-full px-4 py-4 text-lg rounded-lg border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-primary/20 min-h-[44px] text-foreground ${
                 errors.phone 
                   ? 'border-destructive focus:border-destructive' 
                   : 'border-input focus:border-primary'
@@ -210,7 +210,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
                 name="obiettivo"
                 value={formData.obiettivo}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg border-2 border-input focus:border-primary transition-colors"
+                className="w-full px-4 py-3 rounded-lg border-2 border-input focus:border-primary transition-colors text-foreground"
               >
                 <option value="">Seleziona il tuo obiettivo</option>
                 <option value="Dimagrimento">Dimagrimento</option>
@@ -240,7 +240,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
                 onChange={handleChange}
                 placeholder="Raccontaci i tuoi obiettivi..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-lg border-2 border-input focus:border-primary transition-colors resize-vertical"
+                className="w-full px-4 py-3 rounded-lg border-2 border-input focus:border-primary transition-colors resize-vertical text-foreground"
               />
             </div>
           )}
