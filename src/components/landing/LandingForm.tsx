@@ -107,10 +107,10 @@ const LandingForm: React.FC<LandingFormProps> = ({
           <CardContent className="p-8 md:p-12">
             <div className="text-center mb-8">
               <Gift className="w-16 h-16 text-magenta-400 mx-auto mb-4 animate-bounce" />
-              <h2 className="text-3xl md:text-4xl font-White mb-4">
-                <span className="text-magenta-400">{formTitle}</span>
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                <span className="text-white-400">{formTitle}</span>
               </h2>
-              <p className="text-xl text-viola-400 font-bold mb-2">{incentive}</p>
+              <p className="text-xl text-white-400 font-bold mb-2">{incentive}</p>
               <p className="text-gray-300 font-semibold">
                 <Shield className="w-5 h-5 inline mr-2 text-green-400" />✅ ZERO IMPEGNO • ✅ RISULTATI GARANTITI • ✅
                 CONSULENZA 1-to-1
