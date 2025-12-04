@@ -220,6 +220,14 @@
       "changefreq": "weekly"
     },
     {
+      "path": "/nuova-sede",
+      "title": "MUV Fitness Intelligente | Nuova Sede Legnago - Centro Fitness Premium",
+      "description": "Scopri la nuova sede MUV Fitness a Legnago. Design Nordic, tecnologia avanzata EMS e Pilates Reformer, ambiente esclusivo in Piazzetta don Walter Soave.",
+      "keywords": "nuova sede MUV, fitness Legnago, palestra design, club fitness, EMS Legnago, Pilates Reformer",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
       "path": "/blog",
       "title": "Blog Fitness | Consigli e Guide MUV Fitness Legnago",
       "description": "Blog di MUV Fitness Legnago: consigli, guide e articoli su fitness, nutrizione, benessere e allenamento. Scopri i segreti del benessere.",

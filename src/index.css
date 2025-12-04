@@ -9,6 +9,14 @@
     --muv-violet: 280 70% 50%;
     --muv-blue: 220 85% 45%;
     
+    /* Nordic Clean Theme - Nuova Landing Page */
+    --nordic-white: 0 0% 100%;
+    --nordic-sand: 40 30% 95%;
+    --nordic-wood: 30 20% 85%;
+    --nordic-text: 0 0% 10%;
+    --muv-violet-nordic: 324 64% 50%;   /* #C13697 - Viola/Fucsia MUV */
+    --muv-blue-nordic: 209 100% 32%;     /* #0055A4 - Blu Elettrico MUV */
+    
     --background: 0 0% 100%;
     --foreground: 220 15% 15%;
     --card: 0 0% 100%;
