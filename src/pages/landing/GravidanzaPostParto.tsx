@@ -67,7 +67,7 @@ const GravidanzaPostParto = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-6">
                 <span className="bg-brand-accent text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  👶 SPECIALISTI GRAVIDANZA & POST-PARTO
+                  Programmi Specializzati Gravidanza & Post-Parto
                 </span>
               </div>
               
@@ -87,23 +87,22 @@ const GravidanzaPostParto = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 <Link to="/form-contatti">
                   <Button size="lg" className="bg-brand-accent hover:bg-brand-accent/90 text-white px-8 py-4 text-lg">
-                    🎁 Consulenza Gratuita
+                    Prenota consulenza gratuita
                   </Button>
                 </Link>
-                <a href="https://wa.me/393887078662?text=Ciao! Vorrei informazioni sui programmi per gravidanza e post-parto" target="_blank">
+                <a href="https://wa.me/393291070374?text=Ciao! Vorrei informazioni sui programmi per gravidanza e post-parto" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                    💬 WhatsApp
+                    Scrivici su WhatsApp
                   </Button>
                 </a>
               </div>
 
               <div className="glass-card p-6 rounded-2xl border-brand-primary/30">
                 <p className="text-lg font-semibold text-brand-primary mb-2">
-                  ✨ OFFERTA SPECIALE MAMME ✨
+                  Incluso nella consulenza gratuita
                 </p>
                 <p className="text-foreground">
-                  <strong>Prima consulenza + valutazione posturale GRATUITA</strong><br />
-                  + Piano personalizzato per gravidanza o post-parto
+                  <strong>Valutazione posturale completa</strong> e piano personalizzato per gravidanza o post-parto
                 </p>
               </div>
             </div>
@@ -312,8 +311,7 @@ const GravidanzaPostParto = () => {
 
             <div className="text-center mt-8">
               <p className="text-sm text-muted-foreground">
-                ⏰ <strong className="text-brand-primary">POSTI LIMITATI</strong> - 
-                Solo <strong className="text-brand-accent">5 CONSULENZE GRATUITE</strong> questo mese per mamme
+                Posti limitati per garantire attenzione personalizzata a ogni mamma
               </p>
             </div>
           </div>

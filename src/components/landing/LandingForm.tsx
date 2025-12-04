@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone, Mail, User, MessageSquare, Gift, Shield } from "lucide-react";
+import { Phone, Mail, User, MessageSquare, Calendar, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { sendContactViaWeb3Forms } from "@/utils/mailAdapter";
@@ -17,8 +17,8 @@ interface LandingFormProps {
 
 const LandingForm: React.FC<LandingFormProps> = ({
   campaignName,
-  formTitle = "🎁 PRENOTA LA TUA CONSULENZA GRATUITA",
-  incentive = "Check-up gratuito - OGGI per i primi 10",
+  formTitle = "Prenota la tua consulenza gratuita",
+  incentive = "Valutazione completa inclusa",
   onSuccess,
 }) => {
   const [formData, setFormData] = useState({
@@ -66,8 +66,8 @@ const LandingForm: React.FC<LandingFormProps> = ({
         .catch(() => {});
 
       toast({
-        title: "🎉 Perfetto!",
-        description: "Ti ricontatteremo entro 2 ore per confermare il tuo appuntamento gratuito!",
+        title: "Richiesta inviata",
+        description: "Ti ricontatteremo entro 24 ore per confermare il tuo appuntamento.",
       });
 
       // Reset form
@@ -84,8 +84,8 @@ const LandingForm: React.FC<LandingFormProps> = ({
       }
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Si è verificato un errore. Riprova o chiamaci direttamente.",
+        title: "Si è verificato un errore",
+        description: "Riprova o contattaci direttamente via WhatsApp.",
         variant: "destructive",
       });
     } finally {
@@ -101,23 +101,23 @@ const LandingForm: React.FC<LandingFormProps> = ({
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-magenta-900/30 via-viola-900/30 to-blu-900/30">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Card className="bg-gradient-to-br from-gray-800 to-gray-900 border-4 border-magenta-600/50 shadow-2xl">
-          <CardContent className="p-8 md:p-12">
+    <section className="py-16 bg-muted/30">
+      <div className="container mx-auto px-4 max-w-2xl">
+        <Card className="border border-border shadow-lg">
+          <CardContent className="p-8">
             <div className="text-center mb-8">
-              <Gift className="w-16 h-16 text-magenta-400 mx-auto mb-4 animate-bounce" />
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                <span className="text-white-400">{formTitle}</span>
+              <Calendar className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">
+                {formTitle}
               </h2>
-              <p className="text-xl text-white-400 font-bold mb-2">{incentive}</p>
-              <p className="text-gray-300 font-semibold">
-                <Shield className="w-5 h-5 inline mr-2 text-green-400" />✅ ZERO IMPEGNO • ✅ RISULTATI GARANTITI • ✅
-                CONSULENZA 1-to-1
-              </p>
+              <p className="text-lg text-muted-foreground mb-2">{incentive}</p>
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Shield className="w-4 h-4 text-primary" />
+                <span>Zero impegno • Consulenza personalizzata</span>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Honeypot anti-spam field */}
               <input
                 type="text"
@@ -129,11 +129,12 @@ const LandingForm: React.FC<LandingFormProps> = ({
                 tabIndex={-1}
                 aria-hidden="true"
               />
-              <div className="grid md:grid-cols-2 gap-6">
+              
+              <div className="grid md:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-white font-bold mb-2">
-                    <User className="w-5 h-5 inline mr-2" />
-                    Nome e Cognome *
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    <User className="w-4 h-4 inline mr-2" />
+                    Nome e Cognome
                   </label>
                   <Input
                     type="text"
@@ -141,15 +142,15 @@ const LandingForm: React.FC<LandingFormProps> = ({
                     value={formData.nome}
                     onChange={handleChange}
                     required
-                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
+                    className="bg-background border-input placeholder:text-muted-foreground"
                     placeholder="Il tuo nome completo"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-white font-bold mb-2">
-                    <Phone className="w-5 h-5 inline mr-2" />
-                    Numero di Telefono *
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    <Phone className="w-4 h-4 inline mr-2" />
+                    Telefono
                   </label>
                   <Input
                     type="tel"
@@ -157,16 +158,16 @@ const LandingForm: React.FC<LandingFormProps> = ({
                     value={formData.telefono}
                     onChange={handleChange}
                     required
-                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
-                    placeholder="Il tuo numero di telefono"
+                    className="bg-background border-input placeholder:text-muted-foreground"
+                    placeholder="Il tuo numero"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-white font-bold mb-2">
-                  <Mail className="w-5 h-5 inline mr-2" />
-                  Email *
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  <Mail className="w-4 h-4 inline mr-2" />
+                  Email
                 </label>
                 <Input
                   type="email"
@@ -174,22 +175,22 @@ const LandingForm: React.FC<LandingFormProps> = ({
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
+                  className="bg-background border-input placeholder:text-muted-foreground"
                   placeholder="La tua email"
                 />
               </div>
 
               <div>
-                <label className="block text-white font-bold mb-2">
-                  <MessageSquare className="w-5 h-5 inline mr-2" />
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  <MessageSquare className="w-4 h-4 inline mr-2" />
                   Il tuo obiettivo (opzionale)
                 </label>
                 <Textarea
                   name="messaggio"
                   value={formData.messaggio}
                   onChange={handleChange}
-                  className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-300 text-lg p-4"
-                  placeholder="Raccontaci brevemente il tuo obiettivo..."
+                  className="bg-background border-input placeholder:text-muted-foreground"
+                  placeholder="Raccontaci brevemente cosa vorresti ottenere..."
                   rows={3}
                 />
               </div>
@@ -197,14 +198,14 @@ const LandingForm: React.FC<LandingFormProps> = ({
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-magenta-600 via-viola-600 to-blu-600 hover:from-magenta-700 hover:via-viola-700 hover:to-blu-700 text-white py-6 text-xl md:text-2xl font-black rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl border-4 border-white/30"
+                className="w-full py-6 text-lg font-semibold"
+                size="lg"
               >
-                {isSubmitting ? "⏳ INVIO IN CORSO..." : "🚀 PRENOTA ORA LA TUA TRASFORMAZIONE GRATUITA"}
+                {isSubmitting ? "Invio in corso..." : "Prenota la tua consulenza"}
               </Button>
 
-              <p className="text-center text-sm text-gray-400 font-semibold">
-                Ti ricontatteremo entro <span className="text-magenta-400 font-bold">2 ORE</span> per confermare il tuo
-                appuntamento
+              <p className="text-center text-sm text-muted-foreground">
+                Ti ricontatteremo entro 24 ore per confermare l'appuntamento
               </p>
             </form>
           </CardContent>
