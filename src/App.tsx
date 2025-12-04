@@ -96,6 +96,9 @@ const Recensioni = lazy(() => import("./pages/Recensioni"));
 const PersonalTrainerCerea = lazy(() => import("./pages/local/PersonalTrainerCerea"));
 const PersonalTrainerMinerbe = lazy(() => import("./pages/local/PersonalTrainerMinerbe"));
 
+// Nordic Clean Landing Page
+const NordicLanding = lazy(() => import("./pages/NordicLanding"));
+
 
 // SEO Components
 import RedirectHandler from "./components/SEO/RedirectHandler";
@@ -145,7 +148,8 @@ const AppContent = () => {
                           !location.pathname.includes('/trasformazione-30-giorni') &&
                           !location.pathname.includes('/gravidanza-post-parto') &&
                           !location.pathname.includes('/senior-fitness') &&
-                          !location.pathname.includes('/riabilitazione-infortuni');
+                          !location.pathname.includes('/riabilitazione-infortuni') &&
+                          !location.pathname.includes('/nuova-sede');
 
   return (
     <Suspense fallback={<RouteLoading />}>
@@ -177,6 +181,13 @@ const AppContent = () => {
           <Route path="/riabilitazione-infortuni" element={
             <Suspense fallback={<RouteLoading />}>
               <RiabilitazioneInfortuni />
+            </Suspense>
+          } />
+          
+          {/* Nordic Clean Landing Page - Own Navigation/Footer */}
+          <Route path="/nuova-sede" element={
+            <Suspense fallback={<RouteLoading />}>
+              <NordicLanding />
             </Suspense>
           } />
           
