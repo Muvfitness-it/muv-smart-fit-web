@@ -3,16 +3,12 @@ import { useNavigate } from "react-router-dom";
 import LandingTemplate from "./LandingTemplate";
 import { FlexibleHero } from "@/features/hero";
 import LandingBeforeAfter from "@/components/landing/LandingBeforeAfter";
-import LandingCountdown from "@/components/landing/LandingCountdown";
 import LandingForm from "@/components/landing/LandingForm";
 import LandingGuarantee from "@/components/landing/LandingGuarantee";
+import { STANDARD_CTAS } from "@/config/ctaConstants";
 
 const Trasformazione30Giorni = () => {
   const navigate = useNavigate();
-
-  // Set countdown to 3 days from now
-  const countdownEnd = new Date();
-  countdownEnd.setDate(countdownEnd.getDate() + 3);
 
   const scrollToForm = () => {
     const formElement = document.getElementById("landing-form");
@@ -22,87 +18,86 @@ const Trasformazione30Giorni = () => {
   };
 
   const handleFormSuccess = () => {
-    // Redirect to thank you page or show success message
     navigate("/contatti?success=true");
   };
 
   const testimonials = [
     {
-      name: "Marco Rossi",
+      name: "Marco R.",
       age: 35,
       result: "-12kg",
       testimonial:
-        "Non credevo fosse possibile. In 30 giorni ho perso 12kg e mi sento rinato. Il metodo MUV funziona davvero!",
+        "In 30 giorni ho ritrovato energia e forma. Il metodo MUV è stato la scelta giusta: professionalità e attenzione personalizzata.",
       timeframe: "30 giorni",
     },
     {
-      name: "Elena Bianchi",
+      name: "Elena B.",
       age: 28,
-      result: "-8kg + Taglia 42",
+      result: "-8kg",
       testimonial:
-        "Finalmente ho ritrovato la mia forma dopo la gravidanza. Staff professionale e risultati garantiti!",
+        "Dopo la gravidanza cercavo un ambiente discreto e professionale. MUV mi ha dato esattamente questo, con risultati concreti.",
       timeframe: "28 giorni",
     },
     {
-      name: "Andrea Ferri",
+      name: "Andrea F.",
       age: 42,
       result: "-15kg",
-      testimonial: "A 42 anni pensavo fosse troppo tardi. Mi sbagliavo! Ora ho più energia di quando ne avevo 25.",
+      testimonial: 
+        "A 42 anni pensavo fosse difficile tornare in forma. Il percorso personalizzato ha fatto la differenza.",
       timeframe: "35 giorni",
     },
     {
-      name: "Giulia Marchetti",
+      name: "Giulia M.",
       age: 31,
       result: "-10kg",
       testimonial:
-        "Il programma ha cambiato la mia vita. Non solo ho perso peso, ma ho acquisito fiducia in me stessa.",
+        "Più che un programma di dimagrimento, un percorso di consapevolezza. Ho acquisito abitudini che mantengo ancora oggi.",
       timeframe: "30 giorni",
     },
     {
-      name: "Roberto Costa",
+      name: "Roberto C.",
       age: 39,
       result: "-18kg",
-      testimonial: "Incredibile! Tutti mi chiedono il mio segreto. La risposta è semplice: MUV Smart Fit.",
+      testimonial: 
+        "La tecnologia EMS combinata con il supporto nutrizionale: un approccio che funziona davvero.",
       timeframe: "45 giorni",
     },
     {
-      name: "Federica Villa",
+      name: "Federica V.",
       age: 26,
-      result: "-7kg + Tono",
+      result: "Tono muscolare",
       testimonial:
-        "Non solo ho perso peso, ma ho guadagnato massa muscolare. Il mio corpo non è mai stato così tonico!",
+        "Non cercavo solo di perdere peso, ma di sentirmi più forte. MUV ha capito le mie esigenze.",
       timeframe: "25 giorni",
     },
   ];
 
   return (
     <LandingTemplate
-      title="Trasformazione Garantita in 30 Giorni | Centro fitness MUV Legnago"
-      description="Perdi fino a 15kg in 30 giorni con il metodo scientifico MUV. Garanzia soddisfatti o rimborsati. Prenota la tua consulenza gratuita."
-      keywords="dimagrire velocemente, perdere peso 30 giorni, MUV Legnago, fitness risultati garantiti"
+      title="Percorso Trasformazione 30 Giorni | Centro Fitness MUV Legnago"
+      description="Inizia il tuo percorso di trasformazione con il metodo scientifico MUV. Consulenza gratuita, programma personalizzato e risultati misurabili in 30 giorni."
+      keywords="dimagrimento personalizzato, percorso fitness Legnago, MUV Fitness, risultati 30 giorni"
       campaignName="trasformazione-30-giorni"
     >
       <FlexibleHero
         variant="landing"
-        title="TRASFORMA IL TUO CORPO IN 30 GIORNI"
-        subtitle="🔥 PERDI FINO A 15KG CON IL METODO SCIENTIFICO MUV • ✅ RISULTATI GARANTITI O RIMBORSO TOTALE"
+        title="Il tuo percorso di trasformazione inizia qui"
+        subtitle="Risultati visibili in 4 settimane con il Metodo MUV: tecnologia, personalizzazione e supporto costante"
         primaryCTA={{
-          text: "PRENOTA CONSULENZA GRATUITA",
+          text: STANDARD_CTAS.primary,
           onClick: scrollToForm,
         }}
-        guarantee="✅ Garanzia Soddisfatti o Rimborsati al 100%"
-        urgency="ULTIMI 3 POSTI DISPONIBILI A QUESTO PREZZO!"
+        guarantee="Consulenza gratuita senza impegno"
+        urgency="Posti limitati per garantire attenzione personalizzata"
       />
-
-      <LandingCountdown endDate={countdownEnd} title="⏰ OFFERTA LIMITATA IN SCADENZA" />
 
       <LandingBeforeAfter testimonials={testimonials} />
 
       <div id="landing-form">
         <LandingForm
           campaignName="trasformazione-30-giorni"
-          formTitle="🎁 PRENOTA LA TUA TRASFORMAZIONE GRATUITA"
-          incentive="Check-up completo + Prima seduta + Piano personalizzato (Valore €150) - OGGI GRATIS"
+          formTitle="Inizia il tuo percorso"
+          incentive="Valutazione completa + Prima seduta di prova + Piano personalizzato"
           onSuccess={handleFormSuccess}
         />
       </div>

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Target, Shield, Users, CheckCircle, Star, Award } from 'lucide-react';
 import { getServiceSchemaData } from '@/config/businessData';
+import { CONTACT_LINKS, STANDARD_CTAS, WHATSAPP_MESSAGES } from '@/config/ctaConstants';
 
 const PilatesReformerPage = () => {
   const structuredData = getServiceSchemaData('pilates-reformer');
@@ -209,14 +210,14 @@ const PilatesReformerPage = () => {
 
       <ServiceCTASection
         title="Inizia il Tuo Percorso di Benessere"
-        description="Prenota una lezione di prova e scopri come il Pilates Reformer può trasformare la tua postura e il tuo benessere generale."
+        description="Prenota la tua valutazione posturale gratuita e scopri come il Pilates Reformer può trasformare la tua postura e il tuo benessere."
         primaryButton={{
-          text: "Prenota Lezione di Prova",
-          href: "#prenota"
+          text: STANDARD_CTAS.posturalEvaluation,
+          href: "/contatti"
         }}
         secondaryButton={{
-          text: "Scopri di Più",
-          href: "tel:+393491234567"
+          text: STANDARD_CTAS.whatsapp,
+          href: CONTACT_LINKS.whatsappWithMessage(WHATSAPP_MESSAGES.pilates)
         }}
       />
     </ServicePageLayout>

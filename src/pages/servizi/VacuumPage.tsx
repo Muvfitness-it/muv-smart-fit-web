@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Droplets, Heart, Sparkles, Clock, Users, CheckCircle } from 'lucide-react';
 import { getServiceSchemaData } from '@/config/businessData';
+import { CONTACT_LINKS, STANDARD_CTAS, WHATSAPP_MESSAGES } from '@/config/ctaConstants';
 
 const VacuumPage = () => {
   const structuredData = getServiceSchemaData('vacuum-pressoterapia');
@@ -200,14 +201,14 @@ const VacuumPage = () => {
 
       <ServiceCTASection
         title="Ritrova il Benessere delle Tue Gambe"
-        description="Prenota una consulenza gratuita e scopri come la vacuum pressoterapia può aiutarti a sentirti meglio fin dalla prima seduta."
+        description="Prenota la tua consulenza gratuita e scopri come la vacuum pressoterapia può aiutarti a sentirti meglio fin dalla prima seduta."
         primaryButton={{
-          text: "Prenota Consulenza Gratuita",
-          href: "#prenota"
+          text: STANDARD_CTAS.primary,
+          href: "/contatti"
         }}
         secondaryButton={{
-          text: "WhatsApp",
-          href: "https://wa.me/393491234567?text=Ciao! Vorrei informazioni sulla vacuum pressoterapia"
+          text: STANDARD_CTAS.whatsapp,
+          href: CONTACT_LINKS.whatsappWithMessage(WHATSAPP_MESSAGES.vacuum)
         }}
       />
     </ServicePageLayout>
