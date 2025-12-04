@@ -116,11 +116,11 @@ const MUVHomepage = () => {
       <LocalBusinessSchema />
 
       <MinimalHero
-        title="MUV Fitness Legnago | Centro Fitness Intelligente con EMS, Pilates Reformer e Tecnologie Avanzate"
-        description="Il centro fitness più innovativo di Legnago. Tecnologie avanzate per dimagrire velocemente e correggere la postura: EMS Training, Pilates Reformer, Vacuum Therapy. Allenamenti personalizzati basati su scienza e risultati. Prova gratuita senza impegno."
+        title="MUV. Il Fitness Intelligente è arrivato a Legnago."
+        description="Non una palestra. Un percorso personalizzato dove tecnologia, privacy e attenzione si uniscono per farti raggiungere i tuoi obiettivi. EMS Training, Pilates Reformer, Vacuum Therapy: risultati misurabili in 4 settimane."
         gradient="dual"
         primaryCTA={{
-          text: "Prenota la tua Prova Gratuita",
+          text: "Prenota la tua consulenza gratuita",
           href: "/contatti"
         }}
         secondaryCTA={{

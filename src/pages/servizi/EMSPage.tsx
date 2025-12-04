@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Clock, Target, Shield, Users, Award } from 'lucide-react';
 import { getServiceSchemaData } from '@/config/businessData';
+import { CONTACT_LINKS, STANDARD_CTAS, WHATSAPP_MESSAGES } from '@/config/ctaConstants';
 
 const EMSPage = () => {
   const structuredData = getServiceSchemaData('ems-training');
@@ -174,14 +175,14 @@ const EMSPage = () => {
 
       <ServiceCTASection
         title="Pronto a Trasformare il Tuo Corpo?"
-        description="Prenota la tua prova gratuita di allenamento EMS e scopri cosa significa allenarsi con la tecnologia più avanzata."
+        description="Prenota la tua consulenza gratuita e scopri come l'EMS può aiutarti a raggiungere i tuoi obiettivi in meno tempo."
         primaryButton={{
-          text: "Prenota Prova Gratuita",
-          href: "#prenota"
+          text: STANDARD_CTAS.primary,
+          href: "/contatti"
         }}
         secondaryButton={{
-          text: "Chiama Ora",
-          href: "tel:+393491234567"
+          text: STANDARD_CTAS.whatsapp,
+          href: CONTACT_LINKS.whatsappWithMessage(WHATSAPP_MESSAGES.ems)
         }}
       />
     </ServicePageLayout>
