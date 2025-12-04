@@ -269,11 +269,11 @@ const NutrizionePage = () => {
         description="Prenota una consulenza e scopri come un'alimentazione personalizzata può trasformare il tuo benessere e i tuoi risultati."
         primaryButton={{
           text: "Prenota Consulenza",
-          href: "#prenota"
+          href: "/form-contatti"
         }}
         secondaryButton={{
-          text: "Chiama Ora",
-          href: "tel:+393491234567"
+          text: "Scrivici su WhatsApp",
+          href: BUSINESS_DATA.contact.whatsappLink
         }}
       />
     </ServicePageLayout>

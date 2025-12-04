@@ -143,8 +143,8 @@ const LocalLandingTemplate = ({
                 icon: "🏆"
               },
               {
-                title: "Risultati Garantiti",
-                description: "Metodo testato su centinaia di clienti con risultati misurabili in poche settimane",
+                title: "Risultati Misurabili",
+                description: "Metodo testato su centinaia di clienti con progressi tracciabili nel tempo",
                 icon: "📈"
               },
               {

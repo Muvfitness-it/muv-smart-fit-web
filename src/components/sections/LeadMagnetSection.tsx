@@ -115,24 +115,25 @@ const LeadMagnetSection: React.FC = () => {
         <Card className="bg-gradient-to-r from-brand-primary/10 via-brand-secondary/10 to-brand-accent/10 border-brand-primary/30">
           <CardContent className="p-8 text-center">
             <h3 className="text-2xl font-bold text-brand-primary mb-4">
-              🎯 Hai Trovato la Tua Soluzione?
+              Hai trovato la tua soluzione?
             </h3>
             <p className="text-lg text-muted-foreground mb-6">
               Se hai domande specifiche o vuoi un programma personalizzato, siamo qui per aiutarti
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="https://wa.me/393887078662?text=Ciao! Ho scaricato le guide e vorrei maggiori informazioni"
+                href="https://wa.me/393291070374?text=Ciao! Ho scaricato le guide e vorrei maggiori informazioni"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="bg-brand-accent hover:bg-brand-accent/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                💬 Scrivici su WhatsApp
+                Scrivici su WhatsApp
               </a>
               <a 
                 href="/form-contatti"
                 className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                📅 Prenota Consulenza Gratuita
+                Prenota consulenza gratuita
               </a>
             </div>
           </CardContent>

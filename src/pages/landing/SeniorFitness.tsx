@@ -67,7 +67,7 @@ const SeniorFitness = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-6">
                 <span className="bg-brand-accent text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  👴👵 FITNESS OVER 65 SPECIALIZZATO
+                  Fitness Over 65 Specializzato
                 </span>
               </div>
               
@@ -87,23 +87,22 @@ const SeniorFitness = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 <Link to="/form-contatti">
                   <Button size="lg" className="bg-brand-accent hover:bg-brand-accent/90 text-white px-8 py-4 text-lg">
-                    🎁 Valutazione Gratuita
+                    Prenota valutazione gratuita
                   </Button>
                 </Link>
-                <a href="https://wa.me/393887078662?text=Ciao! Vorrei informazioni sui programmi fitness per over 65" target="_blank">
+                <a href="https://wa.me/393291070374?text=Ciao! Vorrei informazioni sui programmi fitness per over 65" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                    💬 WhatsApp
+                    Scrivici su WhatsApp
                   </Button>
                 </a>
               </div>
 
               <div className="glass-card p-6 rounded-2xl border-brand-primary/30">
                 <p className="text-lg font-semibold text-brand-primary mb-2">
-                  ✨ OFFERTA SPECIALE SENIOR ✨
+                  Incluso nella valutazione gratuita
                 </p>
                 <p className="text-foreground">
-                  <strong>Valutazione medico-funzionale GRATUITA</strong><br />
-                  + Prima settimana di prova + Piano personalizzato
+                  <strong>Valutazione medico-funzionale</strong> + Prima settimana di prova + Piano personalizzato
                 </p>
               </div>
             </div>
@@ -345,8 +344,7 @@ const SeniorFitness = () => {
 
             <div className="text-center mt-8">
               <p className="text-sm text-muted-foreground">
-                ⏰ <strong className="text-brand-primary">POSTI LIMITATI</strong> - 
-                Solo <strong className="text-brand-accent">8 VALUTAZIONI GRATUITE</strong> questo mese per over 65
+                Posti limitati per garantire attenzione personalizzata a ogni cliente
               </p>
             </div>
           </div>

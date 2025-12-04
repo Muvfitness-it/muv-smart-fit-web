@@ -94,13 +94,13 @@ const RiabilitazioneInfortuni = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-6">
                 <span className="bg-brand-accent text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  🏥 CENTRO RIABILITAZIONE SPECIALIZZATO
+                  Centro Riabilitazione Specializzato
                 </span>
               </div>
               
               <h1 className="text-4xl md:text-6xl font-heading font-black mb-6">
                 <span className="bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent bg-clip-text text-transparent">
-                  Recupera Più Veloce
+                  Recupera in sicurezza
                 </span>
                 <br />
                 dal Tuo Infortunio
@@ -114,23 +114,23 @@ const RiabilitazioneInfortuni = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 <Link to="/form-contatti">
                   <Button size="lg" className="bg-brand-accent hover:bg-brand-accent/90 text-white px-8 py-4 text-lg">
-                    🎁 Consulenza Fisioterapica Gratuita
+                    Prenota valutazione gratuita
                   </Button>
                 </Link>
-                <a href="https://wa.me/393887078662?text=Ciao! Ho bisogno di riabilitazione per un infortunio" target="_blank">
+                <a href="https://wa.me/393291070374?text=Ciao! Ho bisogno di riabilitazione per un infortunio" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                    💬 WhatsApp Urgente
+                    Scrivici su WhatsApp
                   </Button>
                 </a>
               </div>
 
               <div className="glass-card p-6 rounded-2xl border-brand-primary/30">
                 <p className="text-lg font-semibold text-brand-primary mb-2">
-                  ✨ PACCHETTO RIABILITAZIONE COMPLETO ✨
+                  Incluso nella valutazione gratuita
                 </p>
                 <p className="text-foreground">
-                  <strong>Valutazione fisioterapica + Piano riabilitativo + Prima settimana GRATUITA</strong><br />
-                  Tempi di recupero ridotti del 40% rispetto alla riabilitazione tradizionale
+                  <strong>Valutazione fisioterapica completa + Piano riabilitativo personalizzato</strong><br />
+                  Tecniche avanzate per ottimizzare i tempi di recupero
                 </p>
               </div>
             </div>

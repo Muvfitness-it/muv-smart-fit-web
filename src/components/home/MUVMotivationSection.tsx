@@ -81,10 +81,10 @@ const MUVMotivationSection = () => {
             href="/form-contatti"
             className="inline-flex items-center px-12 py-6 bg-accent hover:bg-accent/90 text-accent-foreground text-xl font-bold rounded-2xl shadow-accent hover:shadow-lg transition-all duration-300 transform hover:scale-105"
           >
-            Inizia la Tua Trasformazione Ora
+            Inizia il tuo percorso
           </a>
           <p className="text-muted-foreground mt-4 text-lg">
-            Prima sessione gratuita • Risultati garantiti in 30 giorni
+            Prima sessione gratuita • Percorso personalizzato
           </p>
         </div>
       </div>

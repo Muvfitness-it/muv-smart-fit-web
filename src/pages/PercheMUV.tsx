@@ -166,7 +166,7 @@ const PercheMUV = () => {
         <title>Perché MUV Non È Una Palestra Tradizionale | Fitness Personalizzato Legnago</title>
         <meta 
           name="description" 
-          content="Scopri cosa rende MUV unico: valutazione personalizzata, tecnologie avanzate EMS e Pilates Reformer, Kit Zero Pensieri e risultati garantiti. Non una palestra, un'esperienza di trasformazione a Legnago." 
+          content="Scopri cosa rende MUV unico: valutazione personalizzata, tecnologie avanzate EMS e Pilates Reformer, Kit Zero Pensieri. Non una palestra, un centro di trasformazione personalizzata a Legnago." 
         />
         <meta 
           name="keywords" 
