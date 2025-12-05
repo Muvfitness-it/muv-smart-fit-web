@@ -8,11 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useGeminiAPI } from "@/hooks/useGeminiAPI";
 import { ImageOptimizer } from "@/components/admin/ImageOptimizer";
+import SocialShareModal from "@/components/admin/SocialShareModal";
+import { Facebook, Twitter, Linkedin, MessageCircle } from "lucide-react";
 
 interface Category { id: string; name: string; slug: string; }
+
+interface SharePreferences {
+  facebook: boolean;
+  twitter: boolean;
+  linkedin: boolean;
+  whatsapp: boolean;
+}
 
 const slugify = (s: string) => s
   .toLowerCase()
@@ -46,6 +56,16 @@ const AdminBlogEditor = () => {
   const [aiTopic, setAiTopic] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
+  
+  // Social sharing state
+  const [sharePreferences, setSharePreferences] = useState<SharePreferences>({
+    facebook: false,
+    twitter: false,
+    linkedin: false,
+    whatsapp: false,
+  });
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [publishedArticleUrl, setPublishedArticleUrl] = useState("");
 
   useEffect(() => {
     const loadCats = async () => {
@@ -79,6 +99,10 @@ const AdminBlogEditor = () => {
           const scheduledDate = new Date(data.scheduled_publish_at);
           setScheduledDate(scheduledDate.toISOString().split('T')[0]);
           setScheduledTime(scheduledDate.toTimeString().slice(0, 5));
+        }
+        // Load share preferences
+        if ((data as any).share_preferences) {
+          setSharePreferences((data as any).share_preferences);
         }
       }
     };
@@ -122,6 +146,7 @@ const AdminBlogEditor = () => {
       featured_image: featured.trim() || null,
       status: nextStatus || status,
       category_id: categoryId || null,
+      share_preferences: sharePreferences,
     };
 
     // Aggiungi scheduled_publish_at se programmato
@@ -156,8 +181,9 @@ const AdminBlogEditor = () => {
       
       // Submit to search engines when published
       if (nextStatus === 'published') {
+        const postUrl = `https://www.muvfitness.it/${slug.trim()}`;
+        
         try {
-          const postUrl = `https://www.muvfitness.it/${slug.trim()}`;
           await supabase.functions.invoke('indexnow-submitter', {
             body: { urls: [postUrl] }
           });
@@ -167,13 +193,27 @@ const AdminBlogEditor = () => {
           });
         } catch (indexError: any) {
           console.error('IndexNow submission error:', indexError);
-          // Don't show error toast for IndexNow failures, it's not critical
+        }
+        
+        // Show social share modal if any platform is selected
+        const hasSelectedSocial = Object.values(sharePreferences).some(v => v);
+        if (hasSelectedSocial) {
+          setPublishedArticleUrl(postUrl);
+          setShowShareModal(true);
+          return; // Don't navigate yet, wait for modal close
         }
       }
       
       navigate('/admin/blog');
     }
     setSaving(false);
+  };
+  
+  const handleShareModalClose = (open: boolean) => {
+    setShowShareModal(open);
+    if (!open) {
+      navigate('/admin/blog');
+    }
   };
 
   const generateAI = async () => {
@@ -399,12 +439,86 @@ const AdminBlogEditor = () => {
             <p className="text-xs text-muted-foreground mt-2">La bozza verrà inserita nel campo contenuto. Rivedi e modifica prima della pubblicazione.</p>
           </div>
 
+          {/* Social Sharing Preferences */}
+          <div className="border rounded-lg p-4">
+            <h2 className="font-semibold mb-3 flex items-center gap-2">
+              📤 Condivisione Social
+            </h2>
+            <p className="text-xs text-muted-foreground mb-4">
+              Seleziona i social su cui vuoi condividere l'articolo. Al momento della pubblicazione vedrai un popup con i link pronti.
+            </p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="share-facebook"
+                  checked={sharePreferences.facebook}
+                  onCheckedChange={(checked) => 
+                    setSharePreferences(prev => ({ ...prev, facebook: !!checked }))
+                  }
+                />
+                <Label htmlFor="share-facebook" className="flex items-center gap-2 cursor-pointer">
+                  <Facebook className="h-4 w-4 text-[#1877F2]" />
+                  Facebook
+                </Label>
+              </div>
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="share-twitter"
+                  checked={sharePreferences.twitter}
+                  onCheckedChange={(checked) => 
+                    setSharePreferences(prev => ({ ...prev, twitter: !!checked }))
+                  }
+                />
+                <Label htmlFor="share-twitter" className="flex items-center gap-2 cursor-pointer">
+                  <Twitter className="h-4 w-4" />
+                  Twitter/X
+                </Label>
+              </div>
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="share-linkedin"
+                  checked={sharePreferences.linkedin}
+                  onCheckedChange={(checked) => 
+                    setSharePreferences(prev => ({ ...prev, linkedin: !!checked }))
+                  }
+                />
+                <Label htmlFor="share-linkedin" className="flex items-center gap-2 cursor-pointer">
+                  <Linkedin className="h-4 w-4 text-[#0A66C2]" />
+                  LinkedIn
+                </Label>
+              </div>
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="share-whatsapp"
+                  checked={sharePreferences.whatsapp}
+                  onCheckedChange={(checked) => 
+                    setSharePreferences(prev => ({ ...prev, whatsapp: !!checked }))
+                  }
+                />
+                <Label htmlFor="share-whatsapp" className="flex items-center gap-2 cursor-pointer">
+                  <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                  WhatsApp
+                </Label>
+              </div>
+            </div>
+          </div>
+
           <ImageOptimizer 
             onImageInserted={handleOptimizedImageInsert}
             className="mt-4"
           />
         </div>
       </div>
+      
+      {/* Social Share Modal */}
+      <SocialShareModal
+        open={showShareModal}
+        onOpenChange={handleShareModalClose}
+        articleTitle={title}
+        articleUrl={publishedArticleUrl}
+        articleImage={featured}
+        sharePreferences={sharePreferences}
+      />
     </main>
   );
 };

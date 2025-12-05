@@ -20,6 +20,7 @@ import { humanizeText, humanizeTitle, humanizeExcerpt } from "@/utils/copyHumani
 import { addInternalLinks } from "@/utils/internalLinker";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { BUSINESS_DATA } from "@/config/businessData";
+import SocialShareButtons from "@/components/blog/SocialShareButtons";
 
 
 interface Author {
@@ -295,6 +296,15 @@ const BlogArticle = () => {
                         </Link>
                       </div>
                     )}
+                    
+                    {/* Social Share Buttons - Header */}
+                    <SocialShareButtons
+                      url={canonical || `https://www.muvfitness.it/${slug}`}
+                      title={post.title}
+                      description={post.excerpt || undefined}
+                      variant="inline"
+                      className="justify-center"
+                    />
                   </div>
                   
                   {post.featured_image && (
@@ -318,6 +328,16 @@ const BlogArticle = () => {
                   className="max-w-none"
                 />
               </main>
+              
+              {/* Social Share Buttons - After Content */}
+              <section className="mt-8 p-6 bg-card/30 backdrop-blur-sm rounded-2xl border border-border/30">
+                <SocialShareButtons
+                  url={canonical || `https://www.muvfitness.it/${slug}`}
+                  title={post.title}
+                  description={post.excerpt || undefined}
+                  variant="expanded"
+                />
+              </section>
 
               {/* Author Box - E-E-A-T Optimization */}
               <section className="mt-12 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-primary/50 shadow-md">
