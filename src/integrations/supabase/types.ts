@@ -484,6 +484,7 @@ export type Database = {
           published_at: string | null
           reading_time: number | null
           scheduled_publish_at: string | null
+          share_preferences: Json | null
           slug: string
           status: string
           title: string
@@ -508,6 +509,7 @@ export type Database = {
           published_at?: string | null
           reading_time?: number | null
           scheduled_publish_at?: string | null
+          share_preferences?: Json | null
           slug: string
           status?: string
           title: string
@@ -532,6 +534,7 @@ export type Database = {
           published_at?: string | null
           reading_time?: number | null
           scheduled_publish_at?: string | null
+          share_preferences?: Json | null
           slug?: string
           status?: string
           title?: string
