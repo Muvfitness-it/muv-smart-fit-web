@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Facebook, Twitter, Linkedin, MessageCircle, Copy, Check, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Facebook, Instagram, Linkedin, MessageCircle, Copy, Check, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface SocialShareButtonsProps {
   url: string;
@@ -19,6 +19,7 @@ const SocialShareButtons = ({
   className,
 }: SocialShareButtonsProps) => {
   const [copied, setCopied] = useState(false);
+  const [instagramCopied, setInstagramCopied] = useState(false);
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -26,7 +27,6 @@ const SocialShareButtons = ({
 
   const shareUrls = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedDescription}`,
     whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
   };
@@ -36,13 +36,34 @@ const SocialShareButtons = ({
     window.open(shareUrl, "_blank", "width=600,height=400,noopener,noreferrer");
   };
 
+  const handleInstagramShare = async () => {
+    const instagramText = `${title} 🏋️\n\nLeggi l'articolo completo: ${url}\n\n#MUVFitness #Fitness #Legnago #PersonalTrainer`;
+    try {
+      await navigator.clipboard.writeText(instagramText);
+      setInstagramCopied(true);
+      toast.success("Testo copiato per Instagram!", {
+        description: "Apri Instagram e incollalo nel tuo post",
+      });
+      setTimeout(() => setInstagramCopied(false), 3000);
+    } catch {
+      const textArea = document.createElement("textarea");
+      textArea.value = instagramText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setInstagramCopied(true);
+      toast.success("Testo copiato per Instagram!");
+      setTimeout(() => setInstagramCopied(false), 3000);
+    }
+  };
+
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement("textarea");
       textArea.value = url;
       document.body.appendChild(textArea);
@@ -64,24 +85,30 @@ const SocialShareButtons = ({
       icon: Facebook,
       label: "Facebook",
       bgClass: "bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2]",
+      onClick: () => handleShare("facebook"),
     },
     {
-      key: "twitter" as const,
-      icon: Twitter,
-      label: "Twitter/X",
-      bgClass: "bg-foreground/10 hover:bg-foreground/20 text-foreground",
+      key: "instagram" as const,
+      icon: Instagram,
+      label: instagramCopied ? "Copiato!" : "Instagram",
+      bgClass: instagramCopied 
+        ? "bg-green-500/10 text-green-600"
+        : "bg-[#E4405F]/10 hover:bg-[#E4405F]/20 text-[#E4405F]",
+      onClick: handleInstagramShare,
     },
     {
       key: "linkedin" as const,
       icon: Linkedin,
       label: "LinkedIn",
       bgClass: "bg-[#0A66C2]/10 hover:bg-[#0A66C2]/20 text-[#0A66C2]",
+      onClick: () => handleShare("linkedin"),
     },
     {
       key: "whatsapp" as const,
       icon: MessageCircle,
       label: "WhatsApp",
       bgClass: "bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366]",
+      onClick: () => handleShare("whatsapp"),
     },
   ];
 
@@ -94,13 +121,13 @@ const SocialShareButtons = ({
         </span>
       )}
       
-      {platforms.map(({ key, icon: Icon, label, bgClass }) => (
+      {platforms.map(({ key, icon: Icon, label, bgClass, onClick }) => (
         <button
           key={key}
-          onClick={() => handleShare(key)}
+          onClick={onClick}
           className={cn(buttonBaseClass, bgClass)}
-          title={`Condividi su ${label}`}
-          aria-label={`Condividi su ${label}`}
+          title={key === "instagram" ? "Copia testo per Instagram" : `Condividi su ${label}`}
+          aria-label={key === "instagram" ? "Copia testo per Instagram" : `Condividi su ${label}`}
         >
           <Icon className={variant === "expanded" ? "h-4 w-4" : "h-5 w-5"} />
           {variant === "expanded" && <span>{label}</span>}
