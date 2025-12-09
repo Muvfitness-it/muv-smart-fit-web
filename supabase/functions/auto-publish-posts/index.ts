@@ -14,7 +14,7 @@ const corsHeaders = {
 
 interface SharePreferences {
   facebook?: boolean;
-  twitter?: boolean;
+  instagram?: boolean;
   linkedin?: boolean;
   whatsapp?: boolean;
 }
@@ -25,10 +25,13 @@ function generateShareUrls(articleUrl: string, articleTitle: string) {
   
   return {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
     whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
   };
+}
+
+function generateInstagramText(articleTitle: string, articleUrl: string) {
+  return `${articleTitle} 🏋️\n\nLeggi l'articolo completo: ${articleUrl}\n\n#MUVFitness #Fitness #Legnago #PersonalTrainer`;
 }
 
 function generateEmailHtml(
@@ -37,26 +40,40 @@ function generateEmailHtml(
   sharePreferences: SharePreferences
 ) {
   const shareUrls = generateShareUrls(articleUrl, articleTitle);
+  const instagramText = generateInstagramText(articleTitle, articleUrl);
   
-  const activePlatforms: { key: keyof SharePreferences; label: string; emoji: string; color: string }[] = [
+  const activePlatforms: { key: keyof SharePreferences; label: string; emoji: string; color: string; isInstagram?: boolean }[] = [
     { key: 'facebook', label: 'Facebook', emoji: '📘', color: '#1877F2' },
-    { key: 'twitter', label: 'Twitter/X', emoji: '🐦', color: '#1DA1F2' },
+    { key: 'instagram', label: 'Instagram', emoji: '📸', color: '#E4405F', isInstagram: true },
     { key: 'linkedin', label: 'LinkedIn', emoji: '💼', color: '#0A66C2' },
     { key: 'whatsapp', label: 'WhatsApp', emoji: '💬', color: '#25D366' },
   ];
 
   const selectedPlatforms = activePlatforms.filter(p => sharePreferences[p.key]);
   
-  const socialLinks = selectedPlatforms.map(p => 
-    `<tr>
+  const socialLinks = selectedPlatforms.map(p => {
+    if (p.isInstagram) {
+      // Instagram doesn't have a share URL, so we show the text to copy
+      return `<tr>
+        <td style="padding: 8px 0;">
+          <div style="display: inline-block; padding: 12px 24px; background-color: ${p.color}; color: white; border-radius: 8px; font-weight: 600;">
+            ${p.emoji} Instagram - Copia questo testo:
+          </div>
+          <div style="margin-top: 8px; padding: 12px; background-color: #f5f5f5; border-radius: 8px; font-size: 13px; white-space: pre-wrap;">
+${instagramText}
+          </div>
+        </td>
+      </tr>`;
+    }
+    return `<tr>
       <td style="padding: 8px 0;">
-        <a href="${shareUrls[p.key]}" 
+        <a href="${shareUrls[p.key as keyof typeof shareUrls]}" 
            style="display: inline-block; padding: 12px 24px; background-color: ${p.color}; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
           ${p.emoji} Condividi su ${p.label}
         </a>
       </td>
-    </tr>`
-  ).join('');
+    </tr>`;
+  }).join('');
 
   return `
 <!DOCTYPE html>

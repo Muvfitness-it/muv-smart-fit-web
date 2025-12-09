@@ -13,13 +13,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useGeminiAPI } from "@/hooks/useGeminiAPI";
 import { ImageOptimizer } from "@/components/admin/ImageOptimizer";
 import SocialShareModal from "@/components/admin/SocialShareModal";
-import { Facebook, Twitter, Linkedin, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react";
 
 interface Category { id: string; name: string; slug: string; }
 
 interface SharePreferences {
   facebook: boolean;
-  twitter: boolean;
+  instagram: boolean;
   linkedin: boolean;
   whatsapp: boolean;
 }
@@ -60,7 +60,7 @@ const AdminBlogEditor = () => {
   // Social sharing state
   const [sharePreferences, setSharePreferences] = useState<SharePreferences>({
     facebook: false,
-    twitter: false,
+    instagram: false,
     linkedin: false,
     whatsapp: false,
   });
@@ -463,15 +463,15 @@ const AdminBlogEditor = () => {
               </div>
               <div className="flex items-center gap-3">
                 <Checkbox
-                  id="share-twitter"
-                  checked={sharePreferences.twitter}
+                  id="share-instagram"
+                  checked={sharePreferences.instagram}
                   onCheckedChange={(checked) => 
-                    setSharePreferences(prev => ({ ...prev, twitter: !!checked }))
+                    setSharePreferences(prev => ({ ...prev, instagram: !!checked }))
                   }
                 />
-                <Label htmlFor="share-twitter" className="flex items-center gap-2 cursor-pointer">
-                  <Twitter className="h-4 w-4" />
-                  Twitter/X
+                <Label htmlFor="share-instagram" className="flex items-center gap-2 cursor-pointer">
+                  <Instagram className="h-4 w-4 text-[#E4405F]" />
+                  Instagram
                 </Label>
               </div>
               <div className="flex items-center gap-3">
