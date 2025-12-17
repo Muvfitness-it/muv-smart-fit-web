@@ -7,15 +7,17 @@ const MUVFooter = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div>
-            <h3 className="text-xl font-bold text-secondary mb-4">MUV Fitness</h3>
-            <p className="text-muted leading-relaxed">
-              MUV Fitness S.r.l.<br />
-              Piazzetta Don Walter Soave, 2<br />
-              37045 Legnago (VR)<br />
-              P.IVA: 05281920289
-            </p>
-          </div>
+            <div>
+              <h3 className="text-xl font-bold text-secondary mb-4">MUV Fitness</h3>
+              <p className="text-muted leading-relaxed">
+                MUV Fitness
+                <br />
+                Piazzetta Don Walter Soave, 2<br />
+                37045 Legnago (VR)
+                <br />
+                P.IVA: 05281920289
+              </p>
+            </div>
 
             <div>
               <h3 className="text-xl font-bold text-secondary mb-4">Orari</h3>
@@ -53,7 +55,7 @@ const MUVFooter = () => {
 
           <div className="border-t border-gray-700 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-footer">© 2024 MUV Fitness. Tutti i diritti riservati.</p>
+              <p className="text-footer">© 2025 MUV Fitness. Tutti i diritti riservati.</p>
               <div className="flex gap-6">
                 <Link to="/privacy" className="text-footer hover:text-secondary transition-colors">
                   Privacy Policy
