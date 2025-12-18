@@ -9,7 +9,7 @@ const corsHeaders = {
 // Rate limiting for security
 const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 3; // 3 requests per minute per IP
+const RATE_LIMIT_MAX_REQUESTS = 5; // 5 requests per minute per IP
 
 const checkRateLimit = (ip: string): boolean => {
   const now = Date.now();
@@ -31,7 +31,6 @@ interface ArticleRequest {
   wordCount: number;
   tone: string;
   additionalContext?: string;
-  qualityModel?: 'openai' | 'pro' | 'flash';
   createImage?: boolean;
 }
 
@@ -82,38 +81,33 @@ serve(async (req) => {
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-    const { topic, wordCount, tone, additionalContext, qualityModel = 'openai', createImage = false } = await req.json() as ArticleRequest;
+
+    const { topic, wordCount, tone, additionalContext, createImage = false } = await req.json() as ArticleRequest;
     
     if (!topic || !topic.trim()) {
       throw new Error('Argomento dell\'articolo è obbligatorio');
     }
 
-    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    // Get Lovable AI API Key
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
-    if (!geminiApiKey && !openAIApiKey) {
-      throw new Error('Nessuna API key configurata (Gemini o OpenAI richiesta)');
+    if (!LOVABLE_API_KEY) {
+      console.error('LOVABLE_API_KEY not configured');
+      throw new Error('Lovable AI non configurato. Contatta il supporto.');
     }
 
-    // Funzione per generare con Gemini
-    const tryGeminiGeneration = async (): Promise<ArticleResponse> => {
-      const geminiModel = qualityModel === 'pro' ? 'gemini-2.5-pro' : 'gemini-2.0-flash';
-      
-      const prompt = `Sei un esperto copywriter specializzato in articoli per centri fitness e benessere.
-Scrivi un articolo per MUV Fitness di Legnago sull'argomento: "${topic}"
+    console.log(`Generating article with Lovable AI Gateway - Topic: "${topic}", Words: ${wordCount}, Tone: ${tone}`);
 
-PARAMETRI:
-- Lunghezza: ${wordCount} parole
-- Tono: ${tone}
-- Contesto aggiuntivo: ${additionalContext || 'Nessuno'}
-- Target: Centro fitness premium in Italia
+    const systemPrompt = `Sei un esperto copywriter per MUV Fitness, centro fitness premium di Legnago (VR).
+Scrivi articoli SEO-ottimizzati in italiano con tono ${tone}.
+Target: persone 25-60 anni che cercano dimagrimento, tonificazione, benessere.
 
-IMPORTANTE: Rispondi SOLO con un JSON valido con questa struttura ESATTA:
+RISPONDI SOLO con JSON valido con questa struttura ESATTA:
 {
   "title": "Titolo accattivante diverso dall'argomento (max 60 caratteri)",
   "slug": "slug-url-friendly",
   "hook": "Frase di apertura forte e coinvolgente",
-  "content": "Contenuto HTML con <h2>, <h3>, <p>, <strong>, <ul>, <li>, tabelle colorate con classi Tailwind per contrasto",
+  "content": "Contenuto HTML con <h2>, <h3>, <p>, <strong>, <ul>, <li>",
   "excerpt": "Riassunto 2-3 frasi (max 160 caratteri)",
   "metaTitle": "Meta title SEO ottimizzato (max 60 caratteri)",
   "metaDescription": "Meta description SEO (max 160 caratteri)",
@@ -124,186 +118,95 @@ IMPORTANTE: Rispondi SOLO con un JSON valido con questa struttura ESATTA:
     "h3": ["Punto 1", "Punto 2", "Punto 3"]
   },
   "internal_links": ["servizio-correlato-1", "pagina-correlata-2"],
-  "image_prompt": "${createImage ? `Prompt per immagine fitness correlata a: ${topic}` : ''}",
+  "image_prompt": "${createImage ? 'Descrivi immagine fitness correlata' : ''}",
   "tone_used": "${tone}",
   "word_count_target": ${wordCount}
 }
 
-REGOLE HTML:
-- Usa classi Tailwind per contrasto: text-gray-900 dark:text-gray-100
-- Tabelle con bg-slate-900 text-white o bg-emerald-50 text-emerald-900 border-emerald-200
+REGOLE CONTENUTO:
+- Usa HTML semantico: h2, h3, p, strong, ul, li
 - Grassetti mirati su parole chiave fitness
 - Liste bullet ben strutturate
-- MAI testo trasparente o poco visibile
-- Titolo deve essere diverso e più accattivante dell'argomento`;
+- Cita servizi MUV: EMS, Pilates Reformer, Vacuum, Personal Training
+- Includi call-to-action verso consulenza gratuita
+- NON usare emoji o CAPS LOCK aggressivi
+- Tono premium, elegante, rassicurante`;
 
-      const geminiPayload = {
-        contents: [{
-          parts: [{ text: prompt }]
-        }],
-        generationConfig: {
-          temperature: 0.8,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 8192,
-          responseMimeType: "application/json"
-        }
-      };
-
-      console.log(`Calling Gemini API with model: ${geminiModel}`);
-      
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${geminiApiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(geminiPayload)
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
-      }
-
-      const data = await response.json();
-      const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      
-      if (!content) {
-        throw new Error('No content generated by Gemini');
-      }
-
-      return JSON.parse(content);
-    };
-
-    // Funzione per generare con OpenAI (fallback)
-    const tryOpenAIGeneration = async (): Promise<ArticleResponse> => {
-      const systemPrompt = `Sei un esperto copywriter per MUV Fitness, centro fitness premium di Legnago.
-Scrivi articoli ottimizzati SEO in italiano con tono ${tone}.
-
-Rispondi SOLO con JSON valido:
-{
-  "title": "Titolo accattivante diverso dall'argomento",
-  "slug": "slug-url",
-  "hook": "Hook forte di apertura",
-  "content": "HTML con h2, h3, p, strong, ul, li, tabelle Tailwind colorate",
-  "excerpt": "Riassunto breve", 
-  "metaTitle": "Meta title SEO",
-  "metaDescription": "Meta description SEO",
-  "keywords": ["array", "keywords"],
-  "headings": {"h1": "titolo", "h2": ["array"], "h3": ["array"]},
-  "internal_links": ["array-link"],
-  "image_prompt": "${createImage ? `Descrivi immagine per: ${topic}` : ''}",
-  "tone_used": "${tone}",
-  "word_count_target": ${wordCount}
-}`;
-
-      const userPrompt = `Argomento: "${topic}"
-${additionalContext ? `Contesto: ${additionalContext}` : ''}
-Lunghezza: ${wordCount} parole
+    const userPrompt = `Scrivi un articolo su: "${topic}"
+${additionalContext ? `Contesto aggiuntivo: ${additionalContext}` : ''}
+Lunghezza target: ${wordCount} parole
 Tono: ${tone}
 
-Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su parole fitness chiave.`;
+Crea contenuto HTML ben formattato con focus SEO per "fitness Legnago".`;
 
-      console.log('Calling OpenAI API as fallback...');
+    // Call Lovable AI Gateway
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Lovable AI Gateway error:', response.status, errorText);
       
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userPrompt }
-          ],
-          max_tokens: 4000,
-          temperature: 0.8,
-          response_format: { type: "json_object" }
-        }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
+      if (response.status === 429) {
+        return new Response(
+          JSON.stringify({ error: 'Limite richieste AI superato. Riprova tra qualche minuto.' }),
+          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
-
-      const data = await response.json();
-      const content = data.choices[0].message.content;
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: 'Crediti AI esauriti. Contatta il supporto.' }),
+          { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
       
-      if (!content) {
-        throw new Error('No content generated by OpenAI');
-      }
+      throw new Error(`Errore AI Gateway: ${response.status}`);
+    }
 
-      return JSON.parse(content);
-    };
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      console.error('No content in AI response:', data);
+      throw new Error('Nessun contenuto generato');
+    }
 
-    // Orchestrazione basata sul modello selezionato
+    console.log('AI Response received, parsing JSON...');
+
+    // Parse JSON from response (handle markdown code blocks)
+    let jsonContent = content;
+    if (content.includes('```json')) {
+      jsonContent = content.replace(/```json\s*/, '').replace(/```\s*$/, '');
+    } else if (content.includes('```')) {
+      jsonContent = content.replace(/```\s*/, '').replace(/```\s*$/, '');
+    }
+
     let articleData: ArticleResponse;
-    let usedProvider = qualityModel === 'openai' ? 'openai' : 'gemini';
-
-    if (qualityModel === 'openai' && openAIApiKey) {
-      // Se specificatamente richiesto OpenAI, usa quello come primo tentativo
-      try {
-        console.log('Attempting generation with OpenAI (user selected)...');
-        articleData = await tryOpenAIGeneration();
-        console.log('OpenAI generation successful');
-      } catch (openaiError) {
-        console.warn('OpenAI failed, trying Gemini fallback:', openaiError);
-        
-        if (!geminiApiKey) {
-          throw new Error('Both OpenAI and Gemini failed. No backup API keys available.');
-        }
-        
-        try {
-          articleData = await tryGeminiGeneration();
-          usedProvider = 'gemini';
-          console.log('Gemini fallback successful');
-        } catch (geminiError) {
-          const geminiErrorMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
-          const openaiErrorMsg = openaiError instanceof Error ? openaiError.message : 'Unknown error';
-          throw new Error(`Both providers failed. OpenAI: ${openaiErrorMsg}, Gemini: ${geminiErrorMsg}`);
-        }
-      }
-    } else {
-      // Default: prova prima Gemini, poi OpenAI come fallback
-      try {
-        if (geminiApiKey) {
-          console.log('Attempting generation with Gemini...');
-          articleData = await tryGeminiGeneration();
-          console.log('Gemini generation successful');
-        } else {
-          throw new Error('Gemini API key not available');
-        }
-      } catch (geminiError) {
-        console.warn('Gemini failed, trying OpenAI fallback:', geminiError);
-        
-        if (!openAIApiKey) {
-          throw new Error('Both Gemini and OpenAI failed. No API keys available.');
-        }
-        
-        try {
-          articleData = await tryOpenAIGeneration();
-          usedProvider = 'openai';
-          console.log('OpenAI fallback successful');
-        } catch (openaiError) {
-          const geminiErrorMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
-          const openaiErrorMsg = openaiError instanceof Error ? openaiError.message : 'Unknown error';
-          throw new Error(`Both providers failed. Gemini: ${geminiErrorMsg}, OpenAI: ${openaiErrorMsg}`);
-        }
-      }
+    try {
+      articleData = JSON.parse(jsonContent.trim());
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError, 'Content:', jsonContent.substring(0, 500));
+      throw new Error('Errore nel parsing della risposta AI');
     }
 
     // Validazione e pulizia dei dati
     if (!articleData.title || !articleData.content || !articleData.excerpt) {
-      throw new Error('Dati dell\'articolo incompleti da entrambi i provider');
+      throw new Error('Dati dell\'articolo incompleti');
     }
 
-    // Assicura che il titolo sia diverso dall'argomento
-    if (articleData.title.toLowerCase().includes(topic.toLowerCase().substring(0, 20))) {
-      articleData.title = `Scopri ${topic}: La Guida Completa di MUV Fitness`;
-    }
-
-    // Genera slug se mancante e gestisci duplicati
+    // Genera slug se mancante
     if (!articleData.slug) {
       articleData.slug = articleData.title
         .toLowerCase()
@@ -316,37 +219,21 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
         .substring(0, 60);
     }
 
-    // Add timestamp to make slug unique and prevent duplicates
-    const timestamp = Date.now().toString().slice(-6); // Last 6 digits
+    // Add timestamp to make slug unique
+    const timestamp = Date.now().toString().slice(-6);
     articleData.slug = `${articleData.slug}-${timestamp}`;
 
-    // Pulisci e normalizza il contenuto HTML
+    // Pulisci contenuto HTML
     let cleanContent = articleData.content
       .replace(/```html|```/g, '')
-      .replace(/^\s*<h1[^>]*>.*?<\/h1>\s*/i, '') // Rimuovi eventuali H1
-      .replace(/style="[^"]*"/g, '') // Rimuovi stili inline
-      .replace(/class="text-white"/g, 'class="text-gray-900 dark:text-gray-100"') // Correggi contrasto
-      .replace(/class="bg-transparent"/g, 'class="bg-slate-50 dark:bg-slate-800"') // Correggi sfondi trasparenti
+      .replace(/^\s*<h1[^>]*>.*?<\/h1>\s*/i, '')
+      .replace(/style="[^"]*"/g, '')
       .trim();
-
-    // Assicura contrasto nelle tabelle
-    cleanContent = cleanContent.replace(
-      /<table([^>]*)>/g, 
-      '<table$1 class="w-full border-collapse border border-slate-300 dark:border-slate-600">'
-    );
-    cleanContent = cleanContent.replace(
-      /<th([^>]*)>/g, 
-      '<th$1 class="bg-slate-900 text-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 p-2 font-semibold">'
-    );
-    cleanContent = cleanContent.replace(
-      /<td([^>]*)>/g, 
-      '<td$1 class="border border-slate-300 dark:border-slate-600 p-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100">'
-    );
 
     const result: ArticleResponse = {
       title: articleData.title.substring(0, 100),
       slug: articleData.slug,
-      hook: articleData.hook || `Scopri tutto quello che devi sapere su ${topic} con MUV Fitness.`,
+      hook: articleData.hook || `Scopri tutto su ${topic} con MUV Fitness.`,
       content: cleanContent,
       excerpt: articleData.excerpt.substring(0, 200),
       metaTitle: (articleData.metaTitle || articleData.title).substring(0, 60),
@@ -358,36 +245,23 @@ Crea contenuto con HTML formattato, tabelle colorate accessibili, grassetti su p
         h3: []
       },
       internal_links: articleData.internal_links || [],
-      image_prompt: createImage ? (articleData.image_prompt || `Immagine professionale per articolo su ${topic}`) : undefined,
+      image_prompt: createImage ? (articleData.image_prompt || `Immagine fitness per: ${topic}`) : undefined,
       tone_used: tone,
       word_count_target: wordCount
     };
 
-    console.log(`Article generated successfully using ${usedProvider}`);
+    console.log(`Article generated successfully with Lovable AI`);
 
-    return new Response(JSON.stringify({ ...result, provider_used: usedProvider }), {
+    return new Response(JSON.stringify({ ...result, provider_used: 'lovable-ai' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
-  } catch (error: any) {
-    console.error('Error in advanced-article-generator function:', error);
+  } catch (error: unknown) {
+    console.error('Error in advanced-article-generator:', error);
     
-    let errorMessage = 'Errore nella generazione dell\'articolo';
+    const errorMsg = error instanceof Error ? error.message : String(error);
     
-    const errorMsg = error?.message || String(error);
-    if (errorMsg?.includes('API key')) {
-      errorMessage = 'Chiave API OpenAI non configurata correttamente';
-    } else if (errorMsg?.includes('quota') || errorMsg?.includes('insufficient_quota')) {
-      errorMessage = 'Quota API OpenAI esaurita';
-    } else if (errorMsg?.includes('rate limit')) {
-      errorMessage = 'Troppe richieste. Riprova tra qualche minuto';
-    } else if (errorMsg?.includes('content_policy')) {
-      errorMessage = 'Contenuto non conforme alle policy di OpenAI';
-    } else {
-      errorMessage = errorMsg || 'Errore sconosciuto nella generazione';
-    }
-    
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    return new Response(JSON.stringify({ error: errorMsg || 'Errore nella generazione' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
