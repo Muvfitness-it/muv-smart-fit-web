@@ -66,11 +66,8 @@ const SmallGroup = lazy(() => import("./pages/servizi/SmallGroup"));
 const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
 const ZoneServite = lazy(() => import("./pages/ZoneServite"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const AdminUserManagement = lazy(() => import("./pages/AdminUserManagement"));
+const AdminUnified = lazy(() => import("./pages/admin/AdminUnified"));
 const Analytics = lazy(() => import("./pages/Analytics"));
-const LocalSEODashboard = lazy(() => import("./pages/admin/LocalSEODashboard"));
-const ContentManagement = lazy(() => import("./pages/admin/ContentManagement"));
 
 // Landing Pages - lazy loaded
 const Trasformazione30Giorni = lazy(() => import("./pages/landing/Trasformazione30Giorni"));
@@ -110,13 +107,7 @@ import { AdminRoute } from "@/components/security/AdminRoute";
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
 const BlogCategory = lazy(() => import("./pages/blog/BlogCategory"));
 const BlogArticle = lazy(() => import("./pages/blog/BlogArticle"));
-const AdminBlogList = lazy(() => import("./pages/admin/AdminBlogList"));
-const AdminBlogDrafts = lazy(() => import("./pages/admin/AdminBlogDrafts"));
 const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
-const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
-const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
-const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
-const AdminSmallGroupSchedule = lazy(() => import("./pages/admin/AdminSmallGroupSchedule"));
 const SEOMonitorDashboard = lazy(() => import("./pages/admin/SEOMonitorDashboard"));
 
 // Loading component for lazy routes
@@ -271,20 +262,21 @@ const AppContent = () => {
                     {/* Removed client-side redirect - now handled server-side via netlify.toml */}
                     <Route path="/:slug" element={<BlogArticle />} />
                     
-                    {/* Admin Routes */}
-                    <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-                    <Route path="/admin/contenuti-base" element={<AdminRoute><Suspense fallback={<RouteLoading />}><ContentManagement /></Suspense></AdminRoute>} />
-                    <Route path="/admin/blog" element={<AdminRoute><AdminBlogList /></AdminRoute>} />
-                    <Route path="/admin/blog/bozze" element={<AdminRoute><AdminBlogDrafts /></AdminRoute>} />
-                    <Route path="/admin/blog/categorie" element={<AdminRoute><AdminCategories /></AdminRoute>} />
-                    <Route path="/admin/blog/create/ai" element={<AdminRoute><AdminBlogCreateAI /></AdminRoute>} />
-                    <Route path="/admin/blog/create/manual" element={<AdminRoute><AdminBlogCreateManual /></AdminRoute>} />
-                    <Route path="/admin/blog/new" element={<Navigate to="/admin/blog/create/ai" replace />} />
+                    {/* Admin Routes - Unified Panel */}
+                    <Route path="/admin" element={<AdminRoute><AdminUnified /></AdminRoute>} />
+                    <Route path="/admin/dashboard" element={<Navigate to="/admin?section=blog" replace />} />
+                    <Route path="/admin/contenuti-base" element={<Navigate to="/admin?section=contenuti" replace />} />
+                    <Route path="/admin/blog" element={<Navigate to="/admin?section=blog" replace />} />
+                    <Route path="/admin/blog/bozze" element={<Navigate to="/admin?section=bozze" replace />} />
+                    <Route path="/admin/blog/categorie" element={<Navigate to="/admin?section=categorie" replace />} />
+                    <Route path="/admin/blog/create/ai" element={<Navigate to="/admin?section=crea-ai" replace />} />
+                    <Route path="/admin/blog/create/manual" element={<Navigate to="/admin?section=crea-manuale" replace />} />
+                    <Route path="/admin/blog/new" element={<Navigate to="/admin?section=crea-ai" replace />} />
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
-                    <Route path="/admin/utenti" element={<AdminRoute><AdminUserManagement /></AdminRoute>} />
-                    <Route path="/admin/small-group-schedule" element={<AdminRoute><Suspense fallback={<RouteLoading />}><AdminSmallGroupSchedule /></Suspense></AdminRoute>} />
-                    <Route path="/admin/local-seo" element={<AdminRoute><Suspense fallback={<RouteLoading />}><LocalSEODashboard /></Suspense></AdminRoute>} />
-                    <Route path="/admin/seo-monitor" element={<AdminRoute><Suspense fallback={<RouteLoading />}><SEOMonitorDashboard /></Suspense></AdminRoute>} />
+                    <Route path="/admin/utenti" element={<Navigate to="/admin?section=utenti" replace />} />
+                    <Route path="/admin/small-group-schedule" element={<Navigate to="/admin?section=small-group" replace />} />
+                    <Route path="/admin/local-seo" element={<Navigate to="/admin?section=local-seo" replace />} />
+                    <Route path="/admin/seo-monitor" element={<Navigate to="/admin?section=seo-monitor" replace />} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Now handled server-side via netlify.toml ===== */}
