@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, X, Phone } from 'lucide-react';
+import { MessageCircle, X, ArrowRight } from 'lucide-react';
 
 const StickyMobileCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -8,12 +8,9 @@ const StickyMobileCTA = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight * 0.8; // 80vh
-      
-      if (scrollY > heroHeight && !isDismissed) {
+      // Show after scrolling just 300px (very early visibility)
+      if (scrollY > 300 && !isDismissed) {
         setIsVisible(true);
-      } else {
-        setIsVisible(false);
       }
     };
 
@@ -26,42 +23,47 @@ const StickyMobileCTA = () => {
     setIsVisible(false);
   };
 
+  const scrollToForm = () => {
+    const formSection = document.getElementById('prenota-form');
+    if (formSection) {
+      formSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-gray-600 p-4 shadow-2xl">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-white font-bold text-sm">Prenota ora la tua consulenza gratuita!</span>
+    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden safe-area-inset-bottom">
+      <div className="bg-background/95 backdrop-blur-md border-t border-border p-3 shadow-2xl">
+        <div className="flex items-center gap-2">
+          {/* Primary CTA - Scroll to form */}
           <button 
-            onClick={handleDismiss}
-            className="text-gray-400 hover:text-white p-1"
-            aria-label="Chiudi"
+            onClick={scrollToForm}
+            className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3.5 px-4 rounded-xl transition-colors min-h-[52px]"
           >
-            <X className="w-4 h-4" />
+            <span className="text-sm">Prenota prova gratuita</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
-        </div>
-        
-        <div className="flex gap-3">
+          
+          {/* WhatsApp button */}
           <a 
-            href="https://wa.me/393291070374"
+            href="https://wa.me/393291070374?text=Ciao,%20vorrei%20prenotare%20una%20prova%20gratuita"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-colors min-h-[48px]"
-            aria-label="Scrivici su WhatsApp"
+            className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold p-3.5 rounded-xl transition-colors min-h-[52px] min-w-[52px]"
+            aria-label="WhatsApp"
           >
             <MessageCircle className="w-5 h-5" />
-            <span className="text-sm">WhatsApp</span>
           </a>
           
-          <a 
-            href="tel:+393291070374" 
-            className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-secondary hover:to-brand-accent text-black font-bold py-3 px-4 rounded-lg transition-all min-h-[48px]"
-            aria-label="Chiama ora"
+          {/* Dismiss button */}
+          <button 
+            onClick={handleDismiss}
+            className="flex items-center justify-center text-muted-foreground hover:text-foreground p-2 rounded-lg"
+            aria-label="Chiudi"
           >
-            <Phone className="w-5 h-5" />
-            <span className="text-sm">Chiama</span>
-          </a>
+            <X className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </div>
