@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Phone, Clock, Shield, MessageCircle } from 'lucide-react';
+import { CheckCircle, Phone, Clock, Shield, MessageCircle, X, Check } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -29,11 +29,21 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
 
   const getObjectiveLabel = (value: string) => {
     const labels: Record<string, string> = {
-      'dimagrire': 'Dimagrire e perdere peso',
-      'tonificare': 'Tonificare e rassodare',
-      'cellulite': 'Eliminare la cellulite',
-      'postura': 'Migliorare postura',
-      'benessere': 'Ritrovare benessere',
+      'dimagrire': 'Perdere peso e dimagrire',
+      'tonificare': 'Tonificare e rassodare il corpo',
+      'cellulite': 'Ridurre cellulite e ritenzione',
+      'postura': 'Migliorare postura e ridurre il mal di schiena',
+      'benessere': 'Ritrovare energia e benessere generale',
+    };
+    return labels[value] || value;
+  };
+
+  const getTimeLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      '2x': '2 volte a settimana (40–45 minuti)',
+      '3x': '3 volte a settimana (circa 1 ora)',
+      '4x+': 'Più di 3 volte a settimana',
+      'variabile': 'Dipende dagli impegni',
     };
     return labels[value] || value;
   };
@@ -56,12 +66,15 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
         email: formData.email || null,
         source: 'funnel_qualifica',
         obiettivo: funnelContext.obiettivo || null,
-        message: `Disponibilità: ${formData.availability}. Tempo: ${funnelContext.tempo || 'N/A'}. Ostacolo: ${funnelContext.ostacolo || 'N/A'}`,
+        message: `Disponibilità contatto: ${formData.availability}. Tempo disponibile: ${funnelContext.tempo || 'N/A'}. Esperienza: ${funnelContext.esperienza || 'N/A'}. Supporto: ${funnelContext.supporto || 'N/A'}`,
         status: 'nuovo',
       });
 
       if (error) throw error;
 
+      // Save user name for grazie page
+      localStorage.setItem('funnel_user_name', formData.name.split(' ')[0]);
+      
       // Clear funnel data
       localStorage.removeItem('funnel_answers');
       
@@ -76,20 +89,59 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto px-4">
-      {/* Personalized summary */}
+    <div className="max-w-2xl mx-auto px-4">
+      {/* Riepilogo personalizzato */}
       {funnelContext.obiettivo && (
-        <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 mb-8 text-center">
-          <p className="text-sm text-muted-foreground mb-1">Il tuo obiettivo:</p>
-          <p className="font-semibold text-foreground">{getObjectiveLabel(funnelContext.obiettivo)}</p>
+        <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 mb-8">
+          <p className="text-sm font-medium text-primary mb-4">In base alle tue risposte:</p>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="text-muted-foreground text-sm">Obiettivo principale:</span>
+                <p className="font-semibold text-foreground">{getObjectiveLabel(funnelContext.obiettivo)}</p>
+              </div>
+            </div>
+            {funnelContext.tempo && (
+              <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-muted-foreground text-sm">Tempo disponibile:</span>
+                  <p className="font-semibold text-foreground">{getTimeLabel(funnelContext.tempo)}</p>
+                </div>
+              </div>
+            )}
+            <div className="flex items-start gap-3">
+              <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="text-muted-foreground text-sm">Tipo di supporto:</span>
+                <p className="font-semibold text-foreground">Percorso guidato e personalizzato</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4 pt-4 border-t border-primary/10">
+            Durante la consulenza analizzeremo la tua situazione e ti spiegheremo 
+            quale percorso è più adatto a te, senza impegno.
+          </p>
         </div>
       )}
+
+      {/* Titolo sezione form */}
+      <div className="text-center mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+          Prenota la tua consulenza in studio
+        </h2>
+        <p className="text-muted-foreground">
+          La consulenza è un incontro conoscitivo di circa 30 minuti,<br />
+          in un ambiente riservato, senza affollamento.
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
-            Nome e Cognome *
+            Nome *
           </label>
           <input
             type="text"
@@ -117,25 +169,11 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
           />
         </div>
 
-        {/* Email (optional) */}
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Email <span className="text-muted-foreground">(opzionale)</span>
-          </label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="mario.rossi@email.com"
-            className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
-          />
-        </div>
-
         {/* Availability */}
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             <Clock className="w-4 h-4 inline mr-2" />
-            Preferenza orario *
+            Quando preferisci essere contattato? *
           </label>
           <div className="grid grid-cols-3 gap-3">
             {['Mattina', 'Pomeriggio', 'Sera'].map((time) => (
@@ -155,6 +193,20 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Email (optional) */}
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Email <span className="text-muted-foreground">(facoltativa)</span>
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="mario.rossi@email.com"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+          />
         </div>
 
         {/* Privacy */}
@@ -177,7 +229,7 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
         >
           {isSubmitting ? (
             <>
@@ -186,32 +238,79 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
             </>
           ) : (
             <>
-              Prenota la consulenza in studio
+              👉 Prenota la consulenza in studio
             </>
           )}
         </button>
 
-        {/* Micro-copy anti-paura */}
+        {/* Micro-copy sotto CTA */}
         <div className="space-y-2 text-sm text-muted-foreground text-center">
           <div className="flex items-center justify-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            <span>Nessun impegno, solo una chiacchierata</span>
+            <span>Nessun impegno</span>
           </div>
           <div className="flex items-center justify-center gap-2">
-            <Shield className="w-4 h-4 text-primary" />
+            <CheckCircle className="w-4 h-4 text-primary" />
             <span>Valutazione conoscitiva gratuita</span>
           </div>
           <div className="flex items-center justify-center gap-2">
-            <Clock className="w-4 h-4 text-primary" />
-            <span>Posti limitati: max 3 nuovi clienti a settimana</span>
+            <CheckCircle className="w-4 h-4 text-primary" />
+            <span>Posti limitati per garantire qualità</span>
           </div>
         </div>
       </form>
 
-      {/* Correzione #4: WhatsApp subordinato */}
-      <div className="mt-8 pt-6 border-t border-border text-center">
+      {/* Box riduzione ansia */}
+      <div className="mt-10 grid md:grid-cols-2 gap-6">
+        {/* Cosa NON succede */}
+        <div className="bg-muted/50 rounded-xl p-5">
+          <h3 className="font-bold text-foreground mb-3 flex items-center gap-2">
+            <X className="w-5 h-5 text-muted-foreground" />
+            Cosa NON succede durante la consulenza:
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <X className="w-4 h-4 flex-shrink-0" />
+              Nessuna vendita forzata
+            </li>
+            <li className="flex items-center gap-2">
+              <X className="w-4 h-4 flex-shrink-0" />
+              Nessun obbligo di iscrizione
+            </li>
+            <li className="flex items-center gap-2">
+              <X className="w-4 h-4 flex-shrink-0" />
+              Nessun "pacchetto standard"
+            </li>
+          </ul>
+        </div>
+
+        {/* Cosa succede invece */}
+        <div className="bg-primary/5 rounded-xl p-5">
+          <h3 className="font-bold text-foreground mb-3 flex items-center gap-2">
+            <Check className="w-5 h-5 text-primary" />
+            Cosa succede invece:
+          </h3>
+          <ul className="space-y-2 text-sm text-foreground">
+            <li className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              Analizziamo i tuoi obiettivi
+            </li>
+            <li className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              Valutiamo la soluzione migliore per te
+            </li>
+            <li className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              Ti spieghiamo chiaramente come lavoriamo
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* WhatsApp subordinato */}
+      <div className="mt-10 pt-6 border-t border-border text-center">
         <p className="text-sm text-muted-foreground mb-2">
-          Preferisci scriverci?
+          Preferisci parlare prima su WhatsApp?
         </p>
         <a
           href="https://wa.me/393400847547?text=Ciao!%20Ho%20compilato%20il%20questionario%20sul%20sito%20e%20vorrei%20prenotare%20una%20consulenza."
@@ -220,8 +319,11 @@ const FunnelBookingForm: React.FC<FunnelBookingFormProps> = ({ onSuccess }) => {
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <MessageCircle className="w-4 h-4" />
-          <span className="underline">Contattaci su WhatsApp</span>
+          <span className="underline">💬 Scrivici su WhatsApp</span>
         </a>
+        <p className="text-xs text-muted-foreground mt-1">
+          Solo se preferisci un primo contatto informale.
+        </p>
       </div>
     </div>
   );
