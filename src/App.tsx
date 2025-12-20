@@ -55,6 +55,12 @@ const Over60Page = lazy(() => import("./pages/servizi/Over60Page"));
 // Landing Pages
 const ProvaGratuitaEMS = lazy(() => import("./pages/landing/ProvaGratuitaEMS"));
 
+// Funnel Pages - Multi-step conversion funnel
+const FunnelStep1 = lazy(() => import("./pages/funnel/FunnelStep1"));
+const FunnelStep2 = lazy(() => import("./pages/funnel/FunnelStep2"));
+const FunnelStep3 = lazy(() => import("./pages/funnel/FunnelStep3"));
+const FunnelGrazie = lazy(() => import("./pages/funnel/FunnelGrazie"));
+
 // Service pages
 const NutrizionePsicocoach = lazy(() => import("./pages/servizi/NutrizionePsicocoach"));
 
@@ -153,6 +159,20 @@ const AppContent = () => {
         {/* Removed problematic optimization components */}
         <div className="min-h-screen bg-background text-foreground">
         <Routes>
+          {/* Funnel Pages - NO Navigation/Footer */}
+          <Route path="/funnel" element={
+            <Suspense fallback={<RouteLoading />}><FunnelStep1 /></Suspense>
+          } />
+          <Route path="/funnel/qualifica" element={
+            <Suspense fallback={<RouteLoading />}><FunnelStep2 /></Suspense>
+          } />
+          <Route path="/funnel/prenota" element={
+            <Suspense fallback={<RouteLoading />}><FunnelStep3 /></Suspense>
+          } />
+          <Route path="/funnel/grazie" element={
+            <Suspense fallback={<RouteLoading />}><FunnelGrazie /></Suspense>
+          } />
+          
           {/* Landing Pages - NO Navigation/Footer */}
           <Route path="/trasformazione-30-giorni" element={
             <Suspense fallback={<RouteLoading />}>
