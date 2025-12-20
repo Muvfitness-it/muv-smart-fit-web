@@ -1,20 +1,21 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
+import FunnelCTA from './FunnelCTA';
 
 const FunnelTargetAudience: React.FC = () => {
   const forYou = [
-    'Adulti 25-60 anni che cercano risultati concreti',
-    'Chi ha poco tempo ma vuole allenarsi in modo efficace',
-    'Chi preferisce un ambiente riservato e professionale',
-    'Chi desidera essere seguito passo passo',
-    'Chi ha già provato palestre senza successo',
+    'Hai poco tempo ma vuoi risultati concreti',
+    'Vuoi essere seguito passo dopo passo, non lasciato solo',
+    'Hai obiettivi specifici (dimagrimento, cellulite, postura, schiena)',
+    'Cerchi un ambiente riservato, professionale, senza affollamento',
+    'Vuoi un programma costruito su di te, non standard',
   ];
 
   const notForYou = [
-    'Chi cerca una palestra low-cost con accesso libero',
-    'Chi vuole allenarsi in totale autonomia',
-    'Chi non è disposto a seguire un percorso strutturato',
-    'Chi cerca risultati miracolosi senza impegno',
+    'Cerchi una palestra low-cost o "all you can train"',
+    'Vuoi allenarti da solo senza guida',
+    'Non vuoi un metodo, ma solo accesso ai macchinari',
+    'Cerchi soluzioni veloci senza impegno',
   ];
 
   return (
@@ -22,11 +23,8 @@ const FunnelTargetAudience: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-            MUV è il percorso giusto per te?
+            Questo percorso è adatto a te se…
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Siamo selettivi perché vogliamo garantire risultati reali. Scopri se possiamo aiutarti.
-          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
@@ -36,7 +34,7 @@ const FunnelTargetAudience: React.FC = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Check className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-bold text-foreground">Per chi è MUV</h3>
+              <h3 className="text-xl font-bold text-foreground">Per chi è</h3>
             </div>
             <ul className="space-y-4">
               {forYou.map((item, index) => (
@@ -54,7 +52,7 @@ const FunnelTargetAudience: React.FC = () => {
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
                 <X className="w-6 h-6 text-muted-foreground" />
               </div>
-              <h3 className="text-xl font-bold text-muted-foreground">Per chi NON è MUV</h3>
+              <h3 className="text-xl font-bold text-muted-foreground">Per chi NON è</h3>
             </div>
             <ul className="space-y-4">
               {notForYou.map((item, index) => (
@@ -65,6 +63,17 @@ const FunnelTargetAudience: React.FC = () => {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* CTA intermedia */}
+        <div className="mt-12 text-center">
+          <p className="text-lg text-foreground font-medium mb-6">
+            👉 Se ti riconosci nella prima colonna, continua.
+          </p>
+          <FunnelCTA 
+            text="Scopri se MUV è adatto a te"
+            href="/funnel/qualifica"
+          />
         </div>
       </div>
     </section>

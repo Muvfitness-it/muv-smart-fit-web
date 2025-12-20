@@ -1,32 +1,25 @@
 import React from 'react';
-import { Zap, Sparkles, HeartPulse, UserCheck } from 'lucide-react';
+import { Zap, Wind, Heart } from 'lucide-react';
 
 const FunnelBenefits: React.FC = () => {
-  // Correzione #2: Benefici contestualizzati nel percorso guidato
   const technologies = [
     {
       icon: Zap,
-      title: 'EMS Training',
-      description: 'Allenamenti brevi e intensi, inseriti in un percorso guidato dal tuo personal trainer',
-      note: 'Ideale per chi ha poco tempo',
+      title: 'EMS – Electrofitness',
+      description: 'Allenamenti brevi e intensi, ideali per chi ha poco tempo.',
+      note: 'Sempre inseriti in un programma personalizzato e supervisionato.',
     },
     {
-      icon: Sparkles,
+      icon: Wind,
       title: 'Vacuum Therapy',
-      description: 'Supporto efficace per la cellulite, se inserito in un programma personalizzato',
-      note: 'Risultati visibili con costanza',
+      description: 'Supporto efficace per cellulite, ritenzione e rimodellamento,',
+      note: 'quando utilizzata all\'interno di un percorso strutturato.',
     },
     {
-      icon: HeartPulse,
-      title: 'Fit Pilates',
-      description: 'Migliora postura e flessibilità, con esercizi adattati alle tue esigenze',
-      note: 'Adatto a tutti i livelli',
-    },
-    {
-      icon: UserCheck,
-      title: 'Ginnastica Posturale',
-      description: 'Risolvi dolori e tensioni con un approccio guidato e progressivo',
-      note: 'Valutazione iniziale inclusa',
+      icon: Heart,
+      title: 'Fit Pilates & Ginnastica Posturale',
+      description: 'Migliora postura, mobilità e qualità di vita,',
+      note: 'riducendo dolori e rigidità nel tempo.',
     },
   ];
 
@@ -35,44 +28,36 @@ const FunnelBenefits: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Tecnologie esclusive per{' '}
+            Tecnologie avanzate.{' '}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              risultati concreti
+              Inserite in un percorso guidato.
             </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Non usiamo i macchinari a caso. Ogni tecnologia è integrata nel tuo piano personalizzato, 
-            seguito dal tuo personal trainer dedicato.
-          </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {technologies.map((tech, index) => (
             <div 
               key={index}
-              className="group bg-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg"
+              className="group bg-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg text-center"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <tech.icon className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-foreground mb-2">{tech.title}</h3>
-                  <p className="text-muted-foreground mb-3">{tech.description}</p>
-                  <span className="inline-block text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">
-                    {tech.note}
-                  </span>
-                </div>
+              <div className="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <tech.icon className="w-7 h-7 text-primary" />
               </div>
+              <h3 className="text-lg font-bold text-foreground mb-3">{tech.title}</h3>
+              <p className="text-muted-foreground mb-2">{tech.description}</p>
+              <p className="text-sm text-muted-foreground italic">{tech.note}</p>
             </div>
           ))}
         </div>
 
-        {/* Nota contestuale - Correzione #1 spostata qui */}
-        <div className="mt-12 text-center bg-muted/50 rounded-xl p-6">
+        {/* Nota finale */}
+        <div className="mt-12 text-center">
+          <p className="text-lg text-foreground font-medium">
+            Qui non vendiamo una tecnologia.
+          </p>
           <p className="text-muted-foreground">
-            <span className="font-medium text-foreground">I nostri clienti vedono i primi risultati già dopo 4-8 settimane</span>, 
-            seguendo il programma personalizzato. I risultati variano in base al programma e alla costanza.
+            Costruiamo un percorso su misura usando gli strumenti giusti.
           </p>
         </div>
       </div>
