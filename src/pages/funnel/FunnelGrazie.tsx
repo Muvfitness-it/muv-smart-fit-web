@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FunnelTemplate from '@/components/funnel/FunnelTemplate';
 import { Helmet } from 'react-helmet';
-import { CheckCircle, Phone, MapPin, Clock, Shirt, FileText, Heart, ExternalLink } from 'lucide-react';
+import { CheckCircle, Phone, MapPin, Clock, Shirt, FileText, Heart, ExternalLink, Award } from 'lucide-react';
 
 const FunnelGrazie: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -11,6 +11,8 @@ const FunnelGrazie: React.FC = () => {
     const stored = localStorage.getItem('funnel_user_name');
     if (stored) {
       setUserName(stored);
+      // Clear after use
+      localStorage.removeItem('funnel_user_name');
     }
   }, []);
 
@@ -30,15 +32,13 @@ const FunnelGrazie: React.FC = () => {
                 <CheckCircle className="w-10 h-10 text-primary" />
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Richiesta ricevuta con successo!
+                Perfetto. La tua richiesta è stata ricevuta.
               </h1>
               <p className="text-lg text-muted-foreground">
-                {userName ? `Grazie ${userName}, a` : 'A'}bbiamo ricevuto la tua richiesta di consulenza
+                {userName ? `Grazie ${userName}, t` : 'T'}i contatteremo a breve per confermare la consulenza in studio.
               </p>
             </div>
 
-            {/* Correzione #5: Pagina Grazie potenziata */}
-            
             {/* What happens next */}
             <div className="bg-card rounded-2xl border border-border p-6 sm:p-8 mb-6">
               <div className="flex items-start gap-4 mb-6">
@@ -76,14 +76,14 @@ const FunnelGrazie: React.FC = () => {
               </ol>
             </div>
 
-            {/* How to prepare */}
+            {/* Preparazione mentale (show-up boost) */}
             <div className="bg-muted/50 rounded-2xl p-6 sm:p-8 mb-6">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 rounded-xl bg-background flex items-center justify-center flex-shrink-0">
                   <Shirt className="w-6 h-6 text-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-foreground mb-2">Come prepararti</h2>
+                  <h2 className="text-xl font-bold text-foreground mb-2">Preparazione mentale</h2>
                   <p className="text-muted-foreground">Per sfruttare al meglio la consulenza:</p>
                 </div>
               </div>
@@ -95,29 +95,28 @@ const FunnelGrazie: React.FC = () => {
                 </li>
                 <li className="flex items-center gap-3">
                   <FileText className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-foreground">Porta eventuali referti medici (solo se hai problemi specifici)</span>
+                  <span className="text-foreground">Porta eventuali referti o informazioni utili</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-foreground">Arriva 5 minuti prima dell'appuntamento</span>
+                  <span className="text-foreground">Arriva 5 minuti prima</span>
                 </li>
               </ul>
             </div>
 
-            {/* Remember */}
+            {/* Rinforzo valore */}
             <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6 sm:p-8 mb-6 border border-primary/10">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Heart className="w-6 h-6 text-primary" />
+                  <Award className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-foreground mb-3">Ricorda</h2>
+                  <h2 className="text-xl font-bold text-foreground mb-3">Hai fatto la scelta giusta</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    La consulenza <strong className="text-foreground">non è una vendita</strong>. 
-                    È un momento per capire insieme se il nostro metodo è adatto a te.
+                    Hai scelto un <strong className="text-foreground">percorso guidato, personalizzato e orientato ai risultati</strong>.
                   </p>
                   <p className="text-primary font-medium mt-3">
-                    Nessun impegno, nessuna pressione.
+                    Non vediamo l'ora di conoscerti.
                   </p>
                 </div>
               </div>
@@ -154,8 +153,11 @@ const FunnelGrazie: React.FC = () => {
               </div>
             </div>
 
-            {/* Back to home */}
-            <div className="text-center mt-10">
+            {/* Footer minimale */}
+            <div className="text-center mt-10 pt-6 border-t border-border">
+              <p className="text-sm text-muted-foreground mb-2">
+                <a href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</a>
+              </p>
               <a 
                 href="/"
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm"
