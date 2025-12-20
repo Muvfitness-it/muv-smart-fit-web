@@ -1,103 +1,109 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Zap, Activity, Heart, Waves, Flame, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
-import { MinimalHero } from '@/features/hero';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Zap, Activity, Heart, Waves, Flame, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import UnifiedSEOHead from "@/components/SEO/UnifiedSEOHead";
+import { MinimalHero } from "@/features/hero";
 
 const ServiziCompleto = () => {
   const servizi = [
     {
-      id: 'ems',
+      id: "ems",
       icon: <Zap className="w-12 h-12 text-white" />,
-      title: 'EMS Training',
-      subtitle: 'Allenamento Elettrostimolazione',
-      description: 'Tecnologia EMS che amplifica l\'efficacia dell\'allenamento. Bruci 600 calorie in 20 minuti equivalenti a 4 ore di palestra tradizionale.',
+      title: "EMS Training",
+      subtitle: "Allenamento Elettrostimolazione",
+      description:
+        "Tecnologia EMS che amplifica l'efficacia dell'allenamento. Bruci 600 calorie in 45 minuti equivalenti a 4 ore di palestra tradizionale.",
       benefits: [
-        'Dimagrimento rapido e tonificazione',
-        '90% muscoli attivati simultaneamente',
-        'Solo 20 minuti a sessione',
-        'Risultati visibili in 2 settimane'
+        "Dimagrimento rapido e tonificazione",
+        "90% muscoli attivati simultaneamente",
+        "Solo 45 minuti a sessione",
+        "Risultati visibili in 2 settimane",
       ],
-      link: '/servizi/ems-legnago',
-      color: 'from-yellow-500 to-orange-500'
+      link: "/servizi/ems-legnago",
+      color: "from-yellow-500 to-orange-500",
     },
     {
-      id: 'pilates',
+      id: "pilates",
       icon: <Activity className="w-12 h-12 text-white" />,
-      title: 'Pilates Reformer',
-      subtitle: 'Postura e Flessibilità',
-      description: 'Il Pilates Reformer più avanzato d\'Italia. Sistema di resistenza variabile per oltre 250 esercizi mirati su postura, core e mobilità.',
+      title: "Pilates Reformer",
+      subtitle: "Postura e Flessibilità",
+      description:
+        "Il Pilates Reformer più avanzato d'Italia. Sistema di resistenza variabile per oltre 250 esercizi mirati su postura, core e mobilità.",
       benefits: [
-        'Corregge problemi posturali',
-        'Elimina mal di schiena cronico',
-        'Aumenta flessibilità e mobilità',
-        'Rinforza il core profondamente'
+        "Corregge problemi posturali",
+        "Elimina mal di schiena cronico",
+        "Aumenta flessibilità e mobilità",
+        "Rinforza il core profondamente",
       ],
-      link: '/servizi/pilates-reformer-legnago',
-      color: 'from-green-500 to-teal-500'
+      link: "/servizi/pilates-reformer-legnago",
+      color: "from-green-500 to-teal-500",
     },
     {
-      id: 'pancafit',
+      id: "pancafit",
       icon: <Heart className="w-12 h-12 text-white" />,
-      title: 'Pancafit® & Postura',
-      subtitle: 'Rieducazione Posturale Globale',
-      description: 'Metodo brevettato per allungamento muscolare decompensato. Risolve dolori cronici, squilibri posturali e tensioni profonde.',
+      title: "Pancafit® & Postura",
+      subtitle: "Rieducazione Posturale Globale",
+      description:
+        "Metodo brevettato per allungamento muscolare decompensato. Risolve dolori cronici, squilibri posturali e tensioni profonde.",
       benefits: [
-        'Elimina dolori cronici definitivamente',
-        'Riequilibra catene muscolari',
-        'Migliora postura globalmente',
-        'Previene infortuni futuri'
+        "Elimina dolori cronici definitivamente",
+        "Riequilibra catene muscolari",
+        "Migliora postura globalmente",
+        "Previene infortuni futuri",
       ],
-      link: '/servizi/pancafit-legnago',
-      color: 'from-blue-500 to-indigo-500'
+      link: "/servizi/pancafit-legnago",
+      color: "from-blue-500 to-indigo-500",
     },
     {
-      id: 'vacuum',
+      id: "vacuum",
       icon: <Waves className="w-12 h-12 text-white" />,
-      title: 'Vacuum & Pressoterapia',
-      subtitle: 'Tecnologia Anti-Cellulite',
-      description: 'Sistema medico certificato a pressione negativa. Elimina cellulite, ritenzione idrica e rimodella gambe e glutei con risultati clinicamente testati.',
+      title: "Vacuum & Pressoterapia",
+      subtitle: "Tecnologia Anti-Cellulite",
+      description:
+        "Sistema medico certificato a pressione negativa. Elimina cellulite, ritenzione idrica e rimodella gambe e glutei con risultati clinicamente testati.",
       benefits: [
-        'Riduce cellulite fino al 70%',
-        'Elimina ritenzione idrica',
-        'Gambe sgonfie immediatamente',
-        'Pelle più liscia e tonica'
+        "Riduce cellulite fino al 70%",
+        "Elimina ritenzione idrica",
+        "Gambe sgonfie immediatamente",
+        "Pelle più liscia e tonica",
       ],
-      link: '/servizi/vacuum-pressoterapia-legnago',
-      color: 'from-purple-500 to-pink-500'
+      link: "/servizi/vacuum-pressoterapia-legnago",
+      color: "from-purple-500 to-pink-500",
     },
     {
-      id: 'sauna',
+      id: "sauna",
       icon: <Flame className="w-12 h-12 text-white" />,
-      title: 'Sauna a Infrarossi',
-      subtitle: 'Detox e Recupero Profondo',
-      description: 'Tecnologia a raggi infrarossi penetranti. Detossifica il corpo in profondità, brucia calorie senza sforzo e accelera il recupero muscolare.',
+      title: "Sauna a Infrarossi",
+      subtitle: "Detox e Recupero Profondo",
+      description:
+        "Tecnologia a raggi infrarossi penetranti. Detossifica il corpo in profondità, brucia calorie senza sforzo e accelera il recupero muscolare.",
       benefits: [
-        'Elimina tossine profondamente',
-        'Brucia fino a 600 calorie/sessione',
-        'Migliora qualità della pelle',
-        'Riduce stress e tensioni muscolari'
+        "Elimina tossine profondamente",
+        "Brucia fino a 600 calorie/sessione",
+        "Migliora qualità della pelle",
+        "Riduce stress e tensioni muscolari",
       ],
-      link: '/servizi/sauna-infrarossi-legnago',
-      color: 'from-red-500 to-orange-500'
+      link: "/servizi/sauna-infrarossi-legnago",
+      color: "from-red-500 to-orange-500",
     },
     {
-      id: 'over60',
+      id: "over60",
       icon: <Users className="w-12 h-12 text-white" />,
-      title: 'Programma Over 60',
-      subtitle: 'Fitness Sicuro ed Efficace',
-      description: 'Programma specializzato per Over 60. Allenamento sicuro, personalizzato e scientificamente validato per mantenere forza, equilibrio e autonomia.',
+      title: "Programma Over 60",
+      subtitle: "Fitness Sicuro ed Efficace",
+      description:
+        "Programma specializzato per Over 60. Allenamento sicuro, personalizzato e scientificamente validato per mantenere forza, equilibrio e autonomia.",
       benefits: [
-        'Previene cadute e infortuni',
-        'Mantiene massa muscolare',
-        'Migliora equilibrio e coordinazione',
-        'Aumenta energia e vitalità'
+        "Previene cadute e infortuni",
+        "Mantiene massa muscolare",
+        "Migliora equilibrio e coordinazione",
+        "Aumenta energia e vitalità",
       ],
-      link: '/servizi/over-60-legnago',
-      color: 'from-cyan-500 to-blue-500'
-    }
+      link: "/servizi/over-60-legnago",
+      color: "from-cyan-500 to-blue-500",
+    },
   ];
 
   return (
@@ -115,12 +121,9 @@ const ServiziCompleto = () => {
         gradient="dual"
         primaryCTA={{
           text: "Prenota una Prova Gratuita",
-          href: "/form-contatti"
+          href: "/form-contatti",
         }}
-        breadcrumbs={[
-          { text: "Home", href: "/" },
-          { text: "Servizi" }
-        ]}
+        breadcrumbs={[{ text: "Home", href: "/" }, { text: "Servizi" }]}
       />
 
       <div className="min-h-screen bg-background">
@@ -129,7 +132,10 @@ const ServiziCompleto = () => {
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {servizi.map((servizio) => (
-                <Card key={servizio.id} className="group hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30">
+                <Card
+                  key={servizio.id}
+                  className="group hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30"
+                >
                   <CardContent className="p-0">
                     {/* Header */}
                     <div className={`bg-gradient-to-br ${servizio.color} p-6 text-white text-center`}>
@@ -140,9 +146,7 @@ const ServiziCompleto = () => {
 
                     {/* Content */}
                     <div className="p-6">
-                      <p className="text-muted-foreground mb-6 leading-relaxed">
-                        {servizio.description}
-                      </p>
+                      <p className="text-muted-foreground mb-6 leading-relaxed">{servizio.description}</p>
 
                       {/* Benefici */}
                       <div className="mb-6">
@@ -194,15 +198,14 @@ const ServiziCompleto = () => {
         {/* CTA Finale */}
         <section className="py-20 bg-gradient-to-br from-primary to-primary/80 text-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold mb-6">
-              Non Sai Quale Servizio Scegliere?
-            </h2>
+            <h2 className="text-4xl font-bold mb-6">Non Sai Quale Servizio Scegliere?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Prenota una <strong>consulenza gratuita</strong>: analizziamo la tua situazione e ti consigliamo il percorso migliore.
+              Prenota una <strong>consulenza gratuita</strong>: analizziamo la tua situazione e ti consigliamo il
+              percorso migliore.
             </p>
             <Link to="/form-contatti">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-white text-primary hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full"
               >
                 Prenota Ora la Tua Consulenza Gratuita

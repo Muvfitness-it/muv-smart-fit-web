@@ -21,13 +21,14 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
   {
     title: "Come Dimagrire in Modo Intelligente a Legnago con il Metodo MUV",
     slug: "come-dimagrire-legnago-metodo-muv",
-    metaDescription: "Scopri come dimagrire in modo sano e duraturo a Legnago con il Metodo MUV: tecnologie EMS, Vacuum e programmi personalizzati. Risultati garantiti in 30 giorni.",
+    metaDescription:
+      "Scopri come dimagrire in modo sano e duraturo a Legnago con il Metodo MUV: tecnologie EMS, Vacuum e programmi personalizzati. Risultati garantiti in 30 giorni.",
     targetKeywords: [
       "dimagrire Legnago",
       "miglior centro fitness per dimagrire a Legnago",
       "dimagrimento rapido Legnago",
       "perdere peso Legnago",
-      "metodo MUV dimagrimento"
+      "metodo MUV dimagrimento",
     ],
     mainQuery: "Come posso dimagrire in modo sano e veloce a Legnago?",
     cta: "Prenota la prova gratuita e scopri il tuo programma personalizzato",
@@ -41,26 +42,27 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Piano nutrizionale personalizzato: il segreto del successo",
       "Quanto peso puoi perdere in 30 giorni con MUV?",
       "Risultati reali: storie di trasformazione a Legnago",
-      "Come iniziare il tuo percorso di dimagrimento"
+      "Come iniziare il tuo percorso di dimagrimento",
     ],
     internalLinks: [
       "/servizi/ems-legnago",
       "/servizi/cellulite-vacuum-pressoterapia-legnago",
       "/contatti",
-      "/dimagrire-legnago"
+      "/dimagrire-legnago",
     ],
-    category: "Dimagrimento"
+    category: "Dimagrimento",
   },
   {
     title: "Vacuum e EMS: la Combinazione che Triplica i Risultati",
     slug: "vacuum-ems-combinazione-risultati",
-    metaDescription: "Vacuum + EMS: la sinergia perfetta per dimagrire, eliminare cellulite e tonificare. Scopri perché questa combinazione funziona 3 volte meglio.",
+    metaDescription:
+      "Vacuum + EMS: la sinergia perfetta per dimagrire, eliminare cellulite e tonificare. Scopri perché questa combinazione funziona 3 volte meglio.",
     targetKeywords: [
       "vacuum dimagrimento",
       "EMS funziona",
       "allenamento EMS benefici",
       "vacuum pressoterapia",
-      "tecnologie dimagrimento"
+      "tecnologie dimagrimento",
     ],
     mainQuery: "Quali sono i benefici della combinazione Vacuum + EMS?",
     cta: "Prenota la tua sessione di prova gratuita Vacuum + EMS",
@@ -74,25 +76,26 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Benefici visibili in 10 sedute: cosa aspettarsi",
       "Cellulite, grasso localizzato e ritenzione: risultati concreti",
       "Chi può beneficiare di questo protocollo?",
-      "Il protocollo MUV: come combiniamo le due tecnologie"
+      "Il protocollo MUV: come combiniamo le due tecnologie",
     ],
     internalLinks: [
       "/servizi/ems-legnago",
       "/servizi/cellulite-vacuum-pressoterapia-legnago",
-      "/servizi/personal-trainer-legnago"
+      "/servizi/personal-trainer-legnago",
     ],
-    category: "Tecnologie Fitness"
+    category: "Tecnologie Fitness",
   },
   {
     title: "Pilates Reformer: il Segreto per Postura Perfetta e Schiena Senza Dolori",
     slug: "pilates-reformer-postura-schiena",
-    metaDescription: "Pilates Reformer a Legnago: elimina mal di schiena, migliora la postura e rinforza il core. Risultati visibili in 8 sedute con trainer certificati.",
+    metaDescription:
+      "Pilates Reformer a Legnago: elimina mal di schiena, migliora la postura e rinforza il core. Risultati visibili in 8 sedute con trainer certificati.",
     targetKeywords: [
       "Pilates Reformer Legnago",
       "mal di schiena palestra",
       "correzione postura",
       "pilates terapeutico",
-      "pancafit Legnago"
+      "pancafit Legnago",
     ],
     mainQuery: "Il Pilates Reformer può eliminare il mal di schiena?",
     cta: "Prenota la valutazione posturale gratuita",
@@ -106,25 +109,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Pilates Reformer vs Pancafit: quale scegliere?",
       "Quanto tempo serve per vedere i risultati?",
       "Casi di successo: pazienti MUV guariti dal mal di schiena",
-      "Il percorso personalizzato per la tua schiena"
+      "Il percorso personalizzato per la tua schiena",
     ],
-    internalLinks: [
-      "/servizi/pilates-reformer-legnago",
-      "/mal-di-schiena-legnago",
-      "/servizi/pancafit"
-    ],
-    category: "Postura e Benessere"
+    internalLinks: ["/servizi/pilates-reformer-legnago", "/mal-di-schiena-legnago", "/servizi/pancafit"],
+    category: "Postura e Benessere",
   },
   {
     title: "Sauna a Infrarossi: Benefici, Detox e Recupero Muscolare Rapido",
     slug: "sauna-infrarossi-benefici-detox-recupero",
-    metaDescription: "Sauna a infrarossi a Legnago: disintossica il corpo, accelera il recupero muscolare e migliora il benessere. Scopri tutti i benefici scientifici.",
+    metaDescription:
+      "Sauna a infrarossi a Legnago: disintossica il corpo, accelera il recupero muscolare e migliora il benessere. Scopri tutti i benefici scientifici.",
     targetKeywords: [
       "sauna infrarossi benefici",
       "recupero muscolare",
       "benessere palestra",
       "detox Legnago",
-      "sauna infrarossi Legnago"
+      "sauna infrarossi Legnago",
     ],
     mainQuery: "Quali sono i benefici della sauna a infrarossi?",
     cta: "Prenota la tua sessione di sauna infrarossi gratuita",
@@ -138,25 +138,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Benefici per la pelle: ringiovanimento e luminosità",
       "Riduzione dello stress e miglioramento del sonno",
       "Quanto spesso usare la sauna infrarossi?",
-      "Il protocollo MUV: sauna integrata nel tuo programma fitness"
+      "Il protocollo MUV: sauna integrata nel tuo programma fitness",
     ],
-    internalLinks: [
-      "/servizi/sauna-infrarossi-legnago",
-      "/servizi/ems-legnago",
-      "/servizi/personal-trainer-legnago"
-    ],
-    category: "Benessere e Recovery"
+    internalLinks: ["/servizi/sauna-infrarossi-legnago", "/servizi/ems-legnago", "/servizi/personal-trainer-legnago"],
+    category: "Benessere e Recovery",
   },
   {
     title: "Allenarsi Dopo i 40 Anni: Come Riattivare il Metabolismo e Perdere Peso",
     slug: "allenarsi-dopo-40-anni-metabolismo",
-    metaDescription: "Allenamento dopo i 40: riattiva il metabolismo, perdi peso e ritrova energia. Programmi MUV specifici per over 40 con risultati garantiti.",
+    metaDescription:
+      "Allenamento dopo i 40: riattiva il metabolismo, perdi peso e ritrova energia. Programmi MUV specifici per over 40 con risultati garantiti.",
     targetKeywords: [
       "dimagrire dopo i 40",
       "reset metabolico",
       "programma MUV 45+",
       "allenamento over 40",
-      "metabolismo lento"
+      "metabolismo lento",
     ],
     mainQuery: "Come posso riattivare il metabolismo dopo i 40 anni?",
     cta: "Scopri il programma MUV 45+ - Consulenza gratuita",
@@ -170,25 +167,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Alimentazione e ormoni: l'equilibrio perfetto dopo i 40",
       "Quanto peso si può perdere dopo i 40?",
       "Storie di successo: trasformazioni over 40 da MUV",
-      "Il programma personalizzato MUV 45+"
+      "Il programma personalizzato MUV 45+",
     ],
-    internalLinks: [
-      "/servizi/personal-trainer-legnago",
-      "/servizi/ems-legnago",
-      "/dimagrire-legnago"
-    ],
-    category: "Fitness Over 40"
+    internalLinks: ["/servizi/personal-trainer-legnago", "/servizi/ems-legnago", "/dimagrire-legnago"],
+    category: "Fitness Over 40",
   },
   {
     title: "Mal di Schiena e Sedentarietà: Come il Metodo MUV Rimette in Movimento",
     slug: "mal-di-schiena-sedentarieta-movimento",
-    metaDescription: "Mal di schiena da ufficio e sedentarietà? Scopri come il Metodo MUV elimina dolore lombare, cervicale e tensioni con Pancafit e Pilates.",
+    metaDescription:
+      "Mal di schiena da ufficio e sedentarietà? Scopri come il Metodo MUV elimina dolore lombare, cervicale e tensioni con Pancafit e Pilates.",
     targetKeywords: [
       "mal di schiena Legnago",
       "postura sedentaria",
       "ginnastica posturale MUV",
       "dolore lombare ufficio",
-      "pancafit Legnago"
+      "pancafit Legnago",
     ],
     mainQuery: "Come eliminare il mal di schiena da sedentarietà?",
     cta: "Valutazione posturale gratuita - Prenota ora",
@@ -202,25 +196,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Esercizi posturali da fare anche in ufficio",
       "Quanto tempo serve per eliminare il dolore?",
       "Testimonianze: impiegati e professionisti guariti con MUV",
-      "Il percorso MUV Anti Sedentarietà"
+      "Il percorso MUV Anti Sedentarietà",
     ],
-    internalLinks: [
-      "/mal-di-schiena-legnago",
-      "/servizi/pancafit",
-      "/servizi/pilates-reformer-legnago"
-    ],
-    category: "Postura e Salute"
+    internalLinks: ["/mal-di-schiena-legnago", "/servizi/pancafit", "/servizi/pilates-reformer-legnago"],
+    category: "Postura e Salute",
   },
   {
     title: "Cellulite e Ritenzione Idrica: le Nuove Soluzioni Tecnologiche MUV",
     slug: "cellulite-ritenzione-soluzioni-tecnologiche",
-    metaDescription: "Cellulite e ritenzione idrica: elimina gli inestetismi con Vacuum, Pressoterapia ed EMS. Risultati visibili in 10 sedute a Legnago.",
+    metaDescription:
+      "Cellulite e ritenzione idrica: elimina gli inestetismi con Vacuum, Pressoterapia ed EMS. Risultati visibili in 10 sedute a Legnago.",
     targetKeywords: [
       "cellulite trattamento Legnago",
       "vacuum anticellulite",
       "pressoterapia",
       "ritenzione idrica",
-      "rimodellamento corpo"
+      "rimodellamento corpo",
     ],
     mainQuery: "Qual è il miglior trattamento per cellulite e ritenzione?",
     cta: "Prova gratuita Vacuum + Pressoterapia",
@@ -234,25 +225,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "La combinazione vincente: Vacuum + EMS + Pressoterapia",
       "Risultati attesi: quanto tempo serve?",
       "Prima e Dopo: trasformazioni reali MUV",
-      "Il protocollo completo MUV Anticellulite"
+      "Il protocollo completo MUV Anticellulite",
     ],
-    internalLinks: [
-      "/servizi/cellulite-vacuum-pressoterapia-legnago",
-      "/servizi/ems-legnago",
-      "/dimagrire-legnago"
-    ],
-    category: "Estetica e Corpo"
+    internalLinks: ["/servizi/cellulite-vacuum-pressoterapia-legnago", "/servizi/ems-legnago", "/dimagrire-legnago"],
+    category: "Estetica e Corpo",
   },
   {
     title: "Allenamento Over 60: Come Restare Forti, Agili e Sicuri",
     slug: "allenamento-over-60-forza-agilita",
-    metaDescription: "Allenamento over 60 a Legnago: mantieni forza, equilibrio e autonomia con programmi sicuri e personalizzati. Prevenzione cadute e sarcopenia.",
+    metaDescription:
+      "Allenamento over 60 a Legnago: mantieni forza, equilibrio e autonomia con programmi sicuri e personalizzati. Prevenzione cadute e sarcopenia.",
     targetKeywords: [
       "allenamento over 60 Legnago",
       "palestra per anziani",
       "mantenersi attivi",
       "prevenzione cadute",
-      "sarcopenia"
+      "sarcopenia",
     ],
     mainQuery: "Qual è il miglior allenamento per over 60?",
     cta: "Prova gratuita programma Over 60",
@@ -266,25 +254,26 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Pilates per over 60: mobilità e flessibilità",
       "Programma MUV Over 60: caratteristiche uniche",
       "Storie di successo: over 60 attivi e in forma",
-      "Come iniziare in sicurezza"
+      "Come iniziare in sicurezza",
     ],
     internalLinks: [
       "/servizi/over-60-legnago",
       "/servizi/pilates-reformer-legnago",
-      "/servizi/personal-trainer-legnago"
+      "/servizi/personal-trainer-legnago",
     ],
-    category: "Senior Fitness"
+    category: "Senior Fitness",
   },
   {
     title: "Reset 5KG: il Protocollo MUV per Perdere 5 kg in 10 Giorni",
     slug: "reset-5kg-protocollo-muv-10-giorni",
-    metaDescription: "Reset 5KG: il protocollo intensivo MUV per perdere 5 kg in 10 giorni in modo sano. EMS, nutrizione e coaching personalizzato a Legnago.",
+    metaDescription:
+      "Reset 5KG: il protocollo intensivo MUV per perdere 5 kg in 10 giorni in modo sano. EMS, nutrizione e coaching personalizzato a Legnago.",
     targetKeywords: [
       "dimagrire 5 kg",
       "reset metabolico",
       "programma MUV",
       "dimagrimento rapido sicuro",
-      "perdere peso velocemente Legnago"
+      "perdere peso velocemente Legnago",
     ],
     mainQuery: "È possibile perdere 5 kg in 10 giorni in modo sano?",
     cta: "Scopri il Reset 5KG - Consulenza gratuita",
@@ -298,25 +287,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "EMS e allenamenti intensivi: il piano movimento",
       "È sicuro perdere 5 kg in 10 giorni?",
       "Risultati reali: chi ha fatto il Reset 5KG",
-      "Come mantenere i risultati dopo il Reset"
+      "Come mantenere i risultati dopo il Reset",
     ],
-    internalLinks: [
-      "/dimagrire-legnago",
-      "/servizi/ems-legnago",
-      "/servizi/personal-trainer-legnago"
-    ],
-    category: "Programmi Dimagrimento"
+    internalLinks: ["/dimagrire-legnago", "/servizi/ems-legnago", "/servizi/personal-trainer-legnago"],
+    category: "Programmi Dimagrimento",
   },
   {
     title: "Fitness e Energia: Come Aumentare la Vibrazione del Corpo con MUV Frequency",
     slug: "fitness-energia-vibrazione-corpo-muv",
-    metaDescription: "Aumenta energia fisica e mentale con il Metodo MUV Frequency: allenamento, nutrizione e mindfulness per elevare la tua vibrazione corporea.",
+    metaDescription:
+      "Aumenta energia fisica e mentale con il Metodo MUV Frequency: allenamento, nutrizione e mindfulness per elevare la tua vibrazione corporea.",
     targetKeywords: [
       "energia fisica",
       "vibrazioni positive",
       "metodo corpo-mente-energia",
       "fitness olistico",
-      "benessere Legnago"
+      "benessere Legnago",
     ],
     mainQuery: "Come posso aumentare la mia energia vitale?",
     cta: "Scopri MUV Frequency - Sessione di prova",
@@ -330,25 +316,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Mindfulness e movimento: la connessione corpo-mente",
       "Sauna infrarossi: ricarica energetica profonda",
       "Testimonianze: da stanchi a pieni di energia",
-      "Il percorso MUV Frequency personalizzato"
+      "Il percorso MUV Frequency personalizzato",
     ],
-    internalLinks: [
-      "/servizi/ems-legnago",
-      "/servizi/sauna-infrarossi-legnago",
-      "/servizi/personal-trainer-legnago"
-    ],
-    category: "Benessere Olistico"
+    internalLinks: ["/servizi/ems-legnago", "/servizi/sauna-infrarossi-legnago", "/servizi/personal-trainer-legnago"],
+    category: "Benessere Olistico",
   },
   {
     title: "Personal Trainer a Legnago: Come Scegliere il Migliore per i Tuoi Obiettivi",
     slug: "personal-trainer-legnago-come-scegliere",
-    metaDescription: "Personal Trainer a Legnago: scopri come scegliere il professionista giusto per te. Confronto PT tradizionale vs MUV, criteri essenziali e risultati garantiti.",
+    metaDescription:
+      "Personal Trainer a Legnago: scopri come scegliere il professionista giusto per te. Confronto PT tradizionale vs MUV, criteri essenziali e risultati garantiti.",
     targetKeywords: [
       "personal trainer Legnago",
       "miglior PT Legnago",
       "come scegliere personal trainer",
       "PT certificato Legnago",
-      "allenamento personalizzato Legnago"
+      "allenamento personalizzato Legnago",
     ],
     mainQuery: "Come scegliere il personal trainer giusto a Legnago?",
     cta: "Prenota la consulenza gratuita con un PT certificato MUV",
@@ -362,25 +345,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Come capire se un PT è adatto al tuo obiettivo",
       "Quanto costa un personal trainer a Legnago? Guida ai prezzi",
       "Risultati garantiti: come funziona il metodo MUV",
-      "Inizia il tuo percorso personalizzato con MUV"
+      "Inizia il tuo percorso personalizzato con MUV",
     ],
-    internalLinks: [
-      "/servizi/personal-trainer-legnago",
-      "/servizi/ems-legnago",
-      "/contatti"
-    ],
-    category: "Personal Training"
+    internalLinks: ["/servizi/personal-trainer-legnago", "/servizi/ems-legnago", "/contatti"],
+    category: "Personal Training",
   },
   {
     title: "Small Group Training a Legnago: Allenarsi in Gruppo con Risultati Personali",
     slug: "small-group-training-legnago",
-    metaDescription: "Small Group Training a Legnago: energia di gruppo e programmi personalizzati. Massimo 6 persone per classe, risultati garantiti con MUV.",
+    metaDescription:
+      "Small Group Training a Legnago: energia di gruppo e programmi personalizzati. Massimo 6 persone per classe, risultati garantiti con MUV.",
     targetKeywords: [
       "corsi fitness Legnago",
       "small group Legnago",
       "allenamento di gruppo",
       "lezioni fitness piccoli gruppi",
-      "fitness motivante Legnago"
+      "fitness motivante Legnago",
     ],
     mainQuery: "Cos'è lo small group training e perché funziona meglio?",
     cta: "Prenota la prova gratuita Small Group MUV",
@@ -394,25 +374,26 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Come sono strutturati i corsi Small Group MUV",
       "Tipologie di allenamento: HIIT, Reformer, Circuit Training",
       "Risultati concreti: storie di trasformazione in gruppo",
-      "Come iscriversi ai corsi Small Group MUV"
+      "Come iscriversi ai corsi Small Group MUV",
     ],
     internalLinks: [
       "/servizi/small-group-legnago",
       "/servizi/pilates-reformer-legnago",
-      "/servizi/personal-trainer-legnago"
+      "/servizi/personal-trainer-legnago",
     ],
-    category: "Small Group"
+    category: "Small Group",
   },
   {
     title: "Nutrizione Personalizzata Legnago: il Segreto per Dimagrire Senza Diete Rigide",
     slug: "nutrizione-personalizzata-legnago-dimagrire",
-    metaDescription: "Nutrizione personalizzata a Legnago: dimagrisci senza diete restrittive con piani alimentari su misura. Approccio MUV basato sulla scienza.",
+    metaDescription:
+      "Nutrizione personalizzata a Legnago: dimagrisci senza diete restrittive con piani alimentari su misura. Approccio MUV basato sulla scienza.",
     targetKeywords: [
       "nutrizionista Legnago",
       "dieta personalizzata Legnago",
       "piano alimentare personalizzato",
       "dimagrire senza dieta",
-      "nutrizione sportiva Legnago"
+      "nutrizione sportiva Legnago",
     ],
     mainQuery: "Come posso dimagrire senza seguire diete rigide?",
     cta: "Prenota la consulenza nutrizionale gratuita",
@@ -426,25 +407,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Integrazione tra alimentazione e allenamento",
       "Educazione alimentare: impara a nutrirti per sempre",
       "Risultati reali: trasformazioni con la nutrizione MUV",
-      "Inizia il tuo percorso nutrizionale personalizzato"
+      "Inizia il tuo percorso nutrizionale personalizzato",
     ],
-    internalLinks: [
-      "/servizi/nutrizione-legnago",
-      "/dimagrire-legnago",
-      "/servizi/personal-trainer-legnago"
-    ],
-    category: "Nutrizione"
+    internalLinks: ["/servizi/nutrizione-legnago", "/dimagrire-legnago", "/servizi/personal-trainer-legnago"],
+    category: "Nutrizione",
   },
   {
     title: "Quanto Costa Allenarsi in Palestra a Legnago? Confronto Prezzi e Valore",
     slug: "costi-palestra-legnago-prezzi-valore",
-    metaDescription: "Quanto costa la palestra a Legnago? Confronto prezzi tra centri tradizionali e MUV. Scopri il vero rapporto qualità-prezzo e i pacchetti disponibili.",
+    metaDescription:
+      "Quanto costa la palestra a Legnago? Confronto prezzi tra centri tradizionali e MUV. Scopri il vero rapporto qualità-prezzo e i pacchetti disponibili.",
     targetKeywords: [
       "prezzi palestra Legnago",
       "quanto costa personal trainer Legnago",
       "abbonamento palestra costi",
       "pacchetti fitness Legnago",
-      "palestra economica Legnago"
+      "palestra economica Legnago",
     ],
     mainQuery: "Quanto costa davvero allenarsi in palestra a Legnago?",
     cta: "Scopri i pacchetti MUV e prenota una consulenza gratuita",
@@ -458,25 +436,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "I pacchetti MUV: quali opzioni e quanto costano",
       "Come calcolare il vero valore del tuo investimento fitness",
       "Offerte e promozioni: come risparmiare senza rinunciare alla qualità",
-      "Trova il pacchetto giusto per te"
+      "Trova il pacchetto giusto per te",
     ],
-    internalLinks: [
-      "/contatti",
-      "/servizi/personal-trainer-legnago",
-      "/servizi/ems-legnago"
-    ],
-    category: "Programmi Speciali"
+    internalLinks: ["/contatti", "/servizi/personal-trainer-legnago", "/servizi/ems-legnago"],
+    category: "Programmi Speciali",
   },
   {
     title: "Posso Allenarmi in Gravidanza? Fitness Pre e Post Parto a Legnago",
     slug: "fitness-gravidanza-post-parto-legnago",
-    metaDescription: "Fitness in gravidanza e post parto a Legnago: allenarsi in sicurezza durante e dopo la gravidanza. Programmi specifici per mamme con trainer specializzati.",
+    metaDescription:
+      "Fitness in gravidanza e post parto a Legnago: allenarsi in sicurezza durante e dopo la gravidanza. Programmi specifici per mamme con trainer specializzati.",
     targetKeywords: [
       "fitness gravidanza Legnago",
       "allenamento post parto",
       "ginnastica pre parto",
       "recupero diastasi addominale",
-      "personal trainer gravidanza"
+      "personal trainer gravidanza",
     ],
     mainQuery: "È sicuro allenarsi durante la gravidanza?",
     cta: "Prenota la consulenza gratuita per mamme",
@@ -490,25 +465,22 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Recupero post parto: quando riprendere l'attività fisica",
       "Diastasi addominale: prevenzione e recupero con esercizi specifici",
       "Il programma MUV Mamme: caratteristiche e risultati",
-      "Inizia in sicurezza con il supporto dei nostri trainer specializzati"
+      "Inizia in sicurezza con il supporto dei nostri trainer specializzati",
     ],
-    internalLinks: [
-      "/servizi/pilates-reformer-legnago",
-      "/servizi/pancafit",
-      "/servizi/personal-trainer-legnago"
-    ],
-    category: "Gravidanza e Post-Parto"
+    internalLinks: ["/servizi/pilates-reformer-legnago", "/servizi/pancafit", "/servizi/personal-trainer-legnago"],
+    category: "Gravidanza e Post-Parto",
   },
   {
     title: "Come Tonificare le Braccia Dopo i 50 Anni (Senza Pesi Eccessivi)",
     slug: "tonificare-braccia-dopo-50-anni",
-    metaDescription: "Tonifica le braccia dopo i 50 anni senza pesi eccessivi. EMS Training e esercizi mirati per eliminare pelle flaccida e ritrovare braccia toniche.",
+    metaDescription:
+      "Tonifica le braccia dopo i 50 anni senza pesi eccessivi. EMS Training e esercizi mirati per eliminare pelle flaccida e ritrovare braccia toniche.",
     targetKeywords: [
       "tonificare braccia over 50",
       "pelle flaccida braccia",
       "allenamento braccia donne 50 anni",
       "EMS braccia",
-      "eliminare ali di pipistrello"
+      "eliminare ali di pipistrello",
     ],
     mainQuery: "Come posso tonificare le braccia dopo i 50 anni?",
     cta: "Prenota la valutazione gratuita e scopri il programma braccia MUV",
@@ -522,57 +494,51 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Il ruolo della nutrizione nella tonificazione muscolare",
       "Quanto tempo serve per vedere risultati visibili",
       "Prima e dopo: trasformazioni reali di braccia tonificate",
-      "Il programma specifico MUV per braccia toniche"
+      "Il programma specifico MUV per braccia toniche",
     ],
-    internalLinks: [
-      "/servizi/ems-legnago",
-      "/servizi/personal-trainer-legnago",
-      "/allenarsi-dopo-40-anni-metabolismo"
-    ],
-    category: "Fitness Over 40"
+    internalLinks: ["/servizi/ems-legnago", "/servizi/personal-trainer-legnago", "/allenarsi-dopo-40-anni-metabolismo"],
+    category: "Fitness Over 40",
   },
   {
-    title: "Lavori Tutto il Giorno? Allenamento Efficace in 20 Minuti con EMS",
+    title: "Lavori Tutto il Giorno? Allenamento Efficace in 45 Minuti con EMS",
     slug: "allenamento-20-minuti-ems-poco-tempo",
-    metaDescription: "Poco tempo per la palestra? Allena tutto il corpo in 20 minuti con EMS Training a Legnago. Risultati equivalenti a 90 minuti di allenamento tradizionale.",
+    metaDescription:
+      "Poco tempo per la palestra? Allena tutto il corpo in 45 minuti con EMS Training a Legnago. Risultati equivalenti a 90 minuti di allenamento tradizionale.",
     targetKeywords: [
       "allenamento veloce",
       "poco tempo per palestra",
-      "EMS 20 minuti",
+      "EMS 45 minuti",
       "fitness per chi lavora",
-      "allenamento efficace breve"
+      "allenamento efficace breve",
     ],
     mainQuery: "Posso allenarmi efficacemente in poco tempo?",
-    cta: "Prova gratuita EMS 20 minuti - Scopri l'allenamento time-saving",
+    cta: "Prova gratuita EMS 45 minuti - Scopri l'allenamento time-saving",
     minWords: 1200,
-    h1: "Lavori Tutto il Giorno? Allenamento Completo ed Efficace in 20 Minuti con EMS",
+    h1: "Lavori Tutto il Giorno? Allenamento Completo ed Efficace in 45 Minuti con EMS",
     h2Sections: [
       "La sfida del tempo: perché rinunciamo alla palestra",
-      "EMS Training: come funziona l'allenamento in 20 minuti",
-      "20 minuti EMS = 90 minuti tradizionali: la scienza dietro",
+      "EMS Training: come funziona l'allenamento in 45 minuti",
+      "45 minuti EMS = 90 minuti tradizionali: la scienza dietro",
       "Tutti i gruppi muscolari attivati contemporaneamente",
       "Perfetto per professionisti e genitori: gestione del tempo",
       "Risultati concreti in tempi dimezzati",
-      "Testimonianze: chi ha trasformato il corpo in 20 minuti al giorno",
-      "Come integrare l'EMS nella tua routine lavorativa"
+      "Testimonianze: chi ha trasformato il corpo in 45 minuti al giorno",
+      "Come integrare l'EMS nella tua routine lavorativa",
     ],
-    internalLinks: [
-      "/servizi/ems-legnago",
-      "/servizi/personal-trainer-legnago",
-      "/contatti"
-    ],
-    category: "Programmi Speciali"
+    internalLinks: ["/servizi/ems-legnago", "/servizi/personal-trainer-legnago", "/contatti"],
+    category: "Programmi Speciali",
   },
   {
     title: "Non Mi Piace la Palestra Tradizionale: 5 Alternative Innovative a Legnago",
     slug: "alternative-palestra-tradizionale-legnago",
-    metaDescription: "Non ami la palestra tradizionale? Scopri 5 alternative innovative a Legnago: EMS, Pilates Reformer, Small Group, Vacuum Therapy. Trova il tuo metodo ideale.",
+    metaDescription:
+      "Non ami la palestra tradizionale? Scopri 5 alternative innovative a Legnago: EMS, Pilates Reformer, Small Group, Vacuum Therapy. Trova il tuo metodo ideale.",
     targetKeywords: [
       "alternative alla palestra",
       "non mi piace la palestra",
       "metodi allenamento innovativi",
       "fitness alternativo Legnago",
-      "palestra diversa"
+      "palestra diversa",
     ],
     mainQuery: "Quali sono le alternative alla palestra tradizionale?",
     cta: "Scopri il metodo MUV perfetto per te - Prova gratuita",
@@ -586,26 +552,27 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Alternativa 4: Vacuum Therapy - rimodellamento senza fatica",
       "Alternativa 5: Personal Training One-to-One - massima attenzione",
       "Come scegliere l'alternativa giusta per te",
-      "Inizia con il metodo MUV che fa per te"
+      "Inizia con il metodo MUV che fa per te",
     ],
     internalLinks: [
       "/servizi/ems-legnago",
       "/servizi/pilates-reformer-legnago",
       "/servizi/small-group-legnago",
-      "/servizi/cellulite-vacuum-pressoterapia-legnago"
+      "/servizi/cellulite-vacuum-pressoterapia-legnago",
     ],
-    category: "Programmi Speciali"
+    category: "Programmi Speciali",
   },
   {
     title: "Ricomposizione Corporea: Come Perdere Grasso e Aumentare Massa Magra Insieme",
     slug: "ricomposizione-corporea-grasso-massa-magra",
-    metaDescription: "Ricomposizione corporea a Legnago: perdi grasso e aumenta massa magra simultaneamente con il protocollo MUV. EMS, nutrizione e periodizzazione scientifica.",
+    metaDescription:
+      "Ricomposizione corporea a Legnago: perdi grasso e aumenta massa magra simultaneamente con il protocollo MUV. EMS, nutrizione e periodizzazione scientifica.",
     targetKeywords: [
       "ricomposizione corporea",
       "aumentare massa magra perdendo grasso",
       "body recomposition",
       "dimagrire e tonificare insieme",
-      "trasformazione fisica completa"
+      "trasformazione fisica completa",
     ],
     mainQuery: "Posso perdere grasso e aumentare muscoli contemporaneamente?",
     cta: "Scopri il protocollo Body Recomposition MUV - Consulenza gratuita",
@@ -619,26 +586,27 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Nutrizione strategica: il deficit calorico intelligente",
       "Periodizzazione dell'allenamento: fasi e progressione",
       "Quanto tempo serve per vedere la ricomposizione",
-      "Prima e dopo: trasformazioni reali MUV in body recomposition"
+      "Prima e dopo: trasformazioni reali MUV in body recomposition",
     ],
     internalLinks: [
       "/servizi/ems-legnago",
       "/servizi/personal-trainer-legnago",
       "/servizi/nutrizione-legnago",
-      "/dimagrire-legnago"
+      "/dimagrire-legnago",
     ],
-    category: "Programmi Speciali"
+    category: "Programmi Speciali",
   },
   {
     title: "Prova Costume 2025: il Piano MUV 60 Giorni per Arrivare al Top",
     slug: "prova-costume-2025-piano-60-giorni",
-    metaDescription: "Prova costume 2025: preparati con il piano MUV 60 giorni. Dimagrimento, tonificazione e definizione con obiettivi realistici e risultati garantiti a Legnago.",
+    metaDescription:
+      "Prova costume 2025: preparati con il piano MUV 60 giorni. Dimagrimento, tonificazione e definizione con obiettivi realistici e risultati garantiti a Legnago.",
     targetKeywords: [
       "prova costume Legnago",
       "forma fisica estate",
       "dimagrire per l'estate",
       "piano 60 giorni",
-      "preparazione estiva fitness"
+      "preparazione estiva fitness",
     ],
     mainQuery: "Come prepararsi alla prova costume in 60 giorni?",
     cta: "Inizia ora il piano Prova Costume MUV - Posti limitati",
@@ -652,14 +620,14 @@ export const GEO_BLOG_ARTICLES: GeoBlogArticle[] = [
       "Settimane 3-6: dimagrimento accelerato con EMS",
       "Settimane 7-8: definizione e tonificazione finale",
       "Nutrizione per la prova costume: cosa mangiare settimana per settimana",
-      "Storie di successo: trasformazioni in 60 giorni per l'estate"
+      "Storie di successo: trasformazioni in 60 giorni per l'estate",
     ],
     internalLinks: [
       "/dimagrire-legnago",
       "/servizi/ems-legnago",
       "/servizi/cellulite-vacuum-pressoterapia-legnago",
-      "/contatti"
+      "/contatti",
     ],
-    category: "Programmi Speciali"
-  }
+    category: "Programmi Speciali",
+  },
 ];

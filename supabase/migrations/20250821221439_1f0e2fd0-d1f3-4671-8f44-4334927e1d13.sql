@@ -637,7 +637,7 @@ INSERT INTO blog_posts (
       <h4>Sessione 1: EMS (20-25 minuti)</h4>
       <ul>
         <li><strong>Riscaldamento</strong>: 2-3 minuti mobilità</li>
-        <li><strong>EMS</strong>: 20 minuti con personal trainer</li>
+        <li><strong>EMS</strong>: 45 minuti con personal trainer</li>
         <li><strong>Defaticamento</strong>: 3-5 minuti stretching + respirazione</li>
       </ul>
       
@@ -801,7 +801,7 @@ INSERT INTO blog_posts (
       Movimento leggero: camminate, scale, faccende. Evita sedentarietà totale ma non sforzarti.</p>
       
       <p><strong>E se ho pochissimo tempo anche per 2 sedute?</strong><br>
-      <a href="/servizi/ems-legnago/">EMS</a> è perfetto: 20 minuti reali, 1-2 volte/settimana, risultati evidenti.</p>
+      <a href="/servizi/ems-legnago/">EMS</a> è perfetto: 45 minuti reali, 1-2 volte/settimana, risultati evidenti.</p>
       
       <p><strong>Posso alternare schemi A e B?</strong><br>
       Meglio seguire uno schema per 6-8 settimane, poi cambiare. La coerenza facilita progressi.</p>

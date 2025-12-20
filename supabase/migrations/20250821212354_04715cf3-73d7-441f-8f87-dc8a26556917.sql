@@ -29,7 +29,7 @@ INSERT INTO blog_posts (
 
     <section id="prima-seduta">
       <h2>Prima della seduta</h2>
-      <p>L''<a href="/servizi/ems-legnago/">EMS a Legnago</a> è efficace quando ottimizzi preparazione e recupero. Ecco la checklist che diamo ai nostri clienti per massimizzare ogni sessione di 20 minuti.</p>
+      <p>L''<a href="/servizi/ems-legnago/">EMS a Legnago</a> è efficace quando ottimizzi preparazione e recupero. Ecco la checklist che diamo ai nostri clienti per massimizzare ogni sessione di 45 minuti.</p>
       
       <h3>2-3 ore prima</h3>
       <ul>

@@ -40,7 +40,7 @@ INSERT INTO blog_posts (
       <h2>Differenze tecniche</h2>
       <h3>EMS (Elettrostimolazione Muscolare)</h3>
       <ul>
-        <li><strong>Durata</strong>: 20 minuti effettivi per sessione</li>
+        <li><strong>Durata</strong>: 45 minuti effettivi per sessione</li>
         <li><strong>Principio</strong>: stimolazione elettrica che attiva fino al 90% delle fibre muscolari</li>
         <li><strong>Impatto</strong>: zero stress articolare, ideale per ripartire o problemi fisici</li>
         <li><strong>Supervisione</strong>: sempre con personal trainer qualificato</li>
@@ -64,14 +64,14 @@ INSERT INTO blog_posts (
       <h2>Quando scegliere EMS</h2>
       <p>L''<a href="/servizi/ems-legnago/">EMS a Legnago</a> è la scelta intelligente quando:</p>
       <ul>
-        <li><strong>Hai pochissimo tempo</strong>: 20 minuti reali, 1–2 volte a settimana</li>
+        <li><strong>Hai pochissimo tempo</strong>: 45 minuti reali, 1–2 volte a settimana</li>
         <li><strong>Riprendi dopo stop lungo</strong>: zero rischio infortuni o DOMS eccessivi</li>
         <li><strong>Problemi articolari</strong>: ginocchia, schiena, spalle delicate</li>
         <li><strong>Obiettivo tonificazione</strong>: lavori contemporaneamente su tutti i distretti</li>
         <li><strong>Lavoro sedentario</strong>: contrasta gli effetti della postura prolungata</li>
       </ul>
       
-      <p><em>Hai poco tempo? EMS allena in 20 minuti reali.</em></p>
+      <p><em>Hai poco tempo? EMS allena in 45 minuti reali.</em></p>
       
       <h3>Risultati tipici EMS (6–8 settimane)</h3>
       <ul>

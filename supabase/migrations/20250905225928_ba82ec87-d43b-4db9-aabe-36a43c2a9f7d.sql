@@ -173,7 +173,7 @@ Se il mal di schiena persiste, al **MUV Fitness di Legnago** utilizziamo:
 
 ### EMS (Elettrostimolazione)
 - **Rinforzo del core** in profondità
-- **20 minuti = 4 ore di palestra**
+- **45 minuti = 4 ore di palestra**
 - **Ideale per chi ha poco tempo**
 
 ### Massoterapia Specializzata
@@ -308,7 +308,7 @@ Il **Metodo Raggi®** adattato per gli over 60:
 
 L''**elettrostimolazione** è ideale per chi:
 - Ha difficoltà con esercizi tradizionali
-- Vuole risultati in tempo ridotto (20 minuti)
+- Vuole risultati in tempo ridotto (45 minuti)
 - Ha bisogno di rinforzo muscolare selettivo
 - Soffre di dolori articolari
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
-import OptimizedImage from '@/components/ui/OptimizedImage';
+import React from "react";
+import { Star, Quote } from "lucide-react";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -9,33 +9,37 @@ const TestimonialsSection = () => {
       age: 34,
       image: "/lovable-uploads/74047076-b154-41c0-8ecb-ee355fc220f1.png",
       result: "-8kg in 6 settimane",
-      quote: "Con l'EMS ho ottenuto in 20 minuti quello che prima richiedeva 2 ore di palestra. Il team MUV è professionale e i risultati sono reali.",
-      service: "EMS + Personal Training"
+      quote:
+        "Con l'EMS ho ottenuto in 45 minuti quello che prima richiedeva 2 ore di palestra. Il team MUV è professionale e i risultati sono reali.",
+      service: "EMS + Personal Training",
     },
     {
       name: "Giulia M.",
       age: 29,
       image: "/lovable-uploads/80ae4a77-9aab-42ac-90cc-32152298a358.png",
       result: "Cellulite ridotta del 70%",
-      quote: "Vacuum e Pressoterapia hanno completamente trasformato le mie gambe. Finalmente posso indossare shorts senza imbarazzo!",
-      service: "Vacuum + Pressoterapia"
+      quote:
+        "Vacuum e Pressoterapia hanno completamente trasformato le mie gambe. Finalmente posso indossare shorts senza imbarazzo!",
+      service: "Vacuum + Pressoterapia",
     },
     {
       name: "Roberto L.",
       age: 42,
       image: "/lovable-uploads/6a6b9274-a4a0-48ab-a512-74641f84240f.png",
       result: "Dolore lombare eliminato",
-      quote: "Dopo anni di mal di schiena, con Pancafit ho risolto definitivamente. Non avrei mai creduto fosse possibile in così poco tempo.",
-      service: "Pancafit + Postural Coach"
+      quote:
+        "Dopo anni di mal di schiena, con Pancafit ho risolto definitivamente. Non avrei mai creduto fosse possibile in così poco tempo.",
+      service: "Pancafit + Postural Coach",
     },
     {
       name: "Elena R.",
       age: 38,
       image: "/lovable-uploads/47d51820-31e5-44e1-9369-96eb744f9ad7.png",
       result: "-12kg + tonificazione",
-      quote: "Il programma integrato nutrizione + allenamento mi ha dato una forma fisica che non avevo nemmeno a 20 anni.",
-      service: "Nutrizione + Personal Training"
-    }
+      quote:
+        "Il programma integrato nutrizione + allenamento mi ha dato una forma fisica che non avevo nemmeno a 20 anni.",
+      service: "Nutrizione + Personal Training",
+    },
   ];
 
   return (
@@ -46,14 +50,14 @@ const TestimonialsSection = () => {
             Storie di Successo <span className="text-primary">Reali</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Oltre 500 persone hanno già raggiunto i loro obiettivi con i nostri metodi scientifici.
-            Questi sono solo alcuni dei risultati certificati.
+            Oltre 500 persone hanno già raggiunto i loro obiettivi con i nostri metodi scientifici. Questi sono solo
+            alcuni dei risultati certificati.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {testimonials.map((testimonial, index) => (
-            <div 
+            <div
               key={index}
               className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300"
             >
@@ -76,15 +80,11 @@ const TestimonialsSection = () => {
               {/* Quote */}
               <div className="relative mb-4">
                 <Quote className="w-6 h-6 text-primary/50 mb-2" />
-                <p className="text-gray-300 text-sm leading-relaxed italic">
-                  "{testimonial.quote}"
-                </p>
+                <p className="text-gray-300 text-sm leading-relaxed italic">"{testimonial.quote}"</p>
               </div>
 
               {/* Service */}
-              <div className="text-xs text-accent font-medium">
-                {testimonial.service}
-              </div>
+              <div className="text-xs text-accent font-medium">{testimonial.service}</div>
 
               {/* Stars */}
               <div className="flex mt-3">

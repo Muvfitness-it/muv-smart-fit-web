@@ -20,6 +20,7 @@ Il sistema di monitoraggio SEO automatico controlla costantemente lo stato di in
 ### 1. Attivare il Cron Job Settimanale
 
 **Prerequisiti:**
+
 - Accesso Supabase Dashboard con permessi admin
 - Extension `pg_cron` abilitata (verificare in Database > Extensions)
 
@@ -79,6 +80,7 @@ Dovresti vedere due job: `seo-monitoring-weekly` e `seo-weekly-report`.
 4. URL dashboard: `https://www.muvfitness.it/admin/seo-monitor`
 
 **Cosa vedi nella dashboard:**
+
 - 📈 **4 Card Metriche**: Totale Articoli, Indicizzati, Non Indicizzati, Critici
 - 🔍 **Filtri**: Tutti | Indicizzati | Non Indicizzati | Critici
 - 📝 **Lista Articoli**: Ogni articolo con status, problemi rilevati, suggerimenti
@@ -98,12 +100,14 @@ Dovresti vedere due job: `seo-monitoring-weekly` e `seo-weekly-report`.
 **Test 2: Verificare Email Report**
 
 Opzione A - Via Supabase Dashboard:
+
 1. Vai su **Edge Functions** → `seo-weekly-report`
 2. Tab **Invoke**
 3. Clicca **Invoke Function**
 4. Controlla email su `info@muvfitness.it`
 
 Opzione B - Via SQL:
+
 ```sql
 -- Chiama manualmente la funzione via SQL
 SELECT net.http_post(
@@ -122,7 +126,7 @@ SELECT net.http_post(
 5. Verifica in `seo_monitoring_log`:
 
 ```sql
-SELECT * FROM seo_monitoring_log 
+SELECT * FROM seo_monitoring_log
 WHERE post_id = '[ID_ARTICOLO]'
 ORDER BY check_date DESC;
 ```
@@ -139,14 +143,15 @@ Il report email contiene 4 sezioni principali:
 
 #### 1️⃣ Stato Generale (Card Metriche)
 
-| Metrica | Significato | Azione |
-|---------|-------------|--------|
-| **Totale Articoli** | Numero articoli pubblicati | Monitora crescita nel tempo |
-| **Indicizzati** | Articoli trovati da Google | Target >90% |
-| **Non Indicizzati** | Articoli non ancora indicizzati | Normale se pubblicati <7gg |
-| **⚠️ Critici (>14gg)** | Articoli problematici | AZIONE IMMEDIATA RICHIESTA |
+| Metrica                | Significato                     | Azione                      |
+| ---------------------- | ------------------------------- | --------------------------- |
+| **Totale Articoli**    | Numero articoli pubblicati      | Monitora crescita nel tempo |
+| **Indicizzati**        | Articoli trovati da Google      | Target >90%                 |
+| **Non Indicizzati**    | Articoli non ancora indicizzati | Normale se pubblicati <7gg  |
+| **⚠️ Critici (>14gg)** | Articoli problematici           | AZIONE IMMEDIATA RICHIESTA  |
 
 **Codici Colore:**
+
 - 🟢 **Verde (Indicizzati)**: Tutto OK
 - 🟠 **Arancione (Non Indicizzati)**: Da monitorare
 - 🔴 **Rosso (Critici)**: Richiede intervento
@@ -159,6 +164,7 @@ Il report email contiene 4 sezioni principali:
 Solo se ci sono articoli non indicizzati da oltre 14 giorni.
 
 **Colonne tabella:**
+
 - **Titolo Articolo**: Nome articolo problematico
 - **URL**: Link diretto all'articolo
 - **Giorni**: Giorni nello stato "Non indicizzato"
@@ -166,9 +172,9 @@ Solo se ci sono articoli non indicizzati da oltre 14 giorni.
 
 **Esempio interpretazione:**
 
-| Articolo | Giorni | Suggerimenti |
-|----------|--------|--------------|
-| "Come allenarsi a casa" | 21 | Aggiornare contenuto e meta description • Richiedere indicizzazione manuale in GSC |
+| Articolo                | Giorni | Suggerimenti                                                                       |
+| ----------------------- | ------ | ---------------------------------------------------------------------------------- |
+| "Come allenarsi a casa" | 21     | Aggiornare contenuto e meta description • Richiedere indicizzazione manuale in GSC |
 
 ➡️ **Azione**: L'articolo è non indicizzato da 21 giorni, probabilmente per contenuto debole o meta description mancante.
 
@@ -227,11 +233,13 @@ Questa sezione elenca le best practice SEO da seguire ogni settimana:
 #### 🔄 Pulsante "Esegui Scansione"
 
 **Quando usare:**
+
 - Dopo aver pubblicato nuovi articoli
 - Dopo aver aggiornato articoli critici
 - Prima di verificare risultati di ottimizzazioni
 
 **Cosa fa:**
+
 1. Chiama edge function `seo-monitor`
 2. Controlla tutti gli articoli pubblicati
 3. Aggiorna database con nuovi dati
@@ -244,19 +252,23 @@ Questa sezione elenca le best practice SEO da seguire ogni settimana:
 #### 📊 Card Metriche
 
 **Totale Articoli (nero)**
+
 - Mostra numero totale articoli `status='published'`
 - Incrementa con nuove pubblicazioni
 
 **Indicizzati (verde)**
+
 - Articoli con `indexing_status='indexed'`
 - Include percentuale sul totale
 - Target: >90%
 
 **Non Indicizzati (arancione)**
+
 - Articoli con `indexing_status='crawled_not_indexed'` o `pending_first_check`
 - Normale per articoli pubblicati <7 giorni
 
 **⚠️ Critici (rosso)**
+
 - Articoli non indicizzati da oltre 14 giorni
 - **RICHIEDE AZIONE IMMEDIATA**
 - Sfondo rosso per evidenziare priorità
@@ -266,18 +278,22 @@ Questa sezione elenca le best practice SEO da seguire ogni settimana:
 #### 🔍 Filtri
 
 **Tutti**
+
 - Mostra tutti gli articoli monitorati
 - Ordinati per data check (più recenti primi)
 
 **Indicizzati**
+
 - Solo articoli `indexed`
 - Utile per verificare articoli performanti
 
 **Non Indicizzati**
+
 - Articoli `crawled_not_indexed` o `pending_first_check`
 - Monitora nuovi articoli
 
 **Critici**
+
 - Solo articoli non indicizzati >14 giorni
 - **Vista prioritaria per interventi urgenti**
 
@@ -288,18 +304,21 @@ Questa sezione elenca le best practice SEO da seguire ogni settimana:
 Ogni articolo mostra:
 
 **Header:**
+
 - **Titolo**: Nome completo articolo
-- **Badge Status**: 
+- **Badge Status**:
   - ✅ Verde = Indicizzato
   - ⏳ Arancione = Non indicizzato
   - ❌ Rosso = Errore
   - 🔴 CRITICO = Non indicizzato >14gg
 
 **Corpo:**
+
 - **URL**: Link cliccabile all'articolo pubblico
 - **Giorni in stato attuale**: Es. "Stato attuale da: 7 giorni"
 
 **Box Problemi (giallo)** - Se presenti:
+
 ```
 ⚠️ Problemi rilevati:
 • Meta description assente o troppo corta
@@ -308,6 +327,7 @@ Ogni articolo mostra:
 ```
 
 **Box Suggerimenti (blu)** - Sempre presente:
+
 ```
 💡 Suggerimenti:
 • Scrivere meta description 150-160 caratteri con keyword principale
@@ -316,6 +336,7 @@ Ogni articolo mostra:
 ```
 
 **Azioni:**
+
 - **[Modifica]**: Apre editor articolo in `/admin/blog/:id`
 - **[📡 Richiedi Indicizzazione]**: Invia URL a motori di ricerca via IndexNow
 
@@ -324,6 +345,7 @@ Ogni articolo mostra:
 ### Pulsante "Richiedi Indicizzazione"
 
 **Cosa fa:**
+
 1. Chiama edge function `indexnow-submitter`
 2. Invia URL articolo a:
    - Google (IndexNow)
@@ -332,15 +354,18 @@ Ogni articolo mostra:
 3. Mostra toast di conferma
 
 **Quando usare:**
+
 - Dopo aver aggiornato un articolo critico
 - Per forzare re-crawl di articoli modificati
 - Per nuovi articoli pubblicati manualmente (se auto-submit non funziona)
 
 **Limiti:**
+
 - Non garantisce indicizzazione immediata
 - Richiesta valida per 24 ore (non ripetere troppo spesso)
 
 **Best Practice:**
+
 - Usa solo DOPO aver ottimizzato il contenuto
 - Non spammare richieste (max 1 volta al giorno per articolo)
 
@@ -351,23 +376,28 @@ Ogni articolo mostra:
 ### Problema: Email Report Non Ricevute
 
 **Sintomi:**
+
 - Lunedì mattina, nessuna email su `info@muvfitness.it`
 - Dashboard mostra dati aggiornati
 
 **Cause Possibili:**
 
 1. **Cron Job non schedulato**
+
    ```sql
    -- Verifica cron attivi
    SELECT * FROM cron.job WHERE jobname LIKE '%seo%';
    ```
+
    **Soluzione**: Re-eseguire SQL scheduling (vedi Quick Start)
 
 2. **Resend API Key non configurata**
+
    ```bash
    # Verifica secret in Supabase Dashboard
    Edge Functions → Settings → Secrets → RESEND_API_KEY
    ```
+
    **Soluzione**: Aggiungi/aggiorna `RESEND_API_KEY`
 
 3. **Email in spam**
@@ -376,9 +406,9 @@ Ogni articolo mostra:
 4. **Errore edge function**
    ```sql
    -- Verifica logs edge function
-   SELECT * FROM cron.job_run_details 
+   SELECT * FROM cron.job_run_details
    WHERE jobname = 'seo-weekly-report'
-   ORDER BY start_time DESC 
+   ORDER BY start_time DESC
    LIMIT 5;
    ```
    **Soluzione**: Controlla logs in Supabase Dashboard → Edge Functions → `seo-weekly-report` → Logs
@@ -388,6 +418,7 @@ Ogni articolo mostra:
 ### Problema: Dashboard Non Mostra Dati
 
 **Sintomi:**
+
 - Card metriche tutte a 0
 - Lista articoli vuota
 - Nessun errore visibile
@@ -398,11 +429,13 @@ Ogni articolo mostra:
    **Soluzione**: Clicca su "🔄 Esegui Scansione" per primo run
 
 2. **RLS Policies problema**
+
    ```sql
    -- Verifica RLS
-   SELECT tablename, policyname FROM pg_policies 
+   SELECT tablename, policyname FROM pg_policies
    WHERE tablename LIKE 'seo_monitoring%';
    ```
+
    **Soluzione**: Verifica che policy admin siano attive
 
 3. **Nessun articolo pubblicato**
@@ -416,33 +449,40 @@ Ogni articolo mostra:
 ### Problema: Articoli Sempre "Non Indicizzati"
 
 **Sintomi:**
+
 - Articoli pubblicati da >14 giorni mostrano `crawled_not_indexed`
 - Metriche "Critici" sempre alta
 
 **Cause Possibili:**
 
 1. **Articoli non raggiungibili via HTTP**
+
    ```bash
    # Test manuale
    curl -I https://www.muvfitness.it/[slug-articolo]
    ```
+
    **Soluzione**: Verifica slug corretto, route esistente, nessun redirect 404
 
 2. **Sitemap non aggiornata**
+
    ```bash
    # Verifica sitemap
    curl https://www.muvfitness.it/sitemap.xml
    ```
+
    **Soluzione**: Trigger aggiornamento sitemap in `/admin/blog`
 
 3. **Robots.txt blocca crawling**
+
    ```bash
    curl https://www.muvfitness.it/robots.txt
    ```
+
    **Soluzione**: Verifica che blog non sia in `Disallow:`
 
 4. **Articolo realmente non indicizzato**
-   **Soluzione**: 
+   **Soluzione**:
    - Ottimizza contenuto (lunghezza, keyword, meta)
    - Aggiungi link interni da altri articoli
    - Richiedi indicizzazione manuale in Google Search Console
@@ -452,6 +492,7 @@ Ogni articolo mostra:
 ### Problema: Cron Job Non Si Esegue
 
 **Sintomi:**
+
 - Email mai ricevute
 - Dashboard dati mai aggiornati automaticamente
 - `check_date` in `seo_monitoring_log` sempre vecchia
@@ -463,12 +504,12 @@ Ogni articolo mostra:
 SELECT * FROM cron.job;
 
 -- 2. Verifica esecuzioni recenti
-SELECT * FROM cron.job_run_details 
-ORDER BY start_time DESC 
+SELECT * FROM cron.job_run_details
+ORDER BY start_time DESC
 LIMIT 20;
 
 -- 3. Verifica errori
-SELECT * FROM cron.job_run_details 
+SELECT * FROM cron.job_run_details
 WHERE status = 'failed'
 ORDER BY start_time DESC;
 ```
@@ -476,6 +517,7 @@ ORDER BY start_time DESC;
 **Soluzioni:**
 
 1. **Extension pg_cron non abilitata**
+
    ```sql
    CREATE EXTENSION IF NOT EXISTS pg_cron;
    ```
@@ -493,6 +535,7 @@ ORDER BY start_time DESC;
    -- Verifica timezone database
    SHOW timezone;
    ```
+
    - Cron usa UTC, verifica orario corretto (8:00 UTC = 9:00 CET)
 
 ---
@@ -515,7 +558,7 @@ Prima di pubblicare un articolo, verifica:
   - Lunghezza: 150-160 caratteri
   - Include keyword principale
   - Call-to-action (CTA)
-  - Es: "Scopri come l'allenamento EMS a Legnago può trasformare il tuo corpo in 20 minuti. Prenota la tua prova gratuita da MUV Fitness!"
+  - Es: "Scopri come l'allenamento EMS a Legnago può trasformare il tuo corpo in 45 minuti. Prenota la tua prova gratuita da MUV Fitness!"
 
 - **Canonical URL**:
   - Sempre impostato
@@ -557,11 +600,13 @@ Prima di pubblicare un articolo, verifica:
 Quando un articolo è marcato "CRITICO" (>14 giorni non indicizzato):
 
 **Step 1: Analisi Dashboard**
+
 1. Apri `/admin/seo-monitor`
 2. Filtra per "Critici"
 3. Leggi problemi rilevati e suggerimenti
 
 **Step 2: Ottimizzazione Contenuto**
+
 1. Clicca "Modifica" su articolo critico
 2. Applica correzioni:
    - Se meta description manca: scrivi 150-160 caratteri
@@ -572,6 +617,7 @@ Quando un articolo è marcato "CRITICO" (>14 giorni non indicizzato):
 4. Salva modifiche
 
 **Step 3: Richiesta Re-indicizzazione**
+
 1. Torna su dashboard SEO Monitor
 2. Clicca "📡 Richiedi Indicizzazione" su articolo appena ottimizzato
 3. Vai su [Google Search Console](https://search.google.com/search-console)
@@ -580,6 +626,7 @@ Quando un articolo è marcato "CRITICO" (>14 giorni non indicizzato):
 6. Clicca "Request Indexing"
 
 **Step 4: Monitoraggio**
+
 1. Attendi 3-7 giorni
 2. Verifica prossimo report email (lunedì)
 3. Se ancora critico, considera rewrite completo articolo
@@ -589,17 +636,20 @@ Quando un articolo è marcato "CRITICO" (>14 giorni non indicizzato):
 ### Calendario SEO Maintenance
 
 **Settimanale (Lunedì):**
+
 - ✅ Leggi report email
 - ✅ Verifica articoli critici in dashboard
 - ✅ Ottimizza 1-2 articoli critici
 
 **Mensile (Prima settimana):**
+
 - ✅ Analizza trend indicizzazione (crescita/decrescita)
 - ✅ Identifica topic con alta indicizzazione
 - ✅ Pianifica nuovi articoli su topic performanti
 - ✅ Aggiorna articoli vecchi (>6 mesi) con nuove info
 
 **Trimestrale:**
+
 - ✅ Audit completo sitemap
 - ✅ Verifica backlink esterni
 - ✅ Analizza competitor per gap content
@@ -613,7 +663,7 @@ Quando un articolo è marcato "CRITICO" (>14 giorni non indicizzato):
 
 ```sql
 -- 1. Vista generale stato indicizzazione
-SELECT 
+SELECT
   indexing_status,
   COUNT(*) as articoli,
   ROUND(AVG(days_in_current_status), 1) as giorni_medi
@@ -623,7 +673,7 @@ GROUP BY indexing_status
 ORDER BY articoli DESC;
 
 -- 2. Articoli più critici (top 10)
-SELECT 
+SELECT
   l.title,
   p.slug,
   l.days_in_current_status,
@@ -637,7 +687,7 @@ ORDER BY l.days_in_current_status DESC
 LIMIT 10;
 
 -- 3. Storico indicizzazione articolo specifico
-SELECT 
+SELECT
   check_date,
   indexing_status,
   days_in_current_status,
@@ -648,7 +698,7 @@ WHERE post_id = '[UUID_ARTICOLO]'
 ORDER BY check_date DESC;
 
 -- 4. Performance edge function (tempo medio esecuzione)
-SELECT 
+SELECT
   AVG(response_time_ms) as avg_response_time_ms,
   MAX(response_time_ms) as max_response_time_ms,
   COUNT(*) as checks_totali
@@ -656,7 +706,7 @@ FROM seo_monitoring_log
 WHERE check_date > NOW() - INTERVAL '30 days';
 
 -- 5. Articoli con problemi meta description
-SELECT 
+SELECT
   l.title,
   p.slug,
   l.meta_description,
@@ -668,7 +718,7 @@ WHERE LENGTH(COALESCE(l.meta_description, '')) < 120
 ORDER BY meta_length ASC;
 
 -- 6. Trend indicizzazione ultimi 3 mesi
-SELECT 
+SELECT
   DATE_TRUNC('week', check_date) as settimana,
   COUNT(*) FILTER (WHERE indexing_status = 'indexed') as indicizzati,
   COUNT(*) FILTER (WHERE indexing_status = 'crawled_not_indexed') as non_indicizzati,
@@ -686,11 +736,13 @@ ORDER BY settimana DESC;
 ### Q: Quanto tempo serve per indicizzare un nuovo articolo?
 
 **A:** Tempi medi:
+
 - **3-7 giorni**: Articoli su topic già presenti nel blog
 - **7-14 giorni**: Articoli su nuovi topic
 - **14-30 giorni**: Articoli con bassa qualità o contenuto duplicato
 
 **Fattori che accelerano:**
+
 - Link interni da articoli già indicizzati
 - Condivisione social
 - Richiesta indicizzazione manuale in GSC
@@ -703,6 +755,7 @@ ORDER BY settimana DESC;
 **A:** Google ha visitato la pagina (crawl) ma ha deciso di non includerla nell'indice.
 
 **Cause comuni:**
+
 - Contenuto troppo breve o di bassa qualità
 - Contenuto duplicato (interno o esterno)
 - Link interni insufficienti
@@ -718,6 +771,7 @@ ORDER BY settimana DESC;
 **A:** No, è complementare.
 
 **Sistema MUV (questo)**:
+
 - ✅ Monitoraggio automatico settimanale
 - ✅ Alert email proattivi
 - ✅ Suggerimenti personalizzati
@@ -725,6 +779,7 @@ ORDER BY settimana DESC;
 - ❌ Dati Google ufficiali (impressions, clicks, CTR)
 
 **Google Search Console**:
+
 - ✅ Dati ufficiali da Google
 - ✅ Metriche performance (impressions, clicks, CTR)
 - ✅ Coverage issues dettagliate
@@ -733,6 +788,7 @@ ORDER BY settimana DESC;
 - ❌ Dashboard separata
 
 **Best Practice:** Usa entrambi!
+
 - Sistema MUV per monitoraggio proattivo settimanale
 - GSC per analisi approfondita e richieste ufficiali
 
@@ -743,6 +799,7 @@ ORDER BY settimana DESC;
 **A:** Sì, modificando il cron schedule.
 
 **Esempio - Monitoraggio giornaliero:**
+
 ```sql
 -- Modifica schedule esistente
 SELECT cron.alter_job(
@@ -752,6 +809,7 @@ SELECT cron.alter_job(
 ```
 
 **Esempio - Monitoraggio bi-settimanale:**
+
 ```sql
 SELECT cron.alter_job(
   job_id := (SELECT jobid FROM cron.job WHERE jobname = 'seo-monitoring-weekly'),
@@ -760,6 +818,7 @@ SELECT cron.alter_job(
 ```
 
 **Attenzione:**
+
 - Frequenza alta = maggiore consumo edge function (costi)
 - Frequenza troppo bassa = problemi scoperti tardi
 
@@ -785,16 +844,19 @@ Salva, il deploy è automatico.
 **A:** Accuratezza ~80-85%.
 
 **Metodo attuale (semplificato):**
+
 - Verifica HTTP 200 + pubblicato >7 giorni = assume indexed
 - Pro: Zero setup, funziona subito
 - Contro: Non verifica reale presenza in indice Google
 
 **Metodo futuro (GSC API):**
+
 - Interroga direttamente Google Search Console
 - Pro: Dati ufficiali, 100% accurato
 - Contro: Richiede OAuth2 setup, più complesso
 
 **Raccomandazione:**
+
 - Usa metodo attuale per quick wins e alert proattivi
 - Verifica manualmente in GSC per articoli critici
 - Pianifica upgrade a GSC API in futuro (roadmap Mese 2-3)
@@ -818,11 +880,13 @@ Salva, il deploy è automatico.
 ## 🚀 Roadmap Futuri Miglioramenti
 
 ### Fase 2.0 (Mese 2-3)
+
 - ✅ Integrazione Google Search Console API
 - ✅ Metriche impressions/clicks/CTR
 - ✅ AI-powered content suggestions
 
 ### Fase 3.0 (Mese 4+)
+
 - ✅ Grafici trend avanzati
 - ✅ A/B testing meta tags
 - ✅ Notifiche Slack/Discord

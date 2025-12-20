@@ -30,15 +30,15 @@ Il segreto? Una routine che si adatta alla TUA vita, non viceversa.
 
 Risultati che durano nel tempo perché nascono da abitudini sane, non da sacrifici estremi.`,
       cta: "Prenota la tua consulenza gratuita",
-      hashtags: "#Legnago #BassaVeronese #MUVFitness #TrasformazioneFisica #PersonalTraining"
+      hashtags: "#Legnago #BassaVeronese #MUVFitness #TrasformazioneFisica #PersonalTraining",
     },
     {
-      title: "EMS: 20 minuti che contano",
+      title: "EMS: 45 minuti che contano",
       angle: "Efficienza temporale",
       image: "Cliente durante sessione EMS",
       copy: `"Non ho tempo per allenarmi" 🕐
 
-Te lo dice spesso anche la tua giornata? EMS è la risposta: 20 minuti reali = 90 minuti di palestra tradizionale.
+Te lo dice spesso anche la tua giornata? EMS è la risposta: 45 minuti reali = 90 minuti di palestra tradizionale.
 
 Elettrostimolazione + movimento mirati = risultati concreti in metà tempo.
 
@@ -46,7 +46,7 @@ Perfetto per chi ha famiglia, lavoro e mille impegni ma non vuole rinunciare all
 
 Tecnologia sicura, supervisione costante, risultati misurabili.`,
       cta: "Prova EMS gratuitamente",
-      hashtags: "#Legnago #EMS #AllenamentoRapido #MUVFitness #PocoTempo"
+      hashtags: "#Legnago #EMS #AllenamentoRapido #MUVFitness #PocoTempo",
     },
     {
       title: "Mal di schiena: da rigido a fluido",
@@ -62,7 +62,7 @@ Non copriamo il sintomo – risolviamo la causa.
 
 Ogni percorso è diverso perché ogni schiena ha una storia. La sicurezza viene sempre prima di tutto.`,
       cta: "Valutazione posturale gratuita",
-      hashtags: "#Legnago #MalDiSchiena #Pancafit #PilatesReformer #PosturaCorretta"
+      hashtags: "#Legnago #MalDiSchiena #Pancafit #PilatesReformer #PosturaCorretta",
     },
     {
       title: "Cellulite: gambe leggere in 6–8 settimane",
@@ -78,7 +78,7 @@ Non solo estetica – anche benessere quotidiano. Gambe più leggere, circolazio
 
 Risultati che si vedono e si sentono.`,
       cta: "Check-up Cellulite & Drenaggio",
-      hashtags: "#Legnago #Cellulite #VacumTerapia #Pressoterapia #GambeLeggere"
+      hashtags: "#Legnago #Cellulite #VacumTerapia #Pressoterapia #GambeLeggere",
     },
     {
       title: "Come misuriamo i progressi",
@@ -94,7 +94,7 @@ Progressi chiari = motivazione alta = risultati duraturi.
 
 Il tuo corpo cambia ogni giorno. Noi lo documentiamo con precisione scientifica per guidarti verso l'obiettivo.`,
       cta: "Scopri il nostro metodo",
-      hashtags: "#Legnago #MisurazioniCorporee #ProgressiReali #MUVFitness #Bioimpedenza"
+      hashtags: "#Legnago #MisurazioniCorporee #ProgressiReali #MUVFitness #Bioimpedenza",
     },
     {
       title: "2×/settimana, risultati veri",
@@ -110,7 +110,7 @@ Non serve ammazzarsi tutti i giorni. Serve allenarsi con intelligenza.
 
 Risultati concreti con il minimo tempo necessario. Sostenibile = duraturo.`,
       cta: "Consulenza gratuita programmazione",
-      hashtags: "#Legnago #AllenamentoSmart #2VolteASettimana #MUVFitness #Sostenibile"
+      hashtags: "#Legnago #AllenamentoSmart #2VolteASettimana #MUVFitness #Sostenibile",
     },
     {
       title: "Ergonomia d'ufficio in 7 mosse",
@@ -129,7 +129,7 @@ Risultati concreti con il minimo tempo necessario. Sostenibile = duraturo.`,
 
 Quest'ultimo punto fa la differenza tra sopravvivere e stare davvero bene.`,
       cta: "Valutazione posturale gratuita",
-      hashtags: "#Legnago #ErgonomiaUfficio #PosturaCorretta #MUVFitness #PrevenzioneNeeded"
+      hashtags: "#Legnago #ErgonomiaUfficio #PosturaCorretta #MUVFitness #PrevenzioneNeeded",
     },
     {
       title: "Prima/dopo (anonimizzato)",
@@ -147,7 +147,7 @@ Il nostro lavoro? Trovare la strada più diretta tra dove sei ora e dove vuoi ar
 
 (Foto pubblicata con autorizzazione, dati anonimizzati per privacy)`,
       cta: "Inizia la tua trasformazione",
-      hashtags: "#Legnago #Trasformazione #PrimaDopo #MUVFitness #RisultatiReali"
+      hashtags: "#Legnago #Trasformazione #PrimaDopo #MUVFitness #RisultatiReali",
     },
     {
       title: "Per chi NON è MUV",
@@ -169,7 +169,7 @@ MUV è per chi:
 
 Se ti riconosci nel secondo gruppo, parliamoci.`,
       cta: "Verifica se MUV fa per te",
-      hashtags: "#Legnago #QualificazioneCliente #MUVFitness #CoachingProfessionale #NonPerTutti"
+      hashtags: "#Legnago #QualificazioneCliente #MUVFitness #CoachingProfessionale #NonPerTutti",
     },
     {
       title: "Tour del centro",
@@ -185,15 +185,18 @@ Non una palestra. Un centro di trasformazione fisica.
 
 Vieni a vedere con i tuoi occhi. La prima consulenza è sempre gratuita e include il tour completo.`,
       cta: "Prenota il tuo tour gratuito",
-      hashtags: "#Legnago #TourCentro #AmbienteRiservato #MUVFitness #TecnologieAvanzate"
-    }
+      hashtags: "#Legnago #TourCentro #AmbienteRiservato #MUVFitness #TecnologieAvanzate",
+    },
   ];
 
   return (
     <>
       <Helmet>
         <title>Proof-post pronti (Meta & GBP)</title>
-        <meta name="description" content="10 proof-post ottimizzati per Facebook, Instagram e Google Business Profile. Copy pronti con hashtag e CTA." />
+        <meta
+          name="description"
+          content="10 proof-post ottimizzati per Facebook, Instagram e Google Business Profile. Copy pronti con hashtag e CTA."
+        />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -206,8 +209,8 @@ Vieni a vedere con i tuoi occhi. La prima consulenza è sempre gratuita e includ
                 10 proof-post per social e Google
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Copy ottimizzati per Facebook, Instagram e Google Business Profile. 
-                Ogni post è pensato per informare, coinvolgere e convertire. 
+                Copy ottimizzati per Facebook, Instagram e Google Business Profile. Ogni post è pensato per informare,
+                coinvolgere e convertire.
                 <span className="text-brand-primary"> Usa il pulsante copia per pubblicare subito.</span>
               </p>
             </div>
@@ -232,7 +235,9 @@ Vieni a vedere con i tuoi occhi. La prima consulenza è sempre gratuita e includ
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => copyToClipboard(`${post.copy}\n\n👉 ${post.cta}\n\n${post.hashtags}`, post.title)}
+                        onClick={() =>
+                          copyToClipboard(`${post.copy}\n\n👉 ${post.cta}\n\n${post.hashtags}`, post.title)
+                        }
                         className="min-h-[44px] min-w-[44px] border-gray-600 hover:border-brand-primary hover:bg-brand-primary/10 flex-shrink-0"
                         aria-label={`Copia post: ${post.title}`}
                       >
@@ -242,11 +247,9 @@ Vieni a vedere con i tuoi occhi. La prima consulenza è sempre gratuita e includ
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="bg-gray-900/50 rounded-lg p-4">
-                      <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">
-                        {post.copy}
-                      </p>
+                      <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{post.copy}</p>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="text-brand-primary font-semibold text-sm">CTA:</span>
@@ -289,17 +292,27 @@ Vieni a vedere con i tuoi occhi. La prima consulenza è sempre gratuita e includ
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-lg font-semibold text-brand-primary mb-3">Template risposte recensioni</h3>
                     <div className="space-y-3">
                       <div className="bg-gray-900/50 rounded-lg p-3">
-                        <p className="text-sm text-gray-300 mb-1"><strong>Recensione positiva:</strong></p>
-                        <p className="text-xs text-gray-400">"Grazie [nome]! È bellissimo sapere che hai raggiunto i tuoi obiettivi. Il team MUV è sempre qui per supportarti nel tuo percorso di benessere. 💪"</p>
+                        <p className="text-sm text-gray-300 mb-1">
+                          <strong>Recensione positiva:</strong>
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          "Grazie [nome]! È bellissimo sapere che hai raggiunto i tuoi obiettivi. Il team MUV è sempre
+                          qui per supportarti nel tuo percorso di benessere. 💪"
+                        </p>
                       </div>
                       <div className="bg-gray-900/50 rounded-lg p-3">
-                        <p className="text-sm text-gray-300 mb-1"><strong>Recensione critica:</strong></p>
-                        <p className="text-xs text-gray-400">"Ciao [nome], ci dispiace per l'esperienza. Ti contatteremo in privato per capire come migliorare. Il tuo feedback è prezioso per crescere. Grazie."</p>
+                        <p className="text-sm text-gray-300 mb-1">
+                          <strong>Recensione critica:</strong>
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          "Ciao [nome], ci dispiace per l'esperienza. Ti contatteremo in privato per capire come
+                          migliorare. Il tuo feedback è prezioso per crescere. Grazie."
+                        </p>
                       </div>
                     </div>
                   </div>

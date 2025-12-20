@@ -63,7 +63,7 @@ INSERT INTO blog_posts (
 
   <section id="ems">
     <h2>EMS: dimagrire quando hai poco tempo</h2>
-    <p><strong>EMS</strong> significa elettrostimolazione muscolare: in 20 minuti attivi in sicurezza i principali distretti. È ideale quando lavori molto, torni tardi o vuoi ripartire senza sovraccaricare articolazioni.</p>
+    <p><strong>EMS</strong> significa elettrostimolazione muscolare: in 45 minuti attivi in sicurezza i principali distretti. È ideale quando lavori molto, torni tardi o vuoi ripartire senza sovraccaricare articolazioni.</p>
     <ul>
       <li><strong>Tempo</strong>: 20 effettivi, 1–2 volte a settimana.</li>
       <li><strong>Effetti</strong>: tonificazione e incremento della spesa energetica.</li>
