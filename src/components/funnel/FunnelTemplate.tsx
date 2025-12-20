@@ -1,5 +1,4 @@
 import React from 'react';
-import muvLogo from '@/assets/muv-logo-original-transparent.png';
 
 interface FunnelTemplateProps {
   children: React.ReactNode;
@@ -13,7 +12,7 @@ const FunnelTemplate: React.FC<FunnelTemplateProps> = ({ children, showLogo = tr
         <header className="py-4 px-4 sm:px-6 lg:px-8 border-b border-border/50">
           <div className="max-w-4xl mx-auto flex justify-center">
             <img 
-              src={muvLogo} 
+              src="/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png" 
               alt="MUV Fitness Legnago" 
               className="h-10 sm:h-12 w-auto"
             />
