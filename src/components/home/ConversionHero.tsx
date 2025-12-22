@@ -3,6 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { trackHomeClickToFunnel } from "@/hooks/useGoogleAnalytics";
 import { useEffect, useRef, useState } from "react";
+import heroPoster from "@/assets/hero-poster.jpg";
 
 const ConversionHero = () => {
   const badges = ["Consulenza conoscitiva gratuita", "Ambiente riservato", "Posti limitati"];
@@ -50,6 +51,15 @@ const ConversionHero = () => {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Poster image - shows immediately */}
+      <img
+        src={heroPoster}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+        style={{ opacity: isVideoLoaded ? 0 : 1 }}
+        loading="eager"
+      />
+      
       {/* Video Background with lazy loading */}
       <video
         ref={videoRef}
@@ -58,14 +68,9 @@ const ConversionHero = () => {
         loop
         playsInline
         preload="none"
+        poster={heroPoster}
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
         style={{ opacity: isVideoLoaded ? 1 : 0 }}
-      />
-      
-      {/* Fallback background while video loads */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black transition-opacity duration-700"
-        style={{ opacity: isVideoLoaded ? 0 : 1 }}
       />
       
       {/* Dark Overlay for text readability - intensified */}
