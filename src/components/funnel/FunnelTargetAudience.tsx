@@ -4,18 +4,16 @@ import FunnelCTA from './FunnelCTA';
 
 const FunnelTargetAudience: React.FC = () => {
   const forYou = [
-    'Hai poco tempo ma vuoi risultati concreti',
-    'Vuoi essere seguito passo dopo passo, non lasciato solo',
-    'Hai obiettivi specifici (dimagrimento, cellulite, postura, schiena)',
-    'Cerchi un ambiente riservato, professionale, senza affollamento',
-    'Vuoi un programma costruito su di te, non standard',
+    'Vuole risultati concreti',
+    'Vuole essere seguito',
+    'Ha poco tempo',
+    'Cerca privacy e qualità',
   ];
 
   const notForYou = [
-    'Cerchi una palestra low-cost o "all you can train"',
-    'Vuoi allenarti da solo senza guida',
-    'Non vuoi un metodo, ma solo accesso ai macchinari',
-    'Cerchi soluzioni veloci senza impegno',
+    'Cerca palestra low-cost',
+    'Vuole allenarsi da solo',
+    'Non vuole un metodo',
   ];
 
   return (
