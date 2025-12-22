@@ -33,6 +33,7 @@ const ConversionHero = () => {
             // Load and play video when visible
             video.src = "/videos/hero-background.mp4";
             video.load();
+            video.playbackRate = 0.5;
             video.play().catch(() => {
               // Autoplay might be blocked, that's ok
             });
