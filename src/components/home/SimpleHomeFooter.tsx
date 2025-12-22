@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
 
 const SimpleHomeFooter = () => {
   const menuLinks = [
@@ -15,6 +15,17 @@ const SimpleHomeFooter = () => {
   return (
     <footer className="bg-card border-t border-border py-10">
       <div className="container mx-auto px-4">
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
+          <Link to="/">
+            <img
+              src="/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png"
+              alt="MUV Fitness Legnago"
+              className="h-12 w-auto"
+            />
+          </Link>
+        </div>
+
         {/* Links alle pagine */}
         <nav className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
           {menuLinks.map((link) => (
@@ -31,15 +42,41 @@ const SimpleHomeFooter = () => {
         {/* Info contatto */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary" />
-            <span>Via Togliatti 1/C, 37045 Legnago (VR)</span>
+            <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+            <span>Piazzetta Don Walter Soave, 2 - 37045 Legnago (VR)</span>
           </div>
           <a 
-            href="tel:+393516893853" 
+            href="tel:+393291070374" 
             className="flex items-center gap-2 hover:text-primary transition-colors"
           >
             <Phone className="h-4 w-4 text-primary" />
-            <span>351 689 3853</span>
+            <span>329 107 0374</span>
+          </a>
+          <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4 text-primary" />
+            <span>Lun-Ven 8:00-21:00 | Sab 8:00-12:00</span>
+          </div>
+        </div>
+
+        {/* Social Icons */}
+        <div className="flex justify-center gap-4 mb-8">
+          <a
+            href="https://www.instagram.com/muvfitness_legnago/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-5 w-5" />
+          </a>
+          <a
+            href="https://www.facebook.com/muvfitnesslegnago"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+            aria-label="Facebook"
+          >
+            <Facebook className="h-5 w-5" />
           </a>
         </div>
 
