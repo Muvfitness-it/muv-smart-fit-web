@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ConversionHero = () => {
-  const badges = ["Prima valutazione gratuita", "Zero impegno", "Risultati in 4 settimane"];
+  const badges = ["Consulenza conoscitiva gratuita", "Ambiente riservato", "Posti limitati"];
 
-  const scrollToForm = () => {
-    const formSection = document.getElementById("prenota-form");
-    if (formSection) {
-      formSection.scrollIntoView({ behavior: "smooth" });
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contatto");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -32,36 +33,32 @@ const ConversionHero = () => {
 
           {/* Headline */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
-            Perdi 4-8kg in 8 settimane
-            <span className="block text-primary">senza palestra affollata</span>
+            Trasforma il tuo corpo con un percorso guidato e personalizzato.
+            <span className="block text-primary text-2xl sm:text-3xl md:text-4xl mt-4">
+              Anche se hai poco tempo o hai già fallito altre palestre.
+            </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Sessioni da 45 minuti con tecnologia EMS. Niente attese, niente sguardi. Solo risultati misurabili nel
-            centro fitness più riservato di Legnago.
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Non siamo una palestra tradizionale. Siamo un <strong className="text-foreground">Centro Fitness Boutique</strong> che lavora su obiettivi reali con tecnologie avanzate, personal training e consulenza dedicata.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button size="lg" className="text-lg px-8 py-6 h-auto" onClick={scrollToForm}>
-              Prenota la tua prova gratuita
-              <ArrowRight className="ml-2 w-5 h-5" />
+            <Button size="lg" className="text-lg px-8 py-6 h-auto" asChild>
+              <Link to="/funnel">
+                Prenota la consulenza
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="text-lg px-8 py-6 h-auto border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-              asChild
+              className="text-lg px-8 py-6 h-auto"
+              onClick={scrollToContact}
             >
-              <a
-                href="https://wa.me/393291070374?text=Ciao,%20vorrei%20prenotare%20una%20prova%20gratuita"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MessageCircle className="mr-2 w-5 h-5" />
-                Scrivici su WhatsApp
-              </a>
+              Richiedi informazioni
             </Button>
           </div>
 
