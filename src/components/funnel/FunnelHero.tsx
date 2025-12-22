@@ -1,6 +1,6 @@
-import React from 'react';
-import FunnelCTA from './FunnelCTA';
-import { CheckCircle } from 'lucide-react';
+import React from "react";
+import FunnelCTA from "./FunnelCTA";
+import { CheckCircle } from "lucide-react";
 
 const FunnelHero: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const FunnelHero: React.FC = () => {
       <div className="max-w-4xl mx-auto text-center">
         {/* Headline */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-          Trasforma il tuo corpo con un{' '}
+          Trasforma il tuo corpo con un{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             percorso guidato e personalizzato.
           </span>
@@ -16,20 +16,17 @@ const FunnelHero: React.FC = () => {
 
         {/* Sottotitolo */}
         <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-4 max-w-3xl mx-auto">
-          Anche se hai poco tempo o hai già fallito altre palestre.
+          Anche se hai poco tempo o hai già fallito in altre palestre.
         </p>
 
         {/* Descrizione */}
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
-          Non siamo una palestra tradizionale. Siamo un Centro Fitness Boutique che lavora su obiettivi reali 
-          attraverso tecnologie avanzate, personal training e consulenza dedicata.
+          Non siamo una palestra tradizionale. Siamo un Centro Fitness Boutique che lavora su obiettivi reali attraverso
+          tecnologie avanzate, personal training e consulenza dedicata.
         </p>
 
         {/* CTA primaria */}
-        <FunnelCTA 
-          text="Scopri se il percorso è adatto a te"
-          href="/funnel/qualifica"
-        />
+        <FunnelCTA text="Scopri se il percorso è adatto a te" href="/funnel/qualifica" />
 
         {/* Micro-trust */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
