@@ -30,13 +30,13 @@ const ConversionHero = () => {
         <source src="/videos/hero-background.mp4" type="video/mp4" />
       </video>
       
-      {/* Dark Overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+      {/* Dark Overlay for text readability - intensified */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/85" />
 
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary/20 text-primary text-sm font-medium px-4 py-2 rounded-full mb-6 backdrop-blur-sm border border-primary/30">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -45,17 +45,17 @@ const ConversionHero = () => {
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight [text-shadow:_0_2px_20px_rgba(0,0,0,0.8)]">
             Trasforma il tuo corpo con un percorso guidato e personalizzato.
-            <span className="block text-primary text-2xl sm:text-3xl md:text-4xl mt-4">
+            <span className="block text-primary text-2xl sm:text-3xl md:text-4xl mt-4 [text-shadow:_0_2px_15px_rgba(0,0,0,0.6)]">
               Anche se hai poco tempo o hai già fallito altre palestre.
             </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
             Non siamo una palestra low-cost. Siamo un{" "}
-            <strong className="text-foreground">Centro Fitness Boutique</strong> specializzato in percorsi personalizzati con
+            <strong className="text-white">Centro Fitness Boutique</strong> specializzato in percorsi personalizzati con
             tecnologie avanzate, personal training e consulenza dedicata.
           </p>
 
@@ -67,7 +67,7 @@ const ConversionHero = () => {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto" onClick={scrollToContact}>
+            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm" onClick={scrollToContact}>
               Richiedi informazioni
             </Button>
           </div>
@@ -75,7 +75,7 @@ const ConversionHero = () => {
           {/* Trust badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {badges.map((badge, index) => (
-              <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div key={index} className="flex items-center gap-2 text-sm text-white/80 [text-shadow:_0_1px_5px_rgba(0,0,0,0.5)]">
                 <Check className="w-4 h-4 text-primary" />
                 <span>{badge}</span>
               </div>
