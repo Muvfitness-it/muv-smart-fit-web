@@ -33,7 +33,7 @@ const ConversionHero = () => {
             // Load and play video when visible
             video.src = "/videos/hero-background.mp4";
             video.load();
-            video.playbackRate = 0.5;
+            video.playbackRate = 0.75;
             video.play().catch(() => {
               // Autoplay might be blocked, that's ok
             });
@@ -70,7 +70,7 @@ const ConversionHero = () => {
         playsInline
         preload="none"
         poster={heroPoster}
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 blur-[2px] scale-105"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 blur-[2px] scale-105 saturate-[1.2] brightness-[1.1]"
         style={{ opacity: isVideoLoaded ? 1 : 0 }}
       />
       
