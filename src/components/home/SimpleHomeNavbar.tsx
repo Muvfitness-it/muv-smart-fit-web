@@ -14,24 +14,29 @@ const SimpleHomeNavbar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center h-20">
+          {/* Spazio vuoto sx per bilanciare */}
+          <div className="flex-1" />
+
+          {/* Logo Centrato */}
           <Link to="/" className="flex items-center">
             <img
               src="/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png"
               alt="MUV Fitness Legnago"
-              className="h-10 w-auto"
+              className="h-14 w-auto"
             />
           </Link>
 
-          {/* Single CTA */}
-          <Link
-            to="/funnel"
-            onClick={handleFunnelClick}
-            className="bg-primary text-primary-foreground px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-lg"
-          >
-            Prenota Consulenza
-          </Link>
+          {/* CTA a destra */}
+          <div className="flex-1 flex justify-end">
+            <Link
+              to="/funnel"
+              onClick={handleFunnelClick}
+              className="bg-primary text-primary-foreground px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Prenota Consulenza
+            </Link>
+          </div>
         </div>
       </div>
     </header>
