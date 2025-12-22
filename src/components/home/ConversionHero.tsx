@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { trackHomeClickToFunnel } from "@/hooks/useGoogleAnalytics";
+import { useEffect, useRef, useState } from "react";
 
 const ConversionHero = () => {
   const badges = ["Consulenza conoscitiva gratuita", "Ambiente riservato", "Posti limitati"];
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById("contatto");
@@ -17,18 +20,53 @@ const ConversionHero = () => {
     trackHomeClickToFunnel('hero_cta_primary');
   };
 
+  // Lazy load video when component mounts
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVideoLoaded) {
+            // Load and play video when visible
+            video.src = "/videos/hero-background.mp4";
+            video.load();
+            video.play().catch(() => {
+              // Autoplay might be blocked, that's ok
+            });
+            setIsVideoLoaded(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, [isVideoLoaded]);
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Video Background */}
+      {/* Video Background with lazy loading */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/videos/hero-background.mp4" type="video/mp4" />
-      </video>
+        preload="none"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+        style={{ opacity: isVideoLoaded ? 1 : 0 }}
+      />
+      
+      {/* Fallback background while video loads */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black transition-opacity duration-700"
+        style={{ opacity: isVideoLoaded ? 0 : 1 }}
+      />
       
       {/* Dark Overlay for text readability - intensified */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/85" />
