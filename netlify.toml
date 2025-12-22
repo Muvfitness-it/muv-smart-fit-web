@@ -186,6 +186,33 @@
   status = 301
   force = true
 
+# Local pages redirects (legacy /local/ prefix)
+[[redirects]]
+  from = "/local/personal-trainer-cerea"
+  to = "/personal-trainer-cerea"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/local/personal-trainer-minerbe"
+  to = "/personal-trainer-minerbe"
+  status = 301
+  force = true
+
+# Small group legacy redirect
+[[redirects]]
+  from = "/servizi/small-group-legnago"
+  to = "/servizi/small-group"
+  status = 301
+  force = true
+
+# Nutrizione-psicocoach legacy
+[[redirects]]
+  from = "/servizi/nutrizione-psicocoach"
+  to = "/servizi/nutrizione"
+  status = 301
+  force = true
+
 # Ensure SPA routing works correctly (must be last)
 [[redirects]]
   from = "/*"
