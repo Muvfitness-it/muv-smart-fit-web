@@ -70,7 +70,7 @@ const ConversionHero = () => {
         playsInline
         preload="none"
         poster={heroPoster}
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 blur-[2px] scale-105 saturate-[1.2] brightness-[1.1]"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 saturate-[1.2] brightness-[1.1]"
         style={{ opacity: isVideoLoaded ? 1 : 0 }}
       />
       
