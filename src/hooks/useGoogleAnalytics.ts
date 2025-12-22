@@ -139,6 +139,48 @@ export const trackFileDownload = (fileName: string, fileType: string) => {
   });
 };
 
+// ============================================
+// HOMEPAGE EVENTS - Percorso contatto veloce
+// ============================================
+
+export const trackHomeFormSubmit = (source: string) => {
+  trackEvent('home_form_submit', {
+    source,
+    timestamp: new Date().toISOString()
+  });
+};
+
+export const trackHomeClickToFunnel = (location: string) => {
+  trackEvent('home_click_to_funnel', {
+    location,
+    timestamp: new Date().toISOString()
+  });
+};
+
+// ============================================
+// FUNNEL EVENTS - Percorso prenotazione qualificata
+// ============================================
+
+export const trackFunnelStep1 = () => {
+  trackEvent('funnel_step1', {
+    timestamp: new Date().toISOString()
+  });
+};
+
+export const trackFunnelStep2Complete = (answers: Record<string, string>) => {
+  trackEvent('funnel_step2_complete', {
+    ...answers,
+    timestamp: new Date().toISOString()
+  });
+};
+
+export const trackFunnelBookingSubmit = (data: { obiettivo?: string; tempo?: string }) => {
+  trackEvent('funnel_booking_submit', {
+    ...data,
+    timestamp: new Date().toISOString()
+  });
+};
+
 // Custom Scroll Depth Hook
 export const useScrollDepthTracking = (pageName: string) => {
   useEffect(() => {

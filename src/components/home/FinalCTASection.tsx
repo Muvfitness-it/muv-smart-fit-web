@@ -2,8 +2,13 @@ import { UnifiedContactForm } from '@/features/forms';
 import { Phone, MessageCircle, ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { trackHomeClickToFunnel } from '@/hooks/useGoogleAnalytics';
 
 const FinalCTASection = () => {
+  const handleFunnelClick = () => {
+    trackHomeClickToFunnel('contact_section_funnel_cta');
+  };
+
   return (
     <section id="contatto" className="py-16 md:py-24 bg-gradient-to-br from-primary via-secondary to-accent">
       <div className="container mx-auto px-4">
@@ -12,18 +17,9 @@ const FinalCTASection = () => {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-4 text-white">
             Hai una domanda veloce? Lasciaci i tuoi dati.
           </h2>
-          <p className="text-lg text-center mb-2 text-white/90">
-            Se vuoi una prima informazione o capire se possiamo aiutarti, scrivici qui.
+          <p className="text-lg text-center mb-8 text-white/90">
+            Se vuoi una prima informazione o capire se possiamo aiutarti, compila il modulo.
             <br />Ti ricontattiamo noi, senza impegno.
-          </p>
-          <p className="text-sm text-center mb-8 text-white/70 italic">
-            (Per un percorso personalizzato completo, ti consigliamo la consulenza in studio.)
-          </p>
-          
-          {/* Form intro */}
-          <p className="text-center text-white/80 text-sm mb-4">
-            Compila il modulo con i tuoi dati essenziali.<br />
-            Un nostro consulente ti contatterà per darti le prime indicazioni.
           </p>
           
           <UnifiedContactForm
@@ -31,6 +27,7 @@ const FinalCTASection = () => {
             source="homepage-contatto-veloce"
             showMessage={true}
             showObjective={false}
+            submitText="Richiedi informazioni"
             className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl"
           />
           
@@ -53,6 +50,7 @@ const FinalCTASection = () => {
               size="lg" 
               className="bg-white text-primary hover:bg-white/90 font-semibold"
               asChild
+              onClick={handleFunnelClick}
             >
               <Link to="/funnel">
                 👉 Prenota la consulenza conoscitiva in studio

@@ -15,28 +15,26 @@ const FunnelHero: React.FC = () => {
         </h1>
 
         {/* Sottotitolo */}
-        <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-4 max-w-3xl mx-auto">
-          Anche se hai poco tempo o hai già fallito in altre palestre.
+        <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-10 max-w-3xl mx-auto">
+          Anche se hai poco tempo o problemi specifici.
+          <br />
+          Percorsi su misura con EMS, Vacuum, Fit Pilates e supporto costante.
+          <br />
+          <strong className="text-foreground">Qui non ti alleni da solo: sei seguito passo dopo passo.</strong>
         </p>
 
-        {/* Descrizione */}
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
-          Non siamo una palestra tradizionale. Siamo un Centro Fitness Boutique che lavora su obiettivi reali attraverso
-          tecnologie avanzate, personal training e consulenza dedicata.
-        </p>
-
-        {/* CTA primaria */}
+        {/* CTA primaria UNICA */}
         <FunnelCTA text="Scopri se il percorso è adatto a te" href="/funnel/qualifica" />
 
         {/* Micro-trust */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            <span>Consulenza conoscitiva gratuita</span>
+            <span>Consulenza gratuita</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            <span>Ambiente riservato · massimo 3 nuovi clienti a settimana</span>
+            <span>Ambiente riservato</span>
           </div>
         </div>
       </div>

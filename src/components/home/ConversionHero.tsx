@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trackHomeClickToFunnel } from "@/hooks/useGoogleAnalytics";
 
 const ConversionHero = () => {
   const badges = ["Consulenza conoscitiva gratuita", "Ambiente riservato", "Posti limitati"];
@@ -10,6 +11,10 @@ const ConversionHero = () => {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleFunnelClick = () => {
+    trackHomeClickToFunnel('hero_cta_primary');
   };
 
   return (
@@ -35,20 +40,20 @@ const ConversionHero = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
             Trasforma il tuo corpo con un percorso guidato e personalizzato.
             <span className="block text-primary text-2xl sm:text-3xl md:text-4xl mt-4">
-              Anche se hai poco tempo o hai già fallito in altre palestre.
+              Anche se hai poco tempo o hai già fallito altre palestre.
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Non siamo una palestra tradizionale. Siamo un{" "}
-            <strong className="text-foreground">Centro Fitness Boutique</strong> che lavora su obiettivi reali con
+            Non siamo una palestra low-cost. Siamo un{" "}
+            <strong className="text-foreground">Centro Fitness Boutique</strong> specializzato in percorsi personalizzati con
             tecnologie avanzate, personal training e consulenza dedicata.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button size="lg" className="text-lg px-8 py-6 h-auto" asChild>
+            <Button size="lg" className="text-lg px-8 py-6 h-auto" asChild onClick={handleFunnelClick}>
               <Link to="/funnel">
                 Prenota la consulenza
                 <ArrowRight className="ml-2 w-5 h-5" />

@@ -21,6 +21,7 @@ interface UnifiedContactFormProps {
   showMessage?: boolean;
   showObjective?: boolean;
   enableAIData?: boolean;
+  submitText?: string;
 }
 
 export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
@@ -33,7 +34,8 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
   className = "",
   showMessage = true,
   showObjective = true,
-  enableAIData = false
+  enableAIData = false,
+  submitText = "INVIA RICHIESTA"
 }) => {
   const {
     formData,
@@ -255,7 +257,7 @@ export const UnifiedContactForm: React.FC<UnifiedContactFormProps> = ({
             disabled={isSubmitting}
             className="btn-accent w-full text-lg py-4"
           >
-            {isSubmitting ? 'INVIO IN CORSO...' : 'INVIA RICHIESTA'}
+            {isSubmitting ? 'INVIO IN CORSO...' : submitText}
           </Button>
         </form>
 
