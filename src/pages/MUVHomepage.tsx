@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import LocalBusinessSchema from "@/components/SEO/LocalBusinessSchema";
 import SimpleHomeNavbar from "@/components/home/SimpleHomeNavbar";
+import SimpleHomeFooter from "@/components/home/SimpleHomeFooter";
 import ConversionHero from "@/components/home/ConversionHero";
 import FinalCTASection from "@/components/home/FinalCTASection";
 import StickyMobileCTA from "@/components/home/StickyMobileCTA";
@@ -47,6 +48,9 @@ const MUVHomepage = () => {
       {/* HOMEPAGE SEMPLICE: Hero + Sezione Contatto Veloce */}
       <ConversionHero />
       <FinalCTASection />
+
+      {/* FOOTER SEMPLICE: Indirizzo, Telefono, Privacy, Link pagine */}
+      <SimpleHomeFooter />
 
       {/* Mobile sticky CTA */}
       <StickyMobileCTA />
