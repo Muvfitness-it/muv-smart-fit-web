@@ -159,6 +159,9 @@ const AppContent = () => {
         {/* Removed problematic optimization components */}
         <div className="min-h-screen bg-background text-foreground">
         <Routes>
+          {/* HOMEPAGE - Landing Page Semplice (NO Menu Completo, NO Footer) */}
+          <Route path="/" element={<MUVHomepage />} />
+
           {/* Funnel Pages - NO Navigation/Footer */}
           <Route path="/funnel" element={
             <Suspense fallback={<RouteLoading />}><FunnelStep1 /></Suspense>
@@ -232,10 +235,9 @@ const AppContent = () => {
               <main id="main">
                 <Suspense fallback={<RouteLoading />}>
                   <Routes>
-                    {/* ===== NEW MUV STRUCTURE - HOMEPAGE & CORE PAGES ===== */}
-                    <Route path="/" element={<MUVHomepage />} />
+                    {/* ===== CORE PAGES (Homepage è fuori da questo blocco) ===== */}
                     <Route path="/metodo" element={<Metodo />} />
-          <Route path="/perche-muv" element={<PercheMUV />} />
+                    <Route path="/perche-muv" element={<PercheMUV />} />
           <Route path="/prezzi" element={<Navigate to="/perche-muv" replace />} />
                     <Route path="/servizi" element={<ServiziCompleto />} />
                     <Route path="/tecnologie" element={<Tecnologie />} />
