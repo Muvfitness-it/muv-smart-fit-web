@@ -23,7 +23,7 @@ const SimpleHomeNavbar = () => {
             <img
               src="/lovable-uploads/8f9d5474-3079-4865-8efd-e5b147a05b32.png"
               alt="MUV Fitness Legnago"
-              className="h-14 w-auto"
+              className="h-24 w-auto"
             />
           </Link>
 
