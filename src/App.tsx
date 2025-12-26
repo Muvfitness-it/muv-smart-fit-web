@@ -81,7 +81,8 @@ const GravidanzaPostParto = lazy(() => import("./pages/landing/GravidanzaPostPar
 const SeniorFitness = lazy(() => import("./pages/landing/SeniorFitness"));
 const RiabilitazioneInfortuni = lazy(() => import("./pages/landing/RiabilitazioneInfortuni"));
 
-// Security components - named imports  
+// Percorsi Page
+const Percorsi = lazy(() => import("./pages/Percorsi"));
 import { SessionSecurity } from "./components/security/SessionSecurity";
 import { SecureDataHandler } from "@/components/security/SecureDataHandler";
 const CookieConsent = lazy(() => import("./components/security/CookieConsent"));
@@ -238,7 +239,8 @@ const AppContent = () => {
                     {/* ===== CORE PAGES (Homepage è fuori da questo blocco) ===== */}
                     <Route path="/metodo" element={<Metodo />} />
                     <Route path="/perche-muv" element={<PercheMUV />} />
-          <Route path="/prezzi" element={<Navigate to="/perche-muv" replace />} />
+                    <Route path="/prezzi" element={<Navigate to="/perche-muv" replace />} />
+                    <Route path="/percorsi" element={<Percorsi />} />
                     <Route path="/servizi" element={<ServiziCompleto />} />
                     <Route path="/tecnologie" element={<Tecnologie />} />
                     
