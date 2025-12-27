@@ -5,6 +5,8 @@ import SimpleHomeFooter from "@/components/home/SimpleHomeFooter";
 import ConversionHero from "@/components/home/ConversionHero";
 import FinalCTASection from "@/components/home/FinalCTASection";
 import StickyMobileCTA from "@/components/home/StickyMobileCTA";
+import SocialProofBar from "@/components/home/SocialProofBar";
+import ExitIntentPopup from "@/components/home/ExitIntentPopup";
 
 const MUVHomepage = () => {
   return (
@@ -45,8 +47,9 @@ const MUVHomepage = () => {
       {/* NAVBAR SEMPLICE: Solo Logo + CTA */}
       <SimpleHomeNavbar />
 
-      {/* HOMEPAGE SEMPLICE: Hero + Sezione Contatto Veloce */}
+      {/* HOMEPAGE SEMPLICE: Hero + Social Proof + Sezione Contatto Veloce */}
       <ConversionHero />
+      <SocialProofBar />
       <FinalCTASection />
 
       {/* FOOTER SEMPLICE: Indirizzo, Telefono, Privacy, Link pagine */}
@@ -54,6 +57,9 @@ const MUVHomepage = () => {
 
       {/* Mobile sticky CTA */}
       <StickyMobileCTA />
+
+      {/* Exit Intent Popup */}
+      <ExitIntentPopup />
     </>
   );
 };

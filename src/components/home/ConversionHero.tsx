@@ -6,6 +6,7 @@ import heroCardDonna from "@/assets/hero-card-donna.jpg";
 import heroCardUomo from "@/assets/hero-card-uomo.jpg";
 import heroCardPosturale from "@/assets/hero-card-posturale.jpg";
 import heroCardPilates from "@/assets/hero-card-pilates.jpg";
+import MiniTestimonialCarousel from "./MiniTestimonialCarousel";
 
 // Icon component for Spine (not available in lucide-react)
 const SpineIcon = ({ className }: { className?: string }) => (
@@ -200,8 +201,11 @@ const ConversionHero = () => {
             </Link>
           </div>
 
+          {/* Mini Testimonial Carousel */}
+          <MiniTestimonialCarousel />
+
           {/* Trust badges */}
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-8">
             {badges.map((badge, index) => (
               <div key={index} className="flex items-center gap-2 text-sm text-white/80 [text-shadow:_0_1px_5px_rgba(0,0,0,0.5)]">
                 <Check className="w-4 h-4 text-primary" />
