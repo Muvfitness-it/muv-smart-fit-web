@@ -2,6 +2,8 @@ import { ArrowRight, Check, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import heroPoster from "@/assets/hero-poster.jpg";
+import heroCardDonna from "@/assets/hero-card-donna.jpg";
+import heroCardUomo from "@/assets/hero-card-uomo.jpg";
 
 const ConversionHero = () => {
   const badges = ["Consulenza conoscitiva gratuita", "Ambiente riservato", "Posti limitati"];
@@ -108,24 +110,58 @@ const ConversionHero = () => {
             <Link 
               to="/percorsi?genere=donna" 
               onClick={() => trackGenderSelection('donna')}
-              className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-primary rounded-xl p-6 transition-all duration-300"
+              className="group relative flex flex-col items-center justify-end gap-3 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-6 min-h-[180px] overflow-hidden transition-all duration-500 hover:border-pink-400 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] hover:-translate-y-2"
             >
-              <div className="w-14 h-14 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <UserRound className="w-7 h-7 text-pink-400" />
+              {/* Background Image */}
+              <img 
+                src={heroCardDonna} 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75"
+              />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-pink-900/80 group-hover:via-pink-800/30" />
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-pink-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-pink-500/50 group-hover:shadow-[0_0_20px_rgba(236,72,153,0.5)]">
+                  <UserRound className="w-6 h-6 text-pink-400 transition-transform duration-300 group-hover:scale-110" />
+                </div>
+                <span className="text-white font-semibold text-lg transition-transform duration-300 group-hover:scale-105">Percorso Donna</span>
+                <span className="text-white/70 text-xs text-center transition-all duration-300 group-hover:text-white/90">Tonificazione • Silhouette • Benessere</span>
               </div>
-              <span className="text-white font-semibold text-lg">Percorso Donna</span>
-              <span className="text-white/70 text-xs text-center">Tonificazione • Silhouette • Benessere</span>
+              
+              {/* Animated arrow on hover */}
+              <div className="absolute top-3 right-3 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2">
+                <ArrowRight className="w-5 h-5 text-pink-400" />
+              </div>
             </Link>
             <Link 
               to="/percorsi?genere=uomo" 
               onClick={() => trackGenderSelection('uomo')}
-              className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-primary rounded-xl p-6 transition-all duration-300"
+              className="group relative flex flex-col items-center justify-end gap-3 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-6 min-h-[180px] overflow-hidden transition-all duration-500 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:-translate-y-2"
             >
-              <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <UserRound className="w-7 h-7 text-blue-400" />
+              {/* Background Image */}
+              <img 
+                src={heroCardUomo} 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75"
+              />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-blue-900/80 group-hover:via-blue-800/30" />
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                  <UserRound className="w-6 h-6 text-blue-400 transition-transform duration-300 group-hover:scale-110" />
+                </div>
+                <span className="text-white font-semibold text-lg transition-transform duration-300 group-hover:scale-105">Percorso Uomo</span>
+                <span className="text-white/70 text-xs text-center transition-all duration-300 group-hover:text-white/90">Definizione • Forza • Performance</span>
               </div>
-              <span className="text-white font-semibold text-lg">Percorso Uomo</span>
-              <span className="text-white/70 text-xs text-center">Definizione • Forza • Performance</span>
+              
+              {/* Animated arrow on hover */}
+              <div className="absolute top-3 right-3 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2">
+                <ArrowRight className="w-5 h-5 text-blue-400" />
+              </div>
             </Link>
           </div>
           
