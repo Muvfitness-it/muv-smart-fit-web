@@ -146,7 +146,7 @@ const Percorsi: React.FC<PercorsiProps> = ({ preselectedGender }) => {
         <PercorsiComparison />
         
         {/* FAQ Section */}
-        <PercorsiFAQ />
+        <PercorsiFAQ gender={selectedGender} />
         
         {/* Final CTA */}
         <PercorsiFinalCTA gender={selectedGender} />
