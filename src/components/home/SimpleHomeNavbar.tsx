@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 
 const SimpleHomeNavbar = () => {
-  const handleFunnelClick = () => {
-    // GA4 tracking via gtag
+  const handlePercorsiClick = () => {
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'home_click_to_funnel', {
-        event_category: 'conversion',
+      (window as any).gtag('event', 'home_click_to_percorsi', {
+        event_category: 'navigation',
         event_label: 'navbar_cta'
       });
     }
@@ -30,11 +29,11 @@ const SimpleHomeNavbar = () => {
           {/* CTA a destra */}
           <div className="flex-1 flex justify-end">
             <Link
-              to="/funnel"
-              onClick={handleFunnelClick}
+              to="/percorsi"
+              onClick={handlePercorsiClick}
               className="bg-primary text-primary-foreground px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-lg"
             >
-              Prenota Consulenza
+              Scopri i Percorsi
             </Link>
           </div>
         </div>

@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
-import { trackHomeClickToFunnel } from "@/hooks/useGoogleAnalytics";
 import { useEffect, useRef, useState } from "react";
 import heroPoster from "@/assets/hero-poster.jpg";
 
@@ -10,15 +8,14 @@ const ConversionHero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contatto");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
+  const trackGenderSelection = (gender: 'donna' | 'uomo' | 'neutral') => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'home_gender_selection', {
+        event_category: 'conversion',
+        event_label: gender,
+        gender_selected: gender
+      });
     }
-  };
-
-  const handleFunnelClick = () => {
-    trackHomeClickToFunnel('hero_cta_primary');
   };
 
   // Lazy load video when component mounts
@@ -103,18 +100,44 @@ const ConversionHero = () => {
             tecnologie avanzate, personal training e consulenza dedicata.
           </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button size="lg" className="text-lg px-8 py-6 h-auto" asChild onClick={handleFunnelClick}>
-              <Link to="/funnel">
-                Prenota la consulenza
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm" onClick={scrollToContact}>
-              Richiedi informazioni
-            </Button>
+          {/* Gender Selection Gateway */}
+          <p className="text-lg text-white/90 mb-6 [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
+            Scegli il percorso più adatto a te:
+          </p>
+          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-6">
+            <Link 
+              to="/percorsi?genere=donna" 
+              onClick={() => trackGenderSelection('donna')}
+              className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-primary rounded-xl p-6 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <UserRound className="w-7 h-7 text-pink-400" />
+              </div>
+              <span className="text-white font-semibold text-lg">Percorso Donna</span>
+              <span className="text-white/70 text-xs text-center">Tonificazione • Silhouette • Benessere</span>
+            </Link>
+            <Link 
+              to="/percorsi?genere=uomo" 
+              onClick={() => trackGenderSelection('uomo')}
+              className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-primary rounded-xl p-6 transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <UserRound className="w-7 h-7 text-blue-400" />
+              </div>
+              <span className="text-white font-semibold text-lg">Percorso Uomo</span>
+              <span className="text-white/70 text-xs text-center">Definizione • Forza • Performance</span>
+            </Link>
           </div>
+          
+          {/* Link alternativo */}
+          <Link 
+            to="/percorsi" 
+            onClick={() => trackGenderSelection('neutral')}
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm transition-colors mb-8"
+          >
+            Non so ancora quale fa per me
+            <ArrowRight className="w-4 h-4" />
+          </Link>
 
           {/* Trust badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">

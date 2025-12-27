@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const StickyMobileCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -8,7 +9,6 @@ const StickyMobileCTA = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // Show after scrolling just 300px (very early visibility)
       if (scrollY > 300 && !isDismissed) {
         setIsVisible(true);
       }
@@ -23,10 +23,12 @@ const StickyMobileCTA = () => {
     setIsVisible(false);
   };
 
-  const scrollToForm = () => {
-    const formSection = document.getElementById('prenota-form');
-    if (formSection) {
-      formSection.scrollIntoView({ behavior: 'smooth' });
+  const handlePercorsiClick = () => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'sticky_cta_percorsi_click', {
+        event_category: 'conversion',
+        event_label: 'mobile_sticky'
+      });
     }
   };
 
@@ -36,14 +38,15 @@ const StickyMobileCTA = () => {
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden safe-area-inset-bottom">
       <div className="bg-background/95 backdrop-blur-md border-t border-border p-3 shadow-2xl">
         <div className="flex items-center gap-2">
-          {/* Primary CTA - Scroll to form */}
-          <button 
-            onClick={scrollToForm}
+          {/* Primary CTA - Link to Percorsi */}
+          <Link 
+            to="/percorsi"
+            onClick={handlePercorsiClick}
             className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3.5 px-4 rounded-xl transition-colors min-h-[52px]"
           >
-            <span className="text-sm">Prenota prova gratuita</span>
+            <span className="text-sm">Scopri il tuo percorso</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </Link>
           
           {/* WhatsApp button */}
           <a 
