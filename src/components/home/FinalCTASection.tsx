@@ -1,13 +1,57 @@
 import { UnifiedContactForm } from '@/features/forms';
-import { Phone, MessageCircle, ArrowRight, Check } from 'lucide-react';
+import { Phone, MessageCircle, ArrowRight, Check, Clock, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+const UrgencyBanner = () => {
+  const [spotsLeft] = useState(3);
+  const [daysLeft, setDaysLeft] = useState(0);
+
+  useEffect(() => {
+    // Calculate days until end of week (Sunday)
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const daysUntilSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
+    setDaysLeft(daysUntilSunday);
+  }, []);
+
+  return (
+    <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/30 animate-pulse-slow">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
+        <div className="flex items-center gap-2">
+          <Zap className="w-5 h-5 text-yellow-300 animate-pulse" />
+          <span className="text-white font-bold text-sm md:text-base">
+            OFFERTA LIMITATA
+          </span>
+        </div>
+        <div className="h-4 w-px bg-white/30 hidden sm:block" />
+        <div className="flex items-center gap-4 text-white/90 text-sm">
+          <span className="flex items-center gap-1.5">
+            <span className="font-bold text-primary text-lg">{spotsLeft}</span> 
+            posti questa settimana
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Clock className="w-4 h-4" />
+            {daysLeft === 0 ? 'Ultimo giorno!' : `${daysLeft} giorni rimasti`}
+          </span>
+        </div>
+      </div>
+      <p className="text-center text-white/80 text-xs mt-2">
+        ✨ Consulenza + Prova Gratuita per i nuovi iscritti
+      </p>
+    </div>
+  );
+};
 
 const FinalCTASection = () => {
   return (
     <section id="contatto" className="py-16 md:py-24 bg-gradient-to-br from-primary via-secondary to-accent">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
+
+          {/* Urgency Banner */}
+          <UrgencyBanner />
 
           {/* Header Form */}
           <h3 className="text-xl md:text-2xl font-bold text-center mb-4 text-white">

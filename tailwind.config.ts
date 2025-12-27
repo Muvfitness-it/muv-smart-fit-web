@@ -145,9 +145,17 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.8" }
         },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.85" }
+        },
         "glow": {
           "0%": { boxShadow: "0 0 20px hsl(var(--brand-primary) / 0.3)" },
           "100%": { boxShadow: "0 0 30px hsl(var(--brand-primary) / 0.6)" }
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" }
         }
       },
       animation: {
@@ -162,7 +170,9 @@ const config: Config = {
         "float": "float 3s ease-in-out infinite",
         "float-gentle": "float-gentle 4s ease-in-out infinite",
         "pulse-soft": "pulse-soft 2s ease-in-out infinite",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
         "glow": "glow 2s ease-in-out infinite alternate",
+        "slide-up": "slide-up 0.4s ease-out",
         "enter": "fade-in 0.3s ease-out, scale-in 0.2s ease-out",
         "exit": "fade-out 0.3s ease-out, scale-out 0.2s ease-out"
       },
