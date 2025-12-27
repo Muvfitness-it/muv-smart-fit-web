@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UnifiedSEOHead from '@/components/SEO/UnifiedSEOHead';
 import PercorsiHero from '@/components/percorsi/PercorsiHero';
+import GenderSelector, { Gender } from '@/components/percorsi/GenderSelector';
 import PercorsiProblema from '@/components/percorsi/PercorsiProblema';
 import PercorsiCards from '@/components/percorsi/PercorsiCards';
 import PercorsiComparison from '@/components/percorsi/PercorsiComparison';
@@ -60,6 +61,8 @@ const getPercorsiStructuredData = () => {
 };
 
 const Percorsi: React.FC = () => {
+  const [selectedGender, setSelectedGender] = useState<Gender>(null);
+
   return (
     <>
       <UnifiedSEOHead
@@ -74,11 +77,17 @@ const Percorsi: React.FC = () => {
         {/* Hero - Above the fold */}
         <PercorsiHero />
         
-        {/* Problem Section */}
-        <PercorsiProblema />
+        {/* Gender Selector - New section */}
+        <GenderSelector 
+          selectedGender={selectedGender} 
+          onGenderSelect={setSelectedGender}
+        />
         
-        {/* Solution: S-M-L Cards - Core content */}
-        <PercorsiCards />
+        {/* Problem Section - Differentiated by gender */}
+        <PercorsiProblema gender={selectedGender} />
+        
+        {/* Solution: S-M-L Cards - Core content with gender-specific messaging */}
+        <PercorsiCards gender={selectedGender} />
         
         {/* Comparison Table */}
         <PercorsiComparison />

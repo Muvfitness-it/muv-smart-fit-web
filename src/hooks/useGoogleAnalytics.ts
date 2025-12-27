@@ -158,6 +158,26 @@ export const trackHomeClickToFunnel = (location: string) => {
 };
 
 // ============================================
+// PERCORSI PAGE EVENTS
+// ============================================
+
+export const trackGenderSelected = (gender: 'donna' | 'uomo') => {
+  trackEvent('gender_selected', {
+    gender,
+    page: '/percorsi',
+    timestamp: new Date().toISOString()
+  });
+};
+
+export const trackPercorsoView = (percorsoName: string, gender?: string) => {
+  trackEvent('percorso_view', {
+    percorso_name: percorsoName,
+    gender: gender || 'not_selected',
+    timestamp: new Date().toISOString()
+  });
+};
+
+// ============================================
 // FUNNEL EVENTS - Percorso prenotazione qualificata
 // ============================================
 
