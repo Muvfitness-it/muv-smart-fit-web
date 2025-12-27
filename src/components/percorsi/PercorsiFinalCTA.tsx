@@ -3,8 +3,33 @@ import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import { CONTACT_LINKS, WHATSAPP_MESSAGES } from '@/config/ctaConstants';
 import { BUSINESS_DATA } from '@/config/businessData';
+import { Gender } from './GenderSelector';
 
-const PercorsiFinalCTA: React.FC = () => {
+interface PercorsiFinalCTAProps {
+  gender?: Gender;
+}
+
+const PercorsiFinalCTA: React.FC<PercorsiFinalCTAProps> = ({ gender }) => {
+  const getHeadline = () => {
+    if (gender === 'donna') {
+      return 'Inizia il tuo percorso di benessere';
+    }
+    if (gender === 'uomo') {
+      return 'Inizia il tuo percorso di forza';
+    }
+    return 'Inizia il tuo percorso di trasformazione';
+  };
+
+  const getWhatsAppMessage = () => {
+    if (gender === 'donna') {
+      return 'Ciao! Sono interessata ai Percorsi Donna. Vorrei prenotare una consulenza gratuita.';
+    }
+    if (gender === 'uomo') {
+      return 'Ciao! Sono interessato ai Percorsi Uomo. Vorrei prenotare una consulenza gratuita.';
+    }
+    return WHATSAPP_MESSAGES.consultation;
+  };
+
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
       {/* Background decoration */}
@@ -17,7 +42,7 @@ const PercorsiFinalCTA: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Headline */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Inizia il tuo percorso di trasformazione
+            {getHeadline()}
           </h2>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8">
@@ -33,7 +58,7 @@ const PercorsiFinalCTA: React.FC = () => {
               asChild
             >
               <a 
-                href={CONTACT_LINKS.whatsappWithMessage(WHATSAPP_MESSAGES.consultation)} 
+                href={CONTACT_LINKS.whatsappWithMessage(getWhatsAppMessage())} 
                 target="_blank" 
                 rel="noopener noreferrer"
               >

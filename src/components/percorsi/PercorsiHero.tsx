@@ -2,13 +2,50 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Phone } from 'lucide-react';
 import { CONTACT_LINKS, STANDARD_CTAS } from '@/config/ctaConstants';
+import { Gender } from './GenderSelector';
 
-const PercorsiHero: React.FC = () => {
+interface PercorsiHeroProps {
+  gender?: Gender;
+}
+
+const PercorsiHero: React.FC<PercorsiHeroProps> = ({ gender }) => {
   const scrollToKits = () => {
-    const element = document.getElementById('percorsi-cards');
+    const element = document.getElementById(gender ? 'percorsi-problema' : 'gender-selector');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const getHeadline = () => {
+    if (gender === 'donna') {
+      return (
+        <>
+          Percorsi <span className="text-primary">su misura per te</span>
+        </>
+      );
+    }
+    if (gender === 'uomo') {
+      return (
+        <>
+          Percorsi <span className="text-primary">su misura per te</span>
+        </>
+      );
+    }
+    return (
+      <>
+        Scegli il <span className="text-primary">percorso giusto</span> per te
+      </>
+    );
+  };
+
+  const getSubtitle = () => {
+    if (gender === 'donna') {
+      return 'Tonificazione, silhouette, benessere: 3 percorsi pensati per le esigenze femminili con tecnologie avanzate e personal trainer dedicato.';
+    }
+    if (gender === 'uomo') {
+      return 'Definizione, forza, performance: 3 percorsi pensati per le esigenze maschili con tecnologie avanzate e personal trainer dedicato.';
+    }
+    return '3 soluzioni complete per trasformare il tuo corpo con tecnologie avanzate, personal trainer dedicato e risultati misurabili.';
   };
 
   return (
@@ -23,18 +60,19 @@ const PercorsiHero: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <span className="text-primary font-medium text-sm">Percorsi Personalizzati</span>
+            <span className="text-primary font-medium text-sm">
+              {gender === 'donna' ? 'Percorsi Donna' : gender === 'uomo' ? 'Percorsi Uomo' : 'Percorsi Personalizzati'}
+            </span>
           </div>
           
           {/* H1 */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Scegli il <span className="text-primary">percorso giusto</span> per te
+            {getHeadline()}
           </h1>
           
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            3 soluzioni complete per trasformare il tuo corpo con tecnologie avanzate, 
-            personal trainer dedicato e risultati misurabili.
+            {getSubtitle()}
           </p>
           
           {/* CTAs */}
@@ -44,7 +82,7 @@ const PercorsiHero: React.FC = () => {
               onClick={scrollToKits}
               className="group w-full sm:w-auto"
             >
-              Vedi i percorsi
+              {gender ? 'Scopri i percorsi' : 'Scegli il tuo percorso'}
               <ChevronDown className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform" />
             </Button>
             

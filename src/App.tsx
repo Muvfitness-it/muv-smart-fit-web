@@ -241,6 +241,8 @@ const AppContent = () => {
                     <Route path="/perche-muv" element={<PercheMUV />} />
                     <Route path="/prezzi" element={<Navigate to="/perche-muv" replace />} />
                     <Route path="/percorsi" element={<Percorsi />} />
+                    <Route path="/percorsi/donna" element={<Percorsi preselectedGender="donna" />} />
+                    <Route path="/percorsi/uomo" element={<Percorsi preselectedGender="uomo" />} />
                     <Route path="/servizi" element={<ServiziCompleto />} />
                     <Route path="/tecnologie" element={<Tecnologie />} />
                     
