@@ -23,7 +23,8 @@ const testimonials: Testimonial[] = [
     gender: 'donna',
     percorso: 'TRASFORMAZIONE',
     quote: 'Finalmente ho trovato un posto dove mi sento a mio agio. I risultati sulla cellulite sono incredibili.',
-    result: '-2 taglie in 8 settimane'
+    result: '-2 taglie in 8 settimane',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'd2',
@@ -32,7 +33,8 @@ const testimonials: Testimonial[] = [
     gender: 'donna',
     percorso: 'ELITE',
     quote: 'Il percorso Elite ha superato ogni aspettativa. Pelle più tonica, silhouette definita e un\'energia che non avevo da anni.',
-    result: 'Trasformazione completa in 12 settimane'
+    result: 'Trasformazione completa in 12 settimane',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'd3',
@@ -41,7 +43,8 @@ const testimonials: Testimonial[] = [
     gender: 'donna',
     percorso: 'START',
     quote: 'Perfetto per iniziare! Ho capito subito che questo metodo funziona davvero.',
-    result: 'Glutei più tonici in 4 settimane'
+    result: 'Glutei più tonici in 4 settimane',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'd4',
@@ -50,7 +53,8 @@ const testimonials: Testimonial[] = [
     gender: 'donna',
     percorso: 'TRASFORMAZIONE',
     quote: 'Dopo due gravidanze pensavo fosse impossibile tornare in forma. Mi sbagliavo.',
-    result: '-8 cm di girovita'
+    result: '-8 cm di girovita',
+    avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face'
   },
   // Testimonianze Uomo
   {
@@ -60,7 +64,8 @@ const testimonials: Testimonial[] = [
     gender: 'uomo',
     percorso: 'TRASFORMAZIONE',
     quote: 'Lavoro 12 ore al giorno. Con 2 sessioni a settimana ho ottenuto risultati che non avevo in palestra con 5 allenamenti.',
-    result: '-5 kg di grasso, +3 kg di muscolo'
+    result: '-5 kg di grasso, +3 kg di muscolo',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'u2',
@@ -69,7 +74,8 @@ const testimonials: Testimonial[] = [
     gender: 'uomo',
     percorso: 'ELITE',
     quote: 'Il mal di schiena che mi perseguitava da anni è sparito. E fisicamente non sono mai stato così in forma.',
-    result: 'Zero mal di schiena, addome definito'
+    result: 'Zero mal di schiena, addome definito',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'u3',
@@ -78,7 +84,8 @@ const testimonials: Testimonial[] = [
     gender: 'uomo',
     percorso: 'START',
     quote: 'Ero scettico sulla tecnologia EMS. Dopo la prima prova ho capito che era quello che cercavo.',
-    result: '+15% massa muscolare in 6 settimane'
+    result: '+15% massa muscolare in 6 settimane',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face'
   },
   {
     id: 'u4',
@@ -87,7 +94,8 @@ const testimonials: Testimonial[] = [
     gender: 'uomo',
     percorso: 'TRASFORMAZIONE',
     quote: 'Finalmente un approccio serio e professionale. Niente palestre affollate, solo risultati concreti.',
-    result: 'Pancia piatta dopo 10 settimane'
+    result: 'Pancia piatta dopo 10 settimane',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face'
   }
 ];
 
@@ -154,13 +162,23 @@ const PercorsiTestimonials: React.FC<PercorsiTestimonialsProps> = ({ gender }) =
               
               {/* Author */}
               <div className="flex items-center justify-between border-t border-border pt-4">
-                <div>
-                  <p className="font-semibold text-foreground">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonial.age} anni
-                  </p>
+                <div className="flex items-center gap-3">
+                  {testimonial.avatar && (
+                    <img 
+                      src={testimonial.avatar} 
+                      alt={`${testimonial.name} - cliente MUV Fitness`}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
+                      loading="lazy"
+                    />
+                  )}
+                  <div>
+                    <p className="font-semibold text-foreground">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {testimonial.age} anni
+                    </p>
+                  </div>
                 </div>
                 
                 {/* Percorso Badge */}

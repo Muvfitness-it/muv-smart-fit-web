@@ -250,6 +250,32 @@
       "keywords": "cookie policy, cookie, MUV Fitness, informativa",
       "priority": 0.3,
       "changefreq": "yearly"
+    },
+    {
+      "path": "/percorsi",
+      "title": "Percorsi Fitness Legnago | START, TRASFORMAZIONE, ELITE | MUV Fitness",
+      "description": "Scegli il percorso fitness perfetto per te a Legnago: START per iniziare, TRASFORMAZIONE per risultati visibili, ELITE per il massimo. Personal training, EMS e tecnologie avanzate.",
+      "keywords": "percorsi fitness Legnago, programma dimagrimento, trasformazione corporea, EMS Legnago, personal training",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "path": "/percorsi/donna",
+      "title": "Percorsi Fitness Donna Legnago | Dimagrimento e Tonificazione Femminile",
+      "description": "Percorsi fitness studiati per le donne a Legnago: dimagrimento, anticellulite, tonificazione glutei e braccia. Personal training in ambiente riservato con EMS, Vacuum e Pilates.",
+      "keywords": "fitness donna Legnago, dimagrimento donne, anticellulite, tonificazione femminile, palestra donne, EMS donna",
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "ogImage": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
+    },
+    {
+      "path": "/percorsi/uomo",
+      "title": "Percorsi Fitness Uomo Legnago | Massa Muscolare e Definizione",
+      "description": "Percorsi fitness per uomini a Legnago: aumento massa muscolare, definizione addominale, perdita grasso. Personal training con EMS e tecnologie avanzate per risultati rapidi.",
+      "keywords": "fitness uomo Legnago, massa muscolare, addominali definiti, perdere pancia, palestra uomini, EMS uomo",
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "ogImage": "https://www.muvfitness.it/lovable-uploads/1a388b9f-8982-4cd3-abd5-2fa541cbc8ac.png"
     }
   ]
 }
