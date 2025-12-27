@@ -1,25 +1,68 @@
 import { UnifiedContactForm } from '@/features/forms';
-import { Phone, MessageCircle, ArrowRight, Check } from 'lucide-react';
+import { Phone, MessageCircle, ArrowRight, Check, UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { trackHomeClickToFunnel } from '@/hooks/useGoogleAnalytics';
 
 const FinalCTASection = () => {
-  const handleFunnelClick = () => {
-    trackHomeClickToFunnel('contact_section_funnel_cta');
+  const trackGenderSelection = (gender: 'donna' | 'uomo') => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'contact_section_gender_click', {
+        event_category: 'conversion',
+        event_label: gender
+      });
+    }
   };
 
   return (
     <section id="contatto" className="py-16 md:py-24 bg-gradient-to-br from-primary via-secondary to-accent">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          {/* Header */}
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-4 text-white">
-            Hai una domanda veloce? Lasciaci i tuoi dati.
-          </h2>
-          <p className="text-lg text-center mb-8 text-white/90">
-            Se vuoi una prima informazione o capire se possiamo aiutarti, compila il modulo.
-            <br />Ti ricontattiamo noi, senza impegno.
+        <div className="max-w-3xl mx-auto">
+          
+          {/* Sezione Orientamento Percorsi */}
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+              Non sai quale percorso è adatto a te?
+            </h2>
+            <p className="text-lg text-white/90 mb-8">
+              Scopri i nostri percorsi personalizzati per genere
+            </p>
+            
+            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-8">
+              <Link 
+                to="/percorsi?genere=donna" 
+                onClick={() => trackGenderSelection('donna')}
+                className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-white rounded-xl p-5 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-full bg-pink-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <UserRound className="w-6 h-6 text-pink-300" />
+                </div>
+                <span className="text-white font-semibold">Percorso Donna</span>
+              </Link>
+              <Link 
+                to="/percorsi?genere=uomo" 
+                onClick={() => trackGenderSelection('uomo')}
+                className="group flex flex-col items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-white rounded-xl p-5 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <UserRound className="w-6 h-6 text-blue-300" />
+                </div>
+                <span className="text-white font-semibold">Percorso Uomo</span>
+              </Link>
+            </div>
+            
+            <div className="h-px bg-white/20 max-w-md mx-auto mb-8" />
+            
+            <p className="text-white/80 text-sm mb-2">
+              Oppure lasciaci i tuoi dati e ti aiuteremo a scegliere
+            </p>
+          </div>
+
+          {/* Header Form */}
+          <h3 className="text-xl md:text-2xl font-bold text-center mb-4 text-white">
+            Hai una domanda veloce?
+          </h3>
+          <p className="text-base text-center mb-8 text-white/90">
+            Compila il modulo, ti ricontattiamo noi senza impegno.
           </p>
           
           <UnifiedContactForm
@@ -41,19 +84,18 @@ const FinalCTASection = () => {
             ))}
           </div>
           
-          {/* Orientamento funnel */}
+          {/* Link a tutti i percorsi */}
           <div className="mt-10 pt-8 border-t border-white/20 text-center">
             <p className="text-white/90 mb-4">
-              Vuoi un'analisi personalizzata e capire quale percorso è più adatto a te?
+              Vuoi esplorare tutti i nostri servizi e tecnologie?
             </p>
             <Button 
               size="lg" 
               className="bg-white text-primary hover:bg-white/90 font-semibold"
               asChild
-              onClick={handleFunnelClick}
             >
-              <Link to="/funnel">
-                👉 Prenota la consulenza conoscitiva in studio
+              <Link to="/percorsi">
+                Scopri tutti i percorsi
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
