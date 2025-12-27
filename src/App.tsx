@@ -250,6 +250,7 @@ const AppContent = () => {
                     <Route path="/servizi/ems-legnago" element={<EMSPage />} />
                     <Route path="/servizi/pilates-reformer-legnago" element={<PilatesReformerPage />} />
                     <Route path="/servizi/pancafit-legnago" element={<Pancafit />} />
+                    <Route path="/servizi/pancafit" element={<Pancafit />} />
                     <Route path="/servizi/vacuum-pressoterapia-legnago" element={<VacuumPage />} />
                     <Route path="/servizi/sauna-infrarossi-legnago" element={<SaunaInfrarossiPage />} />
                     <Route path="/servizi/over-60-legnago" element={<Over60Page />} />
