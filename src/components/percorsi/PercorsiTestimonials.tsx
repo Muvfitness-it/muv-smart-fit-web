@@ -200,6 +200,11 @@ const PercorsiTestimonials: React.FC<PercorsiTestimonialsProps> = ({ gender }) =
           <p className="text-muted-foreground text-sm">
             4.9/5 basato su 120+ recensioni verificate
           </p>
+          <p className="text-xs text-muted-foreground mt-4 max-w-xl mx-auto opacity-70">
+            Le foto e i nomi dei clienti sono rappresentativi e non corrispondono a persone reali, 
+            per tutelare la privacy dei frequentanti del Centro Fitness MUV. 
+            Le testimonianze sono basate su esperienze e risultati reali.
+          </p>
         </div>
       </div>
     </section>
