@@ -118,18 +118,18 @@ const ConversionHero = () => {
           <p className="text-lg text-white/90 mb-6 [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
             Scegli il percorso più adatto a te:
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto mb-8">
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto mb-8">
             {/* Card Donna */}
             <Link 
               to="/percorsi?genere=donna" 
               onClick={() => trackPercorsoSelection('donna')}
-              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-pink-400 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[140px] xs:min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-pink-400 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] hover:-translate-y-2"
             >
               <img src={heroCardDonna} alt="" className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-pink-900/80 group-hover:via-pink-800/30" />
               <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-pink-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-pink-500/50 group-hover:shadow-[0_0_20px_rgba(236,72,153,0.5)]">
-                  <UserRound className="w-5 h-5 md:w-6 md:h-6 text-pink-400 transition-transform duration-300 group-hover:scale-110" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-pink-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-pink-500/50 group-hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <UserRound className="w-5 h-5 md:w-6 md:h-6 text-pink-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
                 </div>
                 <span className="text-white font-semibold text-sm md:text-base transition-transform duration-300 group-hover:scale-105">Percorso Donna</span>
                 <span className="text-white/70 text-[10px] md:text-xs text-center transition-all duration-300 group-hover:text-white/90">Tonificazione • Silhouette</span>
@@ -143,13 +143,13 @@ const ConversionHero = () => {
             <Link 
               to="/percorsi?genere=uomo" 
               onClick={() => trackPercorsoSelection('uomo')}
-              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[140px] xs:min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:-translate-y-2"
             >
               <img src={heroCardUomo} alt="" className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-blue-900/80 group-hover:via-blue-800/30" />
               <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-                  <UserRound className="w-5 h-5 md:w-6 md:h-6 text-blue-400 transition-transform duration-300 group-hover:scale-110" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <UserRound className="w-5 h-5 md:w-6 md:h-6 text-blue-400 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12" />
                 </div>
                 <span className="text-white font-semibold text-sm md:text-base transition-transform duration-300 group-hover:scale-105">Percorso Uomo</span>
                 <span className="text-white/70 text-[10px] md:text-xs text-center transition-all duration-300 group-hover:text-white/90">Definizione • Forza</span>
@@ -163,13 +163,13 @@ const ConversionHero = () => {
             <Link 
               to="/servizi/pancafit" 
               onClick={() => trackPercorsoSelection('posturale')}
-              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-orange-400 hover:shadow-[0_0_30px_rgba(251,146,60,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[140px] xs:min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-orange-400 hover:shadow-[0_0_30px_rgba(251,146,60,0.3)] hover:-translate-y-2"
             >
               <img src={heroCardPosturale} alt="" className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-orange-900/80 group-hover:via-orange-800/30" />
               <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-orange-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-500/50 group-hover:shadow-[0_0_20px_rgba(251,146,60,0.5)]">
-                  <SpineIcon className="w-5 h-5 md:w-6 md:h-6 text-orange-400 transition-transform duration-300 group-hover:scale-110" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-orange-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-500/50 group-hover:shadow-[0_0_20px_rgba(251,146,60,0.5)] group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <SpineIcon className="w-5 h-5 md:w-6 md:h-6 text-orange-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6" />
                 </div>
                 <span className="text-white font-semibold text-sm md:text-base transition-transform duration-300 group-hover:scale-105">Percorso Posturale</span>
                 <span className="text-white/70 text-[10px] md:text-xs text-center transition-all duration-300 group-hover:text-white/90">Pancafit • Mal di schiena</span>
@@ -183,13 +183,13 @@ const ConversionHero = () => {
             <Link 
               to="/servizi/pilates-reformer-legnago" 
               onClick={() => trackPercorsoSelection('pilates')}
-              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-purple-400 hover:shadow-[0_0_30px_rgba(192,132,252,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col items-center justify-end gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 md:p-5 min-h-[140px] xs:min-h-[160px] md:min-h-[180px] overflow-hidden transition-all duration-500 hover:border-purple-400 hover:shadow-[0_0_30px_rgba(192,132,252,0.3)] hover:-translate-y-2"
             >
               <img src={heroCardPilates} alt="" className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-purple-900/80 group-hover:via-purple-800/30" />
               <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-purple-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-purple-500/50 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.5)]">
-                  <Dumbbell className="w-5 h-5 md:w-6 md:h-6 text-purple-400 transition-transform duration-300 group-hover:scale-110" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-purple-500/30 flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:bg-purple-500/50 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.5)] group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <Dumbbell className="w-5 h-5 md:w-6 md:h-6 text-purple-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
                 </div>
                 <span className="text-white font-semibold text-sm md:text-base transition-transform duration-300 group-hover:scale-105">Percorso Pilates</span>
                 <span className="text-white/70 text-[10px] md:text-xs text-center transition-all duration-300 group-hover:text-white/90">Reformer • Core • Flessibilità</span>
