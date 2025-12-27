@@ -202,7 +202,8 @@ const PercorsiBeforeAfter: React.FC<PercorsiBeforeAfterProps> = ({ gender }) => 
         {/* Disclaimer */}
         <p className="text-center text-sm text-muted-foreground mt-8 max-w-2xl mx-auto">
           * I risultati possono variare da persona a persona in base a fattori individuali come metabolismo, 
-          costanza e stile di vita. Le testimonianze riportate sono esperienze reali dei nostri clienti.
+          costanza e stile di vita. I nomi e le foto utilizzati sono fittizi per tutelare la privacy dei nostri clienti. 
+          I risultati riportati sono basati su esperienze reali documentate presso il Centro Fitness MUV.
         </p>
       </div>
     </section>
