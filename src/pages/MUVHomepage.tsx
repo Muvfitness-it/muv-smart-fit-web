@@ -7,8 +7,13 @@ import FinalCTASection from "@/components/home/FinalCTASection";
 import StickyMobileCTA from "@/components/home/StickyMobileCTA";
 import SocialProofBar from "@/components/home/SocialProofBar";
 import ExitIntentPopup from "@/components/home/ExitIntentPopup";
+import HomepageFAQ from "@/components/home/HomepageFAQ";
+import useScrollDepthTracking from "@/hooks/useScrollDepthTracking";
 
 const MUVHomepage = () => {
+  // Attiva scroll depth tracking
+  useScrollDepthTracking();
+
   return (
     <>
       <Helmet>
@@ -47,9 +52,10 @@ const MUVHomepage = () => {
       {/* NAVBAR SEMPLICE: Solo Logo + CTA */}
       <SimpleHomeNavbar />
 
-      {/* HOMEPAGE SEMPLICE: Hero + Social Proof + Sezione Contatto Veloce */}
+      {/* HOMEPAGE: Hero + Social Proof + FAQ + Contatto */}
       <ConversionHero />
       <SocialProofBar />
+      <HomepageFAQ />
       <FinalCTASection />
 
       {/* FOOTER SEMPLICE: Indirizzo, Telefono, Privacy, Link pagine */}
