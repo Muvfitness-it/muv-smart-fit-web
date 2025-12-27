@@ -5,6 +5,8 @@ import PercorsiHero from '@/components/percorsi/PercorsiHero';
 import GenderSelector, { Gender } from '@/components/percorsi/GenderSelector';
 import PercorsiProblema from '@/components/percorsi/PercorsiProblema';
 import PercorsiCards from '@/components/percorsi/PercorsiCards';
+import PercorsiIntermediateCTA from '@/components/percorsi/PercorsiIntermediateCTA';
+import PercorsiBeforeAfter from '@/components/percorsi/PercorsiBeforeAfter';
 import PercorsiTestimonials from '@/components/percorsi/PercorsiTestimonials';
 import PercorsiComparison from '@/components/percorsi/PercorsiComparison';
 import PercorsiFAQ from '@/components/percorsi/PercorsiFAQ';
@@ -136,8 +138,17 @@ const Percorsi: React.FC<PercorsiProps> = ({ preselectedGender }) => {
         {/* Problem Section - Differentiated by gender */}
         <PercorsiProblema gender={selectedGender} />
         
+        {/* Intermediate CTA #1 */}
+        <PercorsiIntermediateCTA gender={selectedGender} variant="secondary" />
+        
         {/* Solution: S-M-L Cards - Core content with gender-specific messaging */}
         <PercorsiCards gender={selectedGender} />
+        
+        {/* Before/After Results - Gender specific */}
+        <PercorsiBeforeAfter gender={selectedGender} />
+        
+        {/* Intermediate CTA #2 */}
+        <PercorsiIntermediateCTA gender={selectedGender} variant="primary" />
         
         {/* Testimonials - Filtered by gender */}
         <PercorsiTestimonials gender={selectedGender} />
@@ -145,7 +156,7 @@ const Percorsi: React.FC<PercorsiProps> = ({ preselectedGender }) => {
         {/* Comparison Table */}
         <PercorsiComparison />
         
-        {/* FAQ Section */}
+        {/* FAQ Section - Gender specific */}
         <PercorsiFAQ gender={selectedGender} />
         
         {/* Final CTA */}
