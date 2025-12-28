@@ -46,6 +46,9 @@ serve(async (req) => {
       errors: [] as string[]
     };
 
+    // Base URL for tracking
+    const TRACKING_BASE_URL = `${SUPABASE_URL}/functions/v1/email-tracking`;
+
     // 2. Process each pending email
     for (const emailRecord of pendingEmails) {
       try {
@@ -58,12 +61,34 @@ serve(async (req) => {
 
         console.log(`Sending ${emailRecord.sequence_type} to ${lead.email}`);
 
+        // Get tracking ID from email record
+        const trackingId = emailRecord.tracking_id || emailRecord.id;
+        
+        // Add tracking pixel to email content
+        const trackingPixel = `<img src="${TRACKING_BASE_URL}?tid=${trackingId}&type=open" width="1" height="1" style="display:none" alt="" />`;
+        
+        // Inject tracking pixel and wrap links for click tracking
+        let emailContent = emailRecord.email_content;
+        
+        // Add tracking pixel before closing body tag
+        emailContent = emailContent.replace('</body>', `${trackingPixel}</body>`);
+        
+        // Wrap CTA links with click tracking
+        emailContent = emailContent.replace(
+          /href="(https:\/\/www\.muvfitness\.it[^"]+)"/g,
+          (match, url) => `href="${TRACKING_BASE_URL}?tid=${trackingId}&type=click&url=${encodeURIComponent(url)}"`
+        );
+        emailContent = emailContent.replace(
+          /href="(https:\/\/wa\.me[^"]+)"/g,
+          (match, url) => `href="${TRACKING_BASE_URL}?tid=${trackingId}&type=click&url=${encodeURIComponent(url)}"`
+        );
+
         // Send email via Resend
         const emailResponse = await resend.emails.send({
           from: "MUV Fitness <noreply@muvfitness.it>",
           to: [lead.email],
           subject: emailRecord.email_subject,
-          html: emailRecord.email_content
+          html: emailContent
         });
 
         if (emailResponse.error) {
