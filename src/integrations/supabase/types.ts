@@ -775,6 +775,7 @@ export type Database = {
           sent_at: string | null
           sequence_type: string
           status: string | null
+          subject_variant: string | null
           tracking_id: string | null
         }
         Insert: {
@@ -791,6 +792,7 @@ export type Database = {
           sent_at?: string | null
           sequence_type: string
           status?: string | null
+          subject_variant?: string | null
           tracking_id?: string | null
         }
         Update: {
@@ -807,6 +809,7 @@ export type Database = {
           sent_at?: string | null
           sequence_type?: string
           status?: string | null
+          subject_variant?: string | null
           tracking_id?: string | null
         }
         Relationships: [

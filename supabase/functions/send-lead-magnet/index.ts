@@ -116,10 +116,29 @@ const createEmailTemplate = (name: string, guideUrl: string) => `
 </html>
 `;
 
+// A/B test subject line variants
+const subjectVariants = {
+  day1: {
+    A: "📖 Hai iniziato a leggere la guida? Ecco un consiglio extra",
+    B: "💡 Il segreto che non trovi nella guida (solo per te)"
+  },
+  day3: {
+    A: (name: string) => `🎯 ${name}, ecco cosa stanno facendo i nostri clienti questa settimana`,
+    B: (name: string) => `📊 ${name}, questi risultati ti sorprenderanno`
+  },
+  day7: {
+    A: (name: string) => `⏰ ${name}, ultima possibilità: offerta speciale per te`,
+    B: (name: string) => `🎁 ${name}, ho riservato questo solo per te (-33%)`
+  }
+};
+
+// Get random A/B variant
+const getRandomVariant = (): 'A' | 'B' => Math.random() < 0.5 ? 'A' : 'B';
+
 // Follow-up email sequence templates
 const followUpTemplates = {
-  day1: (name: string) => ({
-    subject: "📖 Hai iniziato a leggere la guida? Ecco un consiglio extra",
+  day1: (name: string, variant: 'A' | 'B' = 'A') => ({
+    subject: subjectVariants.day1[variant],
     html: `
 <!DOCTYPE html>
 <html lang="it">
@@ -186,8 +205,10 @@ const followUpTemplates = {
 </html>`
   }),
   
-  day3: (name: string) => ({
-    subject: `🎯 ${name}, ecco cosa stanno facendo i nostri clienti questa settimana`,
+  day3: (name: string, variant: 'A' | 'B' = 'A') => ({
+    subject: typeof subjectVariants.day3[variant] === 'function' 
+      ? subjectVariants.day3[variant](name) 
+      : subjectVariants.day3[variant],
     html: `
 <!DOCTYPE html>
 <html lang="it">
@@ -258,8 +279,10 @@ const followUpTemplates = {
 </html>`
   }),
   
-  day7: (name: string) => ({
-    subject: `⏰ ${name}, ultima possibilità: offerta speciale per te`,
+  day7: (name: string, variant: 'A' | 'B' = 'A') => ({
+    subject: typeof subjectVariants.day7[variant] === 'function' 
+      ? subjectVariants.day7[variant](name) 
+      : subjectVariants.day7[variant],
     html: `
 <!DOCTYPE html>
 <html lang="it">
@@ -434,30 +457,37 @@ serve(async (req) => {
       const day3 = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000); // +3 days
       const day7 = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // +7 days
 
+      // Assign random A/B variant for this lead (consistent across all emails)
+      const variant = getRandomVariant();
+      console.log(`A/B Test: Lead ${leadId} assigned to variant ${variant}`);
+
       const sequences = [
         {
           lead_id: leadId,
           sequence_type: "lead_magnet_followup_day1",
-          email_subject: followUpTemplates.day1(cleanName).subject,
-          email_content: followUpTemplates.day1(cleanName).html,
+          email_subject: followUpTemplates.day1(cleanName, variant).subject,
+          email_content: followUpTemplates.day1(cleanName, variant).html,
           scheduled_at: day1.toISOString(),
-          status: "pending"
+          status: "pending",
+          subject_variant: variant
         },
         {
           lead_id: leadId,
           sequence_type: "lead_magnet_followup_day3",
-          email_subject: followUpTemplates.day3(cleanName).subject,
-          email_content: followUpTemplates.day3(cleanName).html,
+          email_subject: followUpTemplates.day3(cleanName, variant).subject,
+          email_content: followUpTemplates.day3(cleanName, variant).html,
           scheduled_at: day3.toISOString(),
-          status: "pending"
+          status: "pending",
+          subject_variant: variant
         },
         {
           lead_id: leadId,
           sequence_type: "lead_magnet_followup_day7",
-          email_subject: followUpTemplates.day7(cleanName).subject,
-          email_content: followUpTemplates.day7(cleanName).html,
+          email_subject: followUpTemplates.day7(cleanName, variant).subject,
+          email_content: followUpTemplates.day7(cleanName, variant).html,
           scheduled_at: day7.toISOString(),
-          status: "pending"
+          status: "pending",
+          subject_variant: variant
         }
       ];
 
