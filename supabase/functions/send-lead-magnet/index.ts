@@ -3,20 +3,13 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const ALLOWED_ORIGINS = [
-  "https://muvfitnesslegnago.it",
-  "https://www.muvfitness.it", 
-  "https://preview---muv-fitness.lovable.app",
-  "https://muv-fitness.lovable.app"
-];
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS"
 };
 
-// Professional HTML email template
+// Professional HTML email template for guide delivery
 const createEmailTemplate = (name: string, guideUrl: string) => `
 <!DOCTYPE html>
 <html lang="it">
@@ -123,9 +116,234 @@ const createEmailTemplate = (name: string, guideUrl: string) => `
 </html>
 `;
 
+// Follow-up email sequence templates
+const followUpTemplates = {
+  day1: (name: string) => ({
+    subject: "📖 Hai iniziato a leggere la guida? Ecco un consiglio extra",
+    html: `
+<!DOCTYPE html>
+<html lang="it">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td align="center" style="padding: 40px 0;">
+        <table role="presentation" style="width: 600px; max-width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <tr>
+            <td style="background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%); padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">💡 Un consiglio extra per te</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 40px 30px;">
+              <p style="color: #333333; font-size: 18px; margin: 0 0 20px 0;">Ciao <strong>${name}</strong>! 👋</p>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                Spero che tu abbia iniziato a leggere la guida "7 Segreti per Dimagrire". 
+                Ecco un consiglio che non troverai nella guida:
+              </p>
+              
+              <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-left: 4px solid #FF6B35; border-radius: 8px; padding: 20px; margin: 25px 0;">
+                <h3 style="color: #333333; margin: 0 0 10px 0; font-size: 18px;">🔥 Il Segreto Bonus:</h3>
+                <p style="color: #555555; font-size: 15px; line-height: 1.6; margin: 0;">
+                  <strong>L'allenamento EMS brucia fino a 500 calorie in soli 20 minuti</strong> - l'equivalente di 2 ore in palestra tradizionale. 
+                  È il modo più efficiente per accelerare i risultati che stai per ottenere con la guida.
+                </p>
+              </div>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 20px 0;">
+                <strong>Curiosità:</strong> I nostri clienti che combinano i consigli della guida con l'EMS 
+                ottengono risultati visibili in media dopo sole 4 settimane.
+              </p>
+              
+              <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 30px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="https://www.muvfitness.it/#contatti" 
+                       style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%); color: #ffffff; text-decoration: none; padding: 16px 35px; border-radius: 50px; font-weight: bold; font-size: 16px;">
+                      🎁 Prova EMS Gratuita
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="color: #888888; font-size: 14px; margin: 20px 0 0 0;">
+                P.S. Non hai ancora scaricato la guida? <a href="https://www.muvfitness.it/guide/7-segreti-per-dimagrire.pdf" style="color: #FF6B35;">Clicca qui</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #1a1a2e; padding: 25px; text-align: center;">
+              <p style="color: #ffffff; margin: 0 0 5px 0; font-weight: bold;">MUV Fitness Legnago</p>
+              <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 13px;">📍 Piazzetta Don Walter Soave, 2 - Legnago (VR) | 📱 329 107 0374</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+  }),
+  
+  day3: (name: string) => ({
+    subject: `🎯 ${name}, ecco cosa stanno facendo i nostri clienti questa settimana`,
+    html: `
+<!DOCTYPE html>
+<html lang="it">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td align="center" style="padding: 40px 0;">
+        <table role="presentation" style="width: 600px; max-width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <tr>
+            <td style="background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%); padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">📊 Risultati reali questa settimana</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 40px 30px;">
+              <p style="color: #333333; font-size: 18px; margin: 0 0 20px 0;">Ciao <strong>${name}</strong>!</p>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">
+                Volevo condividere con te alcuni risultati che i nostri clienti stanno ottenendo questa settimana:
+              </p>
+              
+              <div style="background-color: #f8f9fa; border-radius: 12px; padding: 25px; margin: 20px 0;">
+                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef;">
+                  <span style="font-size: 24px; margin-right: 10px;">👩</span>
+                  <strong style="color: #333;">Maria, 42 anni</strong>
+                  <p style="color: #555; margin: 5px 0 0 20px; font-size: 14px;">-4 kg in 3 settimane con EMS + dieta equilibrata</p>
+                </div>
+                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef;">
+                  <span style="font-size: 24px; margin-right: 10px;">👨</span>
+                  <strong style="color: #333;">Marco, 35 anni</strong>
+                  <p style="color: #555; margin: 5px 0 0 20px; font-size: 14px;">Finalmente addominali visibili dopo 6 settimane</p>
+                </div>
+                <div>
+                  <span style="font-size: 24px; margin-right: 10px;">👩</span>
+                  <strong style="color: #333;">Laura, 52 anni</strong>
+                  <p style="color: #555; margin: 5px 0 0 20px; font-size: 14px;">Mal di schiena sparito + 2 taglie in meno</p>
+                </div>
+              </div>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 25px 0;">
+                <strong>Il loro segreto?</strong> Hanno iniziato con una semplice consulenza gratuita per capire 
+                qual era il percorso giusto per loro.
+              </p>
+              
+              <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 25px; text-align: center; margin: 25px 0;">
+                <p style="color: #ffffff; margin: 0 0 15px 0; font-size: 16px;">
+                  🗓️ <strong>Solo 3 posti disponibili</strong> questa settimana per consulenze gratuite
+                </p>
+                <a href="https://www.muvfitness.it/#contatti" 
+                   style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%); color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 50px; font-weight: bold; font-size: 15px;">
+                  Prenota il Tuo Posto
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #1a1a2e; padding: 25px; text-align: center;">
+              <p style="color: #ffffff; margin: 0 0 5px 0; font-weight: bold;">MUV Fitness Legnago</p>
+              <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 13px;">📍 Piazzetta Don Walter Soave, 2 - Legnago (VR) | 📱 329 107 0374</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+  }),
+  
+  day7: (name: string) => ({
+    subject: `⏰ ${name}, ultima possibilità: offerta speciale per te`,
+    html: `
+<!DOCTYPE html>
+<html lang="it">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td align="center" style="padding: 40px 0;">
+        <table role="presentation" style="width: 600px; max-width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <tr>
+            <td style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">⏰ Offerta Esclusiva - Solo per Te</h1>
+              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 14px;">Valida solo per 48 ore</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 40px 30px;">
+              <p style="color: #333333; font-size: 18px; margin: 0 0 20px 0;">Ciao <strong>${name}</strong>,</p>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                È passata una settimana da quando hai scaricato la nostra guida. 
+                Spero che i consigli ti stiano aiutando! 💪
+              </p>
+              
+              <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">
+                Ho un'<strong>offerta speciale</strong> riservata solo a chi ha scaricato la guida:
+              </p>
+              
+              <div style="background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%); border-radius: 12px; padding: 30px; text-align: center; margin: 25px 0;">
+                <h2 style="color: #ffffff; margin: 0 0 15px 0; font-size: 28px;">🎁 PACCHETTO STARTER</h2>
+                <p style="color: rgba(255,255,255,0.9); margin: 0 0 10px 0; font-size: 18px;">
+                  <span style="text-decoration: line-through;">€149</span> → <strong style="font-size: 32px;">€99</strong>
+                </p>
+                <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">
+                  Consulenza + 3 Sessioni EMS + Piano Personalizzato
+                </p>
+              </div>
+              
+              <div style="background-color: #f8f9fa; border-radius: 12px; padding: 20px; margin: 25px 0;">
+                <h3 style="color: #333; margin: 0 0 15px 0; font-size: 16px;">✅ Cosa include:</h3>
+                <ul style="color: #555; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;">
+                  <li>Consulenza iniziale approfondita (valore €50)</li>
+                  <li>3 sessioni EMS da 20 minuti (valore €75)</li>
+                  <li>Piano alimentare personalizzato (valore €30)</li>
+                  <li>Accesso alla nostra app di monitoraggio</li>
+                </ul>
+              </div>
+              
+              <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 30px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="https://wa.me/393291070374?text=Ciao!%20Vorrei%20approfittare%20dell'offerta%20Pacchetto%20Starter%20a%20€99" 
+                       style="display: inline-block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #ffffff; text-decoration: none; padding: 18px 40px; border-radius: 50px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);">
+                      📱 Prenota su WhatsApp
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="color: #888888; font-size: 14px; text-align: center; margin: 20px 0 0 0;">
+                ⏰ L'offerta scade tra 48 ore. Non aspettare!
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #1a1a2e; padding: 25px; text-align: center;">
+              <p style="color: #ffffff; margin: 0 0 5px 0; font-weight: bold;">MUV Fitness Legnago</p>
+              <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 13px;">📍 Piazzetta Don Walter Soave, 2 - Legnago (VR) | 📱 329 107 0374</p>
+              <p style="color: rgba(255,255,255,0.5); margin: 15px 0 0 0; font-size: 11px;">
+                Non vuoi più ricevere queste email? <a href="https://www.muvfitness.it/unsubscribe" style="color: #888;">Cancellati</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+  })
+};
+
 serve(async (req) => {
-  const origin = req.headers.get("origin");
-  console.log("send-lead-magnet request from origin:", origin);
+  console.log("send-lead-magnet request received");
   
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
@@ -164,8 +382,10 @@ serve(async (req) => {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     
-    // Guide URL - public PDF
+    // Guide URL
     const guideUrl = "https://www.muvfitness.it/guide/7-segreti-per-dimagrire.pdf";
+    const cleanName = name.trim();
+    const cleanEmail = email.toLowerCase().trim();
 
     // 1. Save lead to database
     const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
@@ -177,8 +397,8 @@ serve(async (req) => {
         Prefer: "return=representation"
       },
       body: JSON.stringify({
-        name: name.trim(),
-        email: email.toLowerCase().trim(),
+        name: cleanName,
+        email: cleanEmail,
         phone: phone || null,
         source: source ?? "lead-magnet-exit-intent",
         message: "Richiesta guida: 7 Segreti per Dimagrire",
@@ -186,25 +406,78 @@ serve(async (req) => {
       })
     });
 
-    if (!insertRes.ok) {
-      const errorText = await insertRes.text();
-      console.error("Failed to save lead:", errorText);
-      // Continue anyway - email is more important
+    let leadId: string | null = null;
+    if (insertRes.ok) {
+      const leadData = await insertRes.json();
+      leadId = leadData[0]?.id;
+      console.log("Lead saved successfully:", leadId);
     } else {
-      console.log("Lead saved successfully");
+      console.error("Failed to save lead:", await insertRes.text());
     }
 
-    // 2. Send email with Resend
-    const emailHtml = createEmailTemplate(name.trim(), guideUrl);
+    // 2. Send immediate welcome email with guide
+    const emailHtml = createEmailTemplate(cleanName, guideUrl);
     
     const emailResponse = await resend.emails.send({
       from: "MUV Fitness <noreply@muvfitness.it>",
-      to: [email.toLowerCase().trim()],
+      to: [cleanEmail],
       subject: "🎁 La tua guida '7 Segreti per Dimagrire' è pronta!",
       html: emailHtml
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Welcome email sent:", emailResponse);
+
+    // 3. Schedule follow-up email sequence
+    if (leadId) {
+      const now = new Date();
+      const day1 = new Date(now.getTime() + 1 * 24 * 60 * 60 * 1000); // +1 day
+      const day3 = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000); // +3 days
+      const day7 = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // +7 days
+
+      const sequences = [
+        {
+          lead_id: leadId,
+          sequence_type: "lead_magnet_followup_day1",
+          email_subject: followUpTemplates.day1(cleanName).subject,
+          email_content: followUpTemplates.day1(cleanName).html,
+          scheduled_at: day1.toISOString(),
+          status: "pending"
+        },
+        {
+          lead_id: leadId,
+          sequence_type: "lead_magnet_followup_day3",
+          email_subject: followUpTemplates.day3(cleanName).subject,
+          email_content: followUpTemplates.day3(cleanName).html,
+          scheduled_at: day3.toISOString(),
+          status: "pending"
+        },
+        {
+          lead_id: leadId,
+          sequence_type: "lead_magnet_followup_day7",
+          email_subject: followUpTemplates.day7(cleanName).subject,
+          email_content: followUpTemplates.day7(cleanName).html,
+          scheduled_at: day7.toISOString(),
+          status: "pending"
+        }
+      ];
+
+      // Insert all scheduled emails
+      const sequenceRes = await fetch(`${SUPABASE_URL}/rest/v1/email_sequences`, {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sequences)
+      });
+
+      if (sequenceRes.ok) {
+        console.log("Email sequence scheduled successfully: Day 1, 3, 7");
+      } else {
+        console.error("Failed to schedule email sequence:", await sequenceRes.text());
+      }
+    }
 
     return new Response(JSON.stringify({ 
       ok: true, 
