@@ -762,37 +762,52 @@ export type Database = {
       }
       email_sequences: {
         Row: {
+          click_count: number | null
+          clicked_at: string | null
           created_at: string
           email_content: string
           email_subject: string
           id: string
           lead_id: string
+          open_count: number | null
+          opened_at: string | null
           scheduled_at: string
           sent_at: string | null
           sequence_type: string
           status: string | null
+          tracking_id: string | null
         }
         Insert: {
+          click_count?: number | null
+          clicked_at?: string | null
           created_at?: string
           email_content: string
           email_subject: string
           id?: string
           lead_id: string
+          open_count?: number | null
+          opened_at?: string | null
           scheduled_at: string
           sent_at?: string | null
           sequence_type: string
           status?: string | null
+          tracking_id?: string | null
         }
         Update: {
+          click_count?: number | null
+          clicked_at?: string | null
           created_at?: string
           email_content?: string
           email_subject?: string
           id?: string
           lead_id?: string
+          open_count?: number | null
+          opened_at?: string | null
           scheduled_at?: string
           sent_at?: string | null
           sequence_type?: string
           status?: string | null
+          tracking_id?: string | null
         }
         Relationships: [
           {
@@ -800,6 +815,44 @@ export type Database = {
             columns: ["lead_id"]
             isOneToOne: false
             referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_tracking_events: {
+        Row: {
+          created_at: string
+          email_sequence_id: string | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          link_url: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_sequence_id?: string | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          link_url?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_sequence_id?: string | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          link_url?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_tracking_events_email_sequence_id_fkey"
+            columns: ["email_sequence_id"]
+            isOneToOne: false
+            referencedRelation: "email_sequences"
             referencedColumns: ["id"]
           },
         ]

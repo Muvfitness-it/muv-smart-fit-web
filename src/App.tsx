@@ -116,6 +116,7 @@ const BlogCategory = lazy(() => import("./pages/blog/BlogCategory"));
 const BlogArticle = lazy(() => import("./pages/blog/BlogArticle"));
 const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
 const SEOMonitorDashboard = lazy(() => import("./pages/admin/SEOMonitorDashboard"));
+const LeadsDashboard = lazy(() => import("./pages/admin/LeadsDashboard"));
 
 // Loading component for lazy routes
 const RouteLoading = () => (
@@ -304,6 +305,7 @@ const AppContent = () => {
                     <Route path="/admin/small-group-schedule" element={<Navigate to="/admin?section=small-group" replace />} />
                     <Route path="/admin/local-seo" element={<Navigate to="/admin?section=local-seo" replace />} />
                     <Route path="/admin/seo-monitor" element={<Navigate to="/admin?section=seo-monitor" replace />} />
+                    <Route path="/admin/leads" element={<AdminRoute><LeadsDashboard /></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Now handled server-side via netlify.toml ===== */}
