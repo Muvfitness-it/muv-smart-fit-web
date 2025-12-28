@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download, Mail, Phone, Calendar, FileText, Users, TrendingUp, Eye, MousePointer } from "lucide-react";
+import { Download, Mail, Phone, Calendar, FileText, Users, TrendingUp, Eye, MousePointer, FlaskConical, Trophy } from "lucide-react";
 import { format } from "date-fns";
 import { it } from "date-fns/locale";
 
@@ -34,7 +34,18 @@ interface EmailSequence {
   clicked_at: string | null;
   open_count: number | null;
   click_count: number | null;
+  subject_variant: string | null;
   lead?: { name: string; email: string | null };
+}
+
+interface ABTestResult {
+  sequence_type: string;
+  variant: string;
+  sent: number;
+  opened: number;
+  clicked: number;
+  openRate: number;
+  clickRate: number;
 }
 
 interface Stats {
@@ -49,6 +60,7 @@ interface Stats {
 export default function LeadsDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [emailSequences, setEmailSequences] = useState<EmailSequence[]>([]);
+  const [abTestResults, setAbTestResults] = useState<ABTestResult[]>([]);
   const [stats, setStats] = useState<Stats>({
     totalLeads: 0,
     leadMagnetLeads: 0,
@@ -98,6 +110,35 @@ export default function LeadsDashboard() {
       const sentEmails = typedSequences.filter(e => e.status === "sent");
       const openedEmails = typedSequences.filter(e => e.opened_at !== null);
       const clickedEmails = typedSequences.filter(e => e.clicked_at !== null);
+
+      // Calculate A/B test results
+      const abResults: ABTestResult[] = [];
+      const sequenceTypes = ["lead_magnet_followup_day1", "lead_magnet_followup_day3", "lead_magnet_followup_day7"];
+      
+      sequenceTypes.forEach(seqType => {
+        ["A", "B"].forEach(variant => {
+          const filtered = typedSequences.filter(
+            e => e.sequence_type === seqType && e.subject_variant === variant
+          );
+          const sent = filtered.filter(e => e.status === "sent").length;
+          const opened = filtered.filter(e => e.opened_at !== null).length;
+          const clicked = filtered.filter(e => e.clicked_at !== null).length;
+          
+          if (sent > 0 || filtered.length > 0) {
+            abResults.push({
+              sequence_type: seqType,
+              variant,
+              sent,
+              opened,
+              clicked,
+              openRate: sent > 0 ? (opened / sent) * 100 : 0,
+              clickRate: opened > 0 ? (clicked / opened) * 100 : 0
+            });
+          }
+        });
+      });
+
+      setAbTestResults(abResults);
 
       setStats({
         totalLeads: typedLeads.length,
@@ -241,6 +282,10 @@ export default function LeadsDashboard() {
           <TabsTrigger value="lead-magnet">Lead Magnet</TabsTrigger>
           <TabsTrigger value="contacts">Modulo Contatti</TabsTrigger>
           <TabsTrigger value="emails">Sequenze Email</TabsTrigger>
+          <TabsTrigger value="ab-test" className="flex items-center gap-1">
+            <FlaskConical className="h-4 w-4" />
+            A/B Test
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -430,6 +475,119 @@ export default function LeadsDashboard() {
                   )}
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="ab-test">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FlaskConical className="h-5 w-5" />
+                A/B Test Subject Line
+              </CardTitle>
+              <CardDescription>Confronto performance tra varianti A e B per ogni email della sequenza</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {["lead_magnet_followup_day1", "lead_magnet_followup_day3", "lead_magnet_followup_day7"].map((seqType) => {
+                const variantA = abTestResults.find(r => r.sequence_type === seqType && r.variant === "A");
+                const variantB = abTestResults.find(r => r.sequence_type === seqType && r.variant === "B");
+                
+                const getWinner = () => {
+                  if (!variantA || !variantB) return null;
+                  if (variantA.sent < 5 && variantB.sent < 5) return null;
+                  if (variantA.openRate > variantB.openRate) return "A";
+                  if (variantB.openRate > variantA.openRate) return "B";
+                  return null;
+                };
+                
+                const winner = getWinner();
+                const dayLabel = seqType.includes("day1") ? "Giorno 1" : seqType.includes("day3") ? "Giorno 3" : "Giorno 7";
+                
+                return (
+                  <div key={seqType} className="border rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-semibold text-lg">{dayLabel}</h3>
+                      {winner && (
+                        <Badge variant="default" className="flex items-center gap-1 bg-green-600">
+                          <Trophy className="h-3 w-3" />
+                          Vincitore: Variante {winner}
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Variant A */}
+                      <div className={`p-4 rounded-lg border-2 ${winner === "A" ? "border-green-500 bg-green-50" : "border-muted"}`}>
+                        <div className="flex items-center justify-between mb-3">
+                          <Badge variant="outline" className="text-lg px-3 py-1">Variante A</Badge>
+                          {winner === "A" && <Trophy className="h-5 w-5 text-green-600" />}
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Inviate:</span>
+                            <span className="font-medium">{variantA?.sent || 0}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Aperte:</span>
+                            <span className="font-medium">{variantA?.opened || 0}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tasso Apertura:</span>
+                            <span className="font-bold text-green-600">{(variantA?.openRate || 0).toFixed(1)}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tasso Click:</span>
+                            <span className="font-medium text-blue-600">{(variantA?.clickRate || 0).toFixed(1)}%</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Variant B */}
+                      <div className={`p-4 rounded-lg border-2 ${winner === "B" ? "border-green-500 bg-green-50" : "border-muted"}`}>
+                        <div className="flex items-center justify-between mb-3">
+                          <Badge variant="outline" className="text-lg px-3 py-1">Variante B</Badge>
+                          {winner === "B" && <Trophy className="h-5 w-5 text-green-600" />}
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Inviate:</span>
+                            <span className="font-medium">{variantB?.sent || 0}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Aperte:</span>
+                            <span className="font-medium">{variantB?.opened || 0}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tasso Apertura:</span>
+                            <span className="font-bold text-green-600">{(variantB?.openRate || 0).toFixed(1)}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tasso Click:</span>
+                            <span className="font-medium text-blue-600">{(variantB?.clickRate || 0).toFixed(1)}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {(!variantA?.sent && !variantB?.sent) && (
+                      <p className="text-center text-muted-foreground mt-4 text-sm">
+                        Nessuna email inviata ancora per questo giorno
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+              
+              <div className="bg-muted/50 rounded-lg p-4 mt-6">
+                <h4 className="font-medium mb-2">📊 Come funziona l'A/B Test</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Ogni nuovo lead viene assegnato casualmente alla variante A o B</li>
+                  <li>• Le due varianti hanno subject line diverse per testare quale performa meglio</li>
+                  <li>• Il vincitore è determinato dal tasso di apertura (minimo 5 email inviate)</li>
+                  <li>• Usa questi dati per ottimizzare le tue campagne email</li>
+                </ul>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
