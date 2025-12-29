@@ -650,6 +650,50 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          lead_captured: boolean | null
+          lead_data: Json | null
+          lead_id: string | null
+          messages: Json | null
+          session_id: string
+          updated_at: string
+          visitor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lead_captured?: boolean | null
+          lead_data?: Json | null
+          lead_id?: string | null
+          messages?: Json | null
+          session_id: string
+          updated_at?: string
+          visitor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lead_captured?: boolean | null
+          lead_data?: Json | null
+          lead_id?: string | null
+          messages?: Json | null
+          session_id?: string
+          updated_at?: string
+          visitor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_conversations_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comment_submissions: {
         Row: {
           comment_id: string | null
@@ -992,6 +1036,47 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_scores: {
+        Row: {
+          created_at: string
+          id: string
+          last_activity: string | null
+          lead_id: string | null
+          score: number
+          score_breakdown: Json | null
+          score_level: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_activity?: string | null
+          lead_id?: string | null
+          score?: number
+          score_breakdown?: Json | null
+          score_level?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_activity?: string | null
+          lead_id?: string | null
+          score?: number
+          score_breakdown?: Json | null
+          score_level?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_scores_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: true
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_tracking: {
         Row: {
           booking_completed: boolean | null
@@ -1121,6 +1206,39 @@ export type Database = {
           identifier?: string
           requests_count?: number | null
           window_start?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          source: string | null
+          status: string
+          subscribed_at: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          source?: string | null
+          status?: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          source?: string | null
+          status?: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
         }
         Relationships: []
       }
@@ -1965,6 +2083,14 @@ export type Database = {
       }
       update_analytics_summary: { Args: never; Returns: undefined }
       update_blog_performance_summary: { Args: never; Returns: undefined }
+      update_lead_score: {
+        Args: {
+          p_activity_type: string
+          p_lead_id: string
+          p_score_change: number
+        }
+        Returns: undefined
+      }
       validate_captcha_token: { Args: { token: string }; Returns: boolean }
       verify_ai_token_access: {
         Args: { token_input: string }

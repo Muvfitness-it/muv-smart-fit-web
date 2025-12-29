@@ -119,4 +119,11 @@ verify_jwt = false
 [functions.gsc-token-manager]
 verify_jwt = false
 
-# All other functions require JWT by default (no override here)
+[functions.lead-scoring]
+verify_jwt = false
+
+[functions.weekly-newsletter]
+verify_jwt = false
+
+[functions.ai-chat-muv]
+verify_jwt = false

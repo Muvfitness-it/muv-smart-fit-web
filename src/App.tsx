@@ -21,6 +21,7 @@ import InternalLinkOptimizer from "./components/seo/InternalLinkOptimizer";
 import AIAssistantWidget from "./components/ai/AIAssistantWidget";
 import AIAssistantModal from "./components/ai/AIAssistantModal";
 import AccessibilityEnhancer from "./components/ui/AccessibilityEnhancer";
+import AIChatWidget from "./components/chat/AIChatWidget";
 
 // Critical routes loaded immediately (homepage and essential pages)
 import NotFound from "./pages/NotFound";
@@ -330,6 +331,7 @@ const AppContent = () => {
           <CookieConsent />
           {showAIAssistant && (
             <>
+              <AIChatWidget />
               <AIAssistantWidget 
                 onOpenModal={handleOpenAIModal}
                 onStartConversation={handleStartConversation}
