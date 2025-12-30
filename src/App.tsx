@@ -74,6 +74,7 @@ const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
 const ZoneServite = lazy(() => import("./pages/ZoneServite"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
 const AdminUnified = lazy(() => import("./pages/admin/AdminUnified"));
+const AdminControl = lazy(() => import("./pages/admin/AdminControl"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 
 // Landing Pages - lazy loaded
@@ -293,6 +294,7 @@ const AppContent = () => {
                     
                     {/* Admin Routes - Unified Panel */}
                     <Route path="/admin" element={<AdminRoute><AdminUnified /></AdminRoute>} />
+                    <Route path="/admin-control" element={<AdminRoute><AdminControl /></AdminRoute>} />
                     <Route path="/admin/dashboard" element={<Navigate to="/admin?section=blog" replace />} />
                     <Route path="/admin/contenuti-base" element={<Navigate to="/admin?section=contenuti" replace />} />
                     <Route path="/admin/blog" element={<Navigate to="/admin?section=blog" replace />} />
