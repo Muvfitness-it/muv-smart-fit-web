@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Clock, Instagram, Facebook, MessageCircle } from "lucide-react";
+import NewsletterForm from "@/components/newsletter/NewsletterForm";
 
 const SimpleHomeFooter = () => {
   const menuLinks = [
@@ -71,35 +72,44 @@ const SimpleHomeFooter = () => {
           </div>
         </div>
 
-        {/* Social Icons */}
-        <div className="flex justify-center gap-4 mb-8">
-          <a
-            href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white transition-colors"
-            aria-label="WhatsApp"
-          >
-            <MessageCircle className="h-5 w-5" />
-          </a>
-          <a
-            href="https://www.instagram.com/muvfitness_legnago/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-            aria-label="Instagram"
-          >
-            <Instagram className="h-5 w-5" />
-          </a>
-          <a
-            href="https://www.facebook.com/muvfitnesslegnago"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-            aria-label="Facebook"
-          >
-            <Facebook className="h-5 w-5" />
-          </a>
+        {/* Newsletter + Social Section */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+          {/* Newsletter Form */}
+          <NewsletterForm variant="footer" />
+          
+          {/* Social Icons */}
+          <div className="flex flex-col items-center gap-3">
+            <p className="text-sm font-medium text-muted-foreground">Seguici</p>
+            <div className="flex gap-3">
+              <a
+                href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-200 hover:scale-110"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/muvfitness_legnago/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:scale-110"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.facebook.com/muvfitnesslegnago"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:scale-110"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Privacy e Copyright */}
