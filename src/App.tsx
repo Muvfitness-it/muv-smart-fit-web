@@ -293,7 +293,7 @@ const AppContent = () => {
                     <Route path="/:slug" element={<BlogArticle />} />
                     
                     {/* Admin Routes - Unified Panel */}
-                    <Route path="/admin" element={<AdminRoute><AdminUnified /></AdminRoute>} />
+                    <Route path="/admin" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin-control" element={<AdminRoute><AdminControl /></AdminRoute>} />
                     <Route path="/admin/dashboard" element={<Navigate to="/admin?section=blog" replace />} />
                     <Route path="/admin/contenuti-base" element={<Navigate to="/admin?section=contenuti" replace />} />
