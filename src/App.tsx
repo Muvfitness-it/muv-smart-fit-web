@@ -73,7 +73,7 @@ const SmallGroup = lazy(() => import("./pages/servizi/SmallGroup"));
 const ComeArrivare = lazy(() => import("./pages/ComeArrivare"));
 const ZoneServite = lazy(() => import("./pages/ZoneServite"));
 const AdminAuth = lazy(() => import("./pages/AdminAuth"));
-const AdminUnified = lazy(() => import("./pages/admin/AdminUnified"));
+
 const AdminControl = lazy(() => import("./pages/admin/AdminControl"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 
