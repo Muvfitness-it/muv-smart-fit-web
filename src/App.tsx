@@ -295,19 +295,19 @@ const AppContent = () => {
                     {/* Admin Routes - Unified Panel */}
                     <Route path="/admin" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin-control" element={<AdminRoute><AdminControl /></AdminRoute>} />
-                    <Route path="/admin/dashboard" element={<Navigate to="/admin?section=blog" replace />} />
-                    <Route path="/admin/contenuti-base" element={<Navigate to="/admin?section=contenuti" replace />} />
-                    <Route path="/admin/blog" element={<Navigate to="/admin?section=blog" replace />} />
-                    <Route path="/admin/blog/bozze" element={<Navigate to="/admin?section=bozze" replace />} />
-                    <Route path="/admin/blog/categorie" element={<Navigate to="/admin?section=categorie" replace />} />
-                    <Route path="/admin/blog/create/ai" element={<Navigate to="/admin?section=crea-ai" replace />} />
-                    <Route path="/admin/blog/create/manual" element={<Navigate to="/admin?section=crea-manuale" replace />} />
-                    <Route path="/admin/blog/new" element={<Navigate to="/admin?section=crea-ai" replace />} />
+                    <Route path="/admin/dashboard" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/contenuti-base" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/bozze" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/categorie" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/create/ai" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/create/manual" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/new" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
-                    <Route path="/admin/utenti" element={<Navigate to="/admin?section=utenti" replace />} />
-                    <Route path="/admin/small-group-schedule" element={<Navigate to="/admin?section=small-group" replace />} />
-                    <Route path="/admin/local-seo" element={<Navigate to="/admin?section=local-seo" replace />} />
-                    <Route path="/admin/seo-monitor" element={<Navigate to="/admin?section=seo-monitor" replace />} />
+                    <Route path="/admin/utenti" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/small-group-schedule" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/local-seo" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/seo-monitor" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/leads" element={<AdminRoute><LeadsDashboard /></AdminRoute>} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
