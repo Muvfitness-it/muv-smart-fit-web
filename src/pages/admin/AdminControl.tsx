@@ -139,7 +139,7 @@ export default function AdminControl() {
 
   useEffect(() => {
     if (!authLoading && !isAdmin) {
-      navigate('/admin/auth');
+      navigate('/admin-control');
     }
   }, [authLoading, isAdmin, navigate]);
 
@@ -910,8 +910,8 @@ export default function AdminControl() {
                       <Calendar className="w-4 h-4 mr-2" />Calendly
                     </a>
                   </Button>
-                  <Button variant="outline" onClick={() => navigate('/admin/leads')}>
-                    <Users className="w-4 h-4 mr-2" />Lead Dashboard
+                  <Button variant="outline" onClick={() => setActiveTab('leads')}>
+                    <Users className="w-4 h-4 mr-2" />Vai a Lead & CRM
                   </Button>
                 </CardContent>
               </Card>

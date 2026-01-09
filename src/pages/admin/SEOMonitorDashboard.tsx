@@ -54,7 +54,7 @@ const SEOMonitorDashboard = () => {
   useEffect(() => {
     if (!authLoading) {
       if (!isAdmin) {
-        navigate('/admin/auth');
+        navigate('/admin-control');
       } else {
         loadData();
         checkGSCAuth();

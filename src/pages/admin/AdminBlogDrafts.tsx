@@ -113,7 +113,7 @@ const AdminBlogDrafts = () => {
         </Helmet>
         <h1 className="text-3xl font-bold mb-2">Accesso riservato</h1>
         <p className="text-muted-foreground">Questa sezione è disponibile solo agli amministratori.</p>
-        <Link to="/admin/auth" className="underline mt-4 inline-block">Vai al login admin</Link>
+        <Link to="/admin-control" className="underline mt-4 inline-block">Vai al pannello admin</Link>
       </main>
     );
   }
@@ -131,8 +131,8 @@ const AdminBlogDrafts = () => {
           <p className="text-muted-foreground">Gestisci le bozze dei tuoi articoli</p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={() => navigate("/admin/blog")} variant="outline">Tutti gli articoli</Button>
-          <Button onClick={() => navigate("/admin/blog/new")}>Nuova bozza</Button>
+          <Button onClick={() => navigate("/admin-control")} variant="outline">Tutti gli articoli</Button>
+          <Button onClick={() => navigate("/admin-control")}>Nuova bozza</Button>
         </div>
       </div>
 
@@ -158,7 +158,7 @@ const AdminBlogDrafts = () => {
           <p className="text-muted-foreground mb-4">
             {q ? 'Nessuna bozza corrisponde alla tua ricerca.' : 'Non hai ancora creato nessuna bozza.'}
           </p>
-          <Button onClick={() => navigate("/admin/blog/new")}>Crea la prima bozza</Button>
+          <Button onClick={() => navigate("/admin-control")}>Crea la prima bozza</Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
