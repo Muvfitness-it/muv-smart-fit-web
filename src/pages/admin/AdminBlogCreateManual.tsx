@@ -118,7 +118,7 @@ const AdminBlogCreateManual: React.FC = () => {
     }
 
     toast({ title: "Articolo salvato", description: mode === "now" ? "Pubblicato con successo" : mode === "schedule" ? "Programmato" : "Salvato in bozza" });
-    navigate("/admin/blog");
+    navigate("/admin-control");
   };
 
   return (

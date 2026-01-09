@@ -62,7 +62,7 @@ const AdminBlogList = () => {
         </Helmet>
         <h1 className="text-3xl font-bold mb-2">Accesso riservato</h1>
         <p className="text-muted-foreground">Questa sezione è disponibile solo agli amministratori.</p>
-        <Link to="/admin/auth" className="underline mt-4 inline-block">Vai al login admin</Link>
+        <Link to="/admin-control" className="underline mt-4 inline-block">Vai al pannello admin</Link>
       </main>
     );
   }
@@ -77,9 +77,9 @@ const AdminBlogList = () => {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Articoli</h1>
         <div className="flex gap-2">
-          <Button onClick={() => navigate("/admin/blog/bozze")} variant="outline">Bozze</Button>
-          <Button onClick={() => navigate("/admin/blog/categorie")} variant="outline">Categorie</Button>
-          <Button onClick={() => navigate("/admin/blog/new")}>Nuovo articolo</Button>
+          <Button onClick={() => navigate("/admin-control")} variant="outline">Bozze</Button>
+          <Button onClick={() => navigate("/admin-control")} variant="outline">Categorie</Button>
+          <Button onClick={() => navigate("/admin-control")}>Nuovo articolo</Button>
         </div>
       </div>
 

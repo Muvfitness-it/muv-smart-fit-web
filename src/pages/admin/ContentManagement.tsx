@@ -141,7 +141,7 @@ const ContentManagement = () => {
               </div>
               <Button
                 variant="outline"
-                onClick={() => navigate('/admin/dashboard')}
+                onClick={() => navigate('/admin-control')}
               >
                 Torna alla Dashboard
               </Button>

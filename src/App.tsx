@@ -308,7 +308,7 @@ const AppContent = () => {
                     <Route path="/admin/small-group-schedule" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/local-seo" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/seo-monitor" element={<Navigate to="/admin-control" replace />} />
-                    <Route path="/admin/leads" element={<AdminRoute><LeadsDashboard /></AdminRoute>} />
+                    <Route path="/admin/leads" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/analytics" element={<AdminRoute><Analytics /></AdminRoute>} />
                     
                     {/* ===== LEGACY REDIRECTS - Now handled server-side via netlify.toml ===== */}
