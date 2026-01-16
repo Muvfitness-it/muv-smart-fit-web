@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar } from "@/components/ui/calendar";
 import { toast } from "@/hooks/use-toast";
 
-import { Loader2, Wand2, CheckCircle2, CalendarClock } from "lucide-react";
+import { Loader2, Wand2, CheckCircle2, CalendarClock, ArrowLeft } from "lucide-react";
 
 // Simple slugify
 const slugify = (s: string) =>
@@ -160,6 +160,9 @@ const AdminBlogCreateAI: React.FC = () => {
 
       <div className="border-b border-border bg-card/50">
         <div className="container mx-auto px-4 py-6">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')} className="mb-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />Torna a Admin Control
+          </Button>
           <h1 className="text-2xl md:text-3xl font-bold">Creazione Articolo con IA</h1>
           <p className="text-muted-foreground">Imposta argomento, lunghezza e tono. Visualizza l'anteprima e pubblica o programma.</p>
         </div>

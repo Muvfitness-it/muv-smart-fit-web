@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { toast } from "@/hooks/use-toast";
-import { CheckCircle2, CalendarClock, Image as ImageIcon } from "lucide-react";
+import { CheckCircle2, CalendarClock, Image as ImageIcon, ArrowLeft } from "lucide-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -132,6 +132,9 @@ const AdminBlogCreateManual: React.FC = () => {
 
       <div className="border-b border-border bg-card/50">
         <div className="container mx-auto px-4 py-6">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')} className="mb-4">
+            <ArrowLeft className="w-4 h-4 mr-2" />Torna a Admin Control
+          </Button>
           <h1 className="text-2xl md:text-3xl font-bold">Creazione Articolo Manuale</h1>
           <p className="text-muted-foreground">Titolo, slug automatico, descrizione e editor ricco con immagini e link.</p>
         </div>
