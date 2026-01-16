@@ -539,10 +539,10 @@ export default function AdminControl() {
                   <CardTitle>Azioni Rapide</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-wrap gap-3">
-                  <Button onClick={() => navigate('/admin?section=crea-ai')}>
+                  <Button onClick={() => navigate('/admin/blog/create/ai')}>
                     <Sparkles className="w-4 h-4 mr-2" />Nuovo Articolo AI
                   </Button>
-                  <Button variant="outline" onClick={() => navigate('/admin?section=crea-manuale')}>
+                  <Button variant="outline" onClick={() => navigate('/admin/blog/create/manual')}>
                     <PenTool className="w-4 h-4 mr-2" />Articolo Manuale
                   </Button>
                   <Button variant="outline" onClick={() => setActiveTab('leads')}>
@@ -602,10 +602,10 @@ export default function AdminControl() {
                   </Button>
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={() => navigate('/admin?section=crea-ai')}>
+                  <Button onClick={() => navigate('/admin/blog/create/ai')}>
                     <Sparkles className="w-4 h-4 mr-2" />Crea con AI
                   </Button>
-                  <Button variant="outline" onClick={() => navigate('/admin?section=crea-manuale')}>
+                  <Button variant="outline" onClick={() => navigate('/admin/blog/create/manual')}>
                     <PenTool className="w-4 h-4 mr-2" />Crea Manuale
                   </Button>
                 </div>
@@ -704,7 +704,7 @@ export default function AdminControl() {
                       <CardTitle>Stato Indicizzazione</CardTitle>
                       <CardDescription>Monitoraggio pagine su Google</CardDescription>
                     </div>
-                    <Button onClick={() => navigate('/admin?section=seo-monitor')}>
+                    <Button onClick={() => navigate('/admin/seo-monitor')}>
                       <TrendingUp className="w-4 h-4 mr-2" />Dashboard Completa
                     </Button>
                   </div>
