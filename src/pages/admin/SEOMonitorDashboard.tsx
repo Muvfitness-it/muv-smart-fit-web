@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader2, RefreshCw, Send, FileEdit, Unlock, CheckCircle, Key } from "lucide-react";
+import { Loader2, RefreshCw, Send, FileEdit, Unlock, CheckCircle, Key, ArrowLeft } from "lucide-react";
 import GSCMetricsDashboard from "@/components/admin/GSCMetricsDashboard";
 
 interface SEOLog {
@@ -272,9 +272,15 @@ const SEOMonitorDashboard = () => {
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold">📊 SEO Monitor</h1>
-          <p className="text-muted-foreground mt-1">Monitoraggio indicizzazione articoli blog</p>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Torna a Admin Control
+          </Button>
+          <div>
+            <h1 className="text-3xl font-bold">📊 SEO Monitor</h1>
+            <p className="text-muted-foreground mt-1">Monitoraggio indicizzazione articoli blog</p>
+          </div>
         </div>
         <div className="flex flex-wrap gap-2">
           {!gscAuthorized && !checkingAuth && (

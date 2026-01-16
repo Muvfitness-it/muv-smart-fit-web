@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { BUSINESS_DATA } from '@/config/businessData';
-import { CheckCircle2, XCircle, AlertTriangle, MapPin, Phone, Mail, Globe, Clock, ExternalLink } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertTriangle, MapPin, Phone, Mail, Globe, Clock, ExternalLink, ArrowLeft } from 'lucide-react';
 
 interface CitationPlatform {
   name: string;
@@ -15,6 +16,7 @@ interface CitationPlatform {
 }
 
 export default function LocalSEODashboard() {
+  const navigate = useNavigate();
   const [citations, setCitations] = useState<CitationPlatform[]>([
     { 
       name: 'Google My Business', 
@@ -88,9 +90,15 @@ export default function LocalSEODashboard() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Dashboard Local SEO</h1>
-          <p className="text-muted-foreground">Monitoraggio NAP e Citations</p>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Torna a Admin Control
+          </Button>
+          <div>
+            <h1 className="text-3xl font-bold">Dashboard Local SEO</h1>
+            <p className="text-muted-foreground">Monitoraggio NAP e Citations</p>
+          </div>
         </div>
         <Button variant="outline" onClick={() => window.location.reload()}>
           Aggiorna Dati

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { ArrowLeft } from "lucide-react";
 
 interface Category { id: string; name: string; slug: string; description: string | null; color: string | null; }
 
@@ -21,6 +23,7 @@ const slugify = (s: string) => s
 const AdminCategories = () => {
   const { isAdmin } = useAdminAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Category[]>([]);
 
@@ -97,7 +100,13 @@ const AdminCategories = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <h1 className="text-2xl font-bold mb-6">Categorie Blog</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Torna a Admin Control
+        </Button>
+        <h1 className="text-2xl font-bold">Categorie Blog</h1>
+      </div>
 
       <Card className="mb-6">
         <CardHeader>
