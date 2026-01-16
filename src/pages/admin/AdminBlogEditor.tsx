@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useGeminiAPI } from "@/hooks/useGeminiAPI";
 import { ImageOptimizer } from "@/components/admin/ImageOptimizer";
 import SocialShareModal from "@/components/admin/SocialShareModal";
-import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, Linkedin, MessageCircle, ArrowLeft } from "lucide-react";
 
 interface Category { id: string; name: string; slug: string; }
 
@@ -204,7 +204,7 @@ const AdminBlogEditor = () => {
         }
       }
       
-      navigate('/admin/blog');
+      navigate('/admin-control');
     }
     setSaving(false);
   };
@@ -212,7 +212,7 @@ const AdminBlogEditor = () => {
   const handleShareModalClose = (open: boolean) => {
     setShowShareModal(open);
     if (!open) {
-      navigate('/admin/blog');
+      navigate('/admin-control');
     }
   };
 
@@ -296,9 +296,15 @@ const AdminBlogEditor = () => {
       </Helmet>
 
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{headerTitle}</h1>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/admin-control')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Torna a Admin Control
+          </Button>
+          <h1 className="text-2xl font-bold">{headerTitle}</h1>
+        </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => navigate('/admin/blog')}>Annulla</Button>
+          <Button variant="outline" onClick={() => navigate('/admin-control')}>Annulla</Button>
           <Button disabled={saving} onClick={() => save('draft')}>{saving ? 'Salvataggio...' : 'Salva bozza'}</Button>
           <Button disabled={saving} variant="secondary" onClick={() => save('published')}>{saving ? '...' : 'Pubblica'}</Button>
           <Button disabled={saving || !scheduledDate || !scheduledTime} onClick={() => save('scheduled')}>{saving ? '...' : 'Programma'}</Button>

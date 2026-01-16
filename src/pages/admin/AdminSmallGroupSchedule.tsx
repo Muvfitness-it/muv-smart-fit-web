@@ -53,10 +53,10 @@ const AdminSmallGroupSchedule = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div className="flex items-center gap-3">
-              <Link to="/servizi/small-group">
+              <Link to="/admin-control">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Torna alla pagina
+                  Torna a Admin Control
                 </Button>
               </Link>
               <h1 className="text-2xl md:text-3xl font-bold">Gestione Orari Small Group</h1>
