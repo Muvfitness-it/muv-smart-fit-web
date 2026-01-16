@@ -119,6 +119,8 @@ const BlogArticle = lazy(() => import("./pages/blog/BlogArticle"));
 const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
 const SEOMonitorDashboard = lazy(() => import("./pages/admin/SEOMonitorDashboard"));
 const LeadsDashboard = lazy(() => import("./pages/admin/LeadsDashboard"));
+const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
+const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
 
 // Loading component for lazy routes
 const RouteLoading = () => (
@@ -300,8 +302,8 @@ const AppContent = () => {
                     <Route path="/admin/blog" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/blog/bozze" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/blog/categorie" element={<Navigate to="/admin-control" replace />} />
-                    <Route path="/admin/blog/create/ai" element={<Navigate to="/admin-control" replace />} />
-                    <Route path="/admin/blog/create/manual" element={<Navigate to="/admin-control" replace />} />
+                    <Route path="/admin/blog/create/ai" element={<AdminRoute><AdminBlogCreateAI /></AdminRoute>} />
+                    <Route path="/admin/blog/create/manual" element={<AdminRoute><AdminBlogCreateManual /></AdminRoute>} />
                     <Route path="/admin/blog/new" element={<Navigate to="/admin-control" replace />} />
                     <Route path="/admin/blog/:id" element={<AdminRoute><AdminBlogEditor /></AdminRoute>} />
                     <Route path="/admin/utenti" element={<Navigate to="/admin-control" replace />} />
