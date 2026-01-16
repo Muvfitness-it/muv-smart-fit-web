@@ -118,7 +118,6 @@ const BlogCategory = lazy(() => import("./pages/blog/BlogCategory"));
 const BlogArticle = lazy(() => import("./pages/blog/BlogArticle"));
 const AdminBlogEditor = lazy(() => import("./pages/admin/AdminBlogEditor"));
 const SEOMonitorDashboard = lazy(() => import("./pages/admin/SEOMonitorDashboard"));
-const LeadsDashboard = lazy(() => import("./pages/admin/LeadsDashboard"));
 const AdminBlogCreateAI = lazy(() => import("./pages/admin/AdminBlogCreateAI"));
 const AdminBlogCreateManual = lazy(() => import("./pages/admin/AdminBlogCreateManual"));
 
