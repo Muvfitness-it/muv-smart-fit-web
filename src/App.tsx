@@ -95,6 +95,9 @@ const AIAuth = lazy(() => import("./pages/AIAuth"));
 // SEO pages - lazy loaded
 const FaqGbp = lazy(() => import("./pages/FaqGbp"));
 const MediaKitProofPosts = lazy(() => import("./pages/MediaKitProofPosts"));
+
+// Newsletter pages - lazy loaded
+const NewsletterUnsubscribe = lazy(() => import("./pages/newsletter/NewsletterUnsubscribe"));
 const Grazie = lazy(() => import("./pages/Grazie"));
 const Recensioni = lazy(() => import("./pages/Recensioni"));
 
@@ -224,6 +227,13 @@ const AppContent = () => {
           <Route path="/ai-auth" element={
             <Suspense fallback={<RouteLoading />}>
               <AIAuth />
+            </Suspense>
+          } />
+          
+          {/* Newsletter Unsubscribe - NO Navigation/Footer */}
+          <Route path="/newsletter/unsubscribe" element={
+            <Suspense fallback={<RouteLoading />}>
+              <NewsletterUnsubscribe />
             </Suspense>
           } />
 
